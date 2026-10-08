@@ -57,7 +57,7 @@ interface TopBarProps {
 export function TopBar({ back, backLabel, step, children }: TopBarProps): JSX.Element {
   const t = useT();
   return (
-    <div class="topbar">
+    <header class="topbar">
       {back !== null ? (
         <Link to={back} class={backLabel === undefined ? 'back' : 'back back-text'} ariaLabel={backLabel === undefined ? t('common.back') : undefined} testId="back">
           <Icon name="back" />
@@ -72,7 +72,7 @@ export function TopBar({ back, backLabel, step, children }: TopBarProps): JSX.El
         </div>
       ) : null}
       {children}
-    </div>
+    </header>
   );
 }
 
@@ -85,6 +85,7 @@ interface ScreenProps {
 }
 
 export function Screen({ top, bar, children, rise = true }: ScreenProps): JSX.Element {
+  const t = useT();
   useEffect(() => {
     if (!focusAfterNavigation.pending) return;
     focusAfterNavigation.pending = false;
@@ -96,7 +97,12 @@ export function Screen({ top, bar, children, rise = true }: ScreenProps): JSX.El
       <main id="main" class={`content${rise ? ' rise' : ''}`} tabIndex={-1}>
         {children}
       </main>
-      {bar !== undefined && bar !== null ? <div class="bar bar-rise">{bar}</div> : null}
+      {bar !== undefined && bar !== null ? (
+        // A named region, so the action bar is a landmark like the header and the main area (axe "region").
+        <div class="bar bar-rise" role="region" aria-label={t('common.actions')}>
+          {bar}
+        </div>
+      ) : null}
     </div>
   );
 }

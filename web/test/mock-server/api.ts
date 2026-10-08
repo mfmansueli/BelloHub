@@ -172,15 +172,23 @@ export class MockApi {
 
   // MARK: Lookups
 
+  /**
+   * A scenario by slug. `<scenario>-t<id>` is the same professional as `<scenario>` with a private set of
+   * bookings, holds and lists (they are all keyed by slug), so parallel tests never share state without
+   * a reset that would wipe the others.
+   */
   private scenario(slug: string): Scenario {
     const found = this.scenarioBySlug.get(slug);
-    if (found === undefined) throw new MockError('notFound', 404);
-    return found;
+    if (found !== undefined) return found;
+    const parent = /^(.+)-t[a-z0-9]{3,}$/.exec(slug)?.[1];
+    const instance = parent === undefined ? undefined : this.scenarioBySlug.get(parent);
+    if (instance === undefined) throw new MockError('notFound', 404);
+    return instance;
   }
 
   private profile(slug: string): PublicProfile {
     if (this.inboxKey === null) throw new Error('mock not initialised');
-    return this.scenario(slug).profile(this.inboxKey);
+    return { ...this.scenario(slug).profile(this.inboxKey), slug };
   }
 
   private lite(profile: PublicProfile): ProfessionalLite {
@@ -447,7 +455,7 @@ export class MockApi {
     const start = Date.parse(String(body['startsAt']));
     if (!isFree(start, booking.totalMinutes, this.rules(profile), this.busy(booking.slug, undefined, now), now, { bookingId: booking.id })) throw new MockError('slotTaken', 409);
     booking.rescheduleRequest = { requestedStart: new Date(start).toISOString() };
-    this.rescheduleRequests.push({ bookingId: booking.id, startsAt: new Date(start).toISOString(), note: body['note'] });
+    this.rescheduleRequests.push({ slug: booking.slug, bookingId: booking.id, startsAt: new Date(start).toISOString(), note: body['note'] });
     return this.view(booking, now);
   }
 
@@ -620,6 +628,26 @@ export class MockApi {
     this.manageTokens.set(manageToken, stored.id);
     const portalToken = this.seedPortal(input.slug, (input.name ?? 'Helena Duarte').split(/\s+/)[0] ?? 'Helena', stored.client.phone);
     return { token: manageToken, bookingId: stored.id, portalToken };
+  }
+
+  /** What the server holds for a professional's bookings, so a test can compare it with what the page showed. */
+  listBookings(slug: string): Record<string, unknown>[] {
+    return [...this.bookings.values()]
+      .filter((booking) => booking.slug === slug)
+      .map((booking) => ({
+        id: booking.id,
+        status: booking.status,
+        serviceId: booking.serviceId,
+        addOnIds: booking.addOnIds,
+        guestNames: booking.guestNames,
+        startsAt: new Date(booking.startsAt).toISOString(),
+        totalMinutes: booking.totalMinutes,
+        client: booking.client,
+        rescheduleCount: booking.rescheduleCount,
+        clientConfirmedAt: booking.clientConfirmedAt ?? null,
+        lateByMinutes: booking.lateByMinutes ?? null,
+        intake: booking.intake,
+      }));
   }
 
   seedExpired(slug: string): string {

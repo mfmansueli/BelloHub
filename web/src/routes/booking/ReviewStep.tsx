@@ -41,7 +41,7 @@ export function ReviewStep({ profile }: { profile: PublicProfile }): JSX.Element
     const message = whatsAppUrl(profile.whatsappE164, t('wa.blocked', { name: profile.firstName }));
     return (
       <Screen
-        top={<div class="topbar"><ProHeader professional={profile} /></div>}
+        top={<header class="topbar"><ProHeader professional={profile} /></header>}
         bar={
           message === null ? undefined : (
             <ExternalLink href={message} variant="primary" testId="message-pro">
@@ -78,7 +78,7 @@ export function ReviewStep({ profile }: { profile: PublicProfile }): JSX.Element
   const service = profile.services.find((candidate) => candidate.id === draft.serviceId);
   const reason = result.status === 'pendingApproval' ? result.reason : 'newClient';
   return (
-    <Screen top={<div class="topbar"><ProHeader professional={profile} /></div>}>
+    <Screen top={<header class="topbar"><ProHeader professional={profile} /></header>}>
       <div class="stack">
         <Seal tone="amber" />
         <Title>{t('bk10.title', { name: profile.firstName })}</Title>

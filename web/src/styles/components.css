@@ -9,6 +9,9 @@
 .link-url { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: var(--fs-meta); color: var(--ink); word-break: break-all; user-select: all; -webkit-user-select: all; }
 
 /* A link inside a sentence */
+/* A disclosure and a stand-alone text link are tap targets like any button: 44 px high (a link inside a sentence is not). */
+summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cursor: pointer; }
+.center > .link-button { display: inline-flex; align-items: center; min-block-size: 44px; padding-inline: var(--space-sm); }
 .link-button { display: inline; padding: 0; color: var(--rose-text); text-decoration: underline; text-underline-offset: 2px; font: inherit; font-weight: 600; text-align: start; }
 
 /* Language chooser button */
@@ -156,9 +159,10 @@ fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 .cal-nav { display: flex; gap: 2px; }
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; min-inline-size: var(--space-touch-target); min-block-size: var(--space-touch-target); border-radius: 50%; color: var(--ink); }
 .icon-btn[aria-disabled='true'] { opacity: 0.4; cursor: not-allowed; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+/* minmax(0, ...) lets the seven columns shrink below the 44 px day so a 320 px screen does not scroll sideways. */
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .cal-dow { text-align: center; font-size: var(--fs-footnote); font-weight: 600; color: var(--ink-2); padding-block: 8px; }
-.cal-day { display: flex; align-items: center; justify-content: center; margin: 2px auto; inline-size: 44px; block-size: 44px; border-radius: 50%; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cal-day { display: flex; align-items: center; justify-content: center; margin: 2px auto; inline-size: min(44px, 100%); block-size: 44px; border-radius: 50%; font-weight: 600; font-variant-numeric: tabular-nums; }
 [role='gridcell'][aria-selected='true'] > .cal-day { background: var(--ink); color: var(--ink-on-fill); }
 .cal-day[aria-disabled='true'] { opacity: 0.5; font-weight: 400; cursor: default; }
 .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--field-border); }

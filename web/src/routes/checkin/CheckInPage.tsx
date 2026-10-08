@@ -54,7 +54,7 @@ function CheckIn({ token, context }: { token: string; context: FormContext }): J
 
   if (!context.checkIn.available) {
     return (
-      <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <div class="state">
           <Title>{t('cl5.closed.title')}</Title>
           <p class="lead">{t('cl5.closed.text', { name: pro.firstName })}</p>
@@ -67,7 +67,7 @@ function CheckIn({ token, context }: { token: string; context: FormContext }): J
   if (done !== null) {
     const care = done === 'irritated' || done === 'reaction';
     return (
-      <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <div class="stack">
           <Seal />
           <Title>{t('cl5.thanks', { name: context.client.firstName })}</Title>
@@ -128,7 +128,7 @@ function CheckIn({ token, context }: { token: string; context: FormContext }): J
   const worried = feeling === 'irritated' || feeling === 'reaction';
   return (
     <Screen
-      top={<div class="topbar"><ProHeader professional={pro} /></div>}
+      top={<header class="topbar"><ProHeader professional={pro} /></header>}
       bar={<Button busy={busy} onClick={() => { void send(); }} testId="send-checkin">{t('cl5.send', { name: pro.firstName })}</Button>}
     >
       <div>
@@ -170,6 +170,8 @@ function CheckIn({ token, context }: { token: string; context: FormContext }): J
           type="file"
           accept="image/*"
           id="photo-input"
+          // The visible "Add a photo" button opens this picker; the input itself is out of the reading order.
+          aria-hidden="true"
           tabIndex={-1}
           data-testid="photo-input"
           onChange={(event) => {

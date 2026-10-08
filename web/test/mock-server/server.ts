@@ -1,6 +1,7 @@
 // The HTTP side of the mock: the API under /api, the built page under everything else (with the headers of
 // hosting.json, so the tests run against the Content-Security-Policy that will ship), and test controls under /__test.
 
+import { gzipSync } from 'node:zlib';
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, extname, join, normalize, resolve } from 'node:path';
@@ -150,6 +151,8 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return send(response, 200, { ok: true });
       case '/__test/inbox':
         return send(response, 200, { items: api.inbox.filter((item) => query.get('slug') === null || item.slug === query.get('slug')) });
+      case '/__test/bookings':
+        return send(response, 200, { items: api.listBookings(query.get('slug') ?? '') });
       case '/__test/waitlist':
         return send(response, 200, { items: api.waitlist });
       case '/__test/requests':
@@ -159,7 +162,7 @@ export async function startMock(port: number, distDirectory: string | null): Pro
     }
   }
 
-  function serveStatic(url: URL, response: ServerResponse): void {
+  function serveStatic(url: URL, acceptEncoding: string, response: ServerResponse): void {
     if (distDirectory === null) {
       response.writeHead(404, { 'Content-Type': 'text/plain' });
       response.end('no build');
@@ -180,6 +183,15 @@ export async function startMock(port: number, distDirectory: string | null): Pro
     for (const rule of headerRules) {
       if (rule.pattern.test(url.pathname)) for (const header of rule.headers) headers[header.key] = header.value;
     }
+    // Firebase Hosting compresses text; the mock does the same so the throttled-network tests measure what ships.
+    const compressible = /\.(html|js|css|json|svg|txt)$/.test(file);
+    if (compressible && /\bgzip\b/.test(acceptEncoding)) {
+      headers['Content-Encoding'] = 'gzip';
+      headers['Vary'] = 'Accept-Encoding';
+      response.writeHead(200, headers);
+      response.end(gzipSync(readFileSync(file)));
+      return;
+    }
     response.writeHead(200, headers);
     response.end(readFileSync(file));
   }
@@ -190,7 +202,7 @@ export async function startMock(port: number, distDirectory: string | null): Pro
     const run = async (): Promise<void> => {
       if (url.pathname.startsWith('/api/')) return handleApi(url.pathname.slice(5), method, url.searchParams, request, response);
       if (url.pathname.startsWith('/__test/')) return handleTest(url.pathname, method, url.searchParams, request, response);
-      serveStatic(url, response);
+      serveStatic(url, request.headers['accept-encoding'] ?? '', response);
     };
     run().catch((error: unknown) => {
       if (error instanceof MockError) {

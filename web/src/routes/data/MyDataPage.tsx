@@ -55,7 +55,7 @@ function MyData({ token, context }: { token: string; context: FormContext }): JS
   ];
 
   return (
-    <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+    <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
       <div>
         <Title>{t('cl7.title')}</Title>
         <p class="lead">{t('cl7.sub', { name: pro.firstName })}</p>

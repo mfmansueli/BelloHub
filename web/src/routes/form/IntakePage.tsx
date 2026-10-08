@@ -79,7 +79,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
 
   if (!context.intake.available) {
     return (
-      <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <FullNote title={t('cl4.closed.title')} text={t('cl4.closed.text', { name: pro.firstName })} back={token} />
       </Screen>
     );
@@ -87,7 +87,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
 
   if (done) {
     return (
-      <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <div class="stack">
           <Seal />
           <Title>{t('cl4.thanks')}</Title>
@@ -101,7 +101,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
 
   if (context.intake.completedWithin12Months && !redo) {
     return (
-      <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>}>
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <div class="stack">
           <Title>{t('cl4.already.title')}</Title>
           <p class="lead" data-testid="already">{t('cl4.already.text', { name: pro.firstName })}</p>
@@ -160,7 +160,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
   const error = (problem: IntakeProblem['field'], text: string): string | undefined => (showErrors && problems.some((p) => p.field === problem) ? text : undefined);
 
   return (
-    <Screen top={<div class="topbar"><ProHeader professional={pro} /></div>} bar={<Button busy={busy} onClick={() => { void submit(); }} testId="submit-intake">{busy ? t('cl4.sealing') : t('cl4.submit', { name: pro.firstName })}</Button>}>
+    <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>} bar={<Button busy={busy} onClick={() => { void submit(); }} testId="submit-intake">{busy ? t('cl4.sealing') : t('cl4.submit', { name: pro.firstName })}</Button>}>
       <div>
         <Title>{t('cl4.title')}</Title>
         <p class="lead">{t('cl4.sub', { name: pro.firstName })}</p>

@@ -31,11 +31,13 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
   const canRebook = portal.next !== undefined && portal.rebookMode !== 'paused';
 
   const onKey = (event: KeyboardEvent, index: number): void => {
+    // The tabs pattern of the ARIA practices: arrows move (mirrored in right-to-left), Home and End jump.
     const rtl = document.documentElement.dir === 'rtl';
     const step = event.key === 'ArrowRight' ? (rtl ? -1 : 1) : event.key === 'ArrowLeft' ? (rtl ? 1 : -1) : 0;
-    if (step === 0) return;
+    const target = event.key === 'Home' ? 0 : event.key === 'End' ? TABS.length - 1 : step === 0 ? null : (index + step + TABS.length) % TABS.length;
+    if (target === null) return;
     event.preventDefault();
-    const next = TABS[(index + step + TABS.length) % TABS.length];
+    const next = TABS[target];
     if (next === undefined) return;
     setTab(next.id);
     window.setTimeout(() => { list.current?.querySelector<HTMLElement>(`#tab-${next.id}`)?.focus(); }, 0);
@@ -51,13 +53,13 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
         ) : undefined
       }
       top={
-        <div class="topbar">
+        <header class="topbar">
           <div class="brand-head grow">
             <Avatar name={pro.displayName} photo={pro.photo} />
             <bdi>{pro.displayName}</bdi>
           </div>
           <Avatar name={portal.client.firstName} size="sm" />
-        </div>
+        </header>
       }
     >
       <div>
