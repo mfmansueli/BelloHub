@@ -1,24 +1,23 @@
 {
-  "configurations" : [
+  "configurations": [
     {
-      "id" : "982811EB-84C9-467E-B0ED-D39ECCA44A6F",
-      "name" : "Configuration 1",
-      "options" : {
-
-      }
+      "id": "982811EB-84C9-467E-B0ED-D39ECCA44A6F",
+      "name": "Configuration 1",
+      "options": {}
     }
   ],
-  "defaultOptions" : {
-
-  },
-  "testTargets" : [
+  "defaultOptions": {},
+  "testTargets": [
     {
-      "target" : {
-        "containerPath" : "container:BelloHub.xcodeproj",
-        "identifier" : "000000000000000300000000",
-        "name" : "BelloHubUITests"
-      }
+      "target": {
+        "containerPath": "container:BelloHub.xcodeproj",
+        "identifier": "000000000000000300000000",
+        "name": "BelloHubUITests"
+      },
+      "skippedTests": [
+        "DesignCatalogAuditUITests"
+      ]
     }
   ],
-  "version" : 1
+  "version": 1
 }

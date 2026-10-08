@@ -78,6 +78,43 @@ struct MotionTests {
         #expect(policy.allowsAmbient == expected)
     }
 
+    // MARK: - Arrival (what Reduce Motion and UI testing see)
+
+    @Test("Normally a block starts transparent and 14 pt low, then ends in place")
+    func arrivalNormal() {
+        let policy = MotionPolicy()
+
+        #expect(MotionArrival.frame(shown: false, policy: policy) == .init(opacity: 0, offsetY: Motion.riseOffset))
+        #expect(MotionArrival.frame(shown: true, policy: policy) == .init(opacity: 1, offsetY: 0))
+        #expect(MotionArrival.animation(index: 2, policy: policy) != nil)
+    }
+
+    @Test("Reduce Motion never moves a block: it starts in place and only fades")
+    func arrivalReduceMotion() {
+        let policy = MotionPolicy(reduceMotion: true)
+
+        #expect(MotionArrival.frame(shown: false, policy: policy) == .init(opacity: 0, offsetY: 0))
+        #expect(MotionArrival.frame(shown: true, policy: policy) == .init(opacity: 1, offsetY: 0))
+        #expect(MotionArrival.animation(index: 5, policy: policy) != nil)
+    }
+
+    @Test("UI testing shows every block in its final place at once, with no animation")
+    func arrivalUITesting() {
+        let policy = MotionPolicy(uiTesting: true)
+
+        #expect(MotionArrival.frame(shown: false, policy: policy) == .init(opacity: 1, offsetY: 0))
+        #expect(MotionArrival.animation(index: 0, policy: policy) == nil)
+    }
+
+    @Test("No combination of settings ever moves a block while Reduce Motion or UI testing is on",
+          arguments: [(true, false), (false, true), (true, true)])
+    func neverMovesWhenRestricted(reduce: Bool, testing: Bool) {
+        let policy = MotionPolicy(reduceMotion: reduce, uiTesting: testing)
+
+        #expect(MotionArrival.frame(shown: false, policy: policy).offsetY == 0)
+        #expect(MotionArrival.frame(shown: true, policy: policy).offsetY == 0)
+    }
+
     // MARK: - Directional
 
     @Test("Horizontal motion flips in right-to-left languages and vertical motion does not exist in the helper")

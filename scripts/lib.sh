@@ -73,23 +73,57 @@ acquire_lock() {
 
 # run_xcodebuild <log-name> <xcodebuild arguments...>
 # Sets LAST_LOG to the full log and returns xcodebuild's exit status.
+#
+# Xcode 27 sometimes keeps `xcodebuild test` alive for minutes after the tests have finished (nothing is
+# running; the process sits idle). A watchdog stops it once the log shows the test run is complete and has not
+# grown for 30 seconds, and takes the verdict from the log, so a finished run never blocks the next one.
+# The filtered summary is printed when the run ends, not live.
 run_xcodebuild() {
     local name="$1"
     shift
     acquire_lock
     LAST_LOG="$LOG_DIR/$name-$(date +%Y%m%d-%H%M%S).log"
     echo "Full log: ${LAST_LOG#"$ROOT"/}"
+    : > "$LAST_LOG"
 
-    local status
-    set +e
     xcodebuild "$@" \
         -project "$ROOT/BelloHub.xcodeproj" \
-        -derivedDataPath "$DERIVED_DATA" 2>&1 \
-        | tee "$LAST_LOG" \
-        | { grep -E '(error|warning):|\*\* [A-Z ]+ \*\*|Test Case .* failed|✘' | grep -v "$TOOL_NOISE" || true; }
-    status="${PIPESTATUS[0]}"
-    set -e
+        -derivedDataPath "$DERIVED_DATA" > "$LAST_LOG" 2>&1 &
+    local build_pid=$!
+
+    local last_size=-1 idle_since=$SECONDS size hung=0
+    while kill -0 "$build_pid" 2>/dev/null; do
+        size="$(wc -c < "$LAST_LOG" | tr -d ' ')"
+        if [[ "$size" != "$last_size" ]]; then
+            last_size="$size"
+            idle_since=$SECONDS
+        elif (( SECONDS - idle_since >= 30 )) && test_run_finished "$LAST_LOG"; then
+            hung=1
+            kill "$build_pid" 2>/dev/null || true
+            break
+        fi
+        sleep 1
+    done
+
+    local status=0
+    wait "$build_pid" 2>/dev/null || status=$?
+    if [[ "$hung" == 1 ]]; then
+        if grep -qE '✘ Test run|Test Case .* failed|\*\* TEST FAILED \*\*' "$LAST_LOG"; then
+            status=1
+            echo "** TEST FAILED ** (xcodebuild did not exit after the run; stopped by the watchdog)"
+        else
+            status=0
+            echo "** TEST SUCCEEDED ** (xcodebuild did not exit after the run; stopped by the watchdog)"
+        fi
+    fi
+    # Only errors, warnings and results are printed; the full log stays in build/logs/.
+    { grep -E '(error|warning):|\*\* [A-Z ]+ \*\*|Test Case .* failed|✘' "$LAST_LOG" | grep -v "$TOOL_NOISE" || true; }
     return "$status"
+}
+
+# test_run_finished <log>: true when Swift Testing or XCTest has printed its final summary.
+test_run_finished() {
+    grep -qE "^(✔|✘) Test run with [0-9]+ tests?|^Test Suite '(All|Selected) tests' (passed|failed)" "$1"
 }
 
 # real_warnings <log>: the warnings in a full log, minus the known tool noise.

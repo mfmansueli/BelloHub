@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Keys that INFOPLIST_KEY_* cannot express (arrays). Merged into the generated Info.plist.
+	     Everything else lives in Config/App.xcconfig. -->
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>pt-BR</string>
+		<string>pt-PT</string>
+		<string>es-MX</string>
+		<string>es-419</string>
+		<string>es</string>
+		<string>en</string>
+		<string>en-GB</string>
+		<string>it</string>
+		<string>fr</string>
+		<string>de</string>
+		<string>tr</string>
+		<string>id</string>
+		<string>hi</string>
+		<string>ar</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<!-- Silent pushes wake the app to fetch sealed mailbox items (docs/06-PRIVACY-SECURITY.md section 3.5). -->
+		<string>remote-notification</string>
+	</array>
+</dict>
+</plist>

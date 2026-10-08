@@ -54,7 +54,7 @@ All `no` until a human changes them (H10, H11, H15).
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S1` · started: 2026-10-08 · branch: `build/v1`
+`S2` · started: 2026-10-08 · branch: `build/v1`
 
 ## Stage log
 One block per finished stage (newest last):
@@ -79,6 +79,30 @@ Measured: baseline before edits 9 unit + 1 UI test, all passing; after edits `sc
 Open questions: see the top of this file (one Firebase project instead of three; Storage bucket; Crashlytics FYI; `gh` login).
 Human tasks created: H17; notes added under H1 and H4.
 
+### S1 · Design system, fonts, motion, catalog, localization infrastructure · done 2026-10-08 · tag stage-S1
+Time: about 1 h 10 min (S0 took 20 min; both include reading the docs and a lot of waiting for builds).
+Done:
+- Tokens: `Palette` (light/dark and Increase Contrast pairs), `StatusPalette`, `AvatarPalette`, `HeroPalette`, `Typography` (Fraunces + DM Sans, variable fonts, `FontRegistry`), `Spacing`, `Radius`, `Elevation`, `Icon`, `Motion`.
+- Motion kit: `MotionPolicy`, `MotionArrival`, `StaggeredStack`, `motionBar()`, press and haptics in the button style, `SuccessSeal`, `HeroSurface` (drift and sheen with the limits of `docs/09`), `Directional`.
+- Components: `BelloButtonStyle` (variants and chips), `Avatar` + `Initials`, `StatusChip`, `SectionHeader`, `ListCard` + `belloCard()`, `InsightTile`, `HeroCard`, `EmptyState`, `SheetHeader`, `BelloTextField`, `InlineNotice`, `Skeleton`, `OfflineBanner`, `FooterNote`.
+- DEBUG Design Catalog (`-designCatalog`, with `-uiLocale`, `-catalogSection`, `-catalogTextSize`, `-catalogDark`) and `LaunchOptions`.
+- Localization: `Localizable.xcstrings` and `InfoPlist.xcstrings` with all fourteen localizations, `knownRegions`, `Config/App-Info.plist` (localizations, remote-notification), `scripts/{check-strings,derive-locales,merge-strings,export-strings,import-strings}`, `Config/Locale/` batches and overrides, glossary extended to all localizations (46 terms), `AppLocalization` (resolution rules), `RegionPreset` + `regions.json` (24 regions) + `RegionCatalog`, `PhoneNormalizer`, `PhoneFormatter`, `DigitNormalizer`, `BidiIsolate`, `Formatters`, `WeekConfig`, line-height multiplier for `ar` and `hi`.
+- Tooling: `scripts/check-strings.sh` runs inside `test.sh fast`; `check-warnings.sh` also builds the test targets; `check-project-settings.sh` verifies `knownRegions` and the Info.plist fragment; an `xcodebuild` watchdog in `scripts/lib.sh`.
+- `DESIGN.md` rewritten (identity, tokens, typography, motion, components, catalog, accessibility).
+Decisions/assumptions: ASSUMPTION-9 to ASSUMPTION-15.
+Deviations from the prototype: `fieldBorder` darker (3:1, the prototype's is 1.4:1); avatar initials darker for sage and peach (4.0:1 in the prototype); hero secondary text is a solid color instead of cream at 68 %; tab bar tint is `ink` (the prototype's selected tab is graphite).
+Design additions: none.
+Measured: contrast, every text pair in light, dark and both with Increase Contrast: all at least 4.5:1 and no pair worse with Increase Contrast; UI parts at least 3:1 (`fieldBorder` 3.6 light, 3.9 dark on `bg`); hero text 8.1:1 (primary) and 5.9:1 (secondary) at the lightest glow point. Unit tests: 99 in 16 suites (0.12 s); smoke: 3 UI tests (25 s); Full also runs the accessibility audit of the catalog (clipped text and element description) in `en`, `pt-BR`, `de`, `ar` and `hi` at the default size (112 s) and at AX5 (111 s), and with doubled strings (22 s): all clean. Strings: 34 keys in 14 localizations, check passes (negative-tested: missing language, placeholder, plural category, empty value, stale derived, hard-coded text). `check-warnings.sh`: zero warnings on simulator, device, Release and the test targets.
+Findings worth keeping:
+- `Font.custom("Fraunces").weight(.medium)` resolves to `wght` 500 (identical to an explicit variation), so no custom font plumbing is needed.
+- `INFOPLIST_KEY_UIBackgroundModes` is not a supported key: it produced nothing, so `remote-notification` was missing until the Info.plist fragment was added.
+- An `accessibilityIdentifier` on a container replaces the identifiers of its children. Identifiers go on elements.
+- Xcode's right-to-left pseudolanguage launch arguments do not flip SwiftUI layout; the real `ar` run (first chip on the right, mirrored hero) is the RTL check.
+- Spanish and Portuguese four-digit grouping, French narrow no-break space, Hindi lakh grouping, German and Turkish currency and the documented week-start and clock defaults all matched the doc (asserted, hand-verified quirks).
+- Xcode 27 sometimes keeps `xcodebuild test` alive for minutes after the tests finish; the watchdog stops it once the log shows the run is complete and idle.
+Open questions: see the top of this file.
+Human tasks created: none. H12 (fonts) was not needed: the network allowed the download.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -90,6 +114,20 @@ Human tasks created: H17; notes added under H1 and H4.
 | ASSUMPTION-6 | The single `GoogleService-Info.plist` stays in `SupportFiles/` and keeps the app bundle test working | No per-environment projects exist yet | S0 |
 | ASSUMPTION-7 | `2.5 More` (a tab root) is built in S3 with the shell; it appears in no stage list of `03-BUILD-PLAN.md` | The five-tab `MainView` is S3 | S0 |
 | ASSUMPTION-8 | Local Node is v26; Cloud Functions will declare Node 22 in `engines` as the docs say | Installed toolchain differs from the target runtime | S0 |
+| ASSUMPTION-9 | Pure localization types (`AppLocalization`, `RegionPreset`, `RegionCatalog`, `PhoneNormalizer`, `PhoneFormatter`, `DigitNormalizer`, `BidiIsolate`, `Formatters`, `WeekConfig`) live in `Models/Locale/` (Foundation only); only the bundle loader is in `Managers/Locale/` | `CLAUDE.md` section 2: Models are pure, Managers touch the outside world. `docs/04` draws them all under `Managers/Locale/` | S1 |
+| ASSUMPTION-10 | Strings are authored as batch files (`Config/Locale/strings/*.json`, twelve native languages per row) and merged into the catalog by `scripts/merge-strings.py`, which derives `es-419` and `en-GB`. The catalog stays the committed artifact | Writing 14 languages by hand in the catalog JSON does not scale to about 1,500 keys | S1 |
+| ASSUMPTION-11 | `Config/App-Info.plist` carries the keys `INFOPLIST_KEY_*` cannot express (`CFBundleLocalizations`, `UIBackgroundModes`) and is referenced by `INFOPLIST_FILE` in `App.xcconfig` | Measured: `INFOPLIST_KEY_UIBackgroundModes` produced nothing | S1 |
+| ASSUMPTION-12 | `Palette.accent` is `roseText`; the tab bar tint is `ink` | The prototype's selected tab is graphite; rose is for links and actions | S1 |
+| ASSUMPTION-13 | Fonts are registered at launch with `CTFontManagerRegisterFontsForURL` (`FontRegistry`), not through `UIAppFonts` | `UIAppFonts` is an array that xcconfig keys cannot express and the Info.plist fragment would duplicate the list | S1 |
+| ASSUMPTION-14 | Strings with arguments use `LocalizedStringResource("semantic.key", defaultValue: "...\(arg)")`, never `Text("key \(arg)")` | The latter looks up the key `key %@`, which does not exist (found in the catalog) | S1 |
+| ASSUMPTION-15 | `docs/strings/message-templates.json` is extended in S6, where the messages are first used; the glossary was extended in S1 as the build plan says | The templates have no consumer before S6 | S1 |
+
+## Conventions learned while building (read before writing code)
+- Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
+- Accessibility identifiers go on elements, never on containers.
+- Tests: Swift Testing for logic, XCUITest through `XCUIApplication.launchedForUITests(locale:largestText:arguments:)`; the heavy audit lives in `DesignCatalogAuditUITests`, skipped by UISmoke.
+- UIKit trait mutation in tests needs `@MainActor` (Swift 6 warns otherwise).
+- Screenshots of the catalog on the simulator are the fastest way to see a layout: `xcrun simctl launch <udid> com.bellohub -uiTesting -designCatalog -catalogSection components -uiLocale ar`.
 
 ## Proposed changes to CLAUDE.md
 (none yet)

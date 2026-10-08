@@ -15,6 +15,7 @@ struct ContrastPair: Sendable {
     /// 4.5 for text, 3 for large text, informative icons and field borders.
     let minimum: Double
 
+    @MainActor
     func ratio(in appearance: Appearance) -> Double {
         ContrastRatio.between(
             UIColor(foreground).resolvedColor(with: appearance.traits),
@@ -35,6 +36,8 @@ struct Appearance: Sendable, CustomTestStringConvertible {
         Appearance(isDark: true, isIncreasedContrast: true)
     ]
 
+    /// Main-actor because UIKit's mutable traits are, which keeps the trait closure checked instead of silenced.
+    @MainActor
     var traits: UITraitCollection {
         UITraitCollection { traits in
             traits.userInterfaceStyle = isDark ? .dark : .light

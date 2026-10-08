@@ -34,6 +34,7 @@ struct AvatarPaletteTests {
 
     @Test("Initials text reaches 4.5:1 on both ends of every gradient in every appearance",
           arguments: Appearance.all)
+    @MainActor
     func initialsAreReadable(appearance: Appearance) {
         for pair in AvatarPalette.allCases {
             for background in [pair.start, pair.end] {

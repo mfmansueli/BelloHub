@@ -53,7 +53,9 @@ struct InsightTile: View {
                 .font(Typography.footnote)
                 .foregroundStyle(Palette.ink2)
         }
-        .frame(maxWidth: .infinity, minHeight: Spacing.touchTarget, alignment: .leading)
+        // Fills the row's height so tiles side by side stay equal when one label wraps to two lines
+        // (the row is a `HStack` with `.fixedSize(horizontal: false, vertical: true)`).
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(Spacing.md)
         .background(tone.wash, in: RoundedRectangle(cornerRadius: Radius.tileSmall, style: .continuous))
         .accessibilityElement(children: .combine)

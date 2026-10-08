@@ -1,0 +1,615 @@
+[
+  {
+    "callingCode": "55",
+    "code": "BR",
+    "defaultCurrency": "BRL",
+    "defaultLocalization": "pt-BR",
+    "healthDataResidency": "none",
+    "localizations": [
+      "pt-BR",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10,
+      11
+    ],
+    "phonePatterns": {
+      "10": "(##) ####-####",
+      "11": "(##) #####-####"
+    },
+    "privacyFrameworkId": "lgpd",
+    "timeZones": [
+      "America/Sao_Paulo",
+      "America/Manaus",
+      "America/Rio_Branco",
+      "America/Noronha"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "351",
+    "code": "PT",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "pt-PT",
+    "healthDataResidency": "none",
+    "localizations": [
+      "pt-PT",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "### ### ###"
+    },
+    "privacyFrameworkId": "gdpr-pt",
+    "timeZones": [
+      "Europe/Lisbon",
+      "Atlantic/Azores",
+      "Atlantic/Madeira"
+    ],
+    "wave": 1
+  },
+  {
+    "callingCode": "34",
+    "code": "ES",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "es",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "### ## ## ##"
+    },
+    "privacyFrameworkId": "gdpr-es",
+    "timeZones": [
+      "Europe/Madrid",
+      "Atlantic/Canary"
+    ],
+    "wave": 1
+  },
+  {
+    "callingCode": "52",
+    "code": "MX",
+    "defaultCurrency": "MXN",
+    "defaultLocalization": "es-MX",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es-MX",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10
+    ],
+    "phonePatterns": {
+      "10": "## #### ####"
+    },
+    "privacyFrameworkId": "mx-lfpdppp",
+    "timeZones": [
+      "America/Mexico_City",
+      "America/Cancun",
+      "America/Tijuana",
+      "America/Hermosillo"
+    ],
+    "wave": 2
+  },
+  {
+    "callingCode": "1",
+    "code": "US",
+    "defaultCurrency": "USD",
+    "defaultLocalization": "en",
+    "healthDataResidency": "review",
+    "localizations": [
+      "en",
+      "es-MX"
+    ],
+    "messagingChannel": "messages",
+    "nationalLengths": [
+      10
+    ],
+    "phonePatterns": {
+      "10": "(###) ###-####"
+    },
+    "privacyFrameworkId": "us-state-laws",
+    "timeZones": [
+      "America/New_York",
+      "America/Chicago",
+      "America/Denver",
+      "America/Los_Angeles",
+      "America/Phoenix",
+      "America/Anchorage",
+      "Pacific/Honolulu"
+    ],
+    "wave": 2
+  },
+  {
+    "callingCode": "54",
+    "code": "AR",
+    "defaultCurrency": "ARS",
+    "defaultLocalization": "es-419",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es-419",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10,
+      11
+    ],
+    "phonePatterns": {
+      "10": "## ####-####",
+      "11": "# ## ####-####"
+    },
+    "privacyFrameworkId": "ar-25326",
+    "timeZones": [
+      "America/Argentina/Buenos_Aires"
+    ],
+    "trunkPrefix": "0",
+    "wave": 2
+  },
+  {
+    "callingCode": "57",
+    "code": "CO",
+    "defaultCurrency": "COP",
+    "defaultLocalization": "es-419",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es-419",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      8,
+      10
+    ],
+    "phonePatterns": {
+      "10": "### ### ####",
+      "8": "# ### ####"
+    },
+    "privacyFrameworkId": "co-1581",
+    "timeZones": [
+      "America/Bogota"
+    ],
+    "wave": 2
+  },
+  {
+    "callingCode": "56",
+    "code": "CL",
+    "defaultCurrency": "CLP",
+    "defaultLocalization": "es-419",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es-419",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "# #### ####"
+    },
+    "privacyFrameworkId": "cl-21719",
+    "timeZones": [
+      "America/Santiago"
+    ],
+    "wave": 2
+  },
+  {
+    "callingCode": "51",
+    "code": "PE",
+    "defaultCurrency": "PEN",
+    "defaultLocalization": "es-419",
+    "healthDataResidency": "none",
+    "localizations": [
+      "es-419",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "### ### ###"
+    },
+    "privacyFrameworkId": "pe-29733",
+    "timeZones": [
+      "America/Lima"
+    ],
+    "wave": 2
+  },
+  {
+    "callingCode": "39",
+    "code": "IT",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "it",
+    "healthDataResidency": "none",
+    "localizations": [
+      "it",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9,
+      10
+    ],
+    "phonePatterns": {
+      "10": "### ### ####",
+      "9": "### ### ###"
+    },
+    "privacyFrameworkId": "gdpr-it",
+    "timeZones": [
+      "Europe/Rome"
+    ],
+    "wave": 1
+  },
+  {
+    "callingCode": "33",
+    "code": "FR",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "fr",
+    "healthDataResidency": "review",
+    "localizations": [
+      "fr",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "# ## ## ## ##"
+    },
+    "privacyFrameworkId": "gdpr-fr",
+    "timeZones": [
+      "Europe/Paris"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "49",
+    "code": "DE",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "de",
+    "healthDataResidency": "none",
+    "localizations": [
+      "de",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10,
+      11
+    ],
+    "phonePatterns": {
+      "10": "### #######",
+      "11": "#### #######"
+    },
+    "privacyFrameworkId": "gdpr-de",
+    "timeZones": [
+      "Europe/Berlin"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "43",
+    "code": "AT",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "de",
+    "healthDataResidency": "none",
+    "localizations": [
+      "de",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "phonePatterns": {
+      "10": "### #######",
+      "11": "#### #######"
+    },
+    "privacyFrameworkId": "gdpr-at",
+    "timeZones": [
+      "Europe/Vienna"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "41",
+    "code": "CH",
+    "defaultCurrency": "CHF",
+    "defaultLocalization": "de",
+    "healthDataResidency": "none",
+    "localizations": [
+      "de",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "## ### ## ##"
+    },
+    "privacyFrameworkId": "ch-fadp",
+    "timeZones": [
+      "Europe/Zurich"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "44",
+    "code": "GB",
+    "defaultCurrency": "GBP",
+    "defaultLocalization": "en-GB",
+    "healthDataResidency": "none",
+    "localizations": [
+      "en-GB",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10
+    ],
+    "phonePatterns": {
+      "10": "#### ######"
+    },
+    "privacyFrameworkId": "uk-gdpr",
+    "timeZones": [
+      "Europe/London"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "353",
+    "code": "IE",
+    "defaultCurrency": "EUR",
+    "defaultLocalization": "en-GB",
+    "healthDataResidency": "none",
+    "localizations": [
+      "en-GB",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "## ### ####"
+    },
+    "privacyFrameworkId": "gdpr-ie",
+    "timeZones": [
+      "Europe/Dublin"
+    ],
+    "trunkPrefix": "0",
+    "wave": 1
+  },
+  {
+    "callingCode": "61",
+    "code": "AU",
+    "defaultCurrency": "AUD",
+    "defaultLocalization": "en-GB",
+    "healthDataResidency": "none",
+    "localizations": [
+      "en-GB",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "### ### ###"
+    },
+    "privacyFrameworkId": "au-privacy-act",
+    "timeZones": [
+      "Australia/Sydney",
+      "Australia/Melbourne",
+      "Australia/Brisbane",
+      "Australia/Perth",
+      "Australia/Adelaide"
+    ],
+    "trunkPrefix": "0",
+    "wave": 2
+  },
+  {
+    "callingCode": "64",
+    "code": "NZ",
+    "defaultCurrency": "NZD",
+    "defaultLocalization": "en-GB",
+    "healthDataResidency": "none",
+    "localizations": [
+      "en-GB",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      8,
+      9,
+      10
+    ],
+    "phonePatterns": {
+      "8": "## ### ###",
+      "9": "## ### ####"
+    },
+    "privacyFrameworkId": "nz-privacy-act",
+    "timeZones": [
+      "Pacific/Auckland"
+    ],
+    "trunkPrefix": "0",
+    "wave": 2
+  },
+  {
+    "callingCode": "27",
+    "code": "ZA",
+    "defaultCurrency": "ZAR",
+    "defaultLocalization": "en-GB",
+    "healthDataResidency": "none",
+    "localizations": [
+      "en-GB",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "## ### ####"
+    },
+    "privacyFrameworkId": "za-popia",
+    "timeZones": [
+      "Africa/Johannesburg"
+    ],
+    "trunkPrefix": "0",
+    "wave": 2
+  },
+  {
+    "callingCode": "91",
+    "code": "IN",
+    "defaultCurrency": "INR",
+    "defaultLocalization": "hi",
+    "healthDataResidency": "review",
+    "localizations": [
+      "hi",
+      "en-GB"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10
+    ],
+    "phonePatterns": {
+      "10": "##### #####"
+    },
+    "privacyFrameworkId": "in-dpdp",
+    "timeZones": [
+      "Asia/Kolkata"
+    ],
+    "trunkPrefix": "0",
+    "wave": 3
+  },
+  {
+    "callingCode": "90",
+    "code": "TR",
+    "defaultCurrency": "TRY",
+    "defaultLocalization": "tr",
+    "healthDataResidency": "review",
+    "localizations": [
+      "tr",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      10
+    ],
+    "phonePatterns": {
+      "10": "### ### ## ##"
+    },
+    "privacyFrameworkId": "tr-kvkk",
+    "timeZones": [
+      "Europe/Istanbul"
+    ],
+    "trunkPrefix": "0",
+    "wave": 3
+  },
+  {
+    "callingCode": "62",
+    "code": "ID",
+    "defaultCurrency": "IDR",
+    "defaultLocalization": "id",
+    "healthDataResidency": "review",
+    "localizations": [
+      "id",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "phonePatterns": {
+      "10": "###-####-###",
+      "11": "###-####-####",
+      "12": "####-####-####"
+    },
+    "privacyFrameworkId": "id-pdp",
+    "timeZones": [
+      "Asia/Jakarta",
+      "Asia/Makassar",
+      "Asia/Jayapura"
+    ],
+    "trunkPrefix": "0",
+    "wave": 3
+  },
+  {
+    "callingCode": "966",
+    "code": "SA",
+    "defaultCurrency": "SAR",
+    "defaultLocalization": "ar",
+    "healthDataResidency": "blocking-until-reviewed",
+    "localizations": [
+      "ar",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      9
+    ],
+    "phonePatterns": {
+      "9": "## ### ####"
+    },
+    "privacyFrameworkId": "sa-pdpl",
+    "timeZones": [
+      "Asia/Riyadh"
+    ],
+    "trunkPrefix": "0",
+    "wave": 4
+  },
+  {
+    "callingCode": "971",
+    "code": "AE",
+    "defaultCurrency": "AED",
+    "defaultLocalization": "ar",
+    "healthDataResidency": "blocking-until-reviewed",
+    "localizations": [
+      "ar",
+      "en"
+    ],
+    "messagingChannel": "whatsapp",
+    "nationalLengths": [
+      8,
+      9
+    ],
+    "phonePatterns": {
+      "8": "# ### ####",
+      "9": "## ### ####"
+    },
+    "privacyFrameworkId": "ae-pdpl",
+    "timeZones": [
+      "Asia/Dubai"
+    ],
+    "trunkPrefix": "0",
+    "wave": 4
+  }
+]

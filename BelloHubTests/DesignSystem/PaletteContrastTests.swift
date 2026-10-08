@@ -60,6 +60,7 @@ struct PaletteContrastTests {
     ]
 
     @Test("Every text pair reaches 4.5:1 in every appearance", arguments: Appearance.all)
+    @MainActor
     func textPairsMeetAA(appearance: Appearance) {
         for pair in Self.textPairs {
             let ratio = pair.ratio(in: appearance)
@@ -68,6 +69,7 @@ struct PaletteContrastTests {
     }
 
     @Test("Every UI part and informative icon reaches 3:1 in every appearance", arguments: Appearance.all)
+    @MainActor
     func partPairsMeetNonTextContrast(appearance: Appearance) {
         for pair in Self.partPairs {
             let ratio = pair.ratio(in: appearance)
@@ -76,6 +78,7 @@ struct PaletteContrastTests {
     }
 
     @Test("Increase Contrast never lowers a ratio", arguments: [false, true])
+    @MainActor
     func increasedContrastIsNeverWorse(isDark: Bool) {
         let normal = Appearance(isDark: isDark, isIncreasedContrast: false)
         let increased = Appearance(isDark: isDark, isIncreasedContrast: true)
@@ -89,6 +92,7 @@ struct PaletteContrastTests {
     }
 
     @Test("The documented quirk holds: roseText on roseWash is below AA in light, so it is not used")
+    @MainActor
     func roseTextOnRoseWashIsBelowAAInLight() {
         let light = Appearance(isDark: false, isIncreasedContrast: false)
         let pair = Self.text("roseText on roseWash", Palette.roseText, on: Palette.roseWash)

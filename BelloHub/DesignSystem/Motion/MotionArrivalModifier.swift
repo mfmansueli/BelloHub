@@ -7,34 +7,25 @@ import SwiftUI
 
 /// Staggered rise: opacity 0 to 1 and 14 pt up, once per screen presentation. `@State` lives as long
 /// as the view does in its navigation stack, so popping back or switching tabs does not replay it.
+/// The decisions are in `MotionArrival`, which is tested.
 private struct MotionArrivalModifier: ViewModifier {
     let index: Int
     @Environment(\.motionPolicy) private var policy
     @State private var shown = false
 
     func body(content: Content) -> some View {
+        let frame = MotionArrival.frame(shown: shown, policy: policy)
         content
-            .opacity(isVisible ? 1 : 0)
-            .offset(y: isVisible || !policy.allowsMovement ? 0 : Motion.riseOffset)
+            .opacity(frame.opacity)
+            .offset(y: frame.offsetY)
             .onAppear {
                 guard !shown else { return }
-                if policy.allowsFade {
+                if let animation = MotionArrival.animation(index: index, policy: policy) {
                     withAnimation(animation) { shown = true }
                 } else {
                     shown = true
                 }
             }
-    }
-
-    /// Without movement the content is still there at once; only the fade is kept (Reduce Motion).
-    private var isVisible: Bool {
-        shown || !policy.allowsMovement && !policy.allowsFade
-    }
-
-    private var animation: Animation {
-        policy.allowsMovement
-            ? Motion.ease().delay(Motion.arrivalDelay(index: index))
-            : .easeOut(duration: 0.2)
     }
 }
 

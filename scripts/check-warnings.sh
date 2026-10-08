@@ -29,7 +29,17 @@ check "Simulator, Debug" check-sim-debug -configuration Debug -destination "$sim
 check "Device, Debug" check-device-debug -configuration Debug -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO
 check "Simulator, Release" check-sim-release -configuration Release -destination "$simulator"
 
+# The test targets are code too: their warnings count (Swift 6 isolation diagnostics show up here first).
+echo "== Test targets"
+if ! run_xcodebuild check-tests clean build-for-testing -scheme BelloHub -testPlan Full -destination "$simulator"; then
+    echo "error: the test targets did not build" >&2
+    failed=1
+elif [[ -n "$(real_warnings "$LAST_LOG")" ]]; then
+    echo "error: the test targets have warnings (see above)" >&2
+    failed=1
+fi
+
 if [[ "$failed" == 0 ]]; then
-    echo "Zero warnings on simulator, device and Release."
+    echo "Zero warnings on simulator, device, Release and the test targets."
 fi
 exit "$failed"

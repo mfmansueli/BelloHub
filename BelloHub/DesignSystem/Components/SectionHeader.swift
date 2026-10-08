@@ -9,7 +9,7 @@ import SwiftUI
 /// 30 pt above and 12 pt below; the heading trait makes it a VoiceOver rotor stop.
 struct SectionHeader: View {
     let title: LocalizedStringKey
-    var actionTitle: LocalizedStringKey?
+    var actionTitle: LocalizedStringResource?
     var action: (() -> Void)?
 
     var body: some View {
