@@ -22,6 +22,9 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     private var consentsByID: [UUID: Consent] = [:]
     private var plansByID: [UUID: SessionPlan] = [:]
     private var ledger: [UUID: RegistrationLedgerEntry] = [:]
+    private var storedProfile: ProfessionalProfile?
+    private var tagsByID: [UUID: Tag] = [:]
+    private var storedTemplate: RecordTemplate?
     private let clock: @Sendable () -> Date
     private let changes = VaultChangeBroadcaster()
 
@@ -229,6 +232,52 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     func deletePhoto(id: UUID) {
         photosByID[id] = nil
         photoDataByID[id] = nil
+        changes.notify()
+    }
+
+    // MARK: - BusinessRepository
+
+    func profile() -> ProfessionalProfile? {
+        storedProfile
+    }
+
+    func save(_ profile: ProfessionalProfile) {
+        var stored = profile
+        stored.updatedAt = clock()
+        storedProfile = stored
+        changes.notify()
+    }
+
+    func tags() -> [Tag] {
+        tagsByID.values.sorted { ($0.position, $0.name) < ($1.position, $1.name) }
+    }
+
+    func save(_ tag: Tag) {
+        tagsByID[tag.id] = tag
+        changes.notify()
+    }
+
+    func deleteTag(id: UUID) {
+        tagsByID[id] = nil
+        changes.notify()
+    }
+
+    func recordTemplate() -> RecordTemplate? {
+        storedTemplate
+    }
+
+    func save(_ template: RecordTemplate) {
+        var stored = template
+        stored.updatedAt = clock()
+        storedTemplate = stored
+        changes.notify()
+    }
+
+    func saveOnboarding(_ result: OnboardingResult) {
+        storedProfile = result.profile
+        result.services.forEach { servicesByID[$0.id] = $0 }
+        result.tags.forEach { tagsByID[$0.id] = $0 }
+        storedTemplate = result.template
         changes.notify()
     }
 }

@@ -12,4 +12,6 @@ enum VaultRepositoryError: Error, Equatable {
     case notFound
     /// A stored value could not be read back (a damaged store, or a field this version cannot decode).
     case unreadable
+    /// The store itself could not be opened on this phone.
+    case unavailable
 }

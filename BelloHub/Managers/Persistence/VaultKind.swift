@@ -18,4 +18,9 @@ enum VaultKind: String, CaseIterable, Sendable {
     case sessionPlan
     /// One per client id ever registered (D42). Never deleted.
     case registration
+    /// The professional's profile. One per vault.
+    case profile
+    case tag
+    /// Which record fields and intake items she switched on. One per vault.
+    case recordTemplate
 }

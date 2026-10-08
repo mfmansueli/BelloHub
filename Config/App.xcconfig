@@ -26,6 +26,11 @@ INFOPLIST_FILE = Config/App-Info.plist
 // App Store Connect and Xcode Cloud stop asking about it on every build.
 INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO
 INFOPLIST_KEY_CFBundleDisplayName = Bello Hub
+// Usage descriptions (localized in InfoPlist.xcstrings; these are the English fallbacks the system shows first).
+INFOPLIST_KEY_NSFaceIDUsageDescription = To unlock your clients and records.
+INFOPLIST_KEY_NSMicrophoneUsageDescription = To record treatment notes by voice.
+INFOPLIST_KEY_NSCameraUsageDescription = To take treatment photos.
+INFOPLIST_KEY_NSContactsUsageDescription = To import the clients you choose.
 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES
 INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES
 INFOPLIST_KEY_UILaunchScreen_Generation = YES

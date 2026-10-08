@@ -146,9 +146,15 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `HeroCard` + `HeroSurface` | Graphite, radius 30, glow, `e2`; one per key screen |
 | `EmptyState` | Composed shapes, title, next action, optional primary button |
 | `SheetHeader` | Title, subtitle, close button, for native sheets |
-| `BelloTextField` | 52 pt, radius 14, `sunken`, 1.5 pt `fieldBorder`, 3 pt `roseText` focus ring, error text; `isSensitive` turns off autocorrection |
+| `BelloTextField` | 52 pt, radius 14, `sunken`, 1.5 pt `fieldBorder`, 3 pt `roseText` focus ring, error text; `isSensitive` turns off autocorrection; `identifier` goes on the text field itself |
 | `InlineNotice` | `.safety` (coral), `.info` (sage), `.warning` (amber) |
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
+| `BrandMark`, `BrandLockup` | The graphite "b" with a rose dot, drawn (not an image), and the two-line wordmark. The wordmark is the brand name, never localized, and always left-to-right |
+| `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `ink` outline and a check, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
+| `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic) |
+| `StepProgressBar` | One 4 pt segment per step, filled up to the current one; spoken as "Step n of m" |
+| `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
+| `GlowBackdrop` | The page color with a rose glow from the top leading corner (300 pt) and a sage one from the top trailing corner (240 pt), peak 20 %. Only `ink`, `ink2` and `coralText` may sit on a glow (`BackdropContrastTests`); `roseText` links live lower, on the plain page color |
 
 Strings with arguments use a semantic key plus a default value, never `Text("key \(arg)")` (which looks up the key
 `key %@`): `LocalizedStringResource("home.greeting", defaultValue: "Good morning, \(name)")`, with
@@ -166,9 +172,27 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 
 | Screen | Folder | ViewModel | Identifiers |
 |---|---|---|---|
-| Root (state gate) | `Screens/Main/RootView` | none | none |
-| Main (tab shell) | `Screens/Main/MainView` | none | `main.tab.home` |
-| Home (scaffold placeholder, replaced in S6) | `Screens/Home/HomeView` | none, presentation-only | `home.greeting` |
+| Root (state gate) | `Screens/Main/RootView` | `RootViewModel` | none |
+| Main (five-tab shell) | `Screens/Main/MainView` | none | none (the system tab bar does not pass identifiers to its buttons; UI tests find tabs by position) |
+| 1.1 Welcome | `Screens/Welcome/WelcomeView` | none | `welcome.tagline`, `welcome.getStartedButton`, `welcome.signInButton` |
+| 1.2 SignIn | `Screens/SignIn/SignInView` | `SignInViewModel` | `signIn.title`, `signIn.phoneField`, `signIn.countryMenu`, `signIn.sendButton`, `signIn.codeField`, `signIn.verifyButton`, `signIn.resendButton`, `signIn.differentNumberButton`, `signIn.switchModeButton`, `signIn.backButton`, `signIn.error`, `signIn.phoneError` |
+| Setup (1.3 to 1.10) | `Screens/Onboarding/OnboardingView` (+ `SetupView`) | `OnboardingViewModel` | `onboarding.<step>.title`, `onboarding.<step>.continueButton`, `onboarding.backButton` |
+| About you (new, S3) | `Steps/AboutStepView` | shared | `onboarding.about.nameField`, `onboarding.about.businessField` |
+| 1.3 Profession | `Steps/ProfessionStepView` | shared | `onboarding.profession.choice.<id>` |
+| 1.4 Services | `Steps/ServicesStepView` | shared | `onboarding.services.choice.<key>`, `onboarding.services.custom.<id>`, `onboarding.services.addCustomButton` |
+| 1.5 CustomService (sheet) | `Onboarding/CustomServiceSheet` | local `@State` | `customService.nameField`, `categoryField`, `priceField`, `durationMenu`, `followUp.<weeks>`, `photosToggle`, `aftercareToggle`, `addButton`, `cancelButton` |
+| 1.6 Terminology | `Steps/TerminologyStepView` + `AddNameSheet` | shared | `onboarding.terminology.term.<id>`, `onboarding.terminology.addButton`, `addName.*` |
+| 1.7 Tags | `Steps/TagsStepView` | shared | `onboarding.tags.choice.<key>`, `onboarding.tags.newButton` |
+| 1.8 Record | `Steps/RecordStepView` | shared | `onboarding.record.profession.<id>`, `onboarding.record.field.<key>`, `onboarding.record.intake.<item>` |
+| 1.9 Permissions | `Steps/PermissionsStepView` | none (reads `PermissionService`) | `onboarding.permissions.title`, `allowButton`, `notNowButton`, `continueButton` |
+| 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
+| 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
+| 2.1 Home (placeholder, S6) | `Screens/Home/HomeView` | none, presentation-only | `home.greeting`, `home.empty` |
+| 2.2 Clients (placeholder, S4) | `Screens/Clients/ClientsView` | none | `clients.empty` |
+| 2.3 Calendar (placeholder, S6) | `Screens/Calendar/CalendarView` | none | `calendar.empty` |
+| 2.4 Alerts (placeholder, S8) | `Screens/Alerts/AlertsView` | none | `alerts.empty` |
+| 2.5 More | `Screens/More/MoreView` | none | `more.profileCard`, `more.lockNowButton`, `more.signOutButton`, `more.signOutConfirmButton` |
+| Privacy cover, storage unavailable | `Screens/Main/PrivacyCover`, `StorageUnavailableView` | none | `storage.unavailable` |
 | Design Catalog (DEBUG) | `DesignSystem/Catalog/` | none | `catalog.*` |
 
 The 97 screens and their stages are in `docs/PROGRESS.md` (traceability table).
@@ -176,18 +200,43 @@ The 97 screens and their stages are in `docs/PROGRESS.md` (traceability table).
 ## Navigation tree
 
 ```
-RootView (state gate: onboarding → login → setup → locked → app; only "app" exists)
+RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → app)
 ├── DesignCatalogView (DEBUG, -designCatalog)
-└── MainView (TabView)
-    └── Home tab → NavigationStack → HomeView
+├── WelcomeView ── Get started / Sign in ──▶ SignInView (create | existing)
+├── SetupView → OnboardingView: About → Profession → Services (sheet: CustomService) → Terminology (sheet: AddName)
+│                → Tags → Record → Permissions → Ready
+├── LockedView
+└── MainView (TabView, five tabs, each with its own NavigationStack)
+    ├── Home      → HomeView
+    ├── Clients   → ClientsView (title = the term she chose)
+    ├── Calendar  → CalendarView
+    ├── Alerts    → AlertsView
+    └── More      → MoreView (profile card, Lock now, Sign out)
 ```
 
-Five tabs arrive in S3 (Home, Clients, Calendar, Alerts, More). Secondary flows are sheets. Celebrations and media
-viewers are `fullScreenCover`.
+The scene being inactive puts `PrivacyCover` over everything (the app switcher shows the brand, never a client).
+Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`.
+
+### Changes from the prototype (S3)
+
+- **About you** is a new first step (name and optional business name): the prototype greets her by name but never asks.
+- **Sign-in** has no "Use email instead": the professional signs in with a phone code only (D3). "Get started" opens the
+  same screen with a "Create your workspace" heading; the bottom link switches between creating and signing in.
+- **Terminology** asks what she calls the people she serves (client, patient, student, guest) above the names list,
+  because `docs/07` section 4 puts that choice here; the prototype only shows the names.
+- **Progress** is six segments (About to Record) instead of four.
+- **Ready** shows the booking link as "Ready once you go online": the link needs the server (S8). The import shortcut is
+  hidden until the import screen exists (S4).
+- **Tabs** that have no data yet show an honest empty state without a button; **More** shows the profile card and the two
+  actions that work (Lock now, Sign out). Sign-out moves to Account in S10.
+- The prototype's custom permission dialogs are the system's own; the page before each one is ours.
 
 ## Empty, loading and error states
 
-Home has no data, so none apply yet. Each screen that loads data defines all three before it ships: a loading
+Home, Clients, Calendar and Alerts have no data yet, so each shows its empty state (`EmptyState`, no button until
+there is something to do). The Locked screen has an error state (`InlineNotice`): the face did not match, or this
+phone has no key for her records. A vault that cannot be opened shows `StorageUnavailableView` and never offers to
+erase anything. Each screen that loads data defines all three before it ships: a loading
 state (`Skeleton`), an empty state with the next action (`EmptyState`), and an error state with a retry. Offline
 is a normal state: `OfflineBanner` informs and never blocks.
 

@@ -42,6 +42,12 @@ reviewer starts from the right places and nobody mistakes a draft for a finished
    (owner decisions D40 and D41). Legal terms in Hindi, Arabic, Turkish and Indonesian especially need a local pass.
 10. **Apple requirements.** The App Store needs a privacy policy URL (`{{WEB_BASE_URL}}/privacy`), in-app account
     deletion (planned in S3), and accurate App Privacy answers (`docs/16-MARKETS.md`).
+11. **Gendered forms.** The drafts address the professional in the feminine where the noun allows it ("la profesional",
+    "a profissional") and, in es, it, fr, de and pt, often the client too ("clienta", "cliente", "Kundin"). The app's own
+    strings follow the glossary instead (neutral: "cliente", "Kundschaft"). A pass should make the legal drafts match the
+    glossary, or the owner should decide that the legal texts keep the feminine, as the typical user does.
+12. **Turkish.** "uygulama" means both "app" and "treatment"; the drafts use "işlem" for a treatment and keep "uygulama"
+    for the app. Check the other languages for the same kind of overlap.
 
 <!-- table:start -->
 | Document | Localization | Region set | Version | Status | Framework |

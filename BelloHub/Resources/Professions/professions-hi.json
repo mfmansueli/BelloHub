@@ -1,0 +1,1202 @@
+{
+ "localization": "hi",
+ "status": "needs_review",
+ "professions": [
+  {
+   "id": "esthetician",
+   "name": "एस्थेटीशियन",
+   "plural": "एस्थेटीशियन",
+   "services": [
+    {
+     "key": "esthetician.glow",
+     "name": "ग्लो फ़ेशियल",
+     "category": "फ़ेशियल",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.deep",
+     "name": "डीप क्लींज़िंग",
+     "category": "फ़ेशियल",
+     "minutes": 75,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.hydra",
+     "name": "हाइड्रेटिंग फ़ेशियल",
+     "category": "फ़ेशियल",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.acne",
+     "name": "एक्ने ट्रीटमेंट",
+     "category": "फ़ेशियल",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.peel",
+     "name": "केमिकल पील",
+     "category": "फ़ेशियल",
+     "minutes": 45,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.needle",
+     "name": "माइक्रोनीडलिंग",
+     "category": "फ़ेशियल",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "esthetician.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "esthetician.sensitiveSkin",
+     "name": "संवेदनशील त्वचा",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "esthetician.bridal",
+     "name": "दुल्हन",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "esthetician.acneProne",
+     "name": "मुहांसों वाली त्वचा",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "esthetician.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "esthetician.firstVisit",
+     "name": "पहली विज़िट",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "esthetician.skinCondition",
+     "name": "त्वचा की स्थिति",
+     "on": true
+    },
+    {
+     "key": "esthetician.areas",
+     "name": "हिस्से",
+     "on": true
+    },
+    {
+     "key": "esthetician.products",
+     "name": "प्रोडक्ट और एक्टिव्स",
+     "on": true
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "प्रोटोकॉल",
+     "on": true
+    },
+    {
+     "key": "esthetician.technique",
+     "name": "तकनीक",
+     "on": false
+    },
+    {
+     "key": "esthetician.reaction",
+     "name": "प्रतिक्रिया",
+     "on": true
+    },
+    {
+     "key": "esthetician.result",
+     "name": "नतीजा",
+     "on": true
+    },
+    {
+     "key": "esthetician.aftercare",
+     "name": "बाद की देखभाल",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "hair",
+   "name": "हेयर स्टाइलिस्ट",
+   "plural": "हेयर स्टाइलिस्ट",
+   "services": [
+    {
+     "key": "hair.cut",
+     "name": "हेयरकट",
+     "category": "बाल",
+     "minutes": 45,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "hair.color",
+     "name": "हेयर कलर",
+     "category": "बाल",
+     "minutes": 120,
+     "followUpWeeks": 8,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "hair.highlights",
+     "name": "हाइलाइट्स",
+     "category": "बाल",
+     "minutes": 180,
+     "followUpWeeks": 10,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "hair.treatment",
+     "name": "हेयर ट्रीटमेंट",
+     "category": "बाल",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.blowdry",
+     "name": "ब्लो-ड्राई",
+     "category": "बाल",
+     "minutes": 40,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.styling",
+     "name": "हेयर स्टाइलिंग",
+     "category": "बाल",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "hair.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "hair.sensitiveScalp",
+     "name": "संवेदनशील स्कैल्प",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "hair.blonde",
+     "name": "ब्लॉन्ड बाल",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "hair.curlyHair",
+     "name": "घुंघराले बाल",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.bridal",
+     "name": "दुल्हन",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    }
+   ],
+   "fields": [
+    {
+     "key": "hair.hairCondition",
+     "name": "बालों की स्थिति",
+     "on": true
+    },
+    {
+     "key": "hair.previousColor",
+     "name": "पिछला रंग",
+     "on": true
+    },
+    {
+     "key": "hair.formula",
+     "name": "फ़ॉर्मूला",
+     "on": true
+    },
+    {
+     "key": "hair.developer",
+     "name": "डेवलपर",
+     "on": true
+    },
+    {
+     "key": "hair.technique",
+     "name": "तकनीक",
+     "on": true
+    },
+    {
+     "key": "hair.processingTime",
+     "name": "प्रोसेसिंग समय",
+     "on": true
+    },
+    {
+     "key": "hair.products",
+     "name": "प्रोडक्ट",
+     "on": false
+    },
+    {
+     "key": "hair.result",
+     "name": "नतीजा",
+     "on": true
+    },
+    {
+     "key": "hair.preferences",
+     "name": "पसंद",
+     "on": true
+    }
+   ],
+   "intake": [
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "lash",
+   "name": "लैश आर्टिस्ट",
+   "plural": "लैश आर्टिस्ट",
+   "services": [
+    {
+     "key": "lash.classic",
+     "name": "क्लासिक लैश एक्सटेंशन",
+     "category": "पलकें",
+     "minutes": 120,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.hybrid",
+     "name": "हाइब्रिड लैश एक्सटेंशन",
+     "category": "पलकें",
+     "minutes": 135,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.volume",
+     "name": "वॉल्यूम लैश एक्सटेंशन",
+     "category": "पलकें",
+     "minutes": 150,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.lift",
+     "name": "लैश लिफ़्ट",
+     "category": "पलकें",
+     "minutes": 60,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.refill",
+     "name": "रिफ़िल",
+     "category": "पलकें",
+     "minutes": 75,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.removal",
+     "name": "लैश हटवाना",
+     "category": "पलकें",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "lash.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "lash.sensitiveEyes",
+     "name": "संवेदनशील आँखें",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "lash.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "lash.bridal",
+     "name": "दुल्हन",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "lash.contactLenses",
+     "name": "कॉन्टैक्ट लेंस",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "lash.firstSet",
+     "name": "पहला सेट",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "lash.set",
+     "name": "सेट",
+     "on": true
+    },
+    {
+     "key": "lash.curl",
+     "name": "कर्ल",
+     "on": true
+    },
+    {
+     "key": "lash.length",
+     "name": "लंबाई",
+     "on": true
+    },
+    {
+     "key": "lash.thickness",
+     "name": "मोटाई",
+     "on": true
+    },
+    {
+     "key": "lash.mapping",
+     "name": "मैपिंग",
+     "on": true
+    },
+    {
+     "key": "lash.adhesive",
+     "name": "ग्लू",
+     "on": true
+    },
+    {
+     "key": "lash.retention",
+     "name": "टिकाऊपन",
+     "on": true
+    },
+    {
+     "key": "lash.preferences",
+     "name": "पसंद",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "nail",
+   "name": "नेल आर्टिस्ट",
+   "plural": "नेल आर्टिस्ट",
+   "services": [
+    {
+     "key": "nail.manicure",
+     "name": "मैनीक्योर",
+     "category": "नाखून",
+     "minutes": 45,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.pedicure",
+     "name": "पेडिक्योर",
+     "category": "नाखून",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.gel",
+     "name": "जेल पॉलिश",
+     "category": "नाखून",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "nail.extension",
+     "name": "नेल एक्सटेंशन",
+     "category": "नाखून",
+     "minutes": 90,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.art",
+     "name": "नेल आर्ट",
+     "category": "नाखून",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.removal",
+     "name": "पॉलिश हटवाना",
+     "category": "नाखून",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "nail.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "nail.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "nail.bridal",
+     "name": "दुल्हन",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "nail.gelLover",
+     "name": "जेल पसंद",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "nail.brittleNails",
+     "name": "कमज़ोर नाखून",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "nail.firstVisit",
+     "name": "पहली विज़िट",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "nail.nailCondition",
+     "name": "नाखूनों की स्थिति",
+     "on": true
+    },
+    {
+     "key": "nail.shape",
+     "name": "आकार",
+     "on": true
+    },
+    {
+     "key": "nail.length",
+     "name": "लंबाई",
+     "on": true
+    },
+    {
+     "key": "nail.color",
+     "name": "रंग",
+     "on": true
+    },
+    {
+     "key": "nail.productSystem",
+     "name": "प्रोडक्ट सिस्टम",
+     "on": true
+    },
+    {
+     "key": "nail.technique",
+     "name": "तकनीक",
+     "on": false
+    },
+    {
+     "key": "nail.durability",
+     "name": "टिकाऊपन",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "makeup",
+   "name": "मेकअप आर्टिस्ट",
+   "plural": "मेकअप आर्टिस्ट",
+   "services": [
+    {
+     "key": "makeup.social",
+     "name": "सोशल मेकअप",
+     "category": "मेकअप",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "ब्राइडल मेकअप",
+     "category": "मेकअप",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.event",
+     "name": "इवेंट मेकअप",
+     "category": "मेकअप",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.editorial",
+     "name": "एडिटोरियल मेकअप",
+     "category": "मेकअप",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.trial",
+     "name": "ट्रायल मेकअप",
+     "category": "मेकअप",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.lesson",
+     "name": "मेकअप क्लास",
+     "category": "मेकअप",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "makeup.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "दुल्हन",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "makeup.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "makeup.eventClient",
+     "name": "इवेंट",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "makeup.sensitiveSkin",
+     "name": "संवेदनशील त्वचा",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "makeup.event",
+     "name": "इवेंट",
+     "on": true
+    },
+    {
+     "key": "makeup.look",
+     "name": "लुक",
+     "on": true
+    },
+    {
+     "key": "makeup.skinPrep",
+     "name": "त्वचा की तैयारी",
+     "on": false
+    },
+    {
+     "key": "makeup.foundation",
+     "name": "फ़ाउंडेशन",
+     "on": true
+    },
+    {
+     "key": "makeup.shade",
+     "name": "शेड",
+     "on": true
+    },
+    {
+     "key": "makeup.products",
+     "name": "प्रोडक्ट",
+     "on": true
+    },
+    {
+     "key": "makeup.preferences",
+     "name": "पसंद",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  },
+  {
+   "id": "tattoo",
+   "name": "टैटू / PMU",
+   "plural": "टैटू और PMU आर्टिस्ट",
+   "services": [
+    {
+     "key": "tattoo.brows",
+     "name": "माइक्रोब्लेडिंग",
+     "category": "टैटू और PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.ombre",
+     "name": "ओम्ब्रे आइब्रो",
+     "category": "टैटू और PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.lips",
+     "name": "लिप ब्लश",
+     "category": "टैटू और PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.eyeliner",
+     "name": "आईलाइनर",
+     "category": "टैटू और PMU",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.touchup",
+     "name": "टच-अप",
+     "category": "टैटू और PMU",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.small",
+     "name": "छोटा टैटू",
+     "category": "टैटू और PMU",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "tattoo.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "tattoo.firstTime",
+     "name": "पहला टैटू",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "tattoo.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "tattoo.sensitiveSkin",
+     "name": "संवेदनशील त्वचा",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "tattoo.referral",
+     "name": "रेफ़रल",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "tattoo.design",
+     "name": "डिज़ाइन",
+     "on": true
+    },
+    {
+     "key": "tattoo.placement",
+     "name": "जगह",
+     "on": true
+    },
+    {
+     "key": "tattoo.technique",
+     "name": "तकनीक",
+     "on": true
+    },
+    {
+     "key": "tattoo.pigments",
+     "name": "पिगमेंट",
+     "on": true
+    },
+    {
+     "key": "tattoo.tools",
+     "name": "औज़ार और सामग्री",
+     "on": true
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "सेशन नंबर",
+     "on": true
+    },
+    {
+     "key": "tattoo.healing",
+     "name": "हीलिंग",
+     "on": true
+    },
+    {
+     "key": "tattoo.followUp",
+     "name": "फ़ॉलो-अप",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "barber",
+   "name": "बार्बर",
+   "plural": "बार्बर",
+   "services": [
+    {
+     "key": "barber.cut",
+     "name": "हेयरकट",
+     "category": "बार्बर",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.beard",
+     "name": "दाढ़ी ट्रिम",
+     "category": "बार्बर",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.combo",
+     "name": "हेयरकट और दाढ़ी",
+     "category": "बार्बर",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.fade",
+     "name": "फ़ेड",
+     "category": "बार्बर",
+     "minutes": 40,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.shave",
+     "name": "गर्म तौलिये से शेव",
+     "category": "बार्बर",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "बच्चों का हेयरकट",
+     "category": "बार्बर",
+     "minutes": 25,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "barber.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "barber.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "barber.beardCare",
+     "name": "दाढ़ी की देखभाल",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "बच्चे",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "barber.walkIn",
+     "name": "बिना अपॉइंटमेंट",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "barber.sensitiveSkin",
+     "name": "संवेदनशील त्वचा",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "barber.cut",
+     "name": "कट",
+     "on": true
+    },
+    {
+     "key": "barber.guards",
+     "name": "गार्ड साइज़",
+     "on": true
+    },
+    {
+     "key": "barber.fade",
+     "name": "फ़ेड",
+     "on": true
+    },
+    {
+     "key": "barber.beard",
+     "name": "दाढ़ी",
+     "on": true
+    },
+    {
+     "key": "barber.products",
+     "name": "प्रोडक्ट",
+     "on": false
+    },
+    {
+     "key": "barber.preferences",
+     "name": "पसंद",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "massage",
+   "name": "मसाज / वेलनेस",
+   "plural": "मसाज और वेलनेस थेरेपिस्ट",
+   "services": [
+    {
+     "key": "massage.relax",
+     "name": "रिलैक्सिंग मसाज",
+     "category": "मसाज",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.deep",
+     "name": "डीप टिशू मसाज",
+     "category": "मसाज",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.lymph",
+     "name": "लिम्फैटिक ड्रेनेज",
+     "category": "मसाज",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.hotstone",
+     "name": "हॉट स्टोन मसाज",
+     "category": "मसाज",
+     "minutes": 75,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.reflex",
+     "name": "फ़ुट रिफ़्लेक्सोलॉजी",
+     "category": "मसाज",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.sports",
+     "name": "स्पोर्ट्स मसाज",
+     "category": "मसाज",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "massage.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "massage.athlete",
+     "name": "खिलाड़ी",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "massage.firstVisit",
+     "name": "पहली विज़िट",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.lightPressure",
+     "name": "हल्का दबाव",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "massage.firmPressure",
+     "name": "तेज़ दबाव",
+     "color": "sand",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "massage.focusAreas",
+     "name": "फ़ोकस वाले हिस्से",
+     "on": true
+    },
+    {
+     "key": "massage.pressure",
+     "name": "दबाव",
+     "on": true
+    },
+    {
+     "key": "massage.technique",
+     "name": "तकनीक",
+     "on": true
+    },
+    {
+     "key": "massage.oils",
+     "name": "तेल और प्रोडक्ट",
+     "on": false
+    },
+    {
+     "key": "massage.contraindications",
+     "name": "मना किए गए मामले",
+     "on": true
+    },
+    {
+     "key": "massage.result",
+     "name": "नतीजा",
+     "on": true
+    },
+    {
+     "key": "massage.homeCare",
+     "name": "घर पर देखभाल",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "other",
+   "name": "अन्य",
+   "plural": "प्रोफ़ेशनल",
+   "services": [
+    {
+     "key": "other.consult",
+     "name": "परामर्श",
+     "category": "सेवाएँ",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.session",
+     "name": "सेशन",
+     "category": "सेवाएँ",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.followup",
+     "name": "फ़ॉलो-अप",
+     "category": "सेवाएँ",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "other.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "other.regular",
+     "name": "नियमित ग्राहक",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "other.firstVisit",
+     "name": "पहली विज़िट",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "other.notes",
+     "name": "नोट्स",
+     "on": true
+    },
+    {
+     "key": "other.result",
+     "name": "नतीजा",
+     "on": true
+    },
+    {
+     "key": "other.nextSteps",
+     "name": "अगले कदम",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  }
+ ]
+}

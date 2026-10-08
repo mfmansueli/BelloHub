@@ -1,0 +1,50 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "onb.about.region",
+   "Setup step 1: the country or region she works in.",
+   "Where do you work?",
+   "Onde você trabalha?",
+   "Onde trabalha?",
+   "¿Dónde trabajas?",
+   "¿Dónde trabajas?",
+   "Dove lavori?",
+   "Où travaillez-vous ?",
+   "Wo arbeiten Sie?",
+   "Nerede çalışıyorsunuz?",
+   "Di mana Anda bekerja?",
+   "आप कहाँ काम करते हैं?",
+   "أين تعمل؟"
+  ],
+  [
+   "onb.about.regionHint",
+   "Under the region menu.",
+   "This sets your currency and time zone. You can change it later.",
+   "Isso define a sua moeda e o seu fuso horário. Você pode mudar depois.",
+   "Isto define a sua moeda e o seu fuso horário. Pode alterar mais tarde.",
+   "Esto define tu moneda y tu zona horaria. Puedes cambiarlo después.",
+   "Esto define tu moneda y tu zona horaria. Puedes cambiarlo después.",
+   "Questo imposta la tua valuta e il tuo fuso orario. Puoi cambiarlo in seguito.",
+   "Cela définit votre devise et votre fuseau horaire. Vous pourrez le modifier plus tard.",
+   "Das legt Ihre Währung und Ihre Zeitzone fest. Sie können es später ändern.",
+   "Bu, para biriminizi ve saat diliminizi belirler. Daha sonra değiştirebilirsiniz.",
+   "Ini menentukan mata uang dan zona waktu Anda. Anda dapat mengubahnya nanti.",
+   "इससे आपकी मुद्रा और टाइम ज़ोन तय होता है। आप इसे बाद में बदल सकते हैं।",
+   "يحدد هذا عملتك ومنطقتك الزمنية. يمكنك تغييره لاحقًا."
+  ]
+ ]
+}

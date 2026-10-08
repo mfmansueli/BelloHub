@@ -15,17 +15,24 @@ case "${1:-full}" in
         ;;
 esac
 
-# Strings, privacy and legal-draft gates are cheap, so they run before the simulator does (docs/13-TESTING-QUALITY.md).
+# The cheap gates (strings, privacy, legal drafts, profession catalogs) run before the simulator does
+# (docs/13-TESTING-QUALITY.md).
 if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-strings.sh" > /dev/null
     "$ROOT/scripts/check-privacy.sh" > /dev/null
     "$ROOT/scripts/check-legal-status.sh" > /dev/null
+    "$ROOT/scripts/check-professions.sh" > /dev/null
 fi
 
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).
 destination="$(simulator_destination)"
 
+# ONLY_TESTING=BelloHubUITests/OnboardingAuditUITests runs one suite (or one test) of the plan, to iterate on a failure.
+only_testing=()
+if [[ -n "${ONLY_TESTING:-}" ]]; then only_testing=(-only-testing:"$ONLY_TESTING"); fi
+
 run_xcodebuild "test-$plan" test \
     -scheme BelloHub \
     -testPlan "$plan" \
-    -destination "$destination"
+    -destination "$destination" \
+    ${only_testing[@]+"${only_testing[@]}"}

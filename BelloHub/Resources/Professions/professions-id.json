@@ -1,0 +1,1202 @@
+{
+ "localization": "id",
+ "status": "needs_review",
+ "professions": [
+  {
+   "id": "esthetician",
+   "name": "Estetisi",
+   "plural": "estetisi",
+   "services": [
+    {
+     "key": "esthetician.glow",
+     "name": "Glow Facial",
+     "category": "Perawatan Wajah",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.deep",
+     "name": "Pembersihan Mendalam",
+     "category": "Perawatan Wajah",
+     "minutes": 75,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.hydra",
+     "name": "Facial Melembapkan",
+     "category": "Perawatan Wajah",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.acne",
+     "name": "Perawatan Jerawat",
+     "category": "Perawatan Wajah",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.peel",
+     "name": "Peeling Kimia",
+     "category": "Perawatan Wajah",
+     "minutes": 45,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.needle",
+     "name": "Microneedling",
+     "category": "Perawatan Wajah",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "esthetician.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "esthetician.sensitiveSkin",
+     "name": "Kulit Sensitif",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "esthetician.bridal",
+     "name": "Pengantin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "esthetician.acneProne",
+     "name": "Kulit Berjerawat",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "esthetician.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "esthetician.firstVisit",
+     "name": "Kunjungan Pertama",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "esthetician.skinCondition",
+     "name": "Kondisi kulit",
+     "on": true
+    },
+    {
+     "key": "esthetician.areas",
+     "name": "Area",
+     "on": true
+    },
+    {
+     "key": "esthetician.products",
+     "name": "Produk dan bahan aktif",
+     "on": true
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Protokol",
+     "on": true
+    },
+    {
+     "key": "esthetician.technique",
+     "name": "Teknik",
+     "on": false
+    },
+    {
+     "key": "esthetician.reaction",
+     "name": "Reaksi",
+     "on": true
+    },
+    {
+     "key": "esthetician.result",
+     "name": "Hasil",
+     "on": true
+    },
+    {
+     "key": "esthetician.aftercare",
+     "name": "Perawatan lanjutan",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "hair",
+   "name": "Penata rambut",
+   "plural": "penata rambut",
+   "services": [
+    {
+     "key": "hair.cut",
+     "name": "Potong Rambut",
+     "category": "Rambut",
+     "minutes": 45,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "hair.color",
+     "name": "Pewarnaan",
+     "category": "Rambut",
+     "minutes": 120,
+     "followUpWeeks": 8,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "hair.highlights",
+     "name": "Highlight",
+     "category": "Rambut",
+     "minutes": 180,
+     "followUpWeeks": 10,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "hair.treatment",
+     "name": "Perawatan Rambut",
+     "category": "Rambut",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.blowdry",
+     "name": "Blow Dry",
+     "category": "Rambut",
+     "minutes": 40,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.styling",
+     "name": "Penataan Rambut",
+     "category": "Rambut",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "hair.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "hair.sensitiveScalp",
+     "name": "Kulit Kepala Sensitif",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "hair.blonde",
+     "name": "Rambut Pirang",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "hair.curlyHair",
+     "name": "Rambut Keriting",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.bridal",
+     "name": "Pengantin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    }
+   ],
+   "fields": [
+    {
+     "key": "hair.hairCondition",
+     "name": "Kondisi rambut",
+     "on": true
+    },
+    {
+     "key": "hair.previousColor",
+     "name": "Warna sebelumnya",
+     "on": true
+    },
+    {
+     "key": "hair.formula",
+     "name": "Formula",
+     "on": true
+    },
+    {
+     "key": "hair.developer",
+     "name": "Developer",
+     "on": true
+    },
+    {
+     "key": "hair.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "hair.processingTime",
+     "name": "Waktu proses",
+     "on": true
+    },
+    {
+     "key": "hair.products",
+     "name": "Produk",
+     "on": false
+    },
+    {
+     "key": "hair.result",
+     "name": "Hasil",
+     "on": true
+    },
+    {
+     "key": "hair.preferences",
+     "name": "Preferensi",
+     "on": true
+    }
+   ],
+   "intake": [
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "lash",
+   "name": "Lash artist",
+   "plural": "lash artist",
+   "services": [
+    {
+     "key": "lash.classic",
+     "name": "Eyelash Extension Klasik",
+     "category": "Bulu Mata",
+     "minutes": 120,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.hybrid",
+     "name": "Eyelash Extension Hybrid",
+     "category": "Bulu Mata",
+     "minutes": 135,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.volume",
+     "name": "Eyelash Extension Volume",
+     "category": "Bulu Mata",
+     "minutes": 150,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.lift",
+     "name": "Lash Lift",
+     "category": "Bulu Mata",
+     "minutes": 60,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.refill",
+     "name": "Refill",
+     "category": "Bulu Mata",
+     "minutes": 75,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.removal",
+     "name": "Pelepasan",
+     "category": "Bulu Mata",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "lash.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "lash.sensitiveEyes",
+     "name": "Mata Sensitif",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "lash.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "lash.bridal",
+     "name": "Pengantin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "lash.contactLenses",
+     "name": "Memakai Lensa Kontak",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "lash.firstSet",
+     "name": "Set Pertama",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "lash.set",
+     "name": "Set",
+     "on": true
+    },
+    {
+     "key": "lash.curl",
+     "name": "Lengkungan",
+     "on": true
+    },
+    {
+     "key": "lash.length",
+     "name": "Panjang",
+     "on": true
+    },
+    {
+     "key": "lash.thickness",
+     "name": "Ketebalan",
+     "on": true
+    },
+    {
+     "key": "lash.mapping",
+     "name": "Pemetaan",
+     "on": true
+    },
+    {
+     "key": "lash.adhesive",
+     "name": "Lem",
+     "on": true
+    },
+    {
+     "key": "lash.retention",
+     "name": "Daya tahan",
+     "on": true
+    },
+    {
+     "key": "lash.preferences",
+     "name": "Preferensi",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "nail",
+   "name": "Nail artist",
+   "plural": "nail artist",
+   "services": [
+    {
+     "key": "nail.manicure",
+     "name": "Manikur",
+     "category": "Kuku",
+     "minutes": 45,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.pedicure",
+     "name": "Pedikur",
+     "category": "Kuku",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.gel",
+     "name": "Cat Kuku Gel",
+     "category": "Kuku",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "nail.extension",
+     "name": "Perpanjangan Kuku",
+     "category": "Kuku",
+     "minutes": 90,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.art",
+     "name": "Nail Art",
+     "category": "Kuku",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.removal",
+     "name": "Pelepasan",
+     "category": "Kuku",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "nail.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "nail.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "nail.bridal",
+     "name": "Pengantin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "nail.gelLover",
+     "name": "Penyuka Gel",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "nail.brittleNails",
+     "name": "Kuku Rapuh",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "nail.firstVisit",
+     "name": "Kunjungan Pertama",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "nail.nailCondition",
+     "name": "Kondisi kuku",
+     "on": true
+    },
+    {
+     "key": "nail.shape",
+     "name": "Bentuk",
+     "on": true
+    },
+    {
+     "key": "nail.length",
+     "name": "Panjang",
+     "on": true
+    },
+    {
+     "key": "nail.color",
+     "name": "Warna",
+     "on": true
+    },
+    {
+     "key": "nail.productSystem",
+     "name": "Sistem produk",
+     "on": true
+    },
+    {
+     "key": "nail.technique",
+     "name": "Teknik",
+     "on": false
+    },
+    {
+     "key": "nail.durability",
+     "name": "Daya tahan",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "makeup",
+   "name": "Penata rias",
+   "plural": "penata rias",
+   "services": [
+    {
+     "key": "makeup.social",
+     "name": "Rias Harian",
+     "category": "Rias",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Rias Pengantin",
+     "category": "Rias",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.event",
+     "name": "Rias Acara",
+     "category": "Rias",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.editorial",
+     "name": "Rias Editorial",
+     "category": "Rias",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.trial",
+     "name": "Uji Coba Rias",
+     "category": "Rias",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.lesson",
+     "name": "Kelas Rias",
+     "category": "Rias",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "makeup.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Pengantin",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "makeup.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "makeup.eventClient",
+     "name": "Acara",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "makeup.sensitiveSkin",
+     "name": "Kulit Sensitif",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "makeup.event",
+     "name": "Acara",
+     "on": true
+    },
+    {
+     "key": "makeup.look",
+     "name": "Tampilan",
+     "on": true
+    },
+    {
+     "key": "makeup.skinPrep",
+     "name": "Persiapan kulit",
+     "on": false
+    },
+    {
+     "key": "makeup.foundation",
+     "name": "Foundation",
+     "on": true
+    },
+    {
+     "key": "makeup.shade",
+     "name": "Warna",
+     "on": true
+    },
+    {
+     "key": "makeup.products",
+     "name": "Produk",
+     "on": true
+    },
+    {
+     "key": "makeup.preferences",
+     "name": "Preferensi",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  },
+  {
+   "id": "tattoo",
+   "name": "Tato / PMU",
+   "plural": "seniman tato dan PMU",
+   "services": [
+    {
+     "key": "tattoo.brows",
+     "name": "Microblading",
+     "category": "Tato dan PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.ombre",
+     "name": "Alis Ombre",
+     "category": "Tato dan PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.lips",
+     "name": "Lip Blush",
+     "category": "Tato dan PMU",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.eyeliner",
+     "name": "Eyeliner",
+     "category": "Tato dan PMU",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.touchup",
+     "name": "Sulam Ulang",
+     "category": "Tato dan PMU",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.small",
+     "name": "Tato Kecil",
+     "category": "Tato dan PMU",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "tattoo.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "tattoo.firstTime",
+     "name": "Tato Pertama",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "tattoo.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "tattoo.sensitiveSkin",
+     "name": "Kulit Sensitif",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "tattoo.referral",
+     "name": "Rekomendasi",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "tattoo.design",
+     "name": "Desain",
+     "on": true
+    },
+    {
+     "key": "tattoo.placement",
+     "name": "Lokasi",
+     "on": true
+    },
+    {
+     "key": "tattoo.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "tattoo.pigments",
+     "name": "Pigmen",
+     "on": true
+    },
+    {
+     "key": "tattoo.tools",
+     "name": "Alat dan bahan",
+     "on": true
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Nomor sesi",
+     "on": true
+    },
+    {
+     "key": "tattoo.healing",
+     "name": "Penyembuhan",
+     "on": true
+    },
+    {
+     "key": "tattoo.followUp",
+     "name": "Tindak lanjut",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "barber",
+   "name": "Barber",
+   "plural": "barber",
+   "services": [
+    {
+     "key": "barber.cut",
+     "name": "Potong Rambut",
+     "category": "Barber",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.beard",
+     "name": "Rapikan Jenggot",
+     "category": "Barber",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.combo",
+     "name": "Potong dan Jenggot",
+     "category": "Barber",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.fade",
+     "name": "Fade",
+     "category": "Barber",
+     "minutes": 40,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.shave",
+     "name": "Cukur Handuk Hangat",
+     "category": "Barber",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Potong Rambut Anak",
+     "category": "Barber",
+     "minutes": 25,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "barber.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "barber.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "barber.beardCare",
+     "name": "Perawatan Jenggot",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Anak",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "barber.walkIn",
+     "name": "Tanpa Janji",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "barber.sensitiveSkin",
+     "name": "Kulit Sensitif",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "barber.cut",
+     "name": "Potongan",
+     "on": true
+    },
+    {
+     "key": "barber.guards",
+     "name": "Ukuran mesin",
+     "on": true
+    },
+    {
+     "key": "barber.fade",
+     "name": "Fade",
+     "on": true
+    },
+    {
+     "key": "barber.beard",
+     "name": "Jenggot",
+     "on": true
+    },
+    {
+     "key": "barber.products",
+     "name": "Produk",
+     "on": false
+    },
+    {
+     "key": "barber.preferences",
+     "name": "Preferensi",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "massage",
+   "name": "Pijat / Kebugaran",
+   "plural": "terapis pijat dan kebugaran",
+   "services": [
+    {
+     "key": "massage.relax",
+     "name": "Pijat Relaksasi",
+     "category": "Pijat",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.deep",
+     "name": "Pijat Jaringan Dalam",
+     "category": "Pijat",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.lymph",
+     "name": "Drainase Limfatik",
+     "category": "Pijat",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.hotstone",
+     "name": "Pijat Batu Panas",
+     "category": "Pijat",
+     "minutes": 75,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.reflex",
+     "name": "Refleksi Kaki",
+     "category": "Pijat",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.sports",
+     "name": "Pijat Olahraga",
+     "category": "Pijat",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "massage.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "massage.athlete",
+     "name": "Atlet",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "massage.firstVisit",
+     "name": "Kunjungan Pertama",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.lightPressure",
+     "name": "Tekanan Ringan",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "massage.firmPressure",
+     "name": "Tekanan Kuat",
+     "color": "sand",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "massage.focusAreas",
+     "name": "Area fokus",
+     "on": true
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Tekanan",
+     "on": true
+    },
+    {
+     "key": "massage.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "massage.oils",
+     "name": "Minyak dan produk",
+     "on": false
+    },
+    {
+     "key": "massage.contraindications",
+     "name": "Kontraindikasi",
+     "on": true
+    },
+    {
+     "key": "massage.result",
+     "name": "Hasil",
+     "on": true
+    },
+    {
+     "key": "massage.homeCare",
+     "name": "Perawatan di rumah",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "other",
+   "name": "Lainnya",
+   "plural": "profesional",
+   "services": [
+    {
+     "key": "other.consult",
+     "name": "Konsultasi",
+     "category": "Layanan",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.session",
+     "name": "Sesi",
+     "category": "Layanan",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.followup",
+     "name": "Tindak lanjut",
+     "category": "Layanan",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "other.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "other.regular",
+     "name": "Pelanggan Tetap",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "other.firstVisit",
+     "name": "Kunjungan Pertama",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "other.notes",
+     "name": "Catatan",
+     "on": true
+    },
+    {
+     "key": "other.result",
+     "name": "Hasil",
+     "on": true
+    },
+    {
+     "key": "other.nextSteps",
+     "name": "Langkah berikutnya",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  }
+ ]
+}

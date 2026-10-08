@@ -75,7 +75,7 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S3` (shell, onboarding, session, lock) · started: 2026-10-08 · branch: `build/v1` · `L` (legal drafts) is done, tag `stage-L`
+`S4` (clients and the client record) · started: 2026-10-08 · branch: `build/v1` · `L` (legal drafts) is done, tag `stage-L`; S3 is done
 
 ## Stage log
 One block per finished stage (newest last):
@@ -161,6 +161,33 @@ Findings worth keeping:
 Open questions: the operator identity (H17) fills `{{OPERATOR_NAME}}`, `{{OPERATOR_ADDRESS}}`, `{{OPERATOR_EMAIL}}`, `{{WEB_BASE_URL}}` and `{{EFFECTIVE_DATE}}`; until then the in-app screens must show these texts with the fields visibly pending in DEBUG and block the Release build (S11 gate).
 Human tasks created: none new; H17 now also covers the operator fields.
 
+### S3 · Shell, onboarding, session, lock · done 2026-10-08 · tag stage-S3
+Time: about 1 h 30 min of work (17:38 to about 19:10 by the machine clock, after plan item L), including a run on the owner's iPhone and three rounds of accessibility audit fixes.
+Done:
+- State gate: `RootView` over `RootGate` (welcome → sign-in → setup → locked → app), driven by `SessionService`, `AppLockService` and `DefaultsKey`; Services are `@State` at the root and distributed with `.environment`. `AppDependencies` builds the live set, or an in-memory set for UI tests.
+- Session: `AuthProvider` protocol, `SessionService`, `LocalDevAuthProvider` (DEBUG: any phone, code 123456), `UnconfiguredAuthProvider` (Release until S8). Phone sign-in screen with the country code menu, auto-verify on the sixth digit, a 30 second resend countdown and every error spoken.
+- Lock: `LockPolicy` (grace 0/30/60/300/900 s, default 60), `AppLockService` over `BiometricAuthenticating` (`LocalAuthentication`, device-owner policy so a failed face offers the passcode), the Locked screen (scrollable, auto-prompts once), `PrivacyCover` over everything while the scene is not active, the key cleared from memory on lock.
+- Vault additions: `BusinessRepository` (profile, tags, record template, and `saveOnboarding` that stores everything together) in the SwiftData and in-memory repositories, new `VaultKind`s `profile`, `tag`, `recordTemplate`; `VaultService`, `ProfileService`.
+- Onboarding: 8 steps in one `OnboardingViewModel` (About you with region, Profession, Services with the custom-service sheet, Terminology with the client term and her own names, Tags, Record fields and intake, Permissions, Ready), pure rules and builder in `Screens/Onboarding/Support/` (`OnboardingRules`, `OnboardingSuggestions`, `OnboardingBuilder`, `PriceInput`).
+- Profession catalog as data: `Resources/Professions/professions-<localization>.json` for the 14 localizations (9 professions; 51 services, 49 tags, 63 record fields each), `ProfessionCatalog` loader, `scripts/check-professions.sh` (runs in `test.sh`).
+- Shell: five tabs on the system `TabView` (Home, Clients titled with the term she chose, Calendar, Alerts, More), honest empty states, More with her profile card, Lock now and Sign out.
+- Design system: `BrandMark`, `BrandLockup`, `ChoiceCard`, `FlowLayout`, `StepProgressBar`, `ToggleRow`, `GlowBackdrop`, `Text.prompt`; `BelloTextField` gained `identifier`.
+- Strings: 167 new keys (212 in the catalog) in all 14 localizations (`s3-entry`, `s3-setup`, `s3-shell`, `s3-region`); usage descriptions for Face ID, microphone, camera and contacts localized in `InfoPlist.xcstrings`.
+- `scripts/run-device.sh` builds, installs and launches the Debug app on a paired iPhone; `scripts/test.sh` takes `ONLY_TESTING=<suite>`.
+Decisions/assumptions: ASSUMPTION-26 to ASSUMPTION-34; the Design additions table has six S3 rows.
+Deviations from the docs: the draft is not saved across a killed app (ASSUMPTION-28); the booking link and the import shortcut on Ready wait for S8 and S4; Sign out is in More until S10.
+Design additions: see the table below (About you, sign-in without email, terminology term, six-segment progress, Ready link, empty states).
+Measured: about 410 unit tests in 64 suites pass in about 2 s (S2 had 302 in 42); the fast and smoke plans pass; `scripts/check-warnings.sh` zero warnings (simulator, device, Release, test targets). Contrast measured by unit tests (the backdrop's strongest point for `ink`, `ink2` and `coralText`; `roseText` stays off the glow). Accessibility audit (clipped text and element descriptions) of every onboarding screen, Home, More and Locked in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX5: clean, with two documented false positives (Devanagari text and the phone field).
+Findings worth keeping:
+- Apple's `.contrast` audit flagged 14:1 buttons (shadow), disabled controls and 5:1 secondary text, so the audit suites skip it and contrast is measured exactly by the unit tests. It did find real problems: the system placeholder gray (about 2:1, now `Text.prompt` in `ink2`), the pale rose "hub" wordmark (2.4:1, now `roseText`) and `roseText` links on a glow (4.0:1; the glow is now small and `roseText` stays below it).
+- "Text may be clipped at larger Dynamic Type sizes" is the audit's way of saying a screen does not scroll: the Locked screen needed a `ScrollView` with a minimum height; `ViewThatFits` left an empty zero-size element at AX5, so adaptive rows use `FlowLayout` or `dynamicTypeSize.isAccessibilitySize`.
+- The system tab bar does not pass accessibility identifiers to its buttons: UI tests find tabs by position.
+- A confirmation dialog's button matches twice in XCUITest; use `.firstMatch`. `Wait.untilMain` is the helper for main-actor state.
+- Glossary rule applied to every UI string: neutral forms ("cliente", "Kundschaft"), no feminine plural. The legal drafts still use feminine forms in places (`legal/STATUS.md` point 11).
+- Turkish "uygulama" means both app and treatment; treatments are "işlem" in the app and in the legal drafts.
+Open questions: none new.
+Human tasks created: none.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -189,6 +216,15 @@ Human tasks created: none new; H17 now also covers the operator fields.
 | ASSUMPTION-23 | Concurrent edits of the same record on two devices resolve last-writer-wins for the whole record | One JSON value per record; the second device is usually idle; to be confirmed on two phones (spike checklist step 4) | S2 |
 | ASSUMPTION-24 | The legal texts are shipped as bundle resources and shown in the app by `textVersion` (the file name, `2026-10`); a change is a new file and each acceptance stores the version it accepted | Old versions must stay readable for the record, and consent is only meaningful for the exact text shown | L |
 | ASSUMPTION-25 | One text per localization serves every market that localization covers (for example `en-GB` for the United Kingdom, Ireland, Australia, New Zealand and South Africa; `de` for Germany, Austria and Switzerland; `ar` for Saudi Arabia and the UAE), with the regulators of each named inside | Fourteen localizations is the product's scope (D41); a text per country would be about 40 sets nobody can review | L |
+| ASSUMPTION-26 | The lock grace period defaults to 60 seconds (options 0, 30, 60, 300, 900); a cold launch always locks. The setting screen arrives with Privacy and security (S10); the key exists now (`lock.graceSeconds`) | A professional switching to WhatsApp and back must not be asked for her face every time, yet a borrowed phone must lock quickly | S3 |
+| ASSUMPTION-27 | The profile, tags and record template are stored in the clear in the vault (no sensitive keys): field and tag names, region and language are not clinical | `docs/05` lists tags among the unencrypted fields; what she writes in the fields is sealed in `TreatmentRecord` | S3 |
+| ASSUMPTION-28 | The setup draft is not saved across a killed app: the setup saves everything together on the last tap and a relaunch before it starts over | There is nothing to protect before a vault key exists, the setup takes a few minutes, and saving partial drafts would create duplicate services on re-run. Revisit if testers lose progress | S3 |
+| ASSUMPTION-29 | The first sign-in on a phone creates the vault key (`createIfMissing: true`); a phone that has lost its key after setup shows "No key on this iPhone" on the Locked screen and restores it in S10 | A first sign-in cannot have records to lose; silently starting a new vault later would orphan them | S3 |
+| ASSUMPTION-30 | Sign out lives in More until the Account screen exists (S10) | A tester needs to switch users, and the stage list has no earlier home for it | S3 |
+| ASSUMPTION-31 | Debug builds sign in with any phone number and the code `123456` (`LocalDevAuthProvider`); Release builds say sign-in is unavailable until S8 adds Firebase | The whole app must be usable before the server exists, and a Release build must never carry a shortcut | S3 |
+| ASSUMPTION-32 | The "Aftercare" switch of a custom service stores an empty aftercare template (on, words to be written later) | `Service.aftercareTemplate` is optional text; no separate flag existed | S3 |
+| ASSUMPTION-33 | German uses "Kunde/Kundin" for one client and "Kundschaft" for several and for the tab | The glossary's collective noun does not fit a sentence about "each" client; "pro Kunde/Kundin" does | S3 |
+| ASSUMPTION-34 | "Use passcode" on the Locked screen runs the same system prompt as the Face ID button: the system offers the passcode after a failed face | `LocalAuthentication` has no call that jumps straight to the passcode | S3 |
 
 ## Conventions learned while building (read before writing code)
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
@@ -211,28 +247,34 @@ Human tasks created: none new; H17 now also covers the operator fields.
 | 7.3 Plan | No trial; free usage "x of 10 used"; one plan with monthly and yearly options, localized StoreKit prices, the yearly saving highlighted; opens as the paywall when the 11th client is added | D33, D42 | |
 | 7.11 States | "Plan ended" state becomes "Free registrations used" (existing data stays available) | D42 | |
 | 2.10 BookingRequest | New reason: a new client waits because the free registrations are used; approving shows the paywall | D42 | |
+| 1.x About you (new) | First setup step: name and optional business name; the prototype greets her by name but never asks | S3 | |
+| 1.2 SignIn | No "Use email instead" (phone code only, D3); "Create your workspace" heading when she came from Get started | D3, S3 | |
+| 1.6 Terminology | A "What do you call the people you see?" choice (client, patient, student, guest) above the names list | docs/07 section 4, S3 | |
+| 1.3 to 1.8 | Progress bar has six segments (About to Record) instead of four | S3 | |
+| 1.10 Ready | Booking link card says "Ready once you go online" (needs the server, S8); the import shortcut is hidden until S4 | S3 | |
+| 2.1 to 2.4 | Honest empty states without a button until each screen is built | S3 | |
 
 ## Screen traceability (97 screens; status: todo / in-progress / done / deferred)
 Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 
 | Id | Screen | Stage | Status | Notes |
 |---|---|---|---|---|
-| 1.1 | Onb-1-Welcome | S3 | todo |  |
-| 1.2 | SignIn | S3 | todo |  |
-| 1.3 | Onb-2-Profession | S3 | todo |  |
-| 1.4 | Onb-3-Services | S3 | todo |  |
-| 1.5 | Onb-4-CustomService | S3 | todo |  |
-| 1.6 | Onb-5-Terminology | S3 | todo |  |
-| 1.7 | Onb-6-Tags | S3 | todo |  |
-| 1.8 | Onb-6b-Record | S3 | todo |  |
-| 1.9 | Permissions | S3 | todo |  |
-| 1.10 | Onb-7-Ready | S3 | todo |  |
-| 1.11 | Locked | S3 | todo |  |
-| 2.1 | Home | S6 | todo |  |
-| 2.2 | Clients | S4 | todo |  |
-| 2.3 | Calendar | S6 | todo |  |
-| 2.4 | Notifications | S6 | todo |  |
-| 2.5 | More | S3 | todo | Tab root; rows that open later screens arrive with those screens |
+| 1.1 | Onb-1-Welcome | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.2 | SignIn | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.3 | Onb-2-Profession | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.4 | Onb-3-Services | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.5 | Onb-4-CustomService | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.6 | Onb-5-Terminology | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.7 | Onb-6-Tags | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.8 | Onb-6b-Record | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.9 | Permissions | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.10 | Onb-7-Ready | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 1.11 | Locked | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
+| 2.1 | Home | S6 | in-progress | Greeting and empty state exist since S3 |
+| 2.2 | Clients | S4 | in-progress | Empty state with the term she chose since S3 |
+| 2.3 | Calendar | S6 | in-progress | Empty state since S3 |
+| 2.4 | Notifications | S6 | in-progress | Empty state since S3 (the tab is called Alerts) |
+| 2.5 | More | S3 | done | Profile card, Lock now, Sign out; rows that open later screens arrive with those screens |
 | 2.6 | WeekGlance | S6 | todo |  |
 | 2.7 | FollowUps | S6 | todo |  |
 | 2.8 | WinBack | S6 | todo |  |

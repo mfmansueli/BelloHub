@@ -109,3 +109,27 @@ extension RegistrationLedgerEntry: VaultStorable {
         VaultIndex(dateA: registeredAt)
     }
 }
+
+extension ProfessionalProfile: VaultStorable {
+    static var kind: VaultKind { .profile }
+
+    var index: VaultIndex {
+        VaultIndex(dateA: createdAt, textKey: displayName)
+    }
+}
+
+extension Tag: VaultStorable {
+    static var kind: VaultKind { .tag }
+
+    var index: VaultIndex {
+        VaultIndex(textKey: name)
+    }
+}
+
+extension RecordTemplate: VaultStorable {
+    static var kind: VaultKind { .recordTemplate }
+
+    var index: VaultIndex {
+        VaultIndex(dateA: updatedAt)
+    }
+}

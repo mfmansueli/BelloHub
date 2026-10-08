@@ -1,0 +1,1202 @@
+{
+ "localization": "tr",
+ "status": "needs_review",
+ "professions": [
+  {
+   "id": "esthetician",
+   "name": "Estetisyen",
+   "plural": "estetisyenler",
+   "services": [
+    {
+     "key": "esthetician.glow",
+     "name": "Glow Cilt Bakımı",
+     "category": "Cilt Bakımı",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.deep",
+     "name": "Derin Temizlik",
+     "category": "Cilt Bakımı",
+     "minutes": 75,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.hydra",
+     "name": "Nemlendirici Bakım",
+     "category": "Cilt Bakımı",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.acne",
+     "name": "Akne Tedavisi",
+     "category": "Cilt Bakımı",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.peel",
+     "name": "Kimyasal Peeling",
+     "category": "Cilt Bakımı",
+     "minutes": 45,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.needle",
+     "name": "Mikroiğneleme",
+     "category": "Cilt Bakımı",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "esthetician.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "esthetician.sensitiveSkin",
+     "name": "Hassas Cilt",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "esthetician.bridal",
+     "name": "Gelin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "esthetician.acneProne",
+     "name": "Akneye Eğilimli Cilt",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "esthetician.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "esthetician.firstVisit",
+     "name": "İlk Ziyaret",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "esthetician.skinCondition",
+     "name": "Cilt durumu",
+     "on": true
+    },
+    {
+     "key": "esthetician.areas",
+     "name": "Bölgeler",
+     "on": true
+    },
+    {
+     "key": "esthetician.products",
+     "name": "Ürünler ve aktifler",
+     "on": true
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Protokol",
+     "on": true
+    },
+    {
+     "key": "esthetician.technique",
+     "name": "Teknik",
+     "on": false
+    },
+    {
+     "key": "esthetician.reaction",
+     "name": "Reaksiyon",
+     "on": true
+    },
+    {
+     "key": "esthetician.result",
+     "name": "Sonuç",
+     "on": true
+    },
+    {
+     "key": "esthetician.aftercare",
+     "name": "Bakım sonrası",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "hair",
+   "name": "Kuaför",
+   "plural": "kuaförler",
+   "services": [
+    {
+     "key": "hair.cut",
+     "name": "Saç Kesimi",
+     "category": "Saç",
+     "minutes": 45,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "hair.color",
+     "name": "Boya",
+     "category": "Saç",
+     "minutes": 120,
+     "followUpWeeks": 8,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "hair.highlights",
+     "name": "Röfle",
+     "category": "Saç",
+     "minutes": 180,
+     "followUpWeeks": 10,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "hair.treatment",
+     "name": "Saç Bakımı",
+     "category": "Saç",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.blowdry",
+     "name": "Fön",
+     "category": "Saç",
+     "minutes": 40,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.styling",
+     "name": "Saç Şekillendirme",
+     "category": "Saç",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "hair.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "hair.sensitiveScalp",
+     "name": "Hassas Saç Derisi",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "hair.blonde",
+     "name": "Sarı Saç",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "hair.curlyHair",
+     "name": "Kıvırcık Saç",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.bridal",
+     "name": "Gelin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    }
+   ],
+   "fields": [
+    {
+     "key": "hair.hairCondition",
+     "name": "Saç durumu",
+     "on": true
+    },
+    {
+     "key": "hair.previousColor",
+     "name": "Önceki renk",
+     "on": true
+    },
+    {
+     "key": "hair.formula",
+     "name": "Formül",
+     "on": true
+    },
+    {
+     "key": "hair.developer",
+     "name": "Oksidan",
+     "on": true
+    },
+    {
+     "key": "hair.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "hair.processingTime",
+     "name": "Bekleme süresi",
+     "on": true
+    },
+    {
+     "key": "hair.products",
+     "name": "Ürünler",
+     "on": false
+    },
+    {
+     "key": "hair.result",
+     "name": "Sonuç",
+     "on": true
+    },
+    {
+     "key": "hair.preferences",
+     "name": "Tercihler",
+     "on": true
+    }
+   ],
+   "intake": [
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "lash",
+   "name": "Kirpik uzmanı",
+   "plural": "kirpik uzmanları",
+   "services": [
+    {
+     "key": "lash.classic",
+     "name": "Klasik Kirpik",
+     "category": "Kirpik",
+     "minutes": 120,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.hybrid",
+     "name": "Hibrit Kirpik",
+     "category": "Kirpik",
+     "minutes": 135,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.volume",
+     "name": "Volume Kirpik",
+     "category": "Kirpik",
+     "minutes": 150,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.lift",
+     "name": "Kirpik Lifting",
+     "category": "Kirpik",
+     "minutes": 60,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.refill",
+     "name": "Dolgu",
+     "category": "Kirpik",
+     "minutes": 75,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.removal",
+     "name": "Kirpik Çıkarma",
+     "category": "Kirpik",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "lash.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "lash.sensitiveEyes",
+     "name": "Hassas Gözler",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "lash.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "lash.bridal",
+     "name": "Gelin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "lash.contactLenses",
+     "name": "Lens Kullanıyor",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "lash.firstSet",
+     "name": "İlk Set",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "lash.set",
+     "name": "Set",
+     "on": true
+    },
+    {
+     "key": "lash.curl",
+     "name": "Kıvrım",
+     "on": true
+    },
+    {
+     "key": "lash.length",
+     "name": "Uzunluk",
+     "on": true
+    },
+    {
+     "key": "lash.thickness",
+     "name": "Kalınlık",
+     "on": true
+    },
+    {
+     "key": "lash.mapping",
+     "name": "Haritalama",
+     "on": true
+    },
+    {
+     "key": "lash.adhesive",
+     "name": "Yapıştırıcı",
+     "on": true
+    },
+    {
+     "key": "lash.retention",
+     "name": "Kalıcılık",
+     "on": true
+    },
+    {
+     "key": "lash.preferences",
+     "name": "Tercihler",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "nail",
+   "name": "Tırnak uzmanı",
+   "plural": "tırnak uzmanları",
+   "services": [
+    {
+     "key": "nail.manicure",
+     "name": "Manikür",
+     "category": "Tırnak",
+     "minutes": 45,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.pedicure",
+     "name": "Pedikür",
+     "category": "Tırnak",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.gel",
+     "name": "Kalıcı Oje",
+     "category": "Tırnak",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "nail.extension",
+     "name": "Protez Tırnak",
+     "category": "Tırnak",
+     "minutes": 90,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.art",
+     "name": "Nail Art",
+     "category": "Tırnak",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.removal",
+     "name": "Çıkarma",
+     "category": "Tırnak",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "nail.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "nail.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "nail.bridal",
+     "name": "Gelin",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "nail.gelLover",
+     "name": "Jel Sever",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "nail.brittleNails",
+     "name": "Kırılgan Tırnaklar",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "nail.firstVisit",
+     "name": "İlk Ziyaret",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "nail.nailCondition",
+     "name": "Tırnak durumu",
+     "on": true
+    },
+    {
+     "key": "nail.shape",
+     "name": "Şekil",
+     "on": true
+    },
+    {
+     "key": "nail.length",
+     "name": "Uzunluk",
+     "on": true
+    },
+    {
+     "key": "nail.color",
+     "name": "Renk",
+     "on": true
+    },
+    {
+     "key": "nail.productSystem",
+     "name": "Ürün sistemi",
+     "on": true
+    },
+    {
+     "key": "nail.technique",
+     "name": "Teknik",
+     "on": false
+    },
+    {
+     "key": "nail.durability",
+     "name": "Dayanıklılık",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "makeup",
+   "name": "Makyöz",
+   "plural": "makyözler",
+   "services": [
+    {
+     "key": "makeup.social",
+     "name": "Günlük Makyaj",
+     "category": "Makyaj",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Gelin Makyajı",
+     "category": "Makyaj",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.event",
+     "name": "Davet Makyajı",
+     "category": "Makyaj",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.editorial",
+     "name": "Editoryal Makyaj",
+     "category": "Makyaj",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.trial",
+     "name": "Deneme Makyajı",
+     "category": "Makyaj",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.lesson",
+     "name": "Makyaj Dersi",
+     "category": "Makyaj",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "makeup.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Gelin",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "makeup.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "makeup.eventClient",
+     "name": "Davetler",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "makeup.sensitiveSkin",
+     "name": "Hassas Cilt",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "makeup.event",
+     "name": "Etkinlik",
+     "on": true
+    },
+    {
+     "key": "makeup.look",
+     "name": "Görünüm",
+     "on": true
+    },
+    {
+     "key": "makeup.skinPrep",
+     "name": "Cilt hazırlığı",
+     "on": false
+    },
+    {
+     "key": "makeup.foundation",
+     "name": "Fondöten",
+     "on": true
+    },
+    {
+     "key": "makeup.shade",
+     "name": "Ton",
+     "on": true
+    },
+    {
+     "key": "makeup.products",
+     "name": "Ürünler",
+     "on": true
+    },
+    {
+     "key": "makeup.preferences",
+     "name": "Tercihler",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  },
+  {
+   "id": "tattoo",
+   "name": "Dövme / Kalıcı Makyaj",
+   "plural": "dövme sanatçıları ve kalıcı makyaj uzmanları",
+   "services": [
+    {
+     "key": "tattoo.brows",
+     "name": "Microblading",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.ombre",
+     "name": "Ombre Kaş",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.lips",
+     "name": "Dudak Renklendirme",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.eyeliner",
+     "name": "Eyeliner",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.touchup",
+     "name": "Rötuş",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.small",
+     "name": "Küçük Dövme",
+     "category": "Dövme ve Kalıcı Makyaj",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "tattoo.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "tattoo.firstTime",
+     "name": "İlk Dövme",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "tattoo.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "tattoo.sensitiveSkin",
+     "name": "Hassas Cilt",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "tattoo.referral",
+     "name": "Tavsiye",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "tattoo.design",
+     "name": "Tasarım",
+     "on": true
+    },
+    {
+     "key": "tattoo.placement",
+     "name": "Bölge",
+     "on": true
+    },
+    {
+     "key": "tattoo.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "tattoo.pigments",
+     "name": "Pigmentler",
+     "on": true
+    },
+    {
+     "key": "tattoo.tools",
+     "name": "Araç ve malzemeler",
+     "on": true
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Seans numarası",
+     "on": true
+    },
+    {
+     "key": "tattoo.healing",
+     "name": "İyileşme",
+     "on": true
+    },
+    {
+     "key": "tattoo.followUp",
+     "name": "Kontrol",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "barber",
+   "name": "Berber",
+   "plural": "berberler",
+   "services": [
+    {
+     "key": "barber.cut",
+     "name": "Saç Kesimi",
+     "category": "Berber",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.beard",
+     "name": "Sakal Düzeltme",
+     "category": "Berber",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.combo",
+     "name": "Saç ve Sakal",
+     "category": "Berber",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.fade",
+     "name": "Fade",
+     "category": "Berber",
+     "minutes": 40,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.shave",
+     "name": "Sıcak Havlu ile Tıraş",
+     "category": "Berber",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Çocuk Tıraşı",
+     "category": "Berber",
+     "minutes": 25,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "barber.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "barber.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "barber.beardCare",
+     "name": "Sakal Bakımı",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Çocuk",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "barber.walkIn",
+     "name": "Randevusuz",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "barber.sensitiveSkin",
+     "name": "Hassas Cilt",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "barber.cut",
+     "name": "Kesim",
+     "on": true
+    },
+    {
+     "key": "barber.guards",
+     "name": "Makine numarası",
+     "on": true
+    },
+    {
+     "key": "barber.fade",
+     "name": "Fade",
+     "on": true
+    },
+    {
+     "key": "barber.beard",
+     "name": "Sakal",
+     "on": true
+    },
+    {
+     "key": "barber.products",
+     "name": "Ürünler",
+     "on": false
+    },
+    {
+     "key": "barber.preferences",
+     "name": "Tercihler",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "massage",
+   "name": "Masaj / Sağlıklı Yaşam",
+   "plural": "masaj ve sağlıklı yaşam terapistleri",
+   "services": [
+    {
+     "key": "massage.relax",
+     "name": "Rahatlatıcı Masaj",
+     "category": "Masaj",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.deep",
+     "name": "Derin Doku Masajı",
+     "category": "Masaj",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.lymph",
+     "name": "Lenf Drenajı",
+     "category": "Masaj",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.hotstone",
+     "name": "Sıcak Taş Masajı",
+     "category": "Masaj",
+     "minutes": 75,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.reflex",
+     "name": "Ayak Refleksolojisi",
+     "category": "Masaj",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.sports",
+     "name": "Spor Masajı",
+     "category": "Masaj",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "massage.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "massage.athlete",
+     "name": "Sporcu",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "massage.firstVisit",
+     "name": "İlk Ziyaret",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.lightPressure",
+     "name": "Hafif Basınç",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "massage.firmPressure",
+     "name": "Sert Basınç",
+     "color": "sand",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "massage.focusAreas",
+     "name": "Odak bölgeleri",
+     "on": true
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Basınç",
+     "on": true
+    },
+    {
+     "key": "massage.technique",
+     "name": "Teknik",
+     "on": true
+    },
+    {
+     "key": "massage.oils",
+     "name": "Yağlar ve ürünler",
+     "on": false
+    },
+    {
+     "key": "massage.contraindications",
+     "name": "Kontrendikasyonlar",
+     "on": true
+    },
+    {
+     "key": "massage.result",
+     "name": "Sonuç",
+     "on": true
+    },
+    {
+     "key": "massage.homeCare",
+     "name": "Evde bakım",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "other",
+   "name": "Diğer",
+   "plural": "uzmanlar",
+   "services": [
+    {
+     "key": "other.consult",
+     "name": "Danışma",
+     "category": "Hizmetler",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.session",
+     "name": "Seans",
+     "category": "Hizmetler",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.followup",
+     "name": "Kontrol",
+     "category": "Hizmetler",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "other.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "other.regular",
+     "name": "Düzenli Müşteri",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "other.firstVisit",
+     "name": "İlk Ziyaret",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "other.notes",
+     "name": "Notlar",
+     "on": true
+    },
+    {
+     "key": "other.result",
+     "name": "Sonuç",
+     "on": true
+    },
+    {
+     "key": "other.nextSteps",
+     "name": "Sonraki adımlar",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  }
+ ]
+}

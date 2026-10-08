@@ -1,0 +1,1202 @@
+{
+ "localization": "ar",
+ "status": "needs_review",
+ "professions": [
+  {
+   "id": "esthetician",
+   "name": "أخصائي/ة تجميل",
+   "plural": "أخصائيو ومختصات التجميل",
+   "services": [
+    {
+     "key": "esthetician.glow",
+     "name": "فيشال التوهج",
+     "category": "العناية بالبشرة",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.deep",
+     "name": "تنظيف عميق للبشرة",
+     "category": "العناية بالبشرة",
+     "minutes": 75,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.hydra",
+     "name": "فيشال مرطّب",
+     "category": "العناية بالبشرة",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.acne",
+     "name": "علاج حب الشباب",
+     "category": "العناية بالبشرة",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.peel",
+     "name": "تقشير كيميائي",
+     "category": "العناية بالبشرة",
+     "minutes": 45,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.needle",
+     "name": "الميكرونيدلنج",
+     "category": "العناية بالبشرة",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "esthetician.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "esthetician.sensitiveSkin",
+     "name": "بشرة حساسة",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "esthetician.bridal",
+     "name": "عروس",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "esthetician.acneProne",
+     "name": "بشرة معرّضة لحب الشباب",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "esthetician.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "esthetician.firstVisit",
+     "name": "زيارة أولى",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "esthetician.skinCondition",
+     "name": "حالة البشرة",
+     "on": true
+    },
+    {
+     "key": "esthetician.areas",
+     "name": "المناطق",
+     "on": true
+    },
+    {
+     "key": "esthetician.products",
+     "name": "المنتجات والمكوّنات الفعّالة",
+     "on": true
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "البروتوكول",
+     "on": true
+    },
+    {
+     "key": "esthetician.technique",
+     "name": "التقنية",
+     "on": false
+    },
+    {
+     "key": "esthetician.reaction",
+     "name": "ردّ الفعل",
+     "on": true
+    },
+    {
+     "key": "esthetician.result",
+     "name": "النتيجة",
+     "on": true
+    },
+    {
+     "key": "esthetician.aftercare",
+     "name": "العناية اللاحقة",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "hair",
+   "name": "مصفّف/ة شعر",
+   "plural": "مصفّفو ومصفّفات الشعر",
+   "services": [
+    {
+     "key": "hair.cut",
+     "name": "قص الشعر",
+     "category": "الشعر",
+     "minutes": 45,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "hair.color",
+     "name": "صبغة",
+     "category": "الشعر",
+     "minutes": 120,
+     "followUpWeeks": 8,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "hair.highlights",
+     "name": "هايلايت",
+     "category": "الشعر",
+     "minutes": 180,
+     "followUpWeeks": 10,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "hair.treatment",
+     "name": "علاج الشعر",
+     "category": "الشعر",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.blowdry",
+     "name": "سشوار",
+     "category": "الشعر",
+     "minutes": 40,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.styling",
+     "name": "تسريح",
+     "category": "الشعر",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "hair.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "hair.sensitiveScalp",
+     "name": "فروة رأس حساسة",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "hair.blonde",
+     "name": "شعر أشقر",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "hair.curlyHair",
+     "name": "شعر مجعّد",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.bridal",
+     "name": "عروس",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    }
+   ],
+   "fields": [
+    {
+     "key": "hair.hairCondition",
+     "name": "حالة الشعر",
+     "on": true
+    },
+    {
+     "key": "hair.previousColor",
+     "name": "اللون السابق",
+     "on": true
+    },
+    {
+     "key": "hair.formula",
+     "name": "التركيبة",
+     "on": true
+    },
+    {
+     "key": "hair.developer",
+     "name": "المؤكسد",
+     "on": true
+    },
+    {
+     "key": "hair.technique",
+     "name": "التقنية",
+     "on": true
+    },
+    {
+     "key": "hair.processingTime",
+     "name": "مدة التفاعل",
+     "on": true
+    },
+    {
+     "key": "hair.products",
+     "name": "المنتجات",
+     "on": false
+    },
+    {
+     "key": "hair.result",
+     "name": "النتيجة",
+     "on": true
+    },
+    {
+     "key": "hair.preferences",
+     "name": "التفضيلات",
+     "on": true
+    }
+   ],
+   "intake": [
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "lash",
+   "name": "فنان/ة رموش",
+   "plural": "فنانو وفنانات الرموش",
+   "services": [
+    {
+     "key": "lash.classic",
+     "name": "رموش كلاسيك",
+     "category": "الرموش",
+     "minutes": 120,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.hybrid",
+     "name": "رموش هجين",
+     "category": "الرموش",
+     "minutes": 135,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.volume",
+     "name": "رموش فوليوم",
+     "category": "الرموش",
+     "minutes": 150,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.lift",
+     "name": "رفع الرموش",
+     "category": "الرموش",
+     "minutes": 60,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.refill",
+     "name": "تعبئة",
+     "category": "الرموش",
+     "minutes": 75,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.removal",
+     "name": "إزالة الرموش",
+     "category": "الرموش",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "lash.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "lash.sensitiveEyes",
+     "name": "عيون حساسة",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "lash.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "lash.bridal",
+     "name": "عروس",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "lash.contactLenses",
+     "name": "عدسات لاصقة",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "lash.firstSet",
+     "name": "أول طقم",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "lash.set",
+     "name": "الطقم",
+     "on": true
+    },
+    {
+     "key": "lash.curl",
+     "name": "الانحناء",
+     "on": true
+    },
+    {
+     "key": "lash.length",
+     "name": "الطول",
+     "on": true
+    },
+    {
+     "key": "lash.thickness",
+     "name": "السماكة",
+     "on": true
+    },
+    {
+     "key": "lash.mapping",
+     "name": "خريطة التركيب",
+     "on": true
+    },
+    {
+     "key": "lash.adhesive",
+     "name": "الغراء",
+     "on": true
+    },
+    {
+     "key": "lash.retention",
+     "name": "الثبات",
+     "on": true
+    },
+    {
+     "key": "lash.preferences",
+     "name": "التفضيلات",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "nail",
+   "name": "فنان/ة أظافر",
+   "plural": "فنانو وفنانات الأظافر",
+   "services": [
+    {
+     "key": "nail.manicure",
+     "name": "مانيكير",
+     "category": "الأظافر",
+     "minutes": 45,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.pedicure",
+     "name": "باديكير",
+     "category": "الأظافر",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.gel",
+     "name": "طلاء جل",
+     "category": "الأظافر",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "nail.extension",
+     "name": "تركيب الأظافر",
+     "category": "الأظافر",
+     "minutes": 90,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.art",
+     "name": "فن الأظافر",
+     "category": "الأظافر",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.removal",
+     "name": "إزالة",
+     "category": "الأظافر",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "nail.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "nail.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "nail.bridal",
+     "name": "عروس",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "nail.gelLover",
+     "name": "تفضّل الجل",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "nail.brittleNails",
+     "name": "أظافر هشة",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "nail.firstVisit",
+     "name": "زيارة أولى",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "nail.nailCondition",
+     "name": "حالة الأظافر",
+     "on": true
+    },
+    {
+     "key": "nail.shape",
+     "name": "الشكل",
+     "on": true
+    },
+    {
+     "key": "nail.length",
+     "name": "الطول",
+     "on": true
+    },
+    {
+     "key": "nail.color",
+     "name": "اللون",
+     "on": true
+    },
+    {
+     "key": "nail.productSystem",
+     "name": "نظام المنتجات",
+     "on": true
+    },
+    {
+     "key": "nail.technique",
+     "name": "التقنية",
+     "on": false
+    },
+    {
+     "key": "nail.durability",
+     "name": "مدة الثبات",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "makeup",
+   "name": "خبير/ة مكياج",
+   "plural": "خبراء وخبيرات المكياج",
+   "services": [
+    {
+     "key": "makeup.social",
+     "name": "مكياج يومي",
+     "category": "المكياج",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "مكياج عروس",
+     "category": "المكياج",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.event",
+     "name": "مكياج مناسبات",
+     "category": "المكياج",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.editorial",
+     "name": "مكياج تحريري",
+     "category": "المكياج",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.trial",
+     "name": "تجربة مكياج",
+     "category": "المكياج",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.lesson",
+     "name": "دورة مكياج",
+     "category": "المكياج",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "makeup.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "عروس",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "makeup.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "makeup.eventClient",
+     "name": "مناسبات",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "makeup.sensitiveSkin",
+     "name": "بشرة حساسة",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "makeup.event",
+     "name": "المناسبة",
+     "on": true
+    },
+    {
+     "key": "makeup.look",
+     "name": "الإطلالة",
+     "on": true
+    },
+    {
+     "key": "makeup.skinPrep",
+     "name": "تحضير البشرة",
+     "on": false
+    },
+    {
+     "key": "makeup.foundation",
+     "name": "كريم الأساس",
+     "on": true
+    },
+    {
+     "key": "makeup.shade",
+     "name": "الدرجة",
+     "on": true
+    },
+    {
+     "key": "makeup.products",
+     "name": "المنتجات",
+     "on": true
+    },
+    {
+     "key": "makeup.preferences",
+     "name": "التفضيلات",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  },
+  {
+   "id": "tattoo",
+   "name": "وشم / مكياج دائم",
+   "plural": "فنانو الوشم والمكياج الدائم",
+   "services": [
+    {
+     "key": "tattoo.brows",
+     "name": "ميكروبليدينغ",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.ombre",
+     "name": "حواجب أومبريه",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.lips",
+     "name": "تلوين الشفاه",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.eyeliner",
+     "name": "آيلاينر",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.touchup",
+     "name": "تجديد",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.small",
+     "name": "وشم صغير",
+     "category": "الوشم والمكياج الدائم",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "tattoo.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "tattoo.firstTime",
+     "name": "أول وشم",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "tattoo.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "tattoo.sensitiveSkin",
+     "name": "بشرة حساسة",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "tattoo.referral",
+     "name": "بتوصية",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "tattoo.design",
+     "name": "التصميم",
+     "on": true
+    },
+    {
+     "key": "tattoo.placement",
+     "name": "الموضع",
+     "on": true
+    },
+    {
+     "key": "tattoo.technique",
+     "name": "التقنية",
+     "on": true
+    },
+    {
+     "key": "tattoo.pigments",
+     "name": "الأصباغ",
+     "on": true
+    },
+    {
+     "key": "tattoo.tools",
+     "name": "الأدوات والمواد",
+     "on": true
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "رقم الجلسة",
+     "on": true
+    },
+    {
+     "key": "tattoo.healing",
+     "name": "الالتئام",
+     "on": true
+    },
+    {
+     "key": "tattoo.followUp",
+     "name": "المتابعة",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "barber",
+   "name": "حلّاق",
+   "plural": "الحلّاقون",
+   "services": [
+    {
+     "key": "barber.cut",
+     "name": "قص الشعر",
+     "category": "الحلاقة",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.beard",
+     "name": "تهذيب اللحية",
+     "category": "الحلاقة",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.combo",
+     "name": "قص الشعر واللحية",
+     "category": "الحلاقة",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.fade",
+     "name": "فيد",
+     "category": "الحلاقة",
+     "minutes": 40,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.shave",
+     "name": "حلاقة بالمنشفة الساخنة",
+     "category": "الحلاقة",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "قص شعر الأطفال",
+     "category": "الحلاقة",
+     "minutes": 25,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "barber.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "barber.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "barber.beardCare",
+     "name": "عناية باللحية",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "أطفال",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "barber.walkIn",
+     "name": "بدون موعد",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "barber.sensitiveSkin",
+     "name": "بشرة حساسة",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "barber.cut",
+     "name": "القصّة",
+     "on": true
+    },
+    {
+     "key": "barber.guards",
+     "name": "مقاس الماكينة",
+     "on": true
+    },
+    {
+     "key": "barber.fade",
+     "name": "الفيد",
+     "on": true
+    },
+    {
+     "key": "barber.beard",
+     "name": "اللحية",
+     "on": true
+    },
+    {
+     "key": "barber.products",
+     "name": "المنتجات",
+     "on": false
+    },
+    {
+     "key": "barber.preferences",
+     "name": "التفضيلات",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "massage",
+   "name": "مساج / عافية",
+   "plural": "معالجو ومعالجات المساج والعافية",
+   "services": [
+    {
+     "key": "massage.relax",
+     "name": "مساج استرخاء",
+     "category": "المساج",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.deep",
+     "name": "مساج الأنسجة العميقة",
+     "category": "المساج",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.lymph",
+     "name": "تصريف لمفاوي",
+     "category": "المساج",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.hotstone",
+     "name": "مساج بالحجارة الساخنة",
+     "category": "المساج",
+     "minutes": 75,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.reflex",
+     "name": "علاج انعكاسي للقدم",
+     "category": "المساج",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.sports",
+     "name": "مساج رياضي",
+     "category": "المساج",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "massage.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "massage.athlete",
+     "name": "رياضي",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "massage.firstVisit",
+     "name": "زيارة أولى",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.lightPressure",
+     "name": "ضغط خفيف",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "massage.firmPressure",
+     "name": "ضغط قوي",
+     "color": "sand",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "massage.focusAreas",
+     "name": "مناطق التركيز",
+     "on": true
+    },
+    {
+     "key": "massage.pressure",
+     "name": "الضغط",
+     "on": true
+    },
+    {
+     "key": "massage.technique",
+     "name": "التقنية",
+     "on": true
+    },
+    {
+     "key": "massage.oils",
+     "name": "الزيوت والمنتجات",
+     "on": false
+    },
+    {
+     "key": "massage.contraindications",
+     "name": "موانع الاستخدام",
+     "on": true
+    },
+    {
+     "key": "massage.result",
+     "name": "النتيجة",
+     "on": true
+    },
+    {
+     "key": "massage.homeCare",
+     "name": "العناية المنزلية",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "other",
+   "name": "أخرى",
+   "plural": "مختصون",
+   "services": [
+    {
+     "key": "other.consult",
+     "name": "استشارة",
+     "category": "الخدمات",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.session",
+     "name": "جلسة",
+     "category": "الخدمات",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.followup",
+     "name": "متابعة",
+     "category": "الخدمات",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "other.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "other.regular",
+     "name": "منتظم",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "other.firstVisit",
+     "name": "زيارة أولى",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "other.notes",
+     "name": "ملاحظات",
+     "on": true
+    },
+    {
+     "key": "other.result",
+     "name": "النتيجة",
+     "on": true
+    },
+    {
+     "key": "other.nextSteps",
+     "name": "الخطوات التالية",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  }
+ ]
+}

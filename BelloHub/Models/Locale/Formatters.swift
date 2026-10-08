@@ -84,6 +84,21 @@ struct Formatters: Sendable {
         )
     }
 
+    /// "90 min": minutes only, never turned into hours, because a list of services reads better when every duration
+    /// is in the same unit.
+    func minutes(_ value: Int) -> String {
+        Duration.seconds(value * 60).formatted(
+            Duration.UnitsFormatStyle(allowedUnits: [.minutes], width: .abbreviated).locale(locale)
+        )
+    }
+
+    /// "4 wk": a number of weeks, abbreviated.
+    func weeks(_ value: Int) -> String {
+        Duration.seconds(value * 7 * 86_400).formatted(
+            Duration.UnitsFormatStyle(allowedUnits: [.weeks], width: .abbreviated).locale(locale)
+        )
+    }
+
     /// A count in the locale's digits ("٣" in Arabic regions that use Arabic-Indic digits).
     func number(_ value: Int) -> String {
         value.formatted(.number.locale(locale))

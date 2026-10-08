@@ -15,6 +15,8 @@ struct BelloTextField: View {
     var prompt: LocalizedStringKey?
     var errorMessage: LocalizedStringKey?
     var isSensitive = false
+    /// Goes on the text field itself: an identifier on the surrounding stack would overwrite its children's.
+    var identifier: String?
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -22,7 +24,7 @@ struct BelloTextField: View {
             Text(title)
                 .font(Typography.metaStrong)
                 .foregroundStyle(Palette.ink2)
-            TextField(text: $text, prompt: prompt.map { Text($0) }) { Text(title) }
+            TextField(text: $text, prompt: prompt.map { Text.prompt($0) }) { Text(title) }
                 .font(Typography.body)
                 .foregroundStyle(Palette.ink)
                 .focused($isFocused)
@@ -38,6 +40,7 @@ struct BelloTextField: View {
                     }
                 }
                 .accessibilityHint(errorMessage.map { Text($0) } ?? Text(verbatim: ""))
+                .accessibilityIdentifier(identifier ?? "")
             if let errorMessage {
                 Text(errorMessage)
                     .font(Typography.footnote)

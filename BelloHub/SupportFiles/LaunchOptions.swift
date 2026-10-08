@@ -7,8 +7,8 @@ import Foundation
 
 /// Launch arguments, parsed once. They are test and design hooks, so they exist only in DEBUG builds:
 /// in Release `current` is always the default, and the code that reads them cannot be reached.
-/// More arguments (`-uiSeed`, `-uiOffline`, `-uiLocked`, `-uiTimeTravel`, ...) arrive with the features
-/// that use them (docs/04-ARCHITECTURE.md section 7).
+/// More arguments (`-uiOffline`, `-uiTimeTravel`, ...) arrive with the features that use them
+/// (docs/04-ARCHITECTURE.md section 7).
 struct LaunchOptions: Equatable {
     /// Turns every animation off so UI tests never race them.
     var isUITesting = false
@@ -21,6 +21,13 @@ struct LaunchOptions: Equatable {
     var catalogSection: String?
     /// Starts the Design Catalog in dark appearance.
     var catalogDark = false
+    /// A UI test launch starts from nothing (a fresh vault in memory, empty defaults) unless it asks to keep what
+    /// the previous launch left, which is how a test relaunches the app.
+    var keepsState = false
+    /// A ready-made state to start from: `onboarded` is a signed-in professional with her workspace set up.
+    var seed: String?
+    /// How the Face ID prompt answers: `success` (default), `fail`, `cancelFirst` or `successOnce`.
+    var biometricsMode: String?
     /// Text size of the Design Catalog: `small`, `standard`, `large`, `accessibility3`, `accessibility5`.
     var catalogTextSize: String?
 
@@ -33,6 +40,9 @@ struct LaunchOptions: Equatable {
         catalogSection = Self.value(after: "-catalogSection", in: arguments)
         catalogTextSize = Self.value(after: "-catalogTextSize", in: arguments)
         catalogDark = arguments.contains("-catalogDark")
+        keepsState = arguments.contains("-uiKeepState")
+        seed = Self.value(after: "-uiSeed", in: arguments)
+        biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {
