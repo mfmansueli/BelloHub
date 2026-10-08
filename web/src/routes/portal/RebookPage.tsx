@@ -11,7 +11,7 @@ import type { BookingResult, ProfessionalLite } from '../../api/types';
 import { TokenLayout } from '../../app/TokenLayout';
 import { useFormatter } from '../../app/context';
 import { manageRoute, routePath, type Route } from '../../app/router';
-import { groupByDay } from '../booking/TimeStep';
+import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
 import { DayStrip, SlotList } from '../../components/Calendar';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';

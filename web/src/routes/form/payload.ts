@@ -40,6 +40,13 @@ export function isAnswered(value: AnswerValue | undefined): boolean {
   return value.length > 0;
 }
 
+/** `none` is exclusive in a multiple choice: choosing it clears the others, choosing another clears it. */
+export function toggleChoice(current: readonly string[], value: string): string[] {
+  if (current.includes(value)) return current.filter((item) => item !== value);
+  if (value === 'none') return ['none'];
+  return [...current.filter((item) => item !== 'none'), value];
+}
+
 export type IntakeProblem =
   | { readonly field: 'question'; readonly key: string }
   | { readonly field: 'minorName' }

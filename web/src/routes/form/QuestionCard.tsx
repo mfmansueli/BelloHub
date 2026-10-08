@@ -12,7 +12,7 @@ import { Icon } from '../../components/Icon';
 import { useI18n } from '../../i18n';
 import { pickLocalized, type LocaleId } from '../../lib/locales';
 import { langAttribute } from '../../lib/text';
-import { isAnswered } from './payload';
+import { isAnswered, toggleChoice } from './payload';
 
 interface Props {
   readonly question: FormQuestion;
@@ -20,13 +20,6 @@ interface Props {
   readonly onChange: (value: AnswerValue | undefined) => void;
   readonly pageDefault: LocaleId;
   readonly showError: boolean;
-}
-
-/** `none` is exclusive in a multiple choice: choosing it clears the others, choosing another clears it. */
-export function toggleChoice(current: readonly string[], value: string): string[] {
-  if (current.includes(value)) return current.filter((item) => item !== value);
-  if (value === 'none') return ['none'];
-  return [...current.filter((item) => item !== 'none'), value];
 }
 
 export function QuestionCard({ question, value, onChange, pageDefault, showError }: Props): JSX.Element {

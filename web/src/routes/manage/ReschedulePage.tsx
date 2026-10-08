@@ -10,7 +10,7 @@ import { ApiError } from '../../api/errors';
 import type { BookingView } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { manageRoute, navigate } from '../../app/router';
-import { groupByDay } from '../booking/TimeStep';
+import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
 import { SlotList, DayStrip } from '../../components/Calendar';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';

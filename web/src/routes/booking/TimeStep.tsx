@@ -11,6 +11,7 @@ import type { PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute } from '../../app/router';
 import { allowedStep, FLOW_STEPS, newIdempotencyKey } from '../../app/booking/machine';
+import { groupByDay } from '../../app/booking/slotDays';
 import { useBooking } from '../../app/booking/store';
 import { selectedAddOns, totals } from '../../app/booking/summary';
 import { Button } from '../../components/Button';
@@ -36,15 +37,6 @@ import {
 type Load = { status: 'loading' } | { status: 'ready'; byDay: ReadonlyMap<DateKey, readonly string[]> } | { status: 'error'; error: unknown };
 
 const NEXT_SLOTS_SHOWN = 4;
-
-export function groupByDay(slots: readonly string[], timeZone: string): Map<DateKey, string[]> {
-  const byDay = new Map<DateKey, string[]>();
-  for (const slot of [...slots].sort()) {
-    const day = zonedDateKey(Date.parse(slot), timeZone);
-    byDay.set(day, [...(byDay.get(day) ?? []), slot]);
-  }
-  return byDay;
-}
 
 export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
   const { t } = useI18n();
