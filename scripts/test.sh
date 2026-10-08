@@ -15,10 +15,11 @@ case "${1:-full}" in
         ;;
 esac
 
-# Strings and privacy gates are cheap, so they run before the simulator does (docs/13-TESTING-QUALITY.md).
+# Strings, privacy and legal-draft gates are cheap, so they run before the simulator does (docs/13-TESTING-QUALITY.md).
 if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-strings.sh" > /dev/null
     "$ROOT/scripts/check-privacy.sh" > /dev/null
+    "$ROOT/scripts/check-legal-status.sh" > /dev/null
 fi
 
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).

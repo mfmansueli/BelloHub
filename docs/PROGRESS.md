@@ -17,7 +17,7 @@ Nothing here blocks the build; each item has a safe default in use.
 | 2026-10-08 | **D41 Languages:** no human review is planned; Claude Code does its best. | Every string stays `needs_review` (true, and not a gate). The S11 completeness checks stay; the "awaiting reviewers" list is simply every non-English string. |
 | 2026-10-08 | **D42 Monetization:** first 10 client registrations free (cumulative; deleting never restores a slot; across manual, import and booking; duplicates and edits do not count), paywall on the 11th, existing data always accessible, counter at account level; one paid plan, monthly or yearly (EUR 14.99 / 149.99, USD 14.99 / 149.99, BRL 39.90 / 399.90), same features, **no 14-day trial** (D33 revised). | S2 builds `RegistrationQuota`, `PlanSavings` and the vault ledger; S4 the registration gate and the limit message; S8 the server counter and the booking branch; S10 the plan screen and the paywall with StoreKit. |
 
-**Plan item L (legal drafting pass), right after S2:** for every market, the terms and data processing agreement, privacy policy, client notice, health-form consent, photo consent, guardian consent and data-subject-request wording, written as carefully as possible in the language of each region set (`docs/07-LOCALIZATION.md` section 8), versioned under `legal/<doc>/<localization>/<version>.md`, with `legal/STATUS.md` and `scripts/check-legal-status.sh`. Refined in S11 once the screens that show them exist. Marked `LEGAL-REVIEW` in the headers, never claiming compliance (`docs/06` section 12).
+**Plan item L (legal drafting pass), right after S2, done 2026-10-08 (98 drafts, see the stage log):** for every market, the terms and data processing agreement, privacy policy, client notice, health-form consent, photo consent, guardian consent and data-subject-request wording, written as carefully as possible in the language of each region set (`docs/07-LOCALIZATION.md` section 8), versioned under `legal/<doc>/<localization>/<version>.md`, with `legal/STATUS.md` and `scripts/check-legal-status.sh`. Refined in S11 once the screens that show them exist. Marked `LEGAL-REVIEW` in the headers, never claiming compliance (`docs/06` section 12).
 
 ## Risk register (what opening before legal review leaves open; owner accepted under D40)
 | Risk | Where | Mitigation already in the design | Still open |
@@ -75,7 +75,7 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`L` (legal drafting pass for every market, D40) then `S3` · started: 2026-10-08 · branch: `build/v1`
+`S3` (shell, onboarding, session, lock) · started: 2026-10-08 · branch: `build/v1` · `L` (legal drafts) is done, tag `stage-L`
 
 ## Stage log
 One block per finished stage (newest last):
@@ -146,6 +146,21 @@ Findings worth keeping:
 Open questions: ASSUMPTION-18 (re-signing up with the same phone after deleting the account restarts the count of 10).
 Human tasks created: none new. H2 (CloudKit schema to Production) and H3 (two iPhones) now have the concrete checklist in the spike report.
 
+### L · Legal drafting pass for every market (D40) · done 2026-10-08 · tag stage-L
+Time: about 16 min of wall clock by the machine clock (17:21 commit of S2 to 17:37), writing in seven batches.
+Done:
+- 98 drafts under `legal/<document>/<localization>/2026-10.md`: terms of use with the data processing agreement, privacy policy, booking-page client notice, health-form consent, photo consent, guardian consent for minors, and the wording of copy and deletion requests, each in all fourteen localizations. About 46,000 words.
+- Each text names the law of its market (LGPD, RGPD/LOPDGDD, UK GDPR and the Privacy Acts, LFPDPPP, US state laws including Washington's My Health My Data Act, KVKK, Indonesia's PDP Law, India's DPDP Act, the Saudi and UAE laws) and uses the product facts in `legal/README.md` (clinical data on the iPhone, sealed mailbox, 7-day and 30-day retention, no analytics, on-device AI, the first 10 registrations free).
+- `legal/README.md` (layout, fill-in fields, the facts sheet), `legal/STATUS.md` (the generated table plus ten open points for a lawyer), `scripts/check-legal-status.sh` and `.py`, wired into `scripts/test.sh fast` and `full`. The checker fails on a missing file, a missing header field, an unknown placeholder, a header that does not match its folder, or a forbidden claim.
+Decisions/assumptions: ASSUMPTION-24 and ASSUMPTION-25 below.
+Deviations from the docs: none. Nothing is claimed as compliant anywhere; every header carries `status: draft` and `review: LEGAL-REVIEW`.
+Measured: `scripts/check-legal-status.sh` reports 98 documents, 7 kinds x 14 localizations, all present, exit 0.
+Findings worth keeping:
+- The system Python is 3.9 and rejects a source file with long non-ASCII lines unless it starts with a coding declaration (`# -*- coding: utf-8 -*-`); the generator scripts live in the scratchpad, not the repo.
+- Facts that differ by market are written into the market's own text (Brazil 15 days, Mexico 20 business days, Turkey's article 11 rights, the United States HIPAA note), so `legal/STATUS.md` point 4 asks the lawyer to confirm them.
+Open questions: the operator identity (H17) fills `{{OPERATOR_NAME}}`, `{{OPERATOR_ADDRESS}}`, `{{OPERATOR_EMAIL}}`, `{{WEB_BASE_URL}}` and `{{EFFECTIVE_DATE}}`; until then the in-app screens must show these texts with the fields visibly pending in DEBUG and block the Release build (S11 gate).
+Human tasks created: none new; H17 now also covers the operator fields.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -172,6 +187,8 @@ Human tasks created: none new. H2 (CloudKit schema to Production) and H3 (two iP
 | ASSUMPTION-21 | The vault is one SwiftData table (`VaultItem`) with clear index columns, plain JSON and a sealed sensitive part | The CloudKit schema only grows; a new kind of record is a new `kindRaw`, not a new CloudKit field | S2 |
 | ASSUMPTION-22 | A health form from the mailbox is deduplicated by `importedFromItemID`, kept in a clear index column (an opaque id, not content) | Idempotent import after a crash between import and acknowledge | S2 |
 | ASSUMPTION-23 | Concurrent edits of the same record on two devices resolve last-writer-wins for the whole record | One JSON value per record; the second device is usually idle; to be confirmed on two phones (spike checklist step 4) | S2 |
+| ASSUMPTION-24 | The legal texts are shipped as bundle resources and shown in the app by `textVersion` (the file name, `2026-10`); a change is a new file and each acceptance stores the version it accepted | Old versions must stay readable for the record, and consent is only meaningful for the exact text shown | L |
+| ASSUMPTION-25 | One text per localization serves every market that localization covers (for example `en-GB` for the United Kingdom, Ireland, Australia, New Zealand and South Africa; `de` for Germany, Austria and Switzerland; `ar` for Saudi Arabia and the UAE), with the regulators of each named inside | Fourteen localizations is the product's scope (D41); a text per country would be about 40 sets nobody can review | L |
 
 ## Conventions learned while building (read before writing code)
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
