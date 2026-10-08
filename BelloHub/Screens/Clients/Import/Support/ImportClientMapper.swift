@@ -51,8 +51,9 @@ struct ImportClientMapper: Sendable {
         return ImportEntry(id: candidate.id, displayName: name, rowNumber: candidate.rowNumber, outcome: .ready(client))
     }
 
-    /// The same entries with the ready ones sorted by name the way the system sorts (accents and case ignored,
-    /// "Ana 2" after "Ana 1"): contacts arrive in the order she tapped them, and a list she scans wants an order.
+    /// The same entries sorted by name the way the system sorts (accents and case ignored, "Ana 2" before "Ana 10"):
+    /// contacts arrive in the order she tapped them, and a list she scans wants an order. A spreadsheet keeps the order
+    /// of its file instead, because that is the order she knows.
     static func sortedByName(_ entries: [ImportEntry]) -> [ImportEntry] {
         entries.sorted { $0.displayName.localizedStandardCompare($1.displayName) == .orderedAscending }
     }

@@ -261,6 +261,22 @@ struct ClientRegistrationServiceTests {
         #expect(rig.service.usage.used == 40)
     }
 
+    @Test("A plan imports 2,000 clients through the gate in a reasonable time (the duplicate check is not quadratic)",
+          arguments: RepositoryFlavor.allCases)
+    func importTwoThousand(flavor: RepositoryFlavor) async throws {
+        let rig = try makeRig(flavor, hasPlan: true)
+        let batch = (1...2_000).map { makePerson($0) }
+        let clock = ContinuousClock()
+        let started = clock.now
+
+        let result = try await rig.service.importClients(batch)
+        let elapsed = clock.now - started
+
+        #expect(result.registered == 2_000)
+        #expect(try await rig.repository.allClients().count == 2_000)
+        #expect(elapsed < .seconds(60), "took \(elapsed)")
+    }
+
     @Test("An empty import changes nothing", arguments: RepositoryFlavor.allCases)
     func emptyImport(flavor: RepositoryFlavor) async throws {
         let rig = try makeRig(flavor)
