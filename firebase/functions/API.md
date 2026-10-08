@@ -59,6 +59,23 @@ Firebase Hosting rewrites can expose each function under `/api/<name>` of the we
 `connect-src 'self'`). The rewrite list is not in `firebase.json` yet (S9 decides); the function names and payloads
 do not change.
 
+### Local development (emulators, no cloud)
+```
+cd firebase/functions && npm ci && npm run build        # the emulator runs the compiled code in lib/
+printf 'PHONE_HASH_PEPPER=local-dev-pepper\n' > .secret.local   # any value; git-ignored
+cd .. && firebase emulators:start --project demo-bellohub       # auth 9099, functions 5001, firestore 8080, storage 9199, UI 4000
+cd functions && npm run seed                                     # Maria, her page, her availability and a health form
+```
+The project id **must** start with `demo-`: such an id can never reach the cloud. Base URL
+`http://127.0.0.1:5001/demo-bellohub/europe-west1/<name>`. In the emulator only:
+- the **email code is always `123456`** and "sending" an email only counts it (nothing is written down);
+- **SMS**: use the Auth emulator's real phone sign-in (`signInWithPhoneNumber`); each code is printed in the emulator log and
+  listed at `GET http://127.0.0.1:9099/emulator/v1/projects/demo-bellohub/verificationCodes`;
+- App Check is not enforced (a missing token is accepted);
+- pushes are not sent; `emulatorOutbox` records `{type: "push", kind, id}` so a test can wait for one.
+`ENFORCE_APP_CHECK`, `WEB_BASE_URL`, `WHATSAPP_AUTOMATION` and `PLAN_PRODUCT_IDS` are deploy parameters
+(`functions/.env.<project>`); their defaults suit the emulator.
+
 ### CORS
 Allowed origins: `https://bellohub.app`, any `https://*.bellohub.app`, the project's `*.web.app` and `*.firebaseapp.com`
 Hosting domains. The emulator accepts any origin.
@@ -312,7 +329,8 @@ res: {
   service: { id: Uuid; name: string };
   addOns: { id: Uuid; name: string; minutes: number }[];
   guestCount: number;
-  startsAt: Instant; endsAt: Instant; timeZoneID: string;
+  startsAt: Instant; endsAt: Instant; durationMinutes: number; timeZoneID: string;
+  serverTime: Instant;                // the server clock: a phone with a wrong clock still shows the right free window
   client: { name: string };
   policy: CancellationPolicy;
   rulesText: Partial<Record<LocaleId, string>>;

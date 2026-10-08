@@ -5,6 +5,7 @@ import { refs, ts } from '../../src/lib/store.js';
 import type { BookingDoc, ContactDoc } from '../../src/lib/docs.js';
 import { cancelBooking } from '../../src/token/cancelBooking.js';
 import { confirmPresence } from '../../src/token/confirmPresence.js';
+import { getPortal } from '../../src/public/getPortal.js';
 import { getBooking } from '../../src/token/getBooking.js';
 import { rebook } from '../../src/token/rebook.js';
 import { reportLate } from '../../src/token/reportLate.js';
@@ -157,6 +158,29 @@ describe('getBooking', () => {
     expect((await view(booked.manageToken)).intakeRequired).toBe(false);
     await refs(env.deps.db).contact(pro.uid, hash).update({ lastIntakeAt: ts(env.clock.now() - 400 * 24 * HOUR) });
     expect((await view(booked.manageToken)).intakeRequired).toBe(true);
+  });
+});
+
+describe('tokens are scoped', () => {
+  it('lets a manage token act on its own booking only, and never as a portal token (or the reverse)', async () => {
+    const mine = await bookFriday();
+    const other = asBooked(await book(env, pro, { client: BIA, startsAt: '2026-10-03T17:00:00.000Z' }));
+
+    await env.call(cancelBooking, { token: mine.manageToken });
+
+    expect((await bookingDoc(env, mine.bookingId)).status).toBe('cancelledByClient');
+    expect((await bookingDoc(env, other.bookingId)).status).toBe('confirmed');
+    await expect(env.call(getPortal, { token: other.manageToken })).rejects.toMatchObject({ code: 'NOT_FOUND' });
+    await expect(env.call(getBooking, { token: mine.manageToken.replace(/.$/, mine.manageToken.endsWith('A') ? 'B' : 'A') })).rejects.toMatchObject({ code: 'NOT_FOUND' });
+  });
+
+  it('keeps the token out of every stored document', async () => {
+    const booked = await bookFriday();
+
+    for (const collection of ['bookings', 'idempotency', 'rate', 'contacts', 'accounts']) {
+      const snapshot = await env.deps.db.collection(collection).get();
+      expect(JSON.stringify(snapshot.docs.map((doc) => [doc.id, doc.data()])), collection).not.toContain(booked.manageToken);
+    }
   });
 });
 
