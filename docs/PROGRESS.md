@@ -79,6 +79,27 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `S4` (clients and the client record) · started: 2026-10-08 · branch: `build/v1` · `L` and `S3` are done (tags `stage-L`, `stage-S3`).
 S4 runs as **four parallel agents**, each in its own git worktree and simulator, on top of a shared contract commit (`407427e`: the D42 registration gate, route, fakes): `clients-ui` (2.2, 4.1 to 4.4), `import` (4.6 and the gate's tests), `health-forms` (4.5, 6.14, legal text bundling), `tags-record-template` (6.12, 6.13, More). Their notes land in `docs/agent-notes/`; the coordinator merges the branches, regenerates the string catalog and merges the notes into this file and `DESIGN.md`.
 
+### RESUME HERE (saved 2026-10-08, when the owner's usage limit was running out)
+State of the parallel work. Nothing below is merged into `build/v1` yet; every agent branch lives in a local git worktree under `.claude/worktrees/` (they survive a session restart; they are not pushed).
+
+| Slice | Worktree dir (under `.claude/worktrees/`) | Branch | State |
+|---|---|---|---|
+| clients-ui (2.2, 4.1 to 4.4) | `agent-ab4d3f28d5af2223e` | `worktree-agent-ab4d3f28d5af2223e` | Screens built and committed; was in the final check-warnings run; notes `docs/agent-notes/clients-ui.md` |
+| import (4.6) | `agent-aef36165262ce4d7d` | `worktree-agent-aef36165262ce4d7d` | Engines and screen committed; was running the import audits; notes `import.md` |
+| health-forms (4.5, 6.14) | `agent-a534192a1071f5248` | `worktree-agent-a534192a1071f5248` | Health, consent and templates committed; was running the Health audit; notes `health-forms.md` |
+| tags-record-template (6.12, 6.13, More) | `agent-acff0693a007bb95a` | `worktree-agent-acff0693a007bb95a` | Committed; was re-running the Hindi AX5 audit; notes `tags-record-template.md` |
+| backend (S8 server half) | `agent-a243edc65aa8fcdad` | `worktree-agent-a243edc65aa8fcdad` | **Finished**, tip `be05846`: 1,052 tests green on emulators; nothing deployed; handoff in `docs/agent-notes/backend.md` |
+| web (S9) | `agent-ac7ea3c725dfcc9b0` | `worktree-agent-ac7ea3c725dfcc9b0` | **Checkpointed**, tip `6ca27f2`: 211 unit tests, Chromium and low-end Playwright green, WebKit has about 25 CSP failures; handoff in `docs/agent-notes/web.md` |
+
+**Owner rules for the next session:** (1) at most 3 agents at the same time; (2) agents on `model: fable` run at `medium` at most, other agents `high` by default, `medium` for mechanical work; (3) after S4 is integrated, STOP and wait for the owner before starting S5 (usage-limit worry); (4) never push to `main`.
+
+**Order of work when the owner says go:**
+1. Check each iOS worktree with `git -C <dir> status --short` and `git -C <dir> log --oneline 407427e..HEAD`; if an agent died mid-work, one agent at a time can continue from its notes.
+2. Integrate S4 (the coordinator, no agents needed): merge the four iOS branches into `build/v1` (conflicts are expected only in `Localizable.xcstrings`, `ClientsView`, `MoreView` and the Placeholders folder), regenerate `Localizable.xcstrings` with `scripts/merge-strings.py`, delete `BelloHub/Screens/Clients/Placeholders/`, fold `docs/agent-notes/*` into this file and `DESIGN.md`, then `scripts/test.sh fast`, `scripts/test.sh smoke`, `scripts/check-warnings.sh`; commit, tag `stage-S4`, push.
+3. Backend and web hand-offs are independent of iOS. Next for them, as two Fable agents at `medium` (first one, then the other when there is room): **web**: reconcile the web client with the real `firebase/functions/API.md` (the web assumed plain GET/POST; the server is Firebase callables, `POST {data}` returns `{result}`; list in `docs/agent-notes/backend.md`), then a bounded security checklist (HPKE framing, token handling, privacy gate, CSP and SRI), then the CSP/WebKit failures, `scripts/test-web.sh`, Lighthouse CI. **backend**: a bounded security checklist from section 7 of its notes (rules, D42 paths, calendar locks, sealed mailbox and key ring, App Check, rate limits), then the Apple verifier and the email adapter.
+4. Owner decisions waiting: (a) sign-in for the professional: Sign in with Apple as the main method, phone as the alternative (my recommendation), or phone only; (b) first-visit questions on the booking page: drop them (my recommendation), seal them, or store them as the 300-character note; (c) the CSP variant for Firebase phone verification and App Check on form pages, or SMS through our API only.
+5. Deploy to `bello-hub` (dev, D43) only after the reconciliation: from `firebase/` with the explicit dev config; the Cloud Functions API turns on at the first deploy; record what was deployed here. Never turn on App Check enforcement.
+
 ## Stage log
 One block per finished stage (newest last):
 
