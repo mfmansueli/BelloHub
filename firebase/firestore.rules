@@ -1,7 +1,5 @@
 rules_version = '2';
-
-// Deny all until stage S8 builds the real rules (docs/11-BACKEND-FIREBASE.md section 5).
-// Every collection is reached through Cloud Functions with the Admin SDK in the meantime.
+// placeholder replaced in the rules commit
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
