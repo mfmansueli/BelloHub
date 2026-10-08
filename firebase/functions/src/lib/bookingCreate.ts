@@ -197,7 +197,8 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       ...(request.client.email ? { emailHash: emailHashOf(deps.pepper, request.client.email) } : {}),
       ...(request.note ? { note: request.note } : {}),
       manageTokenHashes: [tokenHash(manageToken)],
-      origin: request.origin,
+      // Booking through a link she sent from the waitlist is a waitlist booking.
+      origin: ownHolds.some((hold) => hold.data.kind === 'offer') ? 'waitlist' : request.origin,
       policy: profile.policy,
       rescheduleCount: 0,
       createdAt: ts(now),

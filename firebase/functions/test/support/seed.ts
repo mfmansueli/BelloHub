@@ -108,6 +108,24 @@ export async function seedProfessional(env: TestEnv, options: SeedOptions = {}):
   return { uid, slug, inboxKey };
 }
 
+/** Publishes Maria's page again with a health form, as the app does when she turns the online form on. */
+export async function publishProfileWithIntake(env: TestEnv, pro: Professional): Promise<void> {
+  await env.call(
+    publishProfile,
+    {
+      profile: {
+        ...mariaProfile(pro.inboxKey),
+        intake: {
+          formVersion: 2,
+          template: { questions: [{ key: 'allergies', required: true }] },
+          consent: { en: { textVersion: '2026-10', text: 'I agree.' } }
+        }
+      }
+    },
+    ownerContext(pro.uid)
+  );
+}
+
 /** A seeded professional's documents, kept in memory so each test can restore them in milliseconds. */
 export interface World {
   pro: Professional;

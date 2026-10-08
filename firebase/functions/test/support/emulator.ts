@@ -1,3 +1,5 @@
+import { EventEmitter } from 'node:events';
+
 import type { App } from 'firebase-admin/app';
 import { getApps, initializeApp } from 'firebase-admin/app';
 import type { Firestore } from 'firebase-admin/firestore';
@@ -9,6 +11,8 @@ export const STORAGE_BUCKET = 'demo-bellohub.appspot.com';
 // Tests talk to the emulators only. With no credentials the SDK would probe Google's metadata server for a while
 // before giving up; telling it there is none keeps the output clean.
 process.env.METADATA_SERVER_DETECTION = 'none';
+// The Storage client adds a listener per upload to a shared stream; many uploads in one test run are normal.
+EventEmitter.defaultMaxListeners = 50;
 
 export function adminApp(): App {
   const existing = getApps().find((app) => app.name === 'tests');

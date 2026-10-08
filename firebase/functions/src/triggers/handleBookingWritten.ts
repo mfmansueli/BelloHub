@@ -29,7 +29,9 @@ export async function handleBookingWritten(
     return;
   }
   const action = after.lastClientAction;
-  if (!action || action.at.toMillis() === before.lastClientAction?.at.toMillis()) return;
+  const previous = before.lastClientAction;
+  const unchanged = previous?.kind === action?.kind && previous?.at.toMillis() === action?.at.toMillis();
+  if (!action || unchanged) return;
 
   await notifyOwner(deps, after.ownerUid, { kind: KIND_OF_ACTION[action.kind], id: bookingId });
   if (action.kind === 'cancelled') {

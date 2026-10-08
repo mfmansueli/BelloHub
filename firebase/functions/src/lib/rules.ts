@@ -123,9 +123,10 @@ export function countedNoShows(
 ): number {
   if (!policy.isOn) return 0;
   const periodStart = addMonthsUtc(now, -policy.countingMonths);
-  const since = Math.max(periodStart, resetAt ?? Number.NEGATIVE_INFINITY);
   return marks.filter((mark) => {
-    if (mark.at < since || mark.at > now) return false;
+    if (mark.at < periodStart || mark.at > now) return false;
+    // "Start her count from zero": nothing at or before the reset counts, the next mark starts a fresh count.
+    if (resetAt !== undefined && mark.at <= resetAt) return false;
     return mark.kind === 'noShow' || policy.lateCancelCounts;
   }).length;
 }
