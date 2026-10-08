@@ -104,7 +104,13 @@ export type SlotQuery =
       readonly from: string;
       readonly to: string;
     }
-  | { readonly token: string; readonly from: string; readonly to: string };
+  | {
+      readonly token: string;
+      /** `reschedule` frees the booking's own time; `rebook` is a new booking of the same service. */
+      readonly purpose: 'reschedule' | 'rebook';
+      readonly from: string;
+      readonly to: string;
+    };
 
 export interface SlotsResponse {
   /** Free start times, UTC ISO strings, ascending. */
@@ -147,9 +153,11 @@ export interface SendCodeResponse {
 
 // MARK: - Booking
 
+export type HeardFrom = 'friend' | 'instagram' | 'search' | 'passing' | 'other';
+
+/** The quick first-visit questions: non-clinical, the same for every profession. Clinical answers only exist in the sealed form. */
 export interface FirstVisitAnswers {
-  /** Keys from a fixed non-clinical list (`glow`, `calm`, `texture`, `unsure`). */
-  readonly goals: readonly string[];
+  readonly heardFrom: HeardFrom | null;
   readonly hadBefore: boolean | null;
   /** A short preference note. The page asks her not to write health details here. */
   readonly note: string;
@@ -195,6 +203,8 @@ export interface BookingView {
   readonly totalMinutes: number;
   readonly price?: { readonly display: Exclude<PriceDisplay, 'hide'>; readonly amount?: number; readonly currency: string };
   readonly professional: ProfessionalLite;
+  /** The first name she booked with, to greet her ("Welcome back, Ana"). Never a surname, never clinical. */
+  readonly client?: { readonly firstName: string };
   readonly rules?: Readonly<Partial<Record<string, readonly RuleLine[]>>>;
   /** The policy as it was when she booked (later edits never change a client's rights). */
   readonly policy: PolicyValues;
@@ -351,6 +361,13 @@ export interface SealedEnvelope {
 }
 
 // MARK: - Errors
+
+/** Who to contact when a link is unknown or expired, so the page can say "Message Maria" (docs/10 section 2). */
+export interface ErrorContact {
+  readonly displayName: string;
+  readonly firstName: string;
+  readonly whatsappE164?: string;
+}
 
 export type ApiErrorCode =
   | 'invalidInput'

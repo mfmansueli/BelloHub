@@ -4,6 +4,7 @@
 // If the real functions use another envelope (callable `{data}` / `{result}`), this file is the only thing to change.
 
 import { ApiError, codeForStatus, isApiErrorCode } from './errors';
+import type { ErrorContact } from './types';
 
 export interface TransportOptions {
   readonly baseUrl: string;
@@ -81,13 +82,21 @@ function toError(status: number, payload: unknown): ApiError {
   if (typeof payload === 'object' && payload !== null) {
     const error = (payload as Record<string, unknown>)['error'];
     if (typeof error === 'object' && error !== null) {
-      const { code, retryAfterSeconds } = error as Record<string, unknown>;
+      const { code, retryAfterSeconds, professional } = error as Record<string, unknown>;
       return new ApiError(
         isApiErrorCode(code) ? code : codeForStatus(status),
         status,
         typeof retryAfterSeconds === 'number' ? retryAfterSeconds : undefined,
+        toContact(professional),
       );
     }
   }
   return new ApiError(codeForStatus(status), status);
+}
+
+function toContact(value: unknown): ErrorContact | undefined {
+  if (typeof value !== 'object' || value === null) return undefined;
+  const { displayName, firstName, whatsappE164 } = value as Record<string, unknown>;
+  if (typeof displayName !== 'string' || typeof firstName !== 'string') return undefined;
+  return { displayName, firstName, ...(typeof whatsappE164 === 'string' ? { whatsappE164 } : {}) };
 }

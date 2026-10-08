@@ -8,9 +8,16 @@
     "node": ">=22.18"
   },
   "scripts": {
-    "gen": "tsx scripts/gen-regions.ts",
+    "gen": "tsx scripts/gen-regions.ts && tsx scripts/gen-tokens.ts && tsx scripts/build-legal.ts",
     "dev": "npm run gen && vite",
-    "test": "npm run gen && vitest run"
+    "mock": "tsx test/mock-server/main.ts",
+    "build": "npm run gen && vite build && tsx scripts/check-size.ts",
+    "preview": "vite preview",
+    "typecheck": "npm run gen && tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "lint": "npm run gen && eslint . --max-warnings 0",
+    "test": "npm run gen && vitest run",
+    "build:e2e": "npm run gen && vite build --mode e2e --outDir dist-e2e",
+    "mock:e2e": "tsx test/mock-server/main.ts --serve-dist dist-e2e"
   },
   "dependencies": {
     "@firebase/app": "0.16.3",

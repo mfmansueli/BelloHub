@@ -3,7 +3,7 @@
 // time zone; money uses the business currency; the week start and the clock follow the business region (D25).
 
 import type { LocaleId } from './locales';
-import { parseDateKey, regionClock, type DateKey, type RegionClock } from './datetime';
+import { instantFromZoned, parseDateKey, regionClock, type DateKey, type RegionClock } from './datetime';
 
 export interface FormatContext {
   readonly localeId: LocaleId;
@@ -44,6 +44,15 @@ export class Formatter {
     };
   }
 
+  /**
+   * An instant as milliseconds. A bare date (`2026-10-28`, how a recommended return date arrives) is read as noon
+   * in the business zone, so formatting it in that zone keeps the day it names.
+   */
+  ms(value: number | string): number {
+    if (typeof value === 'number') return value;
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) ? instantFromZoned(value, 12, 0, this.context.timeZone) : Date.parse(value);
+  }
+
   get timeZone(): string {
     return this.context.timeZone;
   }
@@ -70,7 +79,7 @@ export class Formatter {
   /** `15:00` (or `3:00 PM` where the business region uses 12 hours). */
   time(instant: number | string): string {
     return this.dateFormat('time', { hour: 'numeric', minute: '2-digit', hourCycle: this.clock.hourCycle }).format(
-      toMs(instant),
+      this.ms(instant),
     );
   }
 
@@ -80,7 +89,7 @@ export class Formatter {
       hour: 'numeric',
       minute: '2-digit',
       hourCycle: this.clock.hourCycle,
-    }).format(toMs(instant));
+    }).format(this.ms(instant));
   }
 
   private monthDay(format: 'long' | 'short', instant: number): string {
@@ -89,24 +98,24 @@ export class Formatter {
 
   /** `Thursday · October 1` */
   weekdayDate(instant: number | string): string {
-    const ms = toMs(instant);
+    const ms = this.ms(instant);
     const weekday = this.dateFormat('wd-long', { weekday: 'long' }).format(ms);
     return `${weekday} · ${this.monthDay('long', ms)}`;
   }
 
   /** `Thu, Oct 1` */
   shortDate(instant: number | string): string {
-    return this.dateFormat('short', { weekday: 'short', month: 'short', day: 'numeric' }).format(toMs(instant));
+    return this.dateFormat('short', { weekday: 'short', month: 'short', day: 'numeric' }).format(this.ms(instant));
   }
 
   /** `Thursday, October 1` */
   longDate(instant: number | string): string {
-    return this.dateFormat('long', { weekday: 'long', month: 'long', day: 'numeric' }).format(toMs(instant));
+    return this.dateFormat('long', { weekday: 'long', month: 'long', day: 'numeric' }).format(this.ms(instant));
   }
 
   /** `October 1` */
   dayMonth(instant: number | string): string {
-    return this.monthDay('long', toMs(instant));
+    return this.monthDay('long', this.ms(instant));
   }
 
   /** `Thursday, October 1` for a civil date. */
@@ -143,12 +152,26 @@ export class Formatter {
     return new Intl.NumberFormat(this.tag).format(value);
   }
 
+  /** A year or any number that must not be grouped (`2019`, not `2,019`). */
+  plain(value: number): string {
+    return new Intl.NumberFormat(this.tag, { useGrouping: false }).format(value);
+  }
+
   /** `90 min` (the unit short form of the language). */
   minutes(value: number): string {
     try {
       return new Intl.NumberFormat(this.tag, { style: 'unit', unit: 'minute', unitDisplay: 'short' }).format(value);
     } catch {
       return `${this.number(value)} min`;
+    }
+  }
+
+  /** `24 hours` (the long unit form, for a policy window). */
+  hours(value: number): string {
+    try {
+      return new Intl.NumberFormat(this.tag, { style: 'unit', unit: 'hour', unitDisplay: 'long' }).format(value);
+    } catch {
+      return `${this.number(value)} h`;
     }
   }
 
@@ -185,6 +208,3 @@ export class Formatter {
   }
 }
 
-function toMs(instant: number | string): number {
-  return typeof instant === 'number' ? instant : Date.parse(instant);
-}

@@ -55,6 +55,11 @@ export default tseslint.config(
       'no-console': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-unnecessary-condition': 'off',
+      // The mock server and scripts return `send(...)` and discard values on purpose.
+      '@typescript-eslint/no-confusing-void-expression': 'off',
+      '@typescript-eslint/no-meaningless-void-operator': 'off',
+      '@typescript-eslint/no-base-to-string': 'off',
+      'no-control-regex': 'off',
     },
   },
 );

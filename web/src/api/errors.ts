@@ -1,13 +1,15 @@
 // One error type for everything the server or the network can do wrong. It carries a code and nothing else:
 // no body, no token, no personal data, so it is always safe to show, log or send to an error boundary.
 
-import type { ApiErrorCode } from './types';
+import type { ApiErrorCode, ErrorContact } from './types';
 
 export class ApiError extends Error {
   constructor(
     readonly code: ApiErrorCode,
     readonly status = 0,
     readonly retryAfterSeconds?: number,
+    /** For an unknown or expired link: the professional to message. */
+    readonly contact?: ErrorContact,
   ) {
     super(code);
     this.name = 'ApiError';

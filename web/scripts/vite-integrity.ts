@@ -1,7 +1,9 @@
 // Build plugin: Subresource Integrity on the entry script and stylesheet, and the published bundle hashes.
 //
 // - `integrity="sha384-..."` on every <script> and <link> that index.html loads (docs/06 section 6). There is no
-//   external-looking asset, so this guards against a corrupted or swapped file on the CDN edge.
+//   external-looking asset, so this guards against a corrupted or swapped file on the CDN edge. The hashes are
+//   computed from the files on disk after the whole build wrote them: Vite still rewrites chunk code late in the
+//   build, so hashing earlier would not match what is served.
 // - `dist/.well-known/bellohub-build.txt` lists the SHA-256 of every file and one hash over the list, so anyone can
 //   compare what a page served with what the build published (docs/06 section 6, "bundle hash is published").
 
@@ -10,7 +12,7 @@ import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'n
 import { join, relative } from 'node:path';
 import type { Plugin } from 'vite';
 
-function integrityOf(content: string | Uint8Array): string {
+function integrityOf(content: Buffer): string {
   return `sha384-${createHash('sha384').update(content).digest('base64')}`;
 }
 
@@ -29,20 +31,14 @@ export function integrityPlugin(): Plugin {
     configResolved(config) {
       outDir = config.build.outDir;
     },
-    transformIndexHtml: {
-      order: 'post',
-      handler(html, context) {
-        const bundle = context.bundle;
-        if (bundle === undefined) return html;
-        return html.replace(/<(script|link)\b([^>]*?)(src|href)="\/(assets\/[^"]+)"([^>]*)>/g, (tag, name: string, before: string, attribute: string, file: string, after: string) => {
-          const item = bundle[file];
-          if (item === undefined || /\bintegrity=/.test(tag)) return tag;
-          const content = item.type === 'chunk' ? item.code : item.source;
-          return `<${name}${before}${attribute}="/${file}"${after} integrity="${integrityOf(content)}">`;
-        });
-      },
-    },
     writeBundle() {
+      const indexPath = join(outDir, 'index.html');
+      const html = readFileSync(indexPath, 'utf8').replace(/<(script|link)\b([^>]*?)(src|href)="\/(assets\/[^"]+)"([^>]*)>/g, (tag, name: string, before: string, attribute: string, file: string, after: string) => {
+        if (/\bintegrity=/.test(tag)) return tag;
+        return `<${name}${before}${attribute}="/${file}"${after} integrity="${integrityOf(readFileSync(join(outDir, file)))}">`;
+      });
+      writeFileSync(indexPath, html);
+
       const files = walk(outDir)
         .map((path) => relative(outDir, path).split('\\').join('/'))
         .filter((path) => !path.startsWith('.well-known/'))
