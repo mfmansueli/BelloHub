@@ -84,23 +84,26 @@ per professional, listed on each function. The numbers are in `functions/src/con
 |---|---|---|---|
 | `INVALID_ARGUMENT` | 400 | The input does not match the schema | `{ fields: ["client.phone", ...] }` (paths only, never values) |
 | `UNAUTHENTICATED` | 401 | Owner function without a valid ID token | |
-| `APP_CHECK_REQUIRED` | 412 | Enforcement is on and the App Check token is missing or invalid | |
+| `APP_CHECK_REQUIRED` | 401 | Enforcement is on and the App Check token is missing or invalid | |
 | `FORBIDDEN` | 403 | Signed in but not allowed (not the owner of the resource) | |
 | `NOT_FOUND` | 404 | Unknown slug, token, id | |
 | `TOKEN_EXPIRED` | 404 | The token exists but its time is over (booking + 7 days; portal after 180 idle days; revoked) | |
 | `RATE_LIMITED` | 429 | Too many calls | `{ retryAfterSeconds }` |
 | `VERIFICATION_FAILED` | 403 | The phone ID token or the email proof is missing, wrong, used, expired or for another contact | |
 | `INVALID_CODE` | 400 | Wrong or expired email code (also after 5 wrong tries) | |
-| `NOT_ALLOWED` | 409 | The professional's rules do not allow this action now | `{ action: "message" \| "request" \| "direct" }` the path that is allowed instead |
-| `CONFIRMATION_REQUIRED` | 409 | A late cancellation needs `acceptLateWarning: true` | |
-| `BOOKING_NOT_ACTIVE` | 409 | The booking is cancelled, declined, past or otherwise not in a state for this action | `{ status }` |
+| `NOT_ALLOWED` | 400 | The professional's rules do not allow this action now | `{ action: "message" \| "request" \| "direct" }` the path that is allowed instead |
+| `CONFIRMATION_REQUIRED` | 400 | A late cancellation needs `acceptLateWarning: true` | |
+| `BOOKING_NOT_ACTIVE` | 400 | The booking is cancelled, declined, past or otherwise not in a state for this action | `{ status }` |
 | `SLUG_TAKEN` | 409 | `claimSlug`: someone else owns it | |
-| `KEY_MISMATCH` | 409 | `submitSealed` used a `keyId` the professional does not hold (refetch `getFormContext`) | |
-| `PAYLOAD_TOO_LARGE` | 413 | An envelope or a profile is over its cap | `{ maxBytes }` |
+| `KEY_MISMATCH` | 400 | `submitSealed` used a `keyId` the professional does not hold (refetch `getFormContext`) | |
+| `PAYLOAD_TOO_LARGE` | 400 | An envelope or a profile is over its cap | `{ maxBytes }` |
 | `CONFLICT` | 409 | An id is already used with different content | |
 | `NOT_CONFIGURED` | 503 | A provider (email, App Store) is not set up in this environment | |
 | `TRY_AGAIN` | 503 | A transient contention or outage; repeat after a moment | |
 | `INTERNAL` | 500 | Anything else. Never carries details | |
+
+The HTTP status is the one the Firebase callable protocol sends for the underlying status (a test checks it); clients
+should branch on `error.message`, not on the number.
 
 ## 4. Conventions
 
@@ -208,8 +211,7 @@ res: {
 Semantics mirror the iOS `FreeSlotsCalculator`: weekly hours, breaks, days off, buffer (around bookings and holds,
 none around blocks), minimum notice, booking window, business time zone, daylight saving (a time that does not
 exist moves to the first valid time, a time that happens twice means its first occurrence). Confirmed and
-pending-approval bookings and unexpired holds occupy time. A client who is stopped from online booking sees `paused: true`.
-Errors: `NOT_FOUND` (slug, service, token). Limits: 60/min per IP.
+pending-approval bookings and unexpired holds occupy time. Errors: `NOT_FOUND` (slug, service, token). Limits: 60/min per IP.
 
 ### 5.3 `holdSlot`  (public)
 Soft hold of 5 minutes while the client types her details.
@@ -402,7 +404,7 @@ res: {
   expiresAt: Instant;                  // slides forward on use: 180 days of inactivity
 }
 ```
-Errors: `NOT_FOUND`, `TOKEN_EXPIRED` (also when revoked). Only what the professional published is returned.
+Errors: `NOT_FOUND`, `TOKEN_EXPIRED` (a revoked or idle portal; once the cleanup job has removed a revoked one it is `NOT_FOUND`, so treat both as "this link no longer works"). Only what the professional published is returned.
 
 ### 5.17 `getIcs`  (http GET)
 `GET <base>/getIcs?token=<manageToken>&locale=<LocaleId>` -> `200 text/calendar; charset=utf-8`, `Content-Disposition: attachment; filename="appointment.ics"`,
@@ -422,7 +424,7 @@ All owner calls use the signed-in professional's uid. The app reads her own docu
 ```ts
 ensureAccount:  req { countryCode: string; locale: LocaleId }
                 res { uid: string; appAccountToken: Uuid /* pass to StoreKit as appAccountToken */; dataRegion: "eu";
-                      registrations: { count: number; freeLimit: 10 };
+                      registrations: { count: number; freeLimit: number /* 10 */ };
                       plan: { state: "none" | "active" | "grace" | "expired" | "revoked"; expiresAt?: Instant };
                       slug?: Slug }
 ```
@@ -430,10 +432,10 @@ Idempotent. Creates `accounts/{uid}` on first call. Call after sign-in and on la
 
 ```ts
 reserveRegistration:  req { clientId: Uuid; phone?: E164 }
-                      res { decision: "allowed" | "needsSubscription"; count: number; freeLimit: 10; alreadyCounted: boolean }
+                      res { decision: "allowed" | "needsSubscription"; count: number; freeLimit: number /* 10 */; alreadyCounted: boolean }
 reserveRegistrations: req { clients: { clientId: Uuid; phone?: E164 }[] /* <= 200, processed in order */ }
                       res { results: { clientId: Uuid; decision: "allowed" | "needsSubscription"; alreadyCounted: boolean }[];
-                            count: number; freeLimit: 10 }
+                            count: number; freeLimit: number /* 10 */ }
 ```
 The **server is the authority** for the count; the client only reads it. Rules, in one transaction:
 1. `accounts/{uid}/registrations/{clientId}` exists -> `allowed`, `alreadyCounted: true`, nothing changes.
@@ -492,7 +494,7 @@ Rotation: the new key becomes current in the account keyring and in the public p
 ### 6.3 Bookings, requests, waitlist
 
 ```ts
-respondBookingRequest: req { bookingId: string; decision: "approve" | "decline"; message?: string /* <= 200 */ }
+respondBookingRequest: req { bookingId: string; decision: "approve" | "decline" }
                        res { status: "confirmed" | "declined" | "needsSubscription" }
 ```
 `pendingApproval` -> `confirmed` or `declined`. Approving a **new** phone registers the client (D42): with the free
@@ -509,8 +511,9 @@ A cancellation by the professional never counts against the client. `moveBooking
 rules (she may book outside her hours); the client is emailed if she gave an email.
 
 ```ts
-offerWaitlistSlot:   req { waitlistId: string; serviceId: Uuid; addOnIds?: Uuid[]; startsAt: Instant; holdMinutes?: number /* 15...1440, default 180 */ }
-                     res { holdKey: string; holdId: string; expiresAt: Instant }       // link: <web>/<slug>/time?offer=<holdKey>
+offerWaitlistSlot:   req { waitlistId: string; serviceId: Uuid; addOnIds?: Uuid[]; guests?: 0 | 1 | 2; startsAt: Instant; holdMinutes?: number /* 15...1440, default 180 */ }
+                     res { status: "offered"; holdKey: string; holdId: string; expiresAt: Instant }   // link: <web>/<slug>/time?offer=<holdKey>
+                       | { status: "slotTaken" }                                                       // the time is not free by her own rules
 removeWaitlistEntry: req { waitlistId: string }   res { ok: true }
 ```
 The waitlist entry becomes `offered`; the slot is held for that long for whoever opens the link; booking through it
@@ -609,7 +612,7 @@ Authenticated owner, own data only; **no client write anywhere except `devices` 
 | `devices/{uid}/tokens/{id}` | owner, **and she may write** | `fcmToken`, `platform`, `locale`, `lastSeenAt` |
 
 Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readable: `availability`, `holds`, `portal`,
-`contacts`, `rate`, `audit`, `slugs`, `calendarLocks`, `emailCodes`, `emailProofs` and every counter are function-only.
+`contacts`, `rate`, `audit`, `slugs`, `calendarLocks`, `emailCodes`, `emailProofs`, `idempotency`, `intakeForms` and every counter are function-only.
 
 ## 9. Retention (what the legal texts promise, D30)
 

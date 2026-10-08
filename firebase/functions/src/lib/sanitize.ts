@@ -18,7 +18,15 @@ function isControl(code: number): boolean {
   return code < 0x20 || (code >= 0x7f && code <= 0x9f) || code === 0x2028 || code === 0x2029;
 }
 
-/** `multiline` keeps line feeds (a bio, a rules text); otherwise they become spaces. Result is trimmed. */
+/** Controls that separate words (tab, line breaks, next line, line and paragraph separators). */
+function isSeparator(code: number): boolean {
+  return (code >= 0x09 && code <= 0x0d) || code === 0x85 || code === 0x2028 || code === 0x2029;
+}
+
+/**
+ * `multiline` keeps line feeds (a bio, a rules text); otherwise they become spaces. Other separators become a space,
+ * every other control character is removed. The result is trimmed.
+ */
 export function cleanText(value: string, multiline: boolean): string {
   const unified = value.normalize('NFC').replace(/\r\n?/g, '\n');
   let result = '';
@@ -26,7 +34,7 @@ export function cleanText(value: string, multiline: boolean): string {
     const code = character.codePointAt(0) ?? 0;
     if (isInvisible(code)) continue;
     if (code === 0x0a && multiline) result += '\n';
-    else if (isControl(code)) result += multiline ? '' : ' ';
+    else if (isControl(code)) result += isSeparator(code) ? ' ' : '';
     else result += character;
   }
   return result.trim();
