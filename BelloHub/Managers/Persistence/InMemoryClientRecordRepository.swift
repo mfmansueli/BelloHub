@@ -25,8 +25,11 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     private var storedProfile: ProfessionalProfile?
     private var tagsByID: [UUID: Tag] = [:]
     private var storedTemplate: RecordTemplate?
+    // Not private: the forms part of the contract lives in `InMemoryClientRecordRepository+Forms.swift`.
+    var healthFormTemplatesByVersion: [Int: HealthFormTemplate] = [:]
+    var patchTestsByID: [UUID: PatchTest] = [:]
     private let clock: @Sendable () -> Date
-    private let changes = VaultChangeBroadcaster()
+    let changes = VaultChangeBroadcaster()
 
     init(clock: @escaping @Sendable () -> Date = { Date() }) {
         self.clock = clock
@@ -68,6 +71,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         photosByID = photosByID.filter { $0.value.clientID != id }
         healthFormsByID = healthFormsByID.filter { $0.value.clientID != id }
         consentsByID = consentsByID.filter { $0.value.clientID != id }
+        patchTestsByID = patchTestsByID.filter { $0.value.clientID != id }
         plansByID = plansByID.filter { $0.value.clientID != id }
         clientsByID[id] = nil
         // The registration-ledger entry stays (D42).

@@ -1,0 +1,330 @@
+{
+ "localization": "id",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Alergi",
+   "prompt": "Apakah Anda memiliki alergi?",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "Pewangi"
+    },
+    {
+     "key": "latex",
+     "name": "Lateks"
+    },
+    {
+     "key": "nuts",
+     "name": "Kacang-kacangan"
+    },
+    {
+     "key": "retinol",
+     "name": "Retinol"
+    },
+    {
+     "key": "acids",
+     "name": "Asam"
+    },
+    {
+     "key": "dyes",
+     "name": "Pewarna rambut atau henna"
+    },
+    {
+     "key": "adhesives",
+     "name": "Perekat atau lem"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Obat",
+   "prompt": "Apakah Anda rutin mengonsumsi obat?",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Hamil atau menyusui",
+   "prompt": "Apakah Anda sedang hamil atau menyusui?",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Kondisi kulit",
+   "prompt": "Apakah Anda memiliki kondisi kulit tertentu?",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "Kulit sensitif"
+    },
+    {
+     "key": "eczema",
+     "name": "Eksim"
+    },
+    {
+     "key": "rosacea",
+     "name": "Rosacea"
+    },
+    {
+     "key": "acne",
+     "name": "Jerawat"
+    },
+    {
+     "key": "psoriasis",
+     "name": "Psoriasis"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Kondisi kesehatan",
+   "prompt": "Apakah Anda memiliki salah satu kondisi kesehatan berikut?",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "Diabetes"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "Pengencer darah"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "Tekanan darah tinggi"
+    },
+    {
+     "key": "epilepsy",
+     "name": "Epilepsi"
+    },
+    {
+     "key": "immune",
+     "name": "Daya tahan tubuh lemah"
+    },
+    {
+     "key": "keloids",
+     "name": "Keloid atau bekas luka menonjol"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Prosedur terbaru",
+   "prompt": "Dalam 6 bulan terakhir, apakah Anda menjalani salah satu prosedur berikut?",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "Isotretinoin"
+    },
+    {
+     "key": "peel",
+     "name": "Peeling kimia"
+    },
+    {
+     "key": "laser",
+     "name": "Laser atau terapi cahaya"
+    },
+    {
+     "key": "injectables",
+     "name": "Suntikan (filler atau botulinum)"
+    },
+    {
+     "key": "microneedling",
+     "name": "Microneedling"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "Paparan sinar matahari",
+   "prompt": "Dalam 2 minggu terakhir, apakah Anda mengalami kulit terbakar matahari atau menggunakan tanning bed?",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Kondisi mata",
+   "prompt": "Apakah Anda memiliki kondisi mata tertentu?",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "Lensa kontak"
+    },
+    {
+     "key": "dryEyes",
+     "name": "Mata kering atau sensitif"
+    },
+    {
+     "key": "infection",
+     "name": "Infeksi mata dalam sebulan terakhir"
+    },
+    {
+     "key": "surgery",
+     "name": "Operasi mata dalam 6 bulan terakhir"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Kondisi kuku",
+   "prompt": "Apakah Anda memiliki masalah pada kuku atau tangan?",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "Jamur kuku"
+    },
+    {
+     "key": "brittle",
+     "name": "Kuku rapuh atau mengelupas"
+    },
+    {
+     "key": "injury",
+     "name": "Cedera kuku baru-baru ini"
+    },
+    {
+     "key": "dermatitis",
+     "name": "Dermatitis atau eksim pada tangan"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Kondisi kulit kepala",
+   "prompt": "Apakah Anda memiliki masalah kulit kepala atau rambut rontok?",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Perawatan rambut",
+   "prompt": "Dalam 6 bulan terakhir, apakah Anda menjalani salah satu perawatan rambut berikut?",
+   "options": [
+    {
+     "key": "color",
+     "name": "Pewarnaan"
+    },
+    {
+     "key": "bleach",
+     "name": "Pemutihan"
+    },
+    {
+     "key": "relaxer",
+     "name": "Pelurusan atau keratin"
+    },
+    {
+     "key": "perm",
+     "name": "Keriting permanen"
+    },
+    {
+     "key": "henna",
+     "name": "Henna"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Reaksi terhadap pewarna rambut",
+   "prompt": "Pernahkah Anda mengalami reaksi terhadap pewarna rambut?",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Lainnya",
+   "prompt": "Adakah hal penting lain yang perlu kami ketahui sebelum janji temu?",
+   "options": []
+  }
+ ]
+}

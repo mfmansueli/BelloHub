@@ -1,0 +1,330 @@
+{
+ "localization": "ar",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "الحساسية",
+   "prompt": "هل لديكم أي حساسية؟",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "العطور"
+    },
+    {
+     "key": "latex",
+     "name": "اللاتكس"
+    },
+    {
+     "key": "nuts",
+     "name": "المكسرات"
+    },
+    {
+     "key": "retinol",
+     "name": "الريتينول"
+    },
+    {
+     "key": "acids",
+     "name": "الأحماض"
+    },
+    {
+     "key": "dyes",
+     "name": "صبغة الشعر أو الحناء"
+    },
+    {
+     "key": "adhesives",
+     "name": "المواد اللاصقة أو الغراء"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "الأدوية",
+   "prompt": "هل تتناولون أي أدوية بانتظام؟",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "الحمل أو الرضاعة",
+   "prompt": "هل هناك حمل أو رضاعة حاليًا؟",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "مشكلات البشرة",
+   "prompt": "هل لديكم أي مشكلات في البشرة؟",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "بشرة حساسة"
+    },
+    {
+     "key": "eczema",
+     "name": "الإكزيما"
+    },
+    {
+     "key": "rosacea",
+     "name": "الوردية (روزاسيا)"
+    },
+    {
+     "key": "acne",
+     "name": "حب الشباب"
+    },
+    {
+     "key": "psoriasis",
+     "name": "الصدفية"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "الحالات الصحية",
+   "prompt": "هل لديكم أيٌّ من هذه الحالات الصحية؟",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "السكري"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "مميّعات الدم"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "ارتفاع ضغط الدم"
+    },
+    {
+     "key": "epilepsy",
+     "name": "الصرع"
+    },
+    {
+     "key": "immune",
+     "name": "ضعف المناعة"
+    },
+    {
+     "key": "keloids",
+     "name": "الجدرة (الكيلويد) أو الندوب البارزة"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "إجراءات حديثة",
+   "prompt": "خلال آخر 6 أشهر، هل أُجري أيٌّ من هذه الإجراءات؟",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "الأيزوتريتينوين"
+    },
+    {
+     "key": "peel",
+     "name": "التقشير الكيميائي"
+    },
+    {
+     "key": "laser",
+     "name": "الليزر أو العلاج بالضوء"
+    },
+    {
+     "key": "injectables",
+     "name": "الحقن (الفيلر أو البوتوكس)"
+    },
+    {
+     "key": "microneedling",
+     "name": "الوخز بالإبر الدقيقة (ميكرونيدلنغ)"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "التعرض للشمس",
+   "prompt": "خلال آخر أسبوعين، هل حدثت حروق شمس أو استُخدم سرير تسمير؟",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "مشكلات العين",
+   "prompt": "هل لديكم أي مشكلات في العينين؟",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "العدسات اللاصقة"
+    },
+    {
+     "key": "dryEyes",
+     "name": "جفاف العين أو حساسيتها"
+    },
+    {
+     "key": "infection",
+     "name": "التهاب في العين خلال الشهر الماضي"
+    },
+    {
+     "key": "surgery",
+     "name": "جراحة في العين خلال آخر 6 أشهر"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "مشكلات الأظافر",
+   "prompt": "هل لديكم أي مشكلات في الأظافر أو اليدين؟",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "فطريات الأظافر"
+    },
+    {
+     "key": "brittle",
+     "name": "أظافر هشة أو متقشرة"
+    },
+    {
+     "key": "injury",
+     "name": "إصابة حديثة في الظفر"
+    },
+    {
+     "key": "dermatitis",
+     "name": "التهاب جلد أو إكزيما في اليدين"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "مشكلات فروة الرأس",
+   "prompt": "هل توجد مشكلة في فروة الرأس أو تساقط للشعر؟",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "علاجات الشعر",
+   "prompt": "خلال آخر 6 أشهر، هل أُجري أيٌّ من علاجات الشعر هذه؟",
+   "options": [
+    {
+     "key": "color",
+     "name": "الصبغ"
+    },
+    {
+     "key": "bleach",
+     "name": "التفتيح (البلياش)"
+    },
+    {
+     "key": "relaxer",
+     "name": "فرد الشعر أو الكيراتين"
+    },
+    {
+     "key": "perm",
+     "name": "التمويج الدائم (بيرم)"
+    },
+    {
+     "key": "henna",
+     "name": "الحناء"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "تفاعل مع صبغة الشعر",
+   "prompt": "هل حدث يومًا تفاعل مع صبغة شعر؟",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "أمر آخر",
+   "prompt": "هل هناك أي أمر آخر مهم يجب معرفته قبل الموعد؟",
+   "options": []
+  }
+ ]
+}

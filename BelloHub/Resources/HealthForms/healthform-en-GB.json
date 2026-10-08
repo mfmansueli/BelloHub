@@ -1,0 +1,330 @@
+{
+ "localization": "en-GB",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Allergies",
+   "prompt": "Do you have any allergies?",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "Fragrance"
+    },
+    {
+     "key": "latex",
+     "name": "Latex"
+    },
+    {
+     "key": "nuts",
+     "name": "Nuts"
+    },
+    {
+     "key": "retinol",
+     "name": "Retinol"
+    },
+    {
+     "key": "acids",
+     "name": "Acids"
+    },
+    {
+     "key": "dyes",
+     "name": "Hair dye or henna"
+    },
+    {
+     "key": "adhesives",
+     "name": "Adhesives or glue"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Medication",
+   "prompt": "Do you take any regular medication?",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Pregnant or breastfeeding",
+   "prompt": "Are you pregnant or breastfeeding?",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Skin conditions",
+   "prompt": "Do you have any skin conditions?",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "Sensitive skin"
+    },
+    {
+     "key": "eczema",
+     "name": "Eczema"
+    },
+    {
+     "key": "rosacea",
+     "name": "Rosacea"
+    },
+    {
+     "key": "acne",
+     "name": "Acne"
+    },
+    {
+     "key": "psoriasis",
+     "name": "Psoriasis"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Health conditions",
+   "prompt": "Do you have any of these health conditions?",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "Diabetes"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "Blood thinners"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "High blood pressure"
+    },
+    {
+     "key": "epilepsy",
+     "name": "Epilepsy"
+    },
+    {
+     "key": "immune",
+     "name": "Weakened immune system"
+    },
+    {
+     "key": "keloids",
+     "name": "Keloid or raised scars"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Recent procedures",
+   "prompt": "In the last 6 months, have you had any of these?",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "Isotretinoin"
+    },
+    {
+     "key": "peel",
+     "name": "Chemical peel"
+    },
+    {
+     "key": "laser",
+     "name": "Laser or light treatment"
+    },
+    {
+     "key": "injectables",
+     "name": "Injectables (filler or botulinum toxin)"
+    },
+    {
+     "key": "microneedling",
+     "name": "Microneedling"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "Sun exposure",
+   "prompt": "In the last 2 weeks, have you had sunburn or used a sunbed?",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Eye conditions",
+   "prompt": "Do you have any eye conditions?",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "Contact lenses"
+    },
+    {
+     "key": "dryEyes",
+     "name": "Dry or sensitive eyes"
+    },
+    {
+     "key": "infection",
+     "name": "Eye infection in the last month"
+    },
+    {
+     "key": "surgery",
+     "name": "Eye surgery in the last 6 months"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Nail conditions",
+   "prompt": "Do you have any nail or hand conditions?",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "Nail fungus"
+    },
+    {
+     "key": "brittle",
+     "name": "Brittle or peeling nails"
+    },
+    {
+     "key": "injury",
+     "name": "Recent nail injury"
+    },
+    {
+     "key": "dermatitis",
+     "name": "Hand dermatitis or eczema"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Scalp conditions",
+   "prompt": "Do you have a scalp condition or hair loss?",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Hair treatments",
+   "prompt": "In the last 6 months, have you had any of these hair treatments?",
+   "options": [
+    {
+     "key": "color",
+     "name": "Colour"
+    },
+    {
+     "key": "bleach",
+     "name": "Bleach"
+    },
+    {
+     "key": "relaxer",
+     "name": "Relaxer or keratin smoothing"
+    },
+    {
+     "key": "perm",
+     "name": "Perm"
+    },
+    {
+     "key": "henna",
+     "name": "Henna"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Reaction to hair dye",
+   "prompt": "Have you ever had a reaction to a hair dye?",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Anything else",
+   "prompt": "Is there anything else that is important to know before the visit?",
+   "options": []
+  }
+ ]
+}
