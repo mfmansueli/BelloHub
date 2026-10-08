@@ -75,7 +75,8 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S4` (clients and the client record) · started: 2026-10-08 · branch: `build/v1` · `L` (legal drafts) is done, tag `stage-L`; S3 is done
+`S4` (clients and the client record) · started: 2026-10-08 · branch: `build/v1` · `L` and `S3` are done (tags `stage-L`, `stage-S3`).
+S4 runs as **four parallel agents**, each in its own git worktree and simulator, on top of a shared contract commit (`407427e`: the D42 registration gate, route, fakes): `clients-ui` (2.2, 4.1 to 4.4), `import` (4.6 and the gate's tests), `health-forms` (4.5, 6.14, legal text bundling), `tags-record-template` (6.12, 6.13, More). Their notes land in `docs/agent-notes/`; the coordinator merges the branches, regenerates the string catalog and merges the notes into this file and `DESIGN.md`.
 
 ## Stage log
 One block per finished stage (newest last):
@@ -227,6 +228,7 @@ Human tasks created: none.
 | ASSUMPTION-34 | "Use passcode" on the Locked screen runs the same system prompt as the Face ID button: the system offers the passcode after a failed face | `LocalAuthentication` has no call that jumps straight to the passcode | S3 |
 
 ## Conventions learned while building (read before writing code)
+- Parallel work: the owner asked for parallel agents on every stage. Commit a shared contract first (protocols, DTOs, routes, fakes), then one agent per slice with `isolation: worktree`, a distinct existing simulator each (`SIM_UDID`), no edits to PROGRESS.md, DESIGN.md or the generated string catalog (`docs/agent-notes/<slice>.md` instead). Integrate by merging branches, regenerating the catalog with `scripts/merge-strings.py`, deleting `Screens/Clients/Placeholders/`, then fast, smoke and `check-warnings.sh` on the merged result.
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
 - Accessibility identifiers go on elements, never on containers.
 - Tests: Swift Testing for logic, XCUITest through `XCUIApplication.launchedForUITests(locale:largestText:arguments:)`; the heavy audit lives in `DesignCatalogAuditUITests`, skipped by UISmoke.
