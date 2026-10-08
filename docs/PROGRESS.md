@@ -85,7 +85,7 @@ State of the parallel work. Nothing below is merged into `build/v1` yet; every a
 | Slice | Worktree dir (under `.claude/worktrees/`) | Branch | State |
 |---|---|---|---|
 | clients-ui (2.2, 4.1 to 4.4) | `agent-ab4d3f28d5af2223e` | `worktree-agent-ab4d3f28d5af2223e` | Screens built and committed; was in the final check-warnings run; notes `docs/agent-notes/clients-ui.md` |
-| import (4.6) | `agent-aef36165262ce4d7d` | `worktree-agent-aef36165262ce4d7d` | Engines and screen committed; was running the import audits; notes `import.md` |
+| import (4.6) | `agent-aef36165262ce4d7d` | `worktree-agent-aef36165262ce4d7d` | **Finished**, 3 commits (`158c624`, `8e163c2`, `68b2a1f`) on top of `407427e`, nothing WIP: fast 567 tests, UISmoke 14, check-warnings zero, strings gate green, import audit clean in en, pt-BR, de, ar, hi at AX5; notes `import.md` (integration hints and shared-file conflicts listed there) |
 | health-forms (4.5, 6.14) | `agent-a534192a1071f5248` | `worktree-agent-a534192a1071f5248` | Health, consent and templates committed; was running the Health audit; notes `health-forms.md` |
 | tags-record-template (6.12, 6.13, More) | `agent-acff0693a007bb95a` | `worktree-agent-acff0693a007bb95a` | Committed; was re-running the Hindi AX5 audit; notes `tags-record-template.md` |
 | backend (S8 server half) | `agent-a243edc65aa8fcdad` | `worktree-agent-a243edc65aa8fcdad` | **Finished**, tip `be05846`: 1,052 tests green on emulators; nothing deployed; handoff in `docs/agent-notes/backend.md` |
