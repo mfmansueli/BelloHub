@@ -146,7 +146,8 @@ const GUARDS: Readonly<Record<string, readonly { pattern: RegExp; why: string }[
     { pattern: /Kund:in|Kund\*in|Kund_in|Kunden\/innen|Kundinnen und Kunden|Kund\/in/, why: 'German uses "Kundschaft", no gender marks' },
     { pattern: /\b(du|dein|deine|deinen|deinem|deiner|deines|dich|dir)\b/, why: 'client pages address with "Sie"' },
   ],
-  fr: [{ pattern: /\b(tu|ton|ta|tes|toi|te)\b/i, why: 'French uses "vous" everywhere' }],
+  // Unicode-aware boundaries: a plain \b treats "ê" as a non-letter and would flag "êtes" as "tes".
+  fr: [{ pattern: /(?<![\p{L}'])(tu|ton|ta|tes|toi|te)(?![\p{L}])/iu, why: 'French uses "vous" everywhere' }],
   id: [{ pattern: /\b(kamu|kau|engkau)\b/i, why: 'client pages say "Anda"' }],
   hi: [{ pattern: /तुम|तू |तेरा|तुम्हारा/, why: 'Hindi uses the polite "आप"' }],
   tr: [{ pattern: /\bsen\b|\bsana\b|\bsenin\b/i, why: 'Turkish uses the polite "siz"' }],

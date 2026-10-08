@@ -213,7 +213,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
       ) : load.status === 'loading' ? (
         <div class="skeleton skeleton-block" aria-busy="true" />
       ) : days.length === 0 ? (
-        <p class="lead" data-testid="no-times">{t('cl9.noTimes')}</p>
+        <p class="lead" data-testid="no-times">{t('cl9.noTimes', { name: pro.firstName })}</p>
       ) : (
         <>
           <div class="stack-sm">

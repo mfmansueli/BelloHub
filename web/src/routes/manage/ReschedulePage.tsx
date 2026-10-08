@@ -182,7 +182,7 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
       ) : load.status === 'loading' ? (
         <div class="skeleton skeleton-block" aria-busy="true" />
       ) : days.length === 0 ? (
-        <p class="lead" data-testid="no-times">{t('cl9.noTimes')}</p>
+        <p class="lead" data-testid="no-times">{t('cl9.noTimes', { name: pro.firstName })}</p>
       ) : (
         <>
           <div class="stack-sm">

@@ -78,6 +78,12 @@ h1, h2, h3, p, ul, ol, dl, dd, figure {
   margin: 0;
 }
 
+/* Headings are sized by classes (.title, .section, .strong), never by the browser's defaults. */
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
 ul, ol {
   padding: 0;
   list-style: none;
