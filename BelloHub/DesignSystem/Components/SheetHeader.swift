@@ -11,6 +11,8 @@ struct SheetHeader: View {
     let title: LocalizedStringKey
     var subtitle: LocalizedStringKey?
     let closeLabel: LocalizedStringKey
+    /// Goes on the close button, so a UI test can find it without its translated label.
+    var closeIdentifier: String?
     let onClose: () -> Void
 
     var body: some View {
@@ -33,6 +35,7 @@ struct SheetHeader: View {
                     .background(Palette.sunken, in: Circle())
             }
             .accessibilityLabel(closeLabel)
+            .accessibilityIdentifier(closeIdentifier ?? "")
         }
         .padding(.horizontal, Spacing.gutter)
         .padding(.top, Spacing.md)

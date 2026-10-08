@@ -30,6 +30,9 @@ struct LaunchOptions: Equatable {
     var biometricsMode: String?
     /// Text size of the Design Catalog: `small`, `standard`, `large`, `accessibility3`, `accessibility5`.
     var catalogTextSize: String?
+    /// Shows one screen directly instead of the tab bar, for UI tests of a screen another stage has not wired in yet:
+    /// `health` (4.5, for the seeded client) or `formTemplates` (6.14).
+    var route: String?
 
     init() {}
 
@@ -43,6 +46,7 @@ struct LaunchOptions: Equatable {
         keepsState = arguments.contains("-uiKeepState")
         seed = Self.value(after: "-uiSeed", in: arguments)
         biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)
+        route = Self.value(after: "-uiRoute", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

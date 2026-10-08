@@ -16,6 +16,8 @@
       },
       "skippedTests": [
         "DesignCatalogAuditUITests",
+        "HealthAuditUITests",
+        "HealthMinorUITests",
         "OnboardingAuditUITests"
       ]
     }

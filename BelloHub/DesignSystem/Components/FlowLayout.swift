@@ -12,6 +12,9 @@ struct FlowLayout: Layout {
     var lineSpacing: CGFloat = Spacing.sm
     /// Centers each row, for a short sentence with a link at the end that may wrap.
     var isCentered = false
+    /// Measures every child with the row's full width, so a label longer than the row wraps onto more lines instead
+    /// of running past the edge. Off by default: children keep their natural single-line width.
+    var wrapsLongChildren = false
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
@@ -48,7 +51,8 @@ struct FlowLayout: Layout {
         var rows: [Row] = []
         var current = Row()
         for (index, subview) in subviews.enumerated() {
-            let size = subview.sizeThatFits(.unspecified)
+            let proposal = wrapsLongChildren ? ProposedViewSize(width: width, height: nil) : .unspecified
+            let size = subview.sizeThatFits(proposal)
             let needed = current.items.isEmpty ? size.width : current.width + spacing + size.width
             if needed > width, !current.items.isEmpty {
                 rows.append(current)
