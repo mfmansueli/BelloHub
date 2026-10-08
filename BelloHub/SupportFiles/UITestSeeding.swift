@@ -15,6 +15,7 @@ enum UITestSeeding {
     /// A signed-in professional with her workspace set up, so a test can start on the locked screen or the app.
     @MainActor
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
+        await ImportUITestSeeding.seedIfRequested(dependencies, options: options)
         guard options.seed == "onboarded", !options.keepsState else { return }
         let defaults = dependencies.defaults
         let user = AuthUser(id: userID, phoneE164: phone)
