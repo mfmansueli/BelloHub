@@ -4,6 +4,7 @@
 source "$(dirname "$0")/lib.sh"
 
 "$ROOT/scripts/check-project-settings.sh"
+"$ROOT/scripts/check-privacy.sh"
 
 failed=0
 

@@ -1,0 +1,12 @@
+rules_version = '2';
+// TODO(HUMAN-H4): bucket not created yet; see docs/14-HUMAN-TASKS.md.
+
+// Deny all client access, permanently: large sealed items are served through signed URLs
+// returned by Cloud Functions (docs/11-BACKEND-FIREBASE.md section 5).
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

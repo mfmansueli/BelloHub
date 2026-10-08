@@ -10,3 +10,17 @@ build/
 
 # Swift Package Manager
 .swiftpm/
+
+node_modules/
+.firebase/
+firebase-debug.log
+web/dist/
+*.local.xcconfig
+.env.local
+
+node_modules/
+.firebase/
+firebase-debug.log
+web/dist/
+*.local.xcconfig
+.env.local

@@ -17,20 +17,8 @@ scripts/check-project-settings.sh     # fails if build settings leak into projec
 Needs SwiftLint (`brew install swiftlint`). Build settings live in `Config/*.xcconfig`.
 Set `SIM_NAME` or `SIM_UDID` to pick another simulator (default: iPhone 17 on the oldest iOS 26+ runtime).
 
-## Crashlytics
+## Handoff
 
-Reports are sent from Release builds only. Debug builds stay silent so simulator crashes and test runs
-never reach the dashboard. Symbols are uploaded by the "Upload Crashlytics dSYMs" build phase, and only
-when you archive.
-
-To verify it end to end once (Crashlytics must be enabled in the Firebase console first):
-
-1. In Xcode, Edit Scheme > Run > Info, uncheck **Debug executable**. The debugger swallows crashes, so
-   Crashlytics never sees them while it is attached.
-2. In Run > Arguments, add `-crashlyticsEnableInDebug` and `-crashlyticsTestCrash`, then run. The app crashes
-   right after launch.
-3. Remove `-crashlyticsTestCrash`, keep `-crashlyticsEnableInDebug`, and run again. The saved report is sent
-   at startup and shows up in the Firebase console after a few minutes.
-4. Remove both arguments and check **Debug executable** again.
-
-Launching from the home screen sends nothing in a Debug build, because the arguments are what turn collection on.
+The product brief, decisions, build plan and progress live in [docs/README.md](docs/README.md); the running log is
+`docs/PROGRESS.md`. Backend config (Firestore `eur3`, Functions `europe-west1`) is in `firebase/`.
+Emulator, web and end-to-end commands are added here as those parts come to exist.

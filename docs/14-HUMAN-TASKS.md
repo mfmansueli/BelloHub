@@ -22,6 +22,7 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H14 | App Store Connect, subscriptions, privacy labels, TestFlight | Iago / Mateus | S12 |
 | H15 | Open markets in App Store Connect, one wave at a time | Iago | per wave (`16-MARKETS.md` §2) |
 | H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
+| H17 | GitHub CLI login (to open pull requests) and repository access for pushes | Iago | end of phase A |
 
 ---
 
@@ -93,3 +94,13 @@ In App Store Connect → the app → *Pricing and Availability* → countries an
 2. **EU trader status:** a seller of auto-renewing subscriptions to EU customers is normally a "trader" under the Digital Services Act and must provide and publish contact details in App Store Connect (*Business → Compliance*). Check with the accountant before opening any EU market (**wave 1**).
 3. **Agreements and tax:** accept the Paid Apps agreement and fill in bank and tax information in App Store Connect before subscriptions can be tested in production. (This is Apple's payout for the subscription, the only money in the system, D4.)
 4. **Xcode for uploads:** TestFlight and App Store uploads need a release version of Xcode. If `xcodebuild -version` shows a beta (D39), keep developing with it but install the matching release before uploading.
+
+---
+
+## Notes from Claude Code (kept current; humans tick, Claude Code does not)
+
+**2026-10-08 · S0**
+- **H1 verified.** `xcodebuild -allowProvisioningUpdates` for a device build succeeded with team `X5392U638Q` and produced the profile "iOS Team Provisioning Profile: com.bellohub" with iCloud/CloudKit container `iCloud.com.bellohub`, Push (`aps-environment`) and App Attest entitlements. Still for a person: add Mateus to the team, and confirm iCloud on a real device (H3).
+- **H4 is only partly done.** `firebase projects:list` shows one project, `bello-hub`, not `bellohub-dev`, `bellohub-staging` and `bellohub-prod`. Steps for the owners: (1) create the `dev` and `staging` projects (and `prod` when ready) on the Blaze plan in the same Google account; (2) tell Claude Code the ids so it adds the aliases to `firebase/.firebaserc` and puts each `GoogleService-Info.plist` under `Config/Firebase/<Env>/`; (3) per project: Firestore `(default)` in `eur3` (Claude Code can run `firebase firestore:databases:create '(default)' --location=eur3 --project <id>` from `firebase/` once the project exists), the default Storage bucket in the **EU** location (console: Build > Storage > Get started; this Mac has no `gcloud`), plus the items already listed in H4 (Auth Phone with the SMS allow-list, APNs key, budgets, TTL policies, Secret Manager). Already done by Claude Code in `bello-hub`: Firestore `(default)` in `eur3` with deny-all rules.
+- `TODO(HUMAN-H4)` marks: `firebase/.firebaserc` (aliases) and `firebase/storage.rules` (bucket).
+- **H17 (new).** `gh auth login` on this Mac so Claude Code can open the pull requests at the end of each phase, and make sure the SSH key can push to `git@github.com:mfmansueli/BelloHub.git` (branch `build/v1`). Until then Claude Code pushes branches only and keeps the pull request text in `docs/PROGRESS.md`.

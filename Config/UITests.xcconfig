@@ -2,7 +2,7 @@
 // BelloHubUITests: XCUITest, runs against the installed BelloHub app.
 
 PRODUCT_NAME = $(TARGET_NAME)
-PRODUCT_BUNDLE_IDENTIFIER = com.iagoxavierdelima.BelloHubUITests
+PRODUCT_BUNDLE_IDENTIFIER = com.bellohub.BelloHubUITests
 MARKETING_VERSION = 1.0
 CURRENT_PROJECT_VERSION = 1
 

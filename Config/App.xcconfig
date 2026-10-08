@@ -7,7 +7,10 @@ MARKETING_VERSION = 1.0
 CURRENT_PROJECT_VERSION = 1
 
 CODE_SIGN_STYLE = Automatic
-CODE_SIGN_ENTITLEMENTS = BelloHub/BelloHub.entitlements
+CODE_SIGN_ENTITLEMENTS = BelloHub/SupportFiles/BelloHub.entitlements
+// App Attest (Firebase App Check) is a development environment in Debug and production everywhere else.
+APP_ATTEST_ENVIRONMENT = production
+APP_ATTEST_ENVIRONMENT[config=Debug] = development
 DEVELOPMENT_TEAM = X5392U638Q
 
 ENABLE_PREVIEWS = YES
@@ -21,9 +24,10 @@ GENERATE_INFOPLIST_FILE = YES
 // App Store Connect and Xcode Cloud stop asking about it on every build.
 INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO
 INFOPLIST_KEY_CFBundleDisplayName = Bello Hub
+// Silent pushes wake the app to fetch sealed mailbox items (docs/06-PRIVACY-SECURITY.md section 3.5).
+INFOPLIST_KEY_UIBackgroundModes = remote-notification
 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES
 INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES
 INFOPLIST_KEY_UILaunchScreen_Generation = YES
 INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault
-INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
 INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
