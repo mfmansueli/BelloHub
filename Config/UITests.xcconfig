@@ -1,0 +1,14 @@
+// UITests.xcconfig
+// BelloHubUITests: XCUITest, runs against the installed BelloHub app.
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = com.iagoxavierdelima.BelloHubUITests
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
+CODE_SIGN_STYLE = Automatic
+DEVELOPMENT_TEAM = X5392U638Q
+
+GENERATE_INFOPLIST_FILE = YES
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
+TEST_TARGET_NAME = BelloHub

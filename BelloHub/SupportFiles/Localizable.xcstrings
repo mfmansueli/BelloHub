@@ -1,0 +1,39 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "home.greeting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, world!"
+          }
+        }
+      }
+    },
+    "home.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
+    "main.tab.home" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

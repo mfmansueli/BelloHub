@@ -1,0 +1,16 @@
+# Runs in every build through the "SwiftLint" build phase. Fix the code instead of disabling a rule;
+# a disable needs a comment saying why.
+included:
+  - BelloHub
+  - BelloHubTests
+  - BelloHubUITests
+excluded:
+  - build
+
+opt_in_rules:
+  - empty_count
+  - sorted_imports
+
+identifier_name:
+  # The Palette tokens are short on purpose (bg, ink, ink2).
+  min_length: 2

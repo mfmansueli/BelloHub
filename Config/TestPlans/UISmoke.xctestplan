@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "982811EB-84C9-467E-B0ED-D39ECCA44A6F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:BelloHub.xcodeproj",
+        "identifier" : "000000000000000300000000",
+        "name" : "BelloHubUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
