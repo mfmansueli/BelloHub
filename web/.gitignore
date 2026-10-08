@@ -1,0 +1,18 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.lighthouseci/
+*.tsbuildinfo
+.env.local
+
+# Python tooling (fonts, cross-implementation vectors)
+.venv/
+__pycache__/
+
+# Generated at build time by `npm run gen` from the single sources in the repository
+src/styles/tokens.generated.css
+src/lib/regions.generated.ts
+src/legal/generated/
