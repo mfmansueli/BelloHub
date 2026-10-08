@@ -1,4 +1,4 @@
-import { getApps, initializeApp } from 'firebase-admin/app';
+import { getApp, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
@@ -29,7 +29,12 @@ let cached: Deps | undefined;
  */
 export function createDeps(): Deps {
   if (cached) return cached;
-  if (getApps().length === 0) initializeApp();
+  try {
+    getApp();
+  } catch {
+    // Not initialized yet. (Other apps may exist, so the presence of any app is not the test.)
+    initializeApp();
+  }
   const db = getFirestore();
   try {
     // Optional fields are simply omitted from writes. Must run before the first use of `db`.
@@ -55,6 +60,9 @@ export function createDeps(): Deps {
       validateOutputs: emulator,
       trustedProxyHops: 1,
       planProductIds: PLAN_PRODUCT_IDS.value()
+        .split(',')
+        .map((id) => id.trim())
+        .filter((id) => id.length > 0)
     },
     // TODO(HUMAN-H7): construct the chosen email provider here and pass `true` as the third argument.
     messenger: emulator
