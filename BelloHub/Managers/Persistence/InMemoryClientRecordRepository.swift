@@ -281,4 +281,40 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         changes.notify()
     }
 }
+
+// MARK: - Merge
+
+extension InMemoryClientRecordRepository {
+    @discardableResult
+    func mergeClient(keeping keptID: UUID, merging mergedID: UUID) throws -> Client {
+        guard keptID != mergedID, let kept = clientsByID[keptID], let merged = clientsByID[mergedID] else {
+            throw VaultRepositoryError.notFound
+        }
+        var combined = ClientMerger.merged(keeping: kept, merging: merged)
+        combined.updatedAt = clock()
+        appointmentsByID = reassigned(appointmentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        recordsByID = reassigned(recordsByID, from: mergedID, to: keptID, owner: \.clientID)
+        incidentsByID = reassigned(incidentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        photosByID = reassigned(photosByID, from: mergedID, to: keptID, owner: \.clientID)
+        healthFormsByID = reassigned(healthFormsByID, from: mergedID, to: keptID, owner: \.clientID)
+        consentsByID = reassigned(consentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        plansByID = reassigned(plansByID, from: mergedID, to: keptID, owner: \.clientID)
+        clientsByID[keptID] = combined
+        clientsByID[mergedID] = nil
+        // Neither ledger entry is touched (D42).
+        changes.notify()
+        return combined
+    }
+
+    private func reassigned<Value>(
+        _ items: [UUID: Value], from mergedID: UUID, to keptID: UUID, owner: WritableKeyPath<Value, UUID>
+    ) -> [UUID: Value] {
+        items.mapValues { item in
+            guard item[keyPath: owner] == mergedID else { return item }
+            var moved = item
+            moved[keyPath: owner] = keptID
+            return moved
+        }
+    }
+}
 #endif
