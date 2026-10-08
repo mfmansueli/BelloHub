@@ -2,11 +2,12 @@
 // The BelloHub app target. Shared settings come from Project.xcconfig.
 
 PRODUCT_NAME = $(TARGET_NAME)
-PRODUCT_BUNDLE_IDENTIFIER = com.iagoxavierdelima.BelloHub
+PRODUCT_BUNDLE_IDENTIFIER = com.bellohub
 MARKETING_VERSION = 1.0
 CURRENT_PROJECT_VERSION = 1
 
 CODE_SIGN_STYLE = Automatic
+CODE_SIGN_ENTITLEMENTS = BelloHub/BelloHub.entitlements
 DEVELOPMENT_TEAM = X5392U638Q
 
 ENABLE_PREVIEWS = YES
@@ -16,6 +17,9 @@ SWIFT_EMIT_LOC_STRINGS = YES
 // MARK: - Generated Info.plist
 
 GENERATE_INFOPLIST_FILE = YES
+// Export compliance: the app only uses exempt encryption (HTTPS and what the OS provides), so
+// App Store Connect and Xcode Cloud stop asking about it on every build.
+INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO
 INFOPLIST_KEY_CFBundleDisplayName = Bello Hub
 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES
 INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES
