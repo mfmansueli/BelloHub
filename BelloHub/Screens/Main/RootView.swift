@@ -14,6 +14,7 @@ struct RootView: View {
     @State private var permissions: PermissionService
     @State private var vault: VaultService
     @State private var profile: ProfileService
+    @State private var registration: ClientRegistrationService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -29,6 +30,7 @@ struct RootView: View {
         _permissions = State(initialValue: dependencies.permissions)
         _vault = State(initialValue: dependencies.vault)
         _profile = State(initialValue: dependencies.profile)
+        _registration = State(initialValue: dependencies.registration)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -47,6 +49,7 @@ struct RootView: View {
         .environment(permissions)
         .environment(vault)
         .environment(profile)
+        .environment(registration)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {

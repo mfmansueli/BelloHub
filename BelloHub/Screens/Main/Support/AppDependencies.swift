@@ -15,6 +15,7 @@ struct AppDependencies {
     let permissions: PermissionService
     let vault: VaultService
     let profile: ProfileService
+    let registration: ClientRegistrationService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -35,6 +36,7 @@ struct AppDependencies {
             permissions: PermissionService(),
             vault: vault,
             profile: ProfileService(vault: vault),
+            registration: ClientRegistrationService(vault: vault),
             defaults: defaults
         )
     }
@@ -59,6 +61,7 @@ struct AppDependencies {
             permissions: PermissionService(provider: UITestPermissionProvider()),
             vault: vault,
             profile: ProfileService(vault: vault),
+            registration: ClientRegistrationService(vault: vault),
             defaults: defaults
         )
     }

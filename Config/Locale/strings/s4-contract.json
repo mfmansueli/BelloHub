@@ -1,0 +1,34 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "common.close",
+   "Closes a sheet that only informs.",
+   "Close",
+   "Fechar",
+   "Fechar",
+   "Cerrar",
+   "Cerrar",
+   "Chiudi",
+   "Fermer",
+   "Schließen",
+   "Kapat",
+   "Tutup",
+   "बंद करें",
+   "إغلاق"
+  ]
+ ]
+}
