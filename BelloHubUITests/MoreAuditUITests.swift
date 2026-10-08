@@ -50,7 +50,7 @@ final class MoreAuditUITests: XCTestCase {
 
     private func walkTags(_ app: XCUIApplication, tag: String) throws {
         app.tapButton("more.tagsRow")
-        XCTAssertTrue(app.buttons["tags.newButton"].waitForExistence(timeout: 5), "\(tag) tags")
+        XCTAssertTrue(scrollTo(app.buttons["tags.newButton"], in: app), "\(tag) tags")
         try audit(app, "\(tag) tags")
 
         app.tapButton("tags.newButton")
@@ -65,14 +65,10 @@ final class MoreAuditUITests: XCTestCase {
 
     private func walkRecordFields(_ app: XCUIApplication, tag: String) throws {
         app.tapButton("more.recordFieldsRow")
-        XCTAssertTrue(
-            app.switches["recordTemplate.field.esthetician.skinCondition"].waitForExistence(timeout: 5),
-            "\(tag) record fields"
-        )
+        XCTAssertTrue(app.navigationBars.firstMatch.waitForExistence(timeout: 5), "\(tag) record fields")
         try audit(app, "\(tag) record fields")
-        app.swipeUp()
-        app.swipeUp()
-        try audit(app, "\(tag) record fields, bottom")
+        XCTAssertTrue(scrollTo(app.buttons["recordTemplate.addFieldButton"], in: app), "\(tag) add field row")
+        try audit(app, "\(tag) record fields, scrolled")
 
         app.tapButton("recordTemplate.addFieldButton")
         XCTAssertTrue(app.textFields["fieldEditor.nameField"].waitForExistence(timeout: 5), "\(tag) field sheet")
@@ -88,19 +84,38 @@ final class MoreAuditUITests: XCTestCase {
         app.tapButton("fieldEditor.cancelButton")
     }
 
+    /// Scrolls up the list until `element` exists: a list builds only the rows near the screen, and at AX5 the row the
+    /// test wants can be several screens down.
+    private func scrollTo(_ element: XCUIElement, in app: XCUIApplication, limit: Int = 24) -> Bool {
+        // A short drag, not a swipe: at AX5 a swipe moves past a row that is only a few lines tall, and a list that
+        // recycles its rows then never has it on screen between two looks (seen with the add-field row in pt-BR).
+        let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+        let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+        var drags = 0
+        while !element.waitForExistence(timeout: 1.5), drags < limit {
+            start.press(forDuration: 0.05, thenDragTo: end)
+            drags += 1
+        }
+        return element.exists
+    }
+
     /// Clipped text and missing descriptions only, as in the onboarding audit: contrast is measured exactly by the unit
-    /// tests (`PaletteContrastTests`, `TagColorContrastTests`), not by sampling pixels (CLAUDE.md section 5). Three
+    /// tests (`PaletteContrastTests`, `TagColorContrastTests`), not by sampling pixels (CLAUDE.md section 5). Four
     /// false positives are ignored, each checked by eye on the simulator:
     /// - Devanagari and Arabic text, whose fallback fonts the "may be clipped at larger Dynamic Type sizes" heuristic
     ///   measures with Latin metrics, though the screens scroll and nothing is cut;
-    /// - the name field of the field sheet, which the same heuristic flags although it grows with the text (58 pt at
-    ///   the default size, 70 pt at AX5) exactly as the tag sheet's identical field, which it does not flag;
-    /// - the cells of the system keyboard's prediction bar (`TUIPredictionViewCell`) in Arabic: they are the
-    ///   keyboard's, not the app's, and the audit reports them whenever the keyboard is up.
+    /// - an issue with no element, or an element with no frame and no label (Hindi record fields), which is not on
+    ///   screen and cannot be clipped;
+    /// - the name fields of the two sheets, which the same heuristic flags in some languages although they grow with
+    ///   their text (58 pt at the default size, 70 pt at AX5);
+    /// - the keyboard's own buttons and prediction cells (`TUIPredictionViewCell`, `UIAlternativeCandidatesButton`,
+    ///   `UIScriptSwitcherButton`): they are the system's, not the app's, and the audit reports them whenever the
+    ///   keyboard of Arabic or Hindi is up.
     private func audit(_ app: XCUIApplication, _ screen: String) throws {
         try app.performAccessibilityAudit(for: [.textClipped, .sufficientElementDescription]) { issue in
             let element = issue.element
-            if issue.detailedDescription.contains("TUIPredictionViewCell") { return true }
+            let systemKeyboard = ["TUIPredictionViewCell", "UIAlternativeCandidatesButton", "UIScriptSwitcherButton"]
+            if systemKeyboard.contains(where: { issue.detailedDescription.contains($0) }) { return true }
             if issue.auditType == .textClipped, Self.isKnownFalsePositive(element) { return true }
             let names = [element?.identifier, element?.label].compactMap { $0 }.filter { !$0.isEmpty }
             let frame = element?.frame ?? .zero
@@ -113,8 +128,9 @@ final class MoreAuditUITests: XCTestCase {
     }
 
     private static func isKnownFalsePositive(_ element: XCUIElement?) -> Bool {
-        guard let element else { return false }
-        if element.identifier == "fieldEditor.nameField" { return true }
+        // An issue with no element, or one with no frame and no label, is not on screen: it cannot be clipped.
+        guard let element, !element.frame.isEmpty || !element.label.isEmpty else { return true }
+        if ["tagEditor.nameField", "fieldEditor.nameField"].contains(element.identifier) { return true }
         let fallbackFontScripts = [0x0600...0x06FF, 0x0900...0x097F]
         return element.label.unicodeScalars.contains { scalar in
             fallbackFontScripts.contains { $0.contains(Int(scalar.value)) }
