@@ -17,7 +17,7 @@ struct MainView: View {
             }
             .accessibilityIdentifier("main.tab.home")
         }
-        .tint(Palette.accent)
+        .tint(Palette.ink)
     }
 }
 
