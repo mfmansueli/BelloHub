@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Manual treatment record</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input{border:0;outline:none;padding:0;width:100%;background:none}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden;display:flex;flex-direction:column">
+
+<div style="padding:62px 20px 0">
+<div style="display:flex;align-items:center;justify-content:space-between;height:44px">
+<a href="Tx-1-Register.dc.html" style="min-width:64px;height:44px;display:flex;align-items:center;font-size:17px;color:#9A5A6C">Cancel</a>
+<div style="font-size:17px;font-weight:600">Treatment record</div>
+<a href="Tx-2-Listening.dc.html" aria-label="Use voice instead" style="min-width:64px;height:44px;display:flex;align-items:center;justify-content:flex-end;color:#9A5A6C"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg></a>
+</div>
+<div style="margin-top:8px;display:flex;align-items:center;gap:12px;background:#FFFCF8;border:1px solid #ECE7DF;border-radius:18px;padding:10px 14px">
+<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(145deg,#F3E7DA,#E2CDB6);color:#4A4036;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex:none">AC</div>
+<div style="flex:1"><div style="font-size:15px;font-weight:600">Ana Costa</div><div style="font-size:13px;color:#65625D">Brazilian Glow · Sep 30</div></div>
+</div>
+<div style="font-size:15px;font-weight:600;color:#65625D;margin:14px 4px 6px">Fields for your craft</div>
+<div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px">
+<sc-for list="{{profs}}" as="p" hint-placeholder-count="8">
+<button onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="flex:none;height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;background:{{p.bg}};color:{{p.fg}};border:1px solid {{p.bd}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:14px 20px 16px">
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:18px 16px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="12">
+<sc-if value="{{it.isLabel}}" hint-placeholder-val="{{true}}">
+<div style="width:100%;margin-top:{{it.mt}}px;font-size:13px;font-weight:600;color:#65625D">{{it.label}}</div>
+</sc-if>
+<sc-if value="{{it.isChip}}" hint-placeholder-val="{{false}}">
+<button onClick="{{it.pick}}" aria-pressed="{{it.on}}" style="height:44px;padding:0 16px;border-radius:12px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;background:{{it.bg}};color:{{it.fg}};border:1.5px solid {{it.bd}}">{{it.label}}</button>
+</sc-if>
+<sc-if value="{{it.isText}}" hint-placeholder-val="{{false}}">
+<div style="width:100%"><input aria-label="{{it.label}}" placeholder="{{it.ph}}" style="height:48px;border-radius:12px;background:#F8F6F2;border:1.5px solid #E3DED5;padding:0 14px;font-size:16px"></div>
+</sc-if>
+</sc-for>
+</div>
+<div style="font-size:13px;line-height:1.45;color:#65625D;margin:12px 4px 0">Anything you leave empty stays empty. Nothing is guessed or filled in for you.</div>
+</div>
+
+<div style="padding:12px 20px 34px;background:#F8F6F2;border-top:1px solid #ECE7DF">
+<a href="Tx-5-Saved.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Save to Ana's history</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const prof = st.prof || 'est';
+    const profs = [['est', 'Esthetician'], ['hair', 'Hair stylist'], ['lash', 'Lash artist'], ['nail', 'Nail artist'], ['mua', 'Makeup artist'], ['tat', 'Tattoo / PMU'], ['bar', 'Barber'], ['mas', 'Massage']];
+    // c = one choice, m = several choices, t = free text
+    const F = {
+      est: [['Skin condition', 'c', ['Normal', 'Dry', 'Oily', 'Combination', 'Sensitive']], ['Areas', 'm', ['Face', 'Neck', 'Decolletage']], ['Products and actives', 't', 'What you used'], ['Protocol', 't', 'Name it your way'], ['Reaction', 'c', ['None', 'Mild redness', 'Redness', 'Other']], ['Result', 'c', ['Good response', 'Neutral', 'Needs follow-up']], ['Aftercare', 't', 'What you told the client']],
+      hair: [['Hair condition', 'c', ['Healthy', 'Dry', 'Damaged', 'Color-treated']], ['Previous color', 't', 'Level, tone, date'], ['Formula', 't', 'e.g. 7.1 + 6.0, 30 g'], ['Developer', 'c', ['10 vol', '20 vol', '30 vol', '40 vol']], ['Technique', 'c', ['Root touch-up', 'Global', 'Balayage', 'Foils']], ['Processing time', 'c', ['20 min', '30 min', '45 min', '60 min']], ['Result', 't', 'Final tone and finish'], ['Preferences', 't', 'What she loved or wants next time']],
+      lash: [['Set', 'c', ['Classic', 'Hybrid', 'Volume', 'Mega volume', 'Lift']], ['Curl', 'c', ['B', 'C', 'CC', 'D']], ['Length', 'c', ['9 mm', '10 mm', '11 mm', '12 mm', 'Mixed']], ['Thickness', 'c', ['0.05', '0.07', '0.10', '0.15']], ['Mapping', 't', 'e.g. 9-10-11-12-11-10'], ['Adhesive', 't', 'Product and batch'], ['Retention', 'c', ['1 week', '2 weeks', '3 weeks', '4 weeks']], ['Preferences', 't', 'Natural, dramatic, shorter outer corner']],
+      nail: [['Nail condition', 'c', ['Healthy', 'Brittle', 'Peeling', 'Damaged']], ['Shape', 'c', ['Square', 'Oval', 'Almond', 'Coffin']], ['Length', 'c', ['Short', 'Medium', 'Long']], ['Color', 't', 'Brand, shade, code'], ['Product system', 't', 'Gel, acrylic, builder'], ['Technique', 'c', ['Gel', 'Acrylic', 'Builder gel', 'Dip']], ['Durability', 'c', ['2 weeks', '3 weeks', '4 weeks']]],
+      mua: [['Event', 'c', ['Bridal', 'Party', 'Photo shoot', 'Everyday']], ['Look', 't', 'Soft glam, natural, bold lip'], ['Skin preparation', 't', 'Primer, hydration'], ['Foundation', 't', 'Brand and product'], ['Shade', 't', 'Shade or mix'], ['Products', 't', 'Other products used'], ['Preferences', 't', 'Likes, dislikes, sensitivities']],
+      tat: [['Design', 't', 'Reference or name'], ['Placement', 't', 'Where on the body'], ['Technique', 'c', ['Machine', 'Microblading', 'Powder brows', 'Lip blush']], ['Pigments', 't', 'Brand, color, batch'], ['Tools and materials', 't', 'Needles, cartridges, batch'], ['Session number', 'c', ['1', '2', '3', 'Touch-up']], ['Healing', 'c', ['Fresh', 'Peeling', 'Healed']], ['Follow-up', 'c', ['4 weeks', '6 weeks', '8 weeks']]],
+      bar: [['Cut', 't', 'Style and length on top'], ['Guard sizes', 'c', ['#1', '#2', '#3', '#4', 'Scissors']], ['Fade', 'c', ['None', 'Low', 'Mid', 'High']], ['Beard', 'c', ['None', 'Trim', 'Shape', 'Full shave']], ['Products', 't', 'Pomade, wax, oil'], ['Preferences', 't', 'How he likes it']],
+      mas: [['Focus areas', 'm', ['Neck', 'Shoulders', 'Back', 'Legs', 'Full body']], ['Pressure', 'c', ['Light', 'Medium', 'Firm']], ['Technique', 'c', ['Relaxing', 'Deep tissue', 'Lymphatic', 'Sports']], ['Oils and products', 't', 'What you used'], ['Contraindications', 't', 'Anything to avoid'], ['Result', 't', 'How the client felt'], ['Home care', 't', 'Stretches, water, rest']]
+    };
+    const defaults = { 'est|Skin condition': 'Sensitive', 'est|Areas|Face': true, 'est|Reaction': 'None' };
+    const sel = { ...defaults, ...(st.sel || {}) };
+    const items = [];
+    F[prof].forEach((f, i) => {
+      const k = prof + '|' + f[0];
+      items.push({ isLabel: true, isChip: false, isText: false, label: f[0], mt: i === 0 ? 0 : 14 });
+      if (f[1] === 't') {
+        items.push({ isLabel: false, isChip: false, isText: true, label: f[0], ph: f[2] });
+        return;
+      }
+      f[2].forEach((o) => {
+        const key = f[1] === 'm' ? k + '|' + o : k;
+        const on = f[1] === 'm' ? !!sel[key] : sel[key] === o;
+        items.push({
+          isLabel: false, isChip: true, isText: false, label: o, on: on,
+          bg: on ? '#242321' : '#FFFCF8', fg: on ? '#FFFCF8' : '#242321', bd: on ? '#242321' : '#E3DED5',
+          pick: () => this.setState({ sel: { ...sel, [key]: f[1] === 'm' ? !sel[key] : (on ? null : o) } })
+        });
+      });
+    });
+    return {
+      items: items,
+      profs: profs.map((p) => ({
+        label: p[1], on: prof === p[0],
+        bg: prof === p[0] ? '#242321' : '#FFFCF8', fg: prof === p[0] ? '#FFFCF8' : '#242321', bd: prof === p[0] ? '#242321' : '#E3DED5',
+        pick: () => this.setState({ prof: p[0] })
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

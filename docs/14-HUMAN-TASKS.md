@@ -1,0 +1,95 @@
+# 14 · Human tasks (for Iago and Mateus)
+
+Things the code cannot do on its own. Claude Code builds everything around them with fakes and emulators and marks the integration point `TODO(HUMAN-Hn)`. Each task says **who**, **when it is needed**, **exact steps**, and **what Claude Code expects as the result**. Claude Code keeps this file current: it adds tasks it discovers and ticks nothing (humans tick).
+
+Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U638Q`), the product, `pt-BR` and the business side; the Mac that runs Claude Code is his (Xcode 27). **Mateus** owns Firebase and engineering support; he must be added to the Apple team (see H1) to help with signing and TestFlight.
+
+| Id | Task | Who | Needed by |
+|---|---|---|---|
+| H1 | Xcode signing and capabilities | Iago (Mateus helps) | S2 (iCloud), S8 (push) |
+| H2 | CloudKit container and schema to Production | Iago / Mateus | S2 on device, before TestFlight |
+| H3 | Two real iPhones for sync, AI and voice checks | Iago / Mateus | end of S2, S7, S12 |
+| H4 | Firebase projects, billing, Auth, SMS region list, APNs key, budgets (**done by the owners**; the Firestore database is created by Claude Code in S0) | Mateus | done / SMS list before S8 deploys |
+| H5 | App Check providers (App Attest, reCAPTCHA Enterprise) | Mateus | before S8/S9 deploy |
+| H6 | Domain `bellohub.app`, DNS, Hosting | Iago / Mateus | before S9 deploys |
+| H7 | Transactional email provider | Mateus | before S8 deploys |
+| H8 | In-app browser tests on real phones | Iago | end of S9 |
+| H9 | Google Calendar OAuth (optional, v1.1) | Mateus | optional |
+| H10 | Native reading of the languages (`pt-BR` first, read by Iago) | Iago; native readers for the rest | `pt-BR` at S11; others per market |
+| H11 | Legal review per market (wave 1: Brazil and Europe) | data-protection lawyer | before real users, per market |
+| H12 | Fonts if the build environment has no network | Iago / Mateus | S1 |
+| H13 | WhatsApp Business (Meta) onboarding (optional) | Iago | optional |
+| H14 | App Store Connect, subscriptions, privacy labels, TestFlight | Iago / Mateus | S12 |
+| H15 | Open markets in App Store Connect, one wave at a time | Iago | per wave (`16-MARKETS.md` §2) |
+| H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
+
+---
+
+### H1 · Xcode signing and capabilities
+The account is Iago's, so he does this on his Mac, signed into Xcode with his Apple ID (*Xcode → Settings → Accounts*).
+1. Add Mateus to the team so he can help: App Store Connect → *Users and Access* → invite with role *Admin* (or *App Manager* + *Developer*). The Individual account can invite members.
+2. Open `BelloHub.xcodeproj`, target **BelloHub**, *Signing & Capabilities*, team `X5392U638Q`, bundle id `com.bellohub` (D38; Claude Code changes it in S0).
+3. Add **iCloud** → check **CloudKit** → container `iCloud.com.bellohub`.
+4. Add **Push Notifications** and **Background Modes → Remote notifications**.
+5. Add **App Attest** (Firebase App Check on iOS) if Xcode lists it as a capability; keep the entitlement `com.apple.developer.devicecheck.appattest-environment`.
+6. Commit the generated `BelloHub.entitlements` (the build setting `CODE_SIGN_ENTITLEMENTS` must live in `Config/App.xcconfig`, not in the project file).
+Claude Code may try `xcodebuild … -allowProvisioningUpdates` with the account already signed in to let Xcode register the App ID, capabilities and container itself; if that fails, it records the error and leaves the steps above to Iago.
+**Claude Code expects:** an entitlements file with the container id above and `aps-environment`; until then it runs with `cloudKitDatabase: .none` and a `LocalDevAuthProvider`.
+
+### H2 · CloudKit schema
+After the first device run with the container, open the CloudKit Dashboard → container `iCloud.com.bellohub` → *Deploy Schema Changes to Production*. Repeat before every TestFlight/App Store build that changes the model. **Expected:** a note in `PROGRESS.md` with the date and schema version.
+
+### H3 · Real devices
+Two iPhones (iOS 26+, ideally one with Apple Intelligence) signed into the **same Apple ID** with iCloud Drive and Keychain on. Follow the checklist in `docs/spikes/SPIKE-swiftdata-cloudkit.md` (Claude Code writes it): create client + record + photos on A, see them on B; edit offline on both; fill iCloud quota test; restore on a fresh install; try the recovery key; run voice transcription **in Portuguese (Brazil) first, then every language the device offers**, and record the results in `docs/spikes/VOICE-LANGUAGE-MATRIX.md` (`12-AI-AND-VOICE.md` §8). Paste the numbers into the spike report.
+
+### H4 · Firebase
+1. Create three projects `bellohub-dev`, `bellohub-staging`, `bellohub-prod` (Blaze plan for Functions).
+2. Region decided in D29: Firestore **`eur3`**, Storage in the EU location, Functions `europe-west1`. The Firestore database itself is created by Claude Code in S0 with that location; the owners only confirm nothing else was created before it.
+3. Enable **Authentication → Phone**; add test numbers for dev. Set the **SMS region policy as an allow-list** with the calling codes printed by `firebase/scripts/sms-regions.mjs` (D37). Set an SMS budget alert.
+4. Upload the **APNs auth key** (Cloud Messaging) for each project; add the iOS apps (`com.bellohub`) and download `GoogleService-Info.plist` into `Config/Firebase/<Env>/`.
+5. Set **budget alerts** and a monthly cap; enable **Firestore TTL policies** for `inbox/{uid}/items` and `holds` on `expiresAt`, and `rate`, `audit` per `firebase/README.md`; enable **PITR** with the shortest window.
+6. Add Secret Manager secrets: `PHONE_HASH_PEPPER`, email provider key; give Functions access.
+**Expected:** `.firebaserc` aliases and `firebase deploy --only firestore,functions,hosting --project bellohub-staging` working.
+
+### H5 · App Check
+iOS: register **App Attest** (and DeviceCheck fallback) in Firebase App Check. Web: create a **reCAPTCHA Enterprise** key for the Hosting domains and register it. Turn on **enforcement** per product (Firestore, Functions, Storage) only after staging passes. **Expected:** site key in `web/.env.<env>`; enforcement flags noted in `PROGRESS.md`.
+
+### H6 · Domain
+Register **`bellohub.app`** (recommended: HTTPS-only top-level domain, short, no local-presence rules), point it to Firebase Hosting (prod) and a staging subdomain (`staging.bellohub.app`), enable HTTPS, serve `/.well-known/apple-app-site-association` with app id `X5392U638Q.com.bellohub` when universal links are wanted. **Expected:** `BELLO_WEB_BASE_URL` values in `Config/*.xcconfig` and `web/.env.*`.
+
+### H7 · Email provider
+Pick a transactional email service (Resend, Postmark, SES…), verify the sending domain (SPF, DKIM, DMARC), create an API key, store it as a Functions secret. Sign the provider's DPA. **Expected:** `EmailProvider` implementation selected in `firebase/functions/src/messaging/` (Claude Code writes the adapter for the one you choose; tell it which).
+
+### H8 · In-app browser tests
+On real phones, open a booking link **inside** WhatsApp, Instagram and Facebook on iOS and Android and walk through booking, management, health form and check-in using staging; do it also once in Arabic (right-to-left) and once with an Arabic-Indic digit keyboard. Record failures with screenshots in `docs/PROGRESS.md` (Claude Code fixes them).
+
+### H9 · Google Calendar (optional)
+Create an OAuth client in Google Cloud for the app and complete Google's verification; until then the `Integrations` row says "coming soon". Not required for v1.
+
+### H10 · Reading the languages
+There are no reviewers yet. The plan:
+1. **`pt-BR`: Iago reads it** (needed for Brazil, wave 1) using `docs/review/pt-BR.md` (the ordered list of screens and strings Claude Code prepares in S11) and the spreadsheet from `scripts/export-strings.sh pt-BR`. He edits the spreadsheet or the catalog directly and marks strings reviewed. This unlocks wave 1 (together with H11).
+2. Other languages: **wave 1 needs a native reader each for `pt-PT`, `es`, `it`, `fr`, `de` and `en-GB`** (English readers also cover `en`); the others when their market is about to open. Find one native reader per language (friends, family, clients, a paid freelancer). Give them the exported spreadsheet (`key, en, <language>, comment`) and the glossary; ask them to read the whole app once as a user and edit directly. Return edits through `scripts/import-strings.sh`.
+3. Review also covers the message templates, the profession catalog and the legal drafts' *wording* (not their legal validity).
+Until a language is read, it stays `needs_review` and its market stays closed in App Store Connect (H15).
+
+### H11 · Legal review
+Start with **Brazil**: a data-protection lawyer (LGPD) reviews the terms and DPA, privacy policy, consent texts (health form, photos, guardian), retention minimums per profession, international-transfer wording (servers in the EU), the "sealed in your browser" claims. Then, per wave (`16-MARKETS.md`): Portugal/Spain (EU), Mexico, United States, Latin America, Italy, France, Germany, United Kingdom, India, Turkey, Indonesia, and last Saudi Arabia and the UAE (these two need a written opinion on health-data residency). One lawyer can coordinate local counsel. Return the final texts; Claude Code replaces drafts under `legal/` and bumps `textVersion`; update `legal/STATUS.md`.
+
+### H12 · Fonts
+If `scripts/fetch-fonts.sh` cannot download Fraunces and DM Sans (network blocked), download the variable `.ttf` files from the official Google Fonts repositories (SIL OFL) into `BelloHub/DesignSystem/Fonts/` and `web/public/fonts/` with their license files. (Arabic and Devanagari use system fonts; nothing to download.)
+
+### H13 · WhatsApp Business (optional)
+Create a Meta Business account, verify it, create a WhatsApp Business app and phone number, submit message templates **per language** (confirmation, reminder, code; utility category), obtain the Cloud API token, store it as a secret and set Remote Config `whatsAppAutomation = true` for the cohort you choose. Note per-message costs, which differ by country. **Expected:** the `WhatsAppCloudProvider` goes live without code changes; the web and app copy switches to the automated wording.
+
+### H14 · App Store Connect
+Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`) and the 14-day trial, set prices (O7), fill in **App Privacy** answers from `06-PRIVACY-SECURITY.md` §1–§2, add the privacy policy URL, add the metadata and screenshots per language from `docs/store/`, create the TestFlight group (internal first). **Expected:** the StoreKit product ids match D33; `PrivacyInfo.xcprivacy` matches the answers.
+
+### H15 · Open markets, one wave at a time
+In App Store Connect → the app → *Pricing and Availability* → countries and regions, keep **only the open markets** selected (start: none; open Brazil when H10 `pt-BR` and H11 Brazil are done, and each European country when its language is read, the European legal set is reviewed and H16 trader status is done). A market opens only when its language is read (H10) and its legal set is reviewed (H11); update `legal/STATUS.md` and the "Market readiness" table in `PROGRESS.md`. Waves and conditions: `16-MARKETS.md` §2.
+
+### H16 · Individual account duties and release Xcode
+1. **Seller name:** with an Individual account the App Store lists *Iago Xavier de Lima* as the seller. An Organization account (needs a D-U-N-S number and a legal entity) can be created later and the app transferred; decide before real revenue.
+2. **EU trader status:** a seller of auto-renewing subscriptions to EU customers is normally a "trader" under the Digital Services Act and must provide and publish contact details in App Store Connect (*Business → Compliance*). Check with the accountant before opening any EU market (**wave 1**).
+3. **Agreements and tax:** accept the Paid Apps agreement and fill in bank and tax information in App Store Connect before subscriptions can be tested in production. (This is Apple's payout for the subscription, the only money in the system, D4.)
+4. **Xcode for uploads:** TestFlight and App Store uploads need a release version of Xcode. If `xcodebuild -version` shows a beta (D39), keep developing with it but install the matching release before uploading.

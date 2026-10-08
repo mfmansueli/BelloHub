@@ -1,0 +1,1177 @@
+{
+ "v": 3,
+ "attachments": {},
+ "boards": {
+  "AISettings.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "AI assistant",
+   "w": 390,
+   "x": 2820,
+   "y": 13156
+  },
+  "Account.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Account",
+   "w": 390,
+   "x": 1410,
+   "y": 13156
+  },
+  "Appointment.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Appointment detail",
+   "w": 390,
+   "x": 940,
+   "y": 3420
+  },
+  "Availability.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Availability",
+   "w": 390,
+   "x": 3760,
+   "y": 4384
+  },
+  "BeforeYouStart.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Before you start",
+   "w": 390,
+   "x": 1410,
+   "y": 3420
+  },
+  "Bk-1-Page.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "01 Public booking page",
+   "w": 390,
+   "x": 0,
+   "y": 6820
+  },
+  "Bk-2-Service.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "02 Select service",
+   "w": 390,
+   "x": 470,
+   "y": 6820
+  },
+  "Bk-3-Professional.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "03 Choose professional (teams only)",
+   "w": 390,
+   "x": 940,
+   "y": 6820
+  },
+  "Bk-4-DateTime.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "04 Date and time",
+   "w": 390,
+   "x": 1410,
+   "y": 6820
+  },
+  "Bk-5-Info.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "05 Your details",
+   "w": 390,
+   "x": 1880,
+   "y": 6820
+  },
+  "Bk-6-Verify.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "06 Verification",
+   "w": 390,
+   "x": 2350,
+   "y": 6820
+  },
+  "Bk-7-Questions.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "07 First-time questions",
+   "w": 390,
+   "x": 2820,
+   "y": 6820
+  },
+  "Bk-8-Confirmed.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "08 Booking confirmed",
+   "w": 390,
+   "x": 3290,
+   "y": 6820
+  },
+  "Bk-9-Appointment.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "09 View appointment",
+   "w": 390,
+   "x": 3760,
+   "y": 6820
+  },
+  "BookingSettings.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Booking page settings",
+   "w": 390,
+   "x": 1880,
+   "y": 4384
+  },
+  "Calendar.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Calendar",
+   "w": 390,
+   "x": 470,
+   "y": 3420
+  },
+  "Camera.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Camera",
+   "w": 390,
+   "x": 2350,
+   "y": 10556
+  },
+  "CancelAppointment.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Cancel appointment",
+   "w": 390,
+   "x": 470,
+   "y": 9256
+  },
+  "Cl-1-Reminder.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "01 Reminder on WhatsApp",
+   "w": 390,
+   "x": 0,
+   "y": 8040
+  },
+  "Cl-2-Portal.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "02 Client portal",
+   "w": 390,
+   "x": 470,
+   "y": 8040
+  },
+  "Cl-3-Rebook.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "03 Book again",
+   "w": 390,
+   "x": 940,
+   "y": 8040
+  },
+  "Cl-4-Intake.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "04 Health form",
+   "w": 390,
+   "x": 1410,
+   "y": 8040
+  },
+  "Cl-5-CheckIn.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "05 Skin check-in",
+   "w": 390,
+   "x": 1880,
+   "y": 8040
+  },
+  "Cl-6-Cancel.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "06 Cancel or change",
+   "w": 390,
+   "x": 2350,
+   "y": 8040
+  },
+  "Cl-7-MyData.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "07 Your information",
+   "w": 390,
+   "x": 2820,
+   "y": 8040
+  },
+  "ClientEdit.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Edit client",
+   "w": 390,
+   "x": 0,
+   "y": 10556
+  },
+  "ClientHealth.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Health and consent",
+   "w": 390,
+   "x": 4230,
+   "y": 4384
+  },
+  "ClientKnowledge.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Edit client knowledge",
+   "w": 390,
+   "x": 4700,
+   "y": 4384
+  },
+  "ClientProfile.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Client profile",
+   "w": 390,
+   "x": 0,
+   "y": 4384
+  },
+  "Clients.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Clients",
+   "w": 390,
+   "x": 2350,
+   "y": 3420
+  },
+  "Credentials.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Training and credentials",
+   "w": 390,
+   "x": 940,
+   "y": 11856
+  },
+  "ExportRecord.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Export record",
+   "w": 390,
+   "x": 1880,
+   "y": 10556
+  },
+  "FollowUps.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Follow-ups due",
+   "w": 390,
+   "x": 2350,
+   "y": 4384
+  },
+  "FormTemplates.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Client forms",
+   "w": 390,
+   "x": 2820,
+   "y": 11856
+  },
+  "Help.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Help and support",
+   "w": 390,
+   "x": 4230,
+   "y": 13156
+  },
+  "Home.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Home",
+   "w": 390,
+   "x": 0,
+   "y": 3420
+  },
+  "Hub.dc.html": {
+   "expand": "fill",
+   "h": 1000,
+   "is_interactive": true,
+   "title": "Prototype hub",
+   "w": 1240,
+   "x": 1790,
+   "y": 300
+  },
+  "ImportClients.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Import clients",
+   "w": 390,
+   "x": 3760,
+   "y": 2200
+  },
+  "Incident.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Report a reaction",
+   "w": 390,
+   "x": 1410,
+   "y": 10556
+  },
+  "Integrations.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Integrations",
+   "w": 390,
+   "x": 3290,
+   "y": 13156
+  },
+  "Inventory.dc.html": {
+   "h": 1800,
+   "title": "Screen map",
+   "w": 1240,
+   "x": 0,
+   "y": 14456
+  },
+  "Locked.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Locked",
+   "w": 390,
+   "x": 940,
+   "y": 13156
+  },
+  "Main.dc.html": {
+   "h": 1540,
+   "title": "Brand and system",
+   "w": 1240,
+   "x": 0,
+   "y": 300
+  },
+  "MessageClient.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Message a client",
+   "w": 390,
+   "x": 940,
+   "y": 9256
+  },
+  "More.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "More",
+   "w": 390,
+   "x": 940,
+   "y": 4384
+  },
+  "NewAppointment.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "New appointment",
+   "w": 390,
+   "x": 1880,
+   "y": 3420
+  },
+  "NewClient.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "New client",
+   "w": 390,
+   "x": 2820,
+   "y": 3420
+  },
+  "NotificationSettings.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Notification settings",
+   "w": 390,
+   "x": 2350,
+   "y": 13156
+  },
+  "Notifications.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Alerts",
+   "w": 390,
+   "x": 470,
+   "y": 4384
+  },
+  "Onb-1-Welcome.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "01 Welcome",
+   "w": 390,
+   "x": 0,
+   "y": 2200
+  },
+  "Onb-2-Profession.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "02 Profession",
+   "w": 390,
+   "x": 470,
+   "y": 2200
+  },
+  "Onb-3-Services.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "03 Services",
+   "w": 390,
+   "x": 940,
+   "y": 2200
+  },
+  "Onb-4-CustomService.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "04 Custom service",
+   "w": 390,
+   "x": 1410,
+   "y": 2200
+  },
+  "Onb-5-Terminology.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "05 Your terminology",
+   "w": 390,
+   "x": 1880,
+   "y": 2200
+  },
+  "Onb-6-Tags.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "06 Tags",
+   "w": 390,
+   "x": 2350,
+   "y": 2200
+  },
+  "Onb-6b-Record.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "07 Your client record",
+   "w": 390,
+   "x": 2820,
+   "y": 2200
+  },
+  "Onb-7-Ready.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "08 Workspace ready",
+   "w": 390,
+   "x": 3290,
+   "y": 2200
+  },
+  "Permissions.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Permissions",
+   "w": 390,
+   "x": 470,
+   "y": 13156
+  },
+  "Plan.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Your plan",
+   "w": 390,
+   "x": 1880,
+   "y": 13156
+  },
+  "Privacy.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Privacy and security",
+   "w": 390,
+   "x": 3760,
+   "y": 13156
+  },
+  "Products.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Products",
+   "w": 390,
+   "x": 3290,
+   "y": 4384
+  },
+  "QuickReplies.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Quick replies",
+   "w": 390,
+   "x": 470,
+   "y": 11856
+  },
+  "RecordHistory.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Record history",
+   "w": 390,
+   "x": 470,
+   "y": 10556
+  },
+  "RecordTemplate.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Record fields",
+   "w": 390,
+   "x": 2350,
+   "y": 11856
+  },
+  "Reschedule.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Reschedule",
+   "w": 390,
+   "x": 0,
+   "y": 9256
+  },
+  "ServiceEdit.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "New service",
+   "w": 390,
+   "x": 2820,
+   "y": 4384
+  },
+  "Services.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Services",
+   "w": 390,
+   "x": 1410,
+   "y": 4384
+  },
+  "SessionPlan.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Session plan",
+   "w": 390,
+   "x": 940,
+   "y": 10556
+  },
+  "ShareLink.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Share link and QR",
+   "w": 390,
+   "x": 0,
+   "y": 11856
+  },
+  "SignIn.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Sign in",
+   "w": 390,
+   "x": 0,
+   "y": 13156
+  },
+  "States.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "System states",
+   "w": 390,
+   "x": 4700,
+   "y": 13156
+  },
+  "TabBar.dc.html": {
+   "h": 84,
+   "title": "Tab bar component",
+   "w": 390,
+   "x": 1320,
+   "y": 300
+  },
+  "Tags.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Client tags",
+   "w": 390,
+   "x": 1880,
+   "y": 11856
+  },
+  "Team.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Team",
+   "w": 390,
+   "x": 1410,
+   "y": 11856
+  },
+  "Tx-1-Register.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "01 Register treatment",
+   "w": 390,
+   "x": 0,
+   "y": 5600
+  },
+  "Tx-2-Listening.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "02 Listening",
+   "w": 390,
+   "x": 470,
+   "y": 5600
+  },
+  "Tx-3-Organizing.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "03 AI organizing",
+   "w": 390,
+   "x": 940,
+   "y": 5600
+  },
+  "Tx-4-Review.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "04 Review and save",
+   "w": 390,
+   "x": 1410,
+   "y": 5600
+  },
+  "Tx-5-Saved.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "05 Saved treatment",
+   "w": 390,
+   "x": 1880,
+   "y": 5600
+  },
+  "Tx-6-Photos.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "06 Before and after",
+   "w": 390,
+   "x": 2350,
+   "y": 5600
+  },
+  "Tx-7-NextSession.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "07 Next session",
+   "w": 390,
+   "x": 2820,
+   "y": 5600
+  },
+  "Tx-Form.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Manual treatment record",
+   "w": 390,
+   "x": 3290,
+   "y": 5600
+  },
+  "Waitlist.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Waitlist",
+   "w": 390,
+   "x": 1410,
+   "y": 9256
+  },
+  "WeekGlance.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Week at a glance",
+   "w": 390,
+   "x": 1880,
+   "y": 9256
+  },
+  "WinBack.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Win back clients",
+   "w": 390,
+   "x": 2350,
+   "y": 9256
+  },
+  "Options.dc.html": {
+   "x": 0,
+   "y": 16600,
+   "w": 1240,
+   "h": 1900,
+   "title": "Type and color options"
+  },
+  "FontPairs.dc.html": {
+   "x": 0,
+   "y": 18800,
+   "w": 1240,
+   "h": 2640,
+   "title": "Font pairings"
+  },
+  "NoShowPolicy.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "No-show protection",
+   "w": 390,
+   "x": 0,
+   "y": 22800
+  },
+  "NoShowMark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Mark a no-show",
+   "w": 390,
+   "x": 470,
+   "y": 22800
+  },
+  "NoShowHistory.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "No-show history",
+   "w": 390,
+   "x": 940,
+   "y": 22800
+  },
+  "BookingRequest.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Booking request",
+   "w": 390,
+   "x": 1410,
+   "y": 22800
+  },
+  "Bk-10-Review.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "10 Booking needs Maria",
+   "w": 390,
+   "x": 1880,
+   "y": 22800
+  },
+  "CancelPolicy.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Cancellations and changes",
+   "w": 390,
+   "x": 0,
+   "y": 23800
+  },
+  "RescheduleRequest.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Reschedule request",
+   "w": 390,
+   "x": 470,
+   "y": 23800
+  },
+  "Bk-11-Find.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "11 Find your appointment",
+   "w": 390,
+   "x": 940,
+   "y": 23800
+  },
+  "Cl-8-Reminder.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "8 Appointment reminder",
+   "w": 390,
+   "x": 1410,
+   "y": 23800
+  },
+  "Cl-9-Reschedule.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "9 Reschedule",
+   "w": 390,
+   "x": 1880,
+   "y": 23800
+  },
+  "BlockTime.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Block time",
+   "w": 390,
+   "x": 0,
+   "y": 24800
+  },
+  "RunningLate.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Running late",
+   "w": 390,
+   "x": 470,
+   "y": 24800
+  },
+  "AddOns.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Add-ons",
+   "w": 390,
+   "x": 940,
+   "y": 24800
+  },
+  "ExportAll.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Export all my data",
+   "w": 390,
+   "x": 1410,
+   "y": 24800
+  },
+  "RecoveryKey.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Recovery key",
+   "w": 390,
+   "x": 0,
+   "y": 25800
+  },
+  "LanguageRegion.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "radius": 44,
+   "title": "Language and region",
+   "w": 390,
+   "x": 470,
+   "y": 25800
+  }
+ },
+ "createdOnFiles": {
+  "at": "2026-10-08T00:10:00Z",
+  "v": 1
+ },
+ "designSystems": [],
+ "launch": {
+  "file": "Hub.dc.html",
+  "view": "focused"
+ },
+ "notes": {
+  "n0": {
+   "kind": "title1",
+   "maxW": 1240,
+   "text": "Bello Hub: brand and design system",
+   "w": 240,
+   "x": 0,
+   "y": 0
+  },
+  "n1": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "1 · Set up your workspace",
+   "w": 240,
+   "x": 0,
+   "y": 1960
+  },
+  "n10": {
+   "kind": "title1",
+   "maxW": 1240,
+   "text": "10 · Screen map for the build",
+   "w": 240,
+   "x": 0,
+   "y": 14200
+  },
+  "n11": {
+   "kind": "title1",
+   "maxW": 1240,
+   "text": "Prototype hub: the whole app in one phone",
+   "w": 240,
+   "x": 1790,
+   "y": 0
+  },
+  "n2": {
+   "kind": "title1",
+   "maxW": 5100,
+   "text": "2 · Professional app: today, calendar, client memory",
+   "w": 240,
+   "x": 0,
+   "y": 3164
+  },
+  "n3": {
+   "kind": "title1",
+   "maxW": 3680,
+   "text": "3 · Treatment: speak it, review it, save it",
+   "w": 240,
+   "x": 0,
+   "y": 5348
+  },
+  "n4": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "4 · Client booking in the browser, no app needed",
+   "w": 240,
+   "x": 0,
+   "y": 6564
+  },
+  "n5": {
+   "kind": "title1",
+   "maxW": 1800,
+   "text": "5 · Follow-up and rebooking",
+   "w": 240,
+   "x": 0,
+   "y": 7784
+  },
+  "n6": {
+   "kind": "title1",
+   "maxW": 5100,
+   "text": "6 · Appointment tools and win-back",
+   "w": 240,
+   "x": 0,
+   "y": 9000
+  },
+  "n7": {
+   "kind": "title1",
+   "maxW": 5100,
+   "text": "7 · Client record tools",
+   "w": 240,
+   "x": 0,
+   "y": 10300
+  },
+  "n8": {
+   "kind": "title1",
+   "maxW": 5100,
+   "text": "8 · Business setup",
+   "w": 240,
+   "x": 0,
+   "y": 11600
+  },
+  "n9": {
+   "kind": "title1",
+   "maxW": 5100,
+   "text": "9 · Account, access and settings",
+   "w": 240,
+   "x": 0,
+   "y": 12900
+  },
+  "n12": {
+   "kind": "title1",
+   "w": 240,
+   "x": 0,
+   "y": 16340,
+   "maxW": 1240,
+   "text": "11 · Type and color options"
+  },
+  "n13": {
+   "kind": "title1",
+   "maxW": 2400,
+   "text": "11 · No-show protection: rule, marking, history, request and the client view",
+   "w": 240,
+   "x": 0,
+   "y": 22500
+  },
+  "n14": {
+   "kind": "title1",
+   "maxW": 2400,
+   "text": "12 · Cancellations and changes: the rules, the client link, reminders and requests",
+   "w": 240,
+   "x": 0,
+   "y": 23500
+  },
+  "n15": {
+   "kind": "title1",
+   "maxW": 2400,
+   "text": "13 · Real-life days: blocked days, running late, conflicts and who can book",
+   "w": 240,
+   "x": 0,
+   "y": 24500
+  },
+  "n16": {
+   "kind": "title1",
+   "maxW": 2400,
+   "text": "14 · Where data lives, the recovery key and five languages",
+   "w": 240,
+   "x": 0,
+   "y": 25500
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Hub.dc.html",
+  "TabBar.dc.html",
+  "Onb-1-Welcome.dc.html",
+  "Onb-2-Profession.dc.html",
+  "Onb-3-Services.dc.html",
+  "Onb-4-CustomService.dc.html",
+  "Onb-5-Terminology.dc.html",
+  "Onb-6-Tags.dc.html",
+  "Onb-6b-Record.dc.html",
+  "Onb-7-Ready.dc.html",
+  "ImportClients.dc.html",
+  "Home.dc.html",
+  "Calendar.dc.html",
+  "Appointment.dc.html",
+  "BeforeYouStart.dc.html",
+  "NewAppointment.dc.html",
+  "Clients.dc.html",
+  "NewClient.dc.html",
+  "ClientProfile.dc.html",
+  "Notifications.dc.html",
+  "More.dc.html",
+  "Services.dc.html",
+  "ServiceEdit.dc.html",
+  "Products.dc.html",
+  "Availability.dc.html",
+  "ClientHealth.dc.html",
+  "ClientKnowledge.dc.html",
+  "BookingSettings.dc.html",
+  "FollowUps.dc.html",
+  "Tx-1-Register.dc.html",
+  "Tx-2-Listening.dc.html",
+  "Tx-3-Organizing.dc.html",
+  "Tx-4-Review.dc.html",
+  "Tx-5-Saved.dc.html",
+  "Tx-6-Photos.dc.html",
+  "Tx-7-NextSession.dc.html",
+  "Tx-Form.dc.html",
+  "Bk-1-Page.dc.html",
+  "Bk-2-Service.dc.html",
+  "Bk-3-Professional.dc.html",
+  "Bk-4-DateTime.dc.html",
+  "Bk-5-Info.dc.html",
+  "Bk-6-Verify.dc.html",
+  "Bk-7-Questions.dc.html",
+  "Bk-8-Confirmed.dc.html",
+  "Bk-9-Appointment.dc.html",
+  "Cl-1-Reminder.dc.html",
+  "Cl-2-Portal.dc.html",
+  "Cl-3-Rebook.dc.html",
+  "Cl-4-Intake.dc.html",
+  "Cl-5-CheckIn.dc.html",
+  "Cl-6-Cancel.dc.html",
+  "Cl-7-MyData.dc.html",
+  "Reschedule.dc.html",
+  "CancelAppointment.dc.html",
+  "MessageClient.dc.html",
+  "Waitlist.dc.html",
+  "WeekGlance.dc.html",
+  "WinBack.dc.html",
+  "ClientEdit.dc.html",
+  "RecordHistory.dc.html",
+  "SessionPlan.dc.html",
+  "Incident.dc.html",
+  "ExportRecord.dc.html",
+  "Camera.dc.html",
+  "ShareLink.dc.html",
+  "QuickReplies.dc.html",
+  "Credentials.dc.html",
+  "Team.dc.html",
+  "Tags.dc.html",
+  "RecordTemplate.dc.html",
+  "FormTemplates.dc.html",
+  "SignIn.dc.html",
+  "Permissions.dc.html",
+  "Locked.dc.html",
+  "Account.dc.html",
+  "Plan.dc.html",
+  "NotificationSettings.dc.html",
+  "AISettings.dc.html",
+  "Integrations.dc.html",
+  "Privacy.dc.html",
+  "Help.dc.html",
+  "States.dc.html",
+  "Inventory.dc.html",
+  "Options.dc.html",
+  "FontPairs.dc.html",
+  "NoShowPolicy.dc.html",
+  "NoShowMark.dc.html",
+  "NoShowHistory.dc.html",
+  "BookingRequest.dc.html",
+  "Bk-10-Review.dc.html",
+  "CancelPolicy.dc.html",
+  "RescheduleRequest.dc.html",
+  "Bk-11-Find.dc.html",
+  "Cl-8-Reminder.dc.html",
+  "Cl-9-Reschedule.dc.html",
+  "BlockTime.dc.html",
+  "RunningLate.dc.html",
+  "AddOns.dc.html",
+  "ExportAll.dc.html",
+  "RecoveryKey.dc.html",
+  "LanguageRegion.dc.html"
+ ],
+ "pages": [],
+ "title": "Bello Hub Prototype"
+}

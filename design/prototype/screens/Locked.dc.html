@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>App lock</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input,textarea{border:0;outline:none;padding:0;width:100%;background:none}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.ph{background:repeating-linear-gradient(135deg,#E9E3D9 0 8px,#EFEAE1 8px 16px)}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden;display:flex;flex-direction:column"><div style="position:absolute;inset:0;background:radial-gradient(80% 50% at 50% 0%,rgba(201,143,159,.28),rgba(201,143,159,0) 70%),radial-gradient(70% 45% at 100% 100%,rgba(169,181,161,.28),rgba(169,181,161,0) 70%),#F3EFE8"></div><div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;padding:150px 24px 34px;text-align:center"><svg width="64" height="64" viewBox="0 0 28 28" fill="none" aria-label="Bello Hub mark"><rect width="28" height="28" rx="9" fill="#242321"/><path d="M10 6.5v15" stroke="#FFFCF8" stroke-width="2.2" stroke-linecap="round"/><circle cx="15.2" cy="16" r="4.6" stroke="#FFFCF8" stroke-width="2.2"/><circle cx="10" cy="6.5" r="1.6" fill="#C98F9F"/></svg><div style="font-family:'Fraunces',Georgia,serif;font-size:34px;line-height:1.05;letter-spacing:-0.015em;font-weight:500;color:#242321;margin-top:24px">Bello Hub is locked.</div><div style="font-size:15px;line-height:1.4;color:#65625D;margin-top:8px">Client information is protected.</div><sc-if value="{{isFace}}" hint-placeholder-val="{{true}}"><div style="margin-top:46px;width:96px;height:96px;border-radius:30px;background:#FFFCF8;box-shadow:0 2px 4px rgba(70,45,30,.06),0 20px 36px -18px rgba(70,45,30,.28);display:flex;align-items:center;justify-content:center;color:#242321"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6.5A2.5 2.5 0 0 1 6.5 4H8M16 4h1.5A2.5 2.5 0 0 1 20 6.5V8M20 16v1.5a2.5 2.5 0 0 1-2.5 2.5H16M8 20H6.5A2.5 2.5 0 0 1 4 17.5V16"/><path d="M9 10v1.5M15 10v1.5M12 10v3.5h-1M9.5 16c1.6 1.2 3.4 1.2 5 0"/></svg></div><div style="flex:1"></div><a href="Home.dc.html" style="height:56px;border-radius:18px;background:#242321;color:#FFFCF8;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);width:100%;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6.5A2.5 2.5 0 0 1 6.5 4H8M16 4h1.5A2.5 2.5 0 0 1 20 6.5V8M20 16v1.5a2.5 2.5 0 0 1-2.5 2.5H16M8 20H6.5A2.5 2.5 0 0 1 4 17.5V16"/><path d="M9 10v1.5M15 10v1.5M12 10v3.5h-1M9.5 16c1.6 1.2 3.4 1.2 5 0"/></svg>Unlock with Face ID</a><button onClick="{{usePin}}" style="margin-top:6px;min-height:48px;font-size:16px;font-weight:600;color:#9A5A6C">Use passcode</button></sc-if><sc-if value="{{isPin}}" hint-placeholder-val="{{false}}"><div style="display:flex;gap:14px;margin-top:40px"><sc-for list="{{dots}}" as="d" hint-placeholder-count="4"><span style="width:16px;height:16px;border-radius:50%;background:{{d.bg}};border:1.5px solid #242321"></span></sc-for></div><div style="display:grid;grid-template-columns:repeat(3,76px);gap:12px;margin-top:30px"><sc-for list="{{keys}}" as="k" hint-placeholder-count="10"><button onClick="{{k.tap}}" aria-label="{{k.label}}" style="width:76px;height:64px;border-radius:32px;background:#FFFCF8;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);text-align:center;font-size:26px;font-weight:500" class="tn">{{k.label}}</button></sc-for></div><div style="flex:1"></div><sc-if value="{{pinFull}}" hint-placeholder-val="{{false}}"><a href="Home.dc.html" style="height:56px;border-radius:18px;background:#242321;color:#FFFCF8;display:flex;align-items:center;justify-content:center;gap:8px;font-size:17px;font-weight:600;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);width:100%;">Open Bello Hub</a></sc-if><button onClick="{{useFace}}" style="margin-top:6px;min-height:48px;font-size:16px;font-weight:600;color:#9A5A6C">Use Face ID</button></sc-if></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const sw = (on) => ({ on: on, bg: on ? '#6E8266' : '#D5D0C7', left: on ? '22px' : '2px' });
+    const cs = (on) => ({ on: on, bg: on ? '#242321' : '#FFFCF8', fg: on ? '#FFFCF8' : '#242321', bd: on ? '#242321' : '#E3DED5' });
+
+    const pin = st.pin || ''; const mode = st.mode || 'face';
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].map((k) => ({ label: k, tap: () => this.setState({ pin: pin.length < 4 ? pin + k : pin }) }));
+    return {
+      isFace: mode === 'face', isPin: mode === 'pin', usePin: () => this.setState({ mode: 'pin', pin: '' }), useFace: () => this.setState({ mode: 'face', pin: '' }),
+      dots: [0, 1, 2, 3].map((i) => ({ bg: i < pin.length ? '#242321' : 'transparent' })), keys: keys, pinFull: pin.length === 4
+    };
+  }
+}
+</script>
+</body>
+</html>

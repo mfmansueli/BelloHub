@@ -1,0 +1,47 @@
+key,pt-BR,pt-PT,es-MX,es,en,note
+appointment,Agendamento,Marcação,Cita,Cita,Appointment,Calendar entry for a visit
+booking,Reserva,Reserva,Reserva,Reserva,Booking,The act of reserving online
+client,Cliente,Cliente,Cliente,Cliente,Client,Overridden by the professional term in onboarding (Onb-5)
+cell phone,Celular,Telemóvel,Celular,Móvil,Cell phone,
+cancel,Cancelar,Desmarcar,Cancelar,Cancelar,Cancel,"pt-PT uses desmarcar for appointments; ""Cancelar"" for dialog dismissal"
+reschedule,Remarcar,Remarcar,Reprogramar,Cambiar la cita,Reschedule,
+no-show,Falta sem aviso,Falta sem aviso,Inasistencia,Cita no atendida,No-show,"Neutral wording, never blame"
+waitlist,Lista de espera,Lista de espera,Lista de espera,Lista de espera,Waitlist,
+treatment record,Registro,Registo,Registro,Registro,Record,pt-PT spells registo
+health form,Ficha de saúde,Ficha de saúde,Ficha de salud,Ficha de salud,Health form,
+consent,Consentimento,Consentimento,Consentimiento,Consentimiento,Consent,
+aftercare,Cuidados pós-atendimento,Cuidados pós-tratamento,Cuidados posteriores,Cuidados posteriores,Aftercare,
+patch test,Teste de alergia,Teste de alergia,Prueba de alergia,Prueba de alergia,Patch test,
+contraindication,Contraindicação,Contraindicação,Contraindicación,Contraindicación,Contraindication,"Warns, never blocks (D16)"
+add-on,Adicional,Extra,Adicional,Complemento,Add-on,Adds time (D19)
+guest,Acompanhante,Acompanhante,Acompañante,Acompañante,Guest,
+service,Serviço,Serviço,Servicio,Servicio,Service,
+availability,Disponibilidade,Disponibilidade,Disponibilidad,Disponibilidad,Availability,
+follow-up,Retorno,Seguimento,Seguimiento,Seguimiento,Follow-up,
+haven't returned,Quem não voltou,Quem não regressou,Quienes no han vuelto,Quienes no han vuelto,Haven't returned,
+quick replies,Mensagens prontas,Mensagens rápidas,Respuestas rápidas,Respuestas rápidas,Quick replies,
+booking link,Link de agendamento,Link de marcação,Enlace de reserva,Enlace de reserva,Booking link,
+recovery key,Chave de recuperação,Chave de recuperação,Clave de recuperación,Clave de recuperación,Recovery key,12 words
+sealed,Selado,Selado,Sellado,Sellado,Sealed,Used for the sealed-in-browser statement
+Face ID lock,Bloqueio com Face ID,Bloqueio com Face ID,Bloqueo con Face ID,Bloqueo con Face ID,Face ID lock,
+privacy and security,Privacidade e segurança,Privacidade e segurança,Privacidad y seguridad,Privacidad y seguridad,Privacy and security,
+home (tab),Início,Início,Inicio,Inicio,Home,
+clients (tab),Clientes,Clientes,Clientes,Clientes,Clients,
+calendar (tab),Agenda,Agenda,Agenda,Agenda,Calendar,
+alerts (tab),Alertas,Alertas,Alertas,Alertas,Alerts,
+more (tab),Mais,Mais,Más,Más,More,
+before and after,Antes e depois,Antes e depois,Antes y después,Antes y después,Before and after,
+free changes,Alterações sem custo,Alterações sem encargos,Cambios sin costo,Cambios sin coste,Free changes,Cost vs coste
+subscription,Assinatura,Subscrição,Suscripción,Suscripción,Subscription,StoreKit
+free trial,Teste grátis,Período experimental gratuito,Prueba gratis,Prueba gratuita,Free trial,
+birthday,Aniversário,Aniversário,Cumpleaños,Cumpleaños,Birthday,
+running late,Atraso,Atraso,Retraso,Retraso,Running late,
+verification code,Código de verificação,Código de verificação,Código de verificación,Código de verificación,Verification code,
+business,Negócio,Negócio,Negocio,Negocio,Business,
+professional,Profissional,Profissional,Profesional,Profesional,Professional,
+photo consent,Consentimento de foto,Consentimento de fotografia,Consentimiento de foto,Consentimiento de foto,Photo consent,
+data request,Pedido de dados,Pedido de dados,Solicitud de datos,Solicitud de datos,Data request,
+export,Exportar,Exportar,Exportar,Exportar,Export,
+delete,Excluir,Eliminar,Eliminar,Eliminar,Delete,"pt-BR excluir, pt-PT eliminar"
+save,Salvar,Guardar,Guardar,Guardar,Save,"pt-BR salvar, pt-PT guardar"
+send,Enviar,Enviar,Enviar,Enviar,Send,

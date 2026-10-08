@@ -1,0 +1,95 @@
+{
+  "_comment": "Built-in message templates. Placeholders: {name} {service} {professional} {date} {time} {deadline} {minutes} {link}. {date} = weekday + day + month without year, formatted by the locale; {time} per the locale clock; {deadline} = date and time of the free-change limit. Link base comes from BELLO_WEB_BASE_URL. Add the extra kinds listed in docs/07-LOCALIZATION.md section 6 in the same voice.",
+  "locales": {
+    "pt-BR": {
+      "prototypeId": "pt-BR",
+      "name": "Português (Brasil)",
+      "region": "Brasil",
+      "currencyDefault": "BRL",
+      "weekStartsOn": "sunday",
+      "clock": "24-hour",
+      "phoneExample": "+55 11 98765-4321",
+      "messageChannel": "WhatsApp",
+      "privacyLaw": "LGPD (Brazil)",
+      "tone": "friendly, uses \"você\".",
+      "messages": {
+        "confirmation": "Oi, {name}! Seu horário de {service} está confirmado para {date}, às {time}, com {professional}. Para remarcar ou cancelar, use seu link: {link}",
+        "reminder": "Oi, {name}! Lembrete: amanhã às {time} você tem {service} com {professional}. Se precisar remarcar ou cancelar sem custo, use seu link até {deadline}: {link}",
+        "running_late": "Oi, {name}! Estou com cerca de {minutes} minutos de atraso. Pode chegar um pouco mais tarde? Obrigada pela compreensão!",
+        "birthday": "Parabéns, {name}! Desejo um dia lindo e um ano cheio de cuidado e bem-estar. Um beijo, {professional}"
+      }
+    },
+    "pt-PT": {
+      "prototypeId": "pt-PT",
+      "name": "Português (Portugal)",
+      "region": "Portugal",
+      "currencyDefault": "EUR",
+      "weekStartsOn": "sunday",
+      "clock": "24-hour",
+      "phoneExample": "+351 912 345 678",
+      "messageChannel": "WhatsApp",
+      "privacyLaw": "RGPD (EU) and Lei 58/2019",
+      "tone": "warm and polite, avoids \"você\".",
+      "messages": {
+        "confirmation": "Olá, {name}! A sua marcação de {service} está confirmada para {date}, às {time}, com {professional}. Para alterar ou desmarcar, use o seu link: {link}",
+        "reminder": "Olá, {name}! Lembrete: amanhã às {time} tem {service} com {professional}. Se precisar de alterar ou desmarcar sem encargos, use o link até {deadline}: {link}",
+        "running_late": "Olá, {name}! Vou chegar com cerca de {minutes} minutos de atraso. Pode chegar um pouco mais tarde? Obrigada pela compreensão!",
+        "birthday": "Parabéns, {name}! Desejo-lhe um dia lindo e um ano cheio de cuidado e bem-estar. Um beijinho, {professional}"
+      }
+    },
+    "es-MX": {
+      "prototypeId": "es-MX",
+      "name": "Español (México)",
+      "region": "México",
+      "currencyDefault": "MXN",
+      "weekStartsOn": "sunday",
+      "clock": "12-hour",
+      "phoneExample": "+52 55 1234 5678",
+      "messageChannel": "WhatsApp",
+      "privacyLaw": "Federal data protection law (LFPDPPP)",
+      "tone": "friendly, uses \"tú\".",
+      "messages": {
+        "confirmation": "¡Hola, {name}! Tu cita de {service} quedó confirmada para el {date} a las {time} con {professional}. Para cambiarla o cancelarla, usa tu enlace: {link}",
+        "reminder": "¡Hola, {name}! Recordatorio: mañana a las {time} tienes {service} con {professional}. Si necesitas cambiar o cancelar sin costo, usa tu enlace hasta {deadline}: {link}",
+        "running_late": "¡Hola, {name}! Voy con unos {minutes} minutos de retraso. ¿Podrías llegar un poco más tarde? ¡Gracias por tu comprensión!",
+        "birthday": "¡Feliz cumpleaños, {name}! Te deseo un día hermoso y un año lleno de cuidado y bienestar. Un abrazo, {professional}"
+      }
+    },
+    "es": {
+      "prototypeId": "es-ES",
+      "name": "Español (España)",
+      "region": "España",
+      "currencyDefault": "EUR",
+      "weekStartsOn": "monday",
+      "clock": "24-hour",
+      "phoneExample": "+34 612 34 56 78",
+      "messageChannel": "WhatsApp",
+      "privacyLaw": "RGPD (EU) and LOPDGDD",
+      "tone": "friendly, uses \"tú\".",
+      "messages": {
+        "confirmation": "¡Hola, {name}! Tu cita de {service} está confirmada para el {date} a las {time} con {professional}. Para cambiarla o cancelarla, usa tu enlace: {link}",
+        "reminder": "¡Hola, {name}! Recordatorio: mañana a las {time} tienes {service} con {professional}. Si necesitas cambiar o cancelar sin coste, usa tu enlace hasta {deadline}: {link}",
+        "running_late": "¡Hola, {name}! Voy a llegar con unos {minutes} minutos de retraso. ¿Puedes venir un poco más tarde? ¡Gracias por tu comprensión!",
+        "birthday": "¡Feliz cumpleaños, {name}! Te deseo un día precioso y un año lleno de cuidado y bienestar. Un abrazo, {professional}"
+      }
+    },
+    "en": {
+      "prototypeId": "en-US",
+      "name": "English (United States)",
+      "region": "United States",
+      "currencyDefault": "USD",
+      "weekStartsOn": "sunday",
+      "clock": "12-hour",
+      "phoneExample": "+1 (415) 555-0132",
+      "messageChannel": "Messages (SMS and iMessage)",
+      "privacyLaw": "State privacy laws, for example California",
+      "tone": "friendly and short.",
+      "messages": {
+        "confirmation": "Hi {name}! Your {service} appointment is confirmed for {date} at {time} with {professional}. To change or cancel, use your link: {link}",
+        "reminder": "Hi {name}! Reminder: you have {service} with {professional} tomorrow at {time}. To change or cancel for free, use your link until {deadline}: {link}",
+        "running_late": "Hi {name}! I am running about {minutes} minutes behind. Could you arrive a little later? Thank you for understanding!",
+        "birthday": "Happy birthday, {name}! Wishing you a lovely day and a year full of self-care. Hugs, {professional}"
+      }
+    }
+  }
+}
