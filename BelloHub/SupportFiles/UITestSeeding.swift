@@ -35,7 +35,7 @@ enum UITestSeeding {
         try? dependencies.keyManager.prepare(createIfMissing: true)
         try? await dependencies.vault.repository?.saveOnboarding(result)
         if options.seed == "clients", let repository = dependencies.vault.repository {
-            try? await ClientsFixtures.seed(into: repository, now: Date())
+            _ = try? await ClientsFixtures.seed(into: repository, now: Date())
         }
     }
 }

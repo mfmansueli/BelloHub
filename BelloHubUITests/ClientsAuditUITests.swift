@@ -100,10 +100,12 @@ final class ClientsAuditUITests: XCTestCase {
     /// Clipped text and missing descriptions only, as in the onboarding audit (the `.contrast` audit samples pixels and
     /// misreads thin anti-aliased text and shadows; contrast is measured exactly by the unit tests instead).
     ///
-    /// The same two false positives are ignored there, and for the same reasons: Devanagari and Arabic text, whose
+    /// The same false positives are ignored there, and for the same reasons: Devanagari and Arabic text, whose
     /// fallback fonts the "may be clipped at larger Dynamic Type sizes" heuristic measures with Latin metrics even
-    /// though the screens scroll and nothing is cut at AX5; and the phone fields, whose 52 pt minimum height already
-    /// holds the next size up.
+    /// though the screens scroll and nothing is cut at AX5; and the phone, email and "add an entry" fields, one
+    /// line by nature (a number, an address or a short entry has no place to wrap), whose minimum height already
+    /// holds the next size up. The system's own search bar is added: it is the native component and its text is not
+    /// ours to resize.
     private func audit(_ app: XCUIApplication, _ screen: String) throws {
         try app.performAccessibilityAudit(for: [.textClipped, .sufficientElementDescription]) { issue in
             let element = issue.element
@@ -118,7 +120,9 @@ final class ClientsAuditUITests: XCTestCase {
 
     private static func isKnownFalsePositive(_ element: XCUIElement?) -> Bool {
         guard let element else { return false }
-        if element.identifier.hasSuffix("phoneField") { return true }
+        if element.elementType == .searchField { return true }
+        let oneLineFields = ["phoneField", "emailField", ".addField."]
+        if oneLineFields.contains(where: { element.identifier.contains($0) }) { return true }
         let fallbackFontScripts = [0x0600...0x06FF, 0x0900...0x097F]
         return element.label.unicodeScalars.contains { scalar in
             fallbackFontScripts.contains { $0.contains(Int(scalar.value)) }

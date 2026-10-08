@@ -111,17 +111,46 @@ Branch worktree based on `build/v1` at 407427e. Screens 2.2 Clients, 4.1 ClientP
   extension.
 - `SwiftUI`'s `move(fromOffsets:)` and `remove(atOffsets:)` pull SwiftUI into a ViewModel (`MemberImportVisibility`), so
   `KnowledgeListRules.moving` and `removing` are pure Foundation versions with tests that pin the `onMove` convention.
-- 2,000 clients with 16,000 appointments: building the entries, four chips, a name search, a phone search and a sort
-  are each well inside the bounds the performance test asserts (see the test for the measured values in its message).
+- 2,000 clients with 16,000 appointments: the whole performance test (data, entries, four chips, two searches and a sort)
+  takes about 1.9 s in an unoptimized test build; each step is asserted under 1 to 3 s.
+
+- The audit ignores four reports as false positives of the "may be clipped" heuristic: Devanagari and Arabic text, the
+  one-line phone, email and "add an entry" fields, and the system's own search bar (see `ClientsAuditUITests`).
+- `Calendar.current` is the Islamic calendar under `ar_SA`, so a year read from it (1448) crashed `1900...year`; every year
+  here comes from a Gregorian calendar in the business time zone (`ClientFormViewModel.currentYear`).
 
 ## Open questions
 
 - Should the gate own the phone-clash check on edits (see decisions)?
 - Is "First visit" the right neutral word for "New" in pt, es, it, fr, hi and ar? (needs_review like the rest.)
 
+## State at the checkpoint (everything is committed; nothing is WIP)
+
+Last known results, all on the clients-ui worktree after the final code change:
+
+| Check | Result |
+|---|---|
+| `scripts/check-warnings.sh` | zero warnings on simulator, device, Release and the test targets |
+| `scripts/test.sh fast` | 561 tests in 82 suites pass (about 153 test functions are new, parameterized ones count more) |
+| `scripts/test.sh smoke` | 13 UI tests pass, including `ClientsUITests` (the flow); `ClientsAuditUITests` is skipped by UISmoke |
+| `ClientsAuditUITests` for `en,ar` (default size and AX5, `TEST_RUNNER_AUDIT_LOCALES=en,ar`) | passes |
+| `scripts/check-strings.sh` | passes (356 keys, 14 localizations) |
+| SwiftLint | clean |
+
+Not run: the audit for `pt-BR`, `de` and `hi` (the default locale list of `ClientsAuditUITests`), and `scripts/test.sh full`.
+Next command: `SIM_UDID=<udid> scripts/test.sh full` (runs the audit in all five locales; add
+`TEST_RUNNER_AUDIT_LOCALES=pt-BR,de,hi` and `ONLY_TESTING=BelloHubUITests/ClientsAuditUITests` to run only the three).
+Expect the Devanagari and Arabic "may be clipped" reports to be filtered by the audit's known false positives.
+
+Visual check: screenshots of the list, profile, edit, knowledge, merge and new-client screens in `en` (default size) and
+`ar` at AX5 were reviewed on the simulator. They found and fixed: a crash in the birthday year menu under the Arabic
+(Islamic) device calendar, avatar initials overflowing at AX5, the tab bar covering the edit and knowledge forms, and an
+email placeholder drawn as a link. Dark mode was not looked at (the tokens carry the dark pairs; contrast pairs are
+tested).
+
 ## Tests
 
-See the final report of the session for counts. Pure suites: `ClientListFilter`, `ClientSearch`, `ClientSort`,
+Pure suites: `ClientListFilter`, `ClientSearch`, `ClientSort`,
 `ClientListBuilder` (with the 2,000-client speed test), `ClientFormRules`, `BirthdayInput`, `KnowledgeListRules`,
 `ClientProfileBuilder`, `ClientMerger`, `Formatters` client dates, `PhoneLauncher`, contrast; ViewModels: `ClientsViewModel`,
 `ClientProfileViewModel`, `ClientFormViewModel` (new and edit), `ClientKnowledgeViewModel`, `ClientMergeViewModel`;

@@ -10,7 +10,8 @@ import Foundation
 /// ViewModels need. Every ViewModel test builds one, so nothing is shared between tests.
 @MainActor
 struct ClientsWorld {
-    let repository: InMemoryClientRecordRepository
+    /// The protocol, as the ViewModels see it: its calls can throw, so the tests mark them `try` like the code does.
+    let repository: any ClientRecordRepository
     let vault: VaultService
     let profile: ProfileService
     let tags: [Tag]
@@ -20,15 +21,14 @@ struct ClientsWorld {
         tagNames: [String] = ["Sensitive Skin", "VIP", "Bridal"], clientTerm: ClientTerm = .client,
         regionCode: String = "BR"
     ) async throws -> ClientsWorld {
-        let repository = InMemoryClientRecordRepository(clock: { TestClock.now })
+        let repository: any ClientRecordRepository = InMemoryClientRecordRepository(clock: { TestClock.now })
         let vault = VaultService(repository: repository)
         let profile = ProfileService(vault: vault)
-        var professional = ProfessionalProfile(
+        let professional = ProfessionalProfile(
             displayName: "Maria Silva", regionCode: regionCode, timeZoneID: "America/Sao_Paulo",
             currencyCode: "BRL", appLocaleID: "en", professions: [.esthetician], clientTerm: clientTerm,
             createdAt: TestClock.now
         )
-        professional.appLocaleID = "en"
         try await repository.save(professional)
         let tags = tagNames.enumerated().map { index, name in
             Tag(id: UUID(), name: name, colorToken: ClientFormRules.tagColorToken(forPosition: index), position: index)

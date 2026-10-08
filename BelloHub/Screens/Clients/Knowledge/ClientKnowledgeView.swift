@@ -108,7 +108,6 @@ struct ClientKnowledgeView: View {
                 .foregroundStyle(Palette.ink)
                 .lineLimit(2...8)
                 .autocorrectionDisabled()
-                .frame(minHeight: Spacing.touchTarget)
                 .listRowBackground(Palette.surface)
                 .moveDisabled(true)
                 .accessibilityIdentifier("clientKnowledge.noteField")
@@ -159,6 +158,7 @@ struct ClientKnowledgeView: View {
                 .submitLabel(.done)
                 .onSubmit { viewModel.add(to: section) }
                 .autocorrectionDisabled()
+                .frame(minHeight: Spacing.touchTarget)
                 .accessibilityIdentifier("clientKnowledge.addField.\(section.rawValue)")
                 Button { viewModel.add(to: section) } label: { Text("clients.add") }
                     .buttonStyle(.belloChip(selected: true))

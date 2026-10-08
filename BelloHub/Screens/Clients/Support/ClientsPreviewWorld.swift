@@ -17,7 +17,7 @@ struct ClientsPreviewWorld {
     let seeded: ClientsFixtures.Seeded
 
     static func make() async -> ClientsPreviewWorld? {
-        let repository = InMemoryClientRecordRepository()
+        let repository: any ClientRecordRepository = InMemoryClientRecordRepository()
         let vault = VaultService(repository: repository)
         let profile = ProfileService(vault: vault)
         let now = Date()
