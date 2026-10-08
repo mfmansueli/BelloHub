@@ -229,6 +229,7 @@ Human tasks created: none.
 | ASSUMPTION-34 | "Use passcode" on the Locked screen runs the same system prompt as the Face ID button: the system offers the passcode after a failed face | `LocalAuthentication` has no call that jumps straight to the passcode | S3 |
 
 ## Conventions learned while building (read before writing code)
+- Agent effort (owner-approved, from S5): `high` by default, `xhigh` for security and privacy slices (rules, counters, sealed envelopes, health and consent, vault), `medium` for mechanical work (strings, legal sync, lint, docs), `max` only for a hard bug already retried.
 - Parallel work: the owner asked for parallel agents on every stage. Commit a shared contract first (protocols, DTOs, routes, fakes), then one agent per slice with `isolation: worktree`, a distinct existing simulator each (`SIM_UDID`), no edits to PROGRESS.md, DESIGN.md or the generated string catalog (`docs/agent-notes/<slice>.md` instead). Integrate by merging branches, regenerating the catalog with `scripts/merge-strings.py`, deleting `Screens/Clients/Placeholders/`, then fast, smoke and `check-warnings.sh` on the merged result.
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
 - Accessibility identifiers go on elements, never on containers.
