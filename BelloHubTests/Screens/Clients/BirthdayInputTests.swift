@@ -64,4 +64,12 @@ struct BirthdayInputTests {
         #expect(resolve(BirthdayInput(birthday)) == .success(birthday))
         #expect(BirthdayInput(nil).isEmpty)
     }
+
+    @Test("The year menu lists years newest first, and survives a year that is not in the Gregorian count")
+    func yearOptions() {
+        let years = BirthdayInput.yearOptions(currentYear: 2026)
+
+        #expect(years.first == 2026 && years.last == 1900 && years.count == 127)
+        #expect(BirthdayInput.yearOptions(currentYear: 1448) == [1900], "an Islamic year never inverts the range")
+    }
 }

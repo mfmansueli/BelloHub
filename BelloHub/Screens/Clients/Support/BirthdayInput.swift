@@ -23,6 +23,11 @@ struct BirthdayInput: Equatable, Sendable {
         case invalidYear
     }
 
+    /// The years the year menu offers, newest first. Never empty and never inverted, whatever year it is told.
+    static func yearOptions(currentYear: Int) -> [Int] {
+        Array((earliestYear...max(currentYear, earliestYear)).reversed())
+    }
+
     init(day: Int? = nil, month: Int? = nil, year: Int? = nil) {
         self.day = day
         self.month = month

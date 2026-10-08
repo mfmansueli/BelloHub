@@ -18,6 +18,7 @@ enum Icon: String, CaseIterable {
     case check = "checkmark"
     case forward = "chevron.forward"
     case back = "chevron.backward"
+    case chevronUpDown = "chevron.up.chevron.down"
     case close = "xmark"
     case key = "key"
     case print = "printer"

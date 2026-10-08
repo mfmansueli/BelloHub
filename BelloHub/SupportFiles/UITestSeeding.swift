@@ -6,8 +6,9 @@
 #if DEBUG
 import Foundation
 
-/// Ready-made states for UI tests (`-uiSeed onboarded`). DEBUG only. A test that wants the onboarding itself does
-/// not seed: it launches clean and walks it.
+/// Ready-made states for UI tests (`-uiSeed onboarded`, `-uiSeed clients`). DEBUG only. A test that wants the
+/// onboarding itself does not seed: it launches clean and walks it. `clients` is `onboarded` plus the demo clients
+/// (`ClientsFixtures`).
 enum UITestSeeding {
     static let userID = "dev-5511987654321"
     static let phone = "+5511987654321"
@@ -15,7 +16,7 @@ enum UITestSeeding {
     /// A signed-in professional with her workspace set up, so a test can start on the locked screen or the app.
     @MainActor
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
-        guard options.seed == "onboarded", !options.keepsState else { return }
+        guard options.seed == "onboarded" || options.seed == "clients", !options.keepsState else { return }
         let defaults = dependencies.defaults
         let user = AuthUser(id: userID, phoneE164: phone)
         defaults.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
@@ -33,6 +34,9 @@ enum UITestSeeding {
         let result = OnboardingBuilder.build(draft: draft, catalog: catalog, now: Date())
         try? dependencies.keyManager.prepare(createIfMissing: true)
         try? await dependencies.vault.repository?.saveOnboarding(result)
+        if options.seed == "clients", let repository = dependencies.vault.repository {
+            try? await ClientsFixtures.seed(into: repository, now: Date())
+        }
     }
 }
 #endif

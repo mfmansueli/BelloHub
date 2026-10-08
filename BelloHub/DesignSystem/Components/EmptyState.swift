@@ -9,20 +9,36 @@ import SwiftUI
 /// at most one primary action. Every list and every screen that loads data defines this state.
 struct EmptyState: View {
     let icon: Icon
-    let title: LocalizedStringKey
-    let message: LocalizedStringKey
+    let title: Text
+    let message: Text
     var actionTitle: LocalizedStringKey?
     var action: (() -> Void)?
+
+    init(
+        icon: Icon, title: LocalizedStringKey, message: LocalizedStringKey,
+        actionTitle: LocalizedStringKey? = nil, action: (() -> Void)? = nil
+    ) {
+        self.init(icon: icon, title: Text(title), message: Text(message), actionTitle: actionTitle, action: action)
+    }
+
+    /// For a title or a message with an argument (`Text(LocalizedStringResource(...))`), which a key cannot carry.
+    init(icon: Icon, title: Text, message: Text, actionTitle: LocalizedStringKey? = nil, action: (() -> Void)? = nil) {
+        self.icon = icon
+        self.title = title
+        self.message = message
+        self.actionTitle = actionTitle
+        self.action = action
+    }
 
     var body: some View {
         VStack(spacing: Spacing.md) {
             illustration
-            Text(title)
+            title
                 .font(Typography.section)
                 .foregroundStyle(Palette.ink)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
-            Text(message)
+            message
                 .font(Typography.meta)
                 .foregroundStyle(Palette.ink2)
                 .multilineTextAlignment(.center)
