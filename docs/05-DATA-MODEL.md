@@ -69,6 +69,9 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 - **Photo**: `client`, `record?`, `takenAt`, `kind` (`before`, `after`, `progress`), `visibility` (`professionalOnly`, `shareWithClient`, `portfolio`), encrypted `image` and `thumbnail`.
 - **Voice**: audio is **not stored** after review (default); the transcript is a draft the professional reviews, then the structured result is saved and the draft is deleted.
 
+### Registration ledger (D42)
+- **RegistrationLedgerEntry**: `clientID`, `registeredAt`. Exactly one per client id ever registered, written the first time a client id is saved. **Never deleted, not even when the client is deleted** (it holds no name, phone or any personal data, only an id and a date). The number of entries is the cumulative registration count; the first 10 are free. Synced by CloudKit, so the count follows her Apple ID across devices and reinstalls; the server holds the authoritative copy (layer B, `accounts/{uid}.registrations`) and the app uses the larger of the two.
+
 ### Derived, never stored
 - **ClientHabits**: `visits`, `cancelled`, `noShows`, `lateCancellations`, `returnsEveryWeeks` (median interval), `usualPeriod`, `reminderResponseDays`, `mostBookedService`, `source`. The cancellation rate shows only with ≥ 4 completed visits. Definition: rate = (cancellations by the client + no-shows) ÷ past appointments among the last 10; "cancels often" at ≥ 30 %. A cancellation made by the professional is excluded; a forgiven no-show is excluded.
 - **FollowUp**: last completed visit ≥ the service's `followUpWeeks`. **WinBack**: no visit for ≥ 60 days.
@@ -85,7 +88,8 @@ Region per D29. Collections (details, rules and functions in `11-BACKEND-FIREBAS
 
 | Collection | Content | Written by | Read by |
 |---|---|---|---|
-| `accounts/{uid}` | phone, `slug`, country, `dataRegion` (`eu` in v1, D29), locale, mirrored plan state, deletion state, `inboxKeyring` public keys | Function and the account owner (non-sensitive fields only) | Owner |
+| `accounts/{uid}` | phone, `slug`, country, `dataRegion` (`eu` in v1, D29), locale, mirrored plan state, **`registrations {count, freeLimit}` (D42)**, deletion state, `inboxKeyring` public keys | Function and the account owner (non-sensitive fields only) | Owner |
+| `accounts/{uid}/registrations/{clientId}` | `registeredAt` only (an opaque client id, no personal data); created once per client id by `reserveRegistration`, never deleted by a client delete | Function only | Owner |
 | `publicProfiles/{slug}` | what the public page shows: name, bio, city, photo, public credentials, services (name, duration, price text only if she chose to show it), add-ons, time zone, currency, locales, **rules text per locale**, policy values, `inboxKey` (public) | The app (publishes) | Anyone |
 | `availability/{uid}` | weekly rules, breaks, days off, buffer, **busy blocks (start/end only, no names, no reasons)** | The app | Functions |
 | `bookings/{id}` | `ownerUid`, service, add-ons, guests count, start, end, status, **client name, phone (E.164), optional email, locale**, `manageTokenHash`, timestamps | **Functions only** | The owner; the client through a function with her token |

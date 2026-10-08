@@ -38,6 +38,8 @@ If the device region is not in the table, use the closest preset by language (fo
 
 ## 2. Rollout waves
 
+> **Owner decision D40 (2026-10-08):** the owner opens every market he can and formalizes legal matters only after sales appear. The "Ready to open when" column is advice, not a gate. Claude Code still writes the legal set of every market now.
+
 | Wave | Markets | Ready to open when |
 |---|---|---|
 | 1 | **Brazil and Europe**: Brazil; Portugal, Spain, Italy, France, Germany/Austria/Switzerland, United Kingdom, Ireland | for Brazil: `pt-BR` read by a native (Iago) and the LGPD texts reviewed by a lawyer. For Europe: `pt-PT`, `es`, `it`, `fr`, `de`, `en`, `en-GB` each read by a native, and the European legal set (common GDPR core plus national annexes PT, ES, IT, FR, DE, UK) reviewed by a lawyer; EU trader declaration done in App Store Connect (H16). For both: two real iPhones tested sync and voice; the web link tested inside WhatsApp and Instagram in-app browsers (H8). Brazil and Europe may open on different days if one is ready first; neither waits for waves 2 to 4 |

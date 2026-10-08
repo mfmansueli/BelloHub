@@ -25,6 +25,8 @@ Localization is not translation at the end: **every string is written in all fou
 
 Rules for every language: no machine-translation tone; no literal copies of English sentence structure; same warmth and brevity as `01-PRODUCT.md` voice; errors say what happened and how to fix it. Ask yourself of each string: *would a professional in that country say it this way to a client?*
 
+> **D41 (2026-10-08): no human review is planned.** `needs_review` stays on every string because it is true; it is information, not a gate.
+
 Mark every string that no native has read as `needs_review` in the catalog (state `needs_review`, the catalog's own mechanism). **`pt-BR` is read by Iago (native) in S3, S6, S10 and S11, and turned to `translated` by the owners only**; Claude Code never promotes a string to reviewed. Until reviewers exist (H10) the app runs in **TestFlight internal only**; public release follows D36.
 
 ## 2. iOS implementation

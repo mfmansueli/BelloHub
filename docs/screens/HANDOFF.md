@@ -21,6 +21,7 @@ Prosa em português (idioma da dona do produto); **os textos entre aspas são a 
 6. **Team** continua "later" (D5).
 7. **Movimento** conforme `docs/09-MOTION.md` (as classes `m-*` do protótipo são o resumo do que ele descreve).
 8. **Telas com ficha de saúde da cliente** só enviam envelopes selados (D21). Nenhum dado clínico em texto aberto fora do cofre.
+9. **Monetização (D33, D42)**: os 10 primeiros cadastros de clientes são grátis e a contagem é acumulada (apagar uma cliente não devolve a vaga). Sem teste grátis de 14 dias: as telas `Plan` (7.3), `States` (7.11, "Your trial has ended") e `Onb-7-Ready` mostram o uso gratuito ("x of 10 used") e o plano pago, mensal ou anual, com os preços localizados do StoreKit. `NewClient` (4.2) e `ImportClients` (4.6) explicam o limite antes do cadastro. A mesma tela de plano abre como paywall ao tentar cadastrar a 11ª cliente. Registrar em "Design additions".
 
 
 ---

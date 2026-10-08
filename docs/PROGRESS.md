@@ -10,6 +10,27 @@ Nothing here blocks the build; each item has a safe default in use.
 3. **Crashlytics removed (FYI, ASSUMPTION-2).** `docs/04-ARCHITECTURE.md` section 8 says no Analytics and no Crashlytics in v1, so I removed the Crashlytics product, its dSYM build phase, the crash-policy code and tests, and the README section the scaffold had. If Mateus wants crash reports, the proposal is MetricKit (S12) rather than a third-party SDK that can carry log text.
 4. **`gh` is not logged in** and `origin` is `git@github.com:mfmansueli/BelloHub.git`. Pushing branches works only if this Mac's SSH key has access; opening pull requests needs `gh auth login` (H17).
 
+## Owner decisions made during the build
+| Date | Decision | Effect on the work |
+|---|---|---|
+| 2026-10-08 | **D40 Go-to-market:** open every market possible, formalize legal matters only after real sales appear; no gate on native reading or legal review. | Claude Code writes the legal documents of every market now (plan item L below). The market table below is information; the owner opens markets in App Store Connect. |
+| 2026-10-08 | **D41 Languages:** no human review is planned; Claude Code does its best. | Every string stays `needs_review` (true, and not a gate). The S11 completeness checks stay; the "awaiting reviewers" list is simply every non-English string. |
+| 2026-10-08 | **D42 Monetization:** first 10 client registrations free (cumulative; deleting never restores a slot; across manual, import and booking; duplicates and edits do not count), paywall on the 11th, existing data always accessible, counter at account level; one paid plan, monthly or yearly (EUR 14.99 / 149.99, USD 14.99 / 149.99, BRL 39.90 / 399.90), same features, **no 14-day trial** (D33 revised). | S2 builds `RegistrationQuota`, `PlanSavings` and the vault ledger; S4 the registration gate and the limit message; S8 the server counter and the booking branch; S10 the plan screen and the paywall with StoreKit. |
+
+**Plan item L (legal drafting pass), right after S2:** for every market, the terms and data processing agreement, privacy policy, client notice, health-form consent, photo consent, guardian consent and data-subject-request wording, written as carefully as possible in the language of each region set (`docs/07-LOCALIZATION.md` section 8), versioned under `legal/<doc>/<localization>/<version>.md`, with `legal/STATUS.md` and `scripts/check-legal-status.sh`. Refined in S11 once the screens that show them exist. Marked `LEGAL-REVIEW` in the headers, never claiming compliance (`docs/06` section 12).
+
+## Risk register (what opening before legal review leaves open; owner accepted under D40)
+| Risk | Where | Mitigation already in the design | Still open |
+|---|---|---|---|
+| Health data processed without a legal opinion (LGPD art. 11, GDPR art. 9 and equivalents) | All markets | Clinical data never reaches our servers readable (vault, sealed mailbox, on-device AI); the professional is the controller, Bello Hub a processor with a DPA accepted in the app; retention and deletion built in | The texts themselves are unreviewed |
+| Apple requirements | All storefronts | Privacy-policy URL and App Privacy answers drafted from `docs/06`; `PrivacyInfo.xcprivacy` in S12 | The policy must be hosted at a public URL (needs the domain, H6) |
+| EU trader status for subscriptions | EU storefronts | Instructions in H16 | The owner must declare it in App Store Connect; Apple does not allow skipping it |
+| Gulf health-data residency (UAE Federal Law 2/2019, Saudi PDPL) | `SA`, `AE` | No clinical data on servers; only ciphertext in transit for up to 30 days | `healthDataResidency` is `blocking-until-reviewed` in `regions.json`; the owner decides |
+| French health-data hosting certification (HDS) | `FR` | Servers cannot read the sealed envelopes | Unconfirmed whether HDS applies |
+| German and Austrian legal notice (Impressum) | `DE`, `AT` | An optional "legal notice" text on the public page is planned as a design addition | The professional must fill it in |
+| Minors | All | Guardian flow (D17) and per-country wording in the drafts | Age thresholds differ per country |
+| WhatsApp automation and SMS | All | Manual-first sending, SMS allow-list (D31, D37) | Meta onboarding (H13) if automation is wanted |
+
 ## Market readiness (keep current; mirrors `legal/STATUS.md`)
 | Wave | Market | Language(s) | Strings read by a native | Legal texts reviewed | Open in App Store Connect |
 |---|---|---|---|---|---|
@@ -30,7 +51,7 @@ Nothing here blocks the build; each item has a safe default in use.
 | 4 | Saudi Arabia | ar | no | no | no |
 | 4 | United Arab Emirates | ar | no | no | no |
 
-All `no` until a human changes them (H10, H11, H15).
+Under D40 and D41 the first two columns are not gates: the owner opens markets by his own judgement (H15). They stay `no` because it is true.
 
 ## Environment (S0, 2026-10-08)
 - Xcode 27.0, build 27A266a (a three-digit build number, which looks like a release build and not a beta; confirm in Xcode > About Xcode. If it is a beta, TestFlight uploads need a release Xcode, H16 item 4).
@@ -121,6 +142,11 @@ Human tasks created: none. H12 (fonts) was not needed: the network allowed the d
 | ASSUMPTION-13 | Fonts are registered at launch with `CTFontManagerRegisterFontsForURL` (`FontRegistry`), not through `UIAppFonts` | `UIAppFonts` is an array that xcconfig keys cannot express and the Info.plist fragment would duplicate the list | S1 |
 | ASSUMPTION-14 | Strings with arguments use `LocalizedStringResource("semantic.key", defaultValue: "...\(arg)")`, never `Text("key \(arg)")` | The latter looks up the key `key %@`, which does not exist (found in the catalog) | S1 |
 | ASSUMPTION-15 | `docs/strings/message-templates.json` is extended in S6, where the messages are first used; the glossary was extended in S1 as the build plan says | The templates have no consumer before S6 | S1 |
+| ASSUMPTION-16 | A **new client who books online after the free registrations are used, without a plan**, arrives as "waiting for approval" (`Bk-10-Review`) and the paywall appears when the professional approves | The owner asked for the limit on online booking too, but a professional is not present at booking time; this never loses a request and never blocks existing clients | S2 |
+| ASSUMPTION-17 | The server counter is the authority; the iCloud ledger (ids and dates only) backs it up and the app uses the larger count; offline the cached count is used and the server reconciles by client id | Survives reinstall and a new device with the same Apple ID even offline, and cannot be reset by deleting local data | S2 |
+| ASSUMPTION-18 | **Open question for the owner:** deleting the whole account and signing up again with the same phone number would start a new count of 10. v1 does not keep a tombstone (a stored hash of the phone and the count) because that would hold data after an erasure request | Avoids retaining personal data after account deletion; say if you prefer the tombstone (needs a line in the privacy policy) | S2 |
+| ASSUMPTION-19 | Contact and spreadsheet imports go through the same gate: an import stops at the remaining free slots and offers the paywall for the rest | "Every way a client is created" | S2 |
+| ASSUMPTION-20 | The paywall is the `Plan` screen opened as a sheet, not a new screen; other storefronts than EUR, USD and BRL use Apple's equalized price (the owner can set them in App Store Connect) | Keeps the 97-screen scope; the owner gave three regions | S2 |
 
 ## Conventions learned while building (read before writing code)
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
@@ -139,6 +165,10 @@ Human tasks created: none. H12 (fonts) was not needed: the network allowed the d
 | 7.5 AISettings | "Cloud help" row disabled, "Not available yet"; review toggle locked on | D23 | |
 | 2.4 Notifications / 2.1 Home | "Reminders ready" section | D31 | |
 | 8.8 Bk-8-Confirmed | Channel-dependent confirmation copy | D31 | |
+| 4.2 NewClient / 4.6 ImportClients | The free-registration explainer ("Your first 10 client registrations are free. Deleted clients still count toward this limit.") and the "x of 10 used" counter | D42 | |
+| 7.3 Plan | No trial; free usage "x of 10 used"; one plan with monthly and yearly options, localized StoreKit prices, the yearly saving highlighted; opens as the paywall when the 11th client is added | D33, D42 | |
+| 7.11 States | "Plan ended" state becomes "Free registrations used" (existing data stays available) | D42 | |
+| 2.10 BookingRequest | New reason: a new client waits because the free registrations are used; approving shows the paywall | D42 | |
 
 ## Screen traceability (97 screens; status: todo / in-progress / done / deferred)
 Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.

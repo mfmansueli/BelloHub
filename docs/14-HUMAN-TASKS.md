@@ -15,12 +15,12 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H7 | Transactional email provider | Mateus | before S8 deploys |
 | H8 | In-app browser tests on real phones | Iago | end of S9 |
 | H9 | Google Calendar OAuth (optional, v1.1) | Mateus | optional |
-| H10 | Native reading of the languages (`pt-BR` first, read by Iago) | Iago; native readers for the rest | `pt-BR` at S11; others per market |
-| H11 | Legal review per market (wave 1: Brazil and Europe) | data-protection lawyer | before real users, per market |
+| H10 | Native reading of the languages (`pt-BR` first, read by Iago). **Not planned (D41); optional, any time** | Iago; native readers | optional |
+| H11 | Legal review per market. **After sales appear (D40)**, not before launch | data-protection lawyer | when the owner decides |
 | H12 | Fonts if the build environment has no network | Iago / Mateus | S1 |
 | H13 | WhatsApp Business (Meta) onboarding (optional) | Iago | optional |
 | H14 | App Store Connect, subscriptions, privacy labels, TestFlight | Iago / Mateus | S12 |
-| H15 | Open markets in App Store Connect, one wave at a time | Iago | per wave (`16-MARKETS.md` §2) |
+| H15 | Open markets in App Store Connect: **every market the owner can (D40)** | Iago | at the owner's discretion |
 | H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
 | H17 | GitHub CLI login (to open pull requests) and repository access for pushes | Iago | end of phase A |
 
@@ -68,6 +68,8 @@ On real phones, open a booking link **inside** WhatsApp, Instagram and Facebook 
 Create an OAuth client in Google Cloud for the app and complete Google's verification; until then the `Integrations` row says "coming soon". Not required for v1.
 
 ### H10 · Reading the languages
+> **Owner decision D41 (2026-10-08): not planned.** Kept for the day someone wants to read a language; nothing waits for it.
+
 There are no reviewers yet. The plan:
 1. **`pt-BR`: Iago reads it** (needed for Brazil, wave 1) using `docs/review/pt-BR.md` (the ordered list of screens and strings Claude Code prepares in S11) and the spreadsheet from `scripts/export-strings.sh pt-BR`. He edits the spreadsheet or the catalog directly and marks strings reviewed. This unlocks wave 1 (together with H11).
 2. Other languages: **wave 1 needs a native reader each for `pt-PT`, `es`, `it`, `fr`, `de` and `en-GB`** (English readers also cover `en`); the others when their market is about to open. Find one native reader per language (friends, family, clients, a paid freelancer). Give them the exported spreadsheet (`key, en, <language>, comment`) and the glossary; ask them to read the whole app once as a user and edit directly. Return edits through `scripts/import-strings.sh`.
@@ -75,6 +77,8 @@ There are no reviewers yet. The plan:
 Until a language is read, it stays `needs_review` and its market stays closed in App Store Connect (H15).
 
 ### H11 · Legal review
+> **Owner decision D40 (2026-10-08): after sales appear.** Claude Code writes the texts for every market now (`legal/`); the owner sends them to a lawyer when the product gets traction. Not a gate for opening a market.
+
 Start with **Brazil**: a data-protection lawyer (LGPD) reviews the terms and DPA, privacy policy, consent texts (health form, photos, guardian), retention minimums per profession, international-transfer wording (servers in the EU), the "sealed in your browser" claims. Then, per wave (`16-MARKETS.md`): Portugal/Spain (EU), Mexico, United States, Latin America, Italy, France, Germany, United Kingdom, India, Turkey, Indonesia, and last Saudi Arabia and the UAE (these two need a written opinion on health-data residency). One lawyer can coordinate local counsel. Return the final texts; Claude Code replaces drafts under `legal/` and bumps `textVersion`; update `legal/STATUS.md`.
 
 ### H12 · Fonts
@@ -84,9 +88,11 @@ If `scripts/fetch-fonts.sh` cannot download Fraunces and DM Sans (network blocke
 Create a Meta Business account, verify it, create a WhatsApp Business app and phone number, submit message templates **per language** (confirmation, reminder, code; utility category), obtain the Cloud API token, store it as a secret and set Remote Config `whatsAppAutomation = true` for the cohort you choose. Note per-message costs, which differ by country. **Expected:** the `WhatsAppCloudProvider` goes live without code changes; the web and app copy switches to the automated wording.
 
 ### H14 · App Store Connect
-Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`) and the 14-day trial, set prices (O7), fill in **App Privacy** answers from `06-PRIVACY-SECURITY.md` §1–§2, add the privacy policy URL, add the metadata and screenshots per language from `docs/store/`, create the TestFlight group (internal first). **Expected:** the StoreKit product ids match D33; `PrivacyInfo.xcprivacy` matches the answers.
+Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`) **with no free trial and no introductory offer** (D33, D42), set the prices per storefront (EUR 14.99 and 149.99 for the euro-zone storefronts, USD 14.99 and 149.99 for the United States, BRL 39.90 and 399.90 for Brazil; other storefronts take Apple's equalized price unless you set them), fill in **App Privacy** answers from `06-PRIVACY-SECURITY.md` §1–§2, add the privacy policy URL, add the metadata and screenshots per language from `docs/store/`, create the TestFlight group (internal first). **Expected:** the StoreKit product ids match D33; `PrivacyInfo.xcprivacy` matches the answers.
 
-### H15 · Open markets, one wave at a time
+### H15 · Open markets
+> **Owner decision D40 (2026-10-08): open every market possible, formalize later.** The conditions below are recommendations. Still required by Apple, whatever the market: a public privacy-policy URL and the App Privacy answers (H14), and for the EU the trader declaration (H16).
+
 In App Store Connect → the app → *Pricing and Availability* → countries and regions, keep **only the open markets** selected (start: none; open Brazil when H10 `pt-BR` and H11 Brazil are done, and each European country when its language is read, the European legal set is reviewed and H16 trader status is done). A market opens only when its language is read (H10) and its legal set is reviewed (H11); update `legal/STATUS.md` and the "Market readiness" table in `PROGRESS.md`. Waves and conditions: `16-MARKETS.md` §2.
 
 ### H16 · Individual account duties and release Xcode

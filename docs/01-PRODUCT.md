@@ -14,7 +14,7 @@ It is not a clinic system and not a salon marketplace.
 
 ## Product rules (non-negotiable)
 
-1. **No financial operations.** No payment, deposit, invoice, commission, cash box, revenue, price-bearing package, "client value". Prices appear only as service information and only if the professional chooses to show them (`priceDisplay`). The Bello Hub subscription (StoreKit 2) is separate and is the only charge.
+1. **No financial operations.** No payment, deposit, invoice, commission, cash box, revenue, price-bearing package, "client value". Prices appear only as service information and only if the professional chooses to show them (`priceDisplay`). The Bello Hub subscription (StoreKit 2) is separate and is the only charge: the first 10 client registrations are free, then one paid plan (D42).
 2. **The record belongs to the professional.** It lives on her iPhone and in her iCloud. The Bello Hub team never sees records, photos or health information (`05-DATA-MODEL.md`, `06-PRIVACY-SECURITY.md`).
 3. **Records lock 24 hours after creation.** After that every change is a **logged correction** (who, when, what), never a silent edit.
 4. **Client habits are private to the professional.** The client never sees them. The cancellation rate shows only after 4 completed visits (absolute numbers before). Neutral language: "habits", never "reliability" or "bad client".

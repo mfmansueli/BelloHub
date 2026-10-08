@@ -1,0 +1,106 @@
+//
+//  Appointment.swift
+//  BelloHub
+//
+
+import Foundation
+
+/// A visit in the calendar. The time, status and names are in the clear (lists, notifications and conflict
+/// detection need them); `privateNote` is encrypted at rest.
+struct Appointment: Identifiable, Hashable, Codable, Sendable {
+    let id: UUID
+    var clientID: UUID
+    var serviceID: UUID?
+    /// Copied at booking time; the service may be renamed or deleted later.
+    var serviceName: String
+    var startsAt: Date
+    var endsAt: Date
+    /// Service plus add-ons plus guests in sequence (D19). `endsAt - startsAt` for a booked visit.
+    var totalMinutes: Int
+    var status: AppointmentStatus
+    var cancelledAt: Date?
+    var cancelledBy: CancelledBy?
+    /// Cancelled by the client inside the policy's free window cutoff (`CancellationEvaluator` decides).
+    var isLateCancellation: Bool
+    var origin: AppointmentOrigin
+    /// The server's id for a visit booked through the link.
+    var bookingID: String?
+    var visitType: VisitType
+    /// The visit this one checks after a reaction.
+    var linkedAppointmentID: UUID?
+    var addOns: [AppointmentAddOn]
+    /// Names of guests, booked back to back with the same service.
+    var guests: [String]
+    var sessionPlanID: UUID?
+    var rescheduleCount: Int
+    var reminderSentAt: Date?
+    var clientConfirmedAt: Date?
+    var lateByMinutes: Int?
+    /// A no-show the professional chose not to count (D13).
+    var noShowForgiven: Bool
+    var createdAt: Date
+    var updatedAt: Date
+
+    // Encrypted at rest.
+    var privateNote: String?
+
+    init(
+        id: UUID = UUID(),
+        clientID: UUID,
+        serviceID: UUID? = nil,
+        serviceName: String,
+        startsAt: Date,
+        endsAt: Date,
+        totalMinutes: Int? = nil,
+        status: AppointmentStatus = .booked,
+        cancelledAt: Date? = nil,
+        cancelledBy: CancelledBy? = nil,
+        isLateCancellation: Bool = false,
+        origin: AppointmentOrigin = .manual,
+        bookingID: String? = nil,
+        visitType: VisitType = .treatment,
+        linkedAppointmentID: UUID? = nil,
+        addOns: [AppointmentAddOn] = [],
+        guests: [String] = [],
+        sessionPlanID: UUID? = nil,
+        rescheduleCount: Int = 0,
+        reminderSentAt: Date? = nil,
+        clientConfirmedAt: Date? = nil,
+        lateByMinutes: Int? = nil,
+        noShowForgiven: Bool = false,
+        createdAt: Date,
+        updatedAt: Date? = nil,
+        privateNote: String? = nil
+    ) {
+        self.id = id
+        self.clientID = clientID
+        self.serviceID = serviceID
+        self.serviceName = serviceName
+        self.startsAt = startsAt
+        self.endsAt = endsAt
+        self.totalMinutes = totalMinutes ?? Int(endsAt.timeIntervalSince(startsAt) / 60)
+        self.status = status
+        self.cancelledAt = cancelledAt
+        self.cancelledBy = cancelledBy
+        self.isLateCancellation = isLateCancellation
+        self.origin = origin
+        self.bookingID = bookingID
+        self.visitType = visitType
+        self.linkedAppointmentID = linkedAppointmentID
+        self.addOns = addOns
+        self.guests = guests
+        self.sessionPlanID = sessionPlanID
+        self.rescheduleCount = rescheduleCount
+        self.reminderSentAt = reminderSentAt
+        self.clientConfirmedAt = clientConfirmedAt
+        self.lateByMinutes = lateByMinutes
+        self.noShowForgiven = noShowForgiven
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt ?? createdAt
+        self.privateNote = privateNote
+    }
+
+    var interval: DateInterval {
+        DateInterval(start: startsAt, end: max(endsAt, startsAt))
+    }
+}
