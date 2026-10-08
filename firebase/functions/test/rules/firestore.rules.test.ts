@@ -303,7 +303,7 @@ describe('push tokens', () => {
     ['another platform', token({ platform: 'android' })],
     ['a short token', token({ fcmToken: 'short' })],
     ['a huge token', token({ fcmToken: 'f'.repeat(5000) })],
-    ['a token that is not a string', token({ fcmToken: 12345678901234567890 })],
+    ['a token that is not a string', token({ fcmToken: 42 })],
     ['a bad locale', token({ locale: 'xx' })],
     ['a time that is not a timestamp', token({ lastSeenAt: 'yesterday' })]
   ])('refuses %s', async (_label, data) => {

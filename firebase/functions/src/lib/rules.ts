@@ -7,7 +7,8 @@
 //   registrationDecision<- RegistrationQuota (D42)
 
 export interface CancellationPolicy {
-  freeWindowHours: number;
+  /** The options the app offers (docs/05). */
+  freeWindowHours: 2 | 12 | 24 | 48 | 72;
   clientCanReschedule: boolean;
   maxReschedules?: number | undefined;
   afterWindowCancel: 'allow' | 'message';

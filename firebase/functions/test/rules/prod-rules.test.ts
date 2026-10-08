@@ -48,7 +48,7 @@ describe('production rules (firebase/rules/prod)', () => {
 describe('the default project cannot reach the cloud by accident', () => {
   it('makes a demo project the default, so a bare "firebase deploy" fails', () => {
     const rc = JSON.parse(read('../../../.firebaserc')) as { projects: Record<string, string> };
-    expect(rc.projects['default']).toMatch(/^demo-/);
+    expect(rc.projects.default).toMatch(/^demo-/);
   });
 
   it('keeps the real project reachable only by an explicit alias', () => {
