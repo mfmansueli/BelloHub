@@ -61,6 +61,7 @@ extension XCUIApplication {
     func selectChip(_ identifier: String, file: StaticString = #filePath, line: UInt = #line) {
         let chip = buttons[identifier].firstMatch
         XCTAssertTrue(chip.waitForExistence(timeout: 15), "no chip \(identifier)", file: file, line: line)
+        scrollAboveBottomBar(chip)
         for _ in 0..<3 {
             chip.tap()
             if chip.isSelected { return }
@@ -73,11 +74,27 @@ extension XCUIApplication {
         )
     }
 
+    /// Taps a row that opens a sheet and waits for `expected`, tapping again if the first tap was lost to a scroll.
+    @MainActor
+    func tapRow(
+        _ identifier: String, expecting expected: String, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let row = buttons[identifier].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 15), "no row \(identifier)", file: file, line: line)
+        for _ in 0..<3 {
+            scrollAboveBottomBar(row)
+            row.tap()
+            if element(expected).waitForExistence(timeout: 8) { return }
+        }
+        XCTFail("tapping \(identifier) did not show \(expected)", file: file, line: line)
+    }
+
     /// Types into a text field, tapping it again if the first tap was lost to a scroll.
     @MainActor
     func typeIntoField(_ text: String, identifier: String, file: StaticString = #filePath, line: UInt = #line) {
         let field = textFields[identifier].firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 15), "no field \(identifier)", file: file, line: line)
+        scrollAboveBottomBar(field)
         for _ in 0..<3 {
             field.tap()
             if field.value(forKey: "hasKeyboardFocus") as? Bool == true { break }
@@ -90,18 +107,41 @@ extension XCUIApplication {
     func agreeAndSign(signature: String) {
         let agree = switches["healthForm.agreeToggle"]
         XCTAssertTrue(agree.waitForExistence(timeout: 15), "no agreement toggle")
-        // Tapping the middle of the row toggles it (the whole card is the target); the edges are the switch itself,
-        // which is at the right in left-to-right languages and at the left in Arabic. A tap lost to a scroll is
-        // tried again.
-        for edge in [CGFloat?.none, 0.92, 0.08] where (agree.value as? String) != "1" {
+        scrollAboveBottomBar(agree)
+        // Tapping the middle of the row toggles it (the whole card is the target). A tap lost to a scroll is tried
+        // again, and as a last resort the switch itself is tapped: at the right in left-to-right languages, at the
+        // left in Arabic.
+        for edge in [CGFloat?.none, nil, 0.92, 0.08] where (agree.value as? String) != "1" {
             if let edge {
                 agree.coordinate(withNormalizedOffset: CGVector(dx: edge, dy: 0.5)).tap()
             } else {
                 agree.tap()
             }
         }
-        XCTAssertEqual(agree.value as? String, "1", "the agreement was not ticked")
+        let diagnostics = "\(healthFormState()) \(saveScreenshot(named: "agree"))"
+        XCTAssertEqual(agree.value as? String, "1", "the agreement was not ticked: \(diagnostics)")
         typeIntoField(signature, identifier: "healthForm.signatureField")
+    }
+
+    /// Scrolls a sheet until `element` is clear of the Save bar that floats over its lower part. XCUITest believes
+    /// anything inside the scroll view is visible, so a tap there would land on the bar. The drag ends with a hold,
+    /// so the scroll does not coast and swallow the tap that follows. Does nothing when the element is already clear.
+    @MainActor
+    func scrollAboveBottomBar(_ element: XCUIElement) {
+        let screen = windows.firstMatch.frame
+        guard screen.height > 0 else { return }
+        let bar = ["healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton"].map { buttons[$0] }
+            .first { $0.exists }
+        let limit = (bar?.frame.minY ?? screen.height) - screen.height * 0.06
+        for _ in 0..<6 {
+            let frame = element.frame
+            if frame.maxY <= limit && frame.minY >= screen.height * 0.1 { return }
+            let move = max(-screen.height * 0.35, min(screen.height * 0.35, frame.midY - screen.height * 0.35))
+            let fraction = move / screen.height
+            let start = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 + fraction / 2))
+            let end = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 - fraction / 2))
+            start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.4)
+        }
     }
 
     /// What the health form sheet looks like right now, for a failure message: the chips that are selected, the

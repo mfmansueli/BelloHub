@@ -13,12 +13,12 @@ struct PatchTestSheet: View {
     @Environment(\.locale) private var locale
 
     var body: some View {
-        VStack(spacing: 0) {
-            SheetHeader(
-                title: "health.patch.record", subtitle: "health.private", closeLabel: "common.close",
-                closeIdentifier: "patch.closeButton", onClose: { dismiss() }
-            )
-            ScrollView {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                SheetHeader(
+                    title: "health.patch.record", subtitle: "health.private", closeLabel: "common.close",
+                    closeIdentifier: "patch.closeButton", onClose: { dismiss() }
+                )
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     BelloTextField(
                         title: "patch.product", text: $viewModel.draft.product, prompt: "patch.product.prompt",
@@ -45,10 +45,9 @@ struct PatchTestSheet: View {
                 .padding(.top, Spacing.lg)
                 .padding(.bottom, Spacing.lg)
             }
-            .scrollDismissesKeyboard(.interactively)
-            // A sibling of the scroll view, so the scroll view ends where the bar begins.
-            saveBar
         }
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) { saveBar }
         .background(Palette.bg)
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)

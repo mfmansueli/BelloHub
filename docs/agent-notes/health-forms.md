@@ -1,5 +1,34 @@
 # Agent notes: health-forms (S4, slice 3)
 
+## STATE AT HANDOFF (read this first)
+Everything is committed on branch `worktree-agent-a534192a1071f5248`. The work is functionally complete; what is left is
+verification only.
+
+| Check | Last known result |
+|---|---|
+| `scripts/test.sh fast` | **551 tests in 80 suites passed** at commit 4115d8f. Added after that and **not yet run**: `HealthContrastTests`, `HealthFormCatalogProviderTests`, `AppLocalizationLocaleTests`; and the sheets were restructured (header inside the scroll view, hint moved out of the Save bar). The app target built clean (no warnings) after the restructure because the UI runs below built it. |
+| Gates in `test.sh` (`check-strings`, `check-privacy`, `check-legal-status`, `check-legal-resources`, `check-professions`, `check-health-forms`) | all pass (they run before every xcodebuild) |
+| `HealthUITests` (smoke, the one flow) | passed (22:01, after the header move) |
+| `FormTemplatesUITests` (smoke) | passed once (21:41, before the Save bar went back to a bottom inset; the audit run below walks the same screen after it) |
+| `HealthMinorUITests` (Full only) | passed once (21:44, before the sheet restructure); not rerun |
+| `HealthAuditUITests` in `en,ar`, default size and AX5, 4.5 + its sheets + 6.14 + consent text | **passed** (22:18, the final code); `pt-BR`, `de`, `hi` not run |
+| `scripts/check-warnings.sh` (simulator, device, Release, test targets) | **not run**. Only Debug simulator builds were done; they showed no warnings at the end. Release must be checked: `InMemoryClientRecordRepository`, `HealthDebugRoute` and the previews that use it are under `#if DEBUG` |
+| `scripts/test.sh smoke` (all smoke flows together) | **not run** as a whole; `HealthUITests` and `FormTemplatesUITests` pass alone |
+
+Next commands, in this order (the machine was at load 500+ with four agents, so each run is slow; one at a time):
+1. `SIM_UDID=581B8F64-5D7C-4D9F-B30F-177C13ED50A8 scripts/test.sh fast`
+2. `SIM_UDID=581B8F64-5D7C-4D9F-B30F-177C13ED50A8 scripts/test.sh smoke`
+3. `scripts/check-warnings.sh` (needs `SIM_UDID` too)
+4. Optional: `TEST_RUNNER_AUDIT_LOCALES=pt-BR,de,hi SIM_UDID=... ONLY_TESTING=BelloHubUITests/HealthAuditUITests scripts/test.sh full`, and
+   `ONLY_TESTING=BelloHubUITests/HealthMinorUITests scripts/test.sh full`.
+
+UI-test findings worth keeping (they cost most of the time): XCUITest believes anything inside a scroll view is visible even
+under a floating bottom bar, and a tap that lands while a scroll still coasts is lost; `XCUIApplication+Health.swift` has
+`scrollAboveBottomBar` (drag then hold), `selectChip`, `typeIntoField`, `tapRow` for that. A text field already holding
+focus does not give focus to the next one without a tap. The system keyboard's `TUIPredictionViewCell` is reported by the
+audit and is ignored there. At AX5 the Save bar must stay small: the "answer every question" hint now sits at the end of
+the form, not in the bar. Failure messages of the health UI helpers save a screenshot to the runner's temp folder.
+
 Screens 4.5 (ClientHealth, "Health and consent") and 6.14 (FormTemplates, "Client forms"), the health form model per
 profession and version, consent with its text version, the minors flow (D17), and the bundling of the legal texts.
 Branch `worktree-agent-a534192a1071f5248`, based on `build/v1` at 407427e.
@@ -78,7 +107,8 @@ Branch `worktree-agent-a534192a1071f5248`, based on `build/v1` at 407427e.
   `ClientHealthViewModelTests`, `HealthFormViewModelTests`, `PatchTestViewModelTests`, `FormTemplatesViewModelTests`,
   `ConsentTextViewModelTests`.
 - UI: `HealthUITests` (one flow: fill, sign, signed text version, patch test), `FormTemplatesUITests` (6.14),
-  `HealthMinorUITests` (Full only), `HealthAuditUITests` (textClipped + element description, `AUDIT_LOCALES`).
+  `HealthMinorUITests` (Full only), `HealthAuditUITests` (textClipped + element description; the locales come from
+  `TEST_RUNNER_AUDIT_LOCALES`, default `en,pt-BR,de,ar,hi`).
 
 ## Files and folders owned
 `BelloHub/Screens/Health/**`, `BelloHub/Managers/Legal/**`, `BelloHub/Managers/Forms/**`, `BelloHub/Models/Health/**`,

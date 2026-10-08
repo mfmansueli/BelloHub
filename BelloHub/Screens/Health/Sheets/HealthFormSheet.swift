@@ -12,28 +12,29 @@ struct HealthFormSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        VStack(spacing: 0) {
-            SheetHeader(
-                title: "healthForm.title", subtitle: "healthForm.subtitle", closeLabel: "common.close",
-                closeIdentifier: "healthForm.closeButton", onClose: { dismiss() }
-            )
-            ScrollView {
+        // The header scrolls with the form: at large text sizes a pinned header and a pinned Save bar would leave
+        // almost no room for the questions (the same layout as the onboarding steps).
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                SheetHeader(
+                    title: "healthForm.title", subtitle: "healthForm.subtitle", closeLabel: "common.close",
+                    closeIdentifier: "healthForm.closeButton", onClose: { dismiss() }
+                )
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     minorSection
                     ForEach(viewModel.questions) { question in
                         HealthQuestionView(viewModel: viewModel, question: question)
                     }
                     HealthConsentSection(viewModel: viewModel)
+                    incompleteHint
                 }
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.top, Spacing.lg)
                 .padding(.bottom, Spacing.lg)
             }
-            .scrollDismissesKeyboard(.interactively)
-            // A sibling of the scroll view, not an inset over it, so the scroll view ends where the bar begins: a
-            // question never scrolls to rest under the Save button (VoiceOver and UI tests scroll to what is visible).
-            saveBar
         }
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) { saveBar }
         .background(Palette.bg)
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)
@@ -66,6 +67,19 @@ struct HealthFormSheet: View {
         .accessibilityElement(children: .contain)
     }
 
+    /// Why Save is off, under the last field. It is part of the form, not of the Save bar: at the largest text sizes a
+    /// four-line hint in the bar would take a third of the screen away from the questions.
+    @ViewBuilder
+    private var incompleteHint: some View {
+        if !viewModel.canSave && !viewModel.isSaving {
+            Text("healthForm.incomplete")
+                .font(Typography.footnote)
+                .foregroundStyle(Palette.ink2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityIdentifier("healthForm.incomplete")
+        }
+    }
+
     private var saveBar: some View {
         VStack(spacing: Spacing.sm) {
             if let message = viewModel.errorMessage {
@@ -74,11 +88,6 @@ struct HealthFormSheet: View {
                     .foregroundStyle(Palette.coralText)
                     .accessibilityAddTraits(.updatesFrequently)
                     .accessibilityIdentifier("healthForm.error")
-            } else if !viewModel.canSave && !viewModel.isSaving {
-                Text("healthForm.incomplete")
-                    .font(Typography.footnote)
-                    .foregroundStyle(Palette.ink2)
-                    .multilineTextAlignment(.center)
             }
             Button { viewModel.save() } label: {
                 if viewModel.isSaving { ProgressView() } else { Text("healthForm.save") }

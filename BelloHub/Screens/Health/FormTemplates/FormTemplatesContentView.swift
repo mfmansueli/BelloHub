@@ -19,24 +19,23 @@ struct FormTemplatesContentView: View {
 
     var body: some View {
         @Bindable var model = viewModel
-        VStack(spacing: 0) {
-            ScrollView {
-                StaggeredStack(spacing: Spacing.md) {
-                    Text("formTemplates.subtitle")
-                        .font(Typography.body)
-                        .foregroundStyle(Palette.ink2)
-                        .accessibilityIdentifier("formTemplates.subtitle")
-                    content
-                }
-                .padding(.horizontal, Spacing.gutter)
-                .padding(.top, Spacing.sm)
-                .padding(.bottom, Spacing.xl)
+        ScrollView {
+            StaggeredStack(spacing: Spacing.md) {
+                Text("formTemplates.subtitle")
+                    .font(Typography.body)
+                    .foregroundStyle(Palette.ink2)
+                    .accessibilityIdentifier("formTemplates.subtitle")
+                content
             }
-            // A sibling of the scroll view, so the scroll view ends where the bar begins.
-            if viewModel.hasLoaded { saveBar }
+            .padding(.horizontal, Spacing.gutter)
+            .padding(.top, Spacing.sm)
+            .padding(.bottom, Spacing.xl)
         }
         .background(Palette.bg)
         .navigationTitle(Text("formTemplates.title"))
+        .safeAreaInset(edge: .bottom) {
+            if viewModel.hasLoaded { saveBar }
+        }
         .task { await viewModel.load() }
         .sheet(item: $model.previewSheet) { sheet in
             ConsentPreviewSheet(viewModel: sheet)
