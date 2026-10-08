@@ -30,8 +30,10 @@ struct HealthFormSheet: View {
                 .padding(.bottom, Spacing.lg)
             }
             .scrollDismissesKeyboard(.interactively)
+            // A sibling of the scroll view, not an inset over it, so the scroll view ends where the bar begins: a
+            // question never scrolls to rest under the Save button (VoiceOver and UI tests scroll to what is visible).
+            saveBar
         }
-        .safeAreaInset(edge: .bottom) { saveBar }
         .background(Palette.bg)
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)

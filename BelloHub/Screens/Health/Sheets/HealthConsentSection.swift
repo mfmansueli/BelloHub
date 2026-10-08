@@ -62,6 +62,12 @@ struct HealthConsentSection: View {
         .disabled(viewModel.renderedText == nil)
         .padding(Spacing.md)
         .frame(minHeight: 52)
+        // A switch outside a list only toggles on the switch itself, but the sentence beside it is what a person
+        // taps to agree: the whole card toggles. VoiceOver still finds one switch with its label.
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if viewModel.renderedText != nil { viewModel.draft.agrees.toggle() }
+        }
         .belloCard()
         .accessibilityIdentifier("healthForm.agreeToggle")
     }

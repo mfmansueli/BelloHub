@@ -46,8 +46,9 @@ struct PatchTestSheet: View {
                 .padding(.bottom, Spacing.lg)
             }
             .scrollDismissesKeyboard(.interactively)
+            // A sibling of the scroll view, so the scroll view ends where the bar begins.
+            saveBar
         }
-        .safeAreaInset(edge: .bottom) { saveBar }
         .background(Palette.bg)
         .presentationDetents([.large])
         .presentationDragIndicator(.visible)

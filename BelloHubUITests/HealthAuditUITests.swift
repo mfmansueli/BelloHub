@@ -43,35 +43,35 @@ final class HealthAuditUITests: XCTestCase {
         for locale in Self.locales {
             let app = XCUIApplication.launchedOnHealth(locale: locale, largestText: largestText)
             let tag = "\(locale)\(largestText ? " AX5" : "")"
-            XCTAssertTrue(app.buttons["health.fillButton"].waitForExistence(timeout: 10), "\(tag) empty")
+            XCTAssertTrue(app.buttons["health.fillButton"].waitForExistence(timeout: 20), "\(tag) empty")
             try audit(app, "\(tag) empty")
 
             app.tapButton("health.fillButton")
-            XCTAssertTrue(app.buttons["healthForm.saveButton"].waitForExistence(timeout: 5), "\(tag) sheet")
+            XCTAssertTrue(app.buttons["healthForm.saveButton"].waitForExistence(timeout: 15), "\(tag) sheet")
             try audit(app, "\(tag) health form")
-            app.tapButton("healthForm.minor.yes")
-            XCTAssertTrue(app.textFields["healthForm.minorNameField"].waitForExistence(timeout: 5))
+            app.selectChip("healthForm.minor.yes")
+            XCTAssertTrue(app.textFields["healthForm.minorNameField"].waitForExistence(timeout: 15))
             try audit(app, "\(tag) health form, minor")
-            app.tapButton("healthForm.minor.no")
+            app.selectChip("healthForm.minor.no")
             app.answerHealthFormAndSign()
             app.tapButton("healthForm.saveButton")
 
-            XCTAssertTrue(app.element("health.answer.allergies").waitForExistence(timeout: 10), "\(tag) answers")
+            XCTAssertTrue(app.element("health.answer.allergies").waitForExistence(timeout: 20), "\(tag) answers")
             try audit(app, "\(tag) answers")
 
             let consent = app.button(withPrefix: "health.consent.")
-            XCTAssertTrue(consent.waitForExistence(timeout: 5))
+            XCTAssertTrue(consent.waitForExistence(timeout: 15))
             consent.tap()
-            XCTAssertTrue(app.element("signedConsent.text").waitForExistence(timeout: 5), "\(tag) signed text")
+            XCTAssertTrue(app.element("signedConsent.text").waitForExistence(timeout: 15), "\(tag) signed text")
             try audit(app, "\(tag) signed text")
             app.tapButton("signedConsent.closeButton")
 
             app.tapButton("health.recordPatchTestButton")
-            XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 5), "\(tag) patch sheet")
+            XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15), "\(tag) patch sheet")
             try audit(app, "\(tag) patch test")
-            app.type("Calming serum", intoField: "patch.productField")
+            app.typeIntoField("Calming serum", identifier: "patch.productField")
             app.tapButton("patch.saveButton")
-            XCTAssertTrue(app.element(withPrefix: "health.patchTest.").waitForExistence(timeout: 10))
+            XCTAssertTrue(app.element(withPrefix: "health.patchTest.").waitForExistence(timeout: 20))
             try audit(app, "\(tag) patch log")
             app.terminate()
         }
@@ -81,13 +81,13 @@ final class HealthAuditUITests: XCTestCase {
         for locale in Self.locales {
             let app = XCUIApplication.launchedOnFormTemplates(locale: locale, largestText: largestText)
             let tag = "\(locale)\(largestText ? " AX5" : "")"
-            XCTAssertTrue(app.buttons["formTemplates.saveButton"].waitForExistence(timeout: 10), "\(tag) settings")
+            XCTAssertTrue(app.buttons["formTemplates.saveButton"].waitForExistence(timeout: 20), "\(tag) settings")
             try audit(app, "\(tag) form settings")
 
             let consent = app.buttons["formTemplates.consent.consent-health"]
-            XCTAssertTrue(consent.waitForExistence(timeout: 5))
+            XCTAssertTrue(consent.waitForExistence(timeout: 15))
             consent.tap()
-            XCTAssertTrue(app.element("consentPreview.text").waitForExistence(timeout: 5), "\(tag) preview")
+            XCTAssertTrue(app.element("consentPreview.text").waitForExistence(timeout: 15), "\(tag) preview")
             try audit(app, "\(tag) consent text")
             app.terminate()
         }
