@@ -159,8 +159,8 @@ arrives with 4.6. ASSUMPTION candidates: the eleven above.
 after it):
 - `scripts/test.sh fast`: pass, 525 tests in 77 suites. `scripts/test.sh smoke`: pass, 13 UI tests (includes `MoreUITests` and
   `LockUITests`).
-- `scripts/check-warnings.sh`: zero warnings on simulator, device, Release and the test targets (run before the last
-  two small view edits below, which were then built and run by `fast`/`smoke`; no new warnings were seen).
+- `scripts/check-warnings.sh`: zero warnings on simulator, device, Release and the test targets, run after the last change to
+  any app or unit-test file. Only `MoreAuditUITests.swift` and this note changed after it (linted, not rebuilt).
 - `scripts/check-strings.sh`: pass. SwiftLint over the whole project: clean.
 - `MoreAuditUITests` (Full plan only), default size: clean in `en`, `ar`, `hi`, `pt-BR`, `de` (after the documented false positives).
   AX5: clean in `en` and `hi`.
