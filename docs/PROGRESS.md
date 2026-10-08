@@ -75,7 +75,7 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S2` · started: 2026-10-08 · branch: `build/v1`
+`L` (legal drafting pass for every market, D40) then `S3` · started: 2026-10-08 · branch: `build/v1`
 
 ## Stage log
 One block per finished stage (newest last):
@@ -124,6 +124,28 @@ Findings worth keeping:
 Open questions: see the top of this file.
 Human tasks created: none. H12 (fonts) was not needed: the network allowed the download.
 
+### S2 · Domain, persistence, vault, keys, sync spike · done 2026-10-08 · tag stage-S2
+Time: about 45 min of work (17:05 to 17:50), including the D40, D41 and D42 decisions arriving mid-stage.
+Done:
+- Domain structs and persisted enums with safe fallbacks (`PersistedEnum`: an unknown raw value never crashes, never widens who sees a photo, never blames a client).
+- Pure rules, all taking `now`: `RecordLockPolicy`, `HabitsCalculator`, `FollowUpPlanner` (follow-ups, win-back, birthdays), `FreeSlotsCalculator`, `WaitlistMatcher`, `SessionPlanProgress`, `CancellationEvaluator`, `NoShowEvaluator`, `QuietHours`, `Pricing`.
+- Vault: `SecretBox` (AES-256-GCM), `KeyDerivation` (root key, vault key, inbox X25519 key pairs per generation), `RecoveryPhrase` (12 words, BIP-39 list fetched and verified by `scripts/fetch-wordlist.sh`), `VaultFieldCodec` (associated data `kind|id|field`), `KeyManager` over `KeychainKeyStore` (iCloud Keychain, synchronizable) with an in-memory store for previews.
+- Persistence: one SwiftData table (`VaultItem`, see the spike), `ClientRecordRepository` as three focused protocols (`ClientRepository`, `AgendaRepository`, `TreatmentRepository`), `SwiftDataClientRecordRepository` (an actor), `InMemoryClientRecordRepository` (DEBUG), `VaultMigrationPlan`, `VaultContainerFactory`, change streams.
+- D42: `RegistrationQuota` (the only place that knows the number 10), `RegistrationLedgerEntry` (id and date only, never removed by a delete; the repository appends it the first time a client id is saved), `PlanSavings`, `PlanProduct`; strings for the limit message, counter and paywall in all fourteen localizations (`s2-registration-limit.json`).
+- `SyncStatus`, `SyncStatusReducer`, `SyncStatusService`, `CloudKitSyncMonitor` (the only file that knows CloudKit error codes).
+- `docs/spikes/SPIKE-swiftdata-cloudkit.md` with the verdict (GO) and the two-iPhone checklist; independent known-answer vectors in `scripts/vault-vectors.py`.
+Decisions/assumptions: ASSUMPTION-16 to ASSUMPTION-23; owner decisions D40, D41, D42 recorded in `docs/02-DECISIONS.md`.
+Deviations from the prototype: none (no UI). Deviations from the docs: the vault is one table instead of one `@Model` per type (reason in the spike and in `docs/05`); `masterKey` is called `rootKey` in code (SwiftLint's inclusive-language rule), with the HKDF label still `"master"` because it pins the keys.
+Design additions: see the table below (D42 screens).
+Measured: 302 unit tests in 42 suites (2 s); 3 UI smoke tests; `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets; `check-project-settings`, `check-privacy` and `check-strings` clean. Key derivation matches vectors computed without CryptoKit (HKDF from the standard library, X25519 as the RFC 7748 ladder checked against the RFC's own vector); the four published BIP-39 vectors and the list's SHA-256 match; an AES-GCM known answer from the NIST specification matches. The sentinel test scans the database, its write-ahead log and the external-storage folder for 28 sentinel strings across every sensitive field and finds none, while the clear columns do show the name (so the scan is not blind). Daylight saving: 00:00 to 05:00 offers 4 slots on spring-forward days and 6 on fall-back days in Lisbon, Madrid and New York, and 5 on every day in Mexico City and São Paulo.
+Findings worth keeping:
+- SwiftData's default `.automatic` CloudKit setting switches mirroring on by itself when the app has the iCloud entitlement; the mirroring delegate logged sync errors in a test that used the default. The factory always passes `.none` or `.private`.
+- `INFOPLIST_KEY_UIBackgroundModes` was ignored (S1); `masterKey` trips SwiftLint's inclusive-language rule (renamed `rootKey`).
+- A wrong key must not look like an empty vault: if every item of a kind is unreadable the call fails; a partial failure skips the damaged record and logs only its id and kind.
+- 23:59:59 versus 24:00:00 and the lock being 24 real hours (not a calendar day) are tested, including across a daylight-saving change.
+Open questions: ASSUMPTION-18 (re-signing up with the same phone after deleting the account restarts the count of 10).
+Human tasks created: none new. H2 (CloudKit schema to Production) and H3 (two iPhones) now have the concrete checklist in the spike report.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -147,6 +169,9 @@ Human tasks created: none. H12 (fonts) was not needed: the network allowed the d
 | ASSUMPTION-18 | **Open question for the owner:** deleting the whole account and signing up again with the same phone number would start a new count of 10. v1 does not keep a tombstone (a stored hash of the phone and the count) because that would hold data after an erasure request | Avoids retaining personal data after account deletion; say if you prefer the tombstone (needs a line in the privacy policy) | S2 |
 | ASSUMPTION-19 | Contact and spreadsheet imports go through the same gate: an import stops at the remaining free slots and offers the paywall for the rest | "Every way a client is created" | S2 |
 | ASSUMPTION-20 | The paywall is the `Plan` screen opened as a sheet, not a new screen; other storefronts than EUR, USD and BRL use Apple's equalized price (the owner can set them in App Store Connect) | Keeps the 97-screen scope; the owner gave three regions | S2 |
+| ASSUMPTION-21 | The vault is one SwiftData table (`VaultItem`) with clear index columns, plain JSON and a sealed sensitive part | The CloudKit schema only grows; a new kind of record is a new `kindRaw`, not a new CloudKit field | S2 |
+| ASSUMPTION-22 | A health form from the mailbox is deduplicated by `importedFromItemID`, kept in a clear index column (an opaque id, not content) | Idempotent import after a crash between import and acknowledge | S2 |
+| ASSUMPTION-23 | Concurrent edits of the same record on two devices resolve last-writer-wins for the whole record | One JSON value per record; the second device is usually idle; to be confirmed on two phones (spike checklist step 4) | S2 |
 
 ## Conventions learned while building (read before writing code)
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
@@ -273,8 +298,19 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 9.8 | Cl-8-Reminder | S9 | todo | Picture of a WhatsApp message (message templates), not a web page |
 | 9.9 | Cl-9-Reschedule | S9 | todo |  |
 
+## Pull request text for phase A (S0 to S2), to open into `main`
+`gh` is not logged in (H17), so open it at https://github.com/mfmansueli/BelloHub/pull/new/build/v1 with this body:
+
+> **Phase A: foundation (S0 to S2).** Adopts the handoff, the design system, localization infrastructure and the vault.
+> - S0: handoff docs, entitlements (iCloud, push, App Attest), Firestore `eur3` with deny-all rules, privacy and settings checks.
+> - S1: tokens, motion kit, components, Design Catalog with accessibility audit, fourteen localizations with check/derive/merge scripts, region presets, phone and digit handling, formatters.
+> - S2: domain and pure rules, vault encryption (AES-GCM, key derivation pinned by independent vectors, 12-word recovery), SwiftData vault with contract tests, migration test and on-disk sentinel test, registration quota (D42), sync status, SwiftData and CloudKit spike.
+> Decisions recorded: D40 (open every market, legal after sales), D41 (no human language review), D42 (first 10 registrations free, no trial).
+> Tests: 302 unit, 3 UI smoke, accessibility audit in five languages at AX5; zero warnings on simulator, device, Release and the test targets.
+> Not yet done by a human: see `docs/14-HUMAN-TASKS.md` (Firebase dev and staging projects, domain, App Store Connect, real-device checks).
+
 ## Spikes and reports
-- `docs/spikes/SPIKE-swiftdata-cloudkit.md`: (S2)
+- `docs/spikes/SPIKE-swiftdata-cloudkit.md`: written in S2 (verdict GO; two-iPhone checklist for H3)
 - `docs/spikes/VOICE-LANGUAGE-MATRIX.md`: (S7)
 
 ## Release checklist

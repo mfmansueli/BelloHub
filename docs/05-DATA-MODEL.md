@@ -14,6 +14,8 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 
 ## 1. Layer A rules (SwiftData + CloudKit)
 
+**Implementation (stage S2):** the vault is **one SwiftData table**, `VaultItem` (`Managers/Persistence/Schema/`), with a `kindRaw`, a few clear index columns, the non-sensitive JSON and the sealed sensitive part, instead of one `@Model` per type below. The types below are the *domain* structs in `Models/`; each one declares which of its properties are sealed (`VaultStorable.sensitiveKeys`, pinned by a test against the table in this section). Reason: the CloudKit schema only grows, and a new kind of record is then a new `kindRaw`, not a CloudKit field (`docs/spikes/SPIKE-swiftdata-cloudkit.md`).
+
 **Restrictions that apply to every `@Model`** (verify each in stage S2 and write the result in the spike report; do not assume):
 - Every attribute has a default value or is optional. No `@Attribute(.unique)`. Relationships are optional. No `.deny` delete rule. No ordered relationships (store `position: Int`). Large binary data uses `@Attribute(.externalStorage)`. No custom `Codable` types the schema cannot represent (store `Data`).
 - The CloudKit schema **only grows** in production: never remove or rename a field; add fields; deploy the schema to Production before each release that changes it.
