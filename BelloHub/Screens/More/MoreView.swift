@@ -5,9 +5,9 @@
 
 import SwiftUI
 
-/// 2.5 More. Her profile card, then the settings that exist so far: the tags, record fields and forms of her clients,
-/// and the account actions. The business, messages and preferences sections join it as their screens are built
-/// (services, booking page and availability in S5; privacy, plan and help in S10). Rows that open a screen are
+/// 2.5 More. Her profile card, then her business (services, products, booking page, availability, credentials,
+/// team), the tags, record fields and forms of her clients, her messages and the account actions. The preferences
+/// sections join it as their screens are built (privacy, plan and help in S10). Rows that open a screen are
 /// `NavigationLink`s on the typed `MoreRoute`; the stack and its destinations belong to `MoreTab`.
 struct MoreView: View {
     let onSignOut: () -> Void
@@ -21,9 +21,9 @@ struct MoreView: View {
         ScrollView {
             StaggeredStack(spacing: Spacing.lg) {
                 profileCard
-                // The Business section (services, products, booking page, availability, credentials, team) goes
-                // here in S5, above Clients, as in the prototype.
+                businessSection
                 clientsSection
+                messagesSection
                 accountSection
             }
             .padding(.horizontal, Spacing.gutter)
@@ -60,6 +60,46 @@ struct MoreView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("more.profileCard")
+    }
+
+    /// Services, products, the booking page, availability, credentials and team, above the clients as in the
+    /// prototype.
+    private var businessSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeader(Text("more.section.business"))
+            ListCard(dividerInset: 72) {
+                link(.services, identifier: "more.servicesRow") {
+                    MoreRow(icon: .scissors, tint: .rose, title: Text("more.row.services"), showsChevron: true)
+                }
+                link(.products, identifier: "more.productsRow") {
+                    MoreRow(icon: .box, tint: .peach, title: Text("more.row.products"), showsChevron: true)
+                }
+                link(.bookingPage, identifier: "more.bookingPageRow") {
+                    MoreRow(icon: .globe, tint: .sage, title: Text("more.row.bookingPage"), showsChevron: true)
+                }
+                link(.availability, identifier: "more.availabilityRow") {
+                    MoreRow(icon: .clock, tint: .sage, title: Text("more.row.availability"), showsChevron: true)
+                }
+                link(.credentials, identifier: "more.credentialsRow") {
+                    MoreRow(icon: .star, tint: .rose, title: Text("more.row.credentials"), showsChevron: true)
+                }
+                link(.team, identifier: "more.teamRow") {
+                    MoreRow(icon: .clients, tint: .peach, title: Text("more.row.team"), showsChevron: true)
+                }
+            }
+        }
+    }
+
+    /// The messages she sends clients: quick replies now, templates and channels later.
+    private var messagesSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeader(Text("more.section.messages"))
+            ListCard(dividerInset: 72) {
+                link(.quickReplies, identifier: "more.quickRepliesRow") {
+                    MoreRow(icon: .chat, tint: .sage, title: Text("more.row.quickReplies"), showsChevron: true)
+                }
+            }
+        }
     }
 
     /// Titled with the word she uses for the people she serves, as the tab is. The "Import clients" row joins it

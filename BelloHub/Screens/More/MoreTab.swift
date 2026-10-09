@@ -27,6 +27,13 @@ struct MoreTab: View {
     @ViewBuilder
     private func destination(for route: MoreRoute) -> some View {
         switch route {
+        case .services: ServicesView()
+        case .products: ProductsView()
+        case .bookingPage: BookingSettingsView()
+        case .availability: AvailabilityView()
+        case .credentials: CredentialsView()
+        case .team: TeamView()
+        case .quickReplies: QuickRepliesView()
         case .tags:
             TagsView(profile: profile, clients: vault?.repository)
         case .recordTemplate:

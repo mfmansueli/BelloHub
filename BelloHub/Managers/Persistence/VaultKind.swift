@@ -27,4 +27,16 @@ enum VaultKind: String, CaseIterable, Sendable {
     case healthFormTemplate
     /// One entry of a client's patch-test log (S4).
     case patchTest
+    /// An extra a client can add to a service (S5).
+    case addOn
+    /// A product she sells or uses (S5).
+    case product
+    /// One of her trainings or certificates (S5).
+    case credential
+    /// Weekly hours, breaks, days off and buffer. One per vault (S5).
+    case availability
+    /// The booking page switches and its cancel and no-show policies. One per vault (S5).
+    case bookingSetup
+    /// One quick reply she sends clients (S5).
+    case quickReply
 }
