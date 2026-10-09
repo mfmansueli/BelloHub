@@ -269,6 +269,13 @@ Measured: fast 1362 unit tests in 166 suites pass; UISmoke 21 UI tests pass (631
 Open questions: do saved policies apply to bookings already made (today they keep their snapshot, the prototype footer said otherwise; owner); should "Always" return as a no-show counting period (needs a model case and the server's `countingMonths`); should the credentials page switch survive with no credential; should these screens follow `clientTerm` instead of "clients".
 Human tasks created: none.
 
+### S6 · Home, calendar and appointments · done 2026-10-09 · tag stage-S6
+Built by three slices (notes `docs/agent-notes/s6-calendar.md`, `s6-appointment.md`, `s6-home.md`) on the contract (`AppointmentService`, `AppointmentTransitions`, `AgendaRoute`, `AgendaSheet`); also merged in the same integration: the S7 treatment flow front end (5.1 to 5.9, D53; `docs/agent-notes/s7-flow.md`) and the S8 publish slice (the booking link works end to end, `docs/agent-notes/s8-publish.md`).
+Done: day and week calendar with the warnings engine, NewAppointment, Reschedule, BlockTime, WeekGlance; appointment detail with cancel, no-show, running late, before-you-start, messages through WhatsApp, session plan, no-show history; Home, follow-ups, win back, Alerts (local), shared states, local notifications with no names; time blocks in the vault.
+Measured: fast 1710+ unit tests pass; UISmoke 48 UI tests pass; `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets; `scripts/check-strings.sh` passes (1596 strings, 14 localizations). Audits (`en`, `ar`, default size and AX5) for Calendar, Appointment, Home; not run: `pt-BR`, `de`, `hi`, dark mode inspected by eye, `scripts/test.sh full`.
+Decisions/assumptions: see each notes file (to fold into the table at the next consolidation); Design additions: see each notes file.
+Open questions: Home quick actions are "New appointment" and "Week at a glance" only; Alerts holds local alerts until S8 inbox.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -384,26 +391,26 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 1.9 | Permissions | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 1.10 | Onb-7-Ready | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 1.11 | Locked | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
-| 2.1 | Home | S6 | in-progress | Greeting and empty state exist since S3 |
+| 2.1 | Home | S6 | done | `HomeUITests`, `HomeAuditUITests` |
 | 2.2 | Clients | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
-| 2.3 | Calendar | S6 | in-progress | Empty state since S3 |
-| 2.4 | Notifications | S6 | in-progress | Empty state since S3 (the tab is called Alerts) |
+| 2.3 | Calendar | S6 | done | `CalendarUITests`, `CalendarAuditUITests` |
+| 2.4 | Notifications | S6 | done | local alerts; server alerts in S8 |
 | 2.5 | More | S3 | done | Profile card, Lock now, Sign out; Clients section (S4); Business and Messages rows wired to S5 placeholders |
-| 2.6 | WeekGlance | S6 | todo |  |
-| 2.7 | FollowUps | S6 | todo |  |
-| 2.8 | WinBack | S6 | todo |  |
+| 2.6 | WeekGlance | S6 | done | `CalendarAuditUITests` |
+| 2.7 | FollowUps | S6 | done | `HomeAuditUITests` |
+| 2.8 | WinBack | S6 | done | `HomeAuditUITests` |
 | 2.9 | Waitlist | S8 | todo |  |
 | 2.10 | BookingRequest | S8 | todo |  |
 | 2.11 | RescheduleRequest | S8 | todo |  |
-| 2.12 | RunningLate | S6 | todo |  |
-| 3.1 | NewAppointment | S6 | todo |  |
-| 3.2 | Appointment | S6 | todo |  |
-| 3.3 | BeforeYouStart | S6 | todo |  |
-| 3.4 | Reschedule | S6 | todo |  |
-| 3.5 | CancelAppointment | S6 | todo |  |
-| 3.6 | MessageClient | S6 | todo |  |
-| 6.6 | BlockTime | S6 | todo |  |
-| 3.7 | NoShowMark | S6 | todo |  |
+| 2.12 | RunningLate | S6 | done | `AppointmentAuditUITests` |
+| 3.1 | NewAppointment | S6 | done | `CalendarUITests` |
+| 3.2 | Appointment | S6 | done | `AppointmentUITests` |
+| 3.3 | BeforeYouStart | S6 | done | `AppointmentAuditUITests` |
+| 3.4 | Reschedule | S6 | done | `CalendarUITests` |
+| 3.5 | CancelAppointment | S6 | done | `AppointmentUITests` |
+| 3.6 | MessageClient | S6 | done | `AppointmentAuditUITests` |
+| 6.6 | BlockTime | S6 | done | `CalendarAuditUITests` |
+| 3.7 | NoShowMark | S6 | done | `AppointmentUITests` |
 | 4.1 | ClientProfile | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
 | 4.2 | NewClient | S4 | done | `ClientsUITests`, `ClientsAuditUITests`; D42 gate |
 | 4.3 | ClientEdit | S4 | done | `ClientsAuditUITests`; merge |
@@ -411,19 +418,19 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests` |
 | 4.6 | ImportClients | S4 | done | `ImportClientsUITests`, `ImportAuditUITests` |
 | 4.7 | RecordHistory | S7 | todo |  |
-| 4.8 | SessionPlan | S6 | todo |  |
+| 4.8 | SessionPlan | S6 | done | `AppointmentAuditUITests` |
 | 4.9 | Incident | S7 | todo |  |
 | 4.10 | ExportRecord | S7 | todo |  |
-| 4.11 | NoShowHistory | S6 | todo |  |
-| 5.1 | Tx-1-Register | S7 | todo |  |
-| 5.2 | Tx-2-Listening | S7 | todo |  |
-| 5.3 | Tx-3-Organizing | S7 | todo |  |
-| 5.4 | Tx-4-Review | S7 | todo |  |
-| 5.5 | Tx-Form | S7 | todo |  |
-| 5.6 | Tx-5-Saved | S7 | todo |  |
-| 5.7 | Tx-6-Photos | S7 | todo |  |
-| 5.8 | Camera | S7 | todo |  |
-| 5.9 | Tx-7-NextSession | S7 | todo |  |
+| 4.11 | NoShowHistory | S6 | done | `AppointmentAuditUITests` |
+| 5.1 | Tx-1-Register | S7 | done | `TreatmentFlowUITests` |
+| 5.2 | Tx-2-Listening | S7 | done | `TreatmentFlowUITests` |
+| 5.3 | Tx-3-Organizing | S7 | done | `TreatmentFlowUITests` |
+| 5.4 | Tx-4-Review | S7 | done | `TreatmentFlowUITests` |
+| 5.5 | Tx-Form | S7 | done | `TreatmentFlowUITests` |
+| 5.6 | Tx-5-Saved | S7 | done | `TreatmentFlowUITests` |
+| 5.7 | Tx-6-Photos | S7 | done | `TreatmentFlowUITests` |
+| 5.8 | Camera | S7 | done | `TreatmentFlowUITests` |
+| 5.9 | Tx-7-NextSession | S7 | done | `TreatmentFlowUITests` |
 | 6.1 | Services | S5 | done | `ServicesUITests`, `ServicesAuditUITests` |
 | 6.2 | ServiceEdit | S5 | done | `ServicesUITests` |
 | 6.4 | Products | S5 | done | `ServicesAuditUITests` |
@@ -447,7 +454,7 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 7.6 | Integrations | S10 | todo |  |
 | 7.7 | Privacy | S10 | todo |  |
 | 7.10 | Help | S10 | todo |  |
-| 7.11 | States | S6 | todo | Shared state components |
+| 7.11 | States | S6 | done | shared States |
 | 7.8 | ExportAll | S10 | todo |  |
 | 7.9 | RecoveryKey | S10 | todo |  |
 | 8.1 | Bk-1-Page | S9 | todo |  |
