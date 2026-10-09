@@ -1,6 +1,7 @@
 import type { Auth } from 'firebase-admin/auth';
 import type { Firestore } from 'firebase-admin/firestore';
 
+import type { AppleTokenRevoker } from '../auth/AppleTokenRevoker.js';
 import type { PhoneVerifier } from '../auth/PhoneVerifier.js';
 import type { AppStoreVerifier } from '../billing/AppStoreVerifier.js';
 import type { BlobStore } from '../lib/blobs.js';
@@ -43,6 +44,8 @@ export interface Deps {
   messenger: ClientMessenger;
   push: PushSender;
   phoneVerifier: PhoneVerifier;
+  /** Sign in with Apple revocation on account deletion (D44); unconfigured until H17. */
+  appleRevoker: AppleTokenRevoker;
   appStore: AppStoreVerifier;
   log: Logger;
 }

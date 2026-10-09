@@ -10,7 +10,7 @@ import { base64url } from '../../src/lib/crypto.js';
 import { C } from '../../src/lib/docs.js';
 import { adminApp, clearAuth, clearFirestore, testFirestore } from '../support/emulator.js';
 import { mariaAvailability, mariaProfile, newInboxKey, SERVICE } from '../support/seed.js';
-import { callFunction, callOk, FUNCTIONS_BASE, signInProfessional, signInWithPhone, waitUntil } from '../support/transport.js';
+import { callFunction, callOk, FUNCTIONS_BASE, signInProfessional, signInWithApple, signInWithPhone, waitUntil } from '../support/transport.js';
 
 // The deployed entry points, through the Functions emulator, with the callable wire protocol of API.md section 1.
 
@@ -139,6 +139,33 @@ describe('the whole booking journey, as the web app makes it', () => {
 
     expect(booked.status).toBe('confirmed');
     expect(booked.emailSent).toBe(true);
+  }, 60_000);
+});
+
+describe('the professional signs in with Apple or by phone (D44)', () => {
+  it('accepts an Apple-provider ID token with no phone number for every owner call, and deletes the account with it', async () => {
+    const { idToken, uid } = await signInWithApple('001234.apple-subject.5678', 'joana@privaterelay.appleid.com');
+    const user = await getAuth(adminApp()).getUser(uid);
+    expect(user.phoneNumber).toBeUndefined();
+    expect(user.providerData.map((provider) => provider.providerId)).toEqual(['apple.com']);
+
+    const created = await callOk<{ uid: string }>('ensureAccount', { countryCode: 'PT', locale: 'pt-PT' }, { idToken });
+    expect(created.uid).toBe(uid);
+    expect((await db.collection(C.accounts).doc(uid).get()).data()?.phone).toBeUndefined();
+    await callOk('claimSlug', { slug: `joana-${randomBytes(3).toString('hex')}` }, { idToken });
+    await callOk('registerDevice', { fcmToken: `fcm-${'j'.repeat(60)}`, platform: 'ios' }, { idToken });
+
+    const deleted = await callOk<{ ok: true; appleRevocation: string }>('deleteAccount', { confirm: true, appleAuthorizationCode: 'c1a2b3.0.rrrr.authorization-code' }, { idToken });
+    expect(deleted).toEqual({ ok: true, appleRevocation: 'skipped' });
+    expect((await db.collection(C.accounts).doc(uid).get()).exists).toBe(false);
+    await expect(getAuth(adminApp()).getUser(uid)).rejects.toMatchObject({ code: 'auth/user-not-found' });
+  }, 120_000);
+
+  it('accepts a phone-provider ID token too (the alternative sign-in) and records the phone', async () => {
+    const idToken = await signInWithPhone('+351912345678');
+
+    const created = await callOk<{ uid: string }>('ensureAccount', { countryCode: 'PT', locale: 'pt-PT' }, { idToken });
+    expect((await db.collection(C.accounts).doc(created.uid).get()).data()?.phone).toBe('+351912345678');
   }, 60_000);
 });
 

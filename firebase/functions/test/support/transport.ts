@@ -82,6 +82,20 @@ export async function signInProfessional(customToken: string): Promise<string> {
   return idToken;
 }
 
+/**
+ * A professional's Sign in with Apple through the Auth emulator (D44): the emulator accepts an unsigned JSON "id token"
+ * for any IdP, and mints a Firebase ID token whose `sign_in_provider` is `apple.com` and that carries no phone number.
+ */
+export async function signInWithApple(appleSubject: string, email: string): Promise<{ idToken: string; uid: string }> {
+  const fakeAppleToken = JSON.stringify({ sub: appleSubject, email, email_verified: true });
+  const { idToken, localId } = await identity<{ idToken: string; localId: string }>('accounts:signInWithIdp', {
+    postBody: `id_token=${encodeURIComponent(fakeAppleToken)}&providerId=apple.com`,
+    requestUri: 'http://localhost',
+    returnSecureToken: true
+  });
+  return { idToken, uid: localId };
+}
+
 /** A client's phone sign-in through the Auth emulator: send the SMS, read the fixed code it offers, confirm it. */
 export async function signInWithPhone(phoneNumber: string): Promise<string> {
   const { sessionInfo } = await identity<{ sessionInfo: string }>('accounts:sendVerificationCode', { phoneNumber, recaptchaToken: 'emulator' });

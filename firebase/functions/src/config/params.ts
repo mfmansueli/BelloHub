@@ -42,8 +42,19 @@ export const PHONE_HASH_PEPPER = defineSecret('PHONE_HASH_PEPPER');
 export const EMAIL_API_KEY = defineSecret('EMAIL_API_KEY');
 export const EMAIL_FROM = defineString('EMAIL_FROM', { default: '' });
 
-/** Every function binds the same secrets, so any of them can hash and send email. */
-export const FUNCTION_SECRETS = [PHONE_HASH_PEPPER, EMAIL_API_KEY];
+/**
+ * Sign in with Apple (D44, H17): `deleteAccount` revokes the professional's Apple grant with a client secret signed by the
+ * team's Sign in with Apple key. The adapter is built only when `APPLE_SIGNIN_KEY_ID` is set (then the secret is read);
+ * until then deletion reports `appleRevocation: "skipped"`. Like `EMAIL_API_KEY`, the secret must exist in Secret
+ * Manager for a deploy to pass: a placeholder is fine while the key id is empty. The team id and the client id are fixed.
+ */
+export const APPLE_SIGNIN_TEAM_ID = 'X5392U638Q';
+export const APPLE_SIGNIN_CLIENT_ID = 'com.bellohub';
+export const APPLE_SIGNIN_KEY_ID = defineString('APPLE_SIGNIN_KEY_ID', { default: '' });
+export const APPLE_SIGNIN_PRIVATE_KEY = defineSecret('APPLE_SIGNIN_PRIVATE_KEY');
+
+/** Every function binds the same secrets, so any of them can hash, send email and talk to Apple. */
+export const FUNCTION_SECRETS = [PHONE_HASH_PEPPER, EMAIL_API_KEY, APPLE_SIGNIN_PRIVATE_KEY];
 
 /**
  * App Store verification (H14). The adapter is built only when `APPLE_ROOT_CERTS_DIR` holds at least one DER

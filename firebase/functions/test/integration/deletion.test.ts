@@ -98,7 +98,7 @@ describe('deleteAccount (D30)', () => {
     }
     expect(await envelopeBlobs(env, pro.uid, footprint.large)).toHaveLength(1);
 
-    expect(await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid))).toEqual({ ok: true });
+    expect(await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid))).toEqual({ ok: true, appleRevocation: 'skipped' });
 
     const after = await everything(env.deps.db);
     const stillHers = after.filter(
@@ -131,8 +131,8 @@ describe('deleteAccount (D30)', () => {
     await fillAccount();
     await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid));
 
-    expect(await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid))).toEqual({ ok: true });
-    expect(await env.call(deleteAccount, { confirm: true }, ownerContext('never-existed'))).toEqual({ ok: true });
+    expect(await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid))).toEqual({ ok: true, appleRevocation: 'skipped' });
+    expect(await env.call(deleteAccount, { confirm: true }, ownerContext('never-existed'))).toEqual({ ok: true, appleRevocation: 'skipped' });
   });
 
   it('requires an explicit confirmation and a signed-in professional', async () => {
