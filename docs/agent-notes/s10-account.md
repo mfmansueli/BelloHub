@@ -105,8 +105,8 @@ RepositoryWipeContractTests`, `Models/{Export,Vault}/`, seven new fakes in `Fake
    `OfflineSubscriptionVerifier` with the server check; both are one-file swaps in `AppDependencies.makeLive()`.
 6. S6 "home" reads `NotificationSettingsService.prefs` (and `hideNamesOnLockScreen`) for scheduling; S6 "calendar"
    reads `CalendarIntegrationService.isConnected` for the EventKit write-through.
-7. The S7 slice adds 7.5 AISettings as `MoreRoute.aiSettings` in the `.preferences` section
-   (`MoreTab.preferencesDestination`).
+7. 7.5 AISettings is wired: `MoreRoute.aiSettings` (`.preferences`), `MoreTab.preferencesDestination`, the
+   `more.aiSettingsRow` row (`more.row.aiSettings`), walked by `AccountAuditUITests`.
 8. `UISmoke.xctestplan` skips `AccountAuditUITests` like the other audits.
 
 ## Decisions and assumptions (ASSUMPTION candidates)
@@ -116,8 +116,14 @@ RepositoryWipeContractTests`, `Models/{Export,Vault}/`, seven new fakes in `Fake
   seed and account keys go only after the server answered; the session ends after the done screen. Before S8 the
   outcome is `deviceOnly` and the done screen says the booking side is closed by the team shortly after.
 - **The Apple authorization code is taken at the moment of deletion** and never stored (five-minute, single-use).
-  Until the Apple sign-in half lands in this branch's base, `deleteAccountAsync(appleAuthorizationCode:)` is called
-  with nil; the S8 wiring passes the fresh code from `ASAuthorizationController`.
+  An Apple account (`AuthUser.method == .apple`) confirms the deletion with the native `SignInWithAppleButton` on
+  the confirmation step (`deleteAccount.appleButton`, same look as Welcome); `AccountViewModel` reads the credential
+  through `AppleCredentialProviding` (the VM imports `AuthenticationServices` only for the button's request/result
+  types, like `AppleSignInViewModel`) and calls `deleteAccountAsync(appleAuthorizationCode:)` with the fresh code.
+  Without a code (nil, or an Apple answer without one) the server is never called and nothing is wiped
+  (`account.delete.apple.error`); closing the sheet shows nothing. A phone account keeps the plain destructive
+  button. UI tests tap the shared `UITestAppleOverlay` (now its own file), which calls `deleteWithDevStub()`; the
+  dev credential carries `authorizationCode: "dev-code"`.
 - **Device settings survive deletion**: `lock.enabled` and `lock.graceSeconds` stay; everything in
   `DefaultsKey.clearedOnAccountDeletion` goes.
 - **Yearly saving rounds plainly**: 149.99 vs 12 x 14.99 = 17 %; 399.90 vs 12 x 39.90 = 16 % (D42 says "about 17 %").
@@ -186,11 +192,25 @@ RepositoryWipeContractTests`, `Models/{Export,Vault}/`, seven new fakes in `Fake
 - `scripts/test.sh smoke`: see "State at the checkpoint".
 - `scripts/check-warnings.sh`, audit in `en,ar`: see "State at the checkpoint".
 
+## Merge of build/v1 (commit 4b96ada)
+
+82 commits merged. Conflicts and how they were resolved, both sides kept: `AppDependencies` / `RootView` (S10's six
+services next to S6/S7/S8's; `NotificationService` gets the prefs store of the same `defaults` suite);
+`ClientRecordRepository` (union: `TimeBlockRepository`, `MessageLogRepository`, `VaultWipingRepository`);
+`DefaultsKey` (both key sets; `aiPreferences` and `publishingOnlineUserID` join `clearedOnAccountDeletion`);
+`LaunchOptions` (`uiPlan` next to `uiVoice`/`uiCamera`/`uiOnline`); `MoreTab`/`MoreView` previews and environment;
+`UISmoke.xctestplan` (both audit skips). `NotificationPrefsStoring` / `DefaultsNotificationPrefsStore` existed on
+both sides: build/v1's `Sendable` struct shape won, with S10's throwing `save` kept so the settings screen keeps its
+error state (`FakeNotificationPrefsStore` is now lock-based). `Localizable.xcstrings` was taken from build/v1 and
+regenerated. Two things found on the way: the owner's "saving progress" commit had let an Xcode build write 22
+extracted stubs into the catalog (and a `CFBundleName` stub into `InfoPlist.xcstrings`), so `merge-strings.py` now
+drops every entry that is not `extractionState: manual`, the InfoPlist stub was removed, and the one real key among
+them (`recordTemplate.kind.multiChoice`, used by `RecordFieldKind`) got a row in `s4-tags-record-template.json`.
+`scripts/sync-server-contract.sh` had to run (the merged contract was not in the test bundle).
+
 ## Not done
 
 - No photo on the Account screen (camera/library) and no email field: a later stage.
-- The Apple sign-in half (passing the fresh authorization code at deletion) waits for the `apple-signin` merge:
-  `deleteAccountAsync(appleAuthorizationCode:)` is the hook.
 - Server deletion and server subscription verification are S8 (`OfflineAccountDeleter`, `OfflineSubscriptionVerifier`).
 - Google Calendar (H9), a support chat, key rotation screen.
 - Notification scheduling and the calendar write-through are S6's.
