@@ -15,6 +15,8 @@ enum Radius {
     static let button: CGFloat = 18
     static let control: CGFloat = 14
     static let input: CGFloat = 14
+    /// A visit block in the week grid, where a column is about 48 pt wide.
+    static let block: CGFloat = 8
 
     static func concentric(outer: CGFloat, inset: CGFloat) -> CGFloat {
         max(outer - inset, 0)
