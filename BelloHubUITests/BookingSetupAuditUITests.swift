@@ -45,11 +45,29 @@ final class BookingSetupAuditUITests: XCTestCase {
         try audit(largestText: true) { app, tag in try self.walkPoliciesAndReplies(app, tag: tag) }
     }
 
+    /// The states S8 adds (preview with Go online, online, paused online, the failure notice without a server, Stop):
+    /// against the fake server in `en` and `ar`, the two directions.
+    func testPublishStatesAtDefaultSize() throws {
+        try audit(largestText: false, locales: ["en", "ar"], online: true) { app, tag in
+            try self.walkPublishStates(app, tag: tag)
+        }
+    }
+
+    func testPublishFailureAtDefaultSize() throws {
+        try audit(largestText: false, locales: ["en", "ar"]) { app, tag in try self.walkPublishFailure(app, tag: tag) }
+    }
+
     // MARK: - Walks
 
-    private func audit(largestText: Bool, walk: (XCUIApplication, String) throws -> Void) throws {
-        for locale in Self.locales {
-            let app = XCUIApplication.launchedOnBookingSetup(locale: locale, largestText: largestText)
+    private func audit(
+        largestText: Bool, locales: [String]? = nil, online: Bool = false,
+        walk: (XCUIApplication, String) throws -> Void
+    ) throws {
+        for locale in locales ?? Self.locales {
+            let app = XCUIApplication.launchedForUITests(
+                locale: locale, largestText: largestText,
+                arguments: ["-uiSeed", "onboarded"] + (online ? ["-uiOnline", "fake"] : [])
+            )
             let tag = "\(locale)\(largestText ? " AX5" : "")"
             XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 8), "\(tag) home")
             app.tab(4).tap()
@@ -112,6 +130,49 @@ final class BookingSetupAuditUITests: XCTestCase {
         try audit(app, "\(tag) share link")
         XCTAssertTrue(app.scrollUntilExists(app.buttons["shareLink.whatsappCopy"]), "\(tag) where to put it")
         try audit(app, "\(tag) share link, scrolled")
+    }
+
+    private func walkPublishStates(_ app: XCUIApplication, tag: String) throws {
+        app.tapButton("more.bookingPageRow")
+        XCTAssertTrue(app.element("bookingSettings.notOnline").waitForExistence(timeout: 8), "\(tag) preview")
+        app.tapButton("bookingSettings.chooseAddressButton")
+        app.tapButton("shareLink.suggestion.maria-silva")
+        app.tapButton("shareLink.saveAddressButton")
+        XCTAssertTrue(app.element("shareLink.notOnline").waitForExistence(timeout: 5), "\(tag) share preview")
+        try audit(app, "\(tag) share link, preview")
+        app.tapButton("shareLink.goOnlineButton")
+        XCTAssertTrue(app.element("shareLink.online").waitForExistence(timeout: 10), "\(tag) online")
+        try audit(app, "\(tag) share link, online")
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.element("bookingSettings.onlineStatus").waitForExistence(timeout: 5), "\(tag) card online")
+        try audit(app, "\(tag) booking page, online")
+        XCTAssertTrue(app.scrollUntilExists(app.switches["bookingSettings.acceptingSwitch"]), "\(tag) switch")
+        app.flipSwitch("bookingSettings.acceptingSwitch", opens: app.switches["bookingSettings.pauseSheet.dateSwitch"])
+        app.tapButton("bookingSettings.pauseSheet.confirmButton")
+        XCTAssertTrue(app.buttons["bookingSettings.resumeButton"].waitForExistence(timeout: 5), "\(tag) paused")
+        try audit(app, "\(tag) booking page, paused online")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.stopButton"]), "\(tag) stop")
+        app.tapButton("bookingSettings.stopButton")
+        XCTAssertTrue(app.buttons["bookingSettings.stopConfirmButton"].waitForExistence(timeout: 5), "\(tag) confirm")
+        try audit(app, "\(tag) stop confirmation")
+        app.tapButton("bookingSettings.stopConfirmButton")
+        XCTAssertTrue(app.element("bookingSettings.notOnline").waitForExistence(timeout: 8), "\(tag) stopped")
+    }
+
+    private func walkPublishFailure(_ app: XCUIApplication, tag: String) throws {
+        app.tapButton("more.bookingPageRow")
+        XCTAssertTrue(app.element("bookingSettings.notOnline").waitForExistence(timeout: 8), "\(tag) preview")
+        app.tapButton("bookingSettings.chooseAddressButton")
+        app.tapButton("shareLink.suggestion.maria-silva")
+        app.tapButton("shareLink.saveAddressButton")
+        XCTAssertTrue(app.buttons["shareLink.goOnlineButton"].waitForExistence(timeout: 5), "\(tag) go online")
+        app.tapButton("shareLink.goOnlineButton")
+        XCTAssertTrue(app.element("shareLink.publishError").waitForExistence(timeout: 10), "\(tag) failure")
+        try audit(app, "\(tag) share link, failure")
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.element("bookingSettings.publishError").waitForExistence(timeout: 8), "\(tag) card failure")
+        try audit(app, "\(tag) booking page, failure")
     }
 
     private func walkPoliciesAndReplies(_ app: XCUIApplication, tag: String) throws {

@@ -55,6 +55,7 @@ struct BookingSettingsContentView: View {
             Text("publish.stop.confirmTitle"), isPresented: $confirmsStop, titleVisibility: .visible
         ) {
             Button("publish.stop.confirm", role: .destructive) { Task { await publishing.stop() } }
+                .accessibilityIdentifier("bookingSettings.stopConfirmButton")
             Button("common.cancel", role: .cancel) {}
         } message: {
             Text("publish.stop.confirmMessage")

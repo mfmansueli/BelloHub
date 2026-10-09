@@ -16,10 +16,10 @@ final class BookingSetupUITests: XCTestCase {
     func testHoursWithABreakThenPauseThenShareLink() {
         let app = XCUIApplication.launchedOnBookingSetup()
 
-        // The More rows say where she stands: a page that takes bookings and the suggested week.
+        // The More rows say where she stands: a page that is not online yet (S8) and the suggested week.
         app.tab(4).tap()
         XCTAssertTrue(app.buttons["more.bookingPageRow"].waitForExistence(timeout: 8))
-        XCTAssertTrue(waitForLabel(app.buttons["more.bookingPageRow"], containing: "Taking bookings"))
+        XCTAssertTrue(waitForLabel(app.buttons["more.bookingPageRow"], containing: "Not online yet"))
         XCTAssertTrue(waitForLabel(app.buttons["more.availabilityRow"], containing: "Mon to Fri"))
 
         // Hours: open Saturday, add a lunch break.
@@ -51,7 +51,9 @@ final class BookingSetupUITests: XCTestCase {
         // The link screen: pick the suggested address, save it, see the link and its QR code.
         app.navigationBars.buttons.element(boundBy: 0).tap()
         app.tab(4).tap()
-        XCTAssertTrue(waitForLabel(app.buttons["more.bookingPageRow"], containing: "Paused until"))
+        // The row keeps saying "not online" while the page is not published; the pause shows once it is
+        // (PublishUITests).
+        XCTAssertTrue(waitForLabel(app.buttons["more.bookingPageRow"], containing: "Not online yet"))
         app.tapButton("more.bookingPageRow")
         XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.shareRow"]))
         app.tapButton("bookingSettings.shareRow")
@@ -61,7 +63,7 @@ final class BookingSetupUITests: XCTestCase {
         XCTAssertTrue(waitUntilEnabled(save), "a valid address can be saved before it can be checked")
         save.tap()
         XCTAssertTrue(app.element("shareLink.qr").waitForExistence(timeout: 5))
-        XCTAssertEqual(app.element("shareLink.linkText").label, "bellohub.app/maria-silva")
+        XCTAssertEqual(app.element("shareLink.linkText").label, "bello-hub.web.app/maria-silva")
         XCTAssertTrue(app.element("shareLink.notOnline").exists, "the screen says the page is not online yet")
         XCTAssertTrue(app.buttons["shareLink.shareButton"].exists && app.buttons["shareLink.copyButton"].exists)
     }
