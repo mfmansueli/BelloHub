@@ -63,7 +63,8 @@ these notes. 7.5 AISettings belongs to S7 and is not here.
   (`locked.restoreKeyButton`), words parsed by `RecoveryPhrase`, errors named by position. **Rotation model**:
   `KeyRotationPlan` (generations, retired list, openable set) with tests; no screen in v1. `Managers/Vault/` was
   extended only through `KeyManager.recoveryPhrase()` / `restore(from:)`; the vectors still pass.
-- **7.10 Help** (`Screens/Help/`): six common questions as disclosure rows (`HelpTopics`), "Write to support" and
+- **7.10 Help** (`Screens/Help/`): six common questions as rows that open their answer (`HelpTopics`; not a
+  `DisclosureGroup`: outside a List only its chevron toggles, so a tap on the question did nothing), "Write to support" and
   "Send feedback" as `mailto:` links with a localized subject and no body.
 - **More**: Preferences section (plan with its status, notifications, integrations, privacy with "Save your recovery
   key" until confirmed, help) and the Account row; the profile card opens Account; sign out left More. `MoreRoute`
@@ -167,7 +168,8 @@ RepositoryWipeContractTests`, `Models/{Export,Vault}/`, seven new fakes in `Fake
   Restore key sheet, New client / Import → Paywall sheet (Plan).
 - Components reused: `SettingsSection`, `ToggleRow`, `ChoiceCard`, `MoreRow`, `ListCard`, `HeroCard`, `InlineNotice`,
   `ErrorNotice`, `FooterNote`, `SuccessSeal`, `Skeleton`. New in this slice (feature-local, not Design System):
-  `RegionPresetRow`, `WeekClockCard`, the 12-word grid (three columns, one at accessibility sizes, `privacySensitive`,
+  `RegionPresetRow`, `WeekClockCard`, the 12-word grid (three columns up to the default size, two at the larger sizes, one at
+  accessibility sizes, no line limit or shrinking, `privacySensitive`,
   forced left-to-right), the preview bubbles (`Palette.surface`, tile radius, the chosen language's direction).
 - States: Plan (checking / none / active renews / active ends on / grace; offers loading skeleton; store error with
   retry; purchased / restored / nothing to restore / pending / failed notices), Export (idle / preparing / ready /

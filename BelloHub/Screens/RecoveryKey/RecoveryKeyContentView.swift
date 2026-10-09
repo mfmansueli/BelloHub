@@ -83,17 +83,16 @@ struct RecoveryKeyContentView: View {
         .belloCard()
     }
 
-    /// Three columns at the default size, one at accessibility sizes so a word never wraps mid-way.
+    /// Three columns up to the default size, two at the larger sizes, one at accessibility sizes, so a word is never
+    /// cut or shrunk: the accessibility audit flags a one-line word as clippable, and a shrunk word is hard to copy.
     private var wordsGrid: some View {
-        let columns = Array(
-            repeating: GridItem(.flexible(), spacing: Spacing.sm), count: typeSize.isAccessibilitySize ? 1 : 3
-        )
+        let count = typeSize.isAccessibilitySize ? 1 : (typeSize > .large ? 2 : 3)
+        let columns = Array(repeating: GridItem(.flexible(), spacing: Spacing.sm), count: count)
         return LazyVGrid(columns: columns, spacing: Spacing.sm) {
             ForEach(viewModel.cells) { cell in
                 HStack(spacing: Spacing.sm) {
                     Text(verbatim: "\(cell.position)").font(Typography.meta).foregroundStyle(Palette.ink2)
                     Text(verbatim: cell.text).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-                        .lineLimit(1).minimumScaleFactor(0.7)
                     Spacer(minLength: 0)
                 }
                 .padding(.horizontal, Spacing.row)

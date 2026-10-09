@@ -19,15 +19,17 @@ final class NotificationSettingsService {
     private let permissions: PermissionService
     private let defaults: UserDefaults
 
+    /// `store` defaults to the JSON store in the same `defaults` suite, so a UI-test launch (its own suite, wiped at
+    /// every start) and the account deletion (which clears that suite) never see another run's switches.
     init(
-        store: any NotificationPrefsStoring = DefaultsNotificationPrefsStore(),
+        store: (any NotificationPrefsStoring)? = nil,
         permissions: PermissionService,
         defaults: UserDefaults = .standard
     ) {
-        self.store = store
+        self.store = store ?? DefaultsNotificationPrefsStore(defaults: defaults)
         self.permissions = permissions
         self.defaults = defaults
-        prefs = store.load() ?? .standard
+        prefs = self.store.load() ?? .standard
         hideNamesOnLockScreen = defaults.object(forKey: DefaultsKey.hideNamesOnLockScreen) as? Bool ?? true
     }
 

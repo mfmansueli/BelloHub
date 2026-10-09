@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-/// 7.10 Help and support: common questions as native disclosure groups, then the ways to reach a person (e-mail
+/// 7.10 Help and support: common questions as rows that open their answer, then the ways to reach a person (e-mail
 /// support, send feedback). No chat in v1: the prototype's "Chat with support" has no service behind it, so the
 /// row is e-mail (see the S10 notes). Presentation only: local state, no ViewModel.
 struct HelpView: View {
@@ -35,24 +35,40 @@ struct HelpView: View {
         SettingsSection(title: "help.section.questions") {
             ListCard(dividerInset: Spacing.md) {
                 ForEach(HelpTopics.topics) { topic in
-                    DisclosureGroup(isExpanded: Binding(
-                        get: { expanded.contains(topic.id) },
-                        set: { open in if open { expanded.insert(topic.id) } else { expanded.remove(topic.id) } }
-                    )) {
-                        Text(LocalizedStringKey(topic.answerKey))
-                            .font(Typography.body).foregroundStyle(Palette.ink2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, Spacing.sm)
-                            .accessibilityIdentifier("help.answer.\(topic.id)")
-                    } label: {
-                        Text(LocalizedStringKey(topic.questionKey))
-                            .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                    // Not a DisclosureGroup: outside a List only its small chevron toggles it, and a question she
+                    // taps on the text does nothing. The whole row is the button; the answer sits under it.
+                    let isOpen = expanded.contains(topic.id)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Button {
+                            withAnimation(Motion.ease(Motion.Duration.fade)) {
+                                if isOpen { expanded.remove(topic.id) } else { expanded.insert(topic.id) }
+                            }
+                        } label: {
+                            HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                                Text(LocalizedStringKey(topic.questionKey))
+                                    .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Image(icon: .forward)
+                                    .font(Typography.meta.weight(.semibold)).foregroundStyle(Palette.ink3)
+                                    .rotationEffect(.degrees(isOpen ? 90 : 0))
+                                    .accessibilityHidden(true)
+                            }
+                            .frame(minHeight: Spacing.touchTarget)
+                            .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityAddTraits(isOpen ? [.isSelected] : [])
+                        .accessibilityIdentifier("help.topic.\(topic.id)")
+                        if isOpen {
+                            Text(LocalizedStringKey(topic.answerKey))
+                                .font(Typography.body).foregroundStyle(Palette.ink2)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom, Spacing.sm)
+                                .accessibilityIdentifier("help.answer.\(topic.id)")
+                        }
                     }
-                    .tint(Palette.ink3)
                     .padding(.horizontal, Spacing.md)
-                    .padding(.vertical, Spacing.sm)
-                    .accessibilityIdentifier("help.topic.\(topic.id)")
+                    .padding(.vertical, Spacing.xs)
                 }
             }
         }

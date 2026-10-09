@@ -75,9 +75,10 @@ final class AccountAuditUITests: XCTestCase {
             app, row: "more.notificationsRow", first: app.switches["notificationSettings.newBookingsSwitch"],
             tag: "\(tag) notifications"
         ) {
-            app.bringIntoView(app.switches["notificationSettings.quietHoursSwitch"])
-            app.flip(app.switches["notificationSettings.quietHoursSwitch"])
-            XCTAssertTrue(app.element("notificationSettings.quietFromPicker").waitForExistence(timeout: 5))
+            // At AX5 the row stacks the label over the switch, so the flip tries several points until the pickers show.
+            app.flipSwitch(
+                "notificationSettings.quietHoursSwitch", opens: app.element("notificationSettings.quietFromPicker")
+            )
             try self.audit(app, "\(tag) notifications with quiet hours")
         }
         try walk(
