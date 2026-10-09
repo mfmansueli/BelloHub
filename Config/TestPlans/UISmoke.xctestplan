@@ -25,6 +25,7 @@
         "HealthMinorUITests",
         "HomeAuditUITests",
         "ImportAuditUITests",
+        "InboxAuditUITests",
         "MoreAuditUITests",
         "OnboardingAuditUITests",
         "RecordAuditUITests",
