@@ -80,8 +80,14 @@ final class AppLockService {
     }
 
     /// The app is back in the foreground: lock if she was away longer than the grace period.
+    ///
+    /// Only a real trip to the background counts. The system Face ID sheet, Control Center and notification pulls
+    /// also turn the scene inactive and active again without a background, and on a real iPhone that happens right
+    /// after a successful unlock: treating "no background seen" as "lock" put her in a loop that never reached the
+    /// app. The cold launch is locked by `prepareForLaunch`, not here. The time away is used once.
     func sceneDidReturn() {
-        guard !isLocked else { return }
+        guard !isLocked, let leftAt else { return }
+        self.leftAt = nil
         if LockPolicy.shouldLock(isEnabled: isEnabled, leftAt: leftAt, now: now(), graceSeconds: graceSeconds) {
             lockNow()
         }
@@ -115,6 +121,7 @@ final class AppLockService {
         do {
             try keyManager.unlock()
             failure = nil
+            leftAt = nil
             isLocked = false
         } catch {
             failure = .keyMissing

@@ -167,4 +167,39 @@ struct AppLockServiceTests {
         rig.lock.sceneDidReturn()
         #expect(rig.lock.isLocked)
     }
+
+    @Test("The Face ID sheet turns the scene inactive and active without a background: the app stays open")
+    func sheetWithoutBackground() async {
+        let rig = makeRig()
+        defer { rig.defaults.removePersistentDomain(forName: rig.suite) }
+        rig.lock.prepareForLaunch()
+        await rig.lock.unlock()
+        #expect(!rig.lock.isLocked)
+
+        // The system sheet closes and the scene becomes active again, long after launch, with no background seen.
+        rig.clock.advance(by: 3_600)
+        rig.lock.sceneDidReturn()
+        #expect(!rig.lock.isLocked)
+    }
+
+    @Test("An old trip to the background cannot lock the app again after she unlocked it")
+    func staleLeaveIsForgotten() async {
+        let rig = makeRig()
+        defer { rig.defaults.removePersistentDomain(forName: rig.suite) }
+        rig.defaults.set(60, forKey: DefaultsKey.lockGraceSeconds)
+        rig.lock.prepareForLaunch()
+        await rig.lock.unlock()
+
+        rig.lock.sceneDidLeave()
+        rig.clock.advance(by: 120)
+        rig.lock.sceneDidReturn()
+        #expect(rig.lock.isLocked)
+
+        // She unlocks; the sheet closing makes the scene active once more, and the old leave must not count again.
+        await rig.lock.unlock()
+        #expect(!rig.lock.isLocked)
+        rig.clock.advance(by: 120)
+        rig.lock.sceneDidReturn()
+        #expect(!rig.lock.isLocked)
+    }
 }
