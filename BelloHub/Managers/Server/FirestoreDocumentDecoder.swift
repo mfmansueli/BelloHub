@@ -44,7 +44,10 @@ enum FirestoreDocumentDecoder {
         if let text = wrapped["stringValue"] as? String { return text }
         if let integer = wrapped["integerValue"] {
             // The REST API writes 64-bit integers as strings.
-            if let text = integer as? String { return Int(text) ?? Double(text) ?? 0 }
+            if let text = integer as? String {
+                if let whole = Int(text) { return whole }
+                return Double(text) ?? 0
+            }
             return integer
         }
         if let number = wrapped["doubleValue"] { return number }

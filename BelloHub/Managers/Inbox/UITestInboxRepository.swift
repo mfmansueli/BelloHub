@@ -19,7 +19,7 @@ actor UITestInboxRepository: InboxRepository {
     }
 
     private let scenario: Scenario
-    private let publicKey: @Sendable @MainActor () throws -> Curve25519.KeyAgreement.PublicKey
+    private let publicKey: @Sendable @MainActor () throws -> InboxPublicKey
     private let now: Date
     private var bookings: [IncomingBooking]
     private var requests: [RescheduleRequest]
@@ -30,7 +30,7 @@ actor UITestInboxRepository: InboxRepository {
     private(set) var devices: [String] = []
 
     init(
-        scenario: Scenario, publicKey: @escaping @Sendable @MainActor () throws -> Curve25519.KeyAgreement.PublicKey,
+        scenario: Scenario, publicKey: @escaping @Sendable @MainActor () throws -> InboxPublicKey,
         now: Date = Date()
     ) {
         self.scenario = scenario
@@ -56,7 +56,8 @@ actor UITestInboxRepository: InboxRepository {
             sealed = true
             let plaintext = UITestInboxFixtures.intakePlaintext(now: now)
             let itemID = UITestInboxFixtures.intakeItemID
-            if let key = try? await publicKey(),
+            if let published = try? await publicKey(), let raw = Data(base64URL: published.pub),
+               let key = try? Curve25519.KeyAgreement.PublicKey(rawRepresentation: raw),
                let envelope = try? EnvelopeOpener.seal(plaintext, to: key, kind: .intake, itemId: itemID) {
                 items.append(MailboxItem(
                     id: itemID, kind: .intake, bookingId: UITestInboxFixtures.helenaBookingID, keyId: envelope.keyId,

@@ -152,7 +152,7 @@ struct AppDependencies {
         defaults: UserDefaults
     ) -> InboxServices {
         let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
+            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.currentInboxPublicKey() })
         } ?? OfflineInboxRepository()
         let queue = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
         let bookings = BookingSyncService(
