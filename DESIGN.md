@@ -158,6 +158,8 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `TagDot` + `TagColor` | The tag color as a pastel fill inside a ring in the family's text tone; four tokens `rose`, `sage`, `peach`, `sand` (wash, text, dot, outline each), unknown tokens read as `sand`; the ring is 3:1 or more on `surface`, `bg` and `sunken` (`TagColorContrastTests`) |
 | `ErrorNotice` | An error line with an optional "Try again", for a read or save that failed (S4) |
 | `GlowBackdrop` | The page color with a rose glow from the top leading corner (300 pt) and a sage one from the top trailing corner (240 pt), peak 20 %. Only `ink`, `ink2` and `coralText` may sit on a glow (`BackdropContrastTests`); `roseText` links live lower, on the plain page color |
+| `DataImage` | Image bytes (a vault photo or a scanned paper) drawn as an image; promoted from the treatment flow by D55 because two features use it |
+| `PDFDocumentView` | A PDF from memory through PDFKit (`UIViewRepresentable`); nothing is written to disk (D55, the consent paper preview) |
 
 Strings with arguments use a semantic key plus a default value, never `Text("key \(arg)")` (which looks up the key
 `key %@`): `LocalizedStringResource("home.greeting", defaultValue: "Good morning, \(name)")`, with
@@ -199,7 +201,7 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
 | 4.3 ClientEdit (+ merge sheet) | `Clients/Form/ClientEditView`, `ClientMergeSheet` | `ClientFormViewModel`, `ClientMergeViewModel` | `clientEdit.*`, `clientMerge.*` |
 | 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
-| 4.5 ClientHealth (+ health form, patch test, signed text sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel` | `health.*`, `healthForm.*`, `patch.*`, `signedConsent.*` |
+| 4.5 ClientHealth "Health and consents" (+ health form, patch test, consent record sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `healthForm.*`, `patch.*`, `consent.*` (D55) |
 | 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
 | 6.1 Services (+ 6.2 ServiceEdit sheet, 6.3 AddOns pushed) | `Screens/Services/ServicesView` -> `ServicesContentView`, `AddOns/` | `ServicesViewModel`, `AddOnsViewModel` | `services.*`, `serviceEditor.*`, `addOns.*` |
 | 6.4 Products | `Screens/Products/ProductsView` | `ProductsViewModel` | `products.*` |
@@ -210,14 +212,23 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 6.9 QuickReplies (+ editor sheet) | `Screens/QuickReplies/QuickRepliesView` | `QuickRepliesViewModel` | `quickReplies.*` |
 | 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
 | 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
-| 6.14 FormTemplates (+ consent preview) | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*`, `consentPreview.*` |
+| 6.14 FormTemplates | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*` |
 | 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
 | 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
 | 2.4 Alerts (local part) | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` is pure) | `alerts.*` |
 | 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
 | 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
-| 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (the More row lands with S10) |
-| 2.5 More | `Screens/More/MoreTab` (stack, `MoreRoute`) + `MoreView` | none (`MoreSummary` is pure) | `more.profileCard`, `more.<row>Row` (services, products, bookingPage, availability, credentials, team, recordFields, forms, tags, quickReplies), `more.lockNowButton`, `more.signOutButton`, `more.signOutConfirmButton` |
+| 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
+| 7.1 Account (+ Delete account sheet) | `Screens/Account/` | `AccountViewModel` (the sheet runs on it; `AccountDeletionFlow`, `AccountRules` pure) | `account.*` (`account.signOutButton`, `account.languageRegionRow`, `account.nameField`) |
+| 7.2 LanguageRegion | `Screens/LanguageRegion/` (`RegionPresetRow`, `WeekClockCard`) | `LanguageRegionViewModel` (`LanguageRegionRules`, `LanguageRegionDraft`) | `languageRegion.*` |
+| 7.3 Plan, and the paywall (same screen in `PaywallSheet`, D42) | `Screens/Plan/` | `PlanViewModel` (`PlanPresentation`) over `SubscriptionService` | `plan.*`, `paywall.*` |
+| 7.4 NotificationSettings | `Screens/NotificationSettings/` | `NotificationSettingsViewModel` | `notificationSettings.*` |
+| 7.6 Integrations | `Screens/Integrations/` | `IntegrationsViewModel` over `CalendarIntegrationService` | `integrations.*` |
+| 7.7 Privacy (+ Legal notice sheet) | `Screens/Privacy/` | `PrivacyViewModel` (`LegalNoticeLibrary`) | `privacy.*`, `legalNotice.*` |
+| 7.8 ExportAll | `Screens/ExportAll/` | `ExportAllViewModel` over `DataExportService` | `exportAll.*` |
+| 7.9 RecoveryKey (+ Restore key sheet from Locked) | `Screens/RecoveryKey/` | `RecoveryKeyViewModel`, `RestoreKeyViewModel` over `RecoveryKeyService` | `recoveryKey.*`, `restoreKey.*`, `locked.restoreKeyButton` |
+| 7.10 Help | `Screens/Help/` | none (`HelpTopics`) | `help.*` |
+| 2.5 More | `Screens/More/MoreTab` (stack, `MoreRoute`) + `MoreView` | none (`MoreSummary` is pure) | `more.profileCard`, `more.<row>Row` (services, products, bookingPage, availability, credentials, team, recordFields, forms, tags, quickReplies, plan, notifications, integrations, privacy, aiSettings, help, account), `more.lockNowButton` (sign out moved to Account in S10) |
 | Privacy cover, storage unavailable | `Screens/Main/PrivacyCover`, `StorageUnavailableView` | none | `storage.unavailable` |
 | Design Catalog (DEBUG) | `DesignSystem/Catalog/` | none | `catalog.*` |
 
@@ -231,19 +242,23 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
 ├── WelcomeView ── Get started / Sign in ──▶ SignInView (create | existing)
 ├── SetupView → OnboardingView: About → Profession → Services (sheet: CustomService) → Terminology (sheet: AddName)
 │                → Tags → Record → Permissions → Ready
-├── LockedView
+├── LockedView (sheet: Restore key, when this phone has no key)
 └── MainView (TabView, five tabs, each with its own NavigationStack)
     ├── Home      → HomeView → Appointment · FollowUps · WinBack · WeekGlance (same `AgendaRoute` / `AgendaSheet`)
     ├── Clients   → ClientsTabView → ClientsView (title = the term she chose; sheets: NewClient, ImportClients)
     │                → ClientProfile → ClientEdit (sheet: merge) · ClientKnowledge · ClientHealth (sheets: health form,
-    │                  patch test, signed text) · RecordHistory (sheets: Incident, ExportRecord)
+    │                  patch test, consent record) · RecordHistory (sheets: Incident, ExportRecord)
+    │                NewClient / Import at the 11th registration → Paywall sheet (the Plan screen, D42)
     │                Start (appointment or profile) → TreatmentFlow (fullScreenCover)
     ├── Calendar  → CalendarView (day | week) → Appointment → SessionPlan · NoShowHistory; WeekGlance
     │                (sheets through `AgendaSheet`: NewAppointment, Reschedule, BlockTime, BeforeYouStart, Cancel,
     │                MessageClient, NoShowMark, RunningLate, ClientMessage)
     ├── Alerts    → AlertsView
     └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
-                     Clients (Record fields, Forms, Tags), Messages (Quick replies; S5), Account (Lock now, Sign out)
+                     Clients (Record fields, Forms, Tags), Messages (Quick replies; S5),
+                     Preferences (Plan, Notifications, Integrations, Privacy → Recovery key · Export all · Legal notice,
+                     AI assistant, Help; S10), Account (profile card or row → Account → Language and region,
+                     Delete account sheet → Export all; Sign out; S10), Lock now
 ```
 
 The scene being inactive puts `PrivacyCover` over everything (the app switcher shows the brand, never a client).
@@ -283,13 +298,11 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **Client edit and knowledge** are pushed with Cancel (and a confirmation when something changed); New client is the only
   sheet. The knowledge screen also edits the private note.
 - **Copy is neutral**: no "she" for the client; "New" reads "First visit" where the word would need gender agreement.
-- **Health and consent (4.5)**: "Send form again" waits for the server (S8); review status chip and date; one consent
-  row per signed consent (treatment, photo, guardian) that opens the exact signed text; a minor notice with guardian rows
-  (D17); new sheets for the health form (questions then consent, one signature), patch test and signed text. Questions
-  are never pre-answered.
-- **Client forms (6.14)**: the consent texts are read-only versioned documents (three rows), with a language menu; "Ask
-  again every" offers 3, 6, 12 and 24 months; "Preview as client" waits for S9. No "draft" wording in the app
-  (`legal/STATUS.md`).
+- **Health and consent (4.5)**: "Send form again" waits for the server (S8); review status chip and date; new sheets
+  for the health form and patch test. Questions are never pre-answered. (S4's consent texts, signatures and signed
+  text sheet were removed by D55; see below.)
+- **Client forms (6.14)**: "Ask again every" offers 3, 6, 12 and 24 months; "Preview as client" waits for S9. No
+  "draft" wording in the app (`legal/STATUS.md`). (S4's consent text rows and preview were removed by D55.)
 - **Import (4.6)**: a column-mapping screen, a "can't be imported" list, a partial-import notice and an "n more need a
   plan" card (D42); contacts come from the system picker (no permission flow); CSV only (the row says so; Excel and
   Numbers export CSV); no booking-link invitation in the result yet.
@@ -315,6 +328,42 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   `shareLink.{online,notOnline,goOnlineButton,publishError}`.
 - New tokens: none in S6, S7 or S8.
 
+### Changes from the prototype (S10, account and settings)
+
+- **7.1 Account**: no photo (initials stand in) and no "Change photo" sheet; the email is not editable (the session has
+  no email); no city field (the region row covers it). Sign out moved here from More; Delete account is a sheet that
+  offers the export first, then asks "Delete everything?", then shows a done screen (the server answers first, D44).
+- **7.3 Plan**: no trial lines (D33/D42); two price cards (yearly highlighted and chosen by default, the saving read
+  from the store's prices). The paywall is this screen in a sheet with the D42 headline.
+- **7.6 Integrations**: Google Calendar is "Coming soon" (H9); Apple Calendar is a switch, one way.
+- **7.7 Privacy**: the terms with the DPA and the privacy policy open in a Legal notice sheet read from the bundle;
+  pending operator fields are visibly pending in DEBUG and absent in Release; the word "draft" never appears.
+- **7.8 Export**: D18 copy (Save to Files or share, no e-mail link, no format choice).
+- **7.9 Recovery key**: the real twelve words behind Face ID (three columns, two at large sizes, one at accessibility
+  sizes, forced left to right, `privacySensitive`); Restore lives on the Locked screen.
+- **7.10 Help**: six questions as rows, "Write to support" and "Send feedback" as `mailto:` links; no chat.
+- Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
+  bubbles. No new tokens, colors or fonts.
+
+### Changes from D55 (consents are the professional's own business)
+
+- **4.5**: title "Health and consents". Section "Consents": a list card of records (her label or the kind title; chip
+  Signed / Not signed, sage / amber; "Signed · date" or "Not signed · noted date"; "Photo kept · Note"), an "Add
+  consent" row and a footnote that the paper is signed with her. Sheet "New consent" / "Consent": kind chips
+  (Treatment, Photo, Guardian, Other), optional label, "Signed" switch with a date, note, an optional photo
+  (`PhotosPicker`) or file (`fileImporter`) of the signed paper with a preview (photo, PDF through PDFKit, or a file
+  icon with name and size), Remove, Delete consent (destructive, confirmed) when editing, Save consent (primary) in a
+  bottom bar.
+- **Health form sheet**: questions and the under-18 switch with the minor's name only; no agreement, signature or
+  guardian name; Save is "Save answers".
+- **6.14**: the consent text section and preview sheet are gone. **Export PDF**: consents print the label and
+  "Signed <date>" or "Not signed", never the photo or file.
+- Design System: `DataImage` (bytes to image, promoted from the treatment flow) and `PDFDocumentView` (a PDF from
+  memory; nothing touches the disk).
+- Identifiers: `health.addConsentButton`, `health.consent.<uuid>`, `health.consent.empty`, `health.consent.footnote`,
+  `consent.{closeButton,kind.<kind>,labelField,signedToggle,datePicker,noteField,addPhotoButton,addFileButton,
+  removeDocumentButton,documentPreview,preparingDocument,deleteButton,deleteConfirmButton,error,saveButton}`.
+
 ## Empty, loading and error states
 
 Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
@@ -324,7 +373,12 @@ phone has no key for her records. A vault that cannot be opened shows `StorageUn
 erase anything. Each screen that loads data defines all three before it ships: a loading
 state (`Skeleton`), an empty state with the next action (`EmptyState`), and an error state with a retry. Clients, the client profile, health and consent, tags and record fields (S4) have all three; their
 errors keep what is on screen and offer "Try again". Offline
-is a normal state: `OfflineBanner` informs and never blocks.
+is a normal state: `OfflineBanner` informs and never blocks. S10: Plan (checking, none, active renews or ends,
+grace; offers skeleton; store error with retry; purchased, restored, nothing to restore, pending, failed notices),
+Export (idle, preparing, ready, error), Recovery key (masked, revealed, not recognized, no key, done), Delete account
+(offer, confirm, deleting, done per outcome, error), Notifications (ask, denied, granted), Integrations (available,
+connected, denied in Settings, coming soon). D55: the consent list has an empty text inside its card; a document
+that cannot be read or is above 10 MB shows an error in the sheet.
 
 ## Accessibility
 
