@@ -49,7 +49,8 @@ enum CalendarUITestSeeding {
             let service: String
         }
         let entries = [
-            Entry(client: camila, dayOffset: 0, minutes: 10 * 60, length: 60, status: .confirmed, service: "Glow Facial"),
+            Entry(client: camila, dayOffset: 0, minutes: 10 * 60, length: 60, status: .confirmed,
+                  service: "Glow Facial"),
             Entry(client: julia, dayOffset: 0, minutes: 10 * 60 + 30, length: 75, status: .booked,
                   service: "Deep Cleansing"),
             Entry(client: camila, dayOffset: 1, minutes: 11 * 60, length: 60, status: .booked, service: "Glow Facial")
