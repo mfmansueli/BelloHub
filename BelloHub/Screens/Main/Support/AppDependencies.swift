@@ -42,7 +42,7 @@ struct AppDependencies {
             registration: ClientRegistrationService(vault: vault),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
-            messages: MessageService(vault: vault, sender: UITestMessageSender()),
+            messages: MessageService(vault: vault),
             defaults: defaults
         )
     }
@@ -70,7 +70,7 @@ struct AppDependencies {
             registration: ClientRegistrationService(vault: vault),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
-            messages: MessageService(vault: vault),
+            messages: MessageService(vault: vault, sender: UITestMessageSender()),
             defaults: defaults
         )
     }
