@@ -12,8 +12,9 @@ import { runTransaction } from '../lib/tx.js';
 
 /**
  * Cancel (Cl-6): free inside the window; after it, allowed with an honest warning (D12) or "message her", by the policy
- * copied onto the booking. A late cancellation is recorded as a mark so the no-show rule can count it when she asked it
- * to (D13). Cancelling frees the time at once; the booking trigger matches the waitlist.
+ * copied onto the booking. A late cancellation is recorded as a mark when the no-show policy OF BOOKING TIME said it
+ * counts (D13, D47); bookings made before the snapshot existed keep the old behaviour (always recorded, counted by the
+ * live policy). Cancelling frees the time at once; the booking trigger matches the waitlist.
  */
 export const cancelBooking = defineUseCase({
   name: 'cancelBooking',
@@ -49,7 +50,8 @@ export const cancelBooking = defineUseCase({
         lastClientAction: { kind: 'cancelled', at: ts(now) },
         updatedAt: ts(now)
       });
-      if (isLate) {
+      const lateCounts = booking.data.noShowPolicy ? booking.data.noShowPolicy.isOn && booking.data.noShowPolicy.lateCancelCounts : true;
+      if (isLate && lateCounts) {
         const marks = withMark(contact?.marks, { id: `lc_${booking.id}`, at: now, kind: 'lateCancel' });
         writeContact(tx, r, booking.data.ownerUid, booking.data.phoneHash, contact, { marks }, now);
       }

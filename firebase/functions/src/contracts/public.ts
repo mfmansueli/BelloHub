@@ -187,8 +187,11 @@ export const getBooking = {
     timeZoneID: TimeZoneId,
     serverTime: Instant,
     client: z.strictObject({ name: z.string() }),
+    /** D47: the policy in force when the booking was made. */
     policy: CancellationPolicySchema,
     rulesText: RulesText,
+    /** D47: under the no-show policy of booking time, a late cancellation counts as a missed visit. */
+    lateCancelCounts: z.boolean(),
     actions: z.strictObject({
       cancel: z.enum(['free', 'allowedWithWarning', 'askByMessage', 'unavailable']),
       reschedule: z.enum(['direct', 'request', 'message', 'unavailable']),
