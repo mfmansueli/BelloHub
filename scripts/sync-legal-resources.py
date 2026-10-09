@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Usage: scripts/sync-legal-resources.py [--check]
 
-The legal documents the app shows (the three consent texts) are drafts under legal/<document>/<localization>/
+The legal documents the app shows (the three consent texts, the terms and the privacy policy) are drafts under legal/<document>/<localization>/
 <version>.md. The app bundle has no folders, so each file is bundled flat as BelloHub/Resources/Legal/
 <document>-<localization>-<version>.md (for example consent-health-pt-BR-2026-10.md), byte for byte. Every version
 stays: a consent stores the version it was signed on and must be shown again exactly (ASSUMPTION-24).
@@ -16,7 +16,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 LEGAL = os.path.join(ROOT, "legal")
 BUNDLED = os.path.join(ROOT, "BelloHub", "Resources", "Legal")
-DOCUMENTS = ["consent-health", "consent-photo", "consent-guardian"]
+DOCUMENTS = ["consent-health", "consent-photo", "consent-guardian", "terms-dpa", "privacy-policy"]
 
 
 def sources():
