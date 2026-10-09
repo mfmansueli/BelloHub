@@ -94,24 +94,20 @@ export function newItemId(): string {
 
 export type AnswerValue = boolean | string | readonly string[];
 
+/**
+ * Schema 2 (D55): the answers only. Schema 1 also carried `clientName`, `guardianName`, a `consent` block and an
+ * optional `signaturePng`; consents are the professional's own business now, so the page collects no signature and
+ * the booking id is what ties the answers to the client.
+ */
 export interface IntakePayload {
-  readonly schema: 1;
+  readonly schema: 2;
   readonly bookingId: string;
-  readonly clientName: string;
   readonly localeId: string;
   readonly formVersion: string;
   readonly answers: Readonly<Record<string, AnswerValue>>;
   readonly isForMinor: boolean;
+  /** The name of the person under 18 the visit is for (a question of the form, not a signature). */
   readonly minorName?: string;
-  readonly guardianName?: string;
-  readonly consent: {
-    readonly textVersion: string;
-    readonly textLocaleId: string;
-    readonly acceptedAt: string;
-    readonly typedSignature: string;
-  };
-  /** A drawn signature, PNG as base64, at most 64 KB. */
-  readonly signaturePng?: string;
   readonly submittedAt: string;
 }
 

@@ -7,7 +7,8 @@ import type { Page } from '@playwright/test';
 import { expect, open, tap, test, type Guard, type InboxItem } from './support';
 
 const SECRET = 'SECRET-ANSWER-7f3a91';
-const SIGNATURE = 'Helena Duarte';
+const NAME = 'Helena Duarte';
+const MINOR = 'Bia Duarte';
 const HOUR = 60;
 // One red pixel. The page re-encodes whatever it is given as a JPEG, which drops metadata.
 const PNG_1PX = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
@@ -26,18 +27,24 @@ async function answerIntake(page: Page, options: { minor?: boolean } = {}): Prom
   await expect(page.getByTestId('submit-intake')).toBeVisible();
   if (options.minor === true) {
     await tap(page, 'minor-yes');
-    await page.getByTestId('minor-name').fill('Bia');
-    await page.getByTestId('guardian-name').fill(SIGNATURE);
+    await page.getByTestId('minor-name').fill(MINOR);
   } else {
     await tap(page, 'answer-pregnant-no');
-    await page.getByTestId('typed-signature').fill(SIGNATURE);
   }
   await page.getByTestId('answer-allergies-latex').click();
   await tap(page, 'answer-medication-yes');
   await tap(page, 'answer-skinCondition-no');
   await tap(page, 'answer-isotretinoin-no');
   await page.getByTestId('answer-anythingElse').fill(SECRET);
-  await tap(page, 'consent');
+}
+
+/** The form carries no consent text, agreement, tick box or signature of any kind (D55). */
+async function expectNoConsentOrSignature(page: Page): Promise<void> {
+  for (const id of ['consent', 'consent-text', 'consent-check', 'consent-unavailable', 'typed-signature', 'guardian-name', 'signature-canvas', 'signature-clear']) {
+    await expect(page.getByTestId(id)).toHaveCount(0);
+  }
+  await expect(page.locator('canvas')).toHaveCount(0);
+  await expect(page.locator('input[type="checkbox"][name="consent"]')).toHaveCount(0);
 }
 
 function envelopes(guard: Guard): Envelope[] {
@@ -66,26 +73,22 @@ function onlyItem(items: InboxItem[]): InboxItem {
   return items[0] as InboxItem;
 }
 
-test.describe('the consent text (D49)', () => {
-  test('the text she signs is the one the server returned for her language, never one of ours', async ({ page, mock, slugFor }) => {
+test.describe('no consent on the web (D55)', () => {
+  test('the form shows the questions only: no consent text, no agreement, no tick box, no signature, for an adult or a minor', async ({ page, mock, slugFor }) => {
     const { token } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/form`);
-    await expect(page.getByTestId('consent-text')).toContainText('I agree that Maria keeps this information to take care of me.');
+    await expect(page.getByTestId('submit-intake')).toBeVisible();
+    await expectNoConsentOrSignature(page);
+    await expect(page.locator('main')).not.toContainText(/I agree|consent/i);
     await tap(page, 'minor-yes');
-    await expect(page.getByTestId('consent-text')).toContainText('as the guardian');
-  });
-
-  test('without a consent text from the server the form is not available and nothing can be signed', async ({ page, mock, slugFor }) => {
-    const { token } = await mock.seed({ slug: slugFor('maria-noconsent'), startsInMinutes: 50 * HOUR });
-    await open(page, `/m/${token}/form`);
-    await expect(page.getByTestId('consent-unavailable')).toBeVisible();
-    await expect(page.getByTestId('submit-intake')).toHaveCount(0);
-    await expect(page.getByTestId('consent')).toHaveCount(0);
+    await expect(page.getByTestId('minor-name')).toBeVisible();
+    await expectNoConsentOrSignature(page);
+    await expect(page.locator('main')).not.toContainText(/I agree|consent|guardian text/i);
   });
 });
 
 test.describe('the health form (Cl-4)', () => {
-  test('an adult answers, signs and sends: only a sealed envelope leaves, and only the professional can open it @core', async ({ page, mock, guard, slugFor }) => {
+  test('an adult answers and sends: only a sealed envelope leaves, and only the professional can open it @core', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/form`);
@@ -99,35 +102,38 @@ test.describe('the health form (Cl-4)', () => {
     const envelope = sent[0] as Envelope;
     expect(Object.keys(envelope).sort()).toEqual(['ct', 'enc', 'itemId', 'keyId', 'kind', 'suite', 'v']);
     expect(envelope).toMatchObject({ v: 1, suite: 'hpke-x25519-hkdf-sha256-chacha20poly1305', kind: 'intake' });
-    expectNoClearText(guard, [SECRET, SIGNATURE, 'latex']);
+    expectNoClearText(guard, [SECRET, 'latex']);
 
-    // What the professional's phone opens: exactly what was typed.
+    // What the professional's phone opens: exactly what was typed, and nothing signed (D55).
     const item = onlyItem(await mock.inbox(slug));
     expect(item.kind).toBe('intake');
     expect(item.itemId).toBe(envelope.itemId);
     expect(item.payload).toMatchObject({
-      schema: 1,
-      clientName: SIGNATURE,
+      schema: 2,
       isForMinor: false,
       answers: { allergies: ['latex'], medication: true, pregnant: false, skinCondition: false, isotretinoin: false, anythingElse: SECRET },
-      consent: { typedSignature: SIGNATURE },
     });
+    expect(Object.keys(item.payload).sort()).toEqual(['_pad', 'answers', 'bookingId', 'formVersion', 'isForMinor', 'localeId', 'schema', 'submittedAt']);
     // Padded to a multiple of 1 KiB, plus the 16-byte authentication tag (docs/06 section 3.1).
     expect((item.sizeBytes - 16) % 1024).toBe(0);
 
-    await expectNotStored(page, [SECRET, SIGNATURE]);
+    await expectNotStored(page, [SECRET]);
     expect((await mock.bookings(slug))[0]?.intake).toBe('done');
   });
 
-  test('for a minor the guardian signs the guardian text', async ({ page, mock, slugFor }) => {
+  test('for a minor the same questions are answered with the young person\'s name, and nobody signs anything', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/form`);
     await answerIntake(page, { minor: true });
     await page.getByTestId('submit-intake').click();
     await expect(page.getByTestId('sealed-message')).toBeVisible();
+    expectNoClearText(guard, [SECRET, MINOR]);
     const item = onlyItem(await mock.inbox(slug));
-    expect(item.payload).toMatchObject({ isForMinor: true, minorName: 'Bia', guardianName: SIGNATURE, clientName: SIGNATURE });
+    expect(item.payload).toMatchObject({ isForMinor: true, minorName: MINOR });
+    expect(item.payload).not.toHaveProperty('guardianName');
+    expect(item.payload).not.toHaveProperty('consent');
+    await expectNotStored(page, [SECRET, MINOR]);
     // Questions meant for adults are not asked of a minor and never sent.
     expect(item.payload['answers']).not.toHaveProperty('pregnant');
   });
@@ -238,16 +244,16 @@ test.describe('my data (Cl-7)', () => {
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/data`);
     await page.getByTestId('ask-copy').click();
-    await page.getByTestId('request-name').fill(SIGNATURE);
+    await page.getByTestId('request-name').fill(NAME);
     await page.getByTestId('request-phone').fill('11 98765 4321');
     await page.getByTestId('request-note').fill(SECRET);
     await page.getByTestId('send-request').click();
     await expect(page.getByTestId('ask-copy')).toBeDisabled();
 
-    expectNoClearText(guard, [SIGNATURE, SECRET, '987654321']);
+    expectNoClearText(guard, [NAME, SECRET, '987654321']);
     const item = onlyItem(await mock.inbox(slug));
     expect(item.kind).toBe('datarequest');
-    expect(item.payload).toMatchObject({ request: 'copy', name: SIGNATURE, note: SECRET });
+    expect(item.payload).toMatchObject({ request: 'copy', name: NAME, note: SECRET });
     expect((item.sizeBytes - 16) % 1024).toBe(0);
   });
 
@@ -256,7 +262,7 @@ test.describe('my data (Cl-7)', () => {
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/data`);
     await page.getByTestId('ask-delete').click();
-    await page.getByTestId('request-name').fill(SIGNATURE);
+    await page.getByTestId('request-name').fill(NAME);
     await page.getByTestId('request-phone').fill('11 98765 4321');
     await page.getByTestId('send-request').click();
     await expect(page.getByTestId('ask-delete')).toBeDisabled();

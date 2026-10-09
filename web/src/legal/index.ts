@@ -1,5 +1,6 @@
 // The legal texts the pages show, embedded at build time by scripts/build-legal.ts from legal/<document>/<localization>/.
-// One small JSON per document and localization, loaded when a page needs it.
+// One small JSON per document and localization, loaded when a page needs it. Only notices live here (how the booking
+// is used, how to ask for a copy or deletion, Bello Hub's own privacy policy); no consent text of any kind (D55).
 
 import { useEffect, useState } from 'preact/hooks';
 
@@ -13,12 +14,10 @@ export type Inline = { k: 't'; v: string } | { k: 'b'; v: string } | { k: 'a'; v
 export type Block =
   | { type: 'h1'; text: Inline[] }
   | { type: 'p'; text: Inline[] }
-  | { type: 'ul'; items: Inline[][] }
-  | { type: 'check'; text: Inline[] }
-  | { type: 'consent'; heading: Inline[]; statement: Inline[]; signLabel: string };
+  | { type: 'ul'; items: Inline[][] };
 
 export interface LegalFile {
-  /** The version of the text, recorded with every acceptance (`consent.textVersion`). */
+  /** The version of the text (the file name under legal/). Nothing is signed on the web (D55): it is informative. */
   readonly version: string;
   readonly blocks: readonly Block[];
 }

@@ -50,7 +50,7 @@ export function inlineString(nodes: readonly Inline[], professionalName: string)
     .join('');
 }
 
-/** The blocks of a text, except the ones a form turns into inputs (`skip`). */
+/** The blocks of a text, except the ones the surrounding page already shows (`skip`, for example the title). */
 export function LegalBlocks({ blocks, professionalName, skip = [] }: { blocks: readonly Block[]; professionalName: string; skip?: readonly Block['type'][] }): JSX.Element {
   return (
     <div class="legal">
@@ -74,18 +74,6 @@ export function LegalBlocks({ blocks, professionalName, skip = [] }: { blocks: r
                   </li>
                 ))}
               </ul>
-            );
-          case 'check':
-            return (
-              <p key={index}>
-                <InlineText nodes={block.text} professionalName={professionalName} />
-              </p>
-            );
-          case 'consent':
-            return (
-              <p key={index}>
-                <InlineText nodes={block.heading} professionalName={professionalName} /> <InlineText nodes={block.statement} professionalName={professionalName} />
-              </p>
             );
         }
       })}

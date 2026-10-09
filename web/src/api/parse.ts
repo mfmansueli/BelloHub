@@ -8,7 +8,6 @@ import type {
   BookedResult,
   BookingOutcome,
   BookingView,
-  ConsentText,
   FormContext,
   FormQuestion,
   FoundBooking,
@@ -341,18 +340,6 @@ export function questionsOf(template: unknown): FormQuestion[] {
   return out;
 }
 
-export function consentOf(value: unknown): Readonly<Partial<Record<string, ConsentText>>> {
-  if (typeof value !== 'object' || value === null) return {};
-  const out: Record<string, ConsentText> = {};
-  for (const [locale, entry] of Object.entries(value as Record<string, unknown>)) {
-    if (typeof entry !== 'object' || entry === null) continue;
-    const { textVersion, text: body, guardianText } = entry as Record<string, unknown>;
-    if (typeof textVersion !== 'string' || typeof body !== 'string') continue;
-    out[locale] = { textVersion, text: body, ...(typeof guardianText === 'string' ? { guardianText } : {}) };
-  }
-  return out;
-}
-
 /** Everything the sealed pages need: the booking (who, which visit), her profile (the key is on both), the form. */
 export function formContext(booking: BookingView, form: WireFormContext | null, inboxKey: FormContext['inboxKey']): FormContext {
   return {
@@ -365,7 +352,6 @@ export function formContext(booking: BookingView, form: WireFormContext | null, 
       completedWithin12Months: form?.intakeCompletedWithinMonths === true,
       formVersion: form === null ? '' : String(form.formVersion),
       questions: form === null ? [] : questionsOf(form.template),
-      consent: form === null ? {} : consentOf(form.consent),
     },
     // The skin check-in (Cl-5) is for after the visit.
     checkIn: { available: booking.phase === 'past' && booking.status === 'confirmed', serviceName: booking.service.name },

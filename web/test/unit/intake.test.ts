@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 
 import type { FormContext, FormQuestion } from '../../src/api/types';
 import { EMPTY_INTAKE, buildIntakePayload, intakeProblems, isAnswered, toggleChoice, visibleQuestions, type IntakeState } from '../../src/routes/form/payload';
-import { signableConsent } from '../../src/routes/form/consent';
 import { groupByDay } from '../../src/app/booking/slotDays';
 
 function question(key: string, extra: Partial<FormQuestion> = {}): FormQuestion {
@@ -23,7 +22,7 @@ function makeContext(): FormContext {
     bookingId: 'booking-1',
     client: { firstName: 'Ana' },
     inboxKey: { keyId: 'AAAAAAAAAAA', alg: 'hpke-v1', pub: 'x' },
-    intake: { available: true, completedWithin12Months: false, formVersion: 'v7', questions, consent: {} },
+    intake: { available: true, completedWithin12Months: false, formVersion: 'v7', questions },
     checkIn: { available: false },
   };
 }
@@ -32,8 +31,6 @@ function makeState(extra: Partial<IntakeState> = {}): IntakeState {
   return {
     ...EMPTY_INTAKE,
     answers: { allergies: false, conditions: ['none'], adultOnly: 'fine' },
-    typedSignature: 'Ana Souza',
-    consent: true,
     ...extra,
   };
 }
@@ -59,22 +56,19 @@ describe('the health form rules', () => {
     expect(intakeProblems(makeState(), questions)).toEqual([]);
   });
 
-  it('lists every required question left open, the signature and the consent', () => {
-    const problems = intakeProblems(makeState({ answers: {}, typedSignature: ' ', consent: false }), questions);
+  it('lists every required question left open, and nothing else: no signature, no consent to tick (D55)', () => {
+    const problems = intakeProblems(makeState({ answers: {} }), questions);
     expect(problems).toEqual([
       { field: 'question', key: 'allergies' },
       { field: 'question', key: 'conditions' },
       { field: 'question', key: 'adultOnly' },
-      { field: 'typedSignature' },
-      { field: 'consent' },
     ]);
   });
 
-  it('a minor visit asks for the young person and the guardian instead of a typed signature', () => {
-    const state = makeState({ isForMinor: true, answers: { allergies: true, conditions: ['asthma'], guardianNote: 'ok' }, typedSignature: '' });
-    expect(intakeProblems(state, questions)).toEqual([{ field: 'minorName' }, { field: 'guardianName' }]);
-    const done = { ...state, minorName: 'Bia', guardianName: 'Ana Souza (mother)' };
-    expect(intakeProblems(done, questions)).toEqual([]);
+  it('a minor visit asks only for the young person\'s name on top of the questions: no guardian signature', () => {
+    const state = makeState({ isForMinor: true, answers: { allergies: true, conditions: ['asthma'], guardianNote: 'ok' } });
+    expect(intakeProblems(state, questions)).toEqual([{ field: 'minorName' }]);
+    expect(intakeProblems({ ...state, minorName: 'Bia' }, questions)).toEqual([]);
   });
 
   it('none is exclusive in a multiple choice', () => {
@@ -87,22 +81,22 @@ describe('the health form rules', () => {
 
 describe('the sealed intake payload', () => {
   const now = new Date('2026-03-04T10:20:30.000Z');
-  const input = { context: makeContext(), localeId: 'pt-BR', consentVersion: '2026-03', consentLocaleId: 'pt-BR', now };
+  const input = { context: makeContext(), localeId: 'pt-BR', now };
 
-  it('carries the booking, the typed signature as the consent, and the time it was accepted', () => {
+  it('carries the booking, the answers and the time, and no consent, agreement or signature of any kind (D55)', () => {
     const payload = buildIntakePayload(makeState(), input);
-    expect(payload).toMatchObject({
-      schema: 1,
+    expect(payload).toEqual({
+      schema: 2,
       bookingId: 'booking-1',
-      clientName: 'Ana Souza',
       localeId: 'pt-BR',
       formVersion: 'v7',
+      answers: { allergies: false, conditions: ['none'], adultOnly: 'fine' },
       isForMinor: false,
-      consent: { textVersion: '2026-03', textLocaleId: 'pt-BR', acceptedAt: now.toISOString(), typedSignature: 'Ana Souza' },
       submittedAt: now.toISOString(),
     });
-    expect(payload).not.toHaveProperty('minorName');
-    expect(payload.consent).not.toHaveProperty('photos');
+    for (const gone of ['consent', 'signaturePng', 'clientName', 'guardianName', 'typedSignature', 'textVersion']) {
+      expect(JSON.stringify(payload)).not.toContain(gone);
+    }
   });
 
   it('leaves out an unanswered optional question and the questions of the other audience', () => {
@@ -110,23 +104,16 @@ describe('the sealed intake payload', () => {
     expect(payload.answers).toEqual({ allergies: false, conditions: ['none'], adultOnly: 'trimmed' });
   });
 
-  it('for a minor, the guardian signs (no photo agreement is sent: the signed text is the server\'s, D49)', () => {
+  it('for a minor, carries the young person\'s name trimmed and the minor questions only; no guardian text or name', () => {
     const state = makeState({
       isForMinor: true,
       minorName: ' Bia ',
-      guardianName: ' Ana Souza ',
       answers: { allergies: false, conditions: ['none'], guardianNote: 'ok', adultOnly: 'ignored' },
     });
     const payload = buildIntakePayload(state, input);
-    expect(payload).toMatchObject({ isForMinor: true, minorName: 'Bia', guardianName: 'Ana Souza', clientName: 'Ana Souza' });
-    expect(payload.consent).toMatchObject({ typedSignature: 'Ana Souza' });
-    expect(payload.consent).not.toHaveProperty('photos');
+    expect(payload).toMatchObject({ isForMinor: true, minorName: 'Bia' });
+    expect(payload).not.toHaveProperty('guardianName');
     expect(payload.answers).not.toHaveProperty('adultOnly');
-  });
-
-  it('adds the drawn signature only when there is one', () => {
-    expect(buildIntakePayload(makeState(), input)).not.toHaveProperty('signaturePng');
-    expect(buildIntakePayload(makeState({ signaturePng: 'AAAA' }), input)).toMatchObject({ signaturePng: 'AAAA' });
   });
 });
 
@@ -146,34 +133,5 @@ describe('groupByDay', () => {
     const slots = ['2026-03-05T10:00:00.000Z', '2026-03-04T10:00:00.000Z'];
     groupByDay(slots, 'UTC');
     expect(slots[0]).toBe('2026-03-05T10:00:00.000Z');
-  });
-});
-
-describe('the consent she signs (D49)', () => {
-  const consent = {
-    en: { textVersion: '2026-10', text: 'First paragraph.\n\nSecond paragraph.', guardianText: 'Guardian text.' },
-    'pt-BR': { textVersion: '2026-11', text: 'Concordo.' },
-  };
-
-  it('is the server text in the page language, split into paragraphs, with its version and language', () => {
-    expect(signableConsent(consent, 'en', 'en', false)).toEqual({ textVersion: '2026-10', localeId: 'en', direction: 'ltr', paragraphs: ['First paragraph.', 'Second paragraph.'] });
-    expect(signableConsent(consent, 'pt-BR', 'en', false)).toMatchObject({ textVersion: '2026-11', localeId: 'pt-BR', paragraphs: ['Concordo.'] });
-  });
-
-  it('falls back to her default language, then English, and records the language actually shown', () => {
-    expect(signableConsent(consent, 'de', 'pt-BR', false)?.localeId).toBe('pt-BR');
-    expect(signableConsent(consent, 'de', 'fr', false)?.localeId).toBe('en');
-    expect(signableConsent(consent, 'en-GB', 'en', false)?.localeId).toBe('en');
-  });
-
-  it('a visit for a minor needs her guardian text; without it there is no consent to sign, never a draft', () => {
-    expect(signableConsent(consent, 'en', 'en', true)?.paragraphs).toEqual(['Guardian text.']);
-    expect(signableConsent({ 'pt-BR': consent['pt-BR'] }, 'pt-BR', 'pt-BR', true)).toBeNull();
-  });
-
-  it('is null when the server returned nothing usable', () => {
-    expect(signableConsent({}, 'en', 'en', false)).toBeNull();
-    expect(signableConsent({ en: { textVersion: '1', text: '   ' } }, 'en', 'en', false)).toBeNull();
-    expect(signableConsent({ en: { textVersion: '', text: 'x' } }, 'en', 'en', false)).toBeNull();
   });
 });

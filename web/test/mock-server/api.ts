@@ -156,11 +156,6 @@ const TEMPLATE = {
   ],
 } as const;
 
-const CONSENT = {
-  en: { textVersion: '2026-10', text: 'I agree that Maria keeps this information to take care of me.', guardianText: 'I agree, as the guardian, that Maria keeps this information to take care of the person in my care.' },
-  'pt-BR': { textVersion: '2026-10', text: 'Concordo que a Maria guarde estas informações para cuidar de mim.' },
-} as const;
-
 type Json = Record<string, unknown>;
 
 function str(value: unknown, field: string): string {
@@ -774,7 +769,6 @@ export class MockApi {
       professional: { displayName: profile.displayName },
       formVersion: 1,
       template: TEMPLATE,
-      consent: scenario.noConsent === true ? {} : CONSENT,
       inboxKey: this.inboxKey,
       intakeCompletedWithinMonths: booking.intakeSubmittedAt !== undefined || scenario.intakeCompleted === true,
     };
