@@ -11,10 +11,13 @@ import SwiftUI
 struct BookingSettingsContentView: View {
     @State private var viewModel: BookingSettingsViewModel
     @State private var showsPauseSheet = false
+    @State private var confirmsStop = false
+    let publishing: PublishingService
 
     @Environment(\.locale) private var locale
 
-    init(service: BookingSetupService, profile: ProfessionalProfile?) {
+    init(service: BookingSetupService, publishing: PublishingService, profile: ProfessionalProfile?) {
+        self.publishing = publishing
         _viewModel = State(initialValue: BookingSettingsViewModel(service: service, profile: profile))
     }
 
@@ -48,6 +51,14 @@ struct BookingSettingsContentView: View {
         .sheet(isPresented: $showsPauseSheet) {
             PauseSheet(viewModel: viewModel, formatters: formatters)
         }
+        .confirmationDialog(
+            Text("publish.stop.confirmTitle"), isPresented: $confirmsStop, titleVisibility: .visible
+        ) {
+            Button("publish.stop.confirm", role: .destructive) { Task { await publishing.stop() } }
+            Button("common.cancel", role: .cancel) {}
+        } message: {
+            Text("publish.stop.confirmMessage")
+        }
     }
 
     // MARK: - Sections
@@ -62,6 +73,10 @@ struct BookingSettingsContentView: View {
             ErrorNotice(message: message, actionTitle: "bookingSetup.dismiss", action: viewModel.dismissSaveError)
                 .accessibilityIdentifier("bookingSettings.saveError")
         }
+        if case .error(let failure, let wasOnline) = publishing.state {
+            PublishFailureNotice(failure: failure, wasOnline: wasOnline, onRetry: publishing.retry)
+                .accessibilityIdentifier("bookingSettings.publishError")
+        }
     }
 
     private var linkSection: some View {
@@ -72,7 +87,8 @@ struct BookingSettingsContentView: View {
                     localization: viewModel.localization, professionalName: viewModel.professionalName,
                     displayLink: viewModel.link?.display ?? ""
                 ).shareMessage,
-                isCopied: viewModel.copiedLink, onCopy: viewModel.copyLink
+                isCopied: viewModel.copiedLink, state: publishing.state, onCopy: viewModel.copyLink,
+                onGoOnline: publishing.goOnline
             ) {
                 NavigationLink { shareLinkScreen } label: { Text("bookingSettings.link.noAddress") }
             }
@@ -83,13 +99,20 @@ struct BookingSettingsContentView: View {
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("bookingSettings.shareRow")
             }
+            if publishing.state.isLive { stopButton }
         }
+    }
+
+    private var stopButton: some View {
+        Button { confirmsStop = true } label: { Text("publish.action.stop") }
+            .buttonStyle(.belloSecondary)
+            .accessibilityIdentifier("bookingSettings.stopButton")
     }
 
     private var shareLinkScreen: some View {
         ShareLinkView(
-            editor: viewModel.editor, displayName: viewModel.displayName, businessName: viewModel.businessName,
-            localization: viewModel.localization
+            editor: viewModel.editor, publishing: publishing, displayName: viewModel.displayName,
+            businessName: viewModel.businessName, localization: viewModel.localization
         )
     }
 

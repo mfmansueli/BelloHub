@@ -68,6 +68,7 @@ struct MainView: View {
         .environment(ClientRegistrationService(vault: vault))
         .environment(AppLockService(keyManager: KeyManager()))
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
+        .environment(PublishingService.preview)
         .environment(AppointmentService(vault: VaultService(repository: nil)))
         .environment(TimeBlockService(vault: VaultService(repository: nil)))
 }
