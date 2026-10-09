@@ -14,7 +14,7 @@ enum ClientProfileBuilder {
         var appointments: [Appointment] = []
         var plans: [SessionPlan] = []
         var forms: [HealthForm] = []
-        var consents: [Consent] = []
+        var consents: [ConsentRecord] = []
     }
 
     static func make(_ input: Input, now: Date, calendar: Calendar) -> ClientProfileSnapshot {

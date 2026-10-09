@@ -13,5 +13,5 @@ struct RecordExportSource: Sendable {
     let corrections: [RecordCorrection]
     let incidents: [Incident]
     let photos: [Photo]
-    let consents: [Consent]
+    let consents: [ConsentRecord]
 }

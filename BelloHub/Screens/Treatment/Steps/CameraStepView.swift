@@ -56,7 +56,7 @@ struct CameraStepView: View {
             ZStack {
                 CameraPreview(camera: camera)
                 if showsGhost, let ghost = viewModel.ghostThumbnail(for: kind) {
-                    FlowPhotoImage(data: ghost).opacity(0.35).allowsHitTesting(false).accessibilityHidden(true)
+                    DataImage(data: ghost).opacity(0.35).allowsHitTesting(false).accessibilityHidden(true)
                 }
             }
             .aspectRatio(3 / 4, contentMode: .fit)
@@ -102,7 +102,7 @@ struct CameraStepView: View {
     private func review(_ data: Data) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
-                FlowPhotoImage(data: data)
+                DataImage(data: data)
                     .aspectRatio(3 / 4, contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
                     .accessibilityLabel(Text("treatmentFlow.camera.review"))

@@ -87,11 +87,15 @@ struct VaultEncryptionTests {
         try await repository.save(HealthForm(id: UUID(), clientID: client.id, formVersion: 1, filledBy: .client,
                                              isForMinor: true, signedAt: start, importedFromItemID: "item-9",
                                              answers: ["conditions": .text("SENTINEL-ANSWER")],
-                                             signatureImage: Data("SENTINEL-SIGIMG".utf8),
-                                             guardianName: "SENTINEL-GUARDIAN", minorName: "SENTINEL-MINOR"))
-        try await repository.save(Consent(id: UUID(), clientID: client.id, kind: .treatment, signedAt: start,
-                                          textVersion: "1", localeID: "pt-BR", typedSignature: "SENTINEL-TYPED",
-                                          signatureImage: Data("SENTINEL-CONSENTIMG".utf8)))
+                                             minorName: "SENTINEL-MINOR"))
+        try await repository.save(ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .treatment, isSigned: true, signedAt: start, createdAt: start,
+            label: "SENTINEL-LABEL", note: "SENTINEL-CONSENTNOTE",
+            document: ConsentDocument(
+                kind: .photo, fileName: "SENTINEL-FILENAME", contentType: "public.jpeg",
+                data: Data("SENTINEL-CONSENTIMG".utf8), thumbnail: Data("SENTINEL-CONSENTTHUMB".utf8)
+            )
+        ))
         let photoBytes = Data("SENTINEL-PHOTO-BYTES-".utf8) + Data(repeating: 0xAB, count: 4_000)
         try await repository.save(Photo(id: UUID(), clientID: client.id, recordID: record.id, takenAt: start,
                                         kind: .before, visibility: .professionalOnly),
@@ -111,8 +115,8 @@ struct VaultEncryptionTests {
             "SENTINEL-STOP", "SENTINEL-APPT", "SENTINEL-NOTES", "SENTINEL-TECH", "SENTINEL-PRODUCT",
             "SENTINEL-RESULT", "SENTINEL-AFTER", "SENTINEL-NEXT", "SENTINEL-OLD", "SENTINEL-NEW",
             "SENTINEL-WHY", "SENTINEL-SYMPTOMS", "SENTINEL-AREA", "SENTINEL-ACTION", "SENTINEL-FOLLOW",
-            "SENTINEL-ANSWER", "SENTINEL-SIGIMG", "SENTINEL-GUARDIAN", "SENTINEL-MINOR", "SENTINEL-TYPED",
-            "SENTINEL-CONSENTIMG", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB"
+            "SENTINEL-ANSWER", "SENTINEL-MINOR", "SENTINEL-LABEL", "SENTINEL-CONSENTNOTE", "SENTINEL-FILENAME",
+            "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB"
         ]
 
         #expect(!files.isEmpty)
@@ -155,8 +159,8 @@ struct VaultEncryptionTests {
                                                   "nextSessionSuggestion", "fieldEntries"])
         #expect(RecordCorrection.sensitiveKeys == ["oldValue", "newValue", "reason"])
         #expect(Incident.sensitiveKeys == ["symptoms", "area", "actionTaken", "followUp"])
-        #expect(HealthForm.sensitiveKeys == ["answers", "signatureImage", "guardianName", "minorName"])
-        #expect(Consent.sensitiveKeys == ["typedSignature", "signatureImage"])
+        #expect(HealthForm.sensitiveKeys == ["answers", "minorName"])
+        #expect(ConsentRecord.sensitiveKeys == ["label", "note", "document"])
         #expect(Photo.sensitiveKeys.isEmpty, "photo bytes are sealed separately, not as JSON keys")
     }
 

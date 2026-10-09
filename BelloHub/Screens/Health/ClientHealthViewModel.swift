@@ -6,9 +6,9 @@
 import Foundation
 import Observation
 
-/// Screen 4.5: what one client told the professional about her health, the consents she signed and the patch tests.
-/// It loads from the vault, derives what the screen shows with the pure rules, and owns the three sheets (fill the
-/// form, record a patch test, read a signed text) so their lifetime is the screen's.
+/// Screen 4.5: what one client told the professional about her health, her consent records (D55) and the patch
+/// tests. It loads from the vault, derives what the screen shows with the pure rules, and owns the three sheets
+/// (fill the form, record a patch test, add or edit a consent) so their lifetime is the screen's.
 @MainActor
 @Observable
 final class ClientHealthViewModel {
@@ -18,19 +18,20 @@ final class ClientHealthViewModel {
     private(set) var errorMessage: String?
     private(set) var client: Client?
     private(set) var forms: [HealthForm] = []
-    private(set) var consents: [Consent] = []
+    private(set) var consents: [ConsentRecord] = []
     private(set) var patchTests: [PatchTest] = []
     private(set) var templates: [HealthFormTemplate] = []
     private(set) var catalog: HealthFormCatalog?
     /// The sheets. Setting one to nil closes it; the view reloads when a sheet goes away.
     var fillSheet: HealthFormViewModel?
     var patchSheet: PatchTestViewModel?
-    var consentSheet: SignedConsentViewModel?
+    var consentSheet: ConsentRecordViewModel?
 
     private let repository: (any HealthRepository)?
     private let profile: ProfileService
     private let catalogProvider: any HealthFormCatalogProviding
-    private let legal: any LegalTextLibrary
+    private let photos: any PhotoProcessing
+    private let files: any ConsentDocumentReading
     private let localization: AppLocalization
     private let locale: Locale
     private let now: @Sendable () -> Date
@@ -42,7 +43,8 @@ final class ClientHealthViewModel {
         repository: (any HealthRepository)?,
         profile: ProfileService,
         catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
-        legal: any LegalTextLibrary = BundleLegalTextLibrary(),
+        photos: any PhotoProcessing = ImageIOPhotoProcessing(),
+        files: any ConsentDocumentReading = SystemConsentDocumentReader(),
         locale: Locale = .current,
         now: @escaping @Sendable () -> Date = { Date() },
         makeID: @escaping @Sendable () -> UUID = { UUID() }
@@ -51,7 +53,8 @@ final class ClientHealthViewModel {
         self.repository = repository
         self.profile = profile
         self.catalogProvider = catalogProvider
-        self.legal = legal
+        self.photos = photos
+        self.files = files
         self.locale = locale
         self.localization = AppLocalization(locale: locale)
         self.now = now
@@ -156,8 +159,7 @@ final class ClientHealthViewModel {
             )
             if !templates.contains(where: { $0.version == template.version }) { templates.append(template) }
             fillSheet = HealthFormViewModel(
-                client: client, template: template, catalog: catalog, repository: repository, legal: legal,
-                profile: profile.profile, fallbackLanguage: localization, now: now, makeID: makeID
+                client: client, template: template, catalog: catalog, repository: repository, now: now, makeID: makeID
             )
         } catch {
             errorMessage = String(localized: "health.error.load")
@@ -169,10 +171,20 @@ final class ClientHealthViewModel {
         patchSheet = PatchTestViewModel(clientID: clientID, repository: repository, now: now, makeID: makeID)
     }
 
-    func open(_ consent: Consent) {
-        guard consentSheet == nil else { return }
-        consentSheet = SignedConsentViewModel(
-            consent: consent, formatters: formatters, legal: legal, profile: profile.profile
+    /// A new consent record (D55): the sheet starts signed, dated today.
+    func startConsent() {
+        guard let repository, consentSheet == nil else { return }
+        consentSheet = ConsentRecordViewModel(
+            clientID: clientID, repository: repository, photos: photos, files: files, now: now, makeID: makeID
+        )
+    }
+
+    /// Edits an existing consent record in the same sheet.
+    func open(_ consent: ConsentRecord) {
+        guard let repository, consentSheet == nil else { return }
+        consentSheet = ConsentRecordViewModel(
+            clientID: clientID, existing: consent, repository: repository, photos: photos, files: files, now: now,
+            makeID: makeID
         )
     }
 }

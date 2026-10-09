@@ -3,12 +3,17 @@
 //  BelloHub
 //
 
-enum ConsentKind: String, PersistedEnum {
+/// The category of a `ConsentRecord` (D55): what the paper she keeps is about. A signed `photos` record is the one
+/// rule the app reads from it (`PhotoConsentRules`); the others are for her own organization.
+enum ConsentKind: String, PersistedEnum, Identifiable {
     case treatment
     case photos
-    /// A parent or legal guardian consenting for a minor (D17). It is the treatment consent of someone under 18, on
-    /// its own text (`consent-guardian`).
+    /// A parent or legal guardian signing for someone under 18 (D17).
     case guardian
+    /// Anything else she asks her clients to sign, named by the record's label.
+    case other
+
+    var id: String { rawValue }
 
     static let fallback = ConsentKind.treatment
 }

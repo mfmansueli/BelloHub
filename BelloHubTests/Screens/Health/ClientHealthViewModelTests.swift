@@ -15,11 +15,6 @@ struct ClientHealthViewModelTests {
         let repository: FlakyHealthRepository
         let profile: ProfileService
         let client: Client
-        let legal: FakeLegalTextLibrary
-    }
-
-    private static func legalLibrary() -> FakeLegalTextLibrary {
-        FakeLegalTextLibrary(LegalDocument.allCases.map { FakeLegalTextLibrary.text($0) })
     }
 
     private func makeRig(
@@ -32,13 +27,12 @@ struct ClientHealthViewModelTests {
         await profileRepository.save(makeHealthProfile(professions: professions))
         let profile = ProfileService(vault: VaultService(repository: profileRepository))
         await profile.load()
-        let legal = Self.legalLibrary()
         let model = ClientHealthViewModel(
             clientID: client.id, repository: vaultAvailable ? repository : nil, profile: profile,
-            catalogProvider: FakeHealthFormCatalogProvider(), legal: legal, locale: Locale(identifier: "en"),
-            now: { now }, makeID: { UUID() }
+            catalogProvider: FakeHealthFormCatalogProvider(), photos: FakePhotoProcessing(),
+            files: FakeConsentDocumentReader(), locale: Locale(identifier: "en"), now: { now }, makeID: { UUID() }
         )
-        return Rig(model: model, repository: repository, profile: profile, client: client, legal: legal)
+        return Rig(model: model, repository: repository, profile: profile, client: client)
     }
 
     private func signedForm(for client: Client, version: Int = 1, daysAgo: Int = 10) -> HealthForm {
@@ -55,10 +49,7 @@ struct ClientHealthViewModelTests {
     func loads() async throws {
         let rig = try await makeRig()
         try await rig.repository.save(signedForm(for: rig.client))
-        try await rig.repository.save(Consent(
-            id: UUID(), clientID: rig.client.id, kind: .treatment, signedAt: TestClock.days(-10),
-            textVersion: "2026-10", localeID: "en", typedSignature: "Ana Costa", signatureImage: nil
-        ))
+        try await rig.repository.save(makeConsentRecord(clientID: rig.client.id))
         try await rig.repository.save(PatchTest(
             id: UUID(), clientID: rig.client.id, testedAt: TestClock.days(-40), observedHours: 24,
             product: "Serum", area: nil, result: .noReaction, notes: nil
@@ -137,7 +128,8 @@ struct ClientHealthViewModelTests {
         let rig = try await makeRig()
         let stranger = ClientHealthViewModel(
             clientID: UUID(), repository: rig.repository, profile: rig.profile,
-            catalogProvider: FakeHealthFormCatalogProvider(), legal: rig.legal, locale: Locale(identifier: "en")
+            catalogProvider: FakeHealthFormCatalogProvider(), photos: FakePhotoProcessing(),
+            files: FakeConsentDocumentReader(), locale: Locale(identifier: "en")
         )
         await stranger.load()
         #expect(stranger.errorMessage != nil && !stranger.hasLoaded)
@@ -188,7 +180,7 @@ struct ClientHealthViewModelTests {
         #expect(rig.model.fillSheet == nil)
     }
 
-    @Test("A form filled in through the sheet shows on the screen after a reload, with its consent")
+    @Test("A form filled in through the sheet shows on the screen after a reload, with no consent made (D55)")
     func fillAndReload() async throws {
         let rig = try await makeRig()
         await rig.model.load()
@@ -201,14 +193,12 @@ struct ClientHealthViewModelTests {
             case .text: break
             }
         }
-        sheet.draft.agrees = true
-        sheet.draft.signature = "Ana Costa"
         await sheet.saveAsync()
         #expect(sheet.didSave)
 
         await rig.model.load()
 
-        #expect(rig.model.latestForm?.filledBy == .professional && rig.model.consents.count == 1)
+        #expect(rig.model.latestForm?.filledBy == .professional && rig.model.consents.isEmpty)
         #expect(rig.model.answerRows.contains { $0.key == "medication" && $0.value == "No" })
         guard case .current(let dueAt)? = rig.model.reviewStatus else {
             Issue.record("a form signed just now is current")
@@ -217,7 +207,7 @@ struct ClientHealthViewModelTests {
         #expect(dueAt > TestClock.now)
     }
 
-    @Test("Recording a patch test and reading a signed text open their own sheets, once")
+    @Test("Recording a patch test and adding a consent record open their own sheets, once")
     func otherSheets() async throws {
         let rig = try await makeRig()
         await rig.model.load()
@@ -227,12 +217,36 @@ struct ClientHealthViewModelTests {
         rig.model.startPatchTest()
         #expect(rig.model.patchSheet?.id == patch.id)
 
-        let consent = Consent(
-            id: UUID(), clientID: rig.client.id, kind: .guardian, signedAt: TestClock.now, textVersion: "2026-10",
-            localeID: "en", typedSignature: "Rita Costa", signatureImage: nil
-        )
-        rig.model.open(consent)
-        #expect(rig.model.consentSheet?.consent == consent)
-        #expect(rig.model.consentSheet?.legalText?.document == .consentGuardian)
+        rig.model.startConsent()
+        let sheet = try #require(rig.model.consentSheet)
+        #expect(!sheet.isEditing && sheet.draft.isSigned && sheet.draft.signedAt == TestClock.now)
+        rig.model.startConsent()
+        #expect(rig.model.consentSheet?.id == sheet.id)
+    }
+
+    @Test("Tapping a consent record opens it for editing, and a saved record shows after a reload")
+    func editConsent() async throws {
+        let rig = try await makeRig()
+        let record = makeConsentRecord(clientID: rig.client.id, kind: .guardian, label: "Rita signed on paper")
+        try await rig.repository.save(record)
+        await rig.model.load()
+
+        rig.model.open(record)
+        let sheet = try #require(rig.model.consentSheet)
+        #expect(sheet.isEditing && sheet.existing == record && sheet.draft.label == "Rita signed on paper")
+        sheet.draft.isSigned = false
+        await sheet.saveAsync()
+        rig.model.consentSheet = nil
+
+        await rig.model.load()
+        #expect(rig.model.consents.count == 1 && rig.model.consents.first?.isSigned == false)
+        #expect(rig.model.consents.first?.id == record.id, "editing updates the same record")
+    }
+
+    @Test("Without a vault no consent sheet opens")
+    func consentNeedsVault() async throws {
+        let rig = try await makeRig(vaultAvailable: false)
+        rig.model.startConsent()
+        #expect(rig.model.consentSheet == nil)
     }
 }

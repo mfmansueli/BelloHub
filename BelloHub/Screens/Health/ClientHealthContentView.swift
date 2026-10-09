@@ -5,14 +5,17 @@
 
 import SwiftUI
 
-/// The body of 4.5: the answers of the latest health form, the consents and the patch test log, with the loading,
-/// empty and error states, and the three sheets. Everything on it is private to the professional.
+/// The body of 4.5: the answers of the latest health form, the consent records and the patch test log, with the
+/// loading, empty and error states, and the three sheets. Everything on it is private to the professional.
 struct ClientHealthContentView: View {
     @State private var viewModel: ClientHealthViewModel
 
-    init(clientID: UUID, repository: (any HealthRepository)?, profile: ProfileService, locale: Locale) {
+    init(
+        clientID: UUID, repository: (any HealthRepository)?, profile: ProfileService, photos: any PhotoProcessing,
+        locale: Locale
+    ) {
         _viewModel = State(initialValue: ClientHealthViewModel(
-            clientID: clientID, repository: repository, profile: profile, locale: locale
+            clientID: clientID, repository: repository, profile: profile, photos: photos, locale: locale
         ))
     }
 
@@ -38,8 +41,8 @@ struct ClientHealthContentView: View {
         .sheet(item: $model.patchSheet, onDismiss: viewModel.reload) { sheet in
             PatchTestSheet(viewModel: sheet)
         }
-        .sheet(item: $model.consentSheet) { sheet in
-            SignedConsentSheet(viewModel: sheet)
+        .sheet(item: $model.consentSheet, onDismiss: viewModel.reload) { sheet in
+            ConsentRecordSheet(viewModel: sheet)
         }
     }
 
@@ -120,10 +123,10 @@ struct ClientHealthContentView: View {
     }
 
     private var consentSection: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            SectionHeader(title: "health.section.consent")
-            ConsentCard(consents: viewModel.consents, formatters: viewModel.formatters, onOpen: viewModel.open)
-        }
+        ConsentsCard(
+            consents: viewModel.consents, formatters: viewModel.formatters, onOpen: viewModel.open,
+            onAdd: viewModel.startConsent
+        )
     }
 
     private var fillAgainButton: some View {

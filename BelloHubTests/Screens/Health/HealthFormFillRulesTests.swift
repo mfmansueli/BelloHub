@@ -18,8 +18,6 @@ struct HealthFormFillRulesTests {
     private func allAnswered() -> HealthFormDraft {
         var draft = HealthFormDraft()
         draft.answers = ["allergies": .choices(["none"]), "medication": .no, "pregnancy": .no]
-        draft.agrees = true
-        draft.signature = "Ana Costa"
         return draft
     }
 
@@ -74,30 +72,28 @@ struct HealthFormFillRulesTests {
         #expect(answer == nil)
     }
 
-    // MARK: - Signing
+    // MARK: - Saving
 
-    @Test("A complete draft can be signed")
-    func canSign() {
-        #expect(HealthFormFillRules.canSign(draft: allAnswered(), questions: questions))
+    @Test("A complete draft can be saved")
+    func canSave() {
+        #expect(HealthFormFillRules.canSave(draft: allAnswered(), questions: questions))
     }
 
-    @Test("Each missing piece blocks the signature: an answer, the box, the name, and for a minor her name")
+    @Test("Each missing piece blocks the save: an answer, and for a minor her name")
     func whatBlocks() {
         var missingAnswer = allAnswered()
         missingAnswer.answers["pregnancy"] = nil
-        var notAgreed = allAnswered()
-        notAgreed.agrees = false
-        var shortName = allAnswered()
-        shortName.signature = " A "
         var minorWithoutName = allAnswered()
         minorWithoutName.isForMinor = true
 
-        for draft in [missingAnswer, notAgreed, shortName, minorWithoutName] {
-            #expect(!HealthFormFillRules.canSign(draft: draft, questions: questions))
+        for draft in [missingAnswer, minorWithoutName] {
+            #expect(!HealthFormFillRules.canSave(draft: draft, questions: questions))
         }
         var minor = minorWithoutName
         minor.minorName = "Ana Costa"
-        #expect(HealthFormFillRules.canSign(draft: minor, questions: questions))
+        #expect(HealthFormFillRules.canSave(draft: minor, questions: questions))
+        #expect(HealthFormFillRules.canSave(draft: allAnswered(), questions: questions),
+                "no agreement and no signature are asked (D55)")
     }
 
     @Test("A name needs two characters once the spaces are gone")
@@ -107,57 +103,41 @@ struct HealthFormFillRulesTests {
         #expect(HealthFormFillRules.isValidName("Al") && HealthFormFillRules.isValidName("  Ana Costa "))
     }
 
-    @Test("The consent is the guardian's for a minor and the treatment consent for everyone else (D17)")
-    func consentKinds() {
-        #expect(HealthFormFillRules.consentKind(isForMinor: true) == .guardian)
-        #expect(HealthFormFillRules.consentKind(isForMinor: false) == .treatment)
-    }
+    // MARK: - Record
 
-    // MARK: - Records
-
-    private func signing(text: LegalText? = nil) -> HealthFormFillRules.Signing {
-        HealthFormFillRules.Signing(
-            client: makeClient(name: "Ana Costa"),
+    private func saving() -> HealthFormFillRules.Saving {
+        HealthFormFillRules.Saving(
+            client: Client(name: "Ana Costa", createdAt: TestClock.days(-100)),
             template: makeHealthTemplate(version: 4, keys: ["allergies", "medication", "notes"]),
             questions: ["allergies", "medication", "notes"].compactMap { catalog.question(for: $0) },
-            text: text ?? FakeLegalTextLibrary.text(.consentHealth, localization: "pt-BR", version: "2026-10"),
-            formID: UUID(), consentID: UUID(), now: TestClock.now
+            formID: UUID(), now: TestClock.now
         )
     }
 
-    @Test("A signature makes a form on the template's version and a consent on the text that was read")
-    func adultRecords() {
+    @Test("A save makes a form on the template's version, filled in by the professional, with trimmed notes")
+    func adultRecord() {
         var draft = allAnswered()
         draft.answers["notes"] = .text("  Keloid scars on the left cheek  ")
-        draft.signature = "  Ana Costa "
-        let signing = signing()
+        let saving = saving()
 
-        let records = HealthFormFillRules.records(draft: draft, signing: signing)
+        let form = HealthFormFillRules.form(draft: draft, saving: saving)
 
-        #expect(records.form.formVersion == 4 && records.form.filledBy == .professional)
-        #expect(records.form.signedAt == TestClock.now && records.form.clientID == signing.client.id)
-        #expect(!records.form.isForMinor && records.form.guardianName == nil && records.form.minorName == nil)
-        #expect(records.form.answers["notes"] == .text("Keloid scars on the left cheek"))
-        #expect(records.form.id == signing.formID && records.consent.id == signing.consentID)
-        #expect(records.consent.kind == .treatment && records.consent.typedSignature == "Ana Costa")
-        #expect(records.consent.textVersion == "2026-10" && records.consent.localeID == "pt-BR")
-        #expect(records.consent.signedAt == TestClock.now && records.consent.signatureImage == nil)
+        #expect(form.formVersion == 4 && form.filledBy == .professional)
+        #expect(form.signedAt == TestClock.now && form.clientID == saving.client.id)
+        #expect(!form.isForMinor && form.minorName == nil)
+        #expect(form.answers["notes"] == .text("Keloid scars on the left cheek"))
+        #expect(form.id == saving.formID)
     }
 
-    @Test("A minor's form carries both names, and the guardian signs the guardian consent")
-    func minorRecords() {
+    @Test("A minor's form says so and carries the young person's name, nothing about a guardian (D17, D55)")
+    func minorRecord() {
         var draft = allAnswered()
         draft.isForMinor = true
         draft.minorName = " Ana Costa "
-        draft.signature = "Rita Costa"
-        let text = FakeLegalTextLibrary.text(.consentGuardian, localization: "en", version: "2026-10")
 
-        let records = HealthFormFillRules.records(draft: draft, signing: signing(text: text))
+        let form = HealthFormFillRules.form(draft: draft, saving: saving())
 
-        #expect(records.form.isForMinor && records.form.guardianName == "Rita Costa")
-        #expect(records.form.minorName == "Ana Costa")
-        #expect(records.consent.kind == .guardian && records.consent.typedSignature == "Rita Costa")
-        #expect(records.consent.localeID == "en")
+        #expect(form.isForMinor && form.minorName == "Ana Costa")
     }
 
     @Test("Answers to questions that are off, and a note nobody wrote, are never stored")
@@ -166,10 +146,10 @@ struct HealthFormFillRulesTests {
         draft.answers["pregnancy"] = .yes
         draft.answers["notes"] = .text("   ")
 
-        let records = HealthFormFillRules.records(draft: draft, signing: signing())
+        let form = HealthFormFillRules.form(draft: draft, saving: saving())
 
-        #expect(records.form.answers["pregnancy"] == nil, "pregnancy is not in this template")
-        #expect(records.form.answers["notes"] == nil)
-        #expect(Set(records.form.answers.keys) == ["allergies", "medication"])
+        #expect(form.answers["pregnancy"] == nil, "pregnancy is not in this template")
+        #expect(form.answers["notes"] == nil)
+        #expect(Set(form.answers.keys) == ["allergies", "medication"])
     }
 }

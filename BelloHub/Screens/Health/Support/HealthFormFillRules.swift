@@ -6,9 +6,9 @@
 import Foundation
 
 /// The rules of filling the health form as the professional: when an answer counts, how a choice changes, when the
-/// form can be signed, and the records a signature makes. Pure, so every rule is tested without a screen.
+/// form can be saved, and the record a save makes. Pure, so every rule is tested without a screen.
 enum HealthFormFillRules {
-    /// A typed name needs at least this many characters (a single letter is not a signature).
+    /// A name needs at least this many characters (a single letter is not a name).
     static let minimumNameLength = 2
 
     // MARK: - Answers
@@ -52,44 +52,34 @@ enum HealthFormFillRules {
         return .choices(keys)
     }
 
-    // MARK: - Signing
+    // MARK: - Saving
 
     static func isValidName(_ text: String) -> Bool {
         text.trimmingCharacters(in: .whitespacesAndNewlines).count >= minimumNameLength
     }
 
-    /// Everything is answered, the text is agreed to, the signature is typed and, for a minor, her name is there.
-    static func canSign(draft: HealthFormDraft, questions: [HealthQuestion]) -> Bool {
+    /// Everything is answered and, for a minor, her name is there. No agreement and no signature (D55).
+    static func canSave(draft: HealthFormDraft, questions: [HealthQuestion]) -> Bool {
         unansweredKeys(questions: questions, draft: draft).isEmpty
-            && draft.agrees
-            && isValidName(draft.signature)
             && (!draft.isForMinor || isValidName(draft.minorName))
     }
 
-    /// A minor's consent is the guardian's, on its own text (D17).
-    static func consentKind(isForMinor: Bool) -> ConsentKind {
-        isForMinor ? .guardian : .treatment
-    }
+    // MARK: - Record
 
-    // MARK: - Records
-
-    /// What a signature is made of besides the draft: who it is for, the version of the form asked, the text that was
-    /// read, the ids of the two records and the moment.
-    struct Signing: Sendable {
+    /// What a save is made of besides the draft: who it is for, the version of the form asked, the id of the record
+    /// and the moment.
+    struct Saving: Sendable {
         let client: Client
         let template: HealthFormTemplate
         let questions: [HealthQuestion]
-        let text: LegalText
         let formID: UUID
-        let consentID: UUID
         let now: Date
     }
 
-    /// The form and the consent one signature creates. Both carry the exact version and localization of the text that
-    /// was read, so it can be shown again exactly. Answers of questions that are off are never stored.
-    static func records(draft: HealthFormDraft, signing: Signing) -> (form: HealthForm, consent: Consent) {
+    /// The form a save creates, on the template's version. Answers of questions that are off are never stored.
+    static func form(draft: HealthFormDraft, saving: Saving) -> HealthForm {
         var answers: [String: HealthAnswer] = [:]
-        for question in signing.questions {
+        for question in saving.questions {
             guard let answer = draft.answers[question.key], isAnswered(question, answer) else { continue }
             if case .text(let value) = answer {
                 let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -98,19 +88,11 @@ enum HealthFormFillRules {
                 answers[question.key] = answer
             }
         }
-        let signature = draft.signature.trimmingCharacters(in: .whitespacesAndNewlines)
-        let form = HealthForm(
-            id: signing.formID, clientID: signing.client.id, formVersion: signing.template.version,
-            filledBy: .professional, isForMinor: draft.isForMinor, signedAt: signing.now, importedFromItemID: nil,
+        return HealthForm(
+            id: saving.formID, clientID: saving.client.id, formVersion: saving.template.version,
+            filledBy: .professional, isForMinor: draft.isForMinor, signedAt: saving.now, importedFromItemID: nil,
             answers: answers,
-            signatureImage: nil, guardianName: draft.isForMinor ? signature : nil,
             minorName: draft.isForMinor ? draft.minorName.trimmingCharacters(in: .whitespacesAndNewlines) : nil
         )
-        let consent = Consent(
-            id: signing.consentID, clientID: signing.client.id, kind: consentKind(isForMinor: draft.isForMinor),
-            signedAt: signing.now, textVersion: signing.text.version, localeID: signing.text.localization,
-            typedSignature: signature, signatureImage: nil
-        )
-        return (form, consent)
     }
 }

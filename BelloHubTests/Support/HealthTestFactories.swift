@@ -52,8 +52,19 @@ func makeHealthForm(
 ) -> HealthForm {
     HealthForm(
         id: UUID(), clientID: clientID, formVersion: version, filledBy: filledBy, isForMinor: isForMinor,
-        signedAt: signedAt, importedFromItemID: nil, answers: answers, signatureImage: nil,
-        guardianName: isForMinor ? "Rita Costa" : nil, minorName: isForMinor ? "Ana Costa" : nil
+        signedAt: signedAt, importedFromItemID: nil, answers: answers, minorName: isForMinor ? "Ana Costa" : nil
+    )
+}
+
+/// A consent record (D55) for one client: signed `daysAgo`, or an unsigned note made that day.
+func makeConsentRecord(
+    clientID: UUID = UUID(), kind: ConsentKind = .treatment, isSigned: Bool = true, daysAgo: Int = 10,
+    label: String? = nil, note: String? = nil, document: ConsentDocument? = nil
+) -> ConsentRecord {
+    ConsentRecord(
+        id: UUID(), clientID: clientID, kind: kind, isSigned: isSigned,
+        signedAt: isSigned ? TestClock.days(-daysAgo) : nil, createdAt: TestClock.days(-daysAgo),
+        label: label, note: note, document: document
     )
 }
 

@@ -14,7 +14,7 @@ struct PreVisitChecklist: Equatable, Sendable {
         let appointment: Appointment
         var service: Service?
         var forms: [HealthForm] = []
-        var consents: [Consent] = []
+        var consents: [ConsentRecord] = []
         var patchTests: [PatchTest] = []
         var catalog: HealthFormCatalog?
         var plans: [SessionPlan] = []
@@ -39,7 +39,7 @@ struct PreVisitChecklist: Equatable, Sendable {
     let healthFormSignedAt: Date?
     /// The form is older than "ask again every N months".
     let healthFormReviewDue: Bool
-    /// When the latest consent was signed; nil when none.
+    /// When the latest consent record she marked signed is dated; nil when none is signed (D55).
     let consentSignedAt: Date?
     /// The plan this visit belongs to, or the client's plan in progress.
     let plan: Plan?
@@ -67,7 +67,7 @@ struct PreVisitChecklist: Equatable, Sendable {
             patchTest: PatchTestStatus.make(service: input.service, patchTests: input.patchTests, now: now),
             healthFormSignedAt: signed,
             healthFormReviewDue: review?.isDue ?? false,
-            consentSignedAt: input.consents.map(\.signedAt).max(),
+            consentSignedAt: input.consents.filter(\.isSigned).map(\.effectiveDate).max(),
             plan: plan(for: input.appointment, plans: input.plans, appointments: own, calendar: calendar),
             lastVisit: own.filter { $0.status == .completed && $0.startsAt < input.appointment.startsAt }
                 .max { $0.startsAt < $1.startsAt }

@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-/// The terms or the privacy policy, read in a sheet. Operator fields still pending (H17) are shown the way the
-/// consent screens show them (`LegalTextRenderer.forThisBuild`); the word "draft" never appears.
+/// The terms or the privacy policy, read in a sheet. Operator fields still pending (H17) are visibly pending in a
+/// debug build and absent in a release build (`PendingStyle.forThisBuild`); the word "draft" never appears.
 struct LegalNoticeSheet: View {
     let text: LegalNoticeText
 

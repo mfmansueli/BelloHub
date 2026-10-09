@@ -113,7 +113,7 @@ struct RepositoryRecordContractTests {
         func form(itemID: String?) -> HealthForm {
             HealthForm(id: UUID(), clientID: client.id, formVersion: 2, filledBy: .client, isForMinor: false,
                        signedAt: clock.now, importedFromItemID: itemID, answers: ["allergies": .text("Sentinel-ANS")],
-                       signatureImage: Data([7, 7]), guardianName: nil, minorName: nil)
+                       minorName: nil)
         }
 
         #expect(try await repository.importHealthForm(form(itemID: "item-1")) == true)
@@ -138,18 +138,32 @@ struct RepositoryRecordContractTests {
         await #expect(throws: VaultRepositoryError.notFound) { _ = try await repository.photoData(id: photo.id) }
     }
 
-    @Test("Consents and session plans round-trip", arguments: RepositoryFlavor.allCases)
+    @Test("Consent records and session plans round-trip, with the document, and a record can be deleted",
+          arguments: RepositoryFlavor.allCases)
     func consentsAndPlans(flavor: RepositoryFlavor) async throws {
         let (repository, client) = try seeded(flavor)
-        let consent = Consent(id: UUID(), clientID: client.id, kind: .photos, signedAt: clock.now,
-                              textVersion: "2025-10", localeID: "pt-BR", typedSignature: "Sentinel-SIGN",
-                              signatureImage: Data([1]))
+        let consent = ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .photos, isSigned: true, signedAt: clock.now, createdAt: clock.now,
+            label: "Sentinel-LABEL", note: "Sentinel-NOTE",
+            document: ConsentDocument(
+                kind: .photo, fileName: nil, contentType: "public.jpeg", data: Data([1, 2, 3]), thumbnail: Data([9])
+            )
+        )
+        let unsigned = ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .other, isSigned: false, signedAt: nil,
+            createdAt: clock.now.addingTimeInterval(-86_400), label: "Microblading"
+        )
         let plan = SessionPlan(id: UUID(), clientID: client.id, name: "Skin barrier repair", totalSessions: 6,
                                intervalWeeks: 4, startDate: clock.now, remindToRebook: true)
         try await repository.save(consent)
+        try await repository.save(unsigned)
         try await repository.save(plan)
 
-        #expect(try await repository.consents(for: client.id) == [consent])
+        #expect(try await repository.consents(for: client.id) == [consent, unsigned], "the most recent first")
         #expect(try await repository.sessionPlans(for: client.id) == [plan])
+
+        try await repository.deleteConsent(id: consent.id)
+        try await repository.deleteConsent(id: UUID())
+        #expect(try await repository.consents(for: client.id) == [unsigned])
     }
 }

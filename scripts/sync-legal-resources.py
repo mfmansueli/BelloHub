@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Usage: scripts/sync-legal-resources.py [--check]
 
-The legal documents the app shows (the three consent texts, the terms and the privacy policy) are drafts under legal/<document>/<localization>/
-<version>.md. The app bundle has no folders, so each file is bundled flat as BelloHub/Resources/Legal/
-<document>-<localization>-<version>.md (for example consent-health-pt-BR-2026-10.md), byte for byte. Every version
-stays: a consent stores the version it was signed on and must be shown again exactly (ASSUMPTION-24).
+The legal notices the app shows the professional in Privacy and security (the terms with the data processing
+agreement, and the privacy policy) are drafts under legal/<document>/<localization>/<version>.md. The app bundle has
+no folders, so each file is bundled flat as BelloHub/Resources/Legal/<document>-<localization>-<version>.md (for
+example privacy-policy-pt-BR-2026-10.md), byte for byte. The consent texts are not bundled any more (D55: the app
+keeps only the status of a consent the professional collects herself).
 
 Without arguments it copies the files and removes bundled files that no longer exist under legal/.
 With --check it changes nothing and fails (exit 1) when a bundled copy is missing, differs from legal/ or has no
@@ -16,7 +17,7 @@ import sys
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 LEGAL = os.path.join(ROOT, "legal")
 BUNDLED = os.path.join(ROOT, "BelloHub", "Resources", "Legal")
-DOCUMENTS = ["consent-health", "consent-photo", "consent-guardian", "terms-dpa", "privacy-policy"]
+DOCUMENTS = ["terms-dpa", "privacy-policy"]
 
 
 def sources():
@@ -52,7 +53,7 @@ def main():
     expected = sources()
     problems = []
     if not expected:
-        problems.append("no consent documents found under legal/")
+        problems.append("no legal notices found under legal/")
 
     for name, source in sorted(expected.items()):
         target = os.path.join(BUNDLED, name)

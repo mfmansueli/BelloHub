@@ -27,9 +27,9 @@ struct TreatmentFlowViewModelTests {
         let client = makeClient(name: "Ana Costa")
         _ = try await world.repository.save(client)
         if withPhotoConsent {
-            try await world.repository.save(Consent(
-                id: UUID(), clientID: client.id, kind: .photos, signedAt: TestClock.days(-3), textVersion: "v1",
-                localeID: "en", typedSignature: "Ana Costa", signatureImage: nil
+            try await world.repository.save(ConsentRecord(
+                id: UUID(), clientID: client.id, kind: .photos, isSigned: true, signedAt: TestClock.days(-3),
+                createdAt: TestClock.days(-3)
             ))
         }
         let recordID = UUID()

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Usage: scripts/merge-strings.py [batch.json ...]   (default: every file in Config/Locale/strings/)
+"""Usage: scripts/merge-strings.py [--prune] [batch.json ...]   (default: every file in Config/Locale/strings/)
 
 Merges authored strings into BelloHub/SupportFiles/Localizable.xcstrings, then re-derives es-419 and
-en-GB. A batch file looks like:
+en-GB. With --prune (only when every batch is merged) it also removes catalog keys that no batch
+authors any more and no Swift file under BelloHub/ names, so a key deleted from a batch leaves the
+catalog too; an unauthored key that code still uses is kept and reported. A batch file looks like:
 
   {"languages": ["en", "pt-BR", "pt-PT", "es-MX", "es", "it", "fr", "de", "tr", "id", "hi", "ar"],
    "strings": [["home.title", "comment for the translator", "Home", "Início", ...]]}
@@ -63,8 +65,47 @@ def prune_auto_extracted(catalog):
     return len(stale)
 
 
+def authored_keys(paths):
+    keys = set()
+    for path in paths:
+        with open(path, encoding="utf-8") as handle:
+            keys.update(row[0] for row in json.load(handle)["strings"])
+    return keys
+
+
+def source_text():
+    """Every Swift file of the app target, joined, to see whether a key is still named in code."""
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "BelloHub")
+    parts = []
+    for folder, _, names in os.walk(root):
+        for name in names:
+            if name.endswith(".swift"):
+                with open(os.path.join(folder, name), encoding="utf-8") as handle:
+                    parts.append(handle.read())
+    return "\n".join(parts)
+
+
+def prune_unauthored(catalog, paths):
+    """Removes keys no batch authors and no Swift file names; returns how many went."""
+    keep = authored_keys(paths)
+    code = source_text()
+    removed = 0
+    for key in [key for key in catalog["strings"] if key not in keep]:
+        if f'"{key}"' in code:
+            print(f"warning: {key} is used in code but no batch authors it; kept", file=sys.stderr)
+            continue
+        del catalog["strings"][key]
+        removed += 1
+    return removed
+
+
 def main():
-    paths = sys.argv[1:] or sorted(glob.glob(os.path.join(lib.BATCH_DIR, "*.json")))
+    arguments = sys.argv[1:]
+    prune = "--prune" in arguments
+    paths = [arg for arg in arguments if arg != "--prune"]
+    if prune and paths:
+        sys.exit("--prune only makes sense when every batch is merged (pass no batch paths)")
+    paths = paths or sorted(glob.glob(os.path.join(lib.BATCH_DIR, "*.json")))
     catalog = lib.load_catalog()
     catalog["sourceLanguage"] = lib.SOURCE_LANGUAGE
     pruned = prune_auto_extracted(catalog)
@@ -76,8 +117,9 @@ def main():
         lib.save_catalog(infoplist, lib.INFOPLIST_CATALOG)
         print(f"Dropped {pruned} auto-extracted key(s) from InfoPlist.xcstrings")
     total = sum(merge(path, catalog) for path in paths)
+    removed = prune_unauthored(catalog, paths) if prune else 0
     lib.save_catalog(catalog)
-    print(f"Merged {total} strings from {len(paths)} batch file(s)")
+    print(f"Merged {total} strings from {len(paths)} batch file(s)" + (f", removed {removed}" if prune else ""))
     subprocess.check_call([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "derive-locales.py")])
 
 

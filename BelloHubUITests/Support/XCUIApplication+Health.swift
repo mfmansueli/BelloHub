@@ -6,7 +6,7 @@
 import XCTest
 
 extension XCUIApplication {
-    /// Launches on the Health and consent screen of the seeded client Ana Costa (`-uiSeed clientWithHealth`,
+    /// Launches on the Health and consents screen of the seeded client Ana Costa (`-uiSeed clientWithHealth`,
     /// `-uiRoute health`), who has no health form yet.
     @MainActor
     static func launchedOnHealth(
@@ -39,11 +39,11 @@ extension XCUIApplication {
         descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH %@", prefix)).firstMatch
     }
 
-    /// Opens the health form sheet of an esthetician (the seeded profession) and answers every question: a real
-    /// answer where it is interesting (allergies, a skin condition) and "no" or "none" elsewhere. Stops with the
-    /// consent agreed and signed, ready to tap Save.
+    /// Answers every question of an esthetician's health form (the seeded profession): a real answer where it is
+    /// interesting (allergies, a skin condition) and "no" or "none" elsewhere. Stops ready to tap Save: no agreement
+    /// and no signature are asked (D55).
     @MainActor
-    func answerHealthFormAndSign(signature: String = "Ana Costa") {
+    func answerHealthForm() {
         selectChip("healthForm.question.allergies.option.fragrance")
         selectChip("healthForm.question.allergies.option.retinol")
         selectChip("healthForm.question.medication.no")
@@ -52,7 +52,6 @@ extension XCUIApplication {
         selectChip("healthForm.question.healthConditions.option.none")
         selectChip("healthForm.question.recentProcedures.option.none")
         selectChip("healthForm.minor.no")
-        agreeAndSign(signature: signature)
     }
 
     /// Taps a chip until it is selected. XCUITest scrolls a chip into view before it taps it, and a tap that lands
@@ -109,25 +108,23 @@ extension XCUIApplication {
         field.typeText(text)
     }
 
-    /// Ticks the agreement and types the signature (the last two steps of the sheet).
+    /// Puts a switch in the wanted state. A switch outside a list only toggles on the switch itself, so after a
+    /// plain tap the switch's edge is tapped: at the right in left-to-right languages, at the left in Arabic.
     @MainActor
-    func agreeAndSign(signature: String) {
-        let agree = switches["healthForm.agreeToggle"]
-        XCTAssertTrue(agree.waitForExistence(timeout: 15), "no agreement toggle")
-        scrollAboveBottomBar(agree)
-        // Tapping the middle of the row toggles it (the whole card is the target). A tap lost to a scroll is tried
-        // again, and as a last resort the switch itself is tapped: at the right in left-to-right languages, at the
-        // left in Arabic.
-        for edge in [CGFloat?.none, nil, 0.92, 0.08] where (agree.value as? String) != "1" {
+    func setSwitch(_ identifier: String, on wanted: Bool, file: StaticString = #filePath, line: UInt = #line) {
+        let toggle = switches[identifier]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 15), "no switch \(identifier)", file: file, line: line)
+        scrollAboveBottomBar(toggle)
+        let target = wanted ? "1" : "0"
+        for edge in [CGFloat?.none, nil, 0.92, 0.08] where (toggle.value as? String) != target {
             if let edge {
-                agree.coordinate(withNormalizedOffset: CGVector(dx: edge, dy: 0.5)).tap()
+                toggle.coordinate(withNormalizedOffset: CGVector(dx: edge, dy: 0.5)).tap()
             } else {
-                agree.tap()
+                toggle.tap()
             }
         }
-        let diagnostics = "\(healthFormState()) \(saveScreenshot(named: "agree"))"
-        XCTAssertEqual(agree.value as? String, "1", "the agreement was not ticked: \(diagnostics)")
-        typeIntoField(signature, identifier: "healthForm.signatureField")
+        let shot = saveScreenshot(named: "switch")
+        XCTAssertEqual(toggle.value as? String, target, "\(identifier) did not switch: \(shot)", file: file, line: line)
     }
 
     /// Closes the keyboard with its return key. A chip under the keyboard cannot be scrolled clear of it (the drag
@@ -149,7 +146,8 @@ extension XCUIApplication {
         let screen = windows.firstMatch.frame
         guard screen.height > 0 else { return }
         let bar = [
-            "healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton", "treatmentFlow.form.saveButton",
+            "healthForm.saveButton", "patch.saveButton", "consent.saveButton", "formTemplates.saveButton",
+            "treatmentFlow.form.saveButton",
             "recordHistory.correction.saveButton", "incident.saveButton", "exportRecord.exportButton"
         ].map { buttons[$0] }
             .first { $0.exists }
@@ -166,17 +164,15 @@ extension XCUIApplication {
         }
     }
 
-    /// What the health form sheet looks like right now, for a failure message: the chips that are selected, the
-    /// agreement and the signature. Costs nothing when the test passes.
+    /// What the health form sheet looks like right now, for a failure message: the chips that are selected and
+    /// whether the "answer everything" hint shows. Costs nothing when the test passes.
     @MainActor
     func healthFormState() -> String {
         let chips = buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'healthForm.question'"))
             .allElementsBoundByIndex
         let selected = chips.filter(\.isSelected).map(\.identifier)
-        let agree = switches["healthForm.agreeToggle"].value as? String ?? "nil"
-        let signature = textFields["healthForm.signatureField"].value as? String ?? "nil"
         let hint = staticTexts["healthForm.incomplete"].exists
-        return "selected: \(selected); agree: \(agree); signature: \(signature); incompleteHint: \(hint)"
+        return "selected: \(selected); incompleteHint: \(hint)"
     }
 
     /// Saves a screenshot to the test runner's temporary folder and returns where, for a failure message.

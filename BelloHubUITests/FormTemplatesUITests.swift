@@ -5,16 +5,16 @@
 
 import XCTest
 
-/// The client forms settings (screen 6.14): switch a health question on, choose how often to ask again, save, and
-/// read a consent text. More, which pushes this screen, belongs to another stage, so the test opens it directly
-/// (`-uiRoute formTemplates`).
+/// The client forms settings (screen 6.14): switch a health question on, choose how often to ask again and save.
+/// No consent texts live here (D55). More, which pushes this screen, belongs to another stage, so the test opens it
+/// directly (`-uiRoute formTemplates`).
 @MainActor
 final class FormTemplatesUITests: XCTestCase {
     override func setUp() async throws {
         continueAfterFailure = false
     }
 
-    func testChangeTheQuestionsAndHowOftenToAskAgainThenReadAConsentText() {
+    func testChangeTheQuestionsAndHowOftenToAskAgain() {
         let app = XCUIApplication.launchedOnFormTemplates()
 
         let save = app.buttons["formTemplates.saveButton"]
@@ -38,11 +38,8 @@ final class FormTemplatesUITests: XCTestCase {
         XCTAssertTrue(version.label.contains("2"), version.label)
         XCTAssertFalse(save.isEnabled)
 
-        // The consent texts are read-only.
-        app.tapButton("formTemplates.consent.consent-guardian")
-        let text = app.element("consentPreview.text")
-        XCTAssertTrue(text.waitForExistence(timeout: 15))
-        XCTAssertTrue(app.element("consentPreview.version").label.contains("2026-10"))
-        XCTAssertEqual(app.textFields.count + app.textViews.count, 0, "a legal text is never an editable field")
+        // No consent text is offered anywhere on the screen (D55).
+        let consentRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'formTemplates.consent.'"))
+        XCTAssertEqual(consentRows.count, 0)
     }
 }

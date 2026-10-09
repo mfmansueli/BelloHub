@@ -193,8 +193,7 @@ final class MailboxService {
             let form = HealthForm(
                 id: UUID(), clientID: clientID, formVersion: version, filledBy: .client,
                 isForMinor: payload.isForMinor, signedAt: payload.submittedAt ?? item.createdAt,
-                importedFromItemID: item.id, answers: payload.answers, signatureImage: nil, guardianName: nil,
-                minorName: payload.minorName
+                importedFromItemID: item.id, answers: payload.answers, minorName: payload.minorName
             )
             let imported = try await repository.importHealthForm(form)
             forget(item.id)

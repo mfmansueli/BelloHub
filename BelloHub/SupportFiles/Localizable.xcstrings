@@ -37489,96 +37489,6 @@
         }
       }
     },
-    "catalog.keyboard.done" : {
-      "comment" : "Key above the number pad of the price and year fields: ends the typing.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تم"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fertig"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Done"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Done"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hecho"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Listo"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Listo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Terminé"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "हो गया"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Selesai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fine"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Concluir"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Concluir"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bitti"
-          }
-        }
-      }
-    },
     "catalog.sample.attention" : {
       "comment" : "Design catalog sample: status chip for something that needs the professional's attention",
       "extractionState" : "manual",
@@ -55693,92 +55603,1982 @@
         }
       }
     },
-    "consentPreview.title" : {
-      "comment" : "Title of the sheet that shows a consent text",
+    "consent.date" : {
+      "comment" : "Label of the date picker.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "نص الموافقة"
+            "value" : "تاريخ التوقيع"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einwilligungstext"
+            "value" : "Datum der Unterschrift"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consent text"
+            "value" : "Date signed"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consent text"
+            "value" : "Date signed"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texto del consentimiento"
+            "value" : "Fecha de firma"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texto del consentimiento"
+            "value" : "Fecha de firma"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texto del consentimiento"
+            "value" : "Fecha de firma"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texte du consentement"
+            "value" : "Date de signature"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सहमति का टेक्स्ट"
+            "value" : "हस्ताक्षर की तारीख"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Teks persetujuan"
+            "value" : "Tanggal ditandatangani"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Testo del consenso"
+            "value" : "Data della firma"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texto do consentimento"
+            "value" : "Data da assinatura"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Texto do consentimento"
+            "value" : "Data da assinatura"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Onam metni"
+            "value" : "İmza tarihi"
+          }
+        }
+      }
+    },
+    "consent.delete" : {
+      "comment" : "Destructive button of the consent sheet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "حذف الموافقة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einwilligung löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete consent"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete consent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar consentimiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar consentimiento"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar consentimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer le consentement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सहमति हटाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus persetujuan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elimina consenso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Excluir consentimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar consentimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Onayı sil"
+          }
+        }
+      }
+    },
+    "consent.delete.confirm" : {
+      "comment" : "Title of the delete confirmation.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "هل تريدين حذف سجل الموافقة هذا؟ ستُحذف معه الصورة أو الملف المحفوظ أيضًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diesen Einwilligungseintrag löschen? Das dazu hinterlegte Foto oder die Datei wird ebenfalls gelöscht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete this consent record? The photo or file kept with it is deleted too."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Delete this consent record? The photo or file kept with it is deleted too."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Eliminar este registro de consentimiento? La foto o el archivo guardado también se elimina."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Eliminar este registro de consentimiento? La foto o el archivo guardado también se elimina."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Eliminar este registro de consentimiento? La foto o el archivo guardado también se elimina."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Supprimer cet enregistrement de consentement ? La photo ou le fichier conservé est supprimé aussi."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह सहमति रिकॉर्ड हटाएँ? इसके साथ रखी फ़ोटो या फ़ाइल भी हट जाएगी।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus catatan persetujuan ini? Foto atau berkas yang disimpan bersamanya juga dihapus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminare questa voce di consenso? Anche la foto o il file conservato viene eliminato."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Excluir este registro de consentimento? A foto ou o arquivo guardado com ele também será excluído."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminar este registo de consentimento? A fotografia ou o ficheiro guardado com ele também é eliminado."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu onay kaydı silinsin mi? Onunla saklanan fotoğraf veya dosya da silinir."
+          }
+        }
+      }
+    },
+    "consent.document" : {
+      "comment" : "Label of the document section.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صورة أو ملف للورقة الموقَّعة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto oder Datei des unterschriebenen Papiers"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo or file of the signed paper"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo or file of the signed paper"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto o archivo del papel firmado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto o archivo del papel firmado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto o archivo del papel firmado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo ou fichier du papier signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षरित कागज़ की फ़ोटो या फ़ाइल"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto atau berkas kertas yang ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto o file del foglio firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto ou arquivo do papel assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografia ou ficheiro do papel assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalı kâğıdın fotoğrafı veya dosyası"
+          }
+        }
+      }
+    },
+    "consent.document.addFile" : {
+      "comment" : "Button: choose a file (PDF or image).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختيار ملف"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Datei wählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose file"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choose file"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elegir archivo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elegir archivo"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elegir archivo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choisir un fichier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "फ़ाइल चुनें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pilih berkas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scegli file"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escolher arquivo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escolher ficheiro"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dosya seç"
+          }
+        }
+      }
+    },
+    "consent.document.addPhoto" : {
+      "comment" : "Button: pick a photo from the library.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إضافة صورة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add photo"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add photo"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir foto"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir foto"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añadir foto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajouter une photo"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "फ़ोटो जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambah foto"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi foto"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicionar foto"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicionar fotografia"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotoğraf ekle"
+          }
+        }
+      }
+    },
+    "consent.document.error" : {
+      "comment" : "Error: the photo or file could not be used.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تعذّر استخدام هذه الصورة أو هذا الملف. جرّبي غيره."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieses Foto oder diese Datei konnte nicht verwendet werden. Versuchen Sie ein anderes."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This photo or file could not be used. Try another one."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This photo or file could not be used. Try another one."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo usar esta foto o archivo. Prueba con otro."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo usar esta foto o archivo. Prueba con otro."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo usar esta foto o archivo. Prueba con otro."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impossible d’utiliser cette photo ou ce fichier. Essayez-en un autre."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह फ़ोटो या फ़ाइल उपयोग नहीं की जा सकी। कोई और आज़माएँ।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto atau berkas ini tidak dapat digunakan. Coba yang lain."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impossibile usare questa foto o questo file. Provane un altro."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível usar esta foto ou arquivo. Tente outro."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível usar esta fotografia ou ficheiro. Tente outro."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu fotoğraf veya dosya kullanılamadı. Başka birini deneyin."
+          }
+        }
+      }
+    },
+    "consent.document.file" : {
+      "comment" : "VoiceOver label of the document preview (a file).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ملف الورقة الموقَّعة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Datei des unterschriebenen Papiers"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File of the signed paper"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "File of the signed paper"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivo del papel firmado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivo del papel firmado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Archivo del papel firmado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fichier du papier signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षरित कागज़ की फ़ाइल"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Berkas kertas yang ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "File del foglio firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Arquivo do papel assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficheiro do papel assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalı kâğıdın dosyası"
+          }
+        }
+      }
+    },
+    "consent.document.hint" : {
+      "comment" : "Hint in the document section.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختياري. يُحفظ مشفّرًا على هذا الـ iPhone، مثل صورة العلاج."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. Bleibt verschlüsselt auf diesem iPhone, wie ein Behandlungsfoto."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional. Kept encrypted on this iPhone, like a treatment photo."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. Kept encrypted on this iPhone, like a treatment photo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Se guarda cifrado en este iPhone, como una foto de tratamiento."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Se guarda cifrado en este iPhone, como una foto de tratamiento."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Se guarda cifrado en este iPhone, como una foto de tratamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facultatif. Conservé chiffré sur cet iPhone, comme une photo de soin."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "वैकल्पिक। इस iPhone पर एन्क्रिप्टेड रखा जाता है, उपचार की फ़ोटो की तरह।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opsional. Disimpan terenkripsi di iPhone ini, seperti foto perawatan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facoltativo. Resta cifrato su questo iPhone, come una foto del trattamento."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Fica criptografado neste iPhone, como uma foto de tratamento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Fica cifrado neste iPhone, como uma fotografia de tratamento."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İsteğe bağlı. Bu iPhone’da şifreli olarak saklanır, bir uygulama fotoğrafı gibi."
+          }
+        }
+      }
+    },
+    "consent.document.photo" : {
+      "comment" : "VoiceOver label of the document preview (a photo).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صورة الورقة الموقَّعة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto des unterschriebenen Papiers"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo of the signed paper"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo of the signed paper"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto del papel firmado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto del papel firmado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto del papel firmado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo du papier signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षरित कागज़ की फ़ोटो"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto kertas yang ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto del foglio firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto do papel assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografia do papel assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalı kâğıdın fotoğrafı"
+          }
+        }
+      }
+    },
+    "consent.document.remove" : {
+      "comment" : "Button: remove the attached document.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إزالة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entfernen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remove"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quitar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Retirer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हटाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rimuovi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remover"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remover"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kaldır"
+          }
+        }
+      }
+    },
+    "consent.document.tooLarge" : {
+      "comment" : "Error: the file is above the size cap.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "هذا الملف كبير جدًا (10 ميغابايت كحد أقصى). تكفي صورة للورقة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diese Datei ist zu groß (höchstens 10 MB). Ein Foto des Papiers genügt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This file is too large (10 MB at most). A photo of the paper is enough."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This file is too large (10 MB at most). A photo of the paper is enough."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este archivo es demasiado grande (máximo 10 MB). Basta con una foto del papel."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este archivo es demasiado grande (máximo 10 MB). Basta con una foto del papel."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este archivo es demasiado grande (máximo 10 MB). Basta con una foto del papel."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce fichier est trop volumineux (10 Mo maximum). Une photo du papier suffit."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह फ़ाइल बहुत बड़ी है (अधिकतम 10 MB)। कागज़ की एक फ़ोटो पर्याप्त है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Berkas ini terlalu besar (maksimal 10 MB). Foto kertasnya sudah cukup."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Questo file è troppo grande (massimo 10 MB). Basta una foto del foglio."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este arquivo é grande demais (no máximo 10 MB). Uma foto do papel basta."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este ficheiro é demasiado grande (no máximo 10 MB). Uma fotografia do papel chega."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu dosya çok büyük (en fazla 10 MB). Kâğıdın bir fotoğrafı yeterlidir."
+          }
+        }
+      }
+    },
+    "consent.kind" : {
+      "comment" : "Label of the kind chips.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موضوعها"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Worum es geht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What it is about"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "What it is about"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sobre qué"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sobre qué"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sobre qué"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "À propos de"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "किस बारे में"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tentang apa"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Di cosa si tratta"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sobre o quê"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sobre o quê"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Konusu"
+          }
+        }
+      }
+    },
+    "consent.label" : {
+      "comment" : "Label of the free label field.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "التسمية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bezeichnung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Label"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nombre"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nombre"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nombre"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intitulé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "लेबल"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Label"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Etichetta"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nome"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nome"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Etiket"
+          }
+        }
+      }
+    },
+    "consent.label.prompt" : {
+      "comment" : "Placeholder of the label field.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختياري، بكلماتك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional, in Ihren Worten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional, in your words"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional, in your words"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional, con tus palabras"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional, con tus palabras"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional, con tus palabras"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facultatif, avec vos mots"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "वैकल्पिक, अपने शब्दों में"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opsional, dengan kata-kata Anda"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facoltativo, con parole tue"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional, com suas palavras"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional, com as suas palavras"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İsteğe bağlı, kendi sözlerinizle"
+          }
+        }
+      }
+    },
+    "consent.note" : {
+      "comment" : "Label of the note field.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ملاحظة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Notiz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Note"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Note"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नोट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Catatan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Observação"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not"
+          }
+        }
+      }
+    },
+    "consent.save" : {
+      "comment" : "Primary button of the consent sheet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "حفظ الموافقة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einwilligung speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save consent"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Save consent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar consentimiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar consentimiento"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar consentimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enregistrer le consentement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सहमति सहेजें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Simpan persetujuan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Salva consenso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Salvar consentimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar consentimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Onayı kaydet"
+          }
+        }
+      }
+    },
+    "consent.signed" : {
+      "comment" : "Title of the signed switch.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موقَّعة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Unterschrieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signed"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षरित"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalandı"
+          }
+        }
+      }
+    },
+    "consent.signed.subtitle" : {
+      "comment" : "Line under the signed switch.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "وقّعت الورقة معك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sie hat das Papier bei Ihnen unterschrieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "She signed the paper with you"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "She signed the paper with you"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmó el papel contigo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmó el papel contigo"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmó el papel contigo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elle a signé le papier avec vous"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "उसने कागज़ पर आपके साथ हस्ताक्षर किए"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ia menandatangani kertas bersama Anda"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ha firmato il foglio con te"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ela assinou o papel com você"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ela assinou o papel consigo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kâğıdı sizinle imzaladı"
+          }
+        }
+      }
+    },
+    "consent.subtitle" : {
+      "comment" : "Subtitle of the consent sheet (D55).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لمتابعتك الخاصة. تبقى الورقة الموقَّعة لديك؛ وما تدوّنينه هنا لا يغادر هذا الـ iPhone أبدًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Für Ihre eigene Übersicht. Das unterschriebene Papier bleibt bei Ihnen; was Sie hier vermerken, verlässt dieses iPhone nie."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For your own control. The signed paper stays with you; what you note here never leaves this iPhone."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "For your own control. The signed paper stays with you; what you note here never leaves this iPhone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para tu control. El papel firmado se queda contigo; lo que anotes aquí nunca sale de este iPhone."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para tu control. El papel firmado se queda contigo; lo que anotes aquí nunca sale de este iPhone."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para tu control. El papel firmado se queda contigo; lo que anotes aquí nunca sale de este iPhone."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour votre suivi. Le papier signé reste chez vous ; ce que vous notez ici ne quitte jamais cet iPhone."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके अपने नियंत्रण के लिए। हस्ताक्षरित कागज़ आपके पास रहता है; यहाँ नोट की गई बात इस iPhone से कभी बाहर नहीं जाती।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Untuk kontrol Anda sendiri. Kertas yang ditandatangani tetap pada Anda; apa yang Anda catat di sini tidak pernah keluar dari iPhone ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Per il tuo controllo. Il foglio firmato resta a te; ciò che annoti qui non esce mai da questo iPhone."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para o seu controle. O papel assinado fica com você; o que anotar aqui nunca sai deste iPhone."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para o seu controlo. O papel assinado fica consigo; o que anotar aqui nunca sai deste iPhone."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kendi kontrolünüz için. İmzalı kâğıt sizde kalır; buraya not ettikleriniz bu iPhone’dan asla çıkmaz."
+          }
+        }
+      }
+    },
+    "consent.title.edit" : {
+      "comment" : "Title of the consent sheet when editing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Einwilligung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consent"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentimiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentimiento"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सहमति"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Persetujuan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consenso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consentimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Onay"
+          }
+        }
+      }
+    },
+    "consent.title.new" : {
+      "comment" : "Title of the consent sheet for a new record.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة جديدة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neue Einwilligung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New consent"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New consent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuevo consentimiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuevo consentimiento"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuevo consentimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nouveau consentement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नई सहमति"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Persetujuan baru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuovo consenso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Novo consentimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Novo consentimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yeni onay"
           }
         }
       }
@@ -64783,276 +66583,6 @@
         }
       }
     },
-    "exportRecord.doc.consent.guardian" : {
-      "comment" : "PDF label",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "موافقة الوصي"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Einwilligung der Erziehungsberechtigten"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardian consent"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardian consent"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento del tutor"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento del tutor"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento del tutor"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentement du tuteur"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अभिभावक की सहमति"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Persetujuan wali"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consenso del tutore"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento do responsável"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento do responsável"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Veli onayı"
-          }
-        }
-      }
-    },
-    "exportRecord.doc.consent.photos" : {
-      "comment" : "PDF label",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "موافقة الصور"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Foto-Einwilligung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Photo consent"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Photo consent"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de fotos"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de fotos"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de fotos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentement photo"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "फ़ोटो की सहमति"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Persetujuan foto"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consenso alle foto"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento de fotos"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento de fotografias"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fotoğraf onayı"
-          }
-        }
-      }
-    },
-    "exportRecord.doc.consent.treatment" : {
-      "comment" : "PDF label",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "موافقة العلاج"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Einwilligung zur Behandlung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Treatment consent"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Treatment consent"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de tratamiento"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de tratamiento"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimiento de tratamiento"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentement aux soins"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "उपचार की सहमति"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Persetujuan perawatan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consenso al trattamento"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento de atendimento"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consentimento de atendimento"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "İşlem onayı"
-          }
-        }
-      }
-    },
     "exportRecord.doc.correction" : {
       "comment" : "PDF line; date, field, reason",
       "extractionState" : "manual",
@@ -65589,6 +67119,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Reaksiyonlar"
+          }
+        }
+      }
+    },
+    "exportRecord.doc.notSigned" : {
+      "comment" : "Value of a consent record line in the exported PDF when it is not signed (D55).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "غير موقَّعة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nicht unterschrieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not signed"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not signed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षर नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalanmadı"
           }
         }
       }
@@ -71983,96 +73603,6 @@
         }
       }
     },
-    "formTemplates.consent.hint" : {
-      "comment" : "Line under the consent texts in 6.14",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تتم الموافقة والتوقيع بكتابة الاسم الكامل."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wird durch Eingabe des vollständigen Namens akzeptiert und unterschrieben."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Agreed to and signed by typing a full name."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Agreed to and signed by typing a full name."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se acepta y se firma escribiendo el nombre completo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se acepta y se firma escribiendo el nombre completo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se acepta y se firma escribiendo el nombre completo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "On accepte et on signe en saisissant son nom complet."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "पूरा नाम लिखकर सहमति दी जाती है और हस्ताक्षर किए जाते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Disetujui dan ditandatangani dengan mengetik nama lengkap."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Si accetta e si firma scrivendo il nome completo."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aceito e assinado digitando o nome completo."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aceite e assinado ao escrever o nome completo."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tam ad yazılarak kabul edilir ve imzalanır."
-          }
-        }
-      }
-    },
     "formTemplates.error.load" : {
       "comment" : "Error state of 6.14",
       "extractionState" : "manual",
@@ -73789,104 +75319,560 @@
         }
       }
     },
-    "health.consent.empty" : {
-      "comment" : "Shown when no consent is signed yet",
+    "health.consent.add" : {
+      "comment" : "Button: add a consent record.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "لا توجد موافقة موقّعة بعد."
+            "value" : "إضافة موافقة"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch keine Einwilligung unterschrieben."
+            "value" : "Einwilligung hinzufügen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No consent signed yet."
+            "value" : "Add consent"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "No consent signed yet."
+            "value" : "Add consent"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todavía no hay consentimiento firmado."
+            "value" : "Añadir consentimiento"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aún no hay consentimiento firmado."
+            "value" : "Añadir consentimiento"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aún no hay consentimiento firmado."
+            "value" : "Añadir consentimiento"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aucun consentement signé pour l'instant."
+            "value" : "Ajouter un consentement"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "अभी कोई सहमति हस्ताक्षरित नहीं है।"
+            "value" : "सहमति जोड़ें"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Belum ada persetujuan yang ditandatangani."
+            "value" : "Tambah persetujuan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nessun consenso firmato."
+            "value" : "Aggiungi consenso"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nenhum consentimento assinado ainda."
+            "value" : "Adicionar consentimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ainda sem consentimento assinado."
+            "value" : "Adicionar consentimento"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Henüz imzalanmış onam yok."
+            "value" : "Onay ekle"
           }
         }
       }
     },
-    "health.consent.guardian" : {
-      "comment" : "Consent kind: a guardian consenting for a minor",
+    "health.consent.count" : {
+      "comment" : "Count of consent records in the section header. Plural.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld سجلات"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld سجلًا"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "سجل واحد"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld سجل"
+                }
+              },
+              "two" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "سجلان"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "لا سجلات"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Eintrag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld Einträge"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld record"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld records"
+                }
+              }
+            }
+          }
+        },
+        "en-GB" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld record"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld records"
+                }
+              }
+            }
+          }
+        },
+        "es" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registro"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registros"
+                }
+              }
+            }
+          }
+        },
+        "es-419" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registro"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registros"
+                }
+              }
+            }
+          }
+        },
+        "es-MX" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registro"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registros"
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld enregistrement"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld enregistrements"
+                }
+              }
+            }
+          }
+        },
+        "hi" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld रिकॉर्ड"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld रिकॉर्ड"
+                }
+              }
+            }
+          }
+        },
+        "id" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld catatan"
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld voce"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld voci"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registro"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registros"
+                }
+              }
+            }
+          }
+        },
+        "pt-PT" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registo"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld registos"
+                }
+              }
+            }
+          }
+        },
+        "tr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld kayıt"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld kayıt"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "health.consent.empty" : {
+      "comment" : "Empty state of the consents list.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "موافقة الوصي"
+            "value" : "لم تُسجَّل أي موافقة بعد. دوّني هنا ما وقّعته معك؛ تبقى الورقة لديك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Noch keine Einwilligung vermerkt. Halten Sie hier fest, was sie bei Ihnen unterschrieben hat; das Papier bleibt bei Ihnen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No consent recorded yet. Note here what she signed with you; the paper stays with you."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No consent recorded yet. Note here what she signed with you; the paper stays with you."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay consentimientos registrados. Anota aquí lo que firmó contigo; el papel se queda contigo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay consentimientos registrados. Anota aquí lo que firmó contigo; el papel se queda contigo."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no hay consentimientos registrados. Anota aquí lo que firmó contigo; el papel se queda contigo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucun consentement enregistré. Notez ici ce qu’elle a signé avec vous ; le papier reste chez vous."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अभी कोई सहमति दर्ज नहीं है। उसने आपके साथ जो हस्ताक्षर किए, यहाँ नोट करें; कागज़ आपके पास रहता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum ada persetujuan tercatat. Catat di sini apa yang ia tanda tangani bersama Anda; kertasnya tetap pada Anda."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessun consenso registrato. Annota qui cosa ha firmato con te; il foglio resta a te."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhum consentimento registrado. Anote aqui o que ela assinou com você; o papel fica com você."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhum consentimento registado. Anote aqui o que ela assinou consigo; o papel fica consigo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Henüz onay kaydı yok. Sizinle imzaladıklarını buraya not edin; kâğıt sizde kalır."
+          }
+        }
+      }
+    },
+    "health.consent.footnote" : {
+      "comment" : "Footnote under the consents list (D55).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سجلك الخاص: ما وقّعته معك على الورق. لا يحتوي التطبيق على نص موافقة ولا يطلب توقيعًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ihre eigene Übersicht: was sie bei Ihnen auf Papier unterschrieben hat. Die App hat keinen Einwilligungstext und verlangt keine Unterschrift."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your own record: what she signed with you, on paper. The app has no consent text and asks for no signature."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your own record: what she signed with you, on paper. The app has no consent text and asks for no signature."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu registro personal: lo que firmó contigo, en papel. La app no tiene texto de consentimiento ni pide firma."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu registro personal: lo que firmó contigo, en papel. La app no tiene texto de consentimiento ni pide firma."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu registro personal: lo que firmó contigo, en papel. La app no tiene texto de consentimiento ni pide firma."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre registre : ce qu’elle a signé avec vous, sur papier. L’app n’a aucun texte de consentement et ne demande aucune signature."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका अपना रिकॉर्ड: उसने आपके साथ कागज़ पर जो हस्ताक्षर किए। ऐप में कोई सहमति पाठ नहीं है और कोई हस्ताक्षर नहीं माँगा जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Catatan Anda sendiri: apa yang ia tanda tangani bersama Anda, di atas kertas. Aplikasi tidak memiliki teks persetujuan dan tidak meminta tanda tangan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il tuo registro: cosa ha firmato con te, su carta. L’app non ha testi di consenso e non chiede firme."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seu registro pessoal: o que ela assinou com você, em papel. O app não tem texto de consentimento nem pede assinatura."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O seu registo pessoal: o que ela assinou consigo, em papel. A app não tem texto de consentimento nem pede assinatura."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kendi kaydınız: sizinle kâğıt üzerinde imzaladıkları. Uygulamada onay metni yoktur ve imza istenmez."
+          }
+        }
+      }
+    },
+    "health.consent.guardian" : {
+      "comment" : "Kind of a consent record: a parent or guardian signed for someone under 18.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة ولي الأمر"
           }
         },
         "de" : {
@@ -73934,7 +75920,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "अभिभावक की सहमति"
+            "value" : "अभिभावक सहमति"
           }
         },
         "id" : {
@@ -73958,121 +75944,571 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento do responsável"
+            "value" : "Consentimento do encarregado"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vasi onamı"
+            "value" : "Veli onayı"
           }
         }
       }
     },
-    "health.consent.openHint" : {
-      "comment" : "VoiceOver hint of a consent row",
+    "health.consent.hasFile" : {
+      "comment" : "Footnote of a consent row: a file of the signed paper is kept.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يفتح النص الذي تم توقيعه"
+            "value" : "ملف محفوظ"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Öffnet den unterschriebenen Text"
+            "value" : "Datei hinterlegt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opens the text that was signed"
+            "value" : "File kept"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Opens the text that was signed"
+            "value" : "File kept"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abre el texto que se firmó"
+            "value" : "Archivo guardado"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abre el texto que se firmó"
+            "value" : "Archivo guardado"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abre el texto que se firmó"
+            "value" : "Archivo guardado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ouvre le texte signé"
+            "value" : "Fichier conservé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "हस्ताक्षर किया गया टेक्स्ट खोलता है"
+            "value" : "फ़ाइल रखी गई"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Membuka teks yang ditandatangani"
+            "value" : "Berkas disimpan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apre il testo firmato"
+            "value" : "File conservato"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abre o texto que foi assinado"
+            "value" : "Arquivo guardado"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Abre o texto que foi assinado"
+            "value" : "Ficheiro guardado"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İmzalanan metni açar"
+            "value" : "Dosya saklandı"
           }
         }
       }
     },
-    "health.consent.photos" : {
-      "comment" : "Consent kind: photos",
+    "health.consent.hasNote" : {
+      "comment" : "Footnote of a consent row: there is a note.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الموافقة على التصوير"
+            "value" : "ملاحظة"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einwilligung zu Fotos"
+            "value" : "Notiz"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Note"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Note"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नोट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Catatan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Observação"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nota"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not"
+          }
+        }
+      }
+    },
+    "health.consent.hasPhoto" : {
+      "comment" : "Footnote of a consent row: a photo of the signed paper is kept.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صورة محفوظة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto hinterlegt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo kept"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo kept"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto guardada"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto guardada"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto guardada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photo conservée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "फ़ोटो रखी गई"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto disimpan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto conservata"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto guardada"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografia guardada"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotoğraf saklandı"
+          }
+        }
+      }
+    },
+    "health.consent.notedOn" : {
+      "comment" : "Line under an unsigned consent record. %@ is the day the note was made.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "غير موقَّعة · دُوّنت في %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nicht unterschrieben · vermerkt am %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not signed · noted %@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not signed · noted %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar · anotado el %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar · anotado el %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin firmar · anotado el %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non signé · noté le %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षर नहीं · %@ को नोट किया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum ditandatangani · dicatat %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non firmato · annotato il %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não assinado · anotado em %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não assinado · anotado em %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalanmadı · %@ tarihinde not edildi"
+          }
+        }
+      }
+    },
+    "health.consent.openHint" : {
+      "comment" : "VoiceOver hint on a consent row.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يفتح سجل الموافقة هذا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Öffnet diesen Einwilligungseintrag."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens this consent record."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opens this consent record."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre este registro de consentimiento."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre este registro de consentimiento."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre este registro de consentimiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ouvre cet enregistrement de consentement."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह सहमति रिकॉर्ड खोलता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Membuka catatan persetujuan ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apre questa voce di consenso."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre este registro de consentimento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre este registo de consentimento."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu onay kaydını açar."
+          }
+        }
+      }
+    },
+    "health.consent.other" : {
+      "comment" : "Kind of a consent record: anything else, named by her label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة أخرى"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Andere Einwilligung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other consent"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Other consent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otro consentimiento"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otro consentimiento"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Otro consentimiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Autre consentement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अन्य सहमति"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Persetujuan lain"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Altro consenso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Outro consentimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Outro consentimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diğer onay"
+          }
+        }
+      }
+    },
+    "health.consent.photos" : {
+      "comment" : "Kind of a consent record.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة الصور"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotoeinwilligung"
           }
         },
         "en" : {
@@ -74090,31 +76526,31 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para fotos"
+            "value" : "Consentimiento de fotos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para fotos"
+            "value" : "Consentimiento de fotos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para fotos"
+            "value" : "Consentimiento de fotos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentement pour les photos"
+            "value" : "Consentement photos"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "फ़ोटो की सहमति"
+            "value" : "फ़ोटो सहमति"
           }
         },
         "id" : {
@@ -74126,37 +76562,37 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consenso per le foto"
+            "value" : "Consenso alle foto"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento para fotos"
+            "value" : "Consentimento de fotos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento para fotografias"
+            "value" : "Consentimento de fotografias"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotoğraf onamı"
+            "value" : "Fotoğraf onayı"
           }
         }
       }
     },
-    "health.consent.signed" : {
-      "comment" : "A consent signed without a typed name, and when",
+    "health.consent.signedOn" : {
+      "comment" : "Line under a signed consent record. %@ is the date.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "تم التوقيع · %@"
+            "value" : "موقَّعة · %@"
           }
         },
         "de" : {
@@ -74239,110 +76675,200 @@
         }
       }
     },
-    "health.consent.signedBy" : {
-      "comment" : "Who signed a consent and when",
+    "health.consent.status.notSigned" : {
+      "comment" : "Chip on a consent row.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "التوقيع: %1$@ · %2$@"
+            "value" : "غير موقَّعة"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Unterschrieben von %1$@ · %2$@"
+            "value" : "Nicht unterschrieben"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Signed by %1$@ · %2$@"
+            "value" : "Not signed"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signed by %1$@ · %2$@"
+            "value" : "Not signed"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado por %1$@ · %2$@"
+            "value" : "Sin firmar"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado por %1$@ · %2$@"
+            "value" : "Sin firmar"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado por %1$@ · %2$@"
+            "value" : "Sin firmar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signé par %1$@ · %2$@"
+            "value" : "Non signé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ द्वारा हस्ताक्षरित · %2$@"
+            "value" : "हस्ताक्षर नहीं"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditandatangani oleh %1$@ · %2$@"
+            "value" : "Belum ditandatangani"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmato da %1$@ · %2$@"
+            "value" : "Non firmato"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado por %1$@ · %2$@"
+            "value" : "Não assinado"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado por %1$@ · %2$@"
+            "value" : "Não assinado"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ tarafından imzalandı · %2$@"
+            "value" : "İmzalanmadı"
           }
         }
       }
     },
-    "health.consent.treatment" : {
-      "comment" : "Consent kind: treatment",
+    "health.consent.status.signed" : {
+      "comment" : "Chip on a consent row.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الموافقة على الخدمة"
+            "value" : "موقَّعة"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einwilligung zur Behandlung"
+            "value" : "Unterschrieben"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signed"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signed"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Signé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हस्ताक्षरित"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ditandatangani"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Firmato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assinado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assinado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İmzalandı"
+          }
+        }
+      }
+    },
+    "health.consent.treatment" : {
+      "comment" : "Kind of a consent record.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موافقة العلاج"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Behandlungseinwilligung"
           }
         },
         "en" : {
@@ -74360,19 +76886,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para el tratamiento"
+            "value" : "Consentimiento de tratamiento"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para el tratamiento"
+            "value" : "Consentimiento de tratamiento"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento para el tratamiento"
+            "value" : "Consentimiento de tratamiento"
           }
         },
         "fr" : {
@@ -74384,7 +76910,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "उपचार की सहमति"
+            "value" : "उपचार सहमति"
           }
         },
         "id" : {
@@ -74402,109 +76928,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento para o tratamento"
+            "value" : "Consentimento de tratamento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento para o tratamento"
+            "value" : "Consentimento de tratamento"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İşlem onamı"
-          }
-        }
-      }
-    },
-    "health.consent.version" : {
-      "comment" : "The version of the legal text a consent was signed on",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "إصدار النص %@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Textversion %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text version %@"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Text version %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versión del texto %@"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versión del texto %@"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versión del texto %@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Version du texte %@"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "टेक्स्ट वर्ज़न %@"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versi teks %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versione del testo %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versão do texto %@"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Versão do texto %@"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Metin sürümü %@"
+            "value" : "Uygulama onayı"
           }
         }
       }
@@ -75049,182 +77485,92 @@
         }
       }
     },
-    "health.minor.guardian" : {
-      "comment" : "Row label: the parent or guardian who signed for a minor",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أحد الوالدين أو الوصي"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Erziehungsberechtigte Person"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Parent or guardian"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parent or guardian"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parent ou tuteur"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "माता-पिता या अभिभावक"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Orang tua atau wali"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Genitore o tutore"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responsável legal"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responsável legal"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ebeveyn veya vasi"
-          }
-        }
-      }
-    },
     "health.minor.message" : {
-      "comment" : "Notice for a minor's form: who signed",
+      "comment" : "Notice on 4.5 for a form filled in for a minor (D17, D55).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "وقّع أحد الوالدين أو الوصي القانوني على الموافقة."
+            "value" : "أجاب أحد الوالدين أو ولي الأمر. دوّني موافقته في قائمة الموافقات."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eine erziehungsberechtigte Person hat die Einwilligung unterschrieben."
+            "value" : "Ein Elternteil oder Erziehungsberechtigter hat geantwortet. Vermerken Sie die Einwilligung in der Liste der Einwilligungen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A parent or guardian signed the consent."
+            "value" : "A parent or guardian answered. Note their consent in the Consents list."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A parent or guardian signed the consent."
+            "value" : "A parent or guardian answered. Note their consent in the Consents list."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor firmó el consentimiento."
+            "value" : "Un tutor respondió. Anota su consentimiento en la lista de consentimientos."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor firmó el consentimiento."
+            "value" : "Un tutor respondió. Anota su consentimiento en la lista de consentimientos."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor firmó el consentimiento."
+            "value" : "Un tutor respondió. Anota su consentimiento en la lista de consentimientos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un parent ou tuteur légal a signé le consentement."
+            "value" : "Un parent ou tuteur a répondu. Notez son consentement dans la liste des consentements."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "माता-पिता या अभिभावक ने सहमति पर हस्ताक्षर किए।"
+            "value" : "माता-पिता या अभिभावक ने उत्तर दिया। उनकी सहमति सहमतियों की सूची में नोट करें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Orang tua atau wali menandatangani persetujuan."
+            "value" : "Orang tua atau wali yang menjawab. Catat persetujuannya di daftar persetujuan."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un genitore o tutore legale ha firmato il consenso."
+            "value" : "Ha risposto un genitore o tutore. Annota il suo consenso nell’elenco dei consensi."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um responsável legal assinou o consentimento."
+            "value" : "Um responsável respondeu. Anote o consentimento dele na lista de consentimentos."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um responsável legal assinou o consentimento."
+            "value" : "Um encarregado respondeu. Anote o consentimento dele na lista de consentimentos."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir ebeveyn veya yasal vasi onamı imzaladı."
+            "value" : "Bir ebeveyn veya veli yanıtladı. Onayını onaylar listesine not edin."
           }
         }
       }
@@ -77582,61 +79928,61 @@
       }
     },
     "health.section.consent" : {
-      "comment" : "Section title: the signed consents",
+      "comment" : "Section title: the consent records the professional keeps (D55).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الموافقة"
+            "value" : "الموافقات"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einwilligung"
+            "value" : "Einwilligungen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consent"
+            "value" : "Consents"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consent"
+            "value" : "Consents"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentement"
+            "value" : "Consentements"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सहमति"
+            "value" : "सहमतियाँ"
           }
         },
         "id" : {
@@ -77648,25 +79994,25 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consenso"
+            "value" : "Consensi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento"
+            "value" : "Consentimentos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento"
+            "value" : "Consentimentos"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Onam"
+            "value" : "Onaylar"
           }
         }
       }
@@ -77852,61 +80198,61 @@
       }
     },
     "health.title" : {
-      "comment" : "Title of screen 4.5: the client's health answers and consents",
+      "comment" : "Title of screen 4.5.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الصحة والموافقة"
+            "value" : "الصحة والموافقات"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gesundheit und Einwilligung"
+            "value" : "Gesundheit und Einwilligungen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health and consent"
+            "value" : "Health and consents"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Health and consent"
+            "value" : "Health and consents"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salud y consentimiento"
+            "value" : "Salud y consentimientos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salud y consentimiento"
+            "value" : "Salud y consentimientos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salud y consentimiento"
+            "value" : "Salud y consentimientos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Santé et consentement"
+            "value" : "Santé et consentements"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य और सहमति"
+            "value" : "स्वास्थ्य और सहमतियाँ"
           }
         },
         "id" : {
@@ -77918,205 +80264,25 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salute e consenso"
+            "value" : "Salute e consensi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Saúde e consentimento"
+            "value" : "Saúde e consentimentos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Saúde e consentimento"
+            "value" : "Saúde e consentimentos"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık ve onam"
-          }
-        }
-      }
-    },
-    "healthForm.agree" : {
-      "comment" : "Checkbox: the signer read the text and agrees",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "قرأت هذا النص وأوافق عليه."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ich habe diesen Text gelesen und stimme zu."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I have read this text and I agree."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "I have read this text and I agree."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leí este texto y estoy de acuerdo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leí este texto y estoy de acuerdo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leí este texto y estoy de acuerdo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "J'ai lu ce texte et j'accepte."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "मैंने यह टेक्स्ट पढ़ लिया है और मैं सहमत हूँ।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Saya sudah membaca teks ini dan menyetujuinya."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ho letto questo testo e sono d'accordo."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Li este texto e concordo."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Li este texto e concordo."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu metni okudum ve kabul ediyorum."
-          }
-        }
-      }
-    },
-    "healthForm.agree.guardian" : {
-      "comment" : "Checkbox: the signer is the parent or guardian and agrees",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أنا أحد الوالدين أو الوصي القانوني وأوافق."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ich bin Elternteil oder gesetzliche Vertretung und stimme zu."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "I am the parent or legal guardian, and I agree."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "I am the parent or legal guardian, and I agree."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Soy padre, madre o tutor legal y estoy de acuerdo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Soy padre, madre o tutor legal y estoy de acuerdo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Soy padre, madre o tutor legal y estoy de acuerdo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Je suis parent ou titulaire de l'autorité parentale et j'accepte."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "मैं माता-पिता या कानूनी अभिभावक हूँ और सहमत हूँ।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Saya orang tua atau wali sah dan menyetujuinya."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sono genitore o tutore legale e sono d'accordo."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sou pai, mãe ou responsável legal e concordo."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sou pai, mãe ou representante legal e concordo."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ebeveyn veya yasal vasiyim ve kabul ediyorum."
+            "value" : "Sağlık ve onaylar"
           }
         }
       }
@@ -78212,181 +80378,181 @@
       }
     },
     "healthForm.incomplete" : {
-      "comment" : "Hint under the save button while the form is incomplete",
+      "comment" : "Hint while Save is off.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "أجب عن كل الأسئلة وضع علامة في المربع ووقّع للحفظ."
+            "value" : "أجيبي عن كل الأسئلة للحفظ. الملاحظة اختيارية."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beantworten Sie alle Fragen, setzen Sie das Häkchen und unterschreiben Sie, um zu speichern."
+            "value" : "Beantworten Sie alle Fragen, um zu speichern. Die Notiz ist optional."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Answer every question, tick the box and sign to save."
+            "value" : "Answer every question to save. A note is optional."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Answer every question, tick the box and sign to save."
+            "value" : "Answer every question to save. A note is optional."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Responde a todas las preguntas, marca la casilla y firma para guardar."
+            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Responde todas las preguntas, marca la casilla y firma para guardar."
+            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Responde todas las preguntas, marca la casilla y firma para guardar."
+            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Répondez à toutes les questions, cochez la case et signez pour enregistrer."
+            "value" : "Répondez à toutes les questions pour enregistrer. La note est facultative."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सेव करने के लिए सभी सवालों के जवाब दें, बॉक्स पर निशान लगाएँ और हस्ताक्षर करें।"
+            "value" : "सहेजने के लिए सभी प्रश्नों के उत्तर दें। नोट वैकल्पिक है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jawab semua pertanyaan, centang kotak, lalu tanda tangani untuk menyimpan."
+            "value" : "Jawab semua pertanyaan untuk menyimpan. Catatan bersifat opsional."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rispondi a tutte le domande, spunta la casella e firma per salvare."
+            "value" : "Rispondi a tutte le domande per salvare. La nota è facoltativa."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Responda a todas as perguntas, marque a caixa e assine para salvar."
+            "value" : "Responda todas as perguntas para salvar. A observação é opcional."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Responda a todas as perguntas, assinale a caixa e assine para guardar."
+            "value" : "Responda a todas as perguntas para guardar. A nota é opcional."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydetmek için tüm soruları yanıtlayın, kutuyu işaretleyin ve imzalayın."
+            "value" : "Kaydetmek için tüm soruları yanıtlayın. Not isteğe bağlıdır."
           }
         }
       }
     },
     "healthForm.minor.hint" : {
-      "comment" : "Hint under the minor question",
+      "comment" : "Hint under the minor switch (D17, D55).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يقدّم أحد الوالدين أو الوصي القانوني الموافقة أدناه ويحضر الزيارة."
+            "value" : "اكتبي اسم القاصر. يجيب أحد الوالدين أو ولي الأمر نيابةً عنه؛ وتجمعين الموافقة شخصيًا."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eine erziehungsberechtigte Person gibt die Einwilligung unten ab und kommt zum Termin."
+            "value" : "Tragen Sie den Namen der minderjährigen Person ein. Ein Elternteil oder Erziehungsberechtigter antwortet für sie; die Einwilligung holen Sie persönlich ein."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A parent or guardian gives the consent below and comes to the visit."
+            "value" : "Write the young person’s name. A parent or guardian answers for them; their consent is yours to collect in person."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A parent or guardian gives the consent below and comes to the visit."
+            "value" : "Write the young person’s name. A parent or guardian answers for them; their consent is yours to collect in person."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor da el consentimiento de abajo y asiste a la visita."
+            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor da el consentimiento de abajo y asiste a la visita."
+            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un padre, madre o tutor da el consentimiento de abajo y asiste a la visita."
+            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un parent ou tuteur légal donne le consentement ci-dessous et vient à la visite."
+            "value" : "Indiquez le nom du mineur. Un parent ou tuteur répond pour lui ; vous recueillez le consentement en personne."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "नीचे दी गई सहमति माता-पिता या अभिभावक देते हैं और विज़िट पर आते हैं।"
+            "value" : "नाबालिग का नाम लिखें। माता-पिता या अभिभावक उसके लिए उत्तर देते हैं; सहमति आप व्यक्तिगत रूप से लेती हैं।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Orang tua atau wali memberikan persetujuan di bawah dan hadir saat kunjungan."
+            "value" : "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya Anda kumpulkan secara langsung."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un genitore o tutore legale dà il consenso qui sotto e viene alla visita."
+            "value" : "Scrivi il nome del minore. Un genitore o tutore risponde per lui; il consenso lo raccogli di persona."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um responsável legal dá o consentimento abaixo e vem à visita."
+            "value" : "Escreva o nome do menor. Um responsável responde por ele; o consentimento você recolhe pessoalmente."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um responsável legal dá o consentimento abaixo e vem à visita."
+            "value" : "Escreva o nome do menor. Um encarregado responde por ele; o consentimento recolhe-o pessoalmente."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aşağıdaki onamı bir ebeveyn veya yasal vasi verir ve ziyarete gelir."
+            "value" : "Reşit olmayan kişinin adını yazın. Bir ebeveyn veya veli onun adına yanıtlar; onayı siz bizzat alırsınız."
           }
         }
       }
@@ -78572,361 +80738,181 @@
       }
     },
     "healthForm.save" : {
-      "comment" : "Primary button of the health form sheet",
+      "comment" : "Primary button of the health form sheet.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "حفظ وتوقيع"
+            "value" : "حفظ الإجابات"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Speichern und unterschreiben"
+            "value" : "Antworten speichern"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Save and sign"
+            "value" : "Save answers"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Save and sign"
+            "value" : "Save answers"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Guardar y firmar"
+            "value" : "Guardar respuestas"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Guardar y firmar"
+            "value" : "Guardar respuestas"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Guardar y firmar"
+            "value" : "Guardar respuestas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Enregistrer et signer"
+            "value" : "Enregistrer les réponses"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सेव करें और हस्ताक्षर करें"
+            "value" : "उत्तर सहेजें"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Simpan dan tandatangani"
+            "value" : "Simpan jawaban"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salva e firma"
+            "value" : "Salva risposte"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salvar e assinar"
+            "value" : "Salvar respostas"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Guardar e assinar"
+            "value" : "Guardar respostas"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydet ve imzala"
-          }
-        }
-      }
-    },
-    "healthForm.signature" : {
-      "comment" : "Label of the typed signature",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اكتب اسمك الكامل للتوقيع"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Geben Sie Ihren vollständigen Namen zum Unterschreiben ein"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type your full name to sign"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Type your full name to sign"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe tu nombre completo para firmar"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe tu nombre completo para firmar"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe tu nombre completo para firmar"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Saisissez votre nom complet pour signer"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "हस्ताक्षर के लिए अपना पूरा नाम लिखें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ketik nama lengkap Anda untuk menandatangani"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scrivi il tuo nome completo per firmare"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Digite seu nome completo para assinar"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escreva o seu nome completo para assinar"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "İmzalamak için adınızı ve soyadınızı yazın"
-          }
-        }
-      }
-    },
-    "healthForm.signature.guardian" : {
-      "comment" : "Label of the typed signature of a parent or guardian",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أحد الوالدين أو الوصي: اكتب اسمك الكامل للتوقيع"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Erziehungsberechtigte Person: Geben Sie Ihren vollständigen Namen zum Unterschreiben ein"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Parent or guardian: type your full name to sign"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parent or guardian: type your full name to sign"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor: escribe tu nombre completo para firmar"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor: escribe tu nombre completo para firmar"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Padre, madre o tutor: escribe tu nombre completo para firmar"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parent ou tuteur : saisissez votre nom complet pour signer"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "माता-पिता या अभिभावक: हस्ताक्षर के लिए अपना पूरा नाम लिखें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Orang tua atau wali: ketik nama lengkap Anda untuk menandatangani"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Genitore o tutore: scrivi il tuo nome completo per firmare"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responsável legal: digite seu nome completo para assinar"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responsável legal: escreva o seu nome completo para assinar"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ebeveyn veya vasi: imzalamak için adınızı ve soyadınızı yazın"
+            "value" : "Yanıtları kaydet"
           }
         }
       }
     },
     "healthForm.subtitle" : {
-      "comment" : "Sheet subtitle: filled together, sealed on the iPhone",
+      "comment" : "Subtitle of the health form sheet.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "تُملأ الاستمارة معًا. تُختم الإجابات وتبقى على جهاز iPhone الخاص بك."
+            "value" : "اطرحي الأسئلة واحفظي الإجابات. تُوقَّع أي موافقة معك خارج التطبيق."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Füllen Sie ihn gemeinsam aus. Die Antworten werden versiegelt und bleiben auf Ihrem iPhone."
+            "value" : "Stellen Sie die Fragen und speichern Sie die Antworten. Einwilligungen werden bei Ihnen unterschrieben, außerhalb der App."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill it in together. The answers are sealed and stay on your iPhone."
+            "value" : "Ask the questions and save the answers. Any consent is signed with you, outside the app."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fill it in together. The answers are sealed and stay on your iPhone."
+            "value" : "Ask the questions and save the answers. Any consent is signed with you, outside the app."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rellénala en conjunto. Las respuestas quedan selladas en tu iPhone."
+            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llénala en conjunto. Las respuestas quedan selladas en tu iPhone."
+            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llénala en conjunto. Las respuestas quedan selladas en tu iPhone."
+            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Remplissez-la ensemble. Les réponses sont scellées et restent sur votre iPhone."
+            "value" : "Posez les questions et enregistrez les réponses. Tout consentement se signe avec vous, hors de l’app."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "साथ मिलकर भरें। जवाब सील होकर आपके iPhone पर ही रहते हैं।"
+            "value" : "प्रश्न पूछें और उत्तर सहेजें। कोई भी सहमति आपके साथ, ऐप के बाहर हस्ताक्षरित होती है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isi bersama-sama. Jawaban disegel dan tetap berada di iPhone Anda."
+            "value" : "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama Anda, di luar aplikasi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compilala insieme. Le risposte vengono sigillate e restano sul tuo iPhone."
+            "value" : "Fai le domande e salva le risposte. Ogni consenso si firma con te, fuori dall’app."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencha junto. As respostas ficam seladas no seu iPhone."
+            "value" : "Faça as perguntas e salve as respostas. Qualquer consentimento é assinado com você, fora do app."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencha em conjunto. As respostas ficam seladas no seu iPhone."
+            "value" : "Faça as perguntas e guarde as respostas. Qualquer consentimento é assinado consigo, fora da app."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Birlikte doldurun. Yanıtlar mühürlenir ve iPhone'unuzda kalır."
+            "value" : "Soruları sorun ve yanıtları kaydedin. Onaylar sizinle, uygulama dışında imzalanır."
           }
         }
       }
@@ -98127,186 +100113,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hafta başlangıcı"
-          }
-        }
-      }
-    },
-    "legal.error" : {
-      "comment" : "A legal text could not be loaded",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تعذّر تحميل هذا النص."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dieser Text konnte nicht geladen werden."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This text could not be loaded."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "This text could not be loaded."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se pudo cargar este texto."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se pudo cargar este texto."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No se pudo cargar este texto."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Impossible de charger ce texte."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "यह टेक्स्ट लोड नहीं हो सका।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teks ini tidak dapat dimuat."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Impossibile caricare questo testo."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Não foi possível carregar este texto."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Não foi possível carregar este texto."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu metin yüklenemedi."
-          }
-        }
-      }
-    },
-    "legal.textLanguage" : {
-      "comment" : "Menu label: the language a legal text is shown in",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لغة النص"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sprache des Textes"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text language"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Text language"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma del texto"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma del texto"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma del texto"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Langue du texte"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "टेक्स्ट की भाषा"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bahasa teks"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lingua del testo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma do texto"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Idioma do texto"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Metin dili"
           }
         }
       }
@@ -122108,181 +123914,181 @@
       }
     },
     "onb.record.intake.consentForm" : {
-      "comment" : "Intake item.",
+      "comment" : "Intake item (D55): consent records, status only.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "نموذج الموافقة"
+            "value" : "الموافقات"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einwilligungsformular"
+            "value" : "Einwilligungen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consent form"
+            "value" : "Consents"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consent form"
+            "value" : "Consents"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimiento"
+            "value" : "Consentimientos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulaire de consentement"
+            "value" : "Consentements"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सहमति फ़ॉर्म"
+            "value" : "सहमतियाँ"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulir persetujuan"
+            "value" : "Persetujuan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Modulo di consenso"
+            "value" : "Consensi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Termo de consentimento"
+            "value" : "Consentimentos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consentimento"
+            "value" : "Consentimentos"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Onay formu"
+            "value" : "Onaylar"
           }
         }
       }
     },
     "onb.record.intake.consentFormHint" : {
-      "comment" : "Intake item hint.",
+      "comment" : "Intake item hint (D55).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يُوقَّع رقميًا قبل الخدمة الأولى"
+            "value" : "تُدوَّن كموقَّعة أو غير موقَّعة؛ وتُوقَّع الورقة معك"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vor der ersten Behandlung digital unterschrieben"
+            "value" : "Als unterschrieben oder nicht vermerkt; das Papier wird bei Ihnen unterschrieben"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Signed digitally before the first treatment"
+            "value" : "Noted as signed or not; the paper is signed with you"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signed digitally before the first treatment"
+            "value" : "Noted as signed or not; the paper is signed with you"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado digitalmente antes del primer tratamiento"
+            "value" : "Anotado como firmado o no; el papel se firma contigo"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado digitalmente antes del primer tratamiento"
+            "value" : "Anotado como firmado o no; el papel se firma contigo"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado digitalmente antes del primer tratamiento"
+            "value" : "Anotado como firmado o no; el papel se firma contigo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signé numériquement avant le premier soin"
+            "value" : "Noté signé ou non ; le papier se signe avec vous"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "पहले उपचार से पहले डिजिटल रूप से हस्ताक्षर"
+            "value" : "हस्ताक्षरित या नहीं के रूप में नोट; कागज़ पर आपके साथ हस्ताक्षर होते हैं"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditandatangani digital sebelum perawatan pertama"
+            "value" : "Dicatat sudah atau belum ditandatangani; kertasnya ditandatangani bersama Anda"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmato digitalmente prima del primo trattamento"
+            "value" : "Annotato come firmato o no; il foglio si firma con te"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado digitalmente antes do primeiro atendimento"
+            "value" : "Anotado como assinado ou não; o papel é assinado com você"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado digitalmente antes do primeiro atendimento"
+            "value" : "Anotado como assinado ou não; o papel é assinado consigo"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İlk işlemden önce dijital olarak imzalanır"
+            "value" : "İmzalandı veya imzalanmadı olarak not edilir; kâğıt sizinle imzalanır"
           }
         }
       }
@@ -177855,276 +179661,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "WhatsApp karşılama mesajı"
-          }
-        }
-      }
-    },
-    "signedConsent.missing.message" : {
-      "comment" : "Message when a signed text is not in this version of the app",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تم توقيعه على إصدار لا يملكه التطبيق بعد. حدّث التطبيق لقراءته."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Er wurde mit einer Version unterschrieben, die die App noch nicht hat. Aktualisieren Sie die App, um ihn zu lesen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "It was signed on a version the app does not have yet. Update the app to read it."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "It was signed on a version the app does not have yet. Update the app to read it."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se firmó en una versión que la app aún no tiene. Actualiza la app para leerlo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se firmó en una versión que la app aún no tiene. Actualiza la app para leerlo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se firmó en una versión que la app aún no tiene. Actualiza la app para leerlo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Il a été signé sur une version que l'app n'a pas encore. Mettez l'app à jour pour le lire."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "इस पर ऐसे वर्ज़न में हस्ताक्षर हुए थे जो ऐप में अभी नहीं है। पढ़ने के लिए ऐप अपडेट करें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ditandatangani pada versi yang belum dimiliki aplikasi. Perbarui aplikasi untuk membacanya."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "È stato firmato su una versione che l'app non ha ancora. Aggiorna l'app per leggerlo."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Foi assinado em uma versão que o app ainda não tem. Atualize o app para lê-lo."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Foi assinado numa versão que a aplicação ainda não tem. Atualize a aplicação para o ler."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Uygulamada henüz olmayan bir sürümde imzalandı. Okumak için uygulamayı güncelleyin."
-          }
-        }
-      }
-    },
-    "signedConsent.missing.title" : {
-      "comment" : "Title when a signed text is not in this version of the app",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "هذا النص غير موجود على هذا iPhone"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dieser Text ist nicht auf diesem iPhone"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This text is not on this iPhone"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "This text is not on this iPhone"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este texto no está en este iPhone"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este texto no está en este iPhone"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este texto no está en este iPhone"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ce texte n'est pas sur cet iPhone"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "यह टेक्स्ट इस iPhone पर नहीं है"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Teks ini tidak ada di iPhone ini"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Questo testo non è su questo iPhone"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este texto não está neste iPhone"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Este texto não está neste iPhone"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu metin bu iPhone'da yok"
-          }
-        }
-      }
-    },
-    "signedConsent.written" : {
-      "comment" : "The language a signed text is written in",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اللغة: %@"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Verfasst auf %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Written in %@"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Written in %@"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escrito en %@"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escrito en %@"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escrito en %@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Rédigé en %@"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "भाषा: %@"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ditulis dalam %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scritto in %@"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escrito em %@"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escrito em %@"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dil: %@"
           }
         }
       }

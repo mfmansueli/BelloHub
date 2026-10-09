@@ -26,7 +26,7 @@ struct BundleLegalNoticeLibrary: LegalNoticeLibrary {
     }
 
     private func text(_ notice: LegalNotice, localizationID: String, version: String) throws -> LegalNoticeText {
-        let name = "\(notice.rawValue)-\(localizationID)-\(version)"
+        let name = LegalFileName.name(of: notice, localizationID: localizationID, version: version)
         guard let url = bundle.url(forResource: name, withExtension: "md") else { throw LegalTextError.notFound }
         guard let raw = try? String(contentsOf: url, encoding: .utf8), let parsed = LegalTextRenderer.parse(raw) else {
             throw LegalTextError.malformed
@@ -41,13 +41,11 @@ struct BundleLegalNoticeLibrary: LegalNoticeLibrary {
     }
 
     private func versions(of notice: LegalNotice, localizationID: String) -> [String] {
-        let prefix = "\(notice.rawValue)-\(localizationID)-"
         let urls = bundle.urls(forResourcesWithExtension: "md", subdirectory: nil) ?? []
         return urls.compactMap { url in
-            let fileName = url.deletingPathExtension().lastPathComponent
-            guard fileName.hasPrefix(prefix) else { return nil }
-            let rest = String(fileName.dropFirst(prefix.count))
-            return LegalFileName.isVersion(rest) ? rest : nil
+            LegalFileName.version(
+                inFileName: url.deletingPathExtension().lastPathComponent, of: notice, localizationID: localizationID
+            )
         }
     }
 }

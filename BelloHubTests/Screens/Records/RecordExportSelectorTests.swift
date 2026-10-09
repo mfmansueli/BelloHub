@@ -82,11 +82,12 @@ struct RecordExportSelectorTests {
         #expect(content(options).health?.importantNote == "Prefers a quiet room")
     }
 
-    @Test("Consents carry their kind and date but never a signature")
+    @Test("Consent records carry their kind, label and date but never the photo or file of the paper (D55)")
     func consentsHaveNoSignature() {
         let result = content(ExportOptions())
         #expect(result.consents.count == 2)
-        #expect(result.consents.allSatisfy { $0.typedSignature == nil && $0.signatureImage == nil })
+        #expect(result.consents.allSatisfy { $0.document == nil })
+        #expect(result.consents.allSatisfy { $0.note != nil }, "the note is hers and stays in the export")
     }
 
     @Test("The client's copy has only photos shared with her; a health professional's copy has every photo")
