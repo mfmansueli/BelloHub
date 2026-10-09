@@ -190,7 +190,10 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 1.9 Permissions | `Steps/PermissionsStepView` | none (reads `PermissionService`) | `onboarding.permissions.title`, `allowButton`, `notNowButton`, `continueButton` |
 | 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
 | 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
-| 2.1 Home (placeholder, S6) | `Screens/Home/HomeView` | none, presentation-only | `home.greeting`, `home.empty` |
+| 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeVisitRow`, `RemindersReadyCard`, `HomeFollowUpsCard`, `HomeWinBackLink`) | `HomeViewModel` (reads `AgendaDigestService`) | `home.*` |
+| 2.7 FollowUps, 2.8 WinBack | `Screens/FollowUps/`, `Screens/WinBack/` | one view model each (pure lists in `Support/`) | `followUps.*`, `winBack.*` |
+| Client message (sheet, `AgendaSheet.clientMessage`) | `Screens/Shared/ClientMessage/` | `ClientMessageViewModel` (`ClientMessageComposer` is pure; nothing is sent by the app, D14) | `clientMessage.*` |
+| 7.11 Shared states | `Screens/Shared/States/` (`ScreenPhase`, `ScreenStateView`, `ListLoadingView`) | none | caller-defined |
 | 2.2 Clients | `Screens/Clients/ClientsTabView` (stack, `ClientsRoute`) + `ClientsView` | `ClientsViewModel` | `clients.empty`, `clients.row.<uuid>`, `clients.filter.<chip>`, `clients.newButton`, `clients.importButton` |
 | 4.1 ClientProfile | `Clients/Profile/ClientProfileView` | `ClientProfileViewModel` | `clientProfile.*` |
 | 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
@@ -208,8 +211,12 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
 | 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
 | 6.14 FormTemplates (+ consent preview) | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*`, `consentPreview.*` |
-| 2.3 Calendar (placeholder, S6) | `Screens/Calendar/CalendarView` | none | `calendar.empty` |
-| 2.4 Alerts (placeholder, S8) | `Screens/Alerts/AlertsView` | none | `alerts.empty` |
+| 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
+| 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
+| 2.4 Alerts (local part) | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` is pure) | `alerts.*` |
+| 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
+| 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
+| 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (the More row lands with S10) |
 | 2.5 More | `Screens/More/MoreTab` (stack, `MoreRoute`) + `MoreView` | none (`MoreSummary` is pure) | `more.profileCard`, `more.<row>Row` (services, products, bookingPage, availability, credentials, team, recordFields, forms, tags, quickReplies), `more.lockNowButton`, `more.signOutButton`, `more.signOutConfirmButton` |
 | Privacy cover, storage unavailable | `Screens/Main/PrivacyCover`, `StorageUnavailableView` | none | `storage.unavailable` |
 | Design Catalog (DEBUG) | `DesignSystem/Catalog/` | none | `catalog.*` |
@@ -226,11 +233,14 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
 │                → Tags → Record → Permissions → Ready
 ├── LockedView
 └── MainView (TabView, five tabs, each with its own NavigationStack)
-    ├── Home      → HomeView
+    ├── Home      → HomeView → Appointment · FollowUps · WinBack · WeekGlance (same `AgendaRoute` / `AgendaSheet`)
     ├── Clients   → ClientsTabView → ClientsView (title = the term she chose; sheets: NewClient, ImportClients)
     │                → ClientProfile → ClientEdit (sheet: merge) · ClientKnowledge · ClientHealth (sheets: health form,
-    │                  patch test, signed text)
-    ├── Calendar  → CalendarView
+    │                  patch test, signed text) · RecordHistory (sheets: Incident, ExportRecord)
+    │                Start (appointment or profile) → TreatmentFlow (fullScreenCover)
+    ├── Calendar  → CalendarView (day | week) → Appointment → SessionPlan · NoShowHistory; WeekGlance
+    │                (sheets through `AgendaSheet`: NewAppointment, Reschedule, BlockTime, BeforeYouStart, Cancel,
+    │                MessageClient, NoShowMark, RunningLate, ClientMessage)
     ├── Alerts    → AlertsView
     └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
                      Clients (Record fields, Forms, Tags), Messages (Quick replies; S5), Account (Lock now, Sign out)
@@ -287,10 +297,29 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   switched off, and keep the data they hold.
 - **Tags (6.12)**: four named colors (never color alone), delete inside the sheet and on swipe, counts in people.
 
+### Changes from the prototype (S6 to S8)
+
+- **Home and Alerts**: the digest is rebuilt every minute; "Reminders ready" (D31) is a queue she opens one chat at a
+  time, the row then says "Opened"; nothing is sent by the app (D14). Local notifications are generic (counts only, no
+  client or service name, tested in all 14 localizations).
+- **Calendar**: time blocks are a vault record; the Apple Calendar write-through is one way.
+- **Treatment flow (5.x)**: voice and AI structuring are stubs that say they are unavailable (D53); the manual form is
+  fully real. No AI sensitivity card, no photo slider or timeline, no reminder parts in 5.9.
+- **Record (4.7, 4.9, 4.10)**: history with a lock notice and a correction sheet; the export is a PDF shared through the
+  system sheet.
+- **Booking page (6.7, 6.8), S8 publish**: hero status line per publish state; `Go online` (`.belloOnHero`) on the hero
+  before online, `.belloPrimary` on Share link; `Stop` (`.belloSecondary`) under the share row with a destructive
+  confirmation; failure notice (`ErrorNotice`, "Try again" only for offline, busy, locked or rejected). More's Booking
+  page row says "Not online yet" or "Needs attention" before the page exists. Identifiers:
+  `bookingSettings.{notOnline,onlineStatus,goOnlineButton,stopButton,stopConfirmButton,publishError}`,
+  `shareLink.{online,notOnline,goOnlineButton,publishError}`.
+- New tokens: none in S6, S7 or S8.
+
 ## Empty, loading and error states
 
-Home, Calendar and Alerts have no data yet, so each shows its empty state (`EmptyState`, no button until
-there is something to do). The Locked screen has an error state (`InlineNotice`): the face did not match, or this
+Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
+state, error with retry; precedence is one rule in `ScreenPhase`). An empty day on Home is an `EmptyState`.
+The treatment flow, record history, incident and export define their own states (failed, missing, empty, saved). The Locked screen has an error state (`InlineNotice`): the face did not match, or this
 phone has no key for her records. A vault that cannot be opened shows `StorageUnavailableView` and never offers to
 erase anything. Each screen that loads data defines all three before it ships: a loading
 state (`Skeleton`), an empty state with the next action (`EmptyState`), and an error state with a retry. Clients, the client profile, health and consent, tags and record fields (S4) have all three; their
