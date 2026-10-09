@@ -35,7 +35,13 @@ extension XCUIApplication {
     func firstTappableSlot(file: StaticString = #filePath, line: UInt = #line) -> XCUIElement? {
         for attempt in 0..<4 {
             XCTAssertTrue(calendarSlots.firstMatch.waitForExistence(timeout: 5), "no free hour", file: file, line: line)
-            if let slot = calendarSlots.allElementsBoundByIndex.first(where: { $0.exists && $0.isHittable }) {
+            // Only a slot in the middle of the screen: one under the floating tab bar or the navigation bar reports
+            // `isHittable` but a tap on it lands on the bar (found after 18:30, when the day opens on the last hours).
+            let window = self.windows.firstMatch.frame
+            let band = (window.minY + window.height * 0.25)...(window.minY + window.height * 0.7)
+            if let slot = calendarSlots.allElementsBoundByIndex.first(where: {
+                $0.exists && $0.isHittable && band.contains($0.frame.midY)
+            }) {
                 return slot
             }
             if attempt.isMultiple(of: 2) { swipeUp() } else { swipeDown() }
