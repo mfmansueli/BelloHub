@@ -9,8 +9,9 @@ date recorded). `scripts/check-legal-status.sh` prints this table from the files
 
 **D55 (2026-10-09): the three consent kinds are no longer produced.** Health-form consent, photo consent and guardian
 consent are the professional's own business; the app only records their status. Their rows below are history: the
-drafts stay on disk, are not in the web legal bundle (`web/scripts/build-legal.ts`) nor in the app bundle, and get no
-new versions. The documents still in use are `terms-dpa`, `privacy-policy`, `client-notice` and `data-requests`.
+drafts stay on disk, are not in the web legal bundle (`web/scripts/build-legal.ts`) nor in the app bundle (the iOS
+app no longer bundles any legal text: `BelloHub/Resources/Legal/` and `scripts/sync-legal-resources` are removed; the
+app shows no consent text and asks for no signature, only her own status records), and get no new versions. The documents still in use are `terms-dpa`, `privacy-policy`, `client-notice` and `data-requests`.
 
 The document set per region and the languages are in `docs/07-LOCALIZATION.md` section 8 and `docs/16-MARKETS.md`.
 The legal pass (plan item L in `docs/PROGRESS.md`) wrote the 98 drafts below (7 documents x 14 localizations, version
