@@ -6,45 +6,25 @@ import { useState } from 'preact/hooks';
 
 import { useFormatter } from '../app/context';
 import { useI18n } from '../i18n';
-import { buildIcs, googleCalendarUrl, type CalendarEvent } from '../lib/ics';
+import { buildIcs, calendarEvent, googleCalendarUrl, type CalendarDetails } from '../lib/ics';
 import { inAppBrowser } from '../lib/inapp';
 import { ExternalLink } from './Button';
 import { Icon } from './Icon';
 import { Sheet } from './Sheet';
 
-/** What a calendar entry needs: the booking id (a stable UID), the times, the service names and who with. */
-export interface CalendarDetails {
-  readonly bookingId: string;
-  readonly startsAt: string;
-  readonly endsAt: string;
-  readonly serviceNames: readonly string[];
-  readonly professional: { readonly displayName: string; readonly city?: string | undefined };
-}
-
-export function calendarEvent(booking: CalendarDetails, link: string, t: (key: string, params?: Record<string, string>) => string, language: string): CalendarEvent {
-  return {
-    uid: booking.bookingId,
-    startMs: Date.parse(booking.startsAt),
-    endMs: Date.parse(booking.endsAt),
-    summary: t('ics.summary', { service: booking.serviceNames.join(' + '), name: booking.professional.displayName }),
-    description: t('ics.change', { link }),
-    ...(booking.professional.city === undefined ? {} : { location: booking.professional.city }),
-    language,
-  };
-}
-
 interface Props {
   readonly open: boolean;
   readonly onClose: () => void;
+  /** The professional's public booking page: the only address a calendar entry may carry (D50). */
+  readonly pageUrl: string;
   readonly booking: CalendarDetails;
-  readonly link: string;
 }
 
-export function CalendarSheet({ open, onClose, booking, link }: Props): JSX.Element {
+export function CalendarSheet({ open, onClose, booking, pageUrl }: Props): JSX.Element {
   const { t, locale } = useI18n();
   const format = useFormatter();
   const [saved, setSaved] = useState(false);
-  const event = calendarEvent(booking, link, t, locale);
+  const event = calendarEvent(booking, pageUrl, t, locale);
   const blocked = inAppBrowser();
 
   const download = (): void => {

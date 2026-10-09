@@ -109,8 +109,6 @@ export interface IntakePayload {
     readonly textLocaleId: string;
     readonly acceptedAt: string;
     readonly typedSignature: string;
-    /** The guardian's optional agreement to photos of the minor (the second box of the guardian text). */
-    readonly photos?: boolean;
   };
   /** A drawn signature, PNG as base64, at most 64 KB. */
   readonly signaturePng?: string;

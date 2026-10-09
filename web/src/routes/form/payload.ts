@@ -13,8 +13,6 @@ export interface IntakeState {
   /** The client's typed full name: her signature when the visit is for an adult. */
   readonly typedSignature: string;
   readonly consent: boolean;
-  /** The guardian's optional agreement to photos of the minor. */
-  readonly photosConsent: boolean;
   readonly signaturePng: string | null;
 }
 
@@ -25,7 +23,6 @@ export const EMPTY_INTAKE: IntakeState = {
   guardianName: '',
   typedSignature: '',
   consent: false,
-  photosConsent: false,
   signaturePng: null,
 };
 
@@ -73,9 +70,9 @@ export function intakeProblems(state: IntakeState, questions: readonly FormQuest
 export interface BuildContext {
   readonly context: FormContext;
   readonly localeId: string;
-  /** The version of the consent text that was shown, from the legal file itself. */
+  /** The version of the consent text that was shown: the one the server returned (D49). */
   readonly consentVersion: string;
-  /** The language of the consent text that was shown (the page language, or English when it was missing). */
+  /** The language of the consent text that was shown (the one the server's text was written in). */
   readonly consentLocaleId: string;
   readonly now: Date;
 }
@@ -104,7 +101,6 @@ export function buildIntakePayload(state: IntakeState, input: BuildContext): Int
       textLocaleId: input.consentLocaleId,
       acceptedAt: submittedAt,
       typedSignature: signature,
-      ...(state.isForMinor ? { photos: state.photosConsent } : {}),
     },
     ...(state.signaturePng === null ? {} : { signaturePng: state.signaturePng }),
     submittedAt,

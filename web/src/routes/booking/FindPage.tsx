@@ -1,9 +1,9 @@
-// Bk-11: "Find my appointment". She types the phone she booked with, receives a code (so only she can open it),
+// Bk-11: "Find my appointment". She types the e-mail she booked with, receives a code (so only she can open it),
 // and sees her upcoming bookings with this professional, each one opening its personal link. The answer is the same
-// whether or not that number is a client until she has proved she holds it (docs/10 section 10).
+// whether or not that e-mail is a client until she has proved she holds it (docs/10 section 10, D46).
 
 import type { JSX } from 'preact';
-import { useRef, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 import { api } from '../../api/client';
 import type { FoundBooking, PublicProfile } from '../../api/types';
@@ -12,41 +12,40 @@ import { manageRoute, slugRoute } from '../../app/router';
 import { Button, ExternalLink, Link } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { ErrorNotice } from '../../components/Feedback';
-import { CodeField, PhoneField } from '../../components/Field';
+import { CodeField, TextField } from '../../components/Field';
 import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
+import { isEmail } from '../../lib/email';
 import { ltr } from '../../lib/bidi';
-import { normalizePhone, phoneRegion } from '../../lib/phone';
 import { whatsAppUrl } from '../../lib/whatsapp';
 import { useVerification } from './useVerification';
 
-type Step = { name: 'phone' } | { name: 'code'; phone: string } | { name: 'list'; bookings: FoundBooking[] };
+type Step = { name: 'email' } | { name: 'code'; email: string } | { name: 'list'; bookings: FoundBooking[] };
 
 export function FindPage({ profile }: { profile: PublicProfile }): JSX.Element {
   const { t } = useI18n();
-  const [step, setStep] = useState<Step>({ name: 'phone' });
+  const [step, setStep] = useState<Step>({ name: 'email' });
   useDocumentTitle(t('bk11.title'));
   return (
     <Screen top={<TopBar back={slugRoute(profile.slug)} backLabel={t('bk11.page', { name: profile.displayName })} />}>
-      {step.name === 'phone' ? <PhoneStep profile={profile} onSend={(phone) => { setStep({ name: 'code', phone }); }} /> : null}
-      {step.name === 'code' ? <CodeStep profile={profile} phone={step.phone} onFound={(bookings) => { setStep({ name: 'list', bookings }); }} /> : null}
+      {step.name === 'email' ? <EmailStep onSend={(email) => { setStep({ name: 'code', email }); }} /> : null}
+      {step.name === 'code' ? <CodeStep profile={profile} email={step.email} onFound={(bookings) => { setStep({ name: 'list', bookings }); }} /> : null}
       {step.name === 'list' ? <ListStep profile={profile} bookings={step.bookings} /> : null}
     </Screen>
   );
 }
 
-function PhoneStep({ profile, onSend }: { profile: PublicProfile; onSend: (phone: string) => void }): JSX.Element {
+function EmailStep({ onSend }: { onSend: (email: string) => void }): JSX.Element {
   const { t } = useI18n();
-  const [country, setCountry] = useState(profile.regionCode);
   const [input, setInput] = useState('');
   const [error, setError] = useState<string | undefined>();
   const send = (): void => {
-    const phone = normalizePhone(input, phoneRegion(country));
-    if (!phone.ok) {
-      setError(t('bk5.err.phone'));
+    const email = input.trim();
+    if (!isEmail(email)) {
+      setError(t('bk5.err.email'));
       return;
     }
-    onSend(phone.e164);
+    onSend(email);
   };
   return (
     <>
@@ -55,7 +54,7 @@ function PhoneStep({ profile, onSend }: { profile: PublicProfile; onSend: (phone
         <p class="lead">{t('bk11.sub')}</p>
       </div>
       <form class="stack" noValidate onSubmit={(event) => { event.preventDefault(); send(); }}>
-        <PhoneField label={t('bk5.phone')} countryLabel={t('bk5.phoneCountry')} country={country} input={input} defaultCountry={profile.regionCode} error={error} onChange={(c, p) => { setCountry(c); setInput(p); setError(undefined); }} />
+        <TextField label={t('bk5.email')} value={input} onInput={(value) => { setInput(value); setError(undefined); }} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" error={error} testId="email" dir="ltr" />
         <p class="well well-icon">
           <Icon name="lock" />
           <span>{t('bk11.note')}</span>
@@ -68,11 +67,10 @@ function PhoneStep({ profile, onSend }: { profile: PublicProfile; onSend: (phone
   );
 }
 
-function CodeStep({ profile, phone, onFound }: { profile: PublicProfile; phone: string; onFound: (bookings: FoundBooking[]) => void }): JSX.Element {
+function CodeStep({ profile, email, onFound }: { profile: PublicProfile; email: string; onFound: (bookings: FoundBooking[]) => void }): JSX.Element {
   const { t, locale } = useI18n();
   const format = useFormatter();
-  const captcha = useRef<HTMLDivElement>(null);
-  const verification = useVerification({ target: { kind: 'sms', phone }, slug: profile.slug, locale, purpose: 'find', captcha });
+  const verification = useVerification({ email, slug: profile.slug, locale, purpose: 'find' });
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<unknown>(null);
@@ -84,7 +82,7 @@ function CodeStep({ profile, phone, onFound }: { profile: PublicProfile; phone: 
     setBusy(true);
     setFailure(null);
     try {
-      onFound(await api.findBookings({ slug: profile.slug, phone, verification: proof }));
+      onFound(await api.findBookings({ slug: profile.slug, email, verification: proof }));
     } catch (error) {
       setFailure(error);
       setBusy(false);
@@ -98,7 +96,7 @@ function CodeStep({ profile, phone, onFound }: { profile: PublicProfile; phone: 
     <>
       <div class="stack">
         <Title>{t('bk6.title')}</Title>
-        <p class="lead" aria-live="polite">{t('bk11.codeSub', { phone: ltr(phone) })}</p>
+        <p class="lead" aria-live="polite">{t('bk11.codeSub', { email: ltr(email) })}</p>
       </div>
       <form class="stack" noValidate onSubmit={(event) => { event.preventDefault(); void find(); }}>
         <CodeField label={t('bk11.code')} value={code} onInput={setCode} error={codeError} />
@@ -115,7 +113,6 @@ function CodeStep({ profile, phone, onFound }: { profile: PublicProfile; phone: 
           {t('bk11.find')}
         </Button>
       </form>
-      <div ref={captcha} />
     </>
   );
 }

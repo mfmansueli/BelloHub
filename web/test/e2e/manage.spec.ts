@@ -107,6 +107,22 @@ test.describe('rescheduling (Cl-9)', () => {
   });
 });
 
+test.describe('the rules of the booking (D47)', () => {
+  test('the management page states the rules that apply from the time of booking, worded from the booking\'s own policy', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria');
+    // The booking was made under a 48-hour window; her page today says 24. The booking keeps its own.
+    const { token } = await mock.seed({ slug, startsInMinutes: 80 * HOUR, policy: { freeWindowHours: 48, clientCanReschedule: false, afterWindowCancel: 'message' } });
+    await open(page, `/m/${token}`);
+    const rules = page.getByTestId('booking-rules');
+    await expect(rules).toBeVisible();
+    await expect(rules).toContainText('These are the rules that apply to this booking, from the time you booked');
+    await expect(rules).toContainText('48 hours');
+    await expect(rules).not.toContainText('24 hours');
+    await expect(rules).toContainText('message Maria');
+    await expect(rules).not.toContainText(/missed|counts as/i);
+  });
+});
+
 test.describe('cancelling (Cl-6)', () => {
   test('cancels for free with a reason, and offers to book another time @core', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria');
@@ -123,12 +139,13 @@ test.describe('cancelling (Cl-6)', () => {
     await expect(page.getByTestId('cancelled')).toBeVisible();
   });
 
-  test('a late cancellation says before it happens that it counts as a missed appointment', async ({ page, mock, guard, slugFor }) => {
+  test('a late cancellation states only what the policy states: no claim that it counts as a missed appointment (D47)', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
     const { token } = await mock.seed({ slug, startsInMinutes: 5 * HOUR });
     await open(page, `/m/${token}/cancel`);
-    await expect(page.getByTestId('counts-warning')).toBeVisible();
-    expect(await mainText(page)).toMatch(/counts as a missed appointment/i);
+    await expect(page.getByTestId('confirm-cancel')).toBeVisible();
+    await expect(page.getByTestId('counts-warning')).toHaveCount(0);
+    expect(await mainText(page)).not.toMatch(/missed appointment|counts as/i);
     await page.getByTestId('confirm-cancel').click();
     await expect(page.getByTestId('done-text')).toContainText(/counts/i);
     expect((await mock.bookings(slug))[0]?.status).toBe('cancelledByClient');

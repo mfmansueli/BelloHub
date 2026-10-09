@@ -1,31 +1,21 @@
 // Bk-7: a few non-clinical questions for the first visit, then the booking is created. Health answers are never
-// asked here: they exist only in the sealed form (docs/10 section 2), and this screen says so. Of the three answers
-// only the note travels to the server (API.md 5.8); "how did you hear" and "been before" wait for the owner's decision.
+// asked here: they exist only in the sealed form (docs/10 section 2), and this screen says so. D45: the page does not
+// ask "how did you hear" or "been before" (the professional asks in person); only the optional note travels (API.md 5.8).
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import type { HeardFrom } from '../../api/types';
 import type { PublicProfile } from '../../api/types';
 import { navigate, slugRoute } from '../../app/router';
-import { allowedStep, FLOW_STEPS } from '../../app/booking/machine';
+import { allowedStep, EMPTY_FIRST_VISIT, FLOW_STEPS } from '../../app/booking/machine';
 import { useBooking } from '../../app/booking/store';
 import { Button } from '../../components/Button';
-import { Chip } from '../../components/Choices';
 import { ErrorNotice } from '../../components/Feedback';
 import { TextArea } from '../../components/Field';
 import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useRules } from '../../components/RuleList';
 import { useI18n } from '../../i18n';
 import { NOTE_MAX_LENGTH, submitBooking } from './submit';
-
-const HEARD: readonly { value: HeardFrom; key: string }[] = [
-  { value: 'friend', key: 'bk7.heard.friend' },
-  { value: 'instagram', key: 'bk7.heard.instagram' },
-  { value: 'search', key: 'bk7.heard.search' },
-  { value: 'passing', key: 'bk7.heard.passing' },
-  { value: 'other', key: 'bk7.heard.other' },
-];
 
 export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
   const { t, locale } = useI18n();
@@ -49,7 +39,7 @@ export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Ele
     setBusy(withAnswers ? 'confirm' : 'skip');
     setFailure(null);
     try {
-      await submitBooking(profile, state, locale, withAnswers ? answers : { heardFrom: null, hadBefore: null, note: '' }, dispatch);
+      await submitBooking(profile, state, locale, withAnswers ? answers : EMPTY_FIRST_VISIT, dispatch);
     } catch (error) {
       setFailure(error);
     } finally {
@@ -78,34 +68,6 @@ export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Ele
         <Title>{t('bk7.title', { name: profile.firstName })}</Title>
         <p class="lead">{t('bk7.sub', { service: service?.name ?? '' })}</p>
       </div>
-
-      <fieldset>
-        <legend class="section">{t('bk7.heard', { name: profile.firstName })}</legend>
-        <div class="chips mt-md" role="group" aria-label={t('bk7.heard', { name: profile.firstName })}>
-          {HEARD.map((option) => (
-            <Chip
-              key={option.value}
-              pressed={answers.heardFrom === option.value}
-              testId={`heard-${option.value}`}
-              onToggle={() => { dispatch({ type: 'setFirstVisit', answers: { ...answers, heardFrom: answers.heardFrom === option.value ? null : option.value } }); }}
-            >
-              {t(option.key)}
-            </Chip>
-          ))}
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend class="section">{t('bk7.before')}</legend>
-        <div class="chips mt-md" role="group" aria-label={t('bk7.before')}>
-          <Chip pressed={answers.hadBefore === true} testId="before-yes" onToggle={() => { dispatch({ type: 'setFirstVisit', answers: { ...answers, hadBefore: answers.hadBefore === true ? null : true } }); }}>
-            {t('bk7.before.yes')}
-          </Chip>
-          <Chip pressed={answers.hadBefore === false} testId="before-no" onToggle={() => { dispatch({ type: 'setFirstVisit', answers: { ...answers, hadBefore: answers.hadBefore === false ? null : false } }); }}>
-            {t('bk7.before.no')}
-          </Chip>
-        </div>
-      </fieldset>
 
       <TextArea
         label={t('bk7.note', { name: profile.firstName })}

@@ -5,7 +5,8 @@
 //  - Autofill and spellcheck are off on every field that can hold a health answer.
 //  - On submit the answers become one JSON payload, sealed with the professional's public key by hpke-js (a lazy
 //    chunk), and the only thing that leaves the browser is the envelope.
-//  - A visit for someone under 18 switches to the guardian's consent and signature.
+//  - The consent she signs is the text the server returned for this professional and language (D49), never a draft
+//    of ours; a visit for someone under 18 switches to the guardian's text and signature.
 
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
@@ -24,12 +25,11 @@ import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { TextField } from '../../components/Field';
 import { Icon } from '../../components/Icon';
 import { Footer, ProHeader, Screen, Title, useDocumentTitle } from '../../components/Layout';
-import { LegalBlocks, inlineString } from '../../components/Legal';
 import { SignaturePad } from '../../components/SignaturePad';
 import { useI18n } from '../../i18n';
-import { useLegal, type Block } from '../../legal';
 import { ltr } from '../../lib/bidi';
 import { EMPTY_INTAKE, buildIntakePayload, intakeProblems, visibleQuestions, type IntakeProblem, type IntakeState } from './payload';
+import { signableConsent } from './consent';
 import { QuestionCard } from './QuestionCard';
 
 export function IntakePage({ token }: { token: string }): JSX.Element {
@@ -66,7 +66,6 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
   const [sealFailed, setSealFailed] = useState(false);
   const [done, setDone] = useState(false);
   const envelope = useRef<SealedEnvelope | null>(null);
-  const legal = useLegal(state.isForMinor ? 'consent-guardian' : 'consent-health');
   useDocumentTitle(done ? t('cl4.thanks') : t('cl4.title'));
 
   const questions = context.intake.questions;
@@ -81,6 +80,16 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     return (
       <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <FullNote title={t('cl4.closed.title')} text={t('cl4.closed.text', { name: pro.firstName })} back={token} />
+      </Screen>
+    );
+  }
+
+  // D49: no consent text from the server means no way to sign, and no draft in its place.
+  if (signableConsent(context.intake.consent, locale, pro.defaultLocale, false) === null) {
+    return (
+      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
+        <FullNote title={t('cl4.noConsent.title')} text={t('cl4.noConsent.text', { name: pro.firstName })} back={token} testId="consent-unavailable" />
+        <Footer />
       </Screen>
     );
   }
@@ -115,22 +124,11 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     );
   }
 
-  const legalFile = legal.status === 'ready' ? legal.file : null;
-  const blocks: readonly Block[] = legalFile?.blocks ?? [];
-  const consentBlock = blocks.find((block) => block.type === 'consent');
-  const checks = blocks.filter((block) => block.type === 'check');
-  const lastParagraph = [...blocks].reverse().find((block) => block.type === 'p');
-  const [agreeBlock, photosBlock] = checks;
-  const statement = state.isForMinor
-    ? agreeBlock === undefined ? '' : inlineString(agreeBlock.text, pro.displayName)
-    : consentBlock === undefined ? '' : inlineString(consentBlock.statement, pro.displayName);
-  const photosText = state.isForMinor && photosBlock !== undefined ? inlineString(photosBlock.text, pro.displayName) : null;
-  const signLabel = state.isForMinor
-    ? lastParagraph === undefined ? t('cl4.sign.guardian') : inlineString(lastParagraph.text, pro.displayName)
-    : consentBlock === undefined ? t('cl4.sign') : consentBlock.signLabel;
+  const consent = signableConsent(context.intake.consent, locale, pro.defaultLocale, state.isForMinor);
+  const signLabel = state.isForMinor ? t('cl4.sign.guardian') : t('cl4.sign');
 
   const submit = async (): Promise<void> => {
-    if (problems.length > 0 || legalFile === null) {
+    if (problems.length > 0 || consent === null) {
       setShowErrors(true);
       const first = problems[0];
       if (first !== undefined) window.setTimeout(() => { document.getElementById(problemId(first))?.focus(); }, 0);
@@ -141,7 +139,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     setSealFailed(false);
     try {
       if (envelope.current === null) {
-        const payload = buildIntakePayload(state, { context, localeId: locale, consentVersion: legalFile.version, consentLocaleId: locale, now: new Date() });
+        const payload = buildIntakePayload(state, { context, localeId: locale, consentVersion: consent.textVersion, consentLocaleId: consent.localeId, now: new Date() });
         envelope.current = await sealInBrowser({ kind: 'intake', payload, inboxKey: context.inboxKey });
       }
       await sendEnvelope(token, envelope.current);
@@ -193,7 +191,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
           legend={t('cl4.minor.title')}
           value={state.isForMinor ? 'yes' : 'no'}
           options={[{ value: 'no', label: t('common.no') }, { value: 'yes', label: t('common.yes') }]}
-          onChange={(value) => { set({ isForMinor: value === 'yes', consent: false, photosConsent: false }); }}
+          onChange={(value) => { set({ isForMinor: value === 'yes', consent: false }); }}
           testId="minor"
         />
         {state.isForMinor ? (
@@ -206,22 +204,20 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
 
       <section class="question stack" aria-labelledby="consent-title">
         <h2 id="consent-title" class="label">{t('cl4.consent')}</h2>
-        {legal.status === 'loading' ? <p class="meta" aria-busy="true">{t('common.loading')}</p> : null}
-        {legal.status === 'error' ? <Notice kind="warning" icon="alert" live="assertive">{t('err.generic')}</Notice> : null}
-        {legalFile === null ? null : (
-          <details class="well">
-            <summary class="strong">{t('cl4.consent.read')}</summary>
-            <div class="mt-sm">
-              <LegalBlocks blocks={blocks} professionalName={pro.displayName} skip={['h1', 'consent', 'check']} />
+        {consent === null ? (
+          <Notice kind="warning" icon="alert" testId="consent-unavailable">{t('cl4.noConsent.text', { name: pro.firstName })}</Notice>
+        ) : (
+          <>
+            <div class="well stack-sm" lang={consent.localeId} dir={consent.direction} data-testid="consent-text">
+              {consent.paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
-          </details>
-        )}
-        <div id="consent-check" tabIndex={-1}>
-          <Option type="checkbox" name="consent" value="agree" checked={state.consent} onChange={(checked) => { set({ consent: checked }); }} title={statement === '' ? t('cl4.agree') : statement} testId="consent" />
-          {error('consent', t('cl4.err.consent')) === undefined ? null : <p class="field-error" role="alert"><Icon name="alert" /><span>{t('cl4.err.consent')}</span></p>}
-        </div>
-        {photosText === null ? null : (
-          <Option type="checkbox" name="photos" value="photos" checked={state.photosConsent} onChange={(checked) => { set({ photosConsent: checked }); }} title={photosText} testId="consent-photos" />
+            <div id="consent-check" tabIndex={-1}>
+              <Option type="checkbox" name="consent" value="agree" checked={state.consent} onChange={(checked) => { set({ consent: checked }); }} title={t('cl4.agree')} testId="consent" />
+              {error('consent', t('cl4.err.consent')) === undefined ? null : <p class="field-error" role="alert"><Icon name="alert" /><span>{t('cl4.err.consent')}</span></p>}
+            </div>
+          </>
         )}
         {state.isForMinor ? (
           <TextField label={signLabel} id="guardian-name" value={state.guardianName} onInput={(value) => { set({ guardianName: value }); }} sensitive error={error('guardianName', t('cl4.err.sign'))} testId="guardian-name" />
@@ -245,10 +241,10 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
   );
 }
 
-function FullNote({ title, text, back }: { title: string; text: string; back: string }): JSX.Element {
+function FullNote({ title, text, back, testId }: { title: string; text: string; back: string; testId?: string }): JSX.Element {
   const { t } = useI18n();
   return (
-    <div class="state">
+    <div class="state" data-testid={testId}>
       <Title>{title}</Title>
       <p class="lead">{text}</p>
       <LinkButton to={manageRoute(back)} variant="secondary">{t('cl4.back')}</LinkButton>

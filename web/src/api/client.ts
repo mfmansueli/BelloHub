@@ -52,7 +52,6 @@ import type {
   WaitlistRequest,
 } from './types';
 import { config } from '../lib/config';
-import { getAppCheckToken } from './appcheck';
 
 export interface Api {
   /** Her public page, one request per slug; a failure is forgotten so a retry asks again. */
@@ -64,12 +63,6 @@ export interface Api {
   sendEmailCode(request: SendEmailCodeRequest): Promise<SendCodeResponse>;
   /** Returns the single-use proof for `verification: { method: 'email', proof }`. */
   verifyEmailCode(email: string, code: string): Promise<string>;
-  /**
-   * Not in API.md: the mock server's stand-in for Firebase phone sign-in, used only when `VITE_SMS_VERIFIER=api`
-   * (tests and local development). Production verifies phones in the browser (API.md 5.7) and never calls these.
-   */
-  sendSmsCode(phone: string, slug: string): Promise<SendCodeResponse>;
-  verifySmsCode(phone: string, code: string): Promise<string>;
   createBooking(request: CreateBookingRequest): Promise<BookingOutcome>;
   joinWaitlist(request: WaitlistRequest): Promise<void>;
   findBookings(request: FindBookingsRequest): Promise<FoundBooking[]>;
@@ -118,8 +111,6 @@ export function createApi(transport: Transport): Api {
     holdSlot: async (request) => parseHold(await transport.call('holdSlot', request)),
     sendEmailCode: async (request) => parseSendCode(await transport.call('sendEmailCode', request)),
     verifyEmailCode: async (email, code) => parseProof(await transport.call('verifyEmailCode', { email, code })),
-    sendSmsCode: async (phone, slug) => parseSendCode(await transport.call('sendSmsCode', { phone, slug })),
-    verifySmsCode: async (phone, code) => parseProof(await transport.call('verifySmsCode', { phone, code })),
     createBooking: async (request) => parseBookingOutcome(await transport.call('createBooking', request)),
 
     joinWaitlist: async (request) => {
@@ -161,7 +152,7 @@ export function createApi(transport: Transport): Api {
   };
 }
 
-/** The real API for this build (base URL and App Check from the build configuration). */
+/** The real API for this build (base URL from the build configuration). No browser-side Firebase SDK (D46). */
 export const api: Api = createApi(
-  createTransport({ baseUrl: config.apiBase, appCheckToken: () => getAppCheckToken(config) }),
+  createTransport({ baseUrl: config.apiBase }),
 );

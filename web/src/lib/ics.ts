@@ -90,3 +90,28 @@ export function googleCalendarUrl(event: CalendarEvent): string {
   if (event.location !== undefined) params.set('location', event.location);
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
+
+/** What a calendar entry needs: the booking id (a stable UID), the times, the service names and who with. */
+export interface CalendarDetails {
+  readonly bookingId: string;
+  readonly startsAt: string;
+  readonly endsAt: string;
+  readonly serviceNames: readonly string[];
+  readonly professional: { readonly displayName: string; readonly city?: string | undefined };
+}
+
+/**
+ * The calendar entry of a booking. D50: its text carries the professional's public booking page, never the manage or
+ * portal link, so a shared calendar or a synced device cannot hand the booking to someone else.
+ */
+export function calendarEvent(booking: CalendarDetails, pageUrl: string, t: (key: string, params?: Record<string, string>) => string, language: string): CalendarEvent {
+  return {
+    uid: booking.bookingId,
+    startMs: Date.parse(booking.startsAt),
+    endMs: Date.parse(booking.endsAt),
+    summary: t('ics.summary', { service: booking.serviceNames.join(' + '), name: booking.professional.displayName }),
+    description: t('ics.page', { link: pageUrl }),
+    ...(booking.professional.city === undefined ? {} : { location: booking.professional.city }),
+    language,
+  };
+}

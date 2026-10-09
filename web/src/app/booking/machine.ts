@@ -15,16 +15,12 @@ export type BookingPhase =
   | 'review'
   | 'blocked';
 
-export type Channel = 'sms' | 'email';
-
 /** The non-clinical choices that may sit in sessionStorage so a refresh does not lose them. */
 export interface Draft {
   readonly slug: string;
   readonly serviceId: string | null;
   readonly addOnIds: readonly string[];
   readonly guests: number;
-  /** One name per guest, as many as `guests`. */
-  readonly guestNames: readonly string[];
   readonly startsAt: string | null;
   /** The browser's own key for its soft hold (API.md 5.3): the same key renews the hold, and converts it on booking. */
   readonly holdKey: string;
@@ -33,7 +29,6 @@ export interface Draft {
   readonly phoneCountry: string;
   readonly phoneInput: string;
   readonly email: string;
-  readonly channel: Channel;
   /** One key for the whole attempt, so a double tap or a retry cannot book twice. */
   readonly idempotencyKey: string;
 }
@@ -55,7 +50,7 @@ export type BookingEvent =
   | { readonly type: 'preselect'; readonly serviceId: string }
   | { readonly type: 'setAddOns'; readonly addOnIds: readonly string[] }
   | { readonly type: 'chooseService'; readonly serviceId: string; readonly addOnIds: readonly string[] }
-  | { readonly type: 'setGuests'; readonly guests: number; readonly guestNames: readonly string[] }
+  | { readonly type: 'setGuests'; readonly guests: number }
   | { readonly type: 'chooseSlot'; readonly startsAt: string; readonly holdExpiresAt: string | null }
   | { readonly type: 'slotTaken'; readonly alternatives: readonly string[] }
   | {
@@ -65,14 +60,13 @@ export type BookingEvent =
       readonly phoneInput: string;
       readonly email: string;
     }
-  | { readonly type: 'setChannel'; readonly channel: Channel }
   | { readonly type: 'verified'; readonly proof: VerificationProof; readonly target: string }
   | { readonly type: 'setFirstVisit'; readonly answers: FirstVisitAnswers }
   | { readonly type: 'result'; readonly result: BookingResult }
   | { readonly type: 'back' }
   | { readonly type: 'reset' };
 
-export const EMPTY_FIRST_VISIT: FirstVisitAnswers = { heardFrom: null, hadBefore: null, note: '' };
+export const EMPTY_FIRST_VISIT: FirstVisitAnswers = { note: '' };
 
 /** A lowercase UUID v4, as the server requires for `idempotencyKey` (API.md section 4). */
 export function newIdempotencyKey(): string {
@@ -98,7 +92,6 @@ export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey:
     serviceId: null,
     addOnIds: [],
     guests: 0,
-    guestNames: [],
     startsAt: null,
     holdKey,
     holdExpiresAt: null,
@@ -106,7 +99,6 @@ export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey:
     phoneCountry: defaultCountry,
     phoneInput: '',
     email: '',
-    channel: 'sms',
     idempotencyKey,
   };
 }
@@ -119,7 +111,7 @@ const sameSet = (a: readonly string[], b: readonly string[]): boolean => a.lengt
 
 /** What a proof was issued for: it is void once the phone or the email changes. */
 export function proofTarget(draft: Draft): string {
-  return `${draft.channel}|${draft.phoneCountry}|${draft.phoneInput.trim()}|${draft.email.trim().toLowerCase()}`;
+  return `${draft.phoneCountry}|${draft.phoneInput.trim()}|${draft.email.trim().toLowerCase()}`;
 }
 
 export function reduce(state: BookingState, event: BookingEvent): BookingState {
@@ -147,13 +139,11 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
     }
     case 'setGuests': {
       const changed = draft.guests !== event.guests;
-      const names = Array.from({ length: event.guests }, (_, index) => event.guestNames[index] ?? '');
       return {
         ...state,
         draft: {
           ...draft,
           guests: event.guests,
-          guestNames: names,
           ...(changed ? { startsAt: null, holdExpiresAt: null } : {}),
         },
       };
@@ -180,11 +170,6 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
         phoneInput: event.phoneInput,
         email: event.email,
       };
-      const stale = state.proof !== null && state.proofFor !== proofTarget(nextDraft);
-      return { ...state, draft: nextDraft, ...(stale ? { proof: null, proofFor: null } : {}) };
-    }
-    case 'setChannel': {
-      const nextDraft: Draft = { ...draft, channel: event.channel };
       const stale = state.proof !== null && state.proofFor !== proofTarget(nextDraft);
       return { ...state, draft: nextDraft, ...(stale ? { proof: null, proofFor: null } : {}) };
     }
@@ -253,7 +238,8 @@ export function allowedStep(step: FlowStep, state: BookingState): FlowStep {
   const { draft } = state;
   const hasService = draft.serviceId !== null;
   const hasSlot = draft.startsAt !== null;
-  const hasDetails = draft.name.trim() !== '' && draft.phoneInput.trim() !== '';
+  // D46: the e-mail is required, because it is the only thing the page verifies.
+  const hasDetails = draft.name.trim() !== '' && draft.phoneInput.trim() !== '' && draft.email.trim() !== '';
   switch (step) {
     case 'service':
       return 'service';

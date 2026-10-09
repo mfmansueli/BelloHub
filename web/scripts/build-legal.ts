@@ -19,8 +19,9 @@ const here = dirname(fileURLToPath(import.meta.url));
 const legalRoot = resolve(here, '../../legal');
 const outRoot = resolve(here, '../src/legal/generated');
 
-/** The documents the web shows (privacy policy for the /privacy page, the rest inside the flows). */
-export const DOCUMENTS = ['client-notice', 'consent-health', 'consent-guardian', 'data-requests', 'privacy-policy'] as const;
+/** The documents the web shows (privacy policy for the /privacy page, the rest inside the flows). D49: the consent texts are not here: the
+ * consent a client signs is the one the server serves for that professional. */
+export const DOCUMENTS = ['client-notice', 'data-requests', 'privacy-policy'] as const;
 export type LegalDocument = (typeof DOCUMENTS)[number];
 
 export const LOCALIZATIONS = ['pt-BR', 'pt-PT', 'es-MX', 'es-419', 'es', 'en', 'en-GB', 'it', 'fr', 'de', 'tr', 'id', 'hi', 'ar'] as const;
@@ -163,12 +164,6 @@ function main(): void {
           .replaceAll('{{OPERATOR_ADDRESS}}', values.address)
           .replaceAll('{{EFFECTIVE_DATE}}', effectiveDate(version, localization));
       const parsed = parse(readFileSync(join(directory, latest), 'utf8'), fill);
-      if (document === 'consent-health' && !parsed.blocks.some((b) => b.type === 'consent')) {
-        throw new Error(`${document}/${localization}: no consent paragraph found`);
-      }
-      if (document === 'consent-guardian' && !parsed.blocks.some((b) => b.type === 'check')) {
-        throw new Error(`${document}/${localization}: no checkbox lines found`);
-      }
       const unresolved = JSON.stringify(parsed).match(/\{\{[A-Z_]+\}\}/);
       if (unresolved !== null) throw new Error(`${document}/${localization}: unresolved ${unresolved[0]}`);
       mkdirSync(join(outRoot, document), { recursive: true });

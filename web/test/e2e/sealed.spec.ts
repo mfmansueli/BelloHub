@@ -66,6 +66,24 @@ function onlyItem(items: InboxItem[]): InboxItem {
   return items[0] as InboxItem;
 }
 
+test.describe('the consent text (D49)', () => {
+  test('the text she signs is the one the server returned for her language, never one of ours', async ({ page, mock, slugFor }) => {
+    const { token } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: 50 * HOUR });
+    await open(page, `/m/${token}/form`);
+    await expect(page.getByTestId('consent-text')).toContainText('I agree that Maria keeps this information to take care of me.');
+    await tap(page, 'minor-yes');
+    await expect(page.getByTestId('consent-text')).toContainText('as the guardian');
+  });
+
+  test('without a consent text from the server the form is not available and nothing can be signed', async ({ page, mock, slugFor }) => {
+    const { token } = await mock.seed({ slug: slugFor('maria-noconsent'), startsInMinutes: 50 * HOUR });
+    await open(page, `/m/${token}/form`);
+    await expect(page.getByTestId('consent-unavailable')).toBeVisible();
+    await expect(page.getByTestId('submit-intake')).toHaveCount(0);
+    await expect(page.getByTestId('consent')).toHaveCount(0);
+  });
+});
+
 test.describe('the health form (Cl-4)', () => {
   test('an adult answers, signs and sends: only a sealed envelope leaves, and only the professional can open it @core', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
@@ -101,7 +119,7 @@ test.describe('the health form (Cl-4)', () => {
     expect((await mock.bookings(slug))[0]?.intake).toBe('done');
   });
 
-  test('for a minor the guardian signs and the photo agreement is a separate, explicit box', async ({ page, mock, slugFor }) => {
+  test('for a minor the guardian signs the guardian text', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria');
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}/form`);
@@ -109,7 +127,7 @@ test.describe('the health form (Cl-4)', () => {
     await page.getByTestId('submit-intake').click();
     await expect(page.getByTestId('sealed-message')).toBeVisible();
     const item = onlyItem(await mock.inbox(slug));
-    expect(item.payload).toMatchObject({ isForMinor: true, minorName: 'Bia', guardianName: SIGNATURE, clientName: SIGNATURE, consent: { photos: false } });
+    expect(item.payload).toMatchObject({ isForMinor: true, minorName: 'Bia', guardianName: SIGNATURE, clientName: SIGNATURE });
     // Questions meant for adults are not asked of a minor and never sent.
     expect(item.payload['answers']).not.toHaveProperty('pregnant');
   });

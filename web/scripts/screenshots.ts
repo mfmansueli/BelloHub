@@ -77,8 +77,6 @@ await page.getByTestId('code').fill('123456');
 await shot('bk6-verify');
 await page.getByTestId('verify').click();
 await page.waitForSelector('[data-testid="confirm"]');
-await page.getByTestId('heard-friend').click();
-await page.getByTestId('before-no').click();
 await shot('bk7-first-visit');
 await page.getByTestId('confirm').click();
 await page.waitForSelector('[data-testid="booking-card"]');

@@ -7,12 +7,10 @@ export interface BookingInput {
   readonly serviceId?: string;
   readonly addOns?: readonly string[];
   readonly guests?: number;
-  readonly guestNames?: readonly string[];
   readonly name?: string;
   /** What is typed into the phone field (the country is the professional's). */
   readonly phone?: string;
   readonly email?: string;
-  readonly channel?: 'sms' | 'email';
   /** The code typed on the verify step. */
   readonly code?: string;
   /** Which of the offered slots to take (0 is the first). */
@@ -26,7 +24,6 @@ export const DEFAULTS = {
   email: 'helena@example.com',
 } as const;
 
-export const SMS_CODE = '123456';
 export const EMAIL_CODE = '654321';
 
 /** Bk-1 to Bk-2: choose the service, add-ons and guests, then continue. */
@@ -54,25 +51,20 @@ export async function fillYou(page: Page, input: BookingInput = {}): Promise<voi
   await expect(page.getByTestId('name')).toBeVisible();
   await page.getByTestId('name').fill(input.name ?? DEFAULTS.name);
   await page.getByTestId('phone').fill(input.phone ?? DEFAULTS.phone);
-  if (input.email !== undefined || input.channel === 'email') await page.getByTestId('email').fill(input.email ?? DEFAULTS.email);
-  const names = input.guestNames ?? Array.from({ length: input.guests ?? 0 }, (_, index) => `Guest ${index + 1}`);
-  for (const [index, guest] of names.entries()) await page.getByTestId(`guest-name-${index}`).fill(guest);
+  await page.getByTestId('email').fill(input.email ?? DEFAULTS.email);
   await page.getByTestId('send-code').click();
 }
 
-/** Bk-6: the code, from SMS or email. */
+/** Bk-6: the code sent by e-mail (D46). */
 export async function verify(page: Page, input: BookingInput = {}): Promise<void> {
   await expect(page.getByTestId('code')).toBeVisible();
-  if (input.channel === 'email') await page.getByTestId('use-email').click();
-  await page.getByTestId('code').fill(input.code ?? (input.channel === 'email' ? EMAIL_CODE : SMS_CODE));
+  await page.getByTestId('code').fill(input.code ?? EMAIL_CODE);
   await page.getByTestId('verify').click();
 }
 
 /** Bk-7: the optional first-visit questions, answered, then confirm. */
 export async function confirmFirstVisit(page: Page): Promise<void> {
   await expect(page.getByTestId('confirm')).toBeVisible();
-  await page.getByTestId('heard-friend').click();
-  await page.getByTestId('before-no').click();
   await page.getByTestId('confirm').click();
 }
 

@@ -20,6 +20,17 @@ test.describe('the client portal (Cl-2) and rebooking (Cl-3)', () => {
     await expect(page.getByTestId('tab-appts')).toHaveAttribute('aria-selected', 'true');
   });
 
+  test('links to no form, check-in or data page: those open only from a booking\'s own link (D52)', async ({ page, mock, slugFor }) => {
+    const { portalToken } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: -24 * HOUR, status: 'completed' });
+    await open(page, `/p/${portalToken}`);
+    await expect(page.getByTestId('next-session')).toBeVisible();
+    for (const tab of ['tab-appts', 'tab-journey', 'tab-care']) {
+      await page.getByTestId(tab).click();
+      const hrefs = await page.locator('a[href]').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href') ?? ''));
+      expect(hrefs.filter((href) => /\/(form|checkin|data)(\/|$|\?)/.test(href))).toEqual([]);
+    }
+  });
+
   test('shows what the professional shared after a visit: the note and the care steps', async ({ page, mock, slugFor }) => {
     const { portalToken } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: -24 * HOUR, status: 'completed' });
     await open(page, `/p/${portalToken}`);

@@ -7,6 +7,7 @@
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
+import { api } from '../../api/client';
 import type { PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute, manageRoute } from '../../app/router';
@@ -14,6 +15,7 @@ import { allowedStep } from '../../app/booking/machine';
 import { dispatchBooking, useBooking } from '../../app/booking/store';
 import { priceText } from '../../app/booking/priceText';
 import { selectedAddOns, totals } from '../../app/booking/summary';
+import { BookingRules } from '../../components/BookingRules';
 import { CalendarSheet } from '../../components/CalendarSheet';
 import { Button, Link, LinkButton } from '../../components/Button';
 import { Icon } from '../../components/Icon';
@@ -21,13 +23,33 @@ import { Avatar, Footer, Screen, Title, useDocumentTitle } from '../../component
 import { Notice, Seal } from '../../components/Feedback';
 import { PersonalLink } from '../../components/PersonalLink';
 import { useI18n } from '../../i18n';
-import { linkBase } from '../../lib/config';
+import { linkBase, pageUrl } from '../../lib/config';
+import type { PolicyValues } from '../../lib/policy';
 
 export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
   const { t } = useI18n();
   const format = useFormatter();
   const [state] = useBooking(profile.slug, profile.regionCode);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  // D47: the rules shown here are the booking's own policy snapshot, read back from the server; until it arrives (or if
+  // it cannot be read) nothing is claimed.
+  const [snapshot, setSnapshot] = useState<PolicyValues | null>(null);
+  const bookedToken = state.result?.status === 'confirmed' ? state.result.manageToken : null;
+  useEffect(() => {
+    if (bookedToken === null) return;
+    let current = true;
+    api.getBooking(bookedToken).then(
+      (booking) => {
+        if (current) setSnapshot(booking.policy);
+      },
+      () => {
+        if (current) setSnapshot(null);
+      },
+    );
+    return () => {
+      current = false;
+    };
+  }, [bookedToken]);
   useDocumentTitle(t('bk8.title'));
 
   const redirect = allowedStep('booked', state) !== 'booked';
@@ -45,7 +67,6 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
   const addOns = selectedAddOns(profile.addOns, draft.addOnIds);
   const summary = service === undefined ? null : totals(service, addOns, draft.guests);
   const minutes = Math.round((Date.parse(result.endsAt) - Date.parse(result.startsAt)) / 60_000);
-  const guestNames = draft.guestNames.filter((name) => name.trim() !== '');
   const meta = [format.minutes(minutes), priceText(summary?.price ?? null, format, t)].filter(Boolean).join(' · ');
   const serviceNames = [result.serviceName, ...addOns.map((addOn) => addOn.name)];
 
@@ -65,7 +86,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </b>
         <p class="meta">{meta}</p>
         {draft.guests > 0 ? (
-          <p class="meta">{guestNames.length > 0 ? t('bk8.guest.named', { guest: format.list(guestNames) }) : t('bk8.guest.unnamed', { count: draft.guests })}</p>
+          <p class="meta">{t('bk8.guest.unnamed', { count: draft.guests })}</p>
         ) : null}
         <hr class="rule" />
         <div class="row-flex">
@@ -125,6 +146,8 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </Notice>
       </section>
 
+      {snapshot === null ? null : <BookingRules policy={snapshot} professionalFirstName={profile.firstName} />}
+
       <p class="center">
         <Button
           variant="tertiary"
@@ -144,7 +167,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         open={calendarOpen}
         onClose={() => { setCalendarOpen(false); }}
         booking={{ bookingId: result.bookingId, startsAt: result.startsAt, endsAt: result.endsAt, serviceNames, professional: { displayName: profile.displayName, city: profile.city } }}
-        link={link}
+        pageUrl={pageUrl(profile.slug)}
       />
     </Screen>
   );

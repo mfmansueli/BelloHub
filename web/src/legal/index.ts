@@ -6,7 +6,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { useI18n } from '../i18n';
 import type { LocaleId } from '../lib/locales';
 
-export type LegalDocument = 'client-notice' | 'consent-health' | 'consent-guardian' | 'data-requests' | 'privacy-policy';
+export type LegalDocument = 'client-notice' | 'data-requests' | 'privacy-policy';
 
 export type Inline = { k: 't'; v: string } | { k: 'b'; v: string } | { k: 'a'; v: string } | { k: 'pro' };
 

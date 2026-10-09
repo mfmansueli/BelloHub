@@ -21,6 +21,7 @@ export interface SeedInput {
   readonly status?: 'confirmed' | 'pendingApproval' | 'completed' | 'cancelledByClient' | 'cancelledByPro' | 'declined' | 'noShow';
   readonly serviceId?: string;
   readonly phone?: string;
+  readonly email?: string;
   readonly name?: string;
   readonly rescheduleCount?: number;
   readonly intake?: 'pending' | 'done';

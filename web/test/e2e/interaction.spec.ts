@@ -179,12 +179,14 @@ test.describe('keyboard', () => {
     await page.keyboard.type('Helena Duarte');
     await page.getByTestId('phone').focus();
     await page.keyboard.type('11 98765 4321');
+    await page.getByTestId('email').focus();
+    await page.keyboard.type('helena@example.com');
     await page.getByTestId('send-code').focus();
     await page.keyboard.press('Enter');
     await expect(page.getByTestId('code')).toBeVisible();
     await expect(page.locator('h1#page-title')).toBeFocused();
     await page.getByTestId('code').focus();
-    await page.keyboard.type('123456');
+    await page.keyboard.type('654321');
     await page.getByTestId('verify').focus();
     await page.keyboard.press('Enter');
     await expect(page.getByTestId('confirm')).toBeVisible();

@@ -31,7 +31,6 @@ export function parseDraft(text: string | null, slug: string, defaultCountry: st
       serviceId: nullableStr(stored['serviceId']),
       addOnIds: addOns,
       guests,
-      guestNames: Array.isArray(stored['guestNames']) ? stored['guestNames'].filter((n): n is string => typeof n === 'string').slice(0, guests) : [],
       startsAt: nullableStr(stored['startsAt']),
       holdKey: /^[A-Za-z0-9_-]{16,64}$/.test(str(stored['holdKey'])) ? str(stored['holdKey']) : fresh.holdKey,
       holdExpiresAt: nullableStr(stored['holdExpiresAt']),
@@ -39,7 +38,6 @@ export function parseDraft(text: string | null, slug: string, defaultCountry: st
       phoneCountry: str(stored['phoneCountry'], defaultCountry),
       phoneInput: str(stored['phoneInput']),
       email: str(stored['email']),
-      channel: stored['channel'] === 'email' ? 'email' : 'sms',
       idempotencyKey: str(stored['idempotencyKey'], fresh.idempotencyKey),
     };
   } catch {

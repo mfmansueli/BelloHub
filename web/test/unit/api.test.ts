@@ -43,20 +43,21 @@ function profile(): WireProfile {
 describe('callable transport (API.md section 1)', () => {
   it('POSTs { data } to <base>/<name> and unwraps { result }, with no token in the URL', async () => {
     const { fetch, calls } = fakeFetch(() => ({ status: 200, body: { result: { ok: true } } }));
-    const transport = createTransport({ baseUrl: '/api', appCheckToken: () => Promise.resolve('app-check'), fetchImpl: fetch });
+    const transport = createTransport({ baseUrl: '/api', fetchImpl: fetch });
     await expect(transport.call('getBooking', { token: 'SECRET' })).resolves.toEqual({ ok: true });
     const [call] = calls;
     expect(call?.url).toBe('/api/getBooking');
     expect(call?.init.method).toBe('POST');
     expect(JSON.parse(String(call?.init.body))).toEqual({ data: { token: 'SECRET' } });
-    expect(new Headers(call?.init.headers).get('X-Firebase-AppCheck')).toBe('app-check');
+    // D46: no Firebase SDK in the page, so no App Check token header.
+    expect(new Headers(call?.init.headers).has('X-Firebase-AppCheck')).toBe(false);
     expect(call?.init.credentials).toBe('omit');
     expect(call?.init.referrerPolicy).toBe('no-referrer');
   });
 
   it('a 2xx without { result } is a server fault', async () => {
     const { fetch } = fakeFetch(() => ({ status: 200, body: { ok: true } }));
-    const transport = createTransport({ baseUrl: '/api', appCheckToken: () => Promise.resolve(null), fetchImpl: fetch });
+    const transport = createTransport({ baseUrl: '/api', fetchImpl: fetch });
     await expect(transport.call('getPublicPage', { slug: 'x' })).rejects.toMatchObject({ code: 'server' });
   });
 
