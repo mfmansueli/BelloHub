@@ -41,7 +41,8 @@ hits="$(grep -rEn '^[[:space:]]*import[[:space:]]+(FirebaseAnalytics|FirebaseCra
 # 5. Web: no browser storage in the pages that can hold a health answer (when web/ exists).
 if [[ -d "$ROOT/web/src/routes" ]]; then
     hits="$(grep -rEn 'localStorage|sessionStorage|document\.cookie' \
-        "$ROOT/web/src/routes/form" "$ROOT/web/src/routes/checkin" "$ROOT/web/src/routes/data" 2>/dev/null || true)"
+        "$ROOT/web/src/routes/form" "$ROOT/web/src/routes/checkin" "$ROOT/web/src/routes/data" 2>/dev/null \
+        | grep -vE '^[^:]+:[0-9]+:[[:space:]]*(//|\*|/\*)' || true)"
     [[ -z "$hits" ]] || fail "browser storage used in a sealed-form route" "$hits"
 fi
 

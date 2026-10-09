@@ -18,7 +18,7 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $selection) {
             Tab(value: MainTab.home) {
-                NavigationStack { HomeView() }
+                NavigationStack { HomeView().agendaDestinations() }
             } label: {
                 Label("main.tab.home", systemImage: Icon.home.symbolName)
             }
@@ -36,7 +36,7 @@ struct MainView: View {
             .accessibilityIdentifier("main.tab.clients")
 
             Tab(value: MainTab.calendar) {
-                NavigationStack { CalendarView() }
+                NavigationStack { CalendarView().agendaDestinations() }
             } label: {
                 Label("main.tab.calendar", systemImage: Icon.calendar.symbolName)
             }
@@ -68,4 +68,5 @@ struct MainView: View {
         .environment(ClientRegistrationService(vault: vault))
         .environment(AppLockService(keyManager: KeyManager()))
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
+        .environment(AppointmentService(vault: VaultService(repository: nil)))
 }
