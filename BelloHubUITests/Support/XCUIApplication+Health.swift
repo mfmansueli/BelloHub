@@ -123,8 +123,8 @@ extension XCUIApplication {
                 toggle.tap()
             }
         }
-        XCTAssertEqual(toggle.value as? String, target, "\(identifier) did not switch: \(saveScreenshot(named: "switch"))",
-                       file: file, line: line)
+        let shot = saveScreenshot(named: "switch")
+        XCTAssertEqual(toggle.value as? String, target, "\(identifier) did not switch: \(shot)", file: file, line: line)
     }
 
     /// Closes the keyboard with its return key. A chip under the keyboard cannot be scrolled clear of it (the drag

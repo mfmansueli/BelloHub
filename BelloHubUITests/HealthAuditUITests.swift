@@ -5,8 +5,8 @@
 
 import XCTest
 
-/// Accessibility audit of the health screen (4.5 and its three sheets: the form, the consent record and the patch
-/// test) and the form settings (6.14), in several localizations, at the default size and at AX5. Slow, so it runs in the Full plan and
+/// Accessibility audit of the health screen (4.5 and its three sheets: the form, the consent record and the
+/// patch test) and the form settings (6.14), in several localizations, at the default size and at AX5. Slow, so it runs in the Full plan and
 /// is skipped by UISmoke. It reports clipped text and missing descriptions; contrast is measured by unit tests
 /// (CLAUDE.md section 5), as in `OnboardingAuditUITests`.
 @MainActor

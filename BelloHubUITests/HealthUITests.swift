@@ -15,13 +15,12 @@ final class HealthUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testFillTheHealthFormNoteAConsentEditItAndRecordAPatchTest() {
+    func testFillTheHealthFormAndRecordAPatchTest() {
         let app = XCUIApplication.launchedOnHealth()
 
         // No form yet: the screen explains and offers the professional-filled path.
         XCTAssertTrue(app.buttons["health.fillButton"].waitForExistence(timeout: 20))
         XCTAssertFalse(app.element(withPrefix: "health.answer.").exists)
-        XCTAssertTrue(app.staticTexts["health.consent.empty"].exists, "no consent recorded yet")
         app.tapButton("health.fillButton")
 
         // The sheet opens with the questions only, and Save stays off until everything is answered.
@@ -44,6 +43,31 @@ final class HealthUITests: XCTestCase {
         XCTAssertTrue(app.element("health.answer.medication").label.contains("No"))
         XCTAssertTrue(app.element("health.review").label.contains("12"), "the default review period is 12 months")
         XCTAssertTrue(app.staticTexts["health.consent.empty"].exists, "filling the form notes no consent (D55)")
+
+        // A patch test goes into the log.
+        XCTAssertTrue(app.buttons["health.recordPatchTestButton"].waitForExistence(timeout: 15))
+        app.tapButton("health.recordPatchTestButton")
+        XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15))
+        XCTAssertFalse(app.buttons["patch.saveButton"].isEnabled, "a patch test needs a product")
+        app.typeIntoField("Calming serum", identifier: "patch.productField")
+        app.typeIntoField("Inner arm", identifier: "patch.areaField")
+        app.selectChip("patch.hours.48")
+        app.selectChip("patch.result.mildReaction")
+        XCTAssertTrue(app.buttons["patch.saveButton"].isEnabled)
+        app.tapButton("patch.saveButton")
+
+        let patch = app.element(withPrefix: "health.patchTest.")
+        XCTAssertTrue(patch.waitForExistence(timeout: 20))
+        XCTAssertTrue(patch.label.contains("Calming serum"), patch.label)
+        XCTAssertTrue(patch.label.contains("Inner arm"), patch.label)
+        XCTAssertTrue(patch.label.contains("Mild reaction"), patch.label)
+        XCTAssertFalse(app.staticTexts["health.patch.empty"].exists)
+    }
+
+    func testNoteAConsentThenEditItToNotSigned() {
+        let app = XCUIApplication.launchedOnHealth()
+        XCTAssertTrue(app.buttons["health.addConsentButton"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["health.consent.empty"].exists, "no consent recorded yet")
 
         // A consent is noted: a label of her own, signed, dated today.
         app.tapButton("health.addConsentButton")
@@ -73,26 +97,7 @@ final class HealthUITests: XCTestCase {
         let edited = app.button(withPrefix: "health.consent.")
         XCTAssertTrue(edited.waitForExistence(timeout: 20))
         XCTAssertTrue(edited.label.contains("Not signed"), edited.label)
-        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'health.consent.'")).count, 1,
-                       "editing updates the same record")
-
-        // A patch test goes into the log.
-        XCTAssertTrue(app.buttons["health.recordPatchTestButton"].waitForExistence(timeout: 15))
-        app.tapButton("health.recordPatchTestButton")
-        XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15))
-        XCTAssertFalse(app.buttons["patch.saveButton"].isEnabled, "a patch test needs a product")
-        app.typeIntoField("Calming serum", identifier: "patch.productField")
-        app.typeIntoField("Inner arm", identifier: "patch.areaField")
-        app.selectChip("patch.hours.48")
-        app.selectChip("patch.result.mildReaction")
-        XCTAssertTrue(app.buttons["patch.saveButton"].isEnabled)
-        app.tapButton("patch.saveButton")
-
-        let patch = app.element(withPrefix: "health.patchTest.")
-        XCTAssertTrue(patch.waitForExistence(timeout: 20))
-        XCTAssertTrue(patch.label.contains("Calming serum"), patch.label)
-        XCTAssertTrue(patch.label.contains("Inner arm"), patch.label)
-        XCTAssertTrue(patch.label.contains("Mild reaction"), patch.label)
-        XCTAssertFalse(app.staticTexts["health.patch.empty"].exists)
+        let rows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'health.consent.'"))
+        XCTAssertEqual(rows.count, 1, "editing updates the same record")
     }
 }

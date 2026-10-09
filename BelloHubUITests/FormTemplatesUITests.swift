@@ -39,6 +39,7 @@ final class FormTemplatesUITests: XCTestCase {
         XCTAssertFalse(save.isEnabled)
 
         // No consent text is offered anywhere on the screen (D55).
-        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'formTemplates.consent.'")).count, 0)
+        let consentRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'formTemplates.consent.'"))
+        XCTAssertEqual(consentRows.count, 0)
     }
 }
