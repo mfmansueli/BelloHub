@@ -67,7 +67,16 @@ final class TreatmentFlowUITests: XCTestCase {
         let save = app.buttons["treatmentFlow.review.saveButton"]
         XCTAssertTrue(save.waitForExistence(timeout: 10))
         XCTAssertFalse(save.isEnabled)
-        app.tapButton("treatmentFlow.review.keepAllButton")
+        // "Keep all" sits under the cards; on some screen sizes it peeks out under the save bar, where a tap would
+        // land on the bar, so scroll until the whole button is above it.
+        let keepAll = app.buttons["treatmentFlow.review.keepAllButton"]
+        XCTAssertTrue(keepAll.waitForExistence(timeout: 8))
+        var swipes = 0
+        while keepAll.frame.maxY > save.frame.minY, swipes < 6 {
+            app.swipeUp()
+            swipes += 1
+        }
+        keepAll.tap()
         XCTAssertTrue(save.isEnabled)
         save.tap()
 
