@@ -313,6 +313,7 @@ Human tasks created: none.
 ## Conventions learned while building (read before writing code)
 - Agent concurrency (owner request): at most 3 agents at a time from the next task on (the six running agents of S4, backend and web finish first); a stage with more slices runs in waves of three.
 - Agent effort (owner-approved, from S5): `high` by default, `xhigh` for security and privacy slices (rules, counters, sealed envelopes, health and consent, vault), `medium` for mechanical work (strings, legal sync, lint, docs), `max` only for a hard bug already retried.
+- **Agent effort (owner rule, 2026-10-09, overrides the line above): no agent on any model above `medium`** (never `high`, `xhigh` or `max`), to save tokens.
 - Parallel work: the owner asked for parallel agents on every stage. Commit a shared contract first (protocols, DTOs, routes, fakes), then one agent per slice with `isolation: worktree`, a distinct existing simulator each (`SIM_UDID`), no edits to PROGRESS.md, DESIGN.md or the generated string catalog (`docs/agent-notes/<slice>.md` instead). Integrate by merging branches, regenerating the catalog with `scripts/merge-strings.py`, deleting `Screens/Clients/Placeholders/`, then fast, smoke and `check-warnings.sh` on the merged result.
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
 - Accessibility identifiers go on elements, never on containers.
