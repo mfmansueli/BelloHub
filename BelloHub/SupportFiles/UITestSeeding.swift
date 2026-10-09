@@ -21,6 +21,7 @@ enum UITestSeeding {
     @MainActor
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
         await ImportUITestSeeding.seedIfRequested(dependencies, options: options)
+        await CatalogUITestSeeding.seedIfRequested(dependencies)
         guard let seed = options.seed, ["onboarded", "clientWithHealth", "clients"].contains(seed), !options.keepsState
         else { return }
         let defaults = dependencies.defaults

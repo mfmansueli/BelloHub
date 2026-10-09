@@ -18,7 +18,10 @@ struct FlowLayout: Layout {
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         let rows = arrange(width: proposal.width ?? .infinity, subviews: subviews)
-        let width = proposal.width ?? rows.map(\.width).max() ?? 0
+        // An infinite proposal (a list measuring a row's natural size) is answered with the width the rows need: a
+        // layout must never report a non-finite size ("Invalid frame dimension").
+        let natural = rows.map(\.width).max() ?? 0
+        let width = proposal.width.map { $0.isFinite ? $0 : natural } ?? natural
         let height = rows.reduce(0) { $0 + $1.height } + lineSpacing * CGFloat(max(rows.count - 1, 0))
         return CGSize(width: width, height: height)
     }
