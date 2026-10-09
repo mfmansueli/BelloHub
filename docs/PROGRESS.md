@@ -76,29 +76,13 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S4` (clients and the client record) · started: 2026-10-08 · branch: `build/v1` · `L` and `S3` are done (tags `stage-L`, `stage-S3`).
-S4 runs as **four parallel agents**, each in its own git worktree and simulator, on top of a shared contract commit (`407427e`: the D42 registration gate, route, fakes): `clients-ui` (2.2, 4.1 to 4.4), `import` (4.6 and the gate's tests), `health-forms` (4.5, 6.14, legal text bundling), `tags-record-template` (6.12, 6.13, More). Their notes land in `docs/agent-notes/`; the coordinator merges the branches, regenerates the string catalog and merges the notes into this file and `DESIGN.md`.
+`S5` (business setup) · started: 2026-10-09 · branch: `build/v1` · `S4` is done (tag `stage-S4`).
+S5 runs as **two parallel agents on `model: sonnet`** (owner's cap on 2026-10-09: at most two app agents), each in its own worktree and simulator, on top of the contract commit `78a7317` (More routes and sections, placeholders in `Screens/More/Placeholders/`, empty `CatalogRepository` and `BookingSetupRepository` composed into `ClientRecordRepository`, vault kinds `addOn`, `product`, `credential`, `availability`, `bookingSetup`, `quickReply`, strings batch `s5-contract.json`): **services** (6.1, 6.2, 6.3, 6.4, 6.10, 6.11; notes `docs/agent-notes/s5-services.md`, simulator `9368BE88`) and **booking** (6.5, 6.7, 6.8, 6.9, 6.15, 6.16, policy rule text, slug, QR, quick replies; notes `s5-booking.md`, simulator `1D7CD4D7`).
+In parallel and independent of the app: two Fable agents at `medium` continue the **backend** (worktree `agent-a243edc65aa8fcdad`: bounded security review, Apple verifier, email adapter) and the **web** (worktree `agent-ac7ea3c725dfcc9b0`: reconcile with `firebase/functions/API.md`, the WebKit CSP problem, `scripts/test-web.sh`, security checklist). Their handoffs stay in their branches' `docs/agent-notes/{backend,web}.md`; nothing of them is merged into `build/v1` yet.
 
-### RESUME HERE (saved 2026-10-08, when the owner's usage limit was running out)
-State of the parallel work. Nothing below is merged into `build/v1` yet; every agent branch lives in a local git worktree under `.claude/worktrees/` (they survive a session restart; they are not pushed).
+**Integration of S5 when both agents finish:** merge both branches, regenerate `Localizable.xcstrings` with `scripts/merge-strings.py`, make sure `Screens/More/Placeholders/` is gone, fold `docs/agent-notes/s5-*.md` into this file and `DESIGN.md`, then `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`; commit, tag `stage-S5`, push.
 
-| Slice | Worktree dir (under `.claude/worktrees/`) | Branch | State |
-|---|---|---|---|
-| clients-ui (2.2, 4.1 to 4.4) | `agent-ab4d3f28d5af2223e` | `worktree-agent-ab4d3f28d5af2223e` | Screens built and committed; was in the final check-warnings run; notes `docs/agent-notes/clients-ui.md` |
-| import (4.6) | `agent-aef36165262ce4d7d` | `worktree-agent-aef36165262ce4d7d` | **Finished**, 3 commits (`158c624`, `8e163c2`, `68b2a1f`) on top of `407427e`, nothing WIP: fast 567 tests, UISmoke 14, check-warnings zero, strings gate green, import audit clean in en, pt-BR, de, ar, hi at AX5; notes `import.md` (integration hints and shared-file conflicts listed there) |
-| health-forms (4.5, 6.14) | `agent-a534192a1071f5248` | `worktree-agent-a534192a1071f5248` | **Functionally complete**, 4 commits (`5832a69`, `4115d8f`, `044556f`, `4b1ff45`) on top of `407427e`, clean tree. Still to run at integration: fast, smoke, check-warnings (fast passed at `4115d8f`; three suites added since are unrun; the `pt-BR`, `de`, `hi` audits are unrun). Open point: the 6.14 consent text shows a draft note, which contradicts `legal/STATUS.md` (the app must not show the word "draft"); remove `legal.draftNote` unless the owner prefers the note. Notes `health-forms.md` ("STATE AT HANDOFF") |
-| tags-record-template (6.12, 6.13, More) | `agent-acff0693a007bb95a` | `worktree-agent-acff0693a007bb95a` | Committed; was re-running the Hindi AX5 audit; notes `tags-record-template.md` |
-| backend (S8 server half) | `agent-a243edc65aa8fcdad` | `worktree-agent-a243edc65aa8fcdad` | **Finished**, tip `be05846`: 1,052 tests green on emulators; nothing deployed; handoff in `docs/agent-notes/backend.md` |
-| web (S9) | `agent-ac7ea3c725dfcc9b0` | `worktree-agent-ac7ea3c725dfcc9b0` | **Checkpointed**, tip `6ca27f2`: 211 unit tests, Chromium and low-end Playwright green, WebKit has about 25 CSP failures; handoff in `docs/agent-notes/web.md` |
-
-**Owner rules for the next session:** (1) at most 3 agents at the same time; (2) agents on `model: fable` run at `medium` at most, other agents `high` by default, `medium` for mechanical work; (3) after S4 is integrated, STOP and wait for the owner before starting S5 (usage-limit worry); (4) never push to `main`.
-
-**Order of work when the owner says go:**
-1. Check each iOS worktree with `git -C <dir> status --short` and `git -C <dir> log --oneline 407427e..HEAD`; if an agent died mid-work, one agent at a time can continue from its notes.
-2. Integrate S4 (the coordinator, no agents needed): merge the four iOS branches into `build/v1` (conflicts are expected only in `Localizable.xcstrings`, `ClientsView`, `MoreView` and the Placeholders folder), regenerate `Localizable.xcstrings` with `scripts/merge-strings.py`, delete `BelloHub/Screens/Clients/Placeholders/`, fold `docs/agent-notes/*` into this file and `DESIGN.md`, then `scripts/test.sh fast`, `scripts/test.sh smoke`, `scripts/check-warnings.sh`; commit, tag `stage-S4`, push.
-3. Backend and web hand-offs are independent of iOS. Next for them, as two Fable agents at `medium` (first one, then the other when there is room): **web**: reconcile the web client with the real `firebase/functions/API.md` (the web assumed plain GET/POST; the server is Firebase callables, `POST {data}` returns `{result}`; list in `docs/agent-notes/backend.md`), then a bounded security checklist (HPKE framing, token handling, privacy gate, CSP and SRI), then the CSP/WebKit failures, `scripts/test-web.sh`, Lighthouse CI. **backend**: a bounded security checklist from section 7 of its notes (rules, D42 paths, calendar locks, sealed mailbox and key ring, App Check, rate limits), then the Apple verifier and the email adapter.
-4. Owner decisions waiting: (a) sign-in for the professional: Sign in with Apple as the main method, phone as the alternative (my recommendation), or phone only; (b) first-visit questions on the booking page: drop them (my recommendation), seal them, or store them as the 300-character note; (c) the CSP variant for Firebase phone verification and App Check on form pages, or SMS through our API only.
-5. Deploy to `bello-hub` (dev, D43) only after the reconciliation: from `firebase/` with the explicit dev config; the Cloud Functions API turns on at the first deploy; record what was deployed here. Never turn on App Check enforcement.
+**Owner decisions still waiting:** (a) sign-in for the professional: Sign in with Apple as the main method, phone as the alternative (recommended), or phone only; (b) first-visit questions on the booking page: drop them (recommended), seal them, or store them as the 300-character note; (c) the CSP variant for Firebase phone verification and App Check on form pages, or SMS through our API only. Deploy to `bello-hub` (dev, D43) only after the web and backend reconciliation; never turn on App Check enforcement.
 
 ## Stage log
 One block per finished stage (newest last):
@@ -211,6 +195,29 @@ Findings worth keeping:
 Open questions: none new.
 Human tasks created: none.
 
+### S4 · Clients and the client record · done 2026-10-09 · tag stage-S4
+Built by four parallel agents on the contract `407427e` (notes in `docs/agent-notes/{clients-ui,import,health-forms,tags-record-template}.md`, which keep the full detail), integrated by the coordinator on 2026-10-09 after a session limit (merge commits `0e5ba77`, `f172479`, `b9912de`, `8285942`).
+Done:
+- Clients (2.2, 4.1 to 4.4): `ClientsTabView` over `ClientsRoute`, list with search, filter chips (incl. Archived), sort, the win-back strip, 2,000-client performance test; profile (hero, habits, knowledge, health and consent row, session plan card); New client sheet through the D42 gate with an inline duplicate notice; edit with Restore and merge (`ClientMerger`, `mergeClient` on both vaults with contract tests); knowledge editor; `PhoneLauncher`.
+- Import (4.6): CSV parser (UTF-8, UTF-16, Windows-1252), column mapper, row rules, system contact picker, file importer, mapping screen, result with the D42 "n more need a plan" card; the import shortcut on the last setup step.
+- Health and consent (4.5) and Client forms (6.14): versioned health form model per profession, sealed `patchTest` vault kind, `ConsentKind.guardian` and the minors flow (D17), the legal texts bundled per language with `scripts/check-legal-resources.sh` and `check-health-forms.sh`, signed text kept with version and language.
+- Tags (6.12), Record fields (6.13) and More (2.5) with `MoreTab` over `MoreRoute`; `ProfileService` edits; tag deletion that cleans clients in one write.
+- Design system: `TagColor`, `TagDot`, `ErrorNotice`, `BelloNoteField`, `FlowLayout(wrapsLongChildren:)`, `SheetHeader(closeIdentifier:)`.
+- Integration fixes: `FlakyHealthRepository` gained `mergeClient`; `HealthContrastTests` named a pair that does not exist (`sage on surface`); the health UI helper closes the keyboard before it scrolls to a chip (the drag landed on the keys and the chip was lost); the `legal.draftNote` line was removed from 4.5 and 6.14 because `legal/STATUS.md` says the app never shows the word "draft".
+Decisions/assumptions: ASSUMPTION-35 to ASSUMPTION-48.
+Deviations from the prototype: see `DESIGN.md` "Changes from the prototype (S4)" and the Design additions table (S4 rows).
+Measured: fast 988 unit tests in 131 suites pass; UISmoke 18 UI tests pass (453 s); `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets; `scripts/check-strings.sh` passes (597 keys, 14 localizations). Audits run by the agents at AX5 and default size: Clients in `en`, `ar`; Import in `en`, `pt-BR`, `de`, `ar`, `hi`; Health in `en`, `ar`; More in `en`, `ar`, `hi`, `pt-BR`, `de` (AX5 `pt-BR`, `de`, `ar` for More not rerun after its last test-only scroll change). Not run: `scripts/test.sh full` with every audit in five languages (about 1 h); the tag `stage-S4` also carries the S5 contract commit `78a7317`, made before the last fixes.
+Findings worth keeping:
+- Swift Testing has its own `Tag`: in test files write `BelloHub.Tag`.
+- XCUITest thinks anything inside a scroll view is visible even under a floating bottom bar; drag then hold before a tap (`scrollAboveBottomBar`), and close the keyboard first.
+- `Calendar.current` is Islamic under `ar_SA`: take every year from a Gregorian calendar in the business time zone.
+- A UTF-16 file without a BOM in ASCII letters is valid UTF-8 (every other byte NUL): test UTF-16 first.
+- Bounds on 2,000-row pure code are measured in thread CPU time (`CPUTime.measure`); wall clock under parallel suites on Debug is noisy.
+- `-AppleInterfaceStyle Dark` does not switch an XCUITest run; `xcrun simctl ui <udid> appearance dark` does.
+- Agents sharing the scratchpad must use slice-specific script names.
+Open questions: should the D42 gate own the phone-clash check on edits (today the form checks); phone-less contacts imported twice become two clients; does a minor turning 18 change her form; where `{{OPERATOR_*}}`, `{{WEB_BASE_URL}}`, `{{EFFECTIVE_DATE}}` come from (H17).
+Human tasks created: on a real iPhone, check the contact picker (multi-select, labelled phones, birthdays) and the file importer with CSV from Excel for Windows and from Numbers (added to H8).
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -248,6 +255,20 @@ Human tasks created: none.
 | ASSUMPTION-32 | The "Aftercare" switch of a custom service stores an empty aftercare template (on, words to be written later) | `Service.aftercareTemplate` is optional text; no separate flag existed | S3 |
 | ASSUMPTION-33 | German uses "Kunde/Kundin" for one client and "Kundschaft" for several and for the tab | The glossary's collective noun does not fit a sentence about "each" client; "pro Kunde/Kundin" does | S3 |
 | ASSUMPTION-34 | "Use passcode" on the Locked screen runs the same system prompt as the Face ID button: the system offers the passcode after a failed face | `LocalAuthentication` has no call that jumps straight to the passcode | S3 |
+| ASSUMPTION-35 | "New" on a client means no completed visit yet | The only list rule not owned by `HabitsCalculator` or `FollowUpPlanner` | S4 |
+| ASSUMPTION-36 | Merging two clients: the kept profile wins and the other fills the gaps; lists join without duplicates; two notes become two paragraphs; booking stays stopped if either had it stopped; the registration ledger is never touched | A merge must lose nothing and never change the D42 count | S4 |
+| ASSUMPTION-37 | The client form, not the D42 gate, catches a phone clash on an edit | The gate treats the same id as an edit before it looks at the phone | S4 |
+| ASSUMPTION-38 | Client edit and knowledge are pushed with Cancel; only New client is a sheet | `ClientsRoute` models them as stack routes | S4 |
+| ASSUMPTION-39 | Contacts come from the system contact picker, with no contacts permission flow; only the restricted state is explained | The picker hands over only the ticked contacts, stricter than any access level | S4 |
+| ASSUMPTION-40 | Import reads CSV only in v1; the row says so | `.xlsx` needs its own zip and XML reader | S4 |
+| ASSUMPTION-41 | One health form template per professional (one version sequence), not per profession | `HealthForm.formVersion` is one number and the mailbox carries one | S4 |
+| ASSUMPTION-42 | A patch test is its own sealed vault kind `patchTest` | A health form or consent has no product or result | S4 |
+| ASSUMPTION-43 | Health form questions are never pre-answered | A silent "no" on a health form is a clinical risk | S4 |
+| ASSUMPTION-44 | A consent text is filled with her current business name when shown, not stored | Placeholders are filled at display; operator fields wait for H17 | S4 |
+| ASSUMPTION-45 | The app never shows the word "draft" on legal texts; `legal.draftNote` was removed at integration | `legal/STATUS.md` | S4 |
+| ASSUMPTION-46 | Record fields save as she goes; a field with data keeps it when switched off or deleted; S7 keys saved values by field `key` | Nothing lost on Back; saved records stay readable | S4 |
+| ASSUMPTION-47 | Titles and counts avoid the client term ("Tags", "2 people") | The term would need several grammatical forms in twelve languages | S4 |
+| ASSUMPTION-48 | Deleting a tag removes it from every client, archived included, in one write | The warning count must equal what changes | S4 |
 
 ## Conventions learned while building (read before writing code)
 - Agent concurrency (owner request): at most 3 agents at a time from the next task on (the six running agents of S4, backend and web finish first); a stage with more slices runs in waves of three.
@@ -279,6 +300,11 @@ Human tasks created: none.
 | 1.3 to 1.8 | Progress bar has six segments (About to Record) instead of four | S3 | |
 | 1.10 Ready | Booking link card says "Ready once you go online" (needs the server, S8); the import shortcut is hidden until S4 | S3 | |
 | 2.1 to 2.4 | Honest empty states without a button until each screen is built | S3 | |
+| 2.2, 4.1 to 4.4 | Archived chip and Restore row; merge picker; inline duplicate notice; stale-data warning; "no longer here" state; neutral copy ("First visit") | S4, ASSUMPTION-35 to 38 | |
+| 4.5 | Review status chip; consent rows open the signed text; minors notice; health form, patch test and signed text sheets; "Send form again" waits for S8 | S4, D17 | |
+| 4.6 | Column-mapping screen, "can't be imported" list, partial-import notice, "n more need a plan" card; CSV only | S4, D42 | |
+| 6.12, 6.13 | Named tag colors; record fields save as she goes (no Save bar); her own fields renamed, reordered, switched off | S4 | |
+| 6.14 | Consent texts read-only and versioned with a language menu; 3/6/12/24 months; no "draft" wording | S4, ASSUMPTION-45 | |
 
 ## Screen traceability (97 screens; status: todo / in-progress / done / deferred)
 Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
@@ -297,10 +323,10 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 1.10 | Onb-7-Ready | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 1.11 | Locked | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 2.1 | Home | S6 | in-progress | Greeting and empty state exist since S3 |
-| 2.2 | Clients | S4 | in-progress | Empty state with the term she chose since S3 |
+| 2.2 | Clients | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
 | 2.3 | Calendar | S6 | in-progress | Empty state since S3 |
 | 2.4 | Notifications | S6 | in-progress | Empty state since S3 (the tab is called Alerts) |
-| 2.5 | More | S3 | done | Profile card, Lock now, Sign out; rows that open later screens arrive with those screens |
+| 2.5 | More | S3 | done | Profile card, Lock now, Sign out; Clients section (S4); Business and Messages rows wired to S5 placeholders |
 | 2.6 | WeekGlance | S6 | todo |  |
 | 2.7 | FollowUps | S6 | todo |  |
 | 2.8 | WinBack | S6 | todo |  |
@@ -316,12 +342,12 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 3.6 | MessageClient | S6 | todo |  |
 | 6.6 | BlockTime | S6 | todo |  |
 | 3.7 | NoShowMark | S6 | todo |  |
-| 4.1 | ClientProfile | S4 | todo |  |
-| 4.2 | NewClient | S4 | todo |  |
-| 4.3 | ClientEdit | S4 | todo |  |
-| 4.4 | ClientKnowledge | S4 | todo |  |
-| 4.5 | ClientHealth | S4 | todo |  |
-| 4.6 | ImportClients | S4 | todo |  |
+| 4.1 | ClientProfile | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
+| 4.2 | NewClient | S4 | done | `ClientsUITests`, `ClientsAuditUITests`; D42 gate |
+| 4.3 | ClientEdit | S4 | done | `ClientsAuditUITests`; merge |
+| 4.4 | ClientKnowledge | S4 | done | `ClientsAuditUITests` |
+| 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests` |
+| 4.6 | ImportClients | S4 | done | `ImportClientsUITests`, `ImportAuditUITests` |
 | 4.7 | RecordHistory | S7 | todo |  |
 | 4.8 | SessionPlan | S6 | todo |  |
 | 4.9 | Incident | S7 | todo |  |
@@ -345,9 +371,9 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 6.9 | QuickReplies | S5 | todo |  |
 | 6.10 | Credentials | S5 | todo |  |
 | 6.11 | Team | S5 | todo | Static 'later' screen (D5) |
-| 6.12 | Tags | S4 | todo |  |
-| 6.13 | RecordTemplate | S4 | todo |  |
-| 6.14 | FormTemplates | S4 | todo |  |
+| 6.12 | Tags | S4 | done | `MoreUITests`, `MoreAuditUITests` |
+| 6.13 | RecordTemplate | S4 | done | `MoreUITests`, `MoreAuditUITests` |
+| 6.14 | FormTemplates | S4 | done | `FormTemplatesUITests`, `HealthAuditUITests` |
 | 6.3 | AddOns | S5 | todo |  |
 | 6.16 | CancelPolicy | S5 | todo |  |
 | 6.15 | NoShowPolicy | S5 | todo |  |

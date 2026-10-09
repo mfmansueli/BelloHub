@@ -61,6 +61,7 @@ extension XCUIApplication {
     func selectChip(_ identifier: String, file: StaticString = #filePath, line: UInt = #line) {
         let chip = buttons[identifier].firstMatch
         XCTAssertTrue(chip.waitForExistence(timeout: 15), "no chip \(identifier)", file: file, line: line)
+        dismissKeyboard()
         scrollAboveBottomBar(chip)
         for _ in 0..<3 {
             chip.tap()
@@ -121,6 +122,17 @@ extension XCUIApplication {
         let diagnostics = "\(healthFormState()) \(saveScreenshot(named: "agree"))"
         XCTAssertEqual(agree.value as? String, "1", "the agreement was not ticked: \(diagnostics)")
         typeIntoField(signature, identifier: "healthForm.signatureField")
+    }
+
+    /// Closes the keyboard with its return key. A chip under the keyboard cannot be scrolled clear of it (the drag
+    /// would land on the keys), and a tap there types instead of selecting.
+    @MainActor
+    func dismissKeyboard() {
+        guard keyboards.firstMatch.exists else { return }
+        let returnKey = keyboards.buttons.matching(NSPredicate(format: "label ==[c] 'return' OR label ==[c] 'done'"))
+            .firstMatch
+        if returnKey.exists { returnKey.tap() }
+        _ = keyboards.firstMatch.waitForNonExistence(timeout: 5)
     }
 
     /// Scrolls a sheet until `element` is clear of the Save bar that floats over its lower part. XCUITest believes

@@ -20,7 +20,6 @@ struct ConsentPreviewSheet: View {
             )
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
-                    FooterNote(text: "legal.draftNote", icon: .info)
                     LegalLanguagePicker(
                         selection: Binding(
                             get: { viewModel.language }, set: { viewModel.setLanguage($0) }

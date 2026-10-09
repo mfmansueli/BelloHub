@@ -17,7 +17,6 @@ struct HealthConsentSection: View {
                 .font(Typography.section)
                 .foregroundStyle(Palette.ink)
                 .accessibilityAddTraits(.isHeader)
-            FooterNote(text: "legal.draftNote", icon: .info)
             LegalLanguagePicker(
                 selection: Binding(
                     get: { viewModel.textLanguage }, set: { viewModel.setTextLanguage($0) }

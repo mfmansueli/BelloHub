@@ -829,22 +829,6 @@
    "إعادة المحاولة"
   ],
   [
-   "legal.draftNote",
-   "Note above a legal text the professional reads: it is a draft",
-   "This text is a draft. Read it carefully before you ask someone to sign it.",
-   "Este texto é um rascunho. Leia com atenção antes de pedir uma assinatura.",
-   "Este texto é um rascunho. Leia-o com atenção antes de pedir uma assinatura.",
-   "Este texto es un borrador. Léelo con atención antes de pedir una firma.",
-   "Este texto es un borrador. Léelo con atención antes de pedir una firma.",
-   "Questo testo è una bozza. Leggilo con attenzione prima di chiedere una firma.",
-   "Ce texte est un brouillon. Lisez-le attentivement avant de demander une signature.",
-   "Dieser Text ist ein Entwurf. Lesen Sie ihn sorgfältig, bevor Sie um eine Unterschrift bitten.",
-   "Bu metin bir taslaktır. İmza istemeden önce dikkatle okuyun.",
-   "Teks ini masih berupa draf. Bacalah dengan saksama sebelum meminta tanda tangan.",
-   "यह टेक्स्ट एक ड्राफ़्ट है। हस्ताक्षर माँगने से पहले इसे ध्यान से पढ़ें।",
-   "هذا النص مسودة. اقرأه بعناية قبل طلب التوقيع."
-  ],
-  [
    "legal.textLanguage",
    "Menu label: the language a legal text is shown in",
    "Text language",

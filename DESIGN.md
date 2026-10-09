@@ -145,15 +145,18 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `InsightTile` | Wash, icon disc, Fraunces numeral (capped before AX3), one accessibility element; put tiles in an `HStack` with `.fixedSize(horizontal: false, vertical: true)` so heights match |
 | `HeroCard` + `HeroSurface` | Graphite, radius 30, glow, `e2`; one per key screen |
 | `EmptyState` | Composed shapes, title, next action, optional primary button |
-| `SheetHeader` | Title, subtitle, close button, for native sheets |
+| `SheetHeader` | Title, subtitle, close button (optional `closeIdentifier`), for native sheets |
 | `BelloTextField` | 52 pt, radius 14, `sunken`, 1.5 pt `fieldBorder`, 3 pt `roseText` focus ring, error text; `isSensitive` turns off autocorrection; `identifier` goes on the text field itself |
 | `InlineNotice` | `.safety` (coral), `.info` (sage), `.warning` (amber) |
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
 | `BrandMark`, `BrandLockup` | The graphite "b" with a rose dot, drawn (not an image), and the two-line wordmark. The wordmark is the brand name, never localized, and always left-to-right |
 | `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `ink` outline and a check, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
-| `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic) |
+| `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
 | `StepProgressBar` | One 4 pt segment per step, filled up to the current one; spoken as "Step n of m" |
 | `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
+| `BelloNoteField` | Multi-line field with the same look as `BelloTextField` (S4) |
+| `TagDot` + `TagColor` | The tag color as a pastel fill inside a ring in the family's text tone; four tokens `rose`, `sage`, `peach`, `sand` (wash, text, dot, outline each), unknown tokens read as `sand`; the ring is 3:1 or more on `surface`, `bg` and `sunken` (`TagColorContrastTests`) |
+| `ErrorNotice` | An error line with an optional "Try again", for a read or save that failed (S4) |
 | `GlowBackdrop` | The page color with a rose glow from the top leading corner (300 pt) and a sage one from the top trailing corner (240 pt), peak 20 %. Only `ink`, `ink2` and `coralText` may sit on a glow (`BackdropContrastTests`); `roseText` links live lower, on the plain page color |
 
 Strings with arguments use a semantic key plus a default value, never `Text("key \(arg)")` (which looks up the key
@@ -188,10 +191,19 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
 | 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
 | 2.1 Home (placeholder, S6) | `Screens/Home/HomeView` | none, presentation-only | `home.greeting`, `home.empty` |
-| 2.2 Clients (placeholder, S4) | `Screens/Clients/ClientsView` | none | `clients.empty` |
+| 2.2 Clients | `Screens/Clients/ClientsTabView` (stack, `ClientsRoute`) + `ClientsView` | `ClientsViewModel` | `clients.empty`, `clients.row.<uuid>`, `clients.filter.<chip>`, `clients.newButton`, `clients.importButton` |
+| 4.1 ClientProfile | `Clients/Profile/ClientProfileView` | `ClientProfileViewModel` | `clientProfile.*` |
+| 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
+| 4.3 ClientEdit (+ merge sheet) | `Clients/Form/ClientEditView`, `ClientMergeSheet` | `ClientFormViewModel`, `ClientMergeViewModel` | `clientEdit.*`, `clientMerge.*` |
+| 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
+| 4.5 ClientHealth (+ health form, patch test, signed text sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel` | `health.*`, `healthForm.*`, `patch.*`, `signedConsent.*` |
+| 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
+| 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
+| 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
+| 6.14 FormTemplates (+ consent preview) | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*`, `consentPreview.*` |
 | 2.3 Calendar (placeholder, S6) | `Screens/Calendar/CalendarView` | none | `calendar.empty` |
 | 2.4 Alerts (placeholder, S8) | `Screens/Alerts/AlertsView` | none | `alerts.empty` |
-| 2.5 More | `Screens/More/MoreView` | none | `more.profileCard`, `more.lockNowButton`, `more.signOutButton`, `more.signOutConfirmButton` |
+| 2.5 More | `Screens/More/MoreTab` (stack, `MoreRoute`) + `MoreView` | none (`MoreSummary` is pure) | `more.profileCard`, `more.<row>Row` (services, products, bookingPage, availability, credentials, team, recordFields, forms, tags, quickReplies), `more.lockNowButton`, `more.signOutButton`, `more.signOutConfirmButton` |
 | Privacy cover, storage unavailable | `Screens/Main/PrivacyCover`, `StorageUnavailableView` | none | `storage.unavailable` |
 | Design Catalog (DEBUG) | `DesignSystem/Catalog/` | none | `catalog.*` |
 
@@ -208,10 +220,13 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
 ├── LockedView
 └── MainView (TabView, five tabs, each with its own NavigationStack)
     ├── Home      → HomeView
-    ├── Clients   → ClientsView (title = the term she chose)
+    ├── Clients   → ClientsTabView → ClientsView (title = the term she chose; sheets: NewClient, ImportClients)
+    │                → ClientProfile → ClientEdit (sheet: merge) · ClientKnowledge · ClientHealth (sheets: health form,
+    │                  patch test, signed text)
     ├── Calendar  → CalendarView
     ├── Alerts    → AlertsView
-    └── More      → MoreView (profile card, Lock now, Sign out)
+    └── More      → MoreTab → MoreView: Business (Services, Products, Booking page, Availability, Credentials, Team; S5),
+                     Clients (Record fields, Forms, Tags), Messages (Quick replies; S5), Account (Lock now, Sign out)
 ```
 
 The scene being inactive puts `PrivacyCover` over everything (the app switcher shows the brand, never a client).
@@ -231,13 +246,37 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   actions that work (Lock now, Sign out). Sign-out moves to Account in S10.
 - The prototype's custom permission dialogs are the system's own; the page before each one is ours.
 
+### Changes from the prototype (S4)
+
+- **Clients**: an "Archived" filter chip and a Restore row; a merge picker with search; an inline "this number is already
+  saved" notice with a button to open her; a warning over a list that shows old data after a failed refresh; a "this
+  profile is no longer here" state. Omitted until their stages: Message and Book actions, history, photos and products
+  tabs, the "Send my booking link" switch, "Save and book", photo changes, delete client data, no-show history.
+- **Client edit and knowledge** are pushed with Cancel (and a confirmation when something changed); New client is the only
+  sheet. The knowledge screen also edits the private note.
+- **Copy is neutral**: no "she" for the client; "New" reads "First visit" where the word would need gender agreement.
+- **Health and consent (4.5)**: "Send form again" waits for the server (S8); review status chip and date; one consent
+  row per signed consent (treatment, photo, guardian) that opens the exact signed text; a minor notice with guardian rows
+  (D17); new sheets for the health form (questions then consent, one signature), patch test and signed text. Questions
+  are never pre-answered.
+- **Client forms (6.14)**: the consent texts are read-only versioned documents (three rows), with a language menu; "Ask
+  again every" offers 3, 6, 12 and 24 months; "Preview as client" waits for S9. No "draft" wording in the app
+  (`legal/STATUS.md`).
+- **Import (4.6)**: a column-mapping screen, a "can't be imported" list, a partial-import notice and an "n more need a
+  plan" card (D42); contacts come from the system picker (no permission flow); CSV only (the row says so; Excel and
+  Numbers export CSV); no booking-link invitation in the result yet.
+- **Record fields (6.13)** save as she goes (no "Save changes" bar); her own fields can be renamed, reordered and
+  switched off, and keep the data they hold.
+- **Tags (6.12)**: four named colors (never color alone), delete inside the sheet and on swipe, counts in people.
+
 ## Empty, loading and error states
 
-Home, Clients, Calendar and Alerts have no data yet, so each shows its empty state (`EmptyState`, no button until
+Home, Calendar and Alerts have no data yet, so each shows its empty state (`EmptyState`, no button until
 there is something to do). The Locked screen has an error state (`InlineNotice`): the face did not match, or this
 phone has no key for her records. A vault that cannot be opened shows `StorageUnavailableView` and never offers to
 erase anything. Each screen that loads data defines all three before it ships: a loading
-state (`Skeleton`), an empty state with the next action (`EmptyState`), and an error state with a retry. Offline
+state (`Skeleton`), an empty state with the next action (`EmptyState`), and an error state with a retry. Clients, the client profile, health and consent, tags and record fields (S4) have all three; their
+errors keep what is on screen and offer "Try again". Offline
 is a normal state: `OfflineBanner` informs and never blocks.
 
 ## Accessibility
