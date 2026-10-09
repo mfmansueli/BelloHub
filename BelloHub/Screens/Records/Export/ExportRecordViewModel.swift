@@ -90,7 +90,8 @@ final class ExportRecordViewModel {
             client = loaded
             summary = Summary(
                 treatmentCount: try await repository.records(for: clientID).count,
-                consentSignedAt: try await repository.consents(for: clientID).map(\.signedAt).max()
+                consentSignedAt: try await repository.consents(for: clientID).filter(\.isSigned)
+                    .map(\.effectiveDate).max()
             )
             photoCount = try await repository.photos(for: clientID).count
             if phase == .loading { phase = .form } else if case .failed = phase { phase = .form }
