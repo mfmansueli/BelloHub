@@ -82,7 +82,7 @@ struct BreakSheet: View {
             .safeAreaInset(edge: .bottom) { saveButton }
             .onDisappear { viewModel.dismissSaveError() }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         .presentationBackground(Palette.bg)
     }
 

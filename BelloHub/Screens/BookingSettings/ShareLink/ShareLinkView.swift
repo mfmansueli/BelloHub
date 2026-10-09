@@ -58,6 +58,8 @@ struct ShareLinkView: View {
             VStack(alignment: .leading, spacing: Spacing.sm) {
                 Text(verbatim: "\(viewModel.host)/").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
                     .environment(\.layoutDirection, .leftToRight)
+                    // The field below is labeled "Booking address"; the host in front of it is decoration.
+                    .accessibilityHidden(true)
                 BelloTextField(
                     title: "shareLink.address.field",
                     text: Binding(get: { viewModel.draft }, set: viewModel.updateDraft),

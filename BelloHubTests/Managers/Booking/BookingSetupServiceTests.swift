@@ -108,9 +108,11 @@ struct BookingSetupServiceTests {
         first.slug = "first"
         var second = service.setup
         second.slug = "second"
-        async let one: Void = service.saveSetup(first)
-        async let two: Void = service.saveSetup(second)
-        _ = try await (one, two)
+        // Unstructured tasks start in the order they are made; `async let` gives no such promise.
+        let one = Task { try await service.saveSetup(first) }
+        let two = Task { try await service.saveSetup(second) }
+        try await one.value
+        try await two.value
         #expect(try await repository.bookingSetup()?.slug == "second")
         #expect(service.setup.slug == "second")
         #expect(await repository.writeCount == 2)

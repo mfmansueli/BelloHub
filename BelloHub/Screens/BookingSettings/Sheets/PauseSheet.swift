@@ -70,7 +70,7 @@ struct PauseSheet: View {
             .safeAreaInset(edge: .bottom) { confirmButton }
             .onDisappear { viewModel.dismissSaveError() }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         .presentationBackground(Palette.bg)
     }
 

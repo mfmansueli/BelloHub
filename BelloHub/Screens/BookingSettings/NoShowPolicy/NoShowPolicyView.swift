@@ -171,7 +171,11 @@ struct NoShowPolicyView: View {
 
     private var messages: some View {
         ListCard(dividerInset: Spacing.md) {
-            NavigationLink(value: MoreRoute.quickReplies) {
+            // A closure link, not the typed route: this screen can be reached from the cancellation screen, which is
+            // itself pushed by closure, and a typed push from there would not land on the More stack.
+            NavigationLink {
+                QuickRepliesView()
+            } label: {
                 MoreRow(
                     icon: .chat, tint: .sage, title: Text("noShowPolicy.messages.title"),
                     subtitle: Text("noShowPolicy.messages.subtitle"), showsChevron: true

@@ -41,8 +41,7 @@ final class BookingSetupUITests: XCTestCase {
 
         // Pause the page with a return date.
         app.tapButton("more.bookingPageRow")
-        app.flipSwitch("bookingSettings.acceptingSwitch")
-        XCTAssertTrue(app.switches["bookingSettings.pauseSheet.dateSwitch"].waitForExistence(timeout: 5))
+        app.flipSwitch("bookingSettings.acceptingSwitch", opens: app.switches["bookingSettings.pauseSheet.dateSwitch"])
         app.flipSwitch("bookingSettings.pauseSheet.dateSwitch")
         XCTAssertTrue(app.element("bookingSettings.pauseSheet.datePicker").waitForExistence(timeout: 5))
         app.tapButton("bookingSettings.pauseSheet.confirmButton")

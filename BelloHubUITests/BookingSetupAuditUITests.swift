@@ -63,43 +63,44 @@ final class BookingSetupAuditUITests: XCTestCase {
         app.tapButton("more.availabilityRow")
         XCTAssertTrue(app.element("availability.starterNotice").waitForExistence(timeout: 8), "\(tag) hours")
         try audit(app, "\(tag) availability")
-        XCTAssertTrue(app.scrollUntilExists(app.buttons["availability.addDayOffButton"]), "\(tag) add day off row")
-        try audit(app, "\(tag) availability, scrolled")
-
-        app.tapButton("availability.addBreakButton")
-        XCTAssertTrue(app.textFields["availability.breakSheet.nameField"].waitForExistence(timeout: 5), "\(tag) break")
-        try audit(app, "\(tag) break sheet")
-        app.tapButton("availability.breakSheet.cancelButton")
-
-        app.tapButton("availability.addDayOffButton")
-        XCTAssertTrue(app.buttons["availability.dayOffSheet.saveButton"].waitForExistence(timeout: 5), "\(tag) day off")
-        try audit(app, "\(tag) days off sheet")
-        app.tapButton("availability.dayOffSheet.cancelButton")
-
+        // Down the list in one direction: the hours sheet, then the break sheet, then the days-off sheet.
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["availability.day.3"]), "\(tag) Tuesday")
         app.tapButton("availability.day.3")
         XCTAssertTrue(app.buttons["availability.hoursSheet.saveButton"].waitForExistence(timeout: 5), "\(tag) hours")
         try audit(app, "\(tag) hours sheet")
         app.tapButton("availability.hoursSheet.addButton")
         try audit(app, "\(tag) hours sheet with two stretches")
         app.tapButton("availability.hoursSheet.cancelButton")
+
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["availability.addBreakButton"]), "\(tag) add break row")
+        try audit(app, "\(tag) availability, scrolled")
+        app.tapButton("availability.addBreakButton")
+        XCTAssertTrue(app.textFields["availability.breakSheet.nameField"].waitForExistence(timeout: 5), "\(tag) break")
+        try audit(app, "\(tag) break sheet")
+        app.tapButton("availability.breakSheet.cancelButton")
+
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["availability.addDayOffButton"]), "\(tag) add day off row")
+        app.tapButton("availability.addDayOffButton")
+        XCTAssertTrue(app.buttons["availability.dayOffSheet.saveButton"].waitForExistence(timeout: 5), "\(tag) day off")
+        try audit(app, "\(tag) days off sheet")
+        app.tapButton("availability.dayOffSheet.cancelButton")
     }
 
     private func walkBookingPage(_ app: XCUIApplication, tag: String) throws {
         app.tapButton("more.bookingPageRow")
         XCTAssertTrue(app.element("bookingSettings.linkText").waitForExistence(timeout: 8), "\(tag) booking page")
         try audit(app, "\(tag) booking page")
-        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.noShowRow"]), "\(tag) rules")
-        try audit(app, "\(tag) booking page, rules")
-
         // The pause sheet, then the paused state with a return date.
-        app.flipSwitch("bookingSettings.acceptingSwitch")
-        XCTAssertTrue(app.switches["bookingSettings.pauseSheet.dateSwitch"].waitForExistence(timeout: 5),
-            "\(tag) pause")
+        XCTAssertTrue(app.scrollUntilExists(app.switches["bookingSettings.acceptingSwitch"]), "\(tag) switch")
+        app.flipSwitch("bookingSettings.acceptingSwitch", opens: app.switches["bookingSettings.pauseSheet.dateSwitch"])
+        XCTAssertTrue(app.scrollUntilExists(app.switches["bookingSettings.pauseSheet.dateSwitch"]), "\(tag) pause")
         app.flipSwitch("bookingSettings.pauseSheet.dateSwitch")
         try audit(app, "\(tag) pause sheet")
         app.tapButton("bookingSettings.pauseSheet.confirmButton")
         XCTAssertTrue(app.element("bookingSettings.returnDatePicker").waitForExistence(timeout: 5), "\(tag) paused")
         try audit(app, "\(tag) booking page paused")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.noShowRow"]), "\(tag) rules")
+        try audit(app, "\(tag) booking page paused, rules")
 
         // The share link, with an address saved.
         XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.shareRow"]), "\(tag) share row")

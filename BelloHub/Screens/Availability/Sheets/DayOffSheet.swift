@@ -71,7 +71,7 @@ struct DayOffSheet: View {
             .onChange(of: firstDay) { _, new in if lastDay < new { lastDay = new } }
             .onDisappear { viewModel.dismissSaveError() }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         .presentationBackground(Palette.bg)
     }
 
