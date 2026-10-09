@@ -26,6 +26,12 @@ struct ConsentRecordViewModelTests {
         let repository = FlakyHealthRepository()
         let client = Client(name: "Ana Costa", createdAt: TestClock.days(-100))
         try await repository.save(client)
+        // The record belongs to this rig's client, whatever client the factory gave it.
+        let existing = existing.map { record in
+            var owned = record
+            owned.clientID = client.id
+            return owned
+        }
         if let existing { try await repository.save(existing) }
         let model = ConsentRecordViewModel(
             clientID: client.id, existing: existing, repository: repository, photos: photos, files: files,
