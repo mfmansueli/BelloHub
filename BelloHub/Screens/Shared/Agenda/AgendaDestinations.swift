@@ -32,6 +32,7 @@ extension View {
             case .beforeYouStart(let id): BeforeYouStartView(appointmentID: id)
             case .runningLate(let id): RunningLateView(appointmentID: id)
             case .blockTime(let day): BlockTimeView(day: day)
+            case .clientMessage(let request): ClientMessageView(request: request)
             }
         }
     }

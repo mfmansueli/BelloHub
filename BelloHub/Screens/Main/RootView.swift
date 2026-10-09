@@ -19,6 +19,8 @@ struct RootView: View {
     @State private var appointments: AppointmentService
     @State private var timeBlocks: TimeBlockService
     @State private var messages: MessageService
+    @State private var agendaDigest: AgendaDigestService
+    @State private var notifications: NotificationService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -39,6 +41,8 @@ struct RootView: View {
         _appointments = State(initialValue: dependencies.appointments)
         _timeBlocks = State(initialValue: dependencies.timeBlocks)
         _messages = State(initialValue: dependencies.messages)
+        _agendaDigest = State(initialValue: dependencies.agendaDigest)
+        _notifications = State(initialValue: dependencies.notifications)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -62,6 +66,8 @@ struct RootView: View {
         .environment(appointments)
         .environment(timeBlocks)
         .environment(messages)
+        .environment(agendaDigest)
+        .environment(notifications)
         .treatmentTools(dependencies.treatmentTools)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
@@ -80,7 +86,13 @@ struct RootView: View {
         }
         .onChange(of: model.stage) { _, stage in
             // Her hours, policies and messages leave memory when the app locks or she signs out.
-            if stage != .app { bookingSetup.clear() }
+            if stage != .app {
+                bookingSetup.clear()
+                agendaDigest.stopListening()
+                notifications.stopListening()
+            }
+            // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
+            if stage.isSignedOut { Task { await notifications.removeAll() } }
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }

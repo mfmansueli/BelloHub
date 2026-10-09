@@ -13,4 +13,12 @@ enum RootStage: Equatable, Sendable {
     case setup
     case locked
     case app
+
+    /// No session on this phone: the welcome or the sign-in.
+    var isSignedOut: Bool {
+        switch self {
+        case .welcome, .signIn: true
+        case .loading, .setup, .locked, .app: false
+        }
+    }
 }

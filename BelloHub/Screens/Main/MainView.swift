@@ -12,7 +12,9 @@ struct MainView: View {
     let onSignOut: () -> Void
 
     @Environment(ProfileService.self) private var profile
+    @Environment(NotificationService.self) private var notifications
     @Environment(\.locale) private var locale
+    @Environment(\.scenePhase) private var scenePhase
     @State private var selection = MainTab.home
 
     var body: some View {
@@ -43,7 +45,7 @@ struct MainView: View {
             .accessibilityIdentifier("main.tab.calendar")
 
             Tab(value: MainTab.alerts) {
-                NavigationStack { AlertsView() }
+                NavigationStack { AlertsView().agendaDestinations() }
             } label: {
                 Label("main.tab.alerts", systemImage: Icon.bell.symbolName)
             }
@@ -57,6 +59,11 @@ struct MainView: View {
             .accessibilityIdentifier("main.tab.more")
         }
         .tint(Palette.ink)
+        // The phone's pending notifications follow her calendar for as long as she is signed in and unlocked.
+        .task { notifications.startListening() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { Task { await notifications.permissionMayHaveChanged() } }
+        }
     }
 }
 
@@ -71,4 +78,12 @@ struct MainView: View {
         .environment(AppointmentService(vault: VaultService(repository: nil)))
         .environment(TimeBlockService(vault: VaultService(repository: nil)))
         .environment(MessageService(vault: VaultService(repository: nil)))
+        .environment(AgendaDigestService(
+            appointments: AppointmentService(vault: vault), timeBlocks: TimeBlockService(vault: vault), vault: vault
+        ))
+        .environment(NotificationService(
+            appointments: AppointmentService(vault: vault), vault: vault, permissions: PermissionService(),
+            profile: ProfileService(vault: vault)
+        ))
+        .environment(PermissionService())
 }

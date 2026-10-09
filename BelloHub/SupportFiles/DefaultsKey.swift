@@ -15,4 +15,6 @@ enum DefaultsKey {
     static let lockGraceSeconds = "lock.graceSeconds"
     /// The signed-in dummy user of `LocalDevAuthProvider`. Exists only in DEBUG builds.
     static let localDevUser = "session.localDevUser"
+    /// `NotificationPrefs` as JSON: what reaches her and when (`DefaultsNotificationPrefsStore`).
+    static let notificationPrefs = "notifications.prefs"
 }

@@ -20,6 +20,8 @@ struct AppDependencies {
     let appointments: AppointmentService
     let timeBlocks: TimeBlockService
     let messages: MessageService
+    let agendaDigest: AgendaDigestService
+    let notifications: NotificationService
     let treatmentTools: TreatmentTools
     let defaults: UserDefaults
 
@@ -34,18 +36,26 @@ struct AppDependencies {
         let defaults = UserDefaults.standard
         let keyManager = KeyManager()
         let vault = VaultService.live(keyManager: keyManager)
+        let profile = ProfileService(vault: vault)
+        let permissions = PermissionService()
+        let appointments = AppointmentService(vault: vault)
+        let timeBlocks = TimeBlockService(vault: vault)
         return AppDependencies(
             session: SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults),
             keyManager: keyManager,
             appLock: AppLockService(keyManager: keyManager, defaults: defaults),
-            permissions: PermissionService(),
+            permissions: permissions,
             vault: vault,
-            profile: ProfileService(vault: vault),
+            profile: profile,
             registration: ClientRegistrationService(vault: vault),
             bookingSetup: BookingSetupService(vault: vault),
-            appointments: AppointmentService(vault: vault),
-            timeBlocks: TimeBlockService(vault: vault),
+            appointments: appointments,
+            timeBlocks: timeBlocks,
             messages: MessageService(vault: vault),
+            agendaDigest: AgendaDigestService(appointments: appointments, timeBlocks: timeBlocks, vault: vault),
+            notifications: NotificationService(
+                appointments: appointments, vault: vault, permissions: permissions, profile: profile
+            ),
             treatmentTools: TreatmentTools.make(),
             defaults: defaults
         )
@@ -61,6 +71,10 @@ struct AppDependencies {
         if !options.keepsState { defaults.removePersistentDomain(forName: uiTestSuite) }
         let keyManager = KeyManager(store: InMemoryKeyStore(seed: uiTestSeed))
         let vault = VaultService(repository: InMemoryClientRecordRepository())
+        let profile = ProfileService(vault: vault)
+        let permissions = PermissionService(provider: UITestPermissionProvider())
+        let appointments = AppointmentService(vault: vault)
+        let timeBlocks = TimeBlockService(vault: vault)
         let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
@@ -68,14 +82,19 @@ struct AppDependencies {
             appLock: AppLockService(
                 keyManager: keyManager, biometrics: UITestBiometrics(mode: mode), defaults: defaults
             ),
-            permissions: PermissionService(provider: UITestPermissionProvider()),
+            permissions: permissions,
             vault: vault,
-            profile: ProfileService(vault: vault),
+            profile: profile,
             registration: ClientRegistrationService(vault: vault),
             bookingSetup: BookingSetupService(vault: vault),
-            appointments: AppointmentService(vault: vault),
-            timeBlocks: TimeBlockService(vault: vault),
+            appointments: appointments,
+            timeBlocks: timeBlocks,
             messages: MessageService(vault: vault, sender: UITestMessageSender()),
+            agendaDigest: AgendaDigestService(appointments: appointments, timeBlocks: timeBlocks, vault: vault),
+            notifications: NotificationService(
+                appointments: appointments, vault: vault, permissions: permissions, profile: profile,
+                prefs: DefaultsNotificationPrefsStore(defaults: defaults), scheduler: UITestNotificationScheduler()
+            ),
             treatmentTools: TreatmentTools.make(),
             defaults: defaults
         )
