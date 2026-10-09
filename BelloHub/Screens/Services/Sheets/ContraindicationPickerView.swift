@@ -51,11 +51,12 @@ struct ContraindicationPickerView: View {
                         .accessibilityHidden(true)
                 }
             }
-            .frame(minHeight: Spacing.touchTarget)
+            .frame(minHeight: 52)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .listRowBackground(Palette.surface)
+        .listRowInsets(EdgeInsets(top: 0, leading: Spacing.md, bottom: 0, trailing: Spacing.md))
         .accessibilityLabel(Text(verbatim: option.summary))
         .accessibilityAddTraits(isOn ? .isSelected : [])
         .accessibilityIdentifier("contraindications.option.\(option.token)")

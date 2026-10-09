@@ -43,7 +43,7 @@ struct CredentialsPreviewSheet: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         .presentationBackground(Palette.bg)
     }
 
