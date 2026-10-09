@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "bello-hub"
+    "default": "demo-bellohub",
+    "bello-hub-deny-all": "bello-hub"
   }
 }

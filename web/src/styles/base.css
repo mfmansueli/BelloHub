@@ -1,0 +1,228 @@
+/* Base: fonts, reset, typography and layout. Colors, spacing, radius, type sizes and motion come from
+   tokens.generated.css (BelloHub/DesignSystem/Tokens). Logical properties only: no left or right anywhere. */
+
+/* Self-hosted subsets, Latin and Latin Extended. Arabic and Devanagari use the system stacks (no downloads).
+   The fallback faces are sized to the web fonts so the swap does not move the layout. */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans-latin.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-500-latin.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 104.2%;
+  ascent-override: 95.2%;
+  descent-override: 29.7%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 104.7%;
+  ascent-override: 93.4%;
+  descent-override: 24.4%;
+  line-gap-override: 0%;
+}
+
+:root {
+  --sans: 'DM Sans', 'DM Sans Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+  --sans-tall: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Arabic', 'Noto Sans Devanagari', 'Noto Sans', sans-serif;
+  --serif: 'Fraunces', 'Fraunces Fallback', ui-serif, Georgia, 'Times New Roman', serif;
+  --column: 560px;
+  --lh: 1.45;
+  --focus: var(--rose-text);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 var(--fs-body) / var(--lh) var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+/* Arabic and Hindi have no glyphs in the bundled fonts: system stacks, and the taller line height of docs/07 section 2.5. */
+:lang(ar),
+:lang(hi) {
+  font-family: var(--sans-tall);
+  line-height: calc(var(--lh) * var(--tall-script-line-height));
+}
+
+h1, h2, h3, p, ul, ol, dl, dd, figure {
+  margin: 0;
+}
+
+/* Headings are sized by classes (.title, .section, .strong), never by the browser's defaults. */
+h1, h2, h3 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+bdi {
+  unicode-bidi: isolate;
+}
+
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  inset-inline-start: var(--space-md);
+  inset-block-start: -100px;
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-control);
+  background: var(--ink);
+  color: var(--ink-on-fill);
+  font-weight: 600;
+}
+.skip:focus {
+  inset-block-start: var(--space-sm);
+}
+
+/* Headings: Fraunces for the Latin languages, the system fonts at weight 600 for Arabic and Hindi. */
+.title, .moment, .numeral {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: var(--display-tracking);
+  line-height: 1.1;
+}
+.title { font-size: var(--fs-screen-title); }
+.moment { font-size: var(--fs-moment); font-variant-numeric: tabular-nums; }
+.numeral { font-size: var(--fs-numeral); font-variant-numeric: tabular-nums; }
+:lang(ar) .title, :lang(ar) .moment, :lang(ar) .numeral,
+:lang(hi) .title, :lang(hi) .moment, :lang(hi) .numeral {
+  font-family: var(--sans-tall);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: calc(1.15 * var(--tall-script-line-height));
+}
+.section { font-size: var(--fs-section); font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+.lead { color: var(--ink-2); font-size: var(--fs-body); }
+.meta { font-size: var(--fs-meta); color: var(--ink-2); }
+.foot-note { font-size: var(--fs-footnote); color: var(--ink-2); }
+.strong { font-weight: 600; }
+.tn { font-variant-numeric: tabular-nums; }
+
+/* Layout: one centred column, a sticky action bar, safe areas. 100dvh because in-app browsers resize. */
+.page {
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  max-inline-size: var(--column);
+  margin-inline: auto;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+.content {
+  flex: 1;
+  padding-block: var(--space-lg) var(--space-lg);
+  padding-inline: var(--space-gutter);
+  padding-block-start: max(var(--space-lg), env(safe-area-inset-top));
+}
+/* Screens breathe: every block of a screen is 24 pt from the one before; inner groups use .stack (16) or .stack-sm (8). */
+.content > * + * { margin-block-start: var(--space-lg); }
+.title + .lead { margin-block-start: var(--space-xs); }
+.stack > * + * { margin-block-start: var(--space-md); }
+.stack-lg > * + * { margin-block-start: var(--space-lg); }
+.stack-sm > * + * { margin-block-start: var(--space-sm); }
+.center { text-align: center; }
+.mt-sm { margin-block-start: var(--space-sm); }
+.mt-md { margin-block-start: var(--space-md); }
+.mt-lg { margin-block-start: var(--space-lg); }
+.w-40 { inline-size: 40%; }
+.h-28 { block-size: 28px; }
+.row-flex { display: flex; align-items: center; gap: var(--space-row); }
+.grow { flex: 1; min-inline-size: 0; }
+
+.bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 5;
+  padding: 14px var(--space-gutter);
+  padding-block-end: max(14px, calc(14px + env(safe-area-inset-bottom)));
+  background: var(--surface);
+  border-block-start: 1px solid var(--hairline);
+}
+.bar > * + * { margin-block-start: var(--space-sm); }
+.bar-note { font-size: var(--fs-footnote); color: var(--ink-2); text-align: center; margin-block-end: var(--space-sm); }
+
+noscript p {
+  padding: var(--space-md) var(--space-gutter);
+}

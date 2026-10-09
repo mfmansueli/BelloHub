@@ -1,0 +1,55 @@
+{
+  "//": "Lighthouse CI for the client web app (docs/10 section 9). `npm run lighthouse` (scripts/lighthouse.ts) starts the mock with the e2e build, seeds a booking, finds a Chrome and runs `lhci autorun` with this file; the URLs (the public page and a personal link) are passed on the command line. Thresholds: performance >= 0.9 on the mobile preset, accessibility >= 0.95; best practices and SEO are reported, not enforced.",
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "settings": {
+        "formFactor": "mobile",
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "best-practices",
+          "seo"
+        ],
+        "skipAudits": [
+          "uses-http2",
+          "is-on-https",
+          "redirects-http",
+          "canonical"
+        ]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": [
+          "error",
+          {
+            "minScore": 0.9,
+            "aggregationMethod": "median"
+          }
+        ],
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.95,
+            "aggregationMethod": "median"
+          }
+        ],
+        "categories:best-practices": [
+          "warn",
+          {
+            "minScore": 0.9
+          }
+        ],
+        "categories:seo": [
+          "off"
+        ]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci/reports",
+      "reportFilenamePattern": "%%PATHNAME%%-%%DATETIME%%.%%EXTENSION%%"
+    }
+  }
+}

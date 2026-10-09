@@ -8,11 +8,314 @@
   "storage": {
     "rules": "storage.rules"
   },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "test",
+        "scripts",
+        "coverage",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" ci",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ],
+  "hosting": {
+    "public": "../web/dist",
+    "predeploy": [
+      "npm --prefix ../web ci --no-audit --no-fund",
+      "npm --prefix ../web run build"
+    ],
+    "cleanUrls": false,
+    "trailingSlash": false,
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; manifest-src 'none'; object-src 'none'"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=63072000; includeSubDomains; preload"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "no-referrer"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Cross-Origin-Resource-Policy",
+            "value": "same-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "accelerometer=(), autoplay=(), camera=(), clipboard-read=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/m/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
+      },
+      {
+        "source": "/p/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store"
+          },
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex, nofollow"
+          }
+        ]
+      },
+      {
+        "source": "/api/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-store"
+          }
+        ]
+      },
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "/fonts/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=604800"
+          }
+        ]
+      },
+      {
+        "source": "/.well-known/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/getPublicPage",
+        "function": {
+          "functionId": "getPublicPage",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getSlots",
+        "function": {
+          "functionId": "getSlots",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/holdSlot",
+        "function": {
+          "functionId": "holdSlot",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/createBooking",
+        "function": {
+          "functionId": "createBooking",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/joinWaitlist",
+        "function": {
+          "functionId": "joinWaitlist",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/sendEmailCode",
+        "function": {
+          "functionId": "sendEmailCode",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/verifyEmailCode",
+        "function": {
+          "functionId": "verifyEmailCode",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/findBookings",
+        "function": {
+          "functionId": "findBookings",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getFormContext",
+        "function": {
+          "functionId": "getFormContext",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/submitSealed",
+        "function": {
+          "functionId": "submitSealed",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getPortal",
+        "function": {
+          "functionId": "getPortal",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getBooking",
+        "function": {
+          "functionId": "getBooking",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/confirmPresence",
+        "function": {
+          "functionId": "confirmPresence",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/reportLate",
+        "function": {
+          "functionId": "reportLate",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/rescheduleBooking",
+        "function": {
+          "functionId": "rescheduleBooking",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/requestReschedule",
+        "function": {
+          "functionId": "requestReschedule",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/cancelBooking",
+        "function": {
+          "functionId": "cancelBooking",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/rebook",
+        "function": {
+          "functionId": "rebook",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getHold",
+        "function": {
+          "functionId": "getHold",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/getIcs",
+        "function": {
+          "functionId": "getIcs",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
   "emulators": {
-    "auth": { "port": 9099 },
-    "firestore": { "port": 8080 },
-    "storage": { "port": 9199 },
-    "ui": { "enabled": true, "port": 4000 },
+    "auth": {
+      "port": 9099
+    },
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "storage": {
+      "port": 9199
+    },
+    "pubsub": {
+      "port": 8085
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "hosting": {
+      "port": 5080
+    },
     "singleProjectMode": true
   }
 }

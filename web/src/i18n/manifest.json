@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "note": "Review state of every web localization, the way the iOS catalog marks `needs_review` (docs/07 section 1, D41). No native reader has read any of these strings, so every one is needs_review; that is information for whoever reads the pages later, not a release gate. Only a human reviewer turns a locale or a key to `translated`: list the keys they read in `reviewedKeys`. Never promoted by Claude Code. es-419 and en-GB are derived by scripts/derive-locales.py from es-MX and en plus src/i18n/overrides/.",
+  "source": "en",
+  "derived": { "es-419": "es-MX", "en-GB": "en" },
+  "locales": {
+    "pt-BR": { "state": "needs_review", "reviewedKeys": [] },
+    "pt-PT": { "state": "needs_review", "reviewedKeys": [] },
+    "es-MX": { "state": "needs_review", "reviewedKeys": [] },
+    "es-419": { "state": "needs_review", "reviewedKeys": [] },
+    "es": { "state": "needs_review", "reviewedKeys": [] },
+    "en": { "state": "needs_review", "reviewedKeys": [] },
+    "en-GB": { "state": "needs_review", "reviewedKeys": [] },
+    "it": { "state": "needs_review", "reviewedKeys": [] },
+    "fr": { "state": "needs_review", "reviewedKeys": [] },
+    "de": { "state": "needs_review", "reviewedKeys": [] },
+    "tr": { "state": "needs_review", "reviewedKeys": [] },
+    "id": { "state": "needs_review", "reviewedKeys": [] },
+    "hi": { "state": "needs_review", "reviewedKeys": [] },
+    "ar": { "state": "needs_review", "reviewedKeys": [] }
+  }
+}
