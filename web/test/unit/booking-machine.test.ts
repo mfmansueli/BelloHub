@@ -25,8 +25,8 @@ function run(events: BookingEvent[], from: BookingState = start()): BookingState
 }
 
 const slot: BookingEvent = { type: 'chooseSlot', startsAt: '2026-10-01T18:00:00Z', holdExpiresAt: '2026-10-01T10:05:00Z' };
-const details: BookingEvent = { type: 'setDetails', name: 'Helena Duarte', phoneCountry: 'BR', phoneInput: '11 98765 4321', email: '' };
-const proof = { method: 'phone', idToken: 'tok' } as const;
+const details: BookingEvent = { type: 'setDetails', name: 'Helena Duarte', phoneCountry: 'BR', phoneInput: '11 98765 4321', email: 'helena@example.com' };
+const proof = { method: 'email', proof: 'email:helena@example.com' } as const;
 const booked = { bookingId: 'bk1', manageToken: 'abc', startsAt: '2026-10-01T18:00:00Z', endsAt: '2026-10-01T19:30:00Z', timeZoneID: 'America/Sao_Paulo', serviceName: 'Brazilian Glow', emailSent: false } as const;
 
 describe('booking state machine (docs/10 section 3)', () => {
@@ -77,7 +77,7 @@ describe('booking state machine (docs/10 section 3)', () => {
     expect(serializeDraft(start().draft)).not.toMatch(/heardFrom|hadBefore|guestNames/);
   });
 
-  it('a verification proof is void as soon as the phone, the email or the channel changes, but not the name', () => {
+  it('a verification proof is void as soon as the phone or the email changes, but not the name', () => {
     let state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, details]);
     state = run([{ type: 'verified', proof, target: proofTarget(state.draft) }], state);
     const renamed = run([{ ...details, name: 'Helena D.' }], state);
@@ -86,8 +86,12 @@ describe('booking state machine (docs/10 section 3)', () => {
     expect(rephoned.proof).toBeNull();
     const withEmail = run([{ ...details, email: 'h@example.com' }], state);
     expect(withEmail.proof).toBeNull();
-    const otherChannel = run([{ type: 'setChannel', channel: 'email' }], state);
-    expect(otherChannel.proof).toBeNull();
+  });
+
+  it('does not reach the verify step without an e-mail (D46: the e-mail is the only thing verified)', () => {
+    const noEmail = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, { ...details, email: '' }]);
+    expect(allowedStep('verify', noEmail)).toBe('you');
+    expect(allowedStep('verify', run([{ ...details }], noEmail))).toBe('verify');
   });
 
   it('maps each answer of the server to a screen', () => {

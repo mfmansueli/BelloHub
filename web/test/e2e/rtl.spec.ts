@@ -59,7 +59,7 @@ test.describe('Arabic, right to left', () => {
     await chooseService(page, slug);
     await chooseSlot(page);
     await fillYou(page, { name: DEFAULTS.name, phone: '١١ ٩٨٧٦٥ ٤٣٢١' });
-    await verify(page, { code: '١٢٣٤٥٦' });
+    await verify(page, { code: '٦٥٤٣٢١' });
     await page.getByTestId('confirm').click();
     await expect(page.getByTestId('booking-card')).toBeVisible();
     expect((await mock.bookings(slug))[0]?.client.phone).toBe('+5511987654321');

@@ -16,11 +16,11 @@ export default defineConfig({
     modulePreload: { polyfill: false },
     // Vite warns on raw size, but what a phone downloads is gzip. The budget that matters (initial JS at most 80 KB
     // gzip, every lazy chunk with its own limit) is enforced on every build by scripts/check-size.ts; the warning
-    // would only fire on the app entry (about 170 kB raw, 52 kB gzip) and the lazy Firebase Auth chunk.
+    // would only fire on the app entry (about 170 kB raw, 52 kB gzip) and the lazy sealing chunk.
     chunkSizeWarningLimit: 200,
     rollupOptions: {
       output: {
-        // The sealing library and the Firebase SDK are only reached through dynamic imports (docs/10 section 1).
+        // The sealing library is only reached through dynamic imports (docs/10 section 1).
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',

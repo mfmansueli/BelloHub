@@ -3,8 +3,8 @@
 // emulator, moves the visit, sends her sealed health form, cancels, and the emulator's outbox shows what Maria's
 // iPhone and Helena's inbox would have received. Every call goes through the /api rewrites of firebase/firebase.json.
 //
-// The verification is by email (the emulator's fixed code): the production phone verifier runs in the browser
-// through Firebase Auth, which the page's CSP (`connect-src 'self'`) keeps from reaching the Auth emulator's origin.
+// The verification is by email (the emulator's fixed code), the only one the page has (D46): no Firebase SDK runs in
+// the browser and the CSP stays `connect-src 'self'`.
 
 import { chooseDayAhead, expect, open, tap, test, waitFor, type SeenRequest } from './support';
 
@@ -69,9 +69,8 @@ test.describe('a client and the real functions', () => {
     await page.getByTestId('email').fill(CLIENT.email);
     await page.getByTestId('send-code').click();
 
-    // The SMS path needs Firebase Auth in the browser; the email code is the one the emulator fixes.
+    // D46: the e-mail code is the only verification; the emulator fixes it.
     await expect(page.getByTestId('code')).toBeVisible();
-    await page.getByTestId('use-email').click();
     await expect.poll(() => apiCalls(requests, 'sendEmailCode').length).toBeGreaterThan(0);
     await page.getByTestId('code').fill(EMAIL_CODE);
     await page.getByTestId('verify').click();

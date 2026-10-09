@@ -129,10 +129,14 @@ export type WireHoldResponse =
   | { readonly status: 'slotTaken'; readonly alternatives: readonly string[] }
   | { readonly status: 'paused' };
 
-/** 5.7 and 5.8: how the client proved she holds the phone (a Firebase ID token) or the email (a single-use proof). */
-export type VerificationProof =
-  | { readonly method: 'phone'; readonly idToken: string }
-  | { readonly method: 'email'; readonly proof: string };
+/**
+ * 5.6 and 5.8: how the client proved she holds the email (a single-use proof). D46: the page verifies by e-mail code
+ * only; the `phone` method of API.md 5.7 needs the Firebase JS SDK and reCAPTCHA, which the strict CSP forbids.
+ */
+export interface VerificationProof {
+  readonly method: 'email';
+  readonly proof: string;
+}
 
 export interface SendEmailCodeRequest {
   readonly slug: string;

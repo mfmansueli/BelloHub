@@ -1,4 +1,4 @@
-// Bk-5: who is coming. Name, phone (the identity), optional email, and "Good to
+// Bk-5: who is coming. Name, phone (the identity), e-mail (the page verifies it), and "Good to
 // know" (the professional's rules, as published). No account and no password: a code confirms it is her next.
 
 import type { JSX } from 'preact';
@@ -18,11 +18,10 @@ import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout
 import { LegalDocumentView } from '../../components/Legal';
 import { Sheet } from '../../components/Sheet';
 import { useI18n } from '../../i18n';
+import { isEmail } from '../../lib/email';
 import { ltr } from '../../lib/bidi';
 import { normalizePhone, phoneRegion } from '../../lib/phone';
 import { useRules } from '../../components/RuleList';
-
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 interface Errors {
   name?: string;
@@ -59,7 +58,7 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
     const next: Errors = {};
     if (name.trim().length < 2) next.name = t('bk5.err.name');
     if (!normalizePhone(phone, phoneRegion(country)).ok) next.phone = t('bk5.err.phone');
-    if (email.trim() !== '' && !EMAIL.test(email.trim())) next.email = t('bk5.err.email');
+    if (!isEmail(email)) next.email = t('bk5.err.email');
     setErrors(next);
     if (Object.keys(next).length > 0) {
       // Focus the first field with a problem so the keyboard and a screen reader land on it.
@@ -96,7 +95,7 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
       >
         <TextField label={t('bk5.name')} value={name} onInput={setName} autoComplete="name" error={errors.name} testId="name" />
         <PhoneField label={t('bk5.phone')} countryLabel={t('bk5.phoneCountry')} country={country} input={phone} defaultCountry={profile.regionCode} error={errors.phone} onChange={(c, p) => { setCountry(c); setPhone(p); }} />
-        <TextField label={t('bk5.email')} optional value={email} onInput={setEmail} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" error={errors.email} testId="email" dir="ltr" />
+        <TextField label={t('bk5.email')} value={email} onInput={setEmail} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" error={errors.email} testId="email" dir="ltr" />
       </form>
 
       <p class="well well-icon">

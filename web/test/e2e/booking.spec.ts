@@ -37,15 +37,20 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await expect(page.getByTestId('actions')).toBeVisible();
   });
 
-  test('verifies by email when the person prefers it', async ({ page, mock, slugFor }) => {
+  test('verifies by e-mail code only and sends no phone verification (D46)', async ({ page, mock, slugFor, guard }) => {
     const slug = slugFor('maria');
     await chooseService(page, slug);
     await chooseSlot(page);
-    await fillYou(page, { channel: 'email' });
-    await verify(page, { channel: 'email', code: EMAIL_CODE });
+    await fillYou(page);
+    await expect(page.getByTestId('use-sms')).toHaveCount(0);
+    await verify(page, { code: EMAIL_CODE });
     await confirmFirstVisit(page);
     await expect(page.getByTestId('booking-card')).toBeVisible();
     expect((await mock.bookings(slug))[0]?.client.email).toBe(DEFAULTS.email);
+    // Only our own origin was called, and only the e-mail code functions (no SMS function, no identity provider).
+    const origin = new URL(page.url()).origin;
+    expect(guard.requests.every((request) => request.url.startsWith(origin))).toBe(true);
+    expect(guard.requests.some((request) => /sendSmsCode|verifySmsCode|identitytoolkit|recaptcha/i.test(request.url))).toBe(false);
   });
 
   test('a wrong code is explained and the right one then works', async ({ page, slugFor }) => {
@@ -54,7 +59,7 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await fillYou(page);
     await verify(page, { code: '000000' });
     await expect(page.getByRole('alert')).toBeVisible();
-    await page.getByTestId('code').fill('123456');
+    await page.getByTestId('code').fill(EMAIL_CODE);
     await page.getByTestId('verify').click();
     await expect(page.getByTestId('confirm')).toBeVisible();
   });
@@ -129,13 +134,13 @@ test.describe('approval, no-show protection and pause (Bk-10)', () => {
 });
 
 test.describe('finding a booking again (Bk-11)', () => {
-  test('a phone and a code open the upcoming booking', async ({ page, mock, slugFor }) => {
+  test('an e-mail and a code open the upcoming booking', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria');
-    await mock.seed({ slug, startsInMinutes: 60 * 50, phone: '+5511987654321' });
+    await mock.seed({ slug, startsInMinutes: 60 * 50, email: 'helena@example.com' });
     await open(page, `/${slug}/find`);
-    await page.getByTestId('phone').fill('11 98765 4321');
+    await page.getByTestId('email').fill('helena@example.com');
     await page.getByTestId('send-code').click();
-    await page.getByTestId('code').fill('123456');
+    await page.getByTestId('code').fill(EMAIL_CODE);
     await page.getByTestId('find').click();
     await expect(page.getByTestId('found-count')).toBeVisible();
     await page.getByTestId('found-booking').first().click();

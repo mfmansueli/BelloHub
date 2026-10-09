@@ -38,7 +38,6 @@ export function parseDraft(text: string | null, slug: string, defaultCountry: st
       phoneCountry: str(stored['phoneCountry'], defaultCountry),
       phoneInput: str(stored['phoneInput']),
       email: str(stored['email']),
-      channel: stored['channel'] === 'email' ? 'email' : 'sms',
       idempotencyKey: str(stored['idempotencyKey'], fresh.idempotencyKey),
     };
   } catch {

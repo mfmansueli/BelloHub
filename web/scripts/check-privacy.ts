@@ -10,6 +10,7 @@
 //      new Function) and nothing calls console.* (a logged answer would be a leak).
 //   3. The only absolute URLs in the source are the two links the page opens on the client's request.
 //   4. index.html loads nothing from another origin and has no inline script.
+//   5. D46: no Firebase SDK in the browser (no import, no dependency) and the CSP names no other origin.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -28,6 +29,7 @@ function walk(dir: string): string[] {
   });
 }
 
+const FIREBASE = /^(@firebase\/|firebase(\/|$))/;
 const STORAGE = new Set(['localStorage', 'sessionStorage', 'indexedDB', 'cookie', 'caches', 'openDatabase']);
 const MARKUP = new Set(['innerHTML', 'outerHTML', 'insertAdjacentHTML', 'dangerouslySetInnerHTML', 'eval']);
 // The two links the page opens because the client tapped something: WhatsApp and the calendar.
@@ -53,6 +55,13 @@ for (const file of walk(src)) {
       if (MARKUP.has(node.text)) report(file, node, `${node.text} writes markup from a string`);
       if (node.text === 'console') report(file, node, 'console is never used: a logged value can be a leak');
     }
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && FIREBASE.test(node.moduleSpecifier.text)) {
+      report(file, node, 'the page ships no Firebase SDK (D46)');
+    }
+    if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+      const [argument] = node.arguments;
+      if (argument !== undefined && ts.isStringLiteral(argument) && FIREBASE.test(argument.text)) report(file, node, 'the page ships no Firebase SDK (D46)');
+    }
     if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'Function') report(file, node, 'new Function builds code from a string');
     if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'document' && node.name.text === 'write') {
       report(file, node, 'document.write writes markup from a string');
@@ -75,6 +84,16 @@ for (const match of html.matchAll(/<(script|link|img|iframe|object|embed|form)\b
 }
 if (/<style\b/i.test(html)) problems.push('index.html: inline <style> (the CSP allows style-src self only)');
 if (/\son[a-z]+\s*=/i.test(html)) problems.push('index.html: inline event handler');
+
+const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')) as { dependencies?: Record<string, string> };
+for (const name of Object.keys(manifest.dependencies ?? {})) {
+  if (FIREBASE.test(name)) problems.push(`package.json: dependency ${name} (D46: no Firebase SDK in the browser)`);
+}
+const hosting = readFileSync(join(root, 'hosting.json'), 'utf8');
+const csp = /"Content-Security-Policy",\s*"value":\s*"([^"]*)"/.exec(hosting)?.[1] ?? '';
+if (csp === '') problems.push('hosting.json: no Content-Security-Policy found');
+if (/https?:\/\/|\*\./.test(csp)) problems.push('hosting.json: the CSP names another origin');
+if (!csp.includes("connect-src 'self';")) problems.push("hosting.json: connect-src must be 'self' only");
 
 if (problems.length > 0) {
   for (const problem of problems) process.stderr.write(`FAIL ${problem}\n`);

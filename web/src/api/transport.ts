@@ -10,8 +10,6 @@ import { ApiError, codeForServer, codeForStatus } from './errors';
 
 export interface TransportOptions {
   readonly baseUrl: string;
-  /** Returns an App Check token, or null when App Check is off. Never throws. */
-  readonly appCheckToken: () => Promise<string | null>;
   readonly fetchImpl?: typeof fetch;
   readonly timeoutMs?: number;
 }
@@ -31,9 +29,7 @@ export function createTransport(options: TransportOptions): Transport {
       controller.abort();
     }, timeoutMs);
     try {
-      const token = await options.appCheckToken();
       const headers = new Headers({ Accept: 'application/json', 'Content-Type': 'application/json' });
-      if (token !== null) headers.set('X-Firebase-AppCheck', token);
       let response: Response;
       try {
         response = await fetchImpl(`${options.baseUrl}/${name}`, {

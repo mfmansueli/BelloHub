@@ -93,14 +93,10 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return api.getSlots(data);
       case 'holdSlot':
         return api.holdSlot(data);
-      case 'sendSmsCode':
-        return api.sendCode('phone', data);
-      case 'verifySmsCode':
-        return api.verifyCode('phone', data);
       case 'sendEmailCode':
-        return api.sendCode('email', data);
+        return api.sendEmailCode(data);
       case 'verifyEmailCode':
-        return api.verifyCode('email', data);
+        return api.verifyEmailCode(data);
       case 'createBooking':
         return api.createBooking(data);
       case 'joinWaitlist':

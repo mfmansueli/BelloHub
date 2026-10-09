@@ -34,7 +34,6 @@ import { DEFAULT_RULES, freeSlots, isFree, type Busy, type SlotRules } from './s
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
-const SMS_CODE = '123456';
 const EMAIL_CODE = '654321';
 const MAX_RANGE_DAYS = 42;
 
@@ -450,35 +449,33 @@ export class MockApi {
     return { status: 'held', holdId: hold.id, expiresAt: iso(hold.expiresAt) };
   }
 
-  sendCode(kind: 'phone' | 'email', input: Json): Json {
-    this.maybeFail(kind === 'phone' ? 'sendSmsCode' : 'sendEmailCode');
-    if (kind === 'email') this.scenario(str(input['slug'], 'slug'));
-    const target = str(input[kind], kind);
-    this.attempts.set(`${kind}:${target}`, 0);
+  sendEmailCode(input: Json): Json {
+    this.maybeFail('sendEmailCode');
+    this.scenario(str(input['slug'], 'slug'));
+    const target = str(input['email'], 'email').trim().toLowerCase();
+    this.attempts.set(`email:${target}`, 0);
     return { resendAfterSeconds: this.resendAfterSeconds, expiresInSeconds: 600 };
   }
 
-  verifyCode(kind: 'phone' | 'email', input: Json): Json {
-    const target = str(input[kind], kind);
-    const key = `${kind}:${target}`;
+  verifyEmailCode(input: Json): Json {
+    const target = str(input['email'], 'email').trim().toLowerCase();
+    const key = `email:${target}`;
     const tries = (this.attempts.get(key) ?? 0) + 1;
     this.attempts.set(key, tries);
     if (tries > 5) throw new MockError('RATE_LIMITED', { retryAfterSeconds: 600 });
-    const expected = kind === 'phone' ? SMS_CODE : EMAIL_CODE;
-    if (str(input['code'], 'code') !== expected) throw new MockError('INVALID_CODE');
+    if (str(input['code'], 'code') !== EMAIL_CODE) throw new MockError('INVALID_CODE');
     // The real proof is an opaque single-use string; the mock's names its target so it can check the match.
-    return { proof: `${kind}:${target}`, expiresInSeconds: 1800 };
+    return { proof: `email:${target}`, expiresInSeconds: 1800 };
   }
 
-  /** The target a proof stands for, or VERIFICATION_FAILED. */
-  private verified(value: unknown): { method: 'phone' | 'email'; target: string } {
+  /** The e-mail a proof stands for, or VERIFICATION_FAILED. D46: the page only ever verifies an e-mail. */
+  private verified(value: unknown): string {
     if (typeof value !== 'object' || value === null) throw new MockError('INVALID_ARGUMENT', { fields: ['verification'] });
     const proof = value as Partial<VerificationProof>;
-    const raw = proof.method === 'phone' ? proof.idToken : proof.method === 'email' ? proof.proof : undefined;
-    if (typeof raw !== 'string') throw new MockError('INVALID_ARGUMENT', { fields: ['verification'] });
-    const [kind, ...rest] = raw.split(':');
-    if ((kind !== 'phone' && kind !== 'email') || kind !== proof.method || rest.length === 0) throw new MockError('VERIFICATION_FAILED');
-    return { method: kind, target: rest.join(':') };
+    if (proof.method !== 'email' || typeof proof.proof !== 'string') throw new MockError('INVALID_ARGUMENT', { fields: ['verification'] });
+    const [kind, ...rest] = proof.proof.split(':');
+    if (kind !== 'email' || rest.length === 0) throw new MockError('VERIFICATION_FAILED');
+    return rest.join(':');
   }
 
   createBooking(input: Json, now = Date.now()): BookingOutcome {
@@ -505,9 +502,7 @@ export class MockApi {
     for (const forbidden of ['firstVisit', 'heardFrom', 'hadBefore', 'guestNames', 'holdId', 'sessionKey']) {
       if (forbidden in input) throw new MockError('INVALID_ARGUMENT', { fields: [forbidden] });
     }
-    const proof = this.verified(input['verification']);
-    if (proof.method === 'phone' && proof.target !== phone) throw new MockError('VERIFICATION_FAILED');
-    if (proof.method === 'email' && proof.target !== email) throw new MockError('VERIFICATION_FAILED');
+    if (this.verified(input['verification']) !== email) throw new MockError('VERIFICATION_FAILED');
 
     let result: BookingOutcome;
     const noShow = scenario.noShow[phone];
@@ -577,12 +572,9 @@ export class MockApi {
     this.maybeFail('findBookings');
     const slug = str(input['slug'], 'slug');
     this.profile(slug);
-    const proof = this.verified(input['verification']);
-    const phone = typeof input['phone'] === 'string' ? input['phone'] : undefined;
     const email = typeof input['email'] === 'string' ? input['email'].trim().toLowerCase() : undefined;
-    if (proof.method === 'phone' && proof.target !== phone) throw new MockError('VERIFICATION_FAILED');
-    if (proof.method === 'email' && proof.target !== email) throw new MockError('VERIFICATION_FAILED');
-    const mine = [...this.bookings.values()].filter((b) => b.slug === slug && b.endsAt > now && (b.status === 'confirmed' || b.status === 'pendingApproval') && (proof.method === 'phone' ? b.client.phone === phone : b.client.email === email));
+    if (this.verified(input['verification']) !== email) throw new MockError('VERIFICATION_FAILED');
+    const mine = [...this.bookings.values()].filter((b) => b.slug === slug && b.endsAt > now && (b.status === 'confirmed' || b.status === 'pendingApproval') && b.client.email === email);
     return {
       bookings: mine
         .sort((a, b) => a.startsAt - b.startsAt)
@@ -822,7 +814,7 @@ export class MockApi {
   // MARK: Test controls
 
   seedBooking(
-    input: { slug: string; startsInMinutes: number; status?: BookingStatus | 'completed'; serviceId?: string; phone?: string; name?: string; rescheduleCount?: number; intake?: 'pending' | 'done'; guests?: number; policy?: Partial<PolicyValues> },
+    input: { slug: string; startsInMinutes: number; status?: BookingStatus | 'completed'; serviceId?: string; phone?: string; email?: string; name?: string; rescheduleCount?: number; intake?: 'pending' | 'done'; guests?: number; policy?: Partial<PolicyValues> },
     now = Date.now(),
   ): { token: string; bookingId: string; portalToken: string } {
     const profile = this.profile(input.slug);
@@ -841,7 +833,7 @@ export class MockApi {
       startsAt: start,
       endsAt: start + minutes * MINUTE,
       durationMinutes: minutes,
-      client: { name: input.name ?? 'Helena Duarte', phone: input.phone ?? '+5511987654321', locale: 'en' },
+      client: { name: input.name ?? 'Helena Duarte', phone: input.phone ?? '+5511987654321', email: input.email ?? 'helena@example.com', locale: 'en' },
       policy: { ...profile.policy, ...input.policy },
       rescheduleCount: input.rescheduleCount ?? 0,
       ...(input.intake === 'done' ? { intakeSubmittedAt: iso(now - 20 * DAY) } : {}),
