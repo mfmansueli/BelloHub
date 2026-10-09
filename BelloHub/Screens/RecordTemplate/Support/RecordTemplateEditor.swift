@@ -99,7 +99,7 @@ enum RecordTemplateEditor {
         let taken = scope.reservedNames + custom.filter { $0.key != key }.compactMap(\.customName)
         if OnboardingRules.acceptedName(name, existing: taken) == nil { return .nameTaken }
 
-        if draft.kind == .choice {
+        if draft.kind.hasOptions {
             let options = draft.options
             if options.contains(where: { $0.count > maximumOptionLength }) { return .optionTooLong }
             if options.count > maximumOptions { return .tooManyOptions }
@@ -121,7 +121,7 @@ enum RecordTemplateEditor {
             customName: OnboardingRules.cleaned(draft.name),
             isOn: true,
             kind: draft.kind,
-            options: draft.kind == .choice ? draft.options : [],
+            options: draft.kind.hasOptions ? draft.options : [],
             unit: draft.kind == .number ? unit(of: draft) : nil
         )
         var updated = template
@@ -146,7 +146,7 @@ enum RecordTemplateEditor {
         }
         var updated = template
         updated.fields[index].customName = OnboardingRules.cleaned(draft.name)
-        updated.fields[index].options = effective.kind == .choice ? effective.options : []
+        updated.fields[index].options = effective.kind.hasOptions ? effective.options : []
         updated.fields[index].unit = effective.kind == .number ? unit(of: effective) : nil
         updated.updatedAt = now
         return .success(updated)

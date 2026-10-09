@@ -56,6 +56,7 @@ struct RootView: View {
         .environment(registration)
         .environment(bookingSetup)
         .environment(appointments)
+        .treatmentTools(dependencies.treatmentTools)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {

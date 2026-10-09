@@ -38,8 +38,12 @@ struct LaunchOptions: Equatable {
     /// How many clients to register before the app starts, to test the free-registration limit.
     var uiRegisteredClients: Int?
     /// Shows one screen directly instead of the tab bar, for UI tests of a screen another stage has not wired in yet:
-    /// `health` (4.5, for the seeded client) or `formTemplates` (6.14).
+    /// `health` (4.5, for the seeded client), `formTemplates` (6.14) or `treatmentFlow` (5.1 to 5.9).
     var route: String?
+    /// `scripted` replaces the voice capture and the structuring with scripted ones (the treatment flow's 5.2 to 5.4).
+    var uiVoice: String?
+    /// `scripted` replaces the camera with one that "takes" a generated picture (a simulator has no camera).
+    var uiCamera: String?
 
     init() {}
 
@@ -57,6 +61,8 @@ struct LaunchOptions: Equatable {
         uiSpreadsheet = Self.value(after: "-uiSpreadsheet", in: arguments)
         uiRegisteredClients = Self.value(after: "-uiRegisteredClients", in: arguments).flatMap(Int.init)
         route = Self.value(after: "-uiRoute", in: arguments)
+        uiVoice = Self.value(after: "-uiVoice", in: arguments)
+        uiCamera = Self.value(after: "-uiCamera", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

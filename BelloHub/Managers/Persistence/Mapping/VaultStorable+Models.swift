@@ -40,7 +40,8 @@ extension Service: VaultStorable {
 extension TreatmentRecord: VaultStorable {
     static var kind: VaultKind { .treatmentRecord }
     static var sensitiveKeys: Set<String> {
-        ["notes", "technique", "productsUsed", "resultDetail", "aftercare", "nextSessionSuggestion"]
+        ["notes", "technique", "productsUsed", "resultDetail", "aftercare", "nextSessionSuggestion",
+         "fieldEntries"]
     }
 
     var index: VaultIndex {

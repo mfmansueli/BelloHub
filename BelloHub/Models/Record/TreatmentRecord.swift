@@ -27,6 +27,9 @@ struct TreatmentRecord: Identifiable, Hashable, Codable, Sendable {
     var resultDetail: String?
     var aftercare: String?
     var nextSessionSuggestion: String?
+    /// Her answers to the template's own fields (everything but the ones that have a place above), by field key.
+    /// Nil on a record saved before the treatment flow existed.
+    var fieldEntries: [RecordFieldEntry]?
 
     init(
         id: UUID = UUID(),
@@ -43,7 +46,8 @@ struct TreatmentRecord: Identifiable, Hashable, Codable, Sendable {
         productsUsed: [String] = [],
         resultDetail: String? = nil,
         aftercare: String? = nil,
-        nextSessionSuggestion: String? = nil
+        nextSessionSuggestion: String? = nil,
+        fieldEntries: [RecordFieldEntry]? = nil
     ) {
         self.id = id
         self.clientID = clientID
@@ -61,5 +65,6 @@ struct TreatmentRecord: Identifiable, Hashable, Codable, Sendable {
         self.resultDetail = resultDetail
         self.aftercare = aftercare
         self.nextSessionSuggestion = nextSessionSuggestion
+        self.fieldEntries = fieldEntries
     }
 }
