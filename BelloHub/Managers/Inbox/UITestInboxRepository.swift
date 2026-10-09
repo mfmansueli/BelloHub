@@ -14,18 +14,19 @@ import Foundation
 ///
 /// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42).
 @MainActor
-final class UITestInboxRepository: InboxRepository {
+// An actor, not a @MainActor class: `InboxRepository` is Sendable and the services call it from nonisolated tasks.
+actor UITestInboxRepository: InboxRepository {
     enum Scenario: String {
         case fixtures
         case paywall
     }
 
-    static let requestID = "req-ana"
-    static let helenaBookingID = "bk-helena"
-    static let camilaBookingID = "bk-camila"
-    static let rescheduleID = "rr-camila"
-    static let intakeItemID = "7f0f4c6e-1c2b-4d6a-9a1e-000000000001"
-    static let glowServiceID = "11111111-1111-4111-8111-111111111111"
+    nonisolated static let requestID = "req-ana"
+    nonisolated static let helenaBookingID = "bk-helena"
+    nonisolated static let camilaBookingID = "bk-camila"
+    nonisolated static let rescheduleID = "rr-camila"
+    nonisolated static let intakeItemID = "7f0f4c6e-1c2b-4d6a-9a1e-000000000001"
+    nonisolated static let glowServiceID = "11111111-1111-4111-8111-111111111111"
 
     private let scenario: Scenario
     private let publicKey: @MainActor () throws -> Curve25519.KeyAgreement.PublicKey
@@ -127,7 +128,7 @@ final class UITestInboxRepository: InboxRepository {
                 ],
                 "isForMinor": false, "submittedAt": CallableJSON.instant(now.addingTimeInterval(-600)), "_pad": ""
             ]
-            if let key = try? publicKey(), let plaintext = try? JSONSerialization.data(withJSONObject: payload),
+            if let key = try? await publicKey(), let plaintext = try? JSONSerialization.data(withJSONObject: payload),
                let envelope = try? EnvelopeOpener.seal(plaintext, to: key, kind: .intake, itemId: Self.intakeItemID) {
                 items.append(MailboxItem(
                     id: Self.intakeItemID, kind: .intake, bookingId: Self.helenaBookingID, keyId: envelope.keyId,
