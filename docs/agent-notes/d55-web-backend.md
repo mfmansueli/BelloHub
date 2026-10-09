@@ -14,7 +14,7 @@ policy (as processor), which is not a consent text.
 1. `155bed0` backend: no consent texts in `intakeForms`, `publishProfile`, `getFormContext`; API.md and schemas.json;
    also fixes a pre-existing `prod-rules` test that counted one `bello-hub` alias after D43 added `dev`.
 2. `8853c4b` web: the form is the questions only; payload schema 2; catalogs, legal bundle types, mock, specs, tests.
-3. (this commit) docs, `legal/README.md`, `legal/STATUS.md`, the client-notice sentence, this file.
+3. `3a210b9` docs, `legal/README.md`, `legal/STATUS.md`, the client-notice sentence, this file.
 
 ## 1. API diff (`firebase/functions/API.md`, `contracts/schemas.json` regenerated)
 
@@ -74,8 +74,11 @@ success copy 3.5, consent and minors bullets), `docs/10-WEB-BOOKING.md` (routes 
 
 - `scripts/test-firebase.sh` (all): lint, typecheck, build, audit ok; **unit 755**, **rules 66**, **use cases 277**,
   **transport 19**, all passed.
-- `scripts/test-web.sh full` (E2E_PORT=4112): see the bottom of this file for the final numbers.
-- `scripts/e2e-local.sh`: see the bottom of this file.
+- `scripts/test-web.sh full` (E2E_PORT=4112): lint, typecheck, i18n (14 localizations, 395 keys, 0 problems),
+  contrast (140/140 pairs), privacy gate, **unit 224 passed (2 skipped)**, production build in budget, **Playwright
+  181 passed / 15 skipped** (Chromium, WebKit, low-end), Lighthouse healthcheck passed.
+- `scripts/e2e-local.sh` (real functions on the emulators, seeded Maria, the whole story incl. the sealed intake
+  without a consent step): **6 passed (17.5 s)**, first run.
 
 ## 5. What the iOS agent must do (`BelloHub/`, not touched here)
 
