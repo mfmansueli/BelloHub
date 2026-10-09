@@ -17,7 +17,7 @@ src/
   messaging/        ClientMessenger, EmailProvider (+ disabled and emulator stand-ins), WhatsApp (+ Cloud API provider, disabled)
                     and the email texts in 14 localizations
   push/             PushSender (+ FCM and emulator senders), the FCM payload builder
-  auth/ billing/    PhoneVerifier (Firebase Auth phone provider), AppStoreVerifier (interface; Unconfigured until H14)
+  auth/ billing/    PhoneVerifier (Firebase Auth phone provider), AppStoreVerifier (Apple adapter; Unconfigured until the certs of H14 exist)
   http/             invokeUseCase (the transport-independent gate), callable wrapper, getIcs and Apple webhook handlers
   triggers/ jobs/   onBookingWritten / onInboxItemCreated handlers, cleanupJob steps, sendReminders
 test/

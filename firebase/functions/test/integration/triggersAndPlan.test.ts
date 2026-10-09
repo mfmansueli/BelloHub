@@ -4,6 +4,7 @@ import { handleAppStoreNotification } from '../../src/http/appStoreHandler.js';
 import type { AccountDoc, BookingDoc } from '../../src/lib/docs.js';
 import { refs, ts } from '../../src/lib/store.js';
 import { UnconfiguredAppStoreVerifier } from '../../src/billing/UnconfiguredAppStoreVerifier.js';
+import { AppError } from '../../src/lib/errors.js';
 import { ensureAccount } from '../../src/owner/ensureAccount.js';
 import { syncPlan } from '../../src/owner/syncPlan.js';
 import { joinWaitlist } from '../../src/public/joinWaitlist.js';
@@ -231,5 +232,8 @@ describe('appStoreNotifications', () => {
     } finally {
       env.deps.appStore = original;
     }
+    // A check that failed for a reason Apple calls retryable (the online revocation check) is also a 503.
+    env.appStore.nextError = new AppError('TRY_AGAIN');
+    expect(await handleAppStoreNotification(env.deps, 'retry-payload-0123456789abcd')).toBe(503);
   });
 });

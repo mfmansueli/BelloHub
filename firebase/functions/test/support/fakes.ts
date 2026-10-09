@@ -68,6 +68,8 @@ export class FakePhoneVerifier implements PhoneVerifier {
 
 export class FakeAppStoreVerifier implements AppStoreVerifier {
   configured = true;
+  /** Thrown by the next verification instead of looking anything up (a retryable Apple failure, for example). */
+  nextError: AppError | undefined;
   private readonly transactions = new Map<string, VerifiedTransaction>();
   private readonly notifications = new Map<string, VerifiedNotification>();
 
@@ -80,13 +82,21 @@ export class FakeAppStoreVerifier implements AppStoreVerifier {
   }
 
   verifyTransaction(signedTransaction: string): Promise<VerifiedTransaction> {
+    if (this.nextError) return Promise.reject(this.takeError());
     const found = this.transactions.get(signedTransaction);
     return found ? Promise.resolve(found) : Promise.reject(new AppError('VERIFICATION_FAILED'));
   }
 
   verifyNotification(signedPayload: string): Promise<VerifiedNotification> {
+    if (this.nextError) return Promise.reject(this.takeError());
     const found = this.notifications.get(signedPayload);
     return found ? Promise.resolve(found) : Promise.reject(new AppError('VERIFICATION_FAILED'));
+  }
+
+  private takeError(): AppError {
+    const error = this.nextError ?? new AppError('VERIFICATION_FAILED');
+    this.nextError = undefined;
+    return error;
   }
 }
 

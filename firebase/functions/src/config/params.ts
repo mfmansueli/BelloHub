@@ -23,3 +23,12 @@ export const PLAN_PRODUCT_IDS = defineString('PLAN_PRODUCT_IDS', {
 
 /** HMAC key for phone, email and IP hashes. Rotating it detaches every stored contact, so treat it as permanent. */
 export const PHONE_HASH_PEPPER = defineSecret('PHONE_HASH_PEPPER');
+
+/**
+ * App Store verification (H14). The adapter is built only when `APPLE_ROOT_CERTS_DIR` holds at least one DER
+ * certificate; until then every plan stays `none`. The bundle id is fixed (`com.bellohub`); Production also needs the
+ * numeric app id from App Store Connect.
+ */
+export const APPLE_ROOT_CERTS_DIR = defineString('APPLE_ROOT_CERTS_DIR', { default: 'certs/apple' });
+export const APPLE_ENVIRONMENT = defineString('APPLE_ENVIRONMENT', { default: 'Sandbox' });
+export const APPLE_APP_ID = defineString('APPLE_APP_ID', { default: '' });

@@ -80,5 +80,6 @@ Not done by Claude Code: it needs accounts, billing and keys that only the owner
 ## What the humans still owe (see docs/agent-notes/backend.md)
 
 H4 projects and keys, H5 App Check, H6 domain and Hosting, H7 email provider (the adapter is one small class), H13 WhatsApp
-Business (code and tests exist, disabled), H14 App Store settings for plan verification (the interface exists, answers
-`NOT_CONFIGURED` until the Apple root certificates and ids are supplied).
+Business (code and tests exist, disabled), H14 App Store plan verification (`AppleAppStoreVerifier` is wired; it switches
+on when Apple's root certificates are in `functions/certs/apple/`, see the README there, plus `APPLE_ENVIRONMENT` and
+`APPLE_APP_ID` for Production; until then it answers `NOT_CONFIGURED`).

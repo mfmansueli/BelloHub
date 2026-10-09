@@ -1,7 +1,7 @@
 import { AppError } from '../lib/errors.js';
 import type { AppStoreVerifier, VerifiedNotification, VerifiedTransaction } from './AppStoreVerifier.js';
 
-/** TODO(HUMAN-H14): replace with AppleAppStoreVerifier once the root certificates and app ids are provided. */
+/** What `createDeps` wires until Apple's root certificates are in place (H14); then `AppleAppStoreVerifier` takes over. */
 export class UnconfiguredAppStoreVerifier implements AppStoreVerifier {
   readonly configured = false;
 

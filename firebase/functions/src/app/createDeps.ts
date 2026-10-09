@@ -3,8 +3,20 @@ import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
 import { FirebasePhoneVerifier } from '../auth/FirebasePhoneVerifier.js';
+import { AppleAppStoreVerifier } from '../billing/AppleAppStoreVerifier.js';
+import type { AppStoreVerifier } from '../billing/AppStoreVerifier.js';
+import { loadAppleRootCertificates } from '../billing/appleRootCertificates.js';
 import { UnconfiguredAppStoreVerifier } from '../billing/UnconfiguredAppStoreVerifier.js';
-import { ENFORCE_APP_CHECK, PHONE_HASH_PEPPER, PLAN_PRODUCT_IDS, WEB_BASE_URL, WHATSAPP_AUTOMATION } from '../config/params.js';
+import {
+  APPLE_APP_ID,
+  APPLE_ENVIRONMENT,
+  APPLE_ROOT_CERTS_DIR,
+  ENFORCE_APP_CHECK,
+  PHONE_HASH_PEPPER,
+  PLAN_PRODUCT_IDS,
+  WEB_BASE_URL,
+  WHATSAPP_AUTOMATION
+} from '../config/params.js';
 import { GcsBlobStore } from '../lib/blobs.js';
 import { CloudLogSink } from '../lib/cloudLogSink.js';
 import { createLogger } from '../lib/log.js';
@@ -70,9 +82,21 @@ export function createDeps(): Deps {
       : new ProviderClientMessenger(new DisabledEmailProvider(), new DisabledWhatsAppProvider(), false),
     push: emulator ? new EmulatorPushSender(db) : new FcmPushSender(),
     phoneVerifier: new FirebasePhoneVerifier(getAuth()),
-    // TODO(HUMAN-H14): AppleAppStoreVerifier with the Apple root certificates and the app ids.
-    appStore: new UnconfiguredAppStoreVerifier(),
+    appStore: createAppStoreVerifier(),
     log: createLogger(new CloudLogSink())
   };
   return cached;
+}
+
+/** TODO(HUMAN-H14): put Apple's root certificates in `certs/apple/` and set `APPLE_ENVIRONMENT` + `APPLE_APP_ID` for Production. */
+function createAppStoreVerifier(): AppStoreVerifier {
+  const rootCertificates = loadAppleRootCertificates(APPLE_ROOT_CERTS_DIR.value());
+  if (rootCertificates.length === 0) return new UnconfiguredAppStoreVerifier();
+  const appAppleId = Number.parseInt(APPLE_APP_ID.value(), 10);
+  return AppleAppStoreVerifier.create({
+    bundleId: 'com.bellohub',
+    environment: APPLE_ENVIRONMENT.value() === 'Production' ? 'Production' : 'Sandbox',
+    appAppleId: Number.isFinite(appAppleId) ? appAppleId : undefined,
+    rootCertificates
+  });
 }
