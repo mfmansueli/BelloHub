@@ -19,6 +19,7 @@ struct AccountView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let vault = VaultService(repository: nil)
     let keys = KeyManager()
@@ -29,3 +30,4 @@ struct AccountView: View {
         .environment(DataExportService(vault: vault))
         .environment(BookingSetupService(vault: vault))
 }
+#endif
