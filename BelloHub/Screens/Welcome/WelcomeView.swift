@@ -5,10 +5,17 @@
 
 import SwiftUI
 
-/// 1.1 Onb-1-Welcome. "Get started" opens a new workspace; "Sign in" is for someone who already has one.
+/// 1.1 Onb-1-Welcome. Sign in with Apple is the main action (D44) and creates or opens the workspace alike; the phone
+/// number is the alternative.
 struct WelcomeView: View {
-    let onGetStarted: () -> Void
-    let onSignIn: () -> Void
+    let onUsePhone: () -> Void
+
+    @State private var appleSignIn: AppleSignInViewModel
+
+    init(session: SessionService, onSignedIn: @escaping @MainActor () async -> Void, onUsePhone: @escaping () -> Void) {
+        self.onUsePhone = onUsePhone
+        _appleSignIn = State(initialValue: AppleSignInViewModel(session: session, onSignedIn: onSignedIn))
+    }
 
     var body: some View {
         ScrollView {
@@ -46,33 +53,18 @@ struct WelcomeView: View {
 
     private var actions: some View {
         VStack(spacing: Spacing.sm) {
-            Button(action: onGetStarted) { Text("onb.welcome.getStarted") }
-                .buttonStyle(.belloPrimary)
-                .accessibilityIdentifier("welcome.getStartedButton")
-            FlowLayout(spacing: Spacing.xs, lineSpacing: 0, isCentered: true) {
-                prompt
-                signInLink
-            }
+            AppleSignInSection(viewModel: appleSignIn, identifier: "signIn.appleButton")
+            Button(action: onUsePhone) { Text("onb.apple.usePhone") }
+                .buttonStyle(.belloSecondary)
+                .accessibilityIdentifier("welcome.phoneButton")
         }
         .padding(.horizontal, Spacing.gutter)
         .padding(.vertical, Spacing.md)
         .background(Palette.bg)
         .motionBar()
     }
-
-    private var prompt: some View {
-        Text("onb.welcome.haveAccount").font(Typography.meta).foregroundStyle(Palette.ink2)
-    }
-
-    private var signInLink: some View {
-        Button(action: onSignIn) {
-            Text("onb.welcome.signIn").font(Typography.metaStrong).foregroundStyle(Palette.roseText)
-                .frame(minHeight: Spacing.touchTarget)
-        }
-        .accessibilityIdentifier("welcome.signInButton")
-    }
 }
 
 #Preview {
-    WelcomeView(onGetStarted: {}, onSignIn: {})
+    WelcomeView(session: SessionService(), onSignedIn: {}, onUsePhone: {})
 }

@@ -34,7 +34,14 @@ final class LocalDevAuthProvider: AuthProvider, Sendable {
     func verify(code: String) async throws -> AuthUser {
         guard let phone = pendingPhone.withLock({ $0 }) else { throw AuthError.invalidCode }
         guard code == Self.fixedCode else { throw AuthError.invalidCode }
-        let user = AuthUser(id: "dev-\(phone.dropFirst())", phoneE164: phone)
+        let user = AuthUser(id: "dev-\(phone.dropFirst())", method: .phone, phoneE164: phone)
+        defaults.value.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
+        return user
+    }
+
+    /// Accepts any credential, so a DEBUG build on a device still works; UI tests use `AppleCredential.devStub`.
+    func signInWithApple(_ credential: AppleCredential) async throws -> AuthUser {
+        let user = AuthUser(id: "dev-apple-\(credential.userID)", method: .apple, displayName: credential.fullName)
         defaults.value.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
         return user
     }

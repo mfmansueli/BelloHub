@@ -60,6 +60,13 @@ final class SessionService {
         refreshSetupFlag()
     }
 
+    /// Signs in with the credential of the native Apple button. Throws `AuthError`.
+    func signInWithApple(_ credential: AppleCredential) async throws {
+        let user = try await provider.signInWithApple(credential)
+        state = .signedIn(user)
+        refreshSetupFlag()
+    }
+
     func signOut() async {
         try? await provider.signOut()
         state = .signedOut

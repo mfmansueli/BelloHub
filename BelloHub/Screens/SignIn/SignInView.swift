@@ -13,6 +13,7 @@ struct SignInView: View {
     let onSwitchMode: () -> Void
 
     @State private var viewModel: SignInViewModel
+    @State private var appleSignIn: AppleSignInViewModel
     @Environment(\.locale) private var locale
     @FocusState private var focus: Field?
 
@@ -32,6 +33,7 @@ struct SignInView: View {
         _viewModel = State(initialValue: SignInViewModel(
             session: session, catalog: regions, initialRegion: initialRegion, onSignedIn: onSignedIn
         ))
+        _appleSignIn = State(initialValue: AppleSignInViewModel(session: session, onSignedIn: onSignedIn))
     }
 
     var body: some View {
@@ -40,7 +42,9 @@ struct SignInView: View {
                 topBar
                 header
                 switch viewModel.step {
-                case .phone: phoneStep
+                case .phone:
+                    phoneStep
+                    appleAlternative
                 case .code: codeStep
                 }
             }
@@ -126,6 +130,17 @@ struct SignInView: View {
             } else {
                 Text("onb.signIn.hint").font(Typography.footnote).foregroundStyle(Palette.ink2)
             }
+        }
+    }
+
+    /// The main way in, offered next to the phone form (D44): she may have landed here from "Use phone number instead"
+    /// or from the link to sign in, and Apple is still one tap away.
+    private var appleAlternative: some View {
+        VStack(spacing: Spacing.md) {
+            Text("onb.apple.or").font(Typography.meta).foregroundStyle(Palette.ink2)
+                .frame(maxWidth: .infinity)
+                .accessibilityHidden(true)
+            AppleSignInSection(viewModel: appleSignIn, identifier: "signIn.appleButton")
         }
     }
 
@@ -255,6 +270,7 @@ struct SignInView: View {
         case .tooManyAttempts: "onb.signIn.error.tooMany"
         case .network: "onb.signIn.error.network"
         case .unavailable: "onb.signIn.error.unavailable"
+        case .cancelled, .appleFailed: "onb.apple.error.failed"
         }
     }
 
