@@ -15,4 +15,6 @@ enum DefaultsKey {
     static let lockGraceSeconds = "lock.graceSeconds"
     /// The signed-in dummy user of `LocalDevAuthProvider`. Exists only in DEBUG builds.
     static let localDevUser = "session.localDevUser"
+    /// The on-device assistant's preferences (`AIPreferences`, JSON). Absent means the defaults.
+    static let aiPreferences = "ai.preferences"
 }
