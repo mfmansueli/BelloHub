@@ -81,7 +81,18 @@ strip, quick actions), Follow-ups, Win back, Alerts cards and permission notice,
 shared `ScreenStateView` / `ScreenPhase` / `ListLoadingView`. Screenshots not taken.
 
 ## Results
-See "State at the checkpoint".
+| Check | Result |
+|---|---|
+| `scripts/test.sh fast` | 1710 tests in 222 suites pass (base had 1416 in 178 before this slice), zero SwiftLint warnings |
+| `scripts/test.sh smoke` | 48 UI tests pass, including `HomeUITests` (visits on Home, open one, "Send" opens the message sheet) |
+| `HomeAuditUITests` in `en,ar`, default size and AX5 | passes, no clipped text and no missing description (default 162 s, AX5 227 s) |
+| `scripts/check-warnings.sh` | zero warnings on simulator, device, Release and the test targets |
+| `scripts/check-strings.sh` | passes (1573 keys, 14 localizations) |
+
+Fixes made while finishing: `TreatmentFlowUITests` (S7) tapped "Keep all" while it peeked out under the save bar on the
+iPhone 17 Pro Max (this slice's simulator), so the tap landed on the bar; the test now scrolls the button above the
+bar. The next-visit dot used the decorative `HeroPalette.glowRose` (2.6:1); it is `Palette.roseDeepText` now.
+`NotificationService` keeps the old plan when the vault is not open instead of clearing it.
 
 ## Not done
 - `DESIGN.md` and `docs/PROGRESS.md` (integrator's).
@@ -89,7 +100,9 @@ See "State at the checkpoint".
 - Dark mode was not looked at on the simulator (tokens carry the dark pairs; contrast pairs are tested).
 
 ## State at the checkpoint
-Filled in at the end of the session (see below).
+Everything is committed on `s6-home` (last commit: the roseDeepText dot). Fast, smoke, warnings, strings and the
+`en,ar` audit are green. Ready to merge into `build/v1` (regenerate the catalog, delete nothing else: the two
+placeholders are already gone).
 
 ## Next commands
 ```
