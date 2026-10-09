@@ -265,6 +265,8 @@ final class PublishingService {
         guard let slug = inputs.setup.slug, slug != claimedSlug else { return }
         try await repository.claimSlug(slug)
         claimedSlug = slug
+        // Claiming replaces the old address and removes its public page: publish the page again under the new one.
+        lastProfile = nil
     }
 
     private func fail(with failure: PublishFailure) {
