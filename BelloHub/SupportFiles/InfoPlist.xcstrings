@@ -91,18 +91,6 @@
         }
       }
     },
-    "CFBundleName" : {
-      "comment" : "Bundle name",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "BelloHub"
-          }
-        }
-      }
-    },
     "NSCameraUsageDescription" : {
       "comment" : "Camera: why the app asks.",
       "extractionState" : "manual",

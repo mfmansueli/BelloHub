@@ -52,10 +52,29 @@ def merge(batch_path, catalog):
     return count
 
 
+def prune_auto_extracted(catalog):
+    """Drops the entries an Xcode build adds on its own: with SWIFT_EMIT_LOC_STRINGS, a `defaultValue:` literal or an
+    Info.plist key is extracted as a key with an English value only. Every authored key is `manual` (batches own the
+    Localizable catalog; InfoPlist.xcstrings is written by hand), so a non-manual entry is noise that only breaks
+    check-strings.sh."""
+    stale = [key for key, entry in catalog["strings"].items() if entry.get("extractionState") != "manual"]
+    for key in stale:
+        del catalog["strings"][key]
+    return len(stale)
+
+
 def main():
     paths = sys.argv[1:] or sorted(glob.glob(os.path.join(lib.BATCH_DIR, "*.json")))
     catalog = lib.load_catalog()
     catalog["sourceLanguage"] = lib.SOURCE_LANGUAGE
+    pruned = prune_auto_extracted(catalog)
+    if pruned:
+        print(f"Dropped {pruned} auto-extracted key(s) from Localizable.xcstrings")
+    infoplist = lib.load_catalog(lib.INFOPLIST_CATALOG)
+    pruned = prune_auto_extracted(infoplist)
+    if pruned:
+        lib.save_catalog(infoplist, lib.INFOPLIST_CATALOG)
+        print(f"Dropped {pruned} auto-extracted key(s) from InfoPlist.xcstrings")
     total = sum(merge(path, catalog) for path in paths)
     lib.save_catalog(catalog)
     print(f"Merged {total} strings from {len(paths)} batch file(s)")
