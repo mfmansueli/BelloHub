@@ -111,6 +111,7 @@ struct CancelAppointmentContentView: View {
     @ViewBuilder
     private func notice(_ visit: VisitContext) -> some View {
         let name = firstName(visit.client)
+        let formatters = viewModel.business.formatters(displayLocale: locale)
         switch viewModel.notice {
         case .byProfessional:
             InlineNotice(style: .info, title: Text(LocalizedStringResource(
@@ -119,25 +120,29 @@ struct CancelAppointmentContentView: View {
             ).localized(in: locale)))
             .accessibilityIdentifier("cancelAppointment.notice")
         case .clientInTime(let hours):
+            let window = formatters.hours(hours)
             InlineNotice(style: .info, title: Text(LocalizedStringResource(
                 "cancelAppointment.notice.inTime",
-                defaultValue: "\(name) is cancelling in time (free up to \(hours) hours before). Nothing is noted."
+                defaultValue: "\(name) is cancelling in time (free up to \(window) before). Nothing is noted."
             ).localized(in: locale)))
             .accessibilityIdentifier("cancelAppointment.notice")
         case .clientLate(let hours, let counts):
-            InlineNotice(style: .warning, title: lateText(hours: hours, counts: counts, name: name))
-                .accessibilityIdentifier("cancelAppointment.notice")
+            InlineNotice(
+                style: .warning,
+                title: lateText(window: formatters.hours(hours), counts: counts, name: name)
+            )
+            .accessibilityIdentifier("cancelAppointment.notice")
         case nil:
             EmptyView()
         }
     }
 
-    private func lateText(hours: Int, counts: Bool, name: String) -> Text {
+    private func lateText(window: String, counts: Bool, name: String) -> Text {
         if counts {
             return Text(LocalizedStringResource(
                 "cancelAppointment.notice.lateCounts",
                 defaultValue: """
-                This is inside the \(hours)-hour free window. It is saved as a late cancellation and counts \
+                This is inside the free window (\(window)). It is saved as a late cancellation and counts \
                 toward \(name)'s limit.
                 """
             ).localized(in: locale))
@@ -145,7 +150,7 @@ struct CancelAppointmentContentView: View {
         return Text(LocalizedStringResource(
             "cancelAppointment.notice.late",
             defaultValue: """
-            This is inside the \(hours)-hour free window. It is saved as a late cancellation, and your rule does \
+            This is inside the free window (\(window)). It is saved as a late cancellation, and your rule does \
             not count it toward \(name)'s limit.
             """
         ).localized(in: locale))
@@ -156,7 +161,7 @@ struct CancelAppointmentContentView: View {
         return VStack(alignment: .leading, spacing: Spacing.sm) {
             Toggle(isOn: $viewModel.sendsMessage) {
                 VStack(alignment: .leading, spacing: Spacing.xxs) {
-                    Text(LocalizedStringResource("cancelAppointment.message.title", defaultValue: "Message \(name)")
+                    Text(LocalizedStringResource("messageClient.title", defaultValue: "Message \(name)")
                         .localized(in: locale))
                         .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                     Text("cancelAppointment.message.detail").font(Typography.meta).foregroundStyle(Palette.ink2)

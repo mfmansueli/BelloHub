@@ -93,7 +93,8 @@ struct NoShowHistoryContentView: View {
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("noShowHistory.clientName")
             Text(LocalizedStringResource(
-                "noShowHistory.period", defaultValue: "Counted over the last \(viewModel.policy.countingMonths) months"
+                "noShowCount.period",
+                defaultValue: "Counted over the last \(viewModel.policy.countingMonths) months."
             ).localized(in: locale))
                 .font(Typography.meta).foregroundStyle(Palette.ink2)
         }

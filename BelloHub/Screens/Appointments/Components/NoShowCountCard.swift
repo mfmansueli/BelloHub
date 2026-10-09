@@ -79,15 +79,18 @@ struct NoShowCountCard<Destination: View>: View {
         case .protectionOff:
             Text("noShowCount.off")
         case .counting(_, _, let remaining, let months):
-            Text(LocalizedStringResource(
-                "noShowCount.counting",
-                defaultValue: "Counted over the last \(months) months. Left before your limit: \(remaining)."
-            ).localized(in: locale))
+            Text(verbatim: LocalizedStringResource(
+                "noShowCount.counting", defaultValue: "Left before your limit: \(remaining)."
+            ).resolved(in: locale) + " " + period(months))
         case .limitReached(let action, let months):
-            Text(verbatim: reached(action) + " " + LocalizedStringResource(
-                "noShowCount.period", defaultValue: "Counted over the last \(months) months."
-            ).resolved(in: locale))
+            Text(verbatim: reached(action) + " " + period(months))
         }
+    }
+
+    private func period(_ months: Int) -> String {
+        LocalizedStringResource(
+            "noShowCount.period", defaultValue: "Counted over the last \(months) months."
+        ).resolved(in: locale)
     }
 
     private func reached(_ action: NoShowAction) -> String {

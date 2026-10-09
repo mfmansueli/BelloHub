@@ -138,7 +138,7 @@ struct BeforeYouStartContentView: View {
                 VStack(alignment: .leading, spacing: Spacing.xxs) {
                     Text(verbatim: plan.name).font(Typography.bodyStrong).foregroundStyle(Palette.sageText)
                     Text(LocalizedStringResource(
-                        "beforeYouStart.plan.progress", defaultValue: "Session \(session) of \(total) · every \(every)"
+                        "clientProfile.plan.progress", defaultValue: "Session \(session) of \(total) · every \(every)"
                     ).localized(in: locale))
                     .font(Typography.meta).foregroundStyle(Palette.sageText)
                 }
