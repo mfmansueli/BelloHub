@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import type { FormContext, FormQuestion } from '../../src/api/types';
 import { EMPTY_INTAKE, buildIntakePayload, intakeProblems, isAnswered, toggleChoice, visibleQuestions, type IntakeState } from '../../src/routes/form/payload';
+import { signableConsent } from '../../src/routes/form/consent';
 import { groupByDay } from '../../src/app/booking/slotDays';
 
 function question(key: string, extra: Partial<FormQuestion> = {}): FormQuestion {
@@ -109,17 +110,17 @@ describe('the sealed intake payload', () => {
     expect(payload.answers).toEqual({ allergies: false, conditions: ['none'], adultOnly: 'trimmed' });
   });
 
-  it('for a minor, the guardian signs and the photo agreement is explicit', () => {
+  it('for a minor, the guardian signs (no photo agreement is sent: the signed text is the server\'s, D49)', () => {
     const state = makeState({
       isForMinor: true,
       minorName: ' Bia ',
       guardianName: ' Ana Souza ',
-      photosConsent: false,
       answers: { allergies: false, conditions: ['none'], guardianNote: 'ok', adultOnly: 'ignored' },
     });
     const payload = buildIntakePayload(state, input);
     expect(payload).toMatchObject({ isForMinor: true, minorName: 'Bia', guardianName: 'Ana Souza', clientName: 'Ana Souza' });
-    expect(payload.consent).toMatchObject({ typedSignature: 'Ana Souza', photos: false });
+    expect(payload.consent).toMatchObject({ typedSignature: 'Ana Souza' });
+    expect(payload.consent).not.toHaveProperty('photos');
     expect(payload.answers).not.toHaveProperty('adultOnly');
   });
 
@@ -145,5 +146,34 @@ describe('groupByDay', () => {
     const slots = ['2026-03-05T10:00:00.000Z', '2026-03-04T10:00:00.000Z'];
     groupByDay(slots, 'UTC');
     expect(slots[0]).toBe('2026-03-05T10:00:00.000Z');
+  });
+});
+
+describe('the consent she signs (D49)', () => {
+  const consent = {
+    en: { textVersion: '2026-10', text: 'First paragraph.\n\nSecond paragraph.', guardianText: 'Guardian text.' },
+    'pt-BR': { textVersion: '2026-11', text: 'Concordo.' },
+  };
+
+  it('is the server text in the page language, split into paragraphs, with its version and language', () => {
+    expect(signableConsent(consent, 'en', 'en', false)).toEqual({ textVersion: '2026-10', localeId: 'en', direction: 'ltr', paragraphs: ['First paragraph.', 'Second paragraph.'] });
+    expect(signableConsent(consent, 'pt-BR', 'en', false)).toMatchObject({ textVersion: '2026-11', localeId: 'pt-BR', paragraphs: ['Concordo.'] });
+  });
+
+  it('falls back to her default language, then English, and records the language actually shown', () => {
+    expect(signableConsent(consent, 'de', 'pt-BR', false)?.localeId).toBe('pt-BR');
+    expect(signableConsent(consent, 'de', 'fr', false)?.localeId).toBe('en');
+    expect(signableConsent(consent, 'en-GB', 'en', false)?.localeId).toBe('en');
+  });
+
+  it('a visit for a minor needs her guardian text; without it there is no consent to sign, never a draft', () => {
+    expect(signableConsent(consent, 'en', 'en', true)?.paragraphs).toEqual(['Guardian text.']);
+    expect(signableConsent({ 'pt-BR': consent['pt-BR'] }, 'pt-BR', 'pt-BR', true)).toBeNull();
+  });
+
+  it('is null when the server returned nothing usable', () => {
+    expect(signableConsent({}, 'en', 'en', false)).toBeNull();
+    expect(signableConsent({ en: { textVersion: '1', text: '   ' } }, 'en', 'en', false)).toBeNull();
+    expect(signableConsent({ en: { textVersion: '', text: 'x' } }, 'en', 'en', false)).toBeNull();
   });
 });

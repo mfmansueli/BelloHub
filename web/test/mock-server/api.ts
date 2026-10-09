@@ -774,7 +774,7 @@ export class MockApi {
       professional: { displayName: profile.displayName },
       formVersion: 1,
       template: TEMPLATE,
-      consent: CONSENT,
+      consent: scenario.noConsent === true ? {} : CONSENT,
       inboxKey: this.inboxKey,
       intakeCompletedWithinMonths: booking.intakeSubmittedAt !== undefined || scenario.intakeCompleted === true,
     };

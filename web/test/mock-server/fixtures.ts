@@ -54,6 +54,8 @@ export interface Scenario {
   readonly whatsAppAutomation?: boolean;
   /** Whether she published a health form. */
   readonly intakeAvailable?: boolean;
+  /** She published the health form but no consent text (D49: the page must not sign anything in its place). */
+  readonly noConsent?: boolean;
 }
 
 function base(slug: string, inboxKey: InboxKey, overrides: Partial<WireProfile> = {}, policy: PolicyValues = DEFAULT_POLICY): WireProfile {
@@ -163,6 +165,13 @@ export function scenarios(): Scenario[] {
       knownClients: known,
       noShow: {},
       intakeCompleted: true,
+    },
+    {
+      slug: 'maria-noconsent',
+      profile: (key) => base('maria-noconsent', key),
+      knownClients: known,
+      noShow: {},
+      noConsent: true,
     },
   ];
 }
