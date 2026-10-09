@@ -47,10 +47,12 @@ final class OnboardingAuditUITests: XCTestCase {
             let tag = "\(locale)\(largestText ? " AX5" : "")"
             XCTAssertTrue(app.staticTexts["welcome.tagline"].waitForExistence(timeout: 5), "\(tag) welcome")
             try audit(app, "\(tag) welcome")
+            XCTAssertTrue(app.buttons["signIn.appleButton"].exists, "\(tag) apple button on welcome")
 
-            app.tapButton("welcome.getStartedButton")
+            app.tapButton("welcome.phoneButton")
             XCTAssertTrue(app.staticTexts["signIn.title"].waitForExistence(timeout: 5))
             try audit(app, "\(tag) signIn phone")
+            XCTAssertTrue(app.buttons["signIn.appleButton"].exists, "\(tag) apple button on sign-in")
             app.type("+14155552671", intoField: "signIn.phoneField")
             app.tapButton("signIn.sendButton")
             XCTAssertTrue(app.textFields["signIn.codeField"].waitForExistence(timeout: 5))

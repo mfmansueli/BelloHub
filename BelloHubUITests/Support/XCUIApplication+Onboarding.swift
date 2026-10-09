@@ -43,10 +43,17 @@ extension XCUIApplication {
     /// is in international form, so it is valid whatever region the test runs in.
     @MainActor
     func createAccount(phone: String = "+14155552671") {
-        tapButton("welcome.getStartedButton")
+        tapButton("welcome.phoneButton")
         type(phone, intoField: "signIn.phoneField")
         tapButton("signIn.sendButton")
         type(Self.developmentCode, intoField: "signIn.codeField")
+    }
+
+    /// Welcome, then Sign in with Apple through the development stub (no system sheet): lands on the first setup step
+    /// with the stub's name ("Helena Duarte") already filled in.
+    @MainActor
+    func createAccountWithApple() {
+        tapButton("signIn.appleButton")
     }
 
     /// Walks the whole setup with the first profession and the suggested defaults, ending on the Ready screen.

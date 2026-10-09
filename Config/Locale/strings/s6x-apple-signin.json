@@ -1,0 +1,66 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "onb.apple.usePhone",
+   "Welcome: secondary button under the Sign in with Apple button; opens the phone-number sign-in.",
+   "Use phone number instead",
+   "Usar número de telefone",
+   "Utilizar número de telemóvel",
+   "Usar número de teléfono",
+   "Usar número de teléfono",
+   "Usa il numero di telefono",
+   "Utiliser un numéro de téléphone",
+   "Stattdessen Telefonnummer verwenden",
+   "Bunun yerine telefon numarası kullan",
+   "Gunakan nomor telepon",
+   "इसके बजाय फ़ोन नंबर इस्तेमाल करें",
+   "استخدام رقم الهاتف بدلاً من ذلك"
+  ],
+  [
+   "onb.apple.or",
+   "Sign-in: small word between the phone form and the Sign in with Apple button.",
+   "or",
+   "ou",
+   "ou",
+   "o",
+   "o",
+   "oppure",
+   "ou",
+   "oder",
+   "veya",
+   "atau",
+   "या",
+   "أو"
+  ],
+  [
+   "onb.apple.error.failed",
+   "Sign-in: message under the Apple button when Apple sign-in did not complete (not shown when the person just closes the Apple sheet).",
+   "Sign in with Apple did not work. Try again, or use your phone number.",
+   "Não foi possível entrar com a Apple. Tente de novo ou use seu número de telefone.",
+   "Não foi possível iniciar sessão com a Apple. Tente novamente ou utilize o seu número de telemóvel.",
+   "No se pudo iniciar sesión con Apple. Inténtalo de nuevo o usa tu número de teléfono.",
+   "No se ha podido iniciar sesión con Apple. Inténtalo de nuevo o usa tu número de teléfono.",
+   "Accesso con Apple non riuscito. Riprova o usa il tuo numero di telefono.",
+   "La connexion avec Apple a échoué. Réessayez ou utilisez votre numéro de téléphone.",
+   "Die Anmeldung mit Apple hat nicht geklappt. Versuche es erneut oder nutze deine Telefonnummer.",
+   "Apple ile giriş yapılamadı. Tekrar dene veya telefon numaranı kullan.",
+   "Masuk dengan Apple tidak berhasil. Coba lagi atau gunakan nomor teleponmu.",
+   "Apple से साइन इन नहीं हो सका। फिर से कोशिश करें या अपना फ़ोन नंबर इस्तेमाल करें।",
+   "تعذّر تسجيل الدخول باستخدام Apple. حاول مرة أخرى أو استخدم رقم هاتفك."
+  ]
+ ]
+}

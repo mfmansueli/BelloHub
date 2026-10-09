@@ -101,7 +101,9 @@ struct RootView: View {
             case .loading:
                 Palette.bg.ignoresSafeArea()
             case .welcome:
-                WelcomeView(onGetStarted: { model.choose(.create) }, onSignIn: { model.choose(.existing) })
+                WelcomeView(
+                    session: session, onSignedIn: { await model.didSignIn() }, onUsePhone: { model.choose(.create) }
+                )
             case .signIn(let mode):
                 SignInView(
                     mode: mode, session: session, regions: regions, initialRegion: initialRegion,
@@ -110,7 +112,8 @@ struct RootView: View {
                 )
             case .setup:
                 SetupView(
-                    profile: profile, regions: regions, onFinished: model.didFinishSetup,
+                    profile: profile, regions: regions, suggestedName: session.user?.displayName,
+                    onFinished: model.didFinishSetup,
                     onExit: { Task { await model.signOut() } }
                 )
             case .locked:

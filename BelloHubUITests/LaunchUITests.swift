@@ -15,8 +15,8 @@ final class LaunchUITests: XCTestCase {
         let app = XCUIApplication.launchedForUITests()
 
         XCTAssertTrue(app.staticTexts["welcome.tagline"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["welcome.getStartedButton"].exists)
-        XCTAssertTrue(app.buttons["welcome.signInButton"].exists)
+        XCTAssertTrue(app.buttons["signIn.appleButton"].exists)
+        XCTAssertTrue(app.buttons["welcome.phoneButton"].exists)
     }
 
     func testASetUpWorkspaceOpensOnTheHomeScreen() {
