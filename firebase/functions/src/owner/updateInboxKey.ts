@@ -7,14 +7,16 @@ import { writeAudit } from '../lib/audit.js';
 import { inboxKeyId } from '../lib/crypto.js';
 import type { AccountDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
-import { applyInboxKey } from '../lib/keyring.js';
+import { applyInboxKey, keyringView } from '../lib/keyring.js';
+import { keyringUpdate } from '../lib/keyringUpdate.js';
 import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, ms, refs, ts, txReader } from '../lib/store.js';
 import { runTransaction } from '../lib/tx.js';
 
 /**
- * Key rotation (docs/06 section 3.2): the new key becomes current in the ring and in the public page; earlier keys stay
- * retired so envelopes already in the mailbox still open. Only the owner can write it; the event is logged without values.
+ * Key rotation (docs/06 section 3.2, D51): the new key becomes current in the ring and in the public page; the earlier
+ * key is retired and accepts new envelopes for 24 more hours (at once closed when `compromised`), and stays listed
+ * until nothing in the mailbox can need it. Only the owner can write it; the event is logged without values.
  */
 export const updateInboxKey = defineUseCase({
   name: 'updateInboxKey',
@@ -35,9 +37,10 @@ export const updateInboxKey = defineUseCase({
       const account = dataOf<AccountDoc>(await reader.doc(r.account(uid)));
       if (!account) throw new AppError('NOT_FOUND');
       const profileSnap = account.slug ? await reader.doc(r.profile(account.slug)) : undefined;
-      const applied = applyInboxKey(account.inboxKeyring, input.inboxKey, now);
+      const applied = applyInboxKey(account.inboxKeyring, input.inboxKey, now, { compromised: input.compromised });
+      if ('failure' in applied) throw new AppError('INVALID_ARGUMENT', { fields: ['inboxKey'] });
       if (applied.changed) {
-        tx.update(r.account(uid), { inboxKeyring: applied.keyring, updatedAt: ts(now) });
+        tx.update(r.account(uid), keyringUpdate(applied.keyring, now));
         writeAudit(tx, deps, { kind: 'inboxKeyChanged', uid, keyId: input.inboxKey.keyId });
       }
       if (profileSnap?.exists && account.slug) {
@@ -46,10 +49,12 @@ export const updateInboxKey = defineUseCase({
       return applied.keyring;
     });
     return {
-      keyring: keyring.map((entry) => ({
+      keyring: keyringView(keyring).map((entry) => ({
         keyId: entry.keyId,
         createdAt: iso(ms(entry.createdAt)),
-        ...(entry.retiredAt ? { retiredAt: iso(ms(entry.retiredAt)) } : {})
+        ...(entry.retiredAt ? { retiredAt: iso(ms(entry.retiredAt)) } : {}),
+        ...(entry.acceptsUntil ? { acceptsUntil: iso(ms(entry.acceptsUntil)) } : {}),
+        ...(entry.compromisedAt ? { compromisedAt: iso(ms(entry.compromisedAt)) } : {})
       }))
     };
   }

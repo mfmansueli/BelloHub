@@ -198,6 +198,29 @@ describe('updateInboxKey (rotation)', () => {
   it('refuses a key whose id does not match', async () => {
     await expect(env.call(updateInboxKey, { inboxKey: { ...pro.inboxKey, keyId: 'BBBBBBBBBBB' } }, who())).rejects.toMatchObject({ code: 'INVALID_ARGUMENT' });
   });
+
+  it('tells the app until when a retired key still accepts envelopes, and schedules its removal (D51)', async () => {
+    const now = env.clock.now();
+
+    const result = (await env.call(updateInboxKey, { inboxKey: newInboxKey() }, who())) as { keyring: { keyId: string; retiredAt?: string; acceptsUntil?: string; compromisedAt?: string }[] };
+
+    expect(result.keyring[0]).toMatchObject({ keyId: pro.inboxKey.keyId, retiredAt: new Date(now).toISOString(), acceptsUntil: new Date(now + DAY).toISOString() });
+    expect(result.keyring[0]?.compromisedAt).toBeUndefined();
+    expect(result.keyring[1]?.acceptsUntil).toBeUndefined();
+    expect((await account()).inboxKeyringPruneAt?.toMillis()).toBe(now + DAY + 30 * DAY);
+  });
+
+  it('closes a compromised key at once and never lets it become current again, through either path (D51)', async () => {
+    const now = env.clock.now();
+    const next = newInboxKey();
+
+    const result = (await env.call(updateInboxKey, { inboxKey: next, compromised: true }, who())) as { keyring: { keyId: string; acceptsUntil?: string; compromisedAt?: string }[] };
+
+    expect(result.keyring[0]).toMatchObject({ keyId: pro.inboxKey.keyId, acceptsUntil: new Date(now).toISOString(), compromisedAt: new Date(now).toISOString() });
+    await expect(env.call(updateInboxKey, { inboxKey: pro.inboxKey }, who())).rejects.toMatchObject({ code: 'INVALID_ARGUMENT', details: { fields: ['inboxKey'] } });
+    await expect(env.call(publishProfile, { profile: mariaProfile(pro.inboxKey) }, who())).rejects.toMatchObject({ code: 'INVALID_ARGUMENT', details: { fields: ['profile.inboxKey'] } });
+    expect((await account()).inboxKeyring.map((entry) => entry.keyId)).toEqual([pro.inboxKey.keyId, next.keyId]);
+  });
 });
 
 describe('publishAvailability', () => {

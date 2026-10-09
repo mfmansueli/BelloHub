@@ -182,6 +182,20 @@ describe('short-lived data', () => {
     expect((await runCleanup(env.deps, env.clock.now() + 181 * DAY)).portals).toBe(1);
   });
 
+  it('drops a retired inbox key once no envelope can reference it: 24 h grace plus 30 days (D51)', async () => {
+    const start = env.clock.now();
+    const next = newInboxKey();
+    await env.call(updateInboxKey, { inboxKey: next }, ownerContext(pro.uid));
+    const ring = async () => ((await refs(env.deps.db).account(pro.uid).get()).data() as { inboxKeyring: { keyId: string }[]; inboxKeyringPruneAt?: unknown });
+
+    expect((await runCleanup(env.deps, start + 31 * DAY - 1)).keyrings).toBe(0);
+    expect((await ring()).inboxKeyring.map((entry) => entry.keyId)).toEqual([pro.inboxKey.keyId, next.keyId]);
+    expect((await runCleanup(env.deps, start + 31 * DAY)).keyrings).toBe(1);
+    expect((await ring()).inboxKeyring.map((entry) => entry.keyId)).toEqual([next.keyId]);
+    expect((await ring()).inboxKeyringPruneAt).toBeUndefined();
+    expect((await runCleanup(env.deps, start + 31 * DAY)).keyrings).toBe(0);
+  });
+
   it('removes audit events after 400 days', async () => {
     await env.call(updateInboxKey, { inboxKey: newInboxKey() }, ownerContext(pro.uid));
     expect(await count(C.audit)).toBeGreaterThan(0);

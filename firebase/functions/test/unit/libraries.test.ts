@@ -10,7 +10,8 @@ import { clientIpFrom } from '../../src/lib/clientIp.js';
 import { ALLOWED_ORIGINS } from '../../src/http/callable.js';
 import { base64url, base64urlByteLength, fromBase64url, inboxKeyId, keyedHash, safeEqualHex, sha256Hex } from '../../src/lib/crypto.js';
 import type { InboxKeyringEntry, WaitlistDoc } from '../../src/lib/docs.js';
-import { applyInboxKey, currentKey, isKnownKey } from '../../src/lib/keyring.js';
+import { acceptsKey, applyInboxKey, currentKey, isKnownKey, KEY_GRACE_MS, keyringView, nextPruneAt, pruneKeyring } from '../../src/lib/keyring.js';
+import type { KeyApplied } from '../../src/lib/keyring.js';
 import { createLogger, MemoryLogSink, scrubFields } from '../../src/lib/log.js';
 import { matchesWaitlist } from '../../src/lib/waitlistMatch.js';
 import { planFromTransaction, shouldReplacePlan } from '../../src/billing/plan.js';
@@ -110,17 +111,23 @@ describe('crypto helpers', () => {
   });
 });
 
-describe('keyring', () => {
+describe('keyring (D51)', () => {
+  const HOUR = 3_600_000;
+  const DAY = 24 * HOUR;
   const entry = (keyId: string, retired = false): InboxKeyringEntry => ({
     keyId, pub: keyId, createdAt: Timestamp.fromMillis(1), ...(retired ? { retiredAt: Timestamp.fromMillis(2) } : {})
   });
+  const ok = (applied: ReturnType<typeof applyInboxKey>): KeyApplied => {
+    if ('failure' in applied) throw new Error(applied.failure);
+    return applied;
+  };
 
   it('adds a first key, ignores the same key again, and rotates to a new one keeping the old', () => {
-    const first = applyInboxKey([], { keyId: 'k1', pub: 'p1' }, 10);
+    const first = ok(applyInboxKey([], { keyId: 'k1', pub: 'p1' }, 10));
     expect(first.changed).toBe(true);
-    expect(applyInboxKey(first.keyring, { keyId: 'k1', pub: 'p1' }, 20).changed).toBe(false);
+    expect(ok(applyInboxKey(first.keyring, { keyId: 'k1', pub: 'p1' }, 20)).changed).toBe(false);
 
-    const rotated = applyInboxKey(first.keyring, { keyId: 'k2', pub: 'p2' }, 30);
+    const rotated = ok(applyInboxKey(first.keyring, { keyId: 'k2', pub: 'p2' }, 30));
     expect(rotated.keyring.map((k) => [k.keyId, k.retiredAt !== undefined])).toEqual([['k1', true], ['k2', false]]);
     expect(currentKey(rotated.keyring)?.keyId).toBe('k2');
     expect(isKnownKey(rotated.keyring, 'k1')).toBe(true);
@@ -128,9 +135,50 @@ describe('keyring', () => {
   });
 
   it('makes an older key current again without duplicating it', () => {
-    const back = applyInboxKey([entry('k1', true), entry('k2')], { keyId: 'k1', pub: 'k1' }, 50);
+    const back = ok(applyInboxKey([entry('k1', true), entry('k2')], { keyId: 'k1', pub: 'k1' }, 50));
 
     expect(back.keyring.map((k) => [k.keyId, k.retiredAt !== undefined])).toEqual([['k1', false], ['k2', true]]);
+  });
+
+  it('accepts envelopes for a retired key for 24 hours, then only for the current one', () => {
+    const t0 = Date.UTC(2026, 9, 1);
+    const ring = ok(applyInboxKey(ok(applyInboxKey([], { keyId: 'k1', pub: 'p1' }, t0 - DAY)).keyring, { keyId: 'k2', pub: 'p2' }, t0)).keyring;
+
+    expect(acceptsKey(ring, 'k2', t0)).toBe(true);
+    expect(acceptsKey(ring, 'k1', t0)).toBe(true);
+    expect(acceptsKey(ring, 'k1', t0 + KEY_GRACE_MS - 1)).toBe(true);
+    expect(acceptsKey(ring, 'k1', t0 + KEY_GRACE_MS)).toBe(false);
+    expect(acceptsKey(ring, 'k2', t0 + 400 * DAY)).toBe(true);
+    expect(acceptsKey(ring, 'zz', t0)).toBe(false);
+    expect(keyringView(ring).find((k) => k.keyId === 'k1')?.acceptsUntil?.toMillis()).toBe(t0 + KEY_GRACE_MS);
+  });
+
+  it('closes a compromised key at once and never lets it come back', () => {
+    const t0 = Date.UTC(2026, 9, 1);
+    const ring = ok(applyInboxKey([entry('k1')], { keyId: 'k2', pub: 'p2' }, t0, { compromised: true })).keyring;
+
+    expect(acceptsKey(ring, 'k1', t0)).toBe(false);
+    expect(acceptsKey(ring, 'k2', t0)).toBe(true);
+    expect(ring[0]?.compromisedAt?.toMillis()).toBe(t0);
+    expect(keyringView(ring)[0]?.acceptsUntil?.toMillis()).toBe(t0);
+    expect(applyInboxKey(ring, { keyId: 'k1', pub: 'k1' }, t0 + HOUR)).toEqual({ failure: 'compromisedKey' });
+    // The flag is about the key being replaced: a rotation without it leaves no mark on the new key.
+    expect(ring[1]?.compromisedAt).toBeUndefined();
+  });
+
+  it('drops a retired key once the grace and the 30 day envelope life are over, and says when to look again', () => {
+    const t0 = Date.UTC(2026, 9, 1);
+    const ring = ok(applyInboxKey([entry('k1')], { keyId: 'k2', pub: 'p2' }, t0)).keyring;
+    const death = t0 + KEY_GRACE_MS + 30 * DAY;
+
+    expect(nextPruneAt(ring)).toBe(death);
+    expect(pruneKeyring(ring, death - 1).map((k) => k.keyId)).toEqual(['k1', 'k2']);
+    expect(pruneKeyring(ring, death).map((k) => k.keyId)).toEqual(['k2']);
+    expect(nextPruneAt(pruneKeyring(ring, death))).toBeUndefined();
+    // A rotation prunes on the way, and a compromised key dies 24 hours earlier.
+    expect(ok(applyInboxKey(ring, { keyId: 'k3', pub: 'p3' }, death)).keyring.map((k) => k.keyId)).toEqual(['k2', 'k3']);
+    const closed = ok(applyInboxKey([entry('k1')], { keyId: 'k2', pub: 'p2' }, t0, { compromised: true })).keyring;
+    expect(nextPruneAt(closed)).toBe(t0 + 30 * DAY);
   });
 });
 

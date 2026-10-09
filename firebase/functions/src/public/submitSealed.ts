@@ -6,7 +6,7 @@ import { writeContact } from '../lib/contacts.js';
 import { base64urlByteLength, sha256Hex } from '../lib/crypto.js';
 import type { AccountDoc, ContactDoc, InboxItemDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
-import { isKnownKey } from '../lib/keyring.js';
+import { acceptsKey } from '../lib/keyring.js';
 import { consumeRates } from '../lib/rateLimit.js';
 import { envelopeExpiresAt } from '../lib/rules.js';
 import { dataOf, plainReader, refs, ts, txReader } from '../lib/store.js';
@@ -42,8 +42,9 @@ export const submitSealed = defineUseCase({
       throw new AppError('BOOKING_NOT_ACTIVE', { status: booking.data.status });
     }
     const ownerUid = booking.data.ownerUid;
+    // The current key, or one retired less than 24 h ago and not reported compromised (D51).
     const account = dataOf<AccountDoc>(await r.account(ownerUid).get());
-    if (!account || !isKnownKey(account.inboxKeyring, envelope.keyId)) throw new AppError('KEY_MISMATCH');
+    if (!account || !acceptsKey(account.inboxKeyring, envelope.keyId, now)) throw new AppError('KEY_MISMATCH');
 
     const ctHash = sha256Hex(envelope.ct);
     const itemRef = r.inboxItem(ownerUid, envelope.itemId);

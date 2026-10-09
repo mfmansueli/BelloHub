@@ -2,6 +2,7 @@ import type { Deps } from '../app/Deps.js';
 import { expireEnvelopes } from './steps/expireEnvelopes.js';
 import { expireTemporary } from './steps/expireTemporary.js';
 import { finishDeletions } from './steps/finishDeletions.js';
+import { pruneKeyrings } from './steps/pruneKeyrings.js';
 import { purgeBookings } from './steps/purgeBookings.js';
 import { reconcileBlobs } from './steps/reconcileBlobs.js';
 
@@ -16,6 +17,8 @@ export interface CleanupReport {
   portals: number;
   blobs: number;
   accounts: number;
+  /** Key rings that lost retired keys nobody can need any more (D51). */
+  keyrings: number;
 }
 
 /**
@@ -28,7 +31,8 @@ export async function runCleanup(deps: Deps, now: number = deps.now()): Promise<
   const temporary = await expireTemporary(deps, now);
   const blobs = await reconcileBlobs(deps);
   const accounts = await finishDeletions(deps);
-  const report: CleanupReport = { bookings, requests, envelopes, ...temporary, blobs, accounts };
+  const keyrings = await pruneKeyrings(deps, now);
+  const report: CleanupReport = { bookings, requests, envelopes, ...temporary, blobs, accounts, keyrings };
   deps.log.info('cleanup.done', {
     job: 'cleanup',
     bookings,
