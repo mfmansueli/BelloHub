@@ -10,6 +10,8 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
 
     await expect(page.getByTestId('booking-card')).toContainText('Glow Facial');
     await expect(page.getByTestId('personal-link')).toBeVisible();
+    // D47: the confirmation states the rules of this booking, read back from the booking itself.
+    await expect(page.getByTestId('booking-rules')).toContainText('These are the rules that apply to this booking, from the time you booked');
     await noHorizontalScroll(page);
 
     const [booking] = await mock.bookings(slug);
@@ -27,7 +29,8 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
   });
 
   test('the confirmation links to the appointment and offers a calendar file', async ({ page, slugFor }) => {
-    await bookEverything(page, slugFor('maria'));
+    const slug = slugFor('maria');
+    await bookEverything(page, slug);
     await page.getByTestId('add-calendar').click();
     await expect(page.getByTestId('calendar-sheet')).toBeVisible();
     const download = page.waitForEvent('download');
@@ -35,8 +38,9 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     const file = await download;
     expect(file.suggestedFilename()).toMatch(/\.ics$/);
     // D50: the calendar entry carries the public booking page, never the manage link.
-    const ics = readFileSync((await file.path()), 'utf8');
-    expect(ics).toContain(`/${slugFor('maria')}`);
+    // A calendar file folds long lines; unfold before looking inside.
+    const ics = readFileSync(await file.path(), 'utf8').replace(/\r\n /g, '');
+    expect(ics).toContain(`/${slug}`);
     expect(ics).not.toContain('/m/');
     expect(decodeURIComponent((await page.getByTestId('google-calendar').getAttribute('href')) ?? '')).not.toContain('/m/');
     await page.keyboard.press('Escape');

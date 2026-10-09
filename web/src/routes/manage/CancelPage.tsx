@@ -15,7 +15,7 @@ import { Chip } from '../../components/Choices';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
-import { freeUntil } from '../../lib/policy';
+import { freeUntil, lateCancelCountsAgainst } from '../../lib/policy';
 import { whatsAppUrl } from '../../lib/whatsapp';
 
 const REASONS = [
@@ -34,8 +34,9 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
   const { actions } = booking;
   const mode = actions.cancel === 'free' ? 'free' : actions.cancel === 'allowedWithWarning' ? 'allowLate' : 'message';
   const resched = actions.reschedule;
-  // Whether a late cancellation counts against her is not published (API.md): the warning says it may.
-  const counts = mode === 'allowLate';
+  // D47: the warning appears only when the booking's own policy says a late cancellation counts and gives the limit;
+  // the published policy (API.md 5.11) does not carry those fields today, so it never claims a consequence.
+  const counts = lateCancelCountsAgainst(mode === 'allowLate' ? 'allowLate' : mode === 'free' ? 'free' : 'message', policy) && typeof policy.noShowLimit === 'number';
   const cancellable = (booking.status === 'confirmed' || booking.status === 'pendingApproval') && actions.cancel !== 'unavailable';
   const [reason, setReason] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -128,7 +129,7 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
 
       {counts ? (
         <Notice kind="warning" icon="alert" title={t('cl6.warn.title')} testId="counts-warning">
-          {t('cl6.warn.text', { name: pro.firstName, count: policy.noShowLimit ?? 3 })}
+          {t('cl6.warn.text', { name: pro.firstName, count: policy.noShowLimit ?? 0 })}
           {resched === 'message' ? '' : ` ${t('cl6.warn.instead')}`}
         </Notice>
       ) : null}

@@ -135,8 +135,8 @@ for (const locale of ['en-US', 'ar'] as const) {
       await open(page, `/m/${token}/cancel`);
       await scan(page, 'Cl-6 cancel');
       await open(page, `/m/${lateToken}/cancel`);
-      await expect(page.getByTestId('counts-warning')).toBeVisible();
-      await scan(page, 'Cl-6 late cancel with the warning');
+      await expect(page.getByTestId('confirm-cancel')).toBeVisible();
+      await scan(page, 'Cl-6 late cancel');
       await open(page, `/m/${doneToken}`);
       await expect(page.getByTestId('checkin-link')).toBeVisible();
       await scan(page, 'Bk-9 manage, completed');

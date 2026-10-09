@@ -18,7 +18,7 @@ import { ErrorNotice, Notice, StatusChip, type StatusKind } from '../../componen
 import { Chip } from '../../components/Choices';
 import { Icon } from '../../components/Icon';
 import { Footer, Screen, Title, TopBar, Avatar, useDocumentTitle } from '../../components/Layout';
-import { RuleList, useRules } from '../../components/RuleList';
+import { BookingRules } from '../../components/BookingRules';
 import { useI18n } from '../../i18n';
 import { pageUrl } from '../../lib/config';
 import { freeUntil, reschedulesLeft } from '../../lib/policy';
@@ -69,7 +69,6 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   const { t } = useI18n();
   const format = useFormatter();
   const pro = booking.professional;
-  const rules = useRules(booking.rules, pro);
   const now = serverClock(booking)();
   const startsAt = Date.parse(booking.startsAt);
   const endsAt = Date.parse(booking.endsAt);
@@ -131,8 +130,9 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   const cancelSub = ((): string => {
     if (cancel === 'free') return t('bk9.cancel.free', { deadline });
     if (cancel === 'askByMessage' || cancel === 'unavailable') return t('bk9.cancel.message', { name: pro.firstName });
-    // Whether a late cancellation counts against her is not published; the honest words are "it may count".
-    return t('bk9.cancel.lateCounts', { name: pro.firstName });
+    // D47: only a consequence the policy states is worded. The published policy has no "counts as missed" field, so
+    // the line says what is certain (the free period ended, the professional is told) and nothing more.
+    return policy.lateCancelCounts === true ? t('bk9.cancel.lateCounts', { name: pro.firstName }) : t('bk9.cancel.late', { name: pro.firstName });
   })();
 
   const row = (title: string, sub: string | null, content: { to: Route | string } | { href: string | null } | { onClick: () => void }, options: { danger?: boolean; testId: string }): JSX.Element => {
@@ -295,14 +295,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </Link>
       ) : null}
 
-      {active && rules.lines.length > 0 ? (
-        <section class="card" aria-labelledby="rules-title">
-          <h2 id="rules-title" class="strong">{t('bk9.rulesOf', { name: pro.displayName })}</h2>
-          <div class="mt-sm">
-            <RuleList lines={rules.lines} lang={rules.lang} />
-          </div>
-        </section>
-      ) : null}
+      {active ? <BookingRules policy={policy} professionalFirstName={pro.firstName} /> : null}
 
       {(() => {
         const url = message('wa.hello');

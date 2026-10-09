@@ -7,6 +7,7 @@
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
+import { api } from '../../api/client';
 import type { PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute, manageRoute } from '../../app/router';
@@ -14,6 +15,7 @@ import { allowedStep } from '../../app/booking/machine';
 import { dispatchBooking, useBooking } from '../../app/booking/store';
 import { priceText } from '../../app/booking/priceText';
 import { selectedAddOns, totals } from '../../app/booking/summary';
+import { BookingRules } from '../../components/BookingRules';
 import { CalendarSheet } from '../../components/CalendarSheet';
 import { Button, Link, LinkButton } from '../../components/Button';
 import { Icon } from '../../components/Icon';
@@ -22,12 +24,32 @@ import { Notice, Seal } from '../../components/Feedback';
 import { PersonalLink } from '../../components/PersonalLink';
 import { useI18n } from '../../i18n';
 import { linkBase, pageUrl } from '../../lib/config';
+import type { PolicyValues } from '../../lib/policy';
 
 export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
   const { t } = useI18n();
   const format = useFormatter();
   const [state] = useBooking(profile.slug, profile.regionCode);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  // D47: the rules shown here are the booking's own policy snapshot, read back from the server; until it arrives (or if
+  // it cannot be read) nothing is claimed.
+  const [snapshot, setSnapshot] = useState<PolicyValues | null>(null);
+  const bookedToken = state.result?.status === 'confirmed' ? state.result.manageToken : null;
+  useEffect(() => {
+    if (bookedToken === null) return;
+    let current = true;
+    api.getBooking(bookedToken).then(
+      (booking) => {
+        if (current) setSnapshot(booking.policy);
+      },
+      () => {
+        if (current) setSnapshot(null);
+      },
+    );
+    return () => {
+      current = false;
+    };
+  }, [bookedToken]);
   useDocumentTitle(t('bk8.title'));
 
   const redirect = allowedStep('booked', state) !== 'booked';
@@ -123,6 +145,8 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
           {t('bk8.noShow', { name: profile.firstName })}
         </Notice>
       </section>
+
+      {snapshot === null ? null : <BookingRules policy={snapshot} professionalFirstName={profile.firstName} />}
 
       <p class="center">
         <Button
