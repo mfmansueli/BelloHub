@@ -27,7 +27,7 @@ struct RecordExportContent: Equatable, Sendable {
     let clientName: String
     let health: Health?
     /// Kind and date only: the signature image and the typed signature never leave the vault in an export.
-    let consents: [Consent]
+    let consents: [ConsentRecord]
     let treatments: [Treatment]
     let incidents: [Incident]
     let photos: [Photo]

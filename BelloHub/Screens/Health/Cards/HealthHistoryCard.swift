@@ -6,7 +6,7 @@
 import SwiftUI
 
 /// The answers of the latest health form, who gave them and when, and where the review stands. For a form filled in
-/// for someone under 18 it says so, with the guardian's and the young person's names (D17).
+/// for someone under 18 it says so, with the young person's name (D17).
 struct HealthHistoryCard: View {
     let viewModel: ClientHealthViewModel
     let form: HealthForm
@@ -26,10 +26,6 @@ struct HealthHistoryCard: View {
                     )
                 }
                 if form.isForMinor {
-                    HealthAnswerRow(
-                        name: text("health.minor.guardian"), value: form.guardianName ?? "",
-                        identifier: "health.guardianName"
-                    )
                     HealthAnswerRow(
                         name: text("health.minor.name"), value: form.minorName ?? "", identifier: "health.minorName"
                     )

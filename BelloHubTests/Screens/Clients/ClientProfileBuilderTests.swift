@@ -14,7 +14,7 @@ struct ClientProfileBuilderTests {
 
     private func snapshot(
         appointments: [Appointment] = [], plans: [SessionPlan] = [], forms: [HealthForm] = [],
-        consents: [Consent] = []
+        consents: [ConsentRecord] = []
     ) -> ClientProfileSnapshot {
         ClientProfileBuilder.make(
             ClientProfileBuilder.Input(
@@ -97,16 +97,21 @@ struct ClientProfileBuilderTests {
     func healthSummary() {
         let form = HealthForm(
             id: UUID(), clientID: client.id, formVersion: 1, filledBy: .client, isForMinor: false,
-            signedAt: TestClock.days(-40), importedFromItemID: nil, answers: [:], signatureImage: nil,
-            guardianName: nil, minorName: nil
+            signedAt: TestClock.days(-40), importedFromItemID: nil, answers: [:], minorName: nil
         )
-        let consent = Consent(
-            id: UUID(), clientID: client.id, kind: .treatment, signedAt: TestClock.days(-10), textVersion: "1",
-            localeID: "en", typedSignature: nil, signatureImage: nil
+        let consent = ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .treatment, isSigned: true, signedAt: TestClock.days(-10),
+            createdAt: TestClock.days(-10)
         )
+        var unsigned = consent
+        unsigned.isSigned = false
+        unsigned.signedAt = nil
+        unsigned.createdAt = TestClock.days(-1)
 
         #expect(ClientHealthSummary.make(forms: [form], consents: []) == .signed(TestClock.days(-40)))
         #expect(ClientHealthSummary.make(forms: [form], consents: [consent]) == .signed(TestClock.days(-10)))
+        #expect(ClientHealthSummary.make(forms: [form], consents: [unsigned]) == .signed(TestClock.days(-40)),
+                "a record she has not marked signed is not a signature (D55)")
         #expect(ClientHealthSummary.make(forms: [], consents: []) == .notFilledIn)
     }
 

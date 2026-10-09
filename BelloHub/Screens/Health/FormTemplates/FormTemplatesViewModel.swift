@@ -6,7 +6,7 @@
 import Foundation
 import Observation
 
-/// Screen 6.14: which questions the health form asks, how often she asks again, and the consent texts she can read.
+/// Screen 6.14: which questions the health form asks and how often she asks again. No consent texts (D55).
 /// Saving goes through `HealthFormTemplateRules.edited`: changing the questions starts a new version and never touches
 /// a form that was already signed; changing only "ask again every" updates the current version.
 @MainActor
@@ -29,15 +29,9 @@ final class FormTemplatesViewModel {
     var reviewMonths = HealthFormTemplateRules.defaultReviewMonths {
         didSet { if reviewMonths != oldValue { didSave = false } }
     }
-    /// The newest version of each consent text, in the language she reads them in.
-    private(set) var consentVersions: [LegalDocument: String] = [:]
-    /// The consent text being read, if the sheet is open.
-    var previewSheet: ConsentPreviewViewModel?
-
     private let repository: (any HealthRepository)?
     private let profile: ProfileService
     private let catalogProvider: any HealthFormCatalogProviding
-    private let legal: any LegalTextLibrary
     private let localization: AppLocalization
     private let now: @Sendable () -> Date
 
@@ -45,14 +39,12 @@ final class FormTemplatesViewModel {
         repository: (any HealthRepository)?,
         profile: ProfileService,
         catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
-        legal: any LegalTextLibrary = BundleLegalTextLibrary(),
         locale: Locale = .current,
         now: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.repository = repository
         self.profile = profile
         self.catalogProvider = catalogProvider
-        self.legal = legal
         self.localization = AppLocalization(locale: locale)
         self.now = now
     }
@@ -86,9 +78,6 @@ final class FormTemplatesViewModel {
             offered = HealthFormTemplateRules.offeredQuestions(in: loadedCatalog, for: professions, template: current)
             enabledKeys = Set(current.questionKeys)
             reviewMonths = current.reviewEveryMonths
-            consentVersions = Dictionary(uniqueKeysWithValues: LegalDocument.allCases.compactMap { document in
-                (try? legal.latest(document, localization: consentLanguage)).map { (document, $0.version) }
-            })
             didSave = false
             hasLoaded = true
         } catch {
@@ -153,19 +142,5 @@ final class FormTemplatesViewModel {
         } catch {
             errorMessage = String(localized: "health.error.save")
         }
-    }
-
-    // MARK: - Consent texts
-
-    /// The language the consent texts are read in: the business language, which is what a client is shown.
-    private var consentLanguage: AppLocalization {
-        profile.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? localization
-    }
-
-    func previewConsent(_ document: LegalDocument) {
-        guard previewSheet == nil else { return }
-        previewSheet = ConsentPreviewViewModel(
-            document: document, language: consentLanguage, legal: legal, profile: profile.profile
-        )
     }
 }

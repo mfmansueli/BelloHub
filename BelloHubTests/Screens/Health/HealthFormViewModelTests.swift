@@ -16,24 +16,13 @@ struct HealthFormViewModelTests {
         let client: Client
     }
 
-    private func legalTexts(_ localizations: [String] = ["en", "pt-BR"]) -> FakeLegalTextLibrary {
-        FakeLegalTextLibrary(localizations.flatMap { localization in
-            LegalDocument.allCases.map { FakeLegalTextLibrary.text($0, localization: localization) }
-        })
-    }
-
-    private func makeRig(
-        keys: [String] = ["allergies", "medication", "pregnancy", "notes"],
-        library: FakeLegalTextLibrary? = nil,
-        profile: ProfessionalProfile? = makeHealthProfile(localeID: "pt-BR")
-    ) async throws -> Rig {
+    private func makeRig(keys: [String] = ["allergies", "medication", "pregnancy", "notes"]) async throws -> Rig {
         let repository = FlakyHealthRepository()
         let client = Client(name: "Ana Costa", createdAt: TestClock.days(-100))
         try await repository.save(client)
         let model = HealthFormViewModel(
             client: client, template: makeHealthTemplate(version: 3, keys: keys), catalog: makeHealthCatalog(),
-            repository: repository, legal: library ?? legalTexts(), profile: profile, fallbackLanguage: .en,
-            now: { TestClock.now }, makeID: { UUID() }
+            repository: repository, now: { TestClock.now }, makeID: { UUID() }
         )
         return Rig(model: model, repository: repository, client: client)
     }
@@ -46,11 +35,9 @@ struct HealthFormViewModelTests {
             case .text: break
             }
         }
-        model.draft.agrees = true
-        model.draft.signature = "Ana Costa"
     }
 
-    // MARK: - Questions and text
+    // MARK: - Questions
 
     @Test("The sheet asks the template's questions in its order and skips a key this version does not know")
     func questions() async throws {
@@ -58,70 +45,17 @@ struct HealthFormViewModelTests {
         #expect(rig.model.questions.map(\.key) == ["notes", "allergies"])
     }
 
-    @Test("The text is read in the business language and carries her name")
-    func textInBusinessLanguage() async throws {
+    @Test("A visit for someone under 18 only marks the form (D17); switching back clears nothing else")
+    func minor() async throws {
         let rig = try await makeRig()
-
-        #expect(rig.model.textLanguage == .ptBR)
-        #expect(rig.model.legalText?.document == .consentHealth && rig.model.legalText?.localization == "pt-BR")
-        let rendered = try #require(rig.model.renderedText)
-        #expect(rendered.blocks.contains(.paragraph("**Who.** Maria Beauty.")))
-        #expect(!rig.model.hasTextError)
-    }
-
-    @Test("Without a profile the text is read in the language of the screen")
-    func fallbackLanguage() async throws {
-        let rig = try await makeRig(profile: nil)
-        #expect(rig.model.textLanguage == .en)
-    }
-
-    @Test("A language with no text falls back to English, and the consent will say English")
-    func englishFallback() async throws {
-        let rig = try await makeRig(library: legalTexts(["en"]))
-        #expect(rig.model.textLanguage == .ptBR)
-        #expect(rig.model.legalText?.localization == "en")
-
         answerEverything(rig.model)
-        await rig.model.saveAsync()
-
-        #expect(try await rig.repository.consents(for: rig.client.id).first?.localeID == "en")
-    }
-
-    @Test("Choosing another language reads that text and asks for the agreement again")
-    func changingLanguage() async throws {
-        let rig = try await makeRig()
-        rig.model.draft.agrees = true
-
-        rig.model.setTextLanguage(.en)
-
-        #expect(rig.model.legalText?.localization == "en" && !rig.model.draft.agrees)
-        rig.model.draft.agrees = true
-        rig.model.setTextLanguage(.en)
-        #expect(rig.model.draft.agrees, "choosing the same language changes nothing")
-    }
-
-    @Test("A visit for someone under 18 switches to the guardian text and asks for the agreement again (D17)")
-    func minorSwitchesText() async throws {
-        let rig = try await makeRig()
-        rig.model.draft.agrees = true
-        #expect(rig.model.consentKind == .treatment)
 
         rig.model.setForMinor(true)
-
-        #expect(rig.model.consentKind == .guardian && rig.model.legalText?.document == .consentGuardian)
-        #expect(!rig.model.draft.agrees)
+        #expect(rig.model.draft.isForMinor && !rig.model.canSave, "the young person's name is missing")
+        rig.model.draft.minorName = "Ana Costa"
+        #expect(rig.model.canSave)
         rig.model.setForMinor(false)
-        #expect(rig.model.legalText?.document == .consentHealth)
-    }
-
-    @Test("Without a text nothing can be signed, however complete the answers are")
-    func noText() async throws {
-        let rig = try await makeRig(library: FakeLegalTextLibrary())
-        #expect(rig.model.hasTextError && rig.model.renderedText == nil)
-
-        answerEverything(rig.model)
-
-        #expect(!rig.model.canSave)
+        #expect(!rig.model.draft.isForMinor && rig.model.canSave)
     }
 
     // MARK: - Answers
@@ -149,17 +83,15 @@ struct HealthFormViewModelTests {
 
     // MARK: - Saving
 
-    @Test("Save stays off until everything is answered, agreed and signed")
+    @Test("Save stays off until everything is answered; no agreement and no signature are asked (D55)")
     func canSave() async throws {
         let rig = try await makeRig()
         #expect(!rig.model.canSave)
         answerEverything(rig.model)
         #expect(rig.model.canSave)
-        rig.model.draft.signature = ""
-        #expect(!rig.model.canSave)
     }
 
-    @Test("Saving writes the consent on the text that was read and the form on the template's version")
+    @Test("Saving writes the form on the template's version, filled in by the professional, and no consent")
     func saves() async throws {
         let rig = try await makeRig()
         answerEverything(rig.model)
@@ -167,31 +99,27 @@ struct HealthFormViewModelTests {
         await rig.model.saveAsync()
 
         #expect(rig.model.didSave && rig.model.errorMessage == nil && !rig.model.isSaving)
-        let consent = try #require(try await rig.repository.consents(for: rig.client.id).first)
-        #expect(consent.kind == .treatment && consent.textVersion == "2026-10" && consent.localeID == "pt-BR")
-        #expect(consent.typedSignature == "Ana Costa" && consent.signedAt == TestClock.now)
         let form = try #require(try await rig.repository.healthForms(for: rig.client.id).first)
         #expect(form.formVersion == 3 && form.filledBy == .professional && form.signedAt == TestClock.now)
         #expect(form.answers["medication"] == .no && form.answers["allergies"] == .choices(["none"]))
+        #expect(try await rig.repository.consents(for: rig.client.id).isEmpty)
+        #expect(await rig.repository.savedConsents == 0)
     }
 
-    @Test("A minor's form is saved with the guardian consent and both names")
+    @Test("A minor's form is saved with the young person's name")
     func savesMinor() async throws {
         let rig = try await makeRig()
         rig.model.setForMinor(true)
         answerEverything(rig.model)
         rig.model.draft.minorName = "Ana Costa"
-        rig.model.draft.signature = "Rita Costa"
 
         await rig.model.saveAsync()
 
-        let consent = try #require(try await rig.repository.consents(for: rig.client.id).first)
-        #expect(consent.kind == .guardian && consent.typedSignature == "Rita Costa")
         let form = try #require(try await rig.repository.healthForms(for: rig.client.id).first)
-        #expect(form.isForMinor && form.guardianName == "Rita Costa" && form.minorName == "Ana Costa")
+        #expect(form.isForMinor && form.minorName == "Ana Costa")
     }
 
-    @Test("If the form cannot be saved the error shows, and trying again adds no second consent")
+    @Test("If the form cannot be saved the error shows, and trying again updates the same record")
     func retryAfterFailure() async throws {
         let rig = try await makeRig()
         answerEverything(rig.model)
@@ -206,19 +134,6 @@ struct HealthFormViewModelTests {
         await rig.model.saveAsync()
 
         #expect(rig.model.didSave && rig.model.errorMessage == nil)
-        #expect(try await rig.repository.consents(for: rig.client.id).count == 1, "the retry updated the same consent")
         #expect(try await rig.repository.healthForms(for: rig.client.id).count == 1)
-    }
-
-    @Test("If the consent cannot be saved no answers are saved either")
-    func consentFirst() async throws {
-        let rig = try await makeRig()
-        answerEverything(rig.model)
-        await rig.repository.fail(.consent)
-
-        await rig.model.saveAsync()
-
-        #expect(!rig.model.didSave && rig.model.errorMessage != nil)
-        #expect(await rig.repository.savedForms == 0, "answers are never stored without their consent")
     }
 }

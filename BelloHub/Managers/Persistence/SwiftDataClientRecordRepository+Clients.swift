@@ -76,13 +76,17 @@ extension SwiftDataClientRecordRepository {
         return true
     }
 
-    func consents(for clientID: UUID) throws -> [Consent] {
-        try values(Consent.self, from: items(kind: .consent, ownerID: clientID))
-            .sorted { $0.signedAt > $1.signedAt }
+    func consents(for clientID: UUID) throws -> [ConsentRecord] {
+        ConsentRecord.newestFirst(try values(ConsentRecord.self, from: items(kind: .consent, ownerID: clientID)))
     }
 
-    func save(_ consent: Consent) throws {
+    func save(_ consent: ConsentRecord) throws {
         try upsert(consent)
+        try commit()
+    }
+
+    func deleteConsent(id: UUID) throws {
+        if let found = try item(kind: .consent, id: id) { delete([found]) }
         try commit()
     }
 

@@ -17,7 +17,7 @@ struct RecordPhotoImage: View {
     var body: some View {
         Group {
             if let data {
-                FlowPhotoImage(data: data)
+                DataImage(data: data)
             } else {
                 ZStack {
                     Palette.sunken

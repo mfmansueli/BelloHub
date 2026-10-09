@@ -72,9 +72,9 @@ enum ClientsFixtures {
         }
         try await repository.save(appointment(ana, glow, daysFromNow: -20, status: .cancelled, now: now))
         try await repository.save(appointment(ana, glow, daysFromNow: 3, status: .confirmed, now: now))
-        try await repository.save(Consent(
-            id: UUID(), clientID: ana.id, kind: .treatment, signedAt: day(-175, from: now), textVersion: "2026-10",
-            localeID: "en", typedSignature: "Ana Costa", signatureImage: nil
+        try await repository.save(ConsentRecord(
+            id: UUID(), clientID: ana.id, kind: .treatment, isSigned: true, signedAt: day(-175, from: now),
+            createdAt: day(-175, from: now), label: "Facial treatments, paper form"
         ))
         return ana
     }

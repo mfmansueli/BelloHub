@@ -79,19 +79,20 @@ extension Photo: VaultStorable {
 
 extension HealthForm: VaultStorable {
     static var kind: VaultKind { .healthForm }
-    static var sensitiveKeys: Set<String> { ["answers", "signatureImage", "guardianName", "minorName"] }
+    static var sensitiveKeys: Set<String> { ["answers", "minorName"] }
 
     var index: VaultIndex {
         VaultIndex(ownerID: clientID, dateA: signedAt, textKey: importedFromItemID)
     }
 }
 
-extension Consent: VaultStorable {
+extension ConsentRecord: VaultStorable {
+    /// The raw value stays `consent` (part of the sealing's associated data); records from before D55 read fine.
     static var kind: VaultKind { .consent }
-    static var sensitiveKeys: Set<String> { ["typedSignature", "signatureImage"] }
+    static var sensitiveKeys: Set<String> { ["label", "note", "document"] }
 
     var index: VaultIndex {
-        VaultIndex(ownerID: clientID, dateA: signedAt, statusRaw: kind.rawValue)
+        VaultIndex(ownerID: clientID, dateA: effectiveDate, statusRaw: kind.rawValue)
     }
 }
 

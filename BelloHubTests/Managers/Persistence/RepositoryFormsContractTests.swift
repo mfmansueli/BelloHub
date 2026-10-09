@@ -129,16 +129,15 @@ struct RepositoryFormsContractTests {
         #expect(try await repository.patchTests(for: bia.id).count == 1)
     }
 
-    // MARK: - Guardian consent and a minor's form
+    // MARK: - Guardian consent record and a minor's form
 
-    @Test("A guardian consent and a minor's form round-trip with the version and language they were signed on",
-          arguments: RepositoryFlavor.allCases)
+    @Test("A guardian consent record and a minor's form round-trip (D17, D55)", arguments: RepositoryFlavor.allCases)
     func guardianConsent(flavor: RepositoryFlavor) async throws {
         let (repository, client) = try seeded(flavor)
         try await repository.save(client)
-        let consent = Consent(
-            id: UUID(), clientID: client.id, kind: .guardian, signedAt: clock.now, textVersion: "2026-10",
-            localeID: "pt-BR", typedSignature: "Sentinel-GUARDIAN", signatureImage: nil
+        let consent = ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .guardian, isSigned: true, signedAt: clock.now, createdAt: clock.now,
+            label: "Signed by Rita Costa, paper form"
         )
         let form = makeHealthForm(clientID: client.id, answers: ["allergies": .choices(["latex"])], isForMinor: true)
         try await repository.save(consent)
@@ -147,18 +146,15 @@ struct RepositoryFormsContractTests {
         let storedConsent = try #require(try await repository.consents(for: client.id).first)
         #expect(storedConsent == consent && storedConsent.kind == .guardian)
         let storedForm = try #require(try await repository.healthForms(for: client.id).first)
-        #expect(storedForm.isForMinor && storedForm.guardianName == "Rita Costa" && storedForm.minorName == "Ana Costa")
+        #expect(storedForm.isForMinor && storedForm.minorName == "Ana Costa")
         #expect(storedForm.answers["allergies"] == .choices(["latex"]))
     }
 
     @Test("A consent kind a newer version wrote reads as a treatment consent instead of failing")
     func unknownConsentKind() throws {
         let json = #"{"id":"6E1F0000-0000-4000-8000-000000000001","clientID":"6E1F0000-0000-4000-8000-000000000002","# +
-            #""kind":"somethingNew","signedAt":0,"textVersion":"2026-10","localeID":"en"}"#
-        let consent = try JSONDecoder().decode(Consent.self, from: Data(json.utf8))
+            #""kind":"somethingNew","isSigned":true,"signedAt":0,"createdAt":0}"#
+        let consent = try JSONDecoder().decode(ConsentRecord.self, from: Data(json.utf8))
         #expect(consent.kind == .treatment)
-        #expect(ConsentKind.guardian.legalDocument == .consentGuardian)
-        #expect(ConsentKind.treatment.legalDocument == .consentHealth)
-        #expect(ConsentKind.photos.legalDocument == .consentPhoto)
     }
 }

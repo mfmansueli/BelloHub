@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-/// The sheet where the professional fills the health form with the client: the questions of the current template,
-/// then the consent text and a typed signature. The answers are sealed in the vault when she saves.
+/// The sheet where the professional fills the health form with the client: the questions of the current template.
+/// No consent text and no signature (D55). The answers are sealed in the vault when she saves.
 struct HealthFormSheet: View {
     @Bindable var viewModel: HealthFormViewModel
     @Environment(\.dismiss) private var dismiss
@@ -25,7 +25,6 @@ struct HealthFormSheet: View {
                     ForEach(viewModel.questions) { question in
                         HealthQuestionView(viewModel: viewModel, question: question)
                     }
-                    HealthConsentSection(viewModel: viewModel)
                     incompleteHint
                 }
                 .padding(.horizontal, Spacing.gutter)
@@ -45,8 +44,8 @@ struct HealthFormSheet: View {
 
     // MARK: - Parts
 
-    /// "Is this visit for someone under 18?": a yes switches the consent to the guardian's text and asks for the
-    /// young person's name (D17).
+    /// "Is this visit for someone under 18?": a yes asks for the young person's name (D17). The guardian's consent
+    /// is hers to collect in person and note as a consent record.
     private var minorSection: some View {
         VStack(alignment: .leading, spacing: Spacing.row) {
             Text("healthForm.minor.question")
@@ -93,8 +92,8 @@ struct HealthFormSheet: View {
                 if viewModel.isSaving {
                     ProgressView()
                 } else {
-                    // Two lines at most, shrunk before broken: at AX5 in German "unterschreiben" was split mid-word
-                    // and the bar grew to a quarter of the screen, covering the signature field.
+                    // Two lines at most, shrunk before broken: at AX5 in German a long verb was split mid-word and
+                    // the bar grew to a quarter of the screen, covering the last question.
                     Text("healthForm.save").lineLimit(2).minimumScaleFactor(0.6)
                 }
             }

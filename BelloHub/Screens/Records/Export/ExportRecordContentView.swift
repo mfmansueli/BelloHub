@@ -139,7 +139,7 @@ struct ExportRecordContentView: View {
             return LocalizedStringResource("exportRecord.summary.noConsent").localized(in: locale)
         }
         let date = formatters.shortDate(signed)
-        return LocalizedStringResource("exportRecord.summary.consent", defaultValue: "Consent signed \(date)")
+        return LocalizedStringResource("exportRecord.summary.consent", defaultValue: "ConsentRecord signed \(date)")
             .localized(in: locale)
     }
 

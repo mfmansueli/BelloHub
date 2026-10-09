@@ -118,7 +118,7 @@ struct PreVisitChecksCard: View {
             return Line(id: "consent", tone: .neutral, text: Text("preVisit.consent.none"))
         }
         let date = formatters.recentDate(signed, now: now)
-        return Line(id: "consent", tone: .good, text: text("preVisit.consent.signed", "Consent signed \(date)."))
+        return Line(id: "consent", tone: .good, text: text("preVisit.consent.signed", "ConsentRecord signed \(date)."))
     }
 
     private var patchTestLine: Line {

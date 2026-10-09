@@ -5,8 +5,8 @@
 
 import XCTest
 
-/// Accessibility audit of the health and consent screens (4.5 and its three sheets) and the form settings (6.14 and
-/// the consent text), in several localizations, at the default size and at AX5. Slow, so it runs in the Full plan and
+/// Accessibility audit of the health screen (4.5 and its three sheets: the form, the consent record and the patch
+/// test) and the form settings (6.14), in several localizations, at the default size and at AX5. Slow, so it runs in the Full plan and
 /// is skipped by UISmoke. It reports clipped text and missing descriptions; contrast is measured by unit tests
 /// (CLAUDE.md section 5), as in `OnboardingAuditUITests`.
 @MainActor
@@ -53,18 +53,25 @@ final class HealthAuditUITests: XCTestCase {
             XCTAssertTrue(app.textFields["healthForm.minorNameField"].waitForExistence(timeout: 15))
             try audit(app, "\(tag) health form, minor")
             app.selectChip("healthForm.minor.no")
-            app.answerHealthFormAndSign()
+            app.answerHealthForm()
             app.tapButton("healthForm.saveButton")
 
             XCTAssertTrue(app.element("health.answer.allergies").waitForExistence(timeout: 20), "\(tag) answers")
             try audit(app, "\(tag) answers")
 
+            app.tapButton("health.addConsentButton")
+            XCTAssertTrue(app.buttons["consent.saveButton"].waitForExistence(timeout: 15), "\(tag) consent sheet")
+            try audit(app, "\(tag) consent sheet")
+            app.setSwitch("consent.signedToggle", on: false)
+            try audit(app, "\(tag) consent sheet, not signed")
+            app.tapButton("consent.saveButton")
             let consent = app.button(withPrefix: "health.consent.")
-            XCTAssertTrue(consent.waitForExistence(timeout: 15))
+            XCTAssertTrue(consent.waitForExistence(timeout: 20), "\(tag) consent row")
+            try audit(app, "\(tag) consents")
             consent.tap()
-            XCTAssertTrue(app.element("signedConsent.text").waitForExistence(timeout: 15), "\(tag) signed text")
-            try audit(app, "\(tag) signed text")
-            app.tapButton("signedConsent.closeButton")
+            XCTAssertTrue(app.buttons["consent.deleteButton"].waitForExistence(timeout: 15), "\(tag) consent edit")
+            try audit(app, "\(tag) consent edit")
+            app.tapButton("consent.closeButton")
 
             app.tapButton("health.recordPatchTestButton")
             XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15), "\(tag) patch sheet")
@@ -83,9 +90,6 @@ final class HealthAuditUITests: XCTestCase {
             let tag = "\(locale)\(largestText ? " AX5" : "")"
             XCTAssertTrue(app.buttons["formTemplates.saveButton"].waitForExistence(timeout: 20), "\(tag) settings")
             try audit(app, "\(tag) form settings")
-
-            app.tapRow("formTemplates.consent.consent-health", expecting: "consentPreview.text")
-            try audit(app, "\(tag) consent text")
             app.terminate()
         }
     }

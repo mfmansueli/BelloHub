@@ -8,9 +8,9 @@ import Foundation
 /// Who may see a photo, given what the client agreed to (D2): private to the professional always; shown to the client
 /// or in a portfolio only when a signed photo consent exists. A photo never becomes more public than the consent says.
 enum PhotoConsentRules {
-    /// The most recent signed photo consent, or nil.
-    static func latestPhotoConsent(_ consents: [Consent]) -> Consent? {
-        consents.filter { $0.kind == .photos }.max { $0.signedAt < $1.signedAt }
+    /// The most recent photo consent record she marked signed (D55), or nil. An unsigned record counts for nothing.
+    static func latestPhotoConsent(_ consents: [ConsentRecord]) -> ConsentRecord? {
+        consents.filter { $0.kind == .photos && $0.isSigned }.max { $0.effectiveDate < $1.effectiveDate }
     }
 
     static func allowedVisibilities(hasConsent: Bool) -> [PhotoVisibility] {

@@ -23,7 +23,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     private var photosByID: [UUID: Photo] = [:]
     private var photoDataByID: [UUID: PhotoData] = [:]
     private var healthFormsByID: [UUID: HealthForm] = [:]
-    private var consentsByID: [UUID: Consent] = [:]
+    private var consentsByID: [UUID: ConsentRecord] = [:]
     private var plansByID: [UUID: SessionPlan] = [:]
     private var ledger: [UUID: RegistrationLedgerEntry] = [:]
     private var storedProfile: ProfessionalProfile?
@@ -111,12 +111,17 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         return true
     }
 
-    func consents(for clientID: UUID) -> [Consent] {
-        consentsByID.values.filter { $0.clientID == clientID }.sorted { $0.signedAt > $1.signedAt }
+    func consents(for clientID: UUID) -> [ConsentRecord] {
+        ConsentRecord.newestFirst(consentsByID.values.filter { $0.clientID == clientID })
     }
 
-    func save(_ consent: Consent) {
+    func save(_ consent: ConsentRecord) {
         consentsByID[consent.id] = consent
+        changes.notify()
+    }
+
+    func deleteConsent(id: UUID) {
+        guard consentsByID.removeValue(forKey: id) != nil else { return }
         changes.notify()
     }
 

@@ -9,10 +9,10 @@ import Testing
 
 @Suite("PhotoConsentRules")
 struct PhotoConsentRulesTests {
-    private func consent(_ kind: ConsentKind, daysAgo: Int) -> Consent {
-        Consent(
-            id: UUID(), clientID: UUID(), kind: kind, signedAt: TestClock.days(-daysAgo), textVersion: "v1",
-            localeID: "en", typedSignature: "Ana", signatureImage: nil
+    private func consent(_ kind: ConsentKind, daysAgo: Int, isSigned: Bool = true) -> ConsentRecord {
+        ConsentRecord(
+            id: UUID(), clientID: UUID(), kind: kind, isSigned: isSigned, signedAt: TestClock.days(-daysAgo),
+            createdAt: TestClock.days(-daysAgo)
         )
     }
 
@@ -28,6 +28,8 @@ struct PhotoConsentRulesTests {
         let consents = [consent(.treatment, daysAgo: 1), consent(.photos, daysAgo: 30), consent(.photos, daysAgo: 5)]
         #expect(PhotoConsentRules.latestPhotoConsent(consents)?.signedAt == TestClock.days(-5))
         #expect(PhotoConsentRules.latestPhotoConsent([consent(.treatment, daysAgo: 1)]) == nil)
+        #expect(PhotoConsentRules.latestPhotoConsent([consent(.photos, daysAgo: 1, isSigned: false)]) == nil,
+                "a photo consent she has not marked signed unlocks nothing (D55)")
     }
 
     @Test("Without consent a photo can only be private; with it every choice is open")

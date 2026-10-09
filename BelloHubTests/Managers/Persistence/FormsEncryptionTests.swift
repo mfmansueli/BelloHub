@@ -62,18 +62,23 @@ struct FormsEncryptionTests {
         try await repository.save(HealthForm(
             id: UUID(), clientID: client.id, formVersion: 1, filledBy: .professional, isForMinor: true, signedAt: now,
             importedFromItemID: nil, answers: ["notes": .text("SENTINEL-ANSWER"), "allergies": .choices(["latex"])],
-            signatureImage: nil, guardianName: "SENTINEL-GUARDIAN", minorName: "SENTINEL-MINOR"
+            minorName: "SENTINEL-MINOR"
         ))
-        try await repository.save(Consent(
-            id: UUID(), clientID: client.id, kind: .guardian, signedAt: now, textVersion: "2026-10", localeID: "pt-BR",
-            typedSignature: "SENTINEL-SIGNATURE", signatureImage: nil
+        try await repository.save(ConsentRecord(
+            id: UUID(), clientID: client.id, kind: .guardian, isSigned: true, signedAt: now, createdAt: now,
+            label: "SENTINEL-LABEL", note: "SENTINEL-CONSENTNOTE",
+            document: ConsentDocument(
+                kind: .file, fileName: "SENTINEL-FILENAME", contentType: "com.adobe.pdf",
+                data: Data("SENTINEL-DOCBYTES".utf8), thumbnail: nil
+            )
         ))
         try await repository.save(makeHealthTemplate(version: 1, keys: ["allergies", "notes"]))
 
         let files = try scratch.allBytes()
         #expect(!files.isEmpty)
         for sentinel in ["SENTINEL-PRODUCT", "SENTINEL-AREA", "SENTINEL-PATCHNOTES", "SENTINEL-ANSWER",
-                         "SENTINEL-GUARDIAN", "SENTINEL-MINOR", "SENTINEL-SIGNATURE"] {
+                         "SENTINEL-MINOR", "SENTINEL-LABEL", "SENTINEL-CONSENTNOTE", "SENTINEL-FILENAME",
+                         "SENTINEL-DOCBYTES"] {
             let needle = Data(sentinel.utf8)
             #expect(!files.contains { $0.range(of: needle) != nil }, "\(sentinel) is readable on disk")
         }
@@ -88,8 +93,8 @@ struct FormsEncryptionTests {
     func sensitiveKeys() {
         #expect(PatchTest.sensitiveKeys == ["product", "area", "result", "notes"])
         #expect(HealthFormTemplate.sensitiveKeys.isEmpty, "which questions she asks is not clinical")
-        #expect(HealthForm.sensitiveKeys == ["answers", "signatureImage", "guardianName", "minorName"])
-        #expect(Consent.sensitiveKeys == ["typedSignature", "signatureImage"])
+        #expect(HealthForm.sensitiveKeys == ["answers", "minorName"])
+        #expect(ConsentRecord.sensitiveKeys == ["label", "note", "document"])
     }
 
     @Test("The clear JSON of a patch test holds none of its sensitive keys")

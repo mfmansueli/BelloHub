@@ -17,10 +17,9 @@ enum TreatmentFlowUITestSeeding {
         _ dependencies: AppDependencies, arguments: [String] = ProcessInfo.processInfo.arguments
     ) async {
         guard arguments.contains(argument), let repository = dependencies.vault.repository else { return }
-        let consent = Consent(
-            id: UUID(), clientID: UITestSeeding.healthClientID, kind: .photos,
-            signedAt: Date().addingTimeInterval(-86_400), textVersion: "2026-10", localeID: "en",
-            typedSignature: "Ana Costa", signatureImage: nil
+        let consent = ConsentRecord(
+            id: UUID(), clientID: UITestSeeding.healthClientID, kind: .photos, isSigned: true,
+            signedAt: Date().addingTimeInterval(-86_400), createdAt: Date().addingTimeInterval(-86_400)
         )
         try? await repository.save(consent)
     }

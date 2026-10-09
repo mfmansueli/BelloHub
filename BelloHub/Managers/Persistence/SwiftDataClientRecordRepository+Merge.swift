@@ -24,7 +24,7 @@ extension SwiftDataClientRecordRepository {
         let incidents = try strictValues(Incident.self, owner: mergedID)
         let photos = try strictValues(Photo.self, owner: mergedID)
         let forms = try strictValues(HealthForm.self, owner: mergedID)
-        let consents = try strictValues(Consent.self, owner: mergedID)
+        let consents = try strictValues(ConsentRecord.self, owner: mergedID)
         let plans = try strictValues(SessionPlan.self, owner: mergedID)
 
         do {

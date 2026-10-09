@@ -9,7 +9,8 @@ import Foundation
 /// - the client's copy never includes internal notes, nor corrections of them;
 /// - the client's copy includes only photos that are shared with the client or in the portfolio;
 /// - the client's copy never includes her important note;
-/// - a signature (typed or drawn) is never included, only the kind and date of each consent.
+/// - the photo or file of a signed paper is never included, only the label, the status and the date of each consent
+///   record (D55).
 enum RecordExportSelector {
     static func content(
         from source: RecordExportSource, options: ExportOptions, now: Date, calendar: Calendar
@@ -27,7 +28,7 @@ enum RecordExportSelector {
             options: options,
             clientName: client.name,
             health: options.includeHealth ? health(of: client, isDoctor: isDoctor) : nil,
-            consents: options.includeConsent ? consents.sorted { $0.signedAt > $1.signedAt }.map(withoutSignature) : [],
+            consents: options.includeConsent ? ConsentRecord.newestFirst(consents).map(withoutDocument) : [],
             treatments: options.includeTreatments
                 ? treatments(records, corrections: corrections, since: start, keepsNotes: keepsNotes) : [],
             incidents: options.includeTreatments
@@ -51,10 +52,9 @@ enum RecordExportSelector {
         start.map { date >= $0 } ?? true
     }
 
-    private static func withoutSignature(_ consent: Consent) -> Consent {
+    private static func withoutDocument(_ consent: ConsentRecord) -> ConsentRecord {
         var plain = consent
-        plain.typedSignature = nil
-        plain.signatureImage = nil
+        plain.document = nil
         return plain
     }
 

@@ -55,23 +55,21 @@ struct RecordExportDocumentBuilder {
         return Section(heading: resolve("exportRecord.doc.health"), items: items)
     }
 
-    private func consentSection(_ consents: [Consent]) -> Section {
+    /// Each consent record as her label (or the kind's title) with "Signed <date>" or "Not signed" (D55).
+    private func consentSection(_ consents: [ConsentRecord]) -> Section {
         let items = consents.map { consent -> RecordExportDocument.Item in
-            let signed = formatters.shortDate(consent.signedAt)
+            let value: String
+            if consent.isSigned {
+                let signed = formatters.shortDate(consent.effectiveDate)
+                value = resolve(LocalizedStringResource("exportRecord.doc.signed", defaultValue: "Signed \(signed)"))
+            } else {
+                value = resolve("exportRecord.doc.notSigned")
+            }
             return .line(
-                label: resolve(title(of: consent.kind)),
-                value: resolve(LocalizedStringResource("exportRecord.doc.signed", defaultValue: "Signed \(signed)"))
+                label: consent.displayLabel(kindTitle: resolve(consent.kind.title)), value: value
             )
         }
         return Section(heading: resolve("exportRecord.doc.consent"), items: items)
-    }
-
-    private func title(of kind: ConsentKind) -> LocalizedStringResource {
-        switch kind {
-        case .treatment: "exportRecord.doc.consent.treatment"
-        case .photos: "exportRecord.doc.consent.photos"
-        case .guardian: "exportRecord.doc.consent.guardian"
-        }
     }
 
     private func treatmentSection(_ treatment: RecordExportContent.Treatment) -> Section {

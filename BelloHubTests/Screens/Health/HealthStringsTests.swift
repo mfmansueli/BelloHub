@@ -61,18 +61,14 @@ struct HealthStringsTests {
         #expect(every(24, "de") == "Alle 24 Monate prüfen" && every(1, "de") == "Jeden Monat prüfen")
     }
 
-    @Test("The two arguments of a signature line keep their places in every language",
-          arguments: AppLocalization.allCases)
-    func signedBy(localization: AppLocalization) {
-        let text = resolve(
-            LocalizedStringResource("health.consent.signedBy", defaultValue: "Signed by NAME-X · DATE-Y"),
-            in: localization.rawValue
-        )
-        // The default value has no arguments here, so this is the catalog text for the key with its placeholders.
-        #expect(!text.isEmpty)
-        let named = String(localized: LocalizedStringResource(
-            "health.consent.signedBy", defaultValue: "Signed by \("NAME-X") · \("DATE-Y")"
+    @Test("The date of a consent record line keeps its place in every language", arguments: AppLocalization.allCases)
+    func consentDates(localization: AppLocalization) {
+        let signed = String(localized: LocalizedStringResource(
+            "health.consent.signedOn", defaultValue: "Signed · \("DATE-Y")"
         ).localized(in: localization.locale))
-        #expect(named.contains("NAME-X") && named.contains("DATE-Y"))
+        let noted = String(localized: LocalizedStringResource(
+            "health.consent.notedOn", defaultValue: "Not signed · noted \("DATE-Y")"
+        ).localized(in: localization.locale))
+        #expect(signed.contains("DATE-Y") && noted.contains("DATE-Y"), localization.rawValue)
     }
 }

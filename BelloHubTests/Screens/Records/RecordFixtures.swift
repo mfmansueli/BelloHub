@@ -48,10 +48,14 @@ func makeIncident(
 }
 
 func makeConsent(
-    clientID: UUID = UUID(), kind: ConsentKind = .treatment, signedAt: Date = TestClock.days(-30)
-) -> Consent {
-    Consent(
-        id: UUID(), clientID: clientID, kind: kind, signedAt: signedAt, textVersion: "v1", localeID: "en",
-        typedSignature: "Ana Costa", signatureImage: Data([1, 2, 3])
+    clientID: UUID = UUID(), kind: ConsentKind = .treatment, signedAt: Date = TestClock.days(-30),
+    isSigned: Bool = true, label: String? = nil
+) -> ConsentRecord {
+    ConsentRecord(
+        id: UUID(), clientID: clientID, kind: kind, isSigned: isSigned, signedAt: isSigned ? signedAt : nil,
+        createdAt: signedAt, label: label, note: "Paper form in the drawer",
+        document: ConsentDocument(
+            kind: .photo, fileName: nil, contentType: "public.jpeg", data: Data([1, 2, 3]), thumbnail: Data([1])
+        )
     )
 }

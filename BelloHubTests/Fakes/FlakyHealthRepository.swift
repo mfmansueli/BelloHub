@@ -72,15 +72,20 @@ actor FlakyHealthRepository: HealthRepository {
 
     func importHealthForm(_ form: HealthForm) async throws -> Bool { await vault.importHealthForm(form) }
 
-    func consents(for clientID: UUID) async throws -> [Consent] {
+    func consents(for clientID: UUID) async throws -> [ConsentRecord] {
         try readOrFail()
         return await vault.consents(for: clientID)
     }
 
-    func save(_ consent: Consent) async throws {
+    func save(_ consent: ConsentRecord) async throws {
         if failing.contains(.consent) { throw Failure() }
         savedConsents += 1
         await vault.save(consent)
+    }
+
+    func deleteConsent(id: UUID) async throws {
+        if failing.contains(.consent) { throw Failure() }
+        await vault.deleteConsent(id: id)
     }
 
     func sessionPlans(for clientID: UUID) async throws -> [SessionPlan] { await vault.sessionPlans(for: clientID) }

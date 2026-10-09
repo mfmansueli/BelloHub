@@ -1,468 +1,546 @@
 {
-  "sourceLanguage" : "en",
-  "strings" : {
-    "CFBundleDisplayName" : {
-      "comment" : "App name under the icon. It stays Bello Hub in every language.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+  "sourceLanguage": "en",
+  "strings": {
+    "CFBundleDisplayName": {
+      "comment": "App name under the icon. It stays Bello Hub in every language.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "de": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bello Hub"
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bello Hub"
           }
         },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "en-GB": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "es": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "es-419": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "es-MX": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "fr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "hi": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "id": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "it": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "pt-BR": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
+        "pt-PT": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub"
-          }
-        }
-      }
-    },
-    "CFBundleName" : {
-      "comment" : "Bundle name",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "BelloHub"
+        "tr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Bello Hub"
           }
         }
       }
     },
-    "NSCameraUsageDescription" : {
-      "comment" : "Camera: why the app asks.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لالتقاط صور الخدمة."
+    "CFBundleName": {
+      "comment": "Bundle name: the same in every language.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Um Behandlungsfotos aufzunehmen."
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "To take treatment photos."
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "To take treatment photos."
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para hacer fotos del tratamiento."
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para tomar fotos del tratamiento."
+        "es-419": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para tomar fotos del tratamiento."
+        "es-MX": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour prendre des photos du soin."
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "उपचार की तस्वीरें लेने के लिए।"
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Untuk mengambil foto perawatan."
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Per scattare le foto del trattamento."
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para tirar fotos do atendimento."
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para tirar fotografias do atendimento."
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "İşlem fotoğrafları çekmek için."
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BelloHub"
           }
         }
       }
     },
-    "NSContactsUsageDescription" : {
-      "comment" : "Contacts: why the app asks. Only the contacts she selects are read.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لاستيراد العملاء الذين تختارهم."
+    "NSCameraUsageDescription": {
+      "comment": "Camera: why the app asks.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "لالتقاط صور الخدمة."
           }
         },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Um die von Ihnen gewählten Kontakte als Kundschaft zu importieren."
+        "de": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Um Behandlungsfotos aufzunehmen."
           }
         },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "To import the clients you choose."
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To take treatment photos."
           }
         },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "To import the clients you choose."
+        "en-GB": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "To take treatment photos."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para importar a los clientes que elijas."
+        "es": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para hacer fotos del tratamiento."
           }
         },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para importar a los clientes que elijas."
+        "es-419": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para tomar fotos del tratamiento."
           }
         },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para importar a los clientes que elijas."
+        "es-MX": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para tomar fotos del tratamiento."
           }
         },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour importer les clients que vous choisissez."
+        "fr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Pour prendre des photos du soin."
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आपके चुने हुए क्लाइंट इम्पोर्ट करने के लिए।"
+        "hi": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "उपचार की तस्वीरें लेने के लिए।"
           }
         },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Untuk mengimpor klien yang Anda pilih."
+        "id": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Untuk mengambil foto perawatan."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Per importare i clienti che scegli."
+        "it": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Per scattare le foto del trattamento."
           }
         },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para importar os clientes que você escolher."
+        "pt-BR": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para tirar fotos do atendimento."
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para importar os clientes que escolher."
+        "pt-PT": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para tirar fotografias do atendimento."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Seçtiğiniz müşterileri içe aktarmak için."
+        "tr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "İşlem fotoğrafları çekmek için."
           }
         }
       }
     },
-    "NSFaceIDUsageDescription" : {
-      "comment" : "Face ID: why the app asks.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لفتح عملائك وسجلاتك."
+    "NSContactsUsageDescription": {
+      "comment": "Contacts: why the app asks. Only the contacts she selects are read.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "لاستيراد العملاء الذين تختارهم."
           }
         },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Um Ihre Kundschaft und Unterlagen zu öffnen."
+        "de": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Um die von Ihnen gewählten Kontakte als Kundschaft zu importieren."
           }
         },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "To unlock your clients and records."
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To import the clients you choose."
           }
         },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "To unlock your clients and records."
+        "en-GB": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "To import the clients you choose."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para abrir tus clientes y fichas."
+        "es": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para importar a los clientes que elijas."
           }
         },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para abrir tus clientes y registros."
+        "es-419": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para importar a los clientes que elijas."
           }
         },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para abrir tus clientes y registros."
+        "es-MX": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para importar a los clientes que elijas."
           }
         },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour ouvrir vos clients et vos fiches."
+        "fr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Pour importer les clients que vous choisissez."
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आपके क्लाइंट और रिकॉर्ड खोलने के लिए।"
+        "hi": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "आपके चुने हुए क्लाइंट इम्पोर्ट करने के लिए।"
           }
         },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Untuk membuka klien dan catatan Anda."
+        "id": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Untuk mengimpor klien yang Anda pilih."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Per aprire i tuoi clienti e le schede."
+        "it": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Per importare i clienti che scegli."
           }
         },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para abrir seus clientes e registros."
+        "pt-BR": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para importar os clientes que você escolher."
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para abrir os seus clientes e registos."
+        "pt-PT": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para importar os clientes que escolher."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Müşterilerinizi ve kayıtlarınızı açmak için."
+        "tr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Seçtiğiniz müşterileri içe aktarmak için."
           }
         }
       }
     },
-    "NSMicrophoneUsageDescription" : {
-      "comment" : "Microphone: why the app asks (the system dialog shows this sentence).",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لتسجيل ملاحظات الخدمة بالصوت."
+    "NSFaceIDUsageDescription": {
+      "comment": "Face ID: why the app asks.",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "لفتح عملائك وسجلاتك."
           }
         },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Um Behandlungsnotizen per Sprache aufzunehmen."
+        "de": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Um Ihre Kundschaft und Unterlagen zu öffnen."
           }
         },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "To record treatment notes by voice."
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To unlock your clients and records."
           }
         },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "To record treatment notes by voice."
+        "en-GB": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "To unlock your clients and records."
           }
         },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para grabar notas del tratamiento por voz."
+        "es": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para abrir tus clientes y fichas."
           }
         },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para grabar notas del tratamiento por voz."
+        "es-419": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para abrir tus clientes y registros."
           }
         },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para grabar notas del tratamiento por voz."
+        "es-MX": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para abrir tus clientes y registros."
           }
         },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pour enregistrer vos notes de soin à la voix."
+        "fr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Pour ouvrir vos clients et vos fiches."
           }
         },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "इलाज के नोट्स आवाज़ से रिकॉर्ड करने के लिए।"
+        "hi": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "आपके क्लाइंट और रिकॉर्ड खोलने के लिए।"
           }
         },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Untuk merekam catatan perawatan dengan suara."
+        "id": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Untuk membuka klien dan catatan Anda."
           }
         },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Per registrare a voce le note del trattamento."
+        "it": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Per aprire i tuoi clienti e le schede."
           }
         },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para gravar anotações do atendimento por voz."
+        "pt-BR": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para abrir seus clientes e registros."
           }
         },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Para gravar notas do atendimento por voz."
+        "pt-PT": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para abrir os seus clientes e registos."
           }
         },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "İşlem notlarını sesle kaydetmek için."
+        "tr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Müşterilerinizi ve kayıtlarınızı açmak için."
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "comment": "Microphone: why the app asks (the system dialog shows this sentence).",
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "لتسجيل ملاحظات الخدمة بالصوت."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Um Behandlungsnotizen per Sprache aufzunehmen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To record treatment notes by voice."
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "To record treatment notes by voice."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para grabar notas del tratamiento por voz."
+          }
+        },
+        "es-419": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para grabar notas del tratamiento por voz."
+          }
+        },
+        "es-MX": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para grabar notas del tratamiento por voz."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Pour enregistrer vos notes de soin à la voix."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "इलाज के नोट्स आवाज़ से रिकॉर्ड करने के लिए।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Untuk merekam catatan perawatan dengan suara."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Per registrare a voce le note del trattamento."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para gravar anotações do atendimento por voz."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "Para gravar notas do atendimento por voz."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "needs_review",
+            "value": "İşlem notlarını sesle kaydetmek için."
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

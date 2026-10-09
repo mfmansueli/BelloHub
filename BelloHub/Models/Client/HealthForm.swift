@@ -6,8 +6,9 @@
 import Foundation
 
 /// A client's health history and the version of the form it answers. Arrives from the sealed mailbox (the client
-/// filled it in her browser) or is entered by the professional. Everything below `importedFromItemID` is
-/// encrypted at rest.
+/// filled it in her browser) or is entered by the professional. No consent text, agreement or signature travels
+/// with it (D55): the answers and, for someone under 18, the young person's name. Everything below
+/// `importedFromItemID` is encrypted at rest.
 struct HealthForm: Identifiable, Hashable, Codable, Sendable {
     let id: UUID
     var clientID: UUID
@@ -20,7 +21,5 @@ struct HealthForm: Identifiable, Hashable, Codable, Sendable {
 
     // Encrypted at rest.
     var answers: [String: HealthAnswer]
-    var signatureImage: Data?
-    var guardianName: String?
     var minorName: String?
 }

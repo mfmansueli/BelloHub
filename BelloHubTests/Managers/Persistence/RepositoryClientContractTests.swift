@@ -143,11 +143,9 @@ struct RepositoryClientContractTests {
                                   data: PhotoData(image: Data([1, 2, 3]), thumbnail: Data([9])))
         try await repository.save(HealthForm(id: UUID(), clientID: client.id, formVersion: 1, filledBy: .client,
                                              isForMinor: false, signedAt: start, importedFromItemID: nil,
-                                             answers: ["allergies": .no], signatureImage: nil, guardianName: nil,
-                                             minorName: nil))
-        try await repository.save(Consent(id: UUID(), clientID: client.id, kind: .treatment, signedAt: start,
-                                          textVersion: "1", localeID: "pt-BR", typedSignature: "A",
-                                          signatureImage: nil))
+                                             answers: ["allergies": .no], minorName: nil))
+        try await repository.save(ConsentRecord(id: UUID(), clientID: client.id, kind: .treatment, isSigned: true,
+                                                signedAt: start, createdAt: start, label: "A"))
         try await repository.save(SessionPlan(id: UUID(), clientID: client.id, name: "Plan", totalSessions: 6,
                                               intervalWeeks: 4, startDate: start, remindToRebook: true))
     }

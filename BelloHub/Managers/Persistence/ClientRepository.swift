@@ -43,8 +43,11 @@ protocol ClientRepository: Sendable {
     /// `importedFromItemID` again changes nothing and returns false (a crash between import and acknowledge is safe).
     func importHealthForm(_ form: HealthForm) async throws -> Bool
 
-    func consents(for clientID: UUID) async throws -> [Consent]
-    func save(_ consent: Consent) async throws
+    /// Her consent records for one client (D55), the most recent first.
+    func consents(for clientID: UUID) async throws -> [ConsentRecord]
+    func save(_ consent: ConsentRecord) async throws
+    /// Removes one consent record and its document. Deleting an id that is not there changes nothing.
+    func deleteConsent(id: UUID) async throws
 
     func sessionPlans(for clientID: UUID) async throws -> [SessionPlan]
     func save(_ plan: SessionPlan) async throws

@@ -89,7 +89,7 @@ struct PhotosStepView: View {
             ZStack {
                 Palette.sunken
                 if let photo {
-                    FlowPhotoImage(data: photo.data.thumbnail)
+                    DataImage(data: photo.data.thumbnail)
                 } else {
                     Image(icon: .image).foregroundStyle(Palette.ink2).accessibilityHidden(true)
                 }
@@ -121,7 +121,7 @@ struct PhotosStepView: View {
 
     private func row(_ photo: FlowPhoto) -> some View {
         HStack(spacing: Spacing.row) {
-            FlowPhotoImage(data: photo.data.thumbnail)
+            DataImage(data: photo.data.thumbnail)
                 .frame(width: 56, height: 72)
                 .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
                 .accessibilityHidden(true)

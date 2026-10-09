@@ -13,7 +13,6 @@ struct FormTemplatesViewModelTests {
     private struct Rig {
         let model: FormTemplatesViewModel
         let repository: FlakyHealthRepository
-        let legal: FakeLegalTextLibrary
     }
 
     private func makeRig(
@@ -24,15 +23,12 @@ struct FormTemplatesViewModelTests {
         await profileRepository.save(makeHealthProfile(professions: professions, localeID: localeID))
         let profile = ProfileService(vault: VaultService(repository: profileRepository))
         await profile.load()
-        let legal = FakeLegalTextLibrary(["en", "pt-BR"].flatMap { localization in
-            LegalDocument.allCases.map { FakeLegalTextLibrary.text($0, localization: localization, version: "2026-10") }
-        })
         let model = FormTemplatesViewModel(
             repository: vaultAvailable ? repository : nil, profile: profile,
-            catalogProvider: FakeHealthFormCatalogProvider(), legal: legal, locale: Locale(identifier: "en"),
+            catalogProvider: FakeHealthFormCatalogProvider(), locale: Locale(identifier: "en"),
             now: { TestClock.now }
         )
-        return Rig(model: model, repository: repository, legal: legal)
+        return Rig(model: model, repository: repository)
     }
 
     private func question(_ key: String, in model: FormTemplatesViewModel) throws -> HealthQuestion {
@@ -69,16 +65,6 @@ struct FormTemplatesViewModelTests {
         let noVault = try await makeRig(vaultAvailable: false)
         await noVault.model.load()
         #expect(noVault.model.errorMessage != nil && !noVault.model.hasLoaded)
-    }
-
-    @Test("The consent texts are listed with their newest version in the business language")
-    func consentVersions() async throws {
-        let rig = try await makeRig()
-        await rig.model.load()
-
-        #expect(rig.model.consentVersions.count == LegalDocument.allCases.count)
-        #expect(rig.model.consentVersions[.consentHealth] == "2026-10")
-        #expect(rig.legal.requests.contains("consent-health-pt-BR"))
     }
 
     // MARK: - Editing and saving
@@ -176,20 +162,5 @@ struct FormTemplatesViewModelTests {
 
         #expect(rig.model.offered.map(\.key) == ["allergies", "medication", "scalp", "notes"])
         #expect(rig.model.enabledKeys == ["allergies", "medication", "scalp", "notes"])
-    }
-
-    // MARK: - Consent texts
-
-    @Test("Reading a consent text opens it once, in the business language")
-    func previewConsent() async throws {
-        let rig = try await makeRig(localeID: "pt-BR")
-        await rig.model.load()
-
-        rig.model.previewConsent(.consentGuardian)
-        let sheet = try #require(rig.model.previewSheet)
-        #expect(sheet.document == .consentGuardian && sheet.language == .ptBR)
-        #expect(sheet.legalText?.localization == "pt-BR")
-        rig.model.previewConsent(.consentPhoto)
-        #expect(rig.model.previewSheet?.document == .consentGuardian)
     }
 }
