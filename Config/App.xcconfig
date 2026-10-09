@@ -22,6 +22,8 @@ SWIFT_EMIT_LOC_STRINGS = YES
 // Hosting address until a custom domain exists. Functions are the dev project's `bello-hub` in europe-west1.
 BELLO_FUNCTIONS_BASE_URL = https:/$()/europe-west1-bello-hub.cloudfunctions.net
 BELLO_WEB_BASE_URL = https:/$()/bello-hub.web.app
+// The Firestore project the inbox reads from (bookings, requests, waitlist, sealed items), with the same rules.
+BELLO_FIREBASE_PROJECT_ID = bello-hub
 
 // MARK: - Generated Info.plist
 

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		000000000000000500000001 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000600000001 /* FirebaseCore */; };
 		000000000000000500000002 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000600000002 /* FirebaseAuth */; };
+		000000000000000500000003 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000600000003 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 			files = (
 				000000000000000500000001 /* FirebaseCore in Frameworks */,
 				000000000000000500000002 /* FirebaseAuth in Frameworks */,
+				000000000000000500000003 /* FirebaseMessaging in Frameworks */,
 			);
 		};
 		000000000000000230000000 /* Frameworks */ = {
@@ -144,6 +146,7 @@
 			packageProductDependencies = (
 				000000000000000600000001 /* FirebaseCore */,
 				000000000000000600000002 /* FirebaseAuth */,
+				000000000000000600000003 /* FirebaseMessaging */,
 			);
 			productName = BelloHub;
 			productReference = 000000000000000000000120 /* BelloHub.app */;
@@ -433,6 +436,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 000000000000000700000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		000000000000000600000003 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000000000000000700000001 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

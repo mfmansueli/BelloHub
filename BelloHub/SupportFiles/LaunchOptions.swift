@@ -49,6 +49,10 @@ struct LaunchOptions: Equatable {
     /// `fake` makes the booking server an in-memory fake, so a UI test can go online and see the real states without
     /// network. Without it a UI-test launch has no server at all (publishing says "not online").
     var uiOnline: String?
+    /// `fixtures` fills the in-memory inbox server (`UITestInboxRepository`) with a booking request, a new booking, a
+    /// reschedule request, a waitlist and a sealed health form addressed to the test key, so the inbox screens can be
+    /// walked without a network. Implies `-uiOnline fake`.
+    var uiInbox: String?
 
     init() {}
 
@@ -70,6 +74,7 @@ struct LaunchOptions: Equatable {
         uiVoice = Self.value(after: "-uiVoice", in: arguments)
         uiCamera = Self.value(after: "-uiCamera", in: arguments)
         uiOnline = Self.value(after: "-uiOnline", in: arguments)
+        uiInbox = Self.value(after: "-uiInbox", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

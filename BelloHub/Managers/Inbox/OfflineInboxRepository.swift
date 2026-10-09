@@ -1,0 +1,30 @@
+//
+//  OfflineInboxRepository.swift
+//  BelloHub
+//
+
+import Foundation
+
+/// No server (previews, a build without one): every read is empty and every write says so honestly, so the inbox shows
+/// what the phone knows and nothing pretends to have reached the server.
+struct OfflineInboxRepository: InboxRepository {
+    func bookings(uid: String, since: Date) async throws -> [IncomingBooking] { [] }
+    func rescheduleRequests(uid: String) async throws -> [RescheduleRequest] { [] }
+    func waitlist(uid: String) async throws -> [WaitlistRequest] { [] }
+    func respondBookingRequest(id: String, approve: Bool) async throws -> BookingRequestOutcome {
+        throw BookingRepositoryError.notPublishedYet
+    }
+    func respondRescheduleRequest(id: String, accept: Bool) async throws -> RescheduleOutcome {
+        throw BookingRepositoryError.notPublishedYet
+    }
+    func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome {
+        throw BookingRepositoryError.notPublishedYet
+    }
+    func removeWaitlistEntry(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
+    func resetNoShowCount(phone: String) async throws { throw BookingRepositoryError.notPublishedYet }
+    func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }
+    func mailboxItem(id: String) async throws -> MailboxItem { throw BookingRepositoryError.notPublishedYet }
+    func acknowledgeMailboxItem(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
+    func registerDevice(fcmToken: String, locale: String?) async throws { throw BookingRepositoryError.notPublishedYet }
+    func unregisterDevice(fcmToken: String) async throws { throw BookingRepositoryError.notPublishedYet }
+}
