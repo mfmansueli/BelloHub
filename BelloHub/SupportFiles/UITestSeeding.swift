@@ -24,6 +24,7 @@ enum UITestSeeding {
         await CatalogUITestSeeding.seedIfRequested(dependencies)
         await CalendarUITestSeeding.seedIfRequested(dependencies)
         await AppointmentUITestSeeding.seedIfRequested(dependencies, options: options)
+        await HomeUITestSeeding.seedIfRequested(dependencies)
         let seeds = ["onboarded", "clientWithHealth", "clients", "appointments"]
         guard let seed = options.seed, seeds.contains(seed), !options.keepsState
         else { return }

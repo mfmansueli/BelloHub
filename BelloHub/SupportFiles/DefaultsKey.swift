@@ -19,4 +19,6 @@ enum DefaultsKey {
     /// signed-in
     /// user, changes to her page are published by themselves; stopping removes it.
     static let publishingOnlineUserID = "publishing.onlineUserID"
+    /// `NotificationPrefs` as JSON: what reaches her and when (`DefaultsNotificationPrefsStore`).
+    static let notificationPrefs = "notifications.prefs"
 }
