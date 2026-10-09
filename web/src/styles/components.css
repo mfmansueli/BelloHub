@@ -212,9 +212,6 @@ dialog.sheet::backdrop { background: rgba(36, 35, 33, 0.38); -webkit-backdrop-fi
 .state .lead { max-inline-size: 360px; }
 .banner { padding: 10px var(--space-gutter); background: var(--amber-bg); color: var(--amber-text); font-size: var(--fs-meta); text-align: center; }
 
-/* Signature canvas */
-.sign { inline-size: 100%; block-size: 140px; background: var(--hero-ink); border: 1.5px solid var(--field-border); border-radius: var(--radius-input); touch-action: none; }
-
 /* Photo preview */
 .photo { position: relative; inline-size: 120px; block-size: 120px; border-radius: var(--radius-tile); overflow: hidden; border: 1px solid var(--hairline); }
 .photo img { inline-size: 100%; block-size: 100%; object-fit: cover; }

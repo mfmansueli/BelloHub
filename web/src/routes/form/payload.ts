@@ -1,5 +1,6 @@
 // The health form's rules, pure: which questions apply, what is missing, and the `IntakePayload` that gets sealed
 // (docs/06 section 3.4). Nothing here stores or sends anything; the answers exist only in the component that calls it.
+// D55: there is no consent text, agreement or signature here. Consents are the professional's own business.
 
 import type { FormContext, FormQuestion } from '../../api/types';
 import type { AnswerValue, IntakePayload } from '../../crypto/envelope';
@@ -8,22 +9,12 @@ export interface IntakeState {
   readonly answers: Readonly<Record<string, AnswerValue>>;
   readonly isForMinor: boolean;
   readonly minorName: string;
-  /** The guardian's full name and relationship, typed as her signature when the visit is for a minor. */
-  readonly guardianName: string;
-  /** The client's typed full name: her signature when the visit is for an adult. */
-  readonly typedSignature: string;
-  readonly consent: boolean;
-  readonly signaturePng: string | null;
 }
 
 export const EMPTY_INTAKE: IntakeState = {
   answers: {},
   isForMinor: false,
   minorName: '',
-  guardianName: '',
-  typedSignature: '',
-  consent: false,
-  signaturePng: null,
 };
 
 export function visibleQuestions(questions: readonly FormQuestion[], isForMinor: boolean): FormQuestion[] {
@@ -44,36 +35,21 @@ export function toggleChoice(current: readonly string[], value: string): string[
   return [...current.filter((item) => item !== 'none'), value];
 }
 
-export type IntakeProblem =
-  | { readonly field: 'question'; readonly key: string }
-  | { readonly field: 'minorName' }
-  | { readonly field: 'guardianName' }
-  | { readonly field: 'typedSignature' }
-  | { readonly field: 'consent' };
+export type IntakeProblem = { readonly field: 'question'; readonly key: string } | { readonly field: 'minorName' };
 
-/** What stands between her and "Submit": every required question, the minor's name, the consent and the signature. */
+/** What stands between her and "Submit": every required question and, for a minor, the minor's name. */
 export function intakeProblems(state: IntakeState, questions: readonly FormQuestion[]): IntakeProblem[] {
   const problems: IntakeProblem[] = [];
   for (const question of visibleQuestions(questions, state.isForMinor)) {
     if (question.required === true && !isAnswered(state.answers[question.key])) problems.push({ field: 'question', key: question.key });
   }
-  if (state.isForMinor) {
-    if (state.minorName.trim().length < 2) problems.push({ field: 'minorName' });
-    if (state.guardianName.trim().length < 2) problems.push({ field: 'guardianName' });
-  } else if (state.typedSignature.trim().length < 2) {
-    problems.push({ field: 'typedSignature' });
-  }
-  if (!state.consent) problems.push({ field: 'consent' });
+  if (state.isForMinor && state.minorName.trim().length < 2) problems.push({ field: 'minorName' });
   return problems;
 }
 
 export interface BuildContext {
   readonly context: FormContext;
   readonly localeId: string;
-  /** The version of the consent text that was shown: the one the server returned (D49). */
-  readonly consentVersion: string;
-  /** The language of the consent text that was shown (the one the server's text was written in). */
-  readonly consentLocaleId: string;
   readonly now: Date;
 }
 
@@ -85,24 +61,14 @@ export function buildIntakePayload(state: IntakeState, input: BuildContext): Int
     // An unanswered optional question is left out, never sent as an empty string.
     if (value !== undefined && isAnswered(value)) answers[question.key] = typeof value === 'string' ? value.trim() : value;
   }
-  const signature = state.isForMinor ? state.guardianName.trim() : state.typedSignature.trim();
-  const submittedAt = input.now.toISOString();
   return {
-    schema: 1,
+    schema: 2,
     bookingId: input.context.bookingId,
-    clientName: signature,
     localeId: input.localeId,
     formVersion: input.context.intake.formVersion,
     answers,
     isForMinor: state.isForMinor,
-    ...(state.isForMinor ? { minorName: state.minorName.trim(), guardianName: state.guardianName.trim() } : {}),
-    consent: {
-      textVersion: input.consentVersion,
-      textLocaleId: input.consentLocaleId,
-      acceptedAt: submittedAt,
-      typedSignature: signature,
-    },
-    ...(state.signaturePng === null ? {} : { signaturePng: state.signaturePng }),
-    submittedAt,
+    ...(state.isForMinor ? { minorName: state.minorName.trim() } : {}),
+    submittedAt: input.now.toISOString(),
   };
 }

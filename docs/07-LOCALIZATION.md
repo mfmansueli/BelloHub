@@ -90,7 +90,9 @@ Fixed choices (do not drift): `pt-PT` *marcação, desmarcar, telemóvel*; `pt-B
 - The rule text ("Changes are free up to 24 hours before…") is generated from the professional's policy values **and published per locale** so the iPhone and the web can never disagree (`CancelPolicy` produces it; `RD` templates in the prototype's `Bk-1-Page` show the expected phrasing in the five prototype locales; write the others in the same pattern).
 - ICS files and emails use the business locale unless the client's page language differs (then her page language). ICS `SUMMARY`/`DESCRIPTION` carry bidi isolates in `ar`.
 
-## 8. Legal and consent texts (`LEGAL-REVIEW`)
+## 8. Legal texts (`LEGAL-REVIEW`)
+
+**D55:** consents are the professional's own business; the app only records their status. Bello Hub writes no consent, treatment-agreement, photo-consent or guardian text, so the three consent documents below are no longer produced, shipped or shown anywhere (the 2026-10 drafts stay in `legal/` as history only).
 
 Stored as versioned documents `legal/<doc>/<localization>/<version>.md`, rendered in the app and on the web, referenced by `textVersion`. **All fourteen localizations get provisional drafts**, but because the legal frameworks differ, write them in **region sets**: Brazil (`pt-BR`, LGPD), Portugal (`pt-PT`), Spain (`es`), Mexico (`es-MX`), Latin America (`es-419`, generic with country notes), United States (`en`), English-speaking markets (`en-GB`, UK GDPR), Italy, France, Germany, Turkey, Indonesia, India (`hi` and `en-GB`), Arabic markets (`ar`). Each draft is marked in file headers and `legal/STATUS.md` (`draft | reviewed`, reviewer, date); the professional-facing app does not show "draft". Start with Brazil and the European core and write them most carefully (D36).
 
@@ -99,12 +101,12 @@ Stored as versioned documents `legal/<doc>/<localization>/<version>.md`, rendere
 | Terms for the professional + Data Processing Agreement | roles (controller / processor), what Bello hosts, sub-processors (Google Firebase, email provider), security measures (`06`), her duties (lawful basis, consent, retention), breach notice, deletion on termination. |
 | Privacy policy (app and site) | data categories by class (`06` §1), purposes, legal bases per market, retention (D30), rights and how to exercise them, international transfers, sub-processors, contact, the honest limits of E2EE (`06` §6). |
 | Client notice on the booking page | who is the controller (the professional), what is collected to book, rules of cancellation, link to the privacy policy. |
-| Health-form consent | explicit consent for processing health data by the professional, purpose, who sees it, retention, withdrawal; the sealed-in-browser statement; per-country wording. |
-| Photo consent | purpose, visibility choices (`professionalOnly`, `shareWithClient`, `portfolio`), withdrawal. |
-| Guardian consent (minors) | guardian identity, minor's name, scope; country rules vary (O14). |
+| ~~Health-form consent~~ | Not produced (D55). |
+| ~~Photo consent~~ | Not produced (D55). |
+| ~~Guardian consent (minors)~~ | Not produced (D55). |
 | Data-subject requests | wording for copy and deletion requests and the professional's confirmation. |
 
-Each acceptance stores `textVersion`, localization, timestamp and signature.
+The professional's acceptance of the terms stores `textVersion`, localization and timestamp. Nothing a client reads on the web is signed.
 
 ## 9. Tests and tooling
 

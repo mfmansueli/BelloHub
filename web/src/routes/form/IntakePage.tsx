@@ -1,12 +1,12 @@
-// Cl-4: the health form and consent, sealed in her browser (docs/06 section 3, docs/10 section 5).
+// Cl-4: the health form, sealed in her browser (docs/06 section 3, docs/10 section 5).
 //
 //  - The questions come from the professional's template; the answers live in this component's state only.
 //    No localStorage, sessionStorage, cookie, URL, console or error report ever sees one.
 //  - Autofill and spellcheck are off on every field that can hold a health answer.
 //  - On submit the answers become one JSON payload, sealed with the professional's public key by hpke-js (a lazy
 //    chunk), and the only thing that leaves the browser is the envelope.
-//  - The consent she signs is the text the server returned for this professional and language (D49), never a draft
-//    of ours; a visit for someone under 18 switches to the guardian's text and signature.
+//  - No consent text, agreement or signature (D55): consents are the professional's own business, handled in person.
+//    A visit for someone under 18 only switches the questions and asks the young person's name.
 
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
@@ -20,16 +20,14 @@ import { SealError } from '../../crypto/envelope';
 import { sealInBrowser, sendEnvelope } from '../../crypto/submit';
 import type { SealedEnvelope } from '../../api/types';
 import { Button, LinkButton } from '../../components/Button';
-import { Option, Segmented } from '../../components/Choices';
+import { Segmented } from '../../components/Choices';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { TextField } from '../../components/Field';
 import { Icon } from '../../components/Icon';
 import { Footer, ProHeader, Screen, Title, useDocumentTitle } from '../../components/Layout';
-import { SignaturePad } from '../../components/SignaturePad';
 import { useI18n } from '../../i18n';
 import { ltr } from '../../lib/bidi';
 import { EMPTY_INTAKE, buildIntakePayload, intakeProblems, visibleQuestions, type IntakeProblem, type IntakeState } from './payload';
-import { signableConsent } from './consent';
 import { QuestionCard } from './QuestionCard';
 
 export function IntakePage({ token }: { token: string }): JSX.Element {
@@ -46,12 +44,6 @@ function problemId(problem: IntakeProblem): string {
       return `q-${problem.key}`;
     case 'minorName':
       return 'minor-name';
-    case 'guardianName':
-      return 'guardian-name';
-    case 'typedSignature':
-      return 'typed-signature';
-    case 'consent':
-      return 'consent-check';
   }
 }
 
@@ -80,16 +72,6 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     return (
       <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
         <FullNote title={t('cl4.closed.title')} text={t('cl4.closed.text', { name: pro.firstName })} back={token} />
-      </Screen>
-    );
-  }
-
-  // D49: no consent text from the server means no way to sign, and no draft in its place.
-  if (signableConsent(context.intake.consent, locale, pro.defaultLocale, false) === null) {
-    return (
-      <Screen top={<header class="topbar"><ProHeader professional={pro} /></header>}>
-        <FullNote title={t('cl4.noConsent.title')} text={t('cl4.noConsent.text', { name: pro.firstName })} back={token} testId="consent-unavailable" />
-        <Footer />
       </Screen>
     );
   }
@@ -124,11 +106,8 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     );
   }
 
-  const consent = signableConsent(context.intake.consent, locale, pro.defaultLocale, state.isForMinor);
-  const signLabel = state.isForMinor ? t('cl4.sign.guardian') : t('cl4.sign');
-
   const submit = async (): Promise<void> => {
-    if (problems.length > 0 || consent === null) {
+    if (problems.length > 0) {
       setShowErrors(true);
       const first = problems[0];
       if (first !== undefined) window.setTimeout(() => { document.getElementById(problemId(first))?.focus(); }, 0);
@@ -139,7 +118,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
     setSealFailed(false);
     try {
       if (envelope.current === null) {
-        const payload = buildIntakePayload(state, { context, localeId: locale, consentVersion: consent.textVersion, consentLocaleId: consent.localeId, now: new Date() });
+        const payload = buildIntakePayload(state, { context, localeId: locale, now: new Date() });
         envelope.current = await sealInBrowser({ kind: 'intake', payload, inboxKey: context.inboxKey });
       }
       await sendEnvelope(token, envelope.current);
@@ -191,7 +170,7 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
           legend={t('cl4.minor.title')}
           value={state.isForMinor ? 'yes' : 'no'}
           options={[{ value: 'no', label: t('common.no') }, { value: 'yes', label: t('common.yes') }]}
-          onChange={(value) => { set({ isForMinor: value === 'yes', consent: false }); }}
+          onChange={(value) => { set({ isForMinor: value === 'yes' }); }}
           testId="minor"
         />
         {state.isForMinor ? (
@@ -201,31 +180,6 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
           </div>
         ) : null}
       </fieldset>
-
-      <section class="question stack" aria-labelledby="consent-title">
-        <h2 id="consent-title" class="label">{t('cl4.consent')}</h2>
-        {consent === null ? (
-          <Notice kind="warning" icon="alert" testId="consent-unavailable">{t('cl4.noConsent.text', { name: pro.firstName })}</Notice>
-        ) : (
-          <>
-            <div class="well stack-sm" lang={consent.localeId} dir={consent.direction} data-testid="consent-text">
-              {consent.paragraphs.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
-            <div id="consent-check" tabIndex={-1}>
-              <Option type="checkbox" name="consent" value="agree" checked={state.consent} onChange={(checked) => { set({ consent: checked }); }} title={t('cl4.agree')} testId="consent" />
-              {error('consent', t('cl4.err.consent')) === undefined ? null : <p class="field-error" role="alert"><Icon name="alert" /><span>{t('cl4.err.consent')}</span></p>}
-            </div>
-          </>
-        )}
-        {state.isForMinor ? (
-          <TextField label={signLabel} id="guardian-name" value={state.guardianName} onInput={(value) => { set({ guardianName: value }); }} sensitive error={error('guardianName', t('cl4.err.sign'))} testId="guardian-name" />
-        ) : (
-          <TextField label={signLabel} id="typed-signature" value={state.typedSignature} onInput={(value) => { set({ typedSignature: value }); }} sensitive error={error('typedSignature', t('cl4.err.sign'))} placeholder={t('cl4.signPlaceholder')} testId="typed-signature" />
-        )}
-        <SignaturePad label={t('cl4.draw')} onChange={(png) => { set({ signaturePng: png }); }} />
-      </section>
 
       {sealFailed ? <Notice kind="warning" icon="alert" live="assertive" testId="seal-failed">{t('cl4.err.key', { name: pro.firstName })}</Notice> : null}
       <ErrorNotice error={failure} />
@@ -241,10 +195,10 @@ function Intake({ token, context }: { token: string; context: FormContext }): JS
   );
 }
 
-function FullNote({ title, text, back, testId }: { title: string; text: string; back: string; testId?: string }): JSX.Element {
+function FullNote({ title, text, back }: { title: string; text: string; back: string }): JSX.Element {
   const { t } = useI18n();
   return (
-    <div class="state" data-testid={testId}>
+    <div class="state">
       <Title>{title}</Title>
       <p class="lead">{text}</p>
       <LinkButton to={manageRoute(back)} variant="secondary">{t('cl4.back')}</LinkButton>

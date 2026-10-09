@@ -9,8 +9,9 @@ import { intakeIsCurrent } from '../lib/rules.js';
 import { dataOf, msOpt, plainReader, refs } from '../lib/store.js';
 
 /**
- * What the browser needs to seal a form (docs/10 section 5, docs/06 section 3.5): the questions, the consent texts, the
- * professional's PUBLIC key, and only a flag for "already completed within 12 months". Nothing about the client.
+ * What the browser needs to seal a form (docs/10 section 5, docs/06 section 3.5): the questions, the professional's
+ * PUBLIC key, and only a flag for "already completed within 12 months". Nothing about the client, and no consent text:
+ * consents are the professional's own business (D55); a `consent` map left in an older document is not returned.
  */
 export const getFormContext = defineUseCase({
   name: 'getFormContext',
@@ -38,7 +39,6 @@ export const getFormContext = defineUseCase({
       professional: { displayName: profile.displayName },
       formVersion: form.formVersion,
       template: form.template,
-      consent: form.consent,
       inboxKey: profile.inboxKey,
       intakeCompletedWithinMonths: intakeIsCurrent(msOpt(contact?.lastIntakeAt), now)
     };

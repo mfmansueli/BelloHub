@@ -149,7 +149,7 @@ describe('getBooking', () => {
   it('flags the health form as required until one was sent within twelve months', async () => {
     const booked = await bookFriday();
     await refs(env.deps.db).intakeForm(pro.uid).set({
-      ownerUid: pro.uid, slug: pro.slug, formVersion: 1, template: {}, consent: {}, updatedAt: ts(0)
+      ownerUid: pro.uid, slug: pro.slug, formVersion: 1, template: {}, updatedAt: ts(0)
     });
     expect((await view(booked.manageToken)).intakeRequired).toBe(true);
 

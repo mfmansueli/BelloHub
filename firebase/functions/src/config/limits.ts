@@ -68,7 +68,6 @@ export const SIZE = {
   profileBytes: 700 * 1024,
   photoBytes: 120 * 1024,
   intakeTemplateBytes: 200 * 1024,
-  intakeConsentBytes: 100 * 1024,
   portalBytes: 64 * 1024
 } as const;
 

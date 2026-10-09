@@ -308,19 +308,12 @@ export interface RebookRequest {
   readonly idempotencyKey: string;
 }
 
-export interface ConsentText {
-  readonly textVersion: string;
-  readonly text: string;
-  readonly guardianText?: string;
-}
-
 /** 5.14 `getFormContext`. `template` is opaque to the server: the questions her app published. */
 export interface WireFormContext {
   readonly bookingId: string;
   readonly professional: { readonly displayName: string };
   readonly formVersion: number;
   readonly template: Readonly<Record<string, unknown>>;
-  readonly consent: Readonly<Partial<Record<string, ConsentText>>>;
   readonly inboxKey: InboxKey;
   readonly intakeCompletedWithinMonths: boolean;
 }
@@ -458,8 +451,6 @@ export interface FormContext {
     readonly completedWithin12Months: boolean;
     readonly formVersion: string;
     readonly questions: readonly FormQuestion[];
-    /** The consent texts she published, per language; the page's own consent texts are used until the owner decides. */
-    readonly consent: Readonly<Partial<Record<string, ConsentText>>>;
   };
   readonly checkIn: { readonly available: boolean; readonly serviceName?: string };
 }

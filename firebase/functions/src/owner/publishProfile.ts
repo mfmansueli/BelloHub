@@ -29,9 +29,6 @@ export function validateProfile(profile: PublicProfileInput): void {
     if (bytes(profile.intake.template) > SIZE.intakeTemplateBytes) {
       throw new AppError('PAYLOAD_TOO_LARGE', { maxBytes: SIZE.intakeTemplateBytes });
     }
-    if (bytes(profile.intake.consent) > SIZE.intakeConsentBytes) {
-      throw new AppError('PAYLOAD_TOO_LARGE', { maxBytes: SIZE.intakeConsentBytes });
-    }
   }
   assertUnique(profile.services.map((service) => service.id), 'profile.services');
   assertUnique(profile.addOns.map((addOn) => addOn.id), 'profile.addOns');
@@ -81,7 +78,6 @@ export const publishProfile = defineUseCase({
           slug: slugName,
           formVersion: intake.formVersion,
           template: intake.template,
-          consent: intake.consent,
           updatedAt: ts(now)
         } satisfies IntakeFormDoc);
       } else {
