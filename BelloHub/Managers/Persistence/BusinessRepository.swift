@@ -15,7 +15,17 @@ protocol BusinessRepository: Sendable {
 
     func tags() async throws -> [Tag]
     func save(_ tag: Tag) async throws
+    /// Stores several tags **together**: reordering changes the `position` of many tags, and a crash must never leave
+    /// half of them renumbered.
+    func save(_ tags: [Tag]) async throws
+    /// Deletes only the tag. Clients that carry its id keep a dangling id, so screens use
+    /// `deleteTagRemovingFromClients(id:)`; this is the low-level half of it.
     func deleteTag(id: UUID) async throws
+    /// Deletes the tag **and** removes its id from every client that has it, in one write: either both happen or
+    /// neither. Clients are never deleted by it, and the registration ledger is untouched (a tag edit is not a
+    /// registration). Returns how many clients lost the tag; deleting an id that does not exist returns 0.
+    @discardableResult
+    func deleteTagRemovingFromClients(id: UUID) async throws -> Int
 
     func recordTemplate() async throws -> RecordTemplate?
     func save(_ template: RecordTemplate) async throws

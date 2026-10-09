@@ -17,9 +17,10 @@
       "skippedTests": [
         "ClientsAuditUITests",
         "DesignCatalogAuditUITests",
-        "ImportAuditUITests",
         "HealthAuditUITests",
         "HealthMinorUITests",
+        "ImportAuditUITests",
+        "MoreAuditUITests",
         "OnboardingAuditUITests"
       ]
     }

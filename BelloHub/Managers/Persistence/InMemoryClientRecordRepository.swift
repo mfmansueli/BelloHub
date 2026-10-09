@@ -261,9 +261,27 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         changes.notify()
     }
 
+    func save(_ tags: [Tag]) {
+        tags.forEach { tagsByID[$0.id] = $0 }
+        changes.notify()
+    }
+
     func deleteTag(id: UUID) {
         tagsByID[id] = nil
         changes.notify()
+    }
+
+    func deleteTagRemovingFromClients(id: UUID) -> Int {
+        var removed = 0
+        for var client in clientsByID.values where client.tagIDs.contains(id) {
+            client.tagIDs.removeAll { $0 == id }
+            client.updatedAt = clock()
+            clientsByID[client.id] = client
+            removed += 1
+        }
+        tagsByID[id] = nil
+        changes.notify()
+        return removed
     }
 
     func recordTemplate() -> RecordTemplate? {

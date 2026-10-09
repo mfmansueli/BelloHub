@@ -36,4 +36,11 @@ struct RecordTemplate: Identifiable, Hashable, Codable, Sendable {
     func isIntakeOn(_ item: IntakeItem, for profession: ProfessionID) -> Bool {
         intake.first { $0.profession == profession && $0.item == item }?.isOn ?? false
     }
+
+    /// Fields switched on and fields in total over `professions` ("7 of 8 on"). Fields of a profession she no longer
+    /// has are not counted.
+    func fieldCounts(for professions: [ProfessionID]) -> (on: Int, total: Int) {
+        let counted = fields.filter { professions.contains($0.profession) }
+        return (counted.filter(\.isOn).count, counted.count)
+    }
 }

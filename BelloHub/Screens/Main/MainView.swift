@@ -50,7 +50,7 @@ struct MainView: View {
             .accessibilityIdentifier("main.tab.alerts")
 
             Tab(value: MainTab.more) {
-                NavigationStack { MoreView(onSignOut: onSignOut) }
+                MoreTab(onSignOut: onSignOut)
             } label: {
                 Label("main.tab.more", systemImage: "ellipsis")
             }

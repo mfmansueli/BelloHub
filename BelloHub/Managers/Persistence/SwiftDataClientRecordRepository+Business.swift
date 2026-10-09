@@ -27,9 +27,31 @@ extension SwiftDataClientRecordRepository {
         try commit()
     }
 
+    func save(_ tags: [Tag]) throws {
+        // One context save at the end, so a reorder is a single transaction.
+        try tags.forEach { try upsert($0) }
+        try commit()
+    }
+
     func deleteTag(id: UUID) throws {
         if let found = try item(kind: .tag, id: id) { delete([found]) }
         try commit()
+    }
+
+    func deleteTagRemovingFromClients(id: UUID) throws -> Int {
+        // Clients are re-sealed through `upsert`, not `save(_ client:)`, so the registration ledger is not touched.
+        // A client that cannot be read is skipped (see `values`): it keeps a dangling id, which readers ignore.
+        var removed = 0
+        for var client in try values(Client.self, from: items(kind: .client)) where client.tagIDs.contains(id) {
+            client.tagIDs.removeAll { $0 == id }
+            client.updatedAt = clock()
+            try upsert(client)
+            removed += 1
+        }
+        if let found = try item(kind: .tag, id: id) { delete([found]) }
+        // The clients and the tag go in one context save: one transaction.
+        try commit()
+        return removed
     }
 
     func recordTemplate() throws -> RecordTemplate? {

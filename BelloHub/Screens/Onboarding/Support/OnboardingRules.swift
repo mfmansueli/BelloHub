@@ -53,7 +53,9 @@ enum OnboardingRules {
         return found
     }
 
-    private static func comparisonKey(_ text: String) -> String {
+    /// What two names are compared by: case and accents ignored. The tag and record-field screens use it too, so every
+    /// "is this name taken?" answer in the app agrees.
+    static func comparisonKey(_ text: String) -> String {
         text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: nil)
     }
 }

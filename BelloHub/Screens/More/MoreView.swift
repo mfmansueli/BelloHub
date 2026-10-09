@@ -5,8 +5,10 @@
 
 import SwiftUI
 
-/// 2.5 More. Her profile card and the account actions that exist so far. Business, client and account settings join it
-/// as their screens are built (services and booking page in S5, account and privacy in S10).
+/// 2.5 More. Her profile card, then the settings that exist so far: the tags, record fields and forms of her clients,
+/// and the account actions. The business, messages and preferences sections join it as their screens are built
+/// (services, booking page and availability in S5; privacy, plan and help in S10). Rows that open a screen are
+/// `NavigationLink`s on the typed `MoreRoute`; the stack and its destinations belong to `MoreTab`.
 struct MoreView: View {
     let onSignOut: () -> Void
 
@@ -19,15 +21,10 @@ struct MoreView: View {
         ScrollView {
             StaggeredStack(spacing: Spacing.lg) {
                 profileCard
-                VStack(alignment: .leading, spacing: 0) {
-                    SectionHeader(title: "more.section.account")
-                    ListCard(dividerInset: 72) {
-                        row(icon: .lock, title: "more.lockNow", identifier: "more.lockNowButton") { lock.lockNow() }
-                        row(icon: .logout, title: "more.signOut", identifier: "more.signOutButton") {
-                            confirmsSignOut = true
-                        }
-                    }
-                }
+                // The Business section (services, products, booking page, availability, credentials, team) goes
+                // here in S5, above Clients, as in the prototype.
+                clientsSection
+                accountSection
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.top, Spacing.md)
@@ -46,7 +43,7 @@ struct MoreView: View {
         }
     }
 
-    // MARK: - Parts
+    // MARK: - Sections
 
     private var profileCard: some View {
         HeroCard {
@@ -65,27 +62,85 @@ struct MoreView: View {
         .accessibilityIdentifier("more.profileCard")
     }
 
-    private func row(
-        icon: Icon, title: LocalizedStringKey, identifier: String, action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            HStack(spacing: Spacing.row) {
-                Image(icon: icon)
-                    .foregroundStyle(Palette.roseDeepText)
-                    .frame(width: 44, height: 44)
-                    .background(
-                        Palette.roseWash, in: RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
+    /// Titled with the word she uses for the people she serves, as the tab is. The "Import clients" row joins it
+    /// with the import screen (4.6).
+    private var clientsSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeader(Text(verbatim: profile.clientTerm.titlePlural(in: locale)))
+            ListCard(dividerInset: 72) {
+                link(.recordTemplate, identifier: "more.recordFieldsRow") {
+                    MoreRow(
+                        icon: .sliders, tint: .sage, title: Text("more.row.recordFields"),
+                        subtitle: recordFieldsSubtitle, showsChevron: true
                     )
-                    .accessibilityHidden(true)
-                Text(title).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-                Spacer(minLength: 0)
+                }
+                link(.formTemplates, identifier: "more.formsRow") {
+                    MoreRow(
+                        icon: .document, tint: .peach, title: Text("more.row.forms"),
+                        subtitle: Text("more.row.forms.subtitle"), showsChevron: true
+                    )
+                }
+                link(.tags, identifier: "more.tagsRow") {
+                    MoreRow(
+                        icon: .tag, tint: .rose, title: Text("more.row.tags"), subtitle: tagsSubtitle,
+                        showsChevron: true
+                    )
+                }
             }
-            .padding(.horizontal, Spacing.md)
-            .padding(.vertical, Spacing.sm)
-            .frame(minHeight: 64)
-            .contentShape(Rectangle())
         }
-        .accessibilityIdentifier(identifier)
+    }
+
+    private var accountSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeader(Text("more.section.account"))
+            ListCard(dividerInset: 72) {
+                Button { lock.lockNow() } label: {
+                    MoreRow(icon: .lock, tint: .neutral, title: Text("more.lockNow"))
+                }
+                .accessibilityIdentifier("more.lockNowButton")
+                Button { confirmsSignOut = true } label: {
+                    MoreRow(icon: .logout, tint: .neutral, title: Text("more.signOut"))
+                }
+                .accessibilityIdentifier("more.signOutButton")
+            }
+        }
+    }
+
+    // MARK: - Parts
+
+    /// The same look as `SectionHeader`, for a title that is already a `Text` (the client term is not a catalog key).
+    private func sectionHeader(_ title: Text) -> some View {
+        title
+            .font(Typography.section)
+            .foregroundStyle(Palette.ink)
+            .accessibilityAddTraits(.isHeader)
+            .padding(.top, Spacing.xs)
+            .padding(.bottom, Spacing.row)
+    }
+
+    private func link<Label: View>(
+        _ route: MoreRoute, identifier: String, @ViewBuilder label: () -> Label
+    ) -> some View {
+        NavigationLink(value: route, label: label)
+            .buttonStyle(.plain)
+            .accessibilityIdentifier(identifier)
+    }
+
+    private var summary: MoreSummary {
+        MoreSummary(tags: profile.tags, template: profile.template, professions: profile.profile?.professions ?? [])
+    }
+
+    private var tagsSubtitle: Text {
+        Text(LocalizedStringResource(
+            "more.row.tags.count", defaultValue: "\(summary.tagCount) tags"
+        ).localized(in: locale))
+    }
+
+    private var recordFieldsSubtitle: Text? {
+        guard let on = summary.fieldsOn else { return nil }
+        return Text(LocalizedStringResource(
+            "more.row.recordFields.count", defaultValue: "\(on) fields on"
+        ).localized(in: locale))
     }
 
     private var name: String {
@@ -101,4 +156,10 @@ struct MoreView: View {
             .flatMap { catalog in current.professions.first.flatMap { catalog.entry(for: $0)?.name } }
         return [profession, region].compactMap { $0 }.joined(separator: " · ")
     }
+}
+
+#Preview {
+    NavigationStack { MoreView(onSignOut: {}) }
+        .environment(ProfileService(vault: VaultService(repository: nil)))
+        .environment(AppLockService(keyManager: KeyManager()))
 }

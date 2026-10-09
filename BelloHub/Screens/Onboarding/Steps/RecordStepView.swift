@@ -89,7 +89,8 @@ struct RecordStepView: View {
             ListCard(dividerInset: Spacing.md) {
                 ForEach(IntakeItem.allCases) { item in
                     ToggleRow(
-                        title: title(of: item), subtitle: subtitle(of: item),
+                        title: String(localized: item.title.localized(in: locale)),
+                        subtitle: String(localized: item.hint.localized(in: locale)),
                         isOn: Binding(
                             get: { viewModel.isIntakeOn(item, of: profession) },
                             set: { viewModel.setIntake(item, of: profession, on: $0) }
@@ -99,25 +100,5 @@ struct RecordStepView: View {
                 }
             }
         }
-    }
-
-    private func title(of item: IntakeItem) -> String {
-        switch item {
-        case .healthHistory: text("onb.record.intake.healthHistory")
-        case .consentForm: text("onb.record.intake.consentForm")
-        case .patchTestLog: text("onb.record.intake.patchTestLog")
-        }
-    }
-
-    private func subtitle(of item: IntakeItem) -> String {
-        switch item {
-        case .healthHistory: text("onb.record.intake.healthHistoryHint")
-        case .consentForm: text("onb.record.intake.consentFormHint")
-        case .patchTestLog: text("onb.record.intake.patchTestLogHint")
-        }
-    }
-
-    private func text(_ key: LocalizedStringResource) -> String {
-        String(localized: key.localized(in: locale))
     }
 }
