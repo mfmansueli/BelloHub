@@ -48,6 +48,7 @@ enum UITestSeeding {
         if seed == "clients", let repository = dependencies.vault.repository {
             _ = try? await ClientsFixtures.seed(into: repository, now: Date())
         }
+        await TreatmentFlowUITestSeeding.seedIfRequested(dependencies)
     }
 }
 #endif

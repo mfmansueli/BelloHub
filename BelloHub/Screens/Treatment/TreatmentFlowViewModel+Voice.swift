@@ -124,6 +124,7 @@ extension TreatmentFlowViewModel {
             // Nothing usable came back: the form, with her words as notes, is the honest next step.
             failure = .organize
         } else {
+            usedTranscript = true
             replaceTop(with: .review)
         }
     }
