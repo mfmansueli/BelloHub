@@ -117,11 +117,13 @@ final class NotificationService {
     // MARK: - Private
 
     private func scheduleOnce() async {
-        guard permissions.status(of: .notifications) == .granted, let repository = vault.repository else {
+        guard permissions.status(of: .notifications) == .granted else {
             await scheduler.removeAllScheduled()
             scheduledCount = 0
             return
         }
+        // A vault that is not open (locked, or the store failed) leaves the phone as it is: the old plan still helps her.
+        guard let repository = vault.repository else { return }
         let moment = now()
         let timeZone = profile.profile.flatMap { TimeZone(identifier: $0.timeZoneID) } ?? .current
         var calendar = Calendar(identifier: .gregorian)
