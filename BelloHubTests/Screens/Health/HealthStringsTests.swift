@@ -69,6 +69,6 @@ struct HealthStringsTests {
         let noted = String(localized: LocalizedStringResource(
             "health.consent.notedOn", defaultValue: "Not signed · noted \("DATE-Y")"
         ).localized(in: localization.locale))
-        #expect(signed.contains("DATE-Y") && noted.contains("DATE-Y"), localization.rawValue)
+        #expect(signed.contains("DATE-Y") && noted.contains("DATE-Y"), Comment(rawValue: localization.rawValue))
     }
 }

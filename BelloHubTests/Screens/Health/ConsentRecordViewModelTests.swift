@@ -19,7 +19,9 @@ struct ConsentRecordViewModelTests {
     private func makeRig(
         existing: ConsentRecord? = nil,
         photos: FakePhotoProcessing = FakePhotoProcessing(),
-        files: FakeConsentDocumentReader = FakeConsentDocumentReader(files: ["scan.pdf": .pdf(), "paper.jpg": .image()])
+        files: FakeConsentDocumentReader = FakeConsentDocumentReader(
+            files: ["scan.pdf": FakeConsentDocumentReader.pdf(), "paper.jpg": FakeConsentDocumentReader.image()]
+        )
     ) async throws -> Rig {
         let repository = FlakyHealthRepository()
         let client = Client(name: "Ana Costa", createdAt: TestClock.days(-100))
