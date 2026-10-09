@@ -16,6 +16,7 @@ import {
   ENFORCE_APP_CHECK,
   PHONE_HASH_PEPPER,
   PLAN_PRODUCT_IDS,
+  TRUSTED_PROXY_HOPS,
   WEB_BASE_URL,
   WHATSAPP_AUTOMATION
 } from '../config/params.js';
@@ -73,7 +74,7 @@ export function createDeps(): Deps {
       fixedEmailCode: emulator ? EMULATOR_EMAIL_CODE : undefined,
       emulator,
       validateOutputs: emulator,
-      trustedProxyHops: 1,
+      trustedProxyHops: Math.max(1, TRUSTED_PROXY_HOPS.value()),
       planProductIds: PLAN_PRODUCT_IDS.value()
         .split(',')
         .map((id) => id.trim())

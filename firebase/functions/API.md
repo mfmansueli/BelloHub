@@ -54,10 +54,12 @@ map it to your own localized text. `error.details` is optional and never contain
 A function that has several normal outcomes (booked, needs approval, time taken, paused) returns them as a
 `status` field of a **successful** response, not as an error. Errors are for things the caller cannot expect.
 
-### Same-origin option
-Firebase Hosting rewrites can expose each function under `/api/<name>` of the web origin (no CORS, simpler CSP
-`connect-src 'self'`). The rewrite list is not in `firebase.json` yet (S9 decides); the function names and payloads
-do not change.
+### Same-origin option (what the web app uses)
+`firebase/firebase.json` (`hosting.rewrites`) exposes every public and token function, plus `getIcs`, under
+`/api/<name>` of the web origin: no CORS, and the page's CSP stays `connect-src 'self'`. Owner functions have no
+rewrite (the iPhone calls them through the Functions SDK). The function names and payloads do not change; the same
+list is mirrored in `web/hosting.json` (the mock server and the Playwright suite read it) and a unit test keeps the
+two in step. `scripts/e2e-local.sh` runs the real page through the Hosting emulator with these rewrites.
 
 ### Local development (emulators, no cloud)
 ```
@@ -73,8 +75,9 @@ The project id **must** start with `demo-`: such an id can never reach the cloud
   listed at `GET http://127.0.0.1:9099/emulator/v1/projects/demo-bellohub/verificationCodes`;
 - App Check is not enforced (a missing token is accepted);
 - pushes are not sent; `emulatorOutbox` records `{type: "push", kind, id}` so a test can wait for one.
-`ENFORCE_APP_CHECK`, `WEB_BASE_URL`, `WHATSAPP_AUTOMATION` and `PLAN_PRODUCT_IDS` are deploy parameters
-(`functions/.env.<project>`); their defaults suit the emulator.
+`ENFORCE_APP_CHECK`, `WEB_BASE_URL`, `WHATSAPP_AUTOMATION`, `PLAN_PRODUCT_IDS` and `TRUSTED_PROXY_HOPS` (how many
+proxies append to `X-Forwarded-For`; 1 by default, 2 is expected behind the Hosting rewrites once a staging log confirms
+it) are deploy parameters (`functions/.env.<project>`); their defaults suit the emulator.
 
 ### CORS
 Allowed origins: `https://bellohub.app`, any `https://*.bellohub.app`, and the Hosting domains of our own projects:
