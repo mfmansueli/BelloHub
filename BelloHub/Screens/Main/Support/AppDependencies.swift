@@ -20,6 +20,7 @@ struct AppDependencies {
     let appointments: AppointmentService
     let timeBlocks: TimeBlockService
     let messages: MessageService
+    let treatmentTools: TreatmentTools
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -45,6 +46,7 @@ struct AppDependencies {
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
             messages: MessageService(vault: vault),
+            treatmentTools: TreatmentTools.make(),
             defaults: defaults
         )
     }
@@ -74,6 +76,7 @@ struct AppDependencies {
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
             messages: MessageService(vault: vault, sender: UITestMessageSender()),
+            treatmentTools: TreatmentTools.make(),
             defaults: defaults
         )
     }

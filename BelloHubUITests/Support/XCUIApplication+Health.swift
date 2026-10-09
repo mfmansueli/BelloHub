@@ -148,7 +148,9 @@ extension XCUIApplication {
     func scrollAboveBottomBar(_ element: XCUIElement) {
         let screen = windows.firstMatch.frame
         guard screen.height > 0 else { return }
-        let bar = ["healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton"].map { buttons[$0] }
+        let bar = [
+            "healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton", "treatmentFlow.form.saveButton"
+        ].map { buttons[$0] }
             .first { $0.exists }
         let limit = (bar?.frame.minY ?? screen.height) - screen.height * 0.06
         for _ in 0..<16 {

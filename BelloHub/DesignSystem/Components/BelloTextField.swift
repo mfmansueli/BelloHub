@@ -10,7 +10,7 @@ import SwiftUI
 /// `isSensitive` turns off autocorrection, autocapitalization and spellcheck, so the keyboard never
 /// learns clinical text (docs/10-WEB-BOOKING.md section 5 has the same rule for the web).
 struct BelloTextField: View {
-    let title: LocalizedStringKey
+    let title: Text
     @Binding var text: String
     var prompt: LocalizedStringKey?
     var errorMessage: LocalizedStringKey?
@@ -19,12 +19,35 @@ struct BelloTextField: View {
     var identifier: String?
     @FocusState private var isFocused: Bool
 
+    init(
+        title: LocalizedStringKey, text: Binding<String>, prompt: LocalizedStringKey? = nil,
+        errorMessage: LocalizedStringKey? = nil, isSensitive: Bool = false, identifier: String? = nil
+    ) {
+        self.init(
+            titleText: Text(title), text: text, prompt: prompt, errorMessage: errorMessage, isSensitive: isSensitive,
+            identifier: identifier
+        )
+    }
+
+    /// For a title that is already text, such as the name of a field she created (`Text(verbatim:)`).
+    init(
+        titleText: Text, text: Binding<String>, prompt: LocalizedStringKey? = nil,
+        errorMessage: LocalizedStringKey? = nil, isSensitive: Bool = false, identifier: String? = nil
+    ) {
+        self.title = titleText
+        self._text = text
+        self.prompt = prompt
+        self.errorMessage = errorMessage
+        self.isSensitive = isSensitive
+        self.identifier = identifier
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text(title)
+            title
                 .font(Typography.metaStrong)
                 .foregroundStyle(Palette.ink2)
-            TextField(text: $text, prompt: prompt.map { Text.prompt($0) }) { Text(title) }
+            TextField(text: $text, prompt: prompt.map { Text.prompt($0) }) { title }
                 .font(Typography.body)
                 .foregroundStyle(Palette.ink)
                 .focused($isFocused)

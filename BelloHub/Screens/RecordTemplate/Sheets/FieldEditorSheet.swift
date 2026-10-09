@@ -39,7 +39,7 @@ struct FieldEditorSheet: View {
                     )
                     .focused($isFocused)
                     kindChoice
-                    if draft.kind == .choice { optionsField }
+                    if draft.kind.hasOptions { optionsField }
                     if draft.kind == .number { unitField }
                     if let field = mode.field { deleteButton(for: field) }
                 }

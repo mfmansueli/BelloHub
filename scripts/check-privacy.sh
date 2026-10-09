@@ -38,6 +38,11 @@ hits="$(grep -rEn '^[[:space:]]*import[[:space:]]+(FirebaseAnalytics|FirebaseCra
     "$APP" --include='*.swift' || true)"
 [[ -z "$hits" ]] || fail "analytics or crash SDK imported" "$hits"
 
+# 4b. Photos never reach the camera roll: no photo-library write API in the app (comments may name it).
+hits="$(grep -rEn 'PHPhotoLibrary|UIImageWriteToSavedPhotosAlbum|PHAssetChangeRequest' "$APP" --include='*.swift' \
+    | grep -vE '^[^:]+:[0-9]+:[[:space:]]*(//|\*|/\*)' || true)"
+[[ -z "$hits" ]] || fail "photo library write API used (photos stay in the vault, never the camera roll)" "$hits"
+
 # 5. Web: no browser storage in the pages that can hold a health answer (when web/ exists).
 if [[ -d "$ROOT/web/src/routes" ]]; then
     hits="$(grep -rEn 'localStorage|sessionStorage|document\.cookie' \

@@ -11,6 +11,7 @@ struct TreatmentRecordSensitiveFields: Codable, Equatable, Sendable {
     var resultDetail: String?
     var aftercare: String?
     var nextSessionSuggestion: String?
+    var fieldEntries: [RecordFieldEntry]?
 
     init(_ record: TreatmentRecord) {
         notes = record.notes
@@ -19,5 +20,6 @@ struct TreatmentRecordSensitiveFields: Codable, Equatable, Sendable {
         resultDetail = record.resultDetail
         aftercare = record.aftercare
         nextSessionSuggestion = record.nextSessionSuggestion
+        fieldEntries = record.fieldEntries
     }
 }

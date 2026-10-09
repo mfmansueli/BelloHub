@@ -62,6 +62,7 @@ struct RootView: View {
         .environment(appointments)
         .environment(timeBlocks)
         .environment(messages)
+        .treatmentTools(dependencies.treatmentTools)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {

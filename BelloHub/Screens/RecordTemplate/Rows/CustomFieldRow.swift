@@ -42,7 +42,7 @@ struct CustomFieldRow: View {
     private var detail: String {
         let kind = String(localized: field.kind.title.localized(in: locale))
         switch field.kind {
-        case .choice where !field.options.isEmpty:
+        case .choice where !field.options.isEmpty, .multiChoice where !field.options.isEmpty:
             return field.options.joined(separator: " · ")
         case .number:
             return field.unit.map { "\(kind) · \($0)" } ?? kind
