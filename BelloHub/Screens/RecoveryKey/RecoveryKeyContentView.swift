@@ -116,7 +116,7 @@ struct RecoveryKeyContentView: View {
             .buttonStyle(.plain)
             .disabled(fileURL == nil)
             .accessibilityIdentifier("recoveryKey.saveToFilesButton")
-            Button { viewModel.print(locale: locale) } label: {
+            Button { viewModel.printKey(locale: locale) } label: {
                 MoreRow(icon: .print, tint: .peach, title: Text("recoveryKey.print"),
                         subtitle: Text("recoveryKey.print.subtitle"))
             }

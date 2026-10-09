@@ -9,7 +9,7 @@ import UIKit
 /// system sheet). The text goes to the printer only; nothing is kept.
 @MainActor
 final class SystemDocumentPrinter: DocumentPrinting {
-    func print(text: String, jobName: String) {
+    func printDocument(text: String, jobName: String) {
         let info = UIPrintInfo(dictionary: nil)
         info.jobName = jobName
         info.outputType = .grayscale

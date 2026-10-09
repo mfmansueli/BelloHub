@@ -76,9 +76,9 @@ final class RecoveryKeyViewModel {
         exportFile = nil
     }
 
-    func print(locale: Locale) {
+    func printKey(locale: Locale) {
         guard let phrase else { return }
-        printer.print(
+        printer.printDocument(
             text: RecoveryWordsPresentation.fileText(phrase, businessName: businessName, locale: locale),
             jobName: RecoveryWordsPresentation.fileName
         )
