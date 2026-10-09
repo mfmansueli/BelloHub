@@ -108,6 +108,10 @@ fi
 if ! grep -q '^EMAIL_API_KEY=' "$FUNCTIONS_DIR/.secret.local"; then
     printf 'EMAIL_API_KEY=unset\n' >> "$FUNCTIONS_DIR/.secret.local"
 fi
+# Same for the Sign in with Apple key (D44): never read while APPLE_SIGNIN_KEY_ID is empty.
+if ! grep -q '^APPLE_SIGNIN_PRIVATE_KEY=' "$FUNCTIONS_DIR/.secret.local"; then
+    printf 'APPLE_SIGNIN_PRIVATE_KEY=unset\n' >> "$FUNCTIONS_DIR/.secret.local"
+fi
 
 if [[ ! -d "$FUNCTIONS_DIR/node_modules" || "$FUNCTIONS_DIR/package-lock.json" -nt "$FUNCTIONS_DIR/node_modules/.package-lock.json" ]]; then
     step "npm ci (functions)" in_dir "$FUNCTIONS_DIR" npm ci --no-audit --no-fund || exit 1
