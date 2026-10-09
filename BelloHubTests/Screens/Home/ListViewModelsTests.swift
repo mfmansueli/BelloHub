@@ -47,7 +47,8 @@ struct ListViewModelsTests {
 
         #expect(list.due.map(\.client.id) == [world.ana.id])
         #expect(model.phase(now: TestClock.now) == .content)
-        #expect(model.message(for: row) == ClientMessageRequest(clientID: world.ana.id, kind: .followUp(serviceName: "Glow Facial")))
+        let expected = ClientMessageRequest(clientID: world.ana.id, kind: .followUp(serviceName: "Glow Facial"))
+        #expect(model.message(for: row) == expected)
         #expect(!model.wasOpened(world.ana.id))
 
         await messages.send(text: "Hi", to: world.ana.id, phoneE164: "+5511981234410", template: "followUp")
@@ -65,7 +66,8 @@ struct ListViewModelsTests {
         await Wait.untilMain { !digest.isLoading }
         let model = FollowUpsViewModel(
             settings: settings, digest: digest, bookingSetup: world.bookingSetup,
-            messages: MessageService(vault: world.vault, sender: FakeMessageSender()), prefs: FixedNotificationPrefsStore()
+            messages: MessageService(vault: world.vault, sender: FakeMessageSender()),
+            prefs: FixedNotificationPrefsStore()
         )
 
         #expect(model.phase(now: TestClock.now) == .empty)
@@ -79,7 +81,8 @@ struct ListViewModelsTests {
         let (world, digest) = try await makeWorld()
         let model = WinBackViewModel(
             settings: settings, digest: digest, bookingSetup: world.bookingSetup,
-            messages: MessageService(vault: world.vault, sender: FakeMessageSender()), prefs: FixedNotificationPrefsStore()
+            messages: MessageService(vault: world.vault, sender: FakeMessageSender()),
+            prefs: FixedNotificationPrefsStore()
         )
         let row = try #require(model.list(now: TestClock.now).rows.first)
 

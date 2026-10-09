@@ -43,7 +43,8 @@ struct ClientMessageComposerTests {
             text: "Ana, miss you! {service} again? {link}", position: 5, updatedAt: TestClock.now
         )
 
-        #expect(text(.winBack, comeBack: own, lastService: "Peeling") == "Ana, miss you! Peeling again? bellohub.app/maria")
+        let winBack = text(.winBack, comeBack: own, lastService: "Peeling")
+        #expect(winBack == "Ana, miss you! Peeling again? bellohub.app/maria")
     }
 
     @Test("A win-back message names the service of the last visit; without one the gap stays visible")

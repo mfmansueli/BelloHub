@@ -61,7 +61,8 @@ struct ListsTests {
     func followUpsStopped() {
         let glow = makeService(followUpWeeks: 4)
         let ana = Client(name: "Ana Costa", remindersEnabled: false, createdAt: TestClock.days(-300))
-        let list = FollowUpsList.make(from: digest([overdue(ana, service: glow, daysAgo: 60)], clients: [ana], services: [glow]))
+        let source = digest([overdue(ana, service: glow, daysAgo: 60)], clients: [ana], services: [glow])
+        let list = FollowUpsList.make(from: source)
 
         #expect(list.due.isEmpty)
     }

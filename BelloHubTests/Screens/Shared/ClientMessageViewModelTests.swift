@@ -18,7 +18,8 @@ struct ClientMessageViewModelTests {
     }
 
     private func makeRig(
-        kind: ClientMessageRequest.Kind = .winBack, client: Client? = nil, sender: FakeMessageSender = FakeMessageSender()
+        kind: ClientMessageRequest.Kind = .winBack, client: Client? = nil,
+        sender: FakeMessageSender = FakeMessageSender()
     ) async throws -> Rig {
         let world = try await CalendarWorld.make()
         let target = client ?? world.ana
@@ -35,7 +36,9 @@ struct ClientMessageViewModelTests {
     func loads() async throws {
         let rig = try await makeRig()
         try await rig.world.appointments.book(
-            makeVisit(clientID: rig.world.ana.id, start: TestClock.days(-90), status: .completed, serviceName: "Peeling")
+            makeVisit(
+                clientID: rig.world.ana.id, start: TestClock.days(-90), status: .completed, serviceName: "Peeling"
+            )
         )
 
         await rig.model.loadAsync()

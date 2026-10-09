@@ -164,7 +164,8 @@ struct NotificationPlannerTests {
         var confirmed = makeVisit(clientID: reachableClient.id, start: start.addingTimeInterval(7_200))
         confirmed.clientConfirmedAt = TestClock.now
         let visits = [
-            sent, confirmed, makeVisit(clientID: noPhone.id, start: start), makeVisit(clientID: stopped.id, start: start)
+            sent, confirmed, makeVisit(clientID: noPhone.id, start: start),
+            makeVisit(clientID: stopped.id, start: start)
         ]
         let planned = plan(visits: visits, clients: [reachableClient, noPhone, stopped], prefs: prefs(reminders: true))
 
@@ -288,8 +289,10 @@ struct NotificationPlannerTests {
 
         #expect(calendar.dateComponents([.hour, .minute], from: summary.fireDate) == DateComponents(hour: 8, minute: 0))
         #expect(calendar.isDate(summary.fireDate, inSameDayAs: day.midnight))
-        #expect(calendar.dateComponents([.hour, .minute], from: reminder.fireDate) == DateComponents(hour: 18, minute: 0))
-        #expect(calendar.isDate(reminder.fireDate, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: day.midnight)!))
+        let time = calendar.dateComponents([.hour, .minute], from: reminder.fireDate)
+        #expect(time == DateComponents(hour: 18, minute: 0))
+        let eve = calendar.date(byAdding: .day, value: -1, to: day.midnight)!
+        #expect(calendar.isDate(reminder.fireDate, inSameDayAs: eve))
         #expect(lead.fireDate == visit.startsAt.addingTimeInterval(-900))
     }
 }
