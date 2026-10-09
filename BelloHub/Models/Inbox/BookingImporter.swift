@@ -76,7 +76,7 @@ enum BookingImporter {
         }
 
         for visit in plan.appointments where visit.status.holdsTime {
-            for other in manual where other.interval.intersects(visit.interval), other.id != visit.id {
+            for other in manual where other.interval.intersects(visit.interval) && other.id != visit.id {
                 if let bookingID = visit.bookingID {
                     plan.conflicts.append(BookingConflict(bookingID: bookingID, appointmentID: other.id))
                 }
