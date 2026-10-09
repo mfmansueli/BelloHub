@@ -27,7 +27,9 @@ final class PlanViewModel {
     }
 
     let mode: Mode
-    var choice: PlanPeriod
+    private(set) var choice: PlanPeriod
+    /// She tapped a card: the store's later answer must not move her choice.
+    private var hasChosen = false
     private(set) var isBusy = false
     private(set) var notice: Notice?
 
@@ -56,7 +58,7 @@ final class PlanViewModel {
 
     func load() async {
         await subscription.loadOffers()
-        if !subscription.offers.isEmpty, subscription.offer(for: choice) == nil {
+        if !subscription.offers.isEmpty, !hasChosen || subscription.offer(for: choice) == nil {
             choice = presentation.defaultChoice
         }
     }
@@ -66,6 +68,11 @@ final class PlanViewModel {
     }
 
     // MARK: - Actions
+
+    func choose(_ period: PlanPeriod) {
+        choice = period
+        hasChosen = true
+    }
 
     func buy() {
         Task { await buyAsync() }

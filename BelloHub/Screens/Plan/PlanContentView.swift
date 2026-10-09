@@ -100,7 +100,7 @@ struct PlanContentView: View {
                                 emphasizesSubtitle: period == viewModel.presentation.highlighted,
                                 isSelected: viewModel.choice == period,
                                 identifier: "plan.choice.\(period.rawValue)"
-                            ) { viewModel.choice = period }
+                            ) { viewModel.choose(period) }
                         }
                     }
                 }
