@@ -21,7 +21,8 @@
         "HealthMinorUITests",
         "ImportAuditUITests",
         "MoreAuditUITests",
-        "OnboardingAuditUITests"
+        "OnboardingAuditUITests",
+        "ServicesAuditUITests"
       ]
     }
   ],
