@@ -22,6 +22,7 @@
         "DesignCatalogAuditUITests",
         "HealthAuditUITests",
         "HealthMinorUITests",
+        "HomeAuditUITests",
         "ImportAuditUITests",
         "MoreAuditUITests",
         "OnboardingAuditUITests",

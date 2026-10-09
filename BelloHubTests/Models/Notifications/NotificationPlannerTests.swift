@@ -268,8 +268,11 @@ struct NotificationPlannerTests {
 
     // MARK: - Daylight saving
 
+    /// Brazil has had no clock change since 2019: a control day where nothing moves.
+    private static let saoPaulo = ZoneDay(zone: "America/Sao_Paulo", date: "2026-11-01", dayHours: 24, windowHours: 6)
+
     @Test("Reminders, summaries and birthdays land on the right wall-clock time around a clock change",
-          arguments: ZoneDay.all)
+          arguments: ZoneDay.all + [saoPaulo])
     func daylightSaving(day: ZoneDay) throws {
         let calendar = day.calendar
         let now = calendar.date(byAdding: .day, value: -3, to: day.midnight) ?? day.midnight
