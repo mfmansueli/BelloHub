@@ -1,0 +1,83 @@
+//
+//  RecordExportSelector.swift
+//  BelloHub
+//
+
+import Foundation
+
+/// Chooses what an export contains from what the vault holds. The privacy rules live here and nowhere else:
+/// - the client's copy never includes internal notes, nor corrections of them;
+/// - the client's copy includes only photos that are shared with the client or in the portfolio;
+/// - the client's copy never includes her important note;
+/// - a signature (typed or drawn) is never included, only the kind and date of each consent.
+enum RecordExportSelector {
+    static func content(
+        from source: RecordExportSource, options: ExportOptions, now: Date, calendar: Calendar
+    ) -> RecordExportContent {
+        let client = source.client
+        let records = source.records
+        let corrections = source.corrections
+        let incidents = source.incidents
+        let photos = source.photos
+        let consents = source.consents
+        let start = options.period.start(now: now, calendar: calendar)
+        let keepsNotes = options.effectiveIncludesInternalNotes
+        let isDoctor = options.audience == .healthProfessional
+        return RecordExportContent(
+            options: options,
+            clientName: client.name,
+            health: options.includeHealth ? health(of: client, isDoctor: isDoctor) : nil,
+            consents: options.includeConsent ? consents.sorted { $0.signedAt > $1.signedAt }.map(withoutSignature) : [],
+            treatments: options.includeTreatments
+                ? treatments(records, corrections: corrections, since: start, keepsNotes: keepsNotes) : [],
+            incidents: options.includeTreatments
+                ? incidents.filter { within($0.occurredAt, since: start) }.sorted { $0.occurredAt > $1.occurredAt }
+                : [],
+            photos: options.includePhotos ? visiblePhotos(photos, since: start, isDoctor: isDoctor) : []
+        )
+    }
+
+    // MARK: - Private
+
+    private static func health(of client: Client, isDoctor: Bool) -> RecordExportContent.Health? {
+        let health = RecordExportContent.Health(
+            allergies: client.allergies, sensitivities: client.sensitivities,
+            importantNote: isDoctor ? client.importantNote : nil
+        )
+        return health.isEmpty ? nil : health
+    }
+
+    private static func within(_ date: Date, since start: Date?) -> Bool {
+        start.map { date >= $0 } ?? true
+    }
+
+    private static func withoutSignature(_ consent: Consent) -> Consent {
+        var plain = consent
+        plain.typedSignature = nil
+        plain.signatureImage = nil
+        return plain
+    }
+
+    private static func treatments(
+        _ records: [TreatmentRecord], corrections: [RecordCorrection], since start: Date?, keepsNotes: Bool
+    ) -> [RecordExportContent.Treatment] {
+        records
+            .filter { within($0.createdAt, since: start) }
+            .sorted { $0.createdAt > $1.createdAt }
+            .map { record in
+                var shown = record
+                if !keepsNotes { shown.notes = nil }
+                let own = corrections
+                    .filter { $0.recordID == record.id }
+                    .filter { keepsNotes || $0.fieldKey != RecordCorrectableField.notes.rawValue }
+                    .sorted { $0.createdAt > $1.createdAt }
+                return RecordExportContent.Treatment(record: shown, corrections: own)
+            }
+    }
+
+    private static func visiblePhotos(_ photos: [Photo], since start: Date?, isDoctor: Bool) -> [Photo] {
+        PhotoComparisonRules.timeline(photos)
+            .filter { within($0.takenAt, since: start) }
+            .filter { isDoctor || $0.visibility != .professionalOnly }
+    }
+}

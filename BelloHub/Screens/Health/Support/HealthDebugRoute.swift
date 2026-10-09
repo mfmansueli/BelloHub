@@ -6,8 +6,9 @@
 #if DEBUG
 import SwiftUI
 
-/// `-uiRoute health`, `formTemplates` and `treatmentFlow`: shows one of the screens directly, in its own stack,
-/// so a UI test can drive it before the tab that pushes it is wired in. DEBUG only; it never ships.
+/// `-uiRoute health`, `formTemplates`, `treatmentFlow`, `recordHistory` and `aiSettings`: shows one of the screens
+/// directly, in its own stack, so a UI test can drive it before the tab that pushes it is wired in. DEBUG only; it
+/// never ships.
 struct HealthDebugRoute: View {
     let route: String
 
@@ -19,6 +20,8 @@ struct HealthDebugRoute: View {
             NavigationStack {
                 switch route {
                 case "formTemplates": FormTemplatesView()
+                case "recordHistory": RecordHistoryView(clientID: UITestSeeding.healthClientID)
+                case "aiSettings": AISettingsView()
                 default: ClientHealthView(clientID: UITestSeeding.healthClientID)
                 }
             }

@@ -10,15 +10,25 @@ import SwiftUI
 /// photos, products, no-show history, export and incidents join it with their own stages.
 struct ClientProfileView: View {
     let onOpen: (ClientsRoute) -> Void
+    /// Opens a record screen (4.7) on the tab's stack, or a record sheet (4.9, 4.10). Both default to nothing so a
+    /// preview needs neither.
+    let onRecord: (RecordRoute) -> Void
+    let onRecordSheet: (RecordSheet) -> Void
 
     @State private var viewModel: ClientProfileViewModel
     @Environment(ProfileService.self) private var profile
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    init(clientID: UUID, vault: VaultService, profile: ProfileService, onOpen: @escaping (ClientsRoute) -> Void) {
+    init(
+        clientID: UUID, vault: VaultService, profile: ProfileService, onOpen: @escaping (ClientsRoute) -> Void,
+        onRecord: @escaping (RecordRoute) -> Void = { _ in },
+        onRecordSheet: @escaping (RecordSheet) -> Void = { _ in }
+    ) {
         _viewModel = State(initialValue: ClientProfileViewModel(clientID: clientID, vault: vault, profile: profile))
         self.onOpen = onOpen
+        self.onRecord = onRecord
+        self.onRecordSheet = onRecordSheet
     }
 
     var body: some View {
@@ -99,6 +109,7 @@ struct ClientProfileView: View {
                     summary: snapshot.health, formatters: formatters, now: now,
                     action: { onOpen(.health(clientID: client.id)) }
                 )
+                recordSection(client)
                 VStack(alignment: .leading, spacing: 0) {
                     habitsHeader
                     HabitsCard(habits: snapshot.habits, source: client.source)
@@ -110,6 +121,30 @@ struct ClientProfileView: View {
         }
         .refreshable { await viewModel.refreshAsync() }
         .accessibilityIdentifier("clientProfile.overview")
+    }
+
+    /// The doors to the client's record: its history (with photos and corrections), a reaction note and the PDF export.
+    private func recordSection(_ client: Client) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.row) {
+            Text("clientProfile.record.title").font(Typography.section).foregroundStyle(Palette.ink)
+                .accessibilityAddTraits(.isHeader)
+            ActionRow(
+                icon: .document, title: "clientProfile.record.history",
+                subtitle: Text("clientProfile.record.history.detail"), tone: .rose,
+                identifier: "clientProfile.recordsRow", action: { onRecord(.history(clientID: client.id)) }
+            )
+            ActionRow(
+                icon: .alert, title: "clientProfile.record.incident",
+                subtitle: Text("clientProfile.record.incident.detail"), tone: .coral,
+                identifier: "clientProfile.incidentRow",
+                action: { onRecordSheet(.incident(clientID: client.id, appointmentID: nil)) }
+            )
+            ActionRow(
+                icon: .share, title: "clientProfile.record.export",
+                subtitle: Text("clientProfile.record.export.detail"), tone: .peach,
+                identifier: "clientProfile.exportRow", action: { onRecordSheet(.exportRecord(clientID: client.id)) }
+            )
+        }
     }
 
     private func hasImportantNote(_ client: Client) -> Bool {
