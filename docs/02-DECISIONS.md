@@ -57,6 +57,7 @@ When this file disagrees with the prototype or with another document, **this fil
 | D50 | **No manage token in third-party URLs.** The Google Calendar link and the `.ics` carry the public booking page address, never the manage link; the manage link is only in the confirmation page and e-mail. | A token in a URL leaks through history, referrers and shared calendars. |
 | D51 | **A retired inbox key stops accepting new envelopes after a grace period of 24 hours; a rotation marked as a compromise stops it at once.** | In-flight forms finish; a stolen key stops being useful. |
 | D52 | **Forms and check-in are reached from the booking's own link** (confirmation, reminder), not from the portal, in v1. | The portal has no booking-scoped token and should not get one. |
+| D53 | **S7 ships the front end only (owner's decision, 2026-10-09).** Voice capture, transcription, AI structuring, the camera pipeline and PDF rendering sit behind protocols with simple, honest default implementations (manual entry works completely; the voice and AI paths show a clear "not available yet" or use a fake in DEBUG). The owner refines those technologies after v1. All screens, the lock and corrections, history, incidents and settings are real. | Gets v1 usable sooner; the technology choices need his analysis. |
 
 ## Still open (a human decides; you proceed with the default)
 
