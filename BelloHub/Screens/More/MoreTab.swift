@@ -49,4 +49,5 @@ struct MoreTab: View {
         .environment(ProfileService(vault: VaultService(repository: nil)))
         .environment(VaultService(repository: nil))
         .environment(AppLockService(keyManager: KeyManager()))
+        .environment(BookingSetupService(vault: VaultService(repository: nil)))
 }

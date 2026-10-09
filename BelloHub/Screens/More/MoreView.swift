@@ -14,6 +14,7 @@ struct MoreView: View {
 
     @Environment(ProfileService.self) private var profile
     @Environment(AppLockService.self) private var lock
+    @Environment(BookingSetupService.self) private var bookingSetup
     @Environment(\.locale) private var locale
     @State private var confirmsSignOut = false
 
@@ -32,6 +33,8 @@ struct MoreView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("main.tab.more"))
+        // Her booking page and hours show under their rows; a failed read leaves the rows without a subtitle.
+        .task { try? await bookingSetup.load(timeZoneID: profile.profile?.timeZoneID ?? TimeZone.current.identifier) }
         .confirmationDialog(
             Text("more.signOut.confirmTitle"), isPresented: $confirmsSignOut, titleVisibility: .visible
         ) {
@@ -75,10 +78,16 @@ struct MoreView: View {
                     MoreRow(icon: .box, tint: .peach, title: Text("more.row.products"), showsChevron: true)
                 }
                 link(.bookingPage, identifier: "more.bookingPageRow") {
-                    MoreRow(icon: .globe, tint: .sage, title: Text("more.row.bookingPage"), showsChevron: true)
+                    MoreRow(
+                        icon: .globe, tint: .sage, title: Text("more.row.bookingPage"),
+                        subtitle: bookingPageSubtitle, showsChevron: true
+                    )
                 }
                 link(.availability, identifier: "more.availabilityRow") {
-                    MoreRow(icon: .clock, tint: .sage, title: Text("more.row.availability"), showsChevron: true)
+                    MoreRow(
+                        icon: .clock, tint: .sage, title: Text("more.row.availability"),
+                        subtitle: availabilitySubtitle, showsChevron: true
+                    )
                 }
                 link(.credentials, identifier: "more.credentialsRow") {
                     MoreRow(icon: .star, tint: .rose, title: Text("more.row.credentials"), showsChevron: true)
@@ -183,6 +192,30 @@ struct MoreView: View {
         ).localized(in: locale))
     }
 
+    /// "Taking bookings", "Paused" or "Paused until Oct 20"; nothing until the settings are read.
+    private var bookingPageSubtitle: Text? {
+        guard bookingSetup.hasLoaded else { return nil }
+        let zone = timeZone
+        let formatters = Formatters(locale: locale, timeZone: zone, currencyCode: "EUR")
+        return Text(BookingSetupSummary.page(
+            bookingSetup.setup.page, now: Date(), timeZone: zone, formatters: formatters
+        ).localized(in: locale))
+    }
+
+    /// "Tue to Sat · 09:00 – 19:00"; nothing until the settings are read.
+    private var availabilitySubtitle: Text? {
+        guard bookingSetup.hasLoaded else { return nil }
+        let formatters = Formatters(locale: locale, timeZone: bookingSetup.availability.timeZone, currencyCode: "EUR")
+        let firstWeekday = profile.profile.map { WeekConfig.defaults(forRegion: $0.regionCode).firstWeekday }
+            ?? Calendar.current.firstWeekday
+        return Text(verbatim: AvailabilityText(formatters: formatters, firstWeekday: firstWeekday)
+            .weekSummary(of: bookingSetup.availability))
+    }
+
+    private var timeZone: TimeZone {
+        profile.profile.flatMap { TimeZone(identifier: $0.timeZoneID) } ?? .current
+    }
+
     private var name: String {
         profile.profile?.publicName ?? ""
     }
@@ -202,4 +235,5 @@ struct MoreView: View {
     NavigationStack { MoreView(onSignOut: {}) }
         .environment(ProfileService(vault: VaultService(repository: nil)))
         .environment(AppLockService(keyManager: KeyManager()))
+        .environment(BookingSetupService(vault: VaultService(repository: nil)))
 }

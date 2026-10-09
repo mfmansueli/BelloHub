@@ -15,6 +15,7 @@ struct RootView: View {
     @State private var vault: VaultService
     @State private var profile: ProfileService
     @State private var registration: ClientRegistrationService
+    @State private var bookingSetup: BookingSetupService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -31,6 +32,7 @@ struct RootView: View {
         _vault = State(initialValue: dependencies.vault)
         _profile = State(initialValue: dependencies.profile)
         _registration = State(initialValue: dependencies.registration)
+        _bookingSetup = State(initialValue: dependencies.bookingSetup)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -50,6 +52,7 @@ struct RootView: View {
         .environment(vault)
         .environment(profile)
         .environment(registration)
+        .environment(bookingSetup)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {
@@ -64,6 +67,10 @@ struct RootView: View {
             case .active: appLock.sceneDidReturn()
             default: break
             }
+        }
+        .onChange(of: model.stage) { _, stage in
+            // Her hours, policies and messages leave memory when the app locks or she signs out.
+            if stage != .app { bookingSetup.clear() }
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
