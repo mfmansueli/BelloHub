@@ -94,11 +94,18 @@ struct NextSessionStepView: View {
 
     private var title: String {
         let name = BidiIsolate.wrap(viewModel.client?.firstName ?? "")
-        return String(localized: "treatmentFlow.next.title \(name) \(BidiIsolate.wrap(viewModel.serviceName))", locale: locale)
+        let service = BidiIsolate.wrap(viewModel.serviceName)
+        return LocalizedStringResource(
+            "treatmentFlow.next.title", defaultValue: "When should \(name) come back for \(service)?"
+        ).resolved(in: locale)
     }
 
     private var defaultNote: String {
-        String(localized: "treatmentFlow.next.default \(BidiIsolate.wrap(viewModel.serviceName)) \(viewModel.formatters.weeks(viewModel.defaultWeeks))", locale: locale)
+        let service = BidiIsolate.wrap(viewModel.serviceName)
+        let weeks = viewModel.formatters.weeks(viewModel.defaultWeeks)
+        return LocalizedStringResource(
+            "treatmentFlow.next.default", defaultValue: "Your default for \(service) is \(weeks)."
+        ).resolved(in: locale)
     }
 
     private func save() async {
