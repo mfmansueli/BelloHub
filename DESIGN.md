@@ -198,6 +198,13 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
 | 4.5 ClientHealth (+ health form, patch test, signed text sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel` | `health.*`, `healthForm.*`, `patch.*`, `signedConsent.*` |
 | 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
+| 6.1 Services (+ 6.2 ServiceEdit sheet, 6.3 AddOns pushed) | `Screens/Services/ServicesView` -> `ServicesContentView`, `AddOns/` | `ServicesViewModel`, `AddOnsViewModel` | `services.*`, `serviceEditor.*`, `addOns.*` |
+| 6.4 Products | `Screens/Products/ProductsView` | `ProductsViewModel` | `products.*` |
+| 6.10 Credentials (+ preview sheet) | `Screens/Credentials/CredentialsView` | `CredentialsViewModel` | `credentials.*` |
+| 6.11 Team (static, D5) | `Screens/Team/TeamView` | none | `team.*` |
+| 6.5 Availability (+ hours, break, days-off sheets) | `Screens/Availability/AvailabilityView` | `AvailabilityViewModel` | `availability.*` |
+| 6.7 BookingSettings (+ pause sheet) with 6.8 ShareLink, 6.16 CancelPolicy, 6.15 NoShowPolicy | `Screens/BookingSettings/` | `BookingSettingsViewModel`, policy and share view models | `bookingSettings.*`, `shareLink.*`, `cancelPolicy.*`, `noShowPolicy.*` |
+| 6.9 QuickReplies (+ editor sheet) | `Screens/QuickReplies/QuickRepliesView` | `QuickRepliesViewModel` | `quickReplies.*` |
 | 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
 | 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
 | 6.14 FormTemplates (+ consent preview) | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*`, `consentPreview.*` |
@@ -225,7 +232,7 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
     │                  patch test, signed text)
     ├── Calendar  → CalendarView
     ├── Alerts    → AlertsView
-    └── More      → MoreTab → MoreView: Business (Services, Products, Booking page, Availability, Credentials, Team; S5),
+    └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
                      Clients (Record fields, Forms, Tags), Messages (Quick replies; S5), Account (Lock now, Sign out)
 ```
 
@@ -245,6 +252,17 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **Tabs** that have no data yet show an honest empty state without a button; **More** shows the profile card and the two
   actions that work (Lock now, Sign out). Sign-out moves to Account in S10.
 - The prototype's custom permission dialogs are the system's own; the page before each one is ours.
+
+### Changes from the prototype (S5)
+
+- **Services**: contraindications use the health-form catalog's tokens (grouped native picker); "Pre-appointment questions" waits for the booking intake (S8); duration is a menu; a switched-off service stays in her list with a badge; add-ons are pushed from Services.
+- **Products and credentials**: products are private by default with a Shared/Private chip; the professional registration number is a credential of kind `registration`; no certificate photo until S7.
+- **Team** is static: it lists what she will be able to decide once teams exist.
+- **Availability**: a starting week (Monday to Friday, 09:00 to 18:00) shown with a notice until she saves; a day can have several stretches (hours sheet); days off from here do not touch booked visits (the cancel-or-invite choice is 6.6, S6).
+- **Booking page**: the link says "Ready once you go online"; the pause sheet has an optional return date; the address (slug) is a local preference until the server claims it (S8); no preview, WhatsApp auto-reply or profile section yet.
+- **Policies**: the client-facing rule text comes from one pure owner (`PolicyRuleText`) in all 14 localizations; saved policies apply to bookings made afterwards ("Bookings already made keep the rules they were made under"); no-show counting period is 3, 6 or 12 months.
+- **Quick replies**: six built-in replies in the business language with fixed ids, editable and restorable; variables `{name} {service} {date} {time} {link}` are rendered locale-aware.
+- **More**: Business and Messages sections with subtitles under Booking page and Availability.
 
 ### Changes from the prototype (S4)
 

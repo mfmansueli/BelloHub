@@ -76,15 +76,9 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S5` (business setup) · started: 2026-10-09 · branch: `build/v1` · `S4` is done (tag `stage-S4`).
-S5 runs as **two parallel agents on `model: sonnet`** (owner's cap on 2026-10-09: at most two app agents), each in its own worktree and simulator, on top of the contract commit `78a7317` (More routes and sections, placeholders in `Screens/More/Placeholders/`, empty `CatalogRepository` and `BookingSetupRepository` composed into `ClientRecordRepository`, vault kinds `addOn`, `product`, `credential`, `availability`, `bookingSetup`, `quickReply`, strings batch `s5-contract.json`): **services** (6.1, 6.2, 6.3, 6.4, 6.10, 6.11; notes `docs/agent-notes/s5-services.md`, simulator `9368BE88`) and **booking** (6.5, 6.7, 6.8, 6.9, 6.15, 6.16, policy rule text, slug, QR, quick replies; notes `s5-booking.md`, simulator `1D7CD4D7`).
-In parallel and independent of the app: two Fable agents at `medium` continue the **backend** (worktree `agent-a243edc65aa8fcdad`: bounded security review, Apple verifier, email adapter) and the **web** (worktree `agent-ac7ea3c725dfcc9b0`: reconcile with `firebase/functions/API.md`, the WebKit CSP problem, `scripts/test-web.sh`, security checklist). Their handoffs stay in their branches' `docs/agent-notes/{backend,web}.md`; nothing of them is merged into `build/v1` yet.
-
-**Backend and web, 2026-10-09 (Fable agents, finished, not merged, nothing deployed):** backend tip `983279c` (security review: four holes fixed: createBooking replay minted tokens, stranger could spend a client's rate limits, sealed-mailbox Storage race, mailbox volume cap of 20 items; CORS narrowed to `bellohub*`/`bello-hub*` Hosting sites; Apple verifier H14 on `@apple/app-store-server-library`; Resend email adapter H7; unit 739, rules 65, use cases 258, transport 17 green). Web tip `15a053f` (speaks `API.md` exactly; WebKit CSP report traced to WebKit's own `<select>` shadow tree, excused only for that exact signature, no `unsafe-*`; `scripts/test-web.sh`; unit 221, Playwright 175 passed and 15 skipped across Chromium, WebKit and low-end). Remaining: Lighthouse CI, Hosting merge, e2e with the emulators. New owner items: email vendor account (Resend: DPA, sender domain, `EMAIL_FROM`, `EMAIL_API_KEY`), Apple root certificates, whether retired inbox keys keep accepting envelopes; web: guest names (drop or seal), consent text source (hers vs bundled drafts), the "counts as missed" wording, the Google Calendar link carrying the manage token, a portal path to forms. Details in each branch's `docs/agent-notes/{backend,web}.md`.
-
-**Integration of S5 when both agents finish:** merge both branches, regenerate `Localizable.xcstrings` with `scripts/merge-strings.py`, make sure `Screens/More/Placeholders/` is gone, fold `docs/agent-notes/s5-*.md` into this file and `DESIGN.md`, then `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`; commit, tag `stage-S5`, push.
-
-**Owner decisions still waiting:** (a) sign-in for the professional: Sign in with Apple as the main method, phone as the alternative (recommended), or phone only; (b) first-visit questions on the booking page: drop them (recommended), seal them, or store them as the 300-character note; (c) the CSP variant for Firebase phone verification and App Check on form pages, or SMS through our API only. Deploy to `bello-hub` (dev, D43) only after the web and backend reconciliation; never turn on App Check enforcement.
+`S5` (business setup) is done (tag `stage-S5`). **Stopped here: the owner says when S6 starts.**
+Pending, not merged into `build/v1`: the `backend-web` branch (worktree `agent-a9394d7fc4d39a42c`: backend + web merged, Hosting block, `scripts/e2e-local.sh` 6/6, Lighthouse CI; notes `docs/agent-notes/backend-web-integration.md`) and the `s4-audits` agent (audits of S4 in `pt-BR`, `de`, `hi`; notes `docs/agent-notes/s4-audits.md`). Merge them when they finish, then run `scripts/test.sh fast`.
+Owner decisions still waiting: the 16 listed in `docs/agent-notes/backend-web-integration.md` section 7, headed by (a) sign-in for the professional (Apple first, phone second recommended), (b) first-visit questions on the booking page (drop recommended), (c) the CSP variant for phone sign-in and App Check on form pages. Deploy to `bello-hub` (dev, D43) only after that; never turn on App Check enforcement.
 
 ## Stage log
 One block per finished stage (newest last):
@@ -220,6 +214,17 @@ Findings worth keeping:
 Open questions: should the D42 gate own the phone-clash check on edits (today the form checks); phone-less contacts imported twice become two clients; does a minor turning 18 change her form; where `{{OPERATOR_*}}`, `{{WEB_BASE_URL}}`, `{{EFFECTIVE_DATE}}` come from (H17).
 Human tasks created: on a real iPhone, check the contact picker (multi-select, labelled phones, birthdays) and the file importer with CSV from Excel for Windows and from Numbers (added to H8).
 
+### S5 · Business setup · done 2026-10-09 · tag stage-S5
+Built by two Sonnet agents on the contract `78a7317` (notes `docs/agent-notes/s5-services.md`, `s5-booking.md`); both died once of the session limit and were finished by new agents; integrated by the coordinator (merge commits after `1378a7a`).
+Done:
+- Services (6.1, 6.2, 6.3), Products (6.4), Credentials (6.10), Team (6.11, static): `Product`, `Credential`, `CatalogRepository` on both vaults, contraindications from the health-form catalog tokens, patch-test flag, reorder through `PositionRules`, price input read the way each language writes it (`PriceInput` fixed for Arabic digits and Brazilian decimals).
+- Availability (6.5), BookingSettings (6.7) with pause and return date, ShareLink (6.8, QR with CoreImage), CancelPolicy (6.16), NoShowPolicy (6.15), QuickReplies (6.9): `BookingSetupService` (injected from `RootView`), `BookingSetupRepository` on both vaults, `BookingSlug`, `BookingLink`, `BookingPause`, `PolicyRuleText` (one owner of the client-facing rule text, all 14 localizations), `QuickReplyRenderer`, `BookingRepository` protocol with an offline implementation (the server arrives in S8).
+- Decisions/assumptions: ASSUMPTION-49 to ASSUMPTION-58.
+Deviations from the prototype: `DESIGN.md` "Changes from the prototype (S5)".
+Measured: fast 1362 unit tests in 166 suites pass; UISmoke 21 UI tests pass (631 s); `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets; `scripts/check-strings.sh` passes (1,032 strings merged, 14 localizations). Audits `ServicesAuditUITests` and `BookingSetupAuditUITests` run in `en` and `ar` at default size and AX5; not run: `pt-BR`, `de`, `hi` for them, dark mode, `scripts/test.sh full`.
+Open questions: do saved policies apply to bookings already made (today they keep their snapshot, the prototype footer said otherwise; owner); should "Always" return as a no-show counting period (needs a model case and the server's `countingMonths`); should the credentials page switch survive with no credential; should these screens follow `clientTerm` instead of "clients".
+Human tasks created: none.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -271,6 +276,16 @@ Human tasks created: on a real iPhone, check the contact picker (multi-select, l
 | ASSUMPTION-46 | Record fields save as she goes; a field with data keeps it when switched off or deleted; S7 keys saved values by field `key` | Nothing lost on Back; saved records stay readable | S4 |
 | ASSUMPTION-47 | Titles and counts avoid the client term ("Tags", "2 people") | The term would need several grammatical forms in twelve languages | S4 |
 | ASSUMPTION-48 | Deleting a tag removes it from every client, archived included, in one write | The warning count must equal what changes | S4 |
+| ASSUMPTION-49 | Contraindications use the health-form catalog's tokens, plus "Under 18"; an unknown token is kept as written | The matcher can decide every offered token in all 14 catalogs | S5 |
+| ASSUMPTION-50 | The professional registration number is a `Credential` of kind `registration`; the "show on page" switch is stored per credential | docs/05 stores it per credential | S5 |
+| ASSUMPTION-51 | Names of services, add-ons and products (same brand) are unique ignoring case and accents, 60 characters | Avoids two identical rows | S5 |
+| ASSUMPTION-52 | A switched-off service stays in her list and is hidden from the agenda and booking page (S6 and S8 read `isActive`) | Deleting would lose history | S5 |
+| ASSUMPTION-53 | Until she saves, Availability shows a starting week (Mon to Fri, 09:00 to 18:00) and stores nothing | An empty week would mean nobody can book her | S5 |
+| ASSUMPTION-54 | The slug is a local preference until S8; the server decides ownership when she goes online | No networking before S8 | S5 |
+| ASSUMPTION-55 | A saved policy applies to bookings made afterwards; each booking keeps its snapshot (the document wins over the prototype footer) | `CancellationEvaluator` | S5 |
+| ASSUMPTION-56 | No-show counting period options are 3, 6 and 12 months | The model's `countingMonthOptions` | S5 |
+| ASSUMPTION-57 | Quick replies are written in the business language on first open, with fixed ids so devices agree; then they are hers | Locale-aware defaults | S5 |
+| ASSUMPTION-58 | A pause with a return date ends the morning of that date in the business time zone; a past return date is dropped | D15 | S5 |
 
 ## Conventions learned while building (read before writing code)
 - Agent concurrency (owner request): at most 3 agents at a time from the next task on (the six running agents of S4, backend and web finish first); a stage with more slices runs in waves of three.
@@ -364,21 +379,21 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 5.7 | Tx-6-Photos | S7 | todo |  |
 | 5.8 | Camera | S7 | todo |  |
 | 5.9 | Tx-7-NextSession | S7 | todo |  |
-| 6.1 | Services | S5 | todo |  |
-| 6.2 | ServiceEdit | S5 | todo |  |
-| 6.4 | Products | S5 | todo |  |
-| 6.5 | Availability | S5 | todo |  |
-| 6.7 | BookingSettings | S5 | todo |  |
-| 6.8 | ShareLink | S5 | todo | Built in S5 against the fake; live in S8 |
-| 6.9 | QuickReplies | S5 | todo |  |
-| 6.10 | Credentials | S5 | todo |  |
-| 6.11 | Team | S5 | todo | Static 'later' screen (D5) |
+| 6.1 | Services | S5 | done | `ServicesUITests`, `ServicesAuditUITests` |
+| 6.2 | ServiceEdit | S5 | done | `ServicesUITests` |
+| 6.4 | Products | S5 | done | `ServicesAuditUITests` |
+| 6.5 | Availability | S5 | done | `BookingSetupUITests`, `BookingSetupAuditUITests` |
+| 6.7 | BookingSettings | S5 | done | `BookingSetupUITests`, `BookingSetupAuditUITests` |
+| 6.8 | ShareLink | S5 | done | `BookingSetupUITests`; live in S8 |
+| 6.9 | QuickReplies | S5 | done | `BookingSetupUITests` |
+| 6.10 | Credentials | S5 | done | `ServicesAuditUITests` |
+| 6.11 | Team | S5 | done | static |
 | 6.12 | Tags | S4 | done | `MoreUITests`, `MoreAuditUITests` |
 | 6.13 | RecordTemplate | S4 | done | `MoreUITests`, `MoreAuditUITests` |
 | 6.14 | FormTemplates | S4 | done | `FormTemplatesUITests`, `HealthAuditUITests` |
-| 6.3 | AddOns | S5 | todo |  |
-| 6.16 | CancelPolicy | S5 | todo |  |
-| 6.15 | NoShowPolicy | S5 | todo |  |
+| 6.3 | AddOns | S5 | done | `ServicesUITests` |
+| 6.16 | CancelPolicy | S5 | done | `BookingSetupUITests` |
+| 6.15 | NoShowPolicy | S5 | done | `BookingSetupUITests` |
 | 7.1 | Account | S10 | todo |  |
 | 7.2 | LanguageRegion | S10 | todo |  |
 | 7.3 | Plan | S10 | todo |  |
