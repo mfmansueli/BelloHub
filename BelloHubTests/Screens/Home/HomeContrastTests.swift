@@ -39,7 +39,7 @@ struct HomeContrastTests {
     private static let parts: [ContrastPair] = [
         ContrastPair(name: "chevrons: ink3 on the surface", foreground: Palette.ink3,
                      background: Palette.surface, minimum: 3),
-        ContrastPair(name: "next-visit dot: glowRose on the surface", foreground: HeroPalette.glowRose,
+        ContrastPair(name: "next-visit dot: roseDeepText on the surface", foreground: Palette.roseDeepText,
                      background: Palette.surface, minimum: 3)
     ]
 

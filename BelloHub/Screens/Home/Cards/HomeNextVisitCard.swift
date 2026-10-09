@@ -52,7 +52,7 @@ struct HomeNextVisitCard: View {
             : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Spacing.sm))
         return layout {
             HStack(spacing: Spacing.sm) {
-                Circle().fill(HeroPalette.glowRose).frame(width: 8, height: 8).accessibilityHidden(true)
+                Circle().fill(Palette.roseDeepText).frame(width: 8, height: 8).accessibilityHidden(true)
                 label
                     .font(Typography.metaStrong)
                     .foregroundStyle(HeroPalette.ink2)
