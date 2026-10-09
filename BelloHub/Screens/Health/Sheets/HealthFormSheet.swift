@@ -90,7 +90,13 @@ struct HealthFormSheet: View {
                     .accessibilityIdentifier("healthForm.error")
             }
             Button { viewModel.save() } label: {
-                if viewModel.isSaving { ProgressView() } else { Text("healthForm.save") }
+                if viewModel.isSaving {
+                    ProgressView()
+                } else {
+                    // Two lines at most, shrunk before broken: at AX5 in German "unterschreiben" was split mid-word
+                    // and the bar grew to a quarter of the screen, covering the signature field.
+                    Text("healthForm.save").lineLimit(2).minimumScaleFactor(0.6)
+                }
             }
             .buttonStyle(.belloPrimary)
             .disabled(!viewModel.canSave)

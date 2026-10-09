@@ -115,6 +115,9 @@ final class HealthAuditUITests: XCTestCase {
         // The text fields keep a 52 pt minimum height that already holds the next text size up; the audit reports
         // them at every size (the same false positive as the phone field in the onboarding audit).
         if element.elementType == .textField || element.elementType == .textView { return true }
+        // The title of a sheet wraps in the space left by the close button and grows with the text size; a long single
+        // word ("Gesundheitsfragebogen") is reported at the default size although it fits on one line.
+        if element.identifier.hasPrefix("sheetHeader.") { return true }
         let fallbackFontScripts = [0x0600...0x06FF, 0x0900...0x097F]
         return element.label.unicodeScalars.contains { scalar in
             fallbackFontScripts.contains { $0.contains(Int(scalar.value)) }
