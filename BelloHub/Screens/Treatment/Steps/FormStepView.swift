@@ -47,6 +47,7 @@ struct FormStepView: View {
         .background(Palette.bg)
         .navigationTitle(Text("treatmentFlow.form.title"))
         .navigationBarTitleDisplayMode(.inline)
+        .accessibilityIdentifier("treatmentFlow.form")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button { viewModel.saveFormTapped() } label: { saveLabel }
@@ -55,7 +56,6 @@ struct FormStepView: View {
                     .accessibilityIdentifier("treatmentFlow.form.saveButton")
             }
         }
-        .accessibilityIdentifier("treatmentFlow.form")
     }
 
     // MARK: - Parts

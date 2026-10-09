@@ -46,6 +46,7 @@ struct ListeningStepView: View {
                     .accessibilityIdentifier("treatmentFlow.listening.cancelButton")
             }
         }
+        .accessibilityIdentifier("treatmentFlow.listening")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button { viewModel.finishListeningTapped() } label: { Text("treatmentFlow.listening.finish") }
@@ -54,7 +55,6 @@ struct ListeningStepView: View {
             }
         }
         .onAppear { startPulse() }
-        .accessibilityIdentifier("treatmentFlow.listening")
     }
 
     // MARK: - Parts

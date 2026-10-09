@@ -32,7 +32,6 @@ struct CameraStepView: View {
             .navigationTitle(Text(kind.title))
             .task { await prepare() }
             .onDisappear { camera.stop() }
-            .accessibilityIdentifier("treatmentFlow.camera")
     }
 
     @ViewBuilder
@@ -123,6 +122,7 @@ struct CameraStepView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.vertical, Spacing.md)
         }
+        .accessibilityIdentifier("treatmentFlow.camera.reviewScreen")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button { Task { await save(data) } } label: { Text("treatmentFlow.camera.save") }
@@ -134,7 +134,6 @@ struct CameraStepView: View {
                     .accessibilityIdentifier("treatmentFlow.camera.retakeButton")
             }
         }
-        .accessibilityIdentifier("treatmentFlow.camera.reviewScreen")
     }
 
     // MARK: - Unavailable and denied

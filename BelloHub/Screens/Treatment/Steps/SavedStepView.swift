@@ -39,6 +39,7 @@ struct SavedStepView: View {
                     .accessibilityIdentifier("treatmentFlow.saved.doneButton")
             }
         }
+        .accessibilityIdentifier("treatmentFlow.saved")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button { viewModel.path.append(.nextSession) } label: { Text("treatmentFlow.saved.nextSession") }
@@ -51,7 +52,6 @@ struct SavedStepView: View {
                 .accessibilityIdentifier("treatmentFlow.saved.photosButton")
             }
         }
-        .accessibilityIdentifier("treatmentFlow.saved")
     }
 
     // MARK: - Parts
@@ -84,6 +84,7 @@ struct SavedStepView: View {
             Text("treatmentFlow.saved.session").font(Typography.metaStrong).foregroundStyle(Palette.roseText)
                 .padding(Spacing.md)
                 .accessibilityAddTraits(.isHeader)
+                .accessibilityIdentifier("treatmentFlow.saved.summary")
             if rows.isEmpty {
                 Text("treatmentFlow.saved.empty").font(Typography.body).foregroundStyle(Palette.ink2)
                     .padding([.horizontal, .bottom], Spacing.md)
@@ -111,7 +112,6 @@ struct SavedStepView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .belloCard()
-        .accessibilityIdentifier("treatmentFlow.saved.summary")
     }
 
     private var historyLink: some View {

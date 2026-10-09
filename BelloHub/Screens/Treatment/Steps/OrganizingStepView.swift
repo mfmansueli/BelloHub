@@ -47,8 +47,8 @@ struct OrganizingStepView: View {
                     .accessibilityIdentifier("treatmentFlow.organizing.cancelButton")
             }
         }
-        .safeAreaInset(edge: .bottom) { actions }
         .accessibilityIdentifier("treatmentFlow.organizing")
+        .safeAreaInset(edge: .bottom) { actions }
     }
 
     // MARK: - Parts

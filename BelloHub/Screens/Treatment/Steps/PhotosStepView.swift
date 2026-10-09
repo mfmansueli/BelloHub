@@ -34,6 +34,7 @@ struct PhotosStepView: View {
         }
         .background(Palette.bg)
         .navigationBarTitleDisplayMode(.inline)
+        .accessibilityIdentifier("treatmentFlow.photos")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button { viewModel.path.append(.camera(nextKind)) } label: {
@@ -53,7 +54,6 @@ struct PhotosStepView: View {
             guard let item else { return }
             Task { await load(item) }
         }
-        .accessibilityIdentifier("treatmentFlow.photos")
     }
 
     // MARK: - Parts

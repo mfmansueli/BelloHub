@@ -46,6 +46,7 @@ struct NextSessionStepView: View {
                     .accessibilityIdentifier("treatmentFlow.next.skipButton")
             }
         }
+        .accessibilityIdentifier("treatmentFlow.next")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button {
@@ -59,7 +60,6 @@ struct NextSessionStepView: View {
                     .accessibilityIdentifier("treatmentFlow.next.saveButton")
             }
         }
-        .accessibilityIdentifier("treatmentFlow.next")
     }
 
     // MARK: - Parts

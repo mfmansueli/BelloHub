@@ -60,8 +60,8 @@ struct ReviewStepView: View {
                     .accessibilityIdentifier("treatmentFlow.review.cancelButton")
             }
         }
-        .safeAreaInset(edge: .bottom) { saveBar }
         .accessibilityIdentifier("treatmentFlow.review")
+        .safeAreaInset(edge: .bottom) { saveBar }
     }
 
     // MARK: - Parts
