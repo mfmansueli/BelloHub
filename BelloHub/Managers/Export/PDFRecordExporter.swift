@@ -60,14 +60,19 @@ final class PDFRecordExporter: RecordExporting {
 
         let output = NSMutableData()
         UIGraphicsBeginPDFContextToData(output, Self.page, [kCGPDFContextTitle as String: document.title])
-        defer { UIGraphicsEndPDFContext() }
         renderer.prepare(forDrawingPages: NSRange(location: 0, length: max(renderer.numberOfPages, 1)))
-        guard renderer.numberOfPages > 0 else { throw RecordExportError.nothingToDraw }
-        let bounds = UIGraphicsGetPDFContextBounds()
-        for index in 0..<renderer.numberOfPages {
-            UIGraphicsBeginPDFPage()
-            renderer.drawPage(at: index, in: bounds)
+        let pages = renderer.numberOfPages
+        if pages > 0 {
+            let bounds = UIGraphicsGetPDFContextBounds()
+            for index in 0..<pages {
+                UIGraphicsBeginPDFPage()
+                renderer.drawPage(at: index, in: bounds)
+            }
         }
+        // The trailer is written when the context ends, so the bytes are read only after that (a `defer` would end
+        // the context after `output` was already copied, leaving a PDF that no reader can open).
+        UIGraphicsEndPDFContext()
+        guard pages > 0 else { throw RecordExportError.nothingToDraw }
         return output as Data
     }
 

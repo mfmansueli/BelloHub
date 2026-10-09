@@ -30,7 +30,7 @@ struct RecordHistoryBuilderTests {
     func remaining() {
         let record = makeRecord(createdAt: TestClock.now.addingTimeInterval(-20 * 3600))
         let items = RecordHistoryBuilder.items(records: [record], corrections: [], now: TestClock.now)
-        #expect(items.first?.remaining == 4 * 3600)
+        #expect(items.first?.remaining == TimeInterval(4 * 3600))
     }
 
     @Test("No records, no items")

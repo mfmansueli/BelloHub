@@ -65,10 +65,13 @@ struct RecordExportDocumentBuilderTests {
         #expect(all.contains("Cleanse for 48 hours"))
     }
 
-    @Test("A health professional's copy with the switch on includes the notes")
+    @Test("A health professional's copy with the switch on includes the notes as they read now")
     func doctorCopyHasNotes() {
         let (_, lines) = document(audience: .healthProfessional, notes: true)
-        #expect(lines.joined(separator: "\n").contains("PRIVATE-OBSERVATION"))
+        let all = lines.joined(separator: "\n")
+        // The notes were corrected: the copy shows the current text and logs the correction, not the old words.
+        #expect(all.contains("PRIVATE-CORRECTION"))
+        #expect(!all.contains("PRIVATE-OBSERVATION"))
     }
 
     @Test("The document has a title, the professional, the footer and a PDF file name")
