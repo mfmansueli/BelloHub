@@ -32,7 +32,9 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     // Not private: the forms part of the contract lives in `InMemoryClientRecordRepository+Forms.swift`.
     var healthFormTemplatesByVersion: [Int: HealthFormTemplate] = [:]
     var patchTestsByID: [UUID: PatchTest] = [:]
-    private let clock: @Sendable () -> Date
+    // Not private: the booking-setup contract lives in `InMemoryClientRecordRepository+BookingSetup.swift`.
+    let clock: @Sendable () -> Date
+    var bookingSetupMemory = BookingSetupMemory()
     let changes = VaultChangeBroadcaster()
 
     init(clock: @escaping @Sendable () -> Date = { Date() }) {

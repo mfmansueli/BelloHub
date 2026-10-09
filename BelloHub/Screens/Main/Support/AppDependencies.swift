@@ -16,6 +16,7 @@ struct AppDependencies {
     let vault: VaultService
     let profile: ProfileService
     let registration: ClientRegistrationService
+    let bookingSetup: BookingSetupService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -37,6 +38,7 @@ struct AppDependencies {
             vault: vault,
             profile: ProfileService(vault: vault),
             registration: ClientRegistrationService(vault: vault),
+            bookingSetup: BookingSetupService(vault: vault),
             defaults: defaults
         )
     }
@@ -62,6 +64,7 @@ struct AppDependencies {
             vault: vault,
             profile: ProfileService(vault: vault),
             registration: ClientRegistrationService(vault: vault),
+            bookingSetup: BookingSetupService(vault: vault),
             defaults: defaults
         )
     }
