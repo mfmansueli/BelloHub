@@ -96,7 +96,7 @@ final class AccountUITests: XCTestCase {
         app.tapButton("newClient.cancelButton")
 
         // From More, the Plan screen buys through the test store and the status changes.
-        openMore(app)
+        openMore(app, fromHome: false)
         let planRow = app.buttons["more.planRow"]
         XCTAssertTrue(planRow.waitForExistence(timeout: 5))
         XCTAssertTrue(planRow.label.contains("No plan yet"), planRow.label)
@@ -113,8 +113,9 @@ final class AccountUITests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func openMore(_ app: XCUIApplication) {
-        XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 8))
+    /// From the home screen (`fromHome`) or from any other tab.
+    private func openMore(_ app: XCUIApplication, fromHome: Bool = true) {
+        if fromHome { XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 8)) }
         app.tab(4).tap()
         XCTAssertTrue(app.buttons["more.accountRow"].waitForExistence(timeout: 5))
     }
