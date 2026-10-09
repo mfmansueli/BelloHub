@@ -207,7 +207,7 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       // D47: the rules she published now apply to this booking for good; `rulesText` goes with them.
       policy: profile.policy,
       rulesText: profile.rulesText,
-      noShowPolicy: { isOn: noShowPolicy.isOn, lateCancelCounts: noShowPolicy.lateCancelCounts },
+      noShowPolicy: { isOn: noShowPolicy.isOn, limit: noShowPolicy.limit, lateCancelCounts: noShowPolicy.lateCancelCounts },
       rescheduleCount: 0,
       createdAt: ts(now),
       updatedAt: ts(now),

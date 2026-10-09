@@ -47,7 +47,7 @@ async function publishB(): Promise<void> {
   await env.call(publishProfile, { profile: mariaProfile(pro.inboxKey, { policy: POLICY_B, rulesText: RULES_B }) }, ownerContext(pro.uid));
   await env.call(
     publishAvailability,
-    mariaAvailability({ noShow: { isOn: true, limit: 3, action: 'tell', lateCancelCounts: true, countingMonths: 12 } }),
+    mariaAvailability({ noShow: { isOn: true, limit: 2, action: 'tell', lateCancelCounts: true, countingMonths: 12 } }),
     ownerContext(pro.uid)
   );
 }
@@ -56,6 +56,7 @@ interface View {
   policy: { freeWindowHours: number; afterWindowCancel: string; maxReschedules?: number };
   rulesText: Record<string, string>;
   lateCancelCounts: boolean;
+  noShowLimit?: number;
   actions: { cancel: string; reschedule: string };
 }
 
@@ -72,16 +73,18 @@ describe('the policy snapshot (D47)', () => {
     expect(underA.policy).toEqual(POLICY_A);
     expect(underA.rulesText).toEqual(RULES_A);
     expect(underA.lateCancelCounts).toBe(false);
+    expect(underA.noShowLimit).toBe(3);
 
     const underB = await view(second.manageToken);
     expect(underB.policy).toEqual(POLICY_B);
     expect(underB.rulesText).toEqual(RULES_B);
     expect(underB.lateCancelCounts).toBe(true);
+    expect(underB.noShowLimit).toBe(2);
 
     const storedA = await bookingDoc(env, first.bookingId);
     expect(storedA.policy).toEqual(POLICY_A);
     expect(storedA.rulesText).toEqual(RULES_A);
-    expect(storedA.noShowPolicy).toEqual({ isOn: true, lateCancelCounts: false });
+    expect(storedA.noShowPolicy).toEqual({ isOn: true, limit: 3, lateCancelCounts: false });
   });
 
   it('evaluates what the client may do by the rules of booking time, not the current page', async () => {
@@ -119,6 +122,19 @@ describe('the policy snapshot (D47)', () => {
     expect(ANA.phone).not.toBe(BIA.phone);
   });
 
+  it('states no limit when the no-show policy was off at booking time', async () => {
+    await env.call(
+      publishAvailability,
+      mariaAvailability({ noShow: { isOn: false, limit: 3, action: 'tell', lateCancelCounts: true, countingMonths: 12 } }),
+      ownerContext(pro.uid)
+    );
+    const booked = asBooked(await book(env, pro, { startsAt: START }));
+
+    const off = await view(booked.manageToken);
+    expect(off.lateCancelCounts).toBe(false);
+    expect(off.noShowLimit).toBeUndefined();
+  });
+
   it('falls back to the page texts for a booking stored before the snapshot existed', async () => {
     const first = asBooked(await book(env, pro, { startsAt: START }));
     await refs(env.deps.db).booking(first.bookingId).update({ rulesText: null, noShowPolicy: null });
@@ -135,5 +151,6 @@ describe('the policy snapshot (D47)', () => {
     expect(legacy.policy).toEqual(POLICY_A);
     expect(legacy.rulesText).toEqual(RULES_B);
     expect(legacy.lateCancelCounts).toBe(false);
+    expect(legacy.noShowLimit).toBeUndefined();
   });
 });
