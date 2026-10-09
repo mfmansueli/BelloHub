@@ -5,13 +5,15 @@
 
 import SwiftUI
 
-/// 1.10 Onb-7-Ready. The workspace is set up. Shows what it will hold, where her booking link will be, and a button
-/// that saves everything and opens the app. The import shortcut and the live link arrive with the screens they open
-/// (clients in S4, the booking link in S8).
+/// 1.10 Onb-7-Ready. The workspace is set up. Shows what it will hold, where her booking link will be, a shortcut to
+/// import her clients, and a button that saves everything and opens the app. The live booking link arrives with the
+/// server (S8).
 struct ReadyStepView: View {
     @Bindable var viewModel: OnboardingViewModel
+    @Environment(ClientRegistrationService.self) private var registration
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @State private var isImportPresented = false
 
     var body: some View {
         OnboardingStepLayout(
@@ -22,11 +24,18 @@ struct ReadyStepView: View {
                 SuccessSeal(size: 64)
                 tiles
                 linkCard
+                importCard
                 if let message = viewModel.errorMessage {
                     InlineNotice(style: .warning, title: LocalizedStringKey(message))
                         .accessibilityIdentifier("onboarding.ready.error")
                 }
             }
+        }
+        // The profile is not saved yet, so the import is told the region and the term she has just chosen.
+        .sheet(isPresented: $isImportPresented) {
+            ImportClientsView(
+                businessRegionCode: viewModel.draft.regionCode, clientTerm: viewModel.draft.clientTerm
+            )
         }
     }
 
@@ -57,8 +66,8 @@ struct ReadyStepView: View {
     private var tileSet: some View {
         InsightTile(icon: .calendar, value: "0", label: "onb.ready.appointments", tone: .sage)
         InsightTile(
-            icon: .clients, value: "0", label: LocalizedStringKey(viewModel.draft.clientTerm.titlePlural(in: locale)),
-            tone: .rose
+            icon: .clients, value: "\(registration.usage.used)",
+            label: LocalizedStringKey(viewModel.draft.clientTerm.titlePlural(in: locale)), tone: .rose
         )
         InsightTile(icon: .repeatArrows, value: "0", label: "onb.ready.followUps", tone: .peach)
     }
@@ -79,5 +88,40 @@ struct ReadyStepView: View {
         .padding(Spacing.md)
         .belloCard()
         .accessibilityElement(children: .combine)
+    }
+
+    /// The shortcut to the import (4.6): clients she already has come in from her contacts or a spreadsheet.
+    private var importCard: some View {
+        Button { isImportPresented = true } label: {
+            HStack(spacing: Spacing.row) {
+                Image(icon: .userPlus)
+                    .foregroundStyle(Palette.neutralText)
+                    .frame(width: 44, height: 44)
+                    .background(
+                        Palette.neutralWash, in: RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
+                    )
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: Spacing.xxs) {
+                    Text(LocalizedStringResource(
+                        "import.title", defaultValue: "Import \(viewModel.draft.clientTerm.pluralText(in: locale))"
+                    ).localized(in: locale))
+                        .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                    Text("import.entry.subtitle").font(Typography.footnote).foregroundStyle(Palette.ink2)
+                }
+                .multilineTextAlignment(.leading)
+                Spacer(minLength: 0)
+                Image(icon: .forward)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(Palette.ink3)
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .accessibilityHidden(true)
+            }
+            .padding(Spacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .belloCard()
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("onboarding.ready.importButton")
     }
 }

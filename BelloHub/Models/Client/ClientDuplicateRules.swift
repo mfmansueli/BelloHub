@@ -17,24 +17,24 @@ enum ClientDuplicateRules {
     }
 
     /// Splits a batch into the rows to add and the rows to skip: a row is skipped when it matches an existing client
-    /// or an earlier row of the batch. Order is kept.
+    /// or an earlier row of the batch. Order is kept. Ids and phones are looked up in sets, so a batch of thousands of
+    /// rows against thousands of clients stays linear (the rule is the same as `existing(matching:in:)`).
     static func partition(_ batch: [Client], existing: [Client]) -> (fresh: [Client], duplicates: [Client]) {
-        var known = existing
+        var knownIDs = Set(existing.map(\.id))
+        var knownPhones = Set(existing.compactMap { normalized($0.phoneE164) })
         var fresh: [Client] = []
         var duplicates: [Client] = []
         for client in batch {
-            if existingMatch(client, in: known) {
+            let phone = normalized(client.phoneE164)
+            if knownIDs.contains(client.id) || (phone.map(knownPhones.contains) ?? false) {
                 duplicates.append(client)
             } else {
                 fresh.append(client)
-                known.append(client)
+                knownIDs.insert(client.id)
+                if let phone { knownPhones.insert(phone) }
             }
         }
         return (fresh, duplicates)
-    }
-
-    private static func existingMatch(_ client: Client, in known: [Client]) -> Bool {
-        existing(matching: client, in: known) != nil
     }
 
     private static func normalized(_ phone: String?) -> String? {

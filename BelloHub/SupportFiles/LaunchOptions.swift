@@ -30,6 +30,13 @@ struct LaunchOptions: Equatable {
     var biometricsMode: String?
     /// Text size of the Design Catalog: `small`, `standard`, `large`, `accessibility3`, `accessibility5`.
     var catalogTextSize: String?
+    /// A fixture for the client import's contact picker (`four`): a UI test cannot drive the system's picker, so the
+    /// import answers with these contacts at once.
+    var uiContacts: String?
+    /// A fixture spreadsheet for the client import (`clients`): it is read instead of showing the file importer.
+    var uiSpreadsheet: String?
+    /// How many clients to register before the app starts, to test the free-registration limit.
+    var uiRegisteredClients: Int?
 
     init() {}
 
@@ -43,6 +50,9 @@ struct LaunchOptions: Equatable {
         keepsState = arguments.contains("-uiKeepState")
         seed = Self.value(after: "-uiSeed", in: arguments)
         biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)
+        uiContacts = Self.value(after: "-uiContacts", in: arguments)
+        uiSpreadsheet = Self.value(after: "-uiSpreadsheet", in: arguments)
+        uiRegisteredClients = Self.value(after: "-uiRegisteredClients", in: arguments).flatMap(Int.init)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {
