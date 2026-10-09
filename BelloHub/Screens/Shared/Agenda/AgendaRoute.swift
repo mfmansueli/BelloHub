@@ -20,4 +20,10 @@ enum AgendaRoute: Hashable, Sendable {
     case sessionPlan(clientID: UUID)
     /// 4.11 NoShowHistory of one client.
     case noShowHistory(clientID: UUID)
+    /// 2.10 BookingRequest, by the server's booking id.
+    case bookingRequest(id: String)
+    /// 2.11 RescheduleRequest, by the server's request id.
+    case rescheduleRequest(id: String)
+    /// 2.9 Waitlist.
+    case waitlist
 }

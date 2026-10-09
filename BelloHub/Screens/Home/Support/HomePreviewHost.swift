@@ -11,11 +11,12 @@ import SwiftUI
 struct HomePreviewHost<Content: View>: View {
     @State private var world: CalendarPreviewWorld?
     @State private var digest: AgendaDigestService?
+    @State private var inbox: BookingSyncService?
     @ViewBuilder let content: () -> Content
 
     var body: some View {
         Group {
-            if let world, let digest {
+            if let world, let digest, let inbox {
                 content()
                     .environment(world.vault)
                     .environment(world.profile)
@@ -26,6 +27,7 @@ struct HomePreviewHost<Content: View>: View {
                     .environment(MessageService(vault: world.vault))
                     .environment(PermissionService(provider: UITestPermissionProvider()))
                     .environment(digest)
+                    .environment(inbox)
             } else {
                 ProgressView()
             }
@@ -35,6 +37,13 @@ struct HomePreviewHost<Content: View>: View {
             world = built
             digest = built.map {
                 AgendaDigestService(appointments: $0.appointments, timeBlocks: $0.timeBlocks, vault: $0.vault)
+            }
+            inbox = built.map {
+                let offline = OfflineInboxRepository()
+                return BookingSyncService(
+                    repository: offline, queue: OutboundQueue(repository: offline), appointments: $0.appointments,
+                    vault: $0.vault, pollInterval: nil
+                )
             }
         }
     }

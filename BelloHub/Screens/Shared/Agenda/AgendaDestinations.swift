@@ -16,6 +16,9 @@ extension View {
             case .winBack: WinBackView()
             case .sessionPlan(let clientID): SessionPlanView(clientID: clientID)
             case .noShowHistory(let clientID): NoShowHistoryView(clientID: clientID)
+            case .bookingRequest(let id): BookingRequestView(bookingID: id)
+            case .rescheduleRequest(let id): RescheduleRequestView(requestID: id)
+            case .waitlist: WaitlistView()
             }
         }
     }

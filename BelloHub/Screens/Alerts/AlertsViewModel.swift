@@ -24,6 +24,8 @@ final class AlertsViewModel {
 
     let settings: CalendarSettings
     private let source: AgendaDigestSource
+    /// What arrives through her link (S8); nil in tests that only check the local part.
+    private let inbox: BookingSyncService?
     private let permissions: PermissionService
     private let notifications: NotificationService
     private let settingsOpener: any SettingsOpening
@@ -32,9 +34,11 @@ final class AlertsViewModel {
         settings: CalendarSettings, digest: AgendaDigestService, bookingSetup: BookingSetupService,
         permissions: PermissionService, notifications: NotificationService,
         settingsOpener: any SettingsOpening = SystemSettingsOpener(),
-        prefs: any NotificationPrefsStoring = DefaultsNotificationPrefsStore()
+        prefs: any NotificationPrefsStoring = DefaultsNotificationPrefsStore(),
+        inbox: BookingSyncService? = nil
     ) {
         self.settings = settings
+        self.inbox = inbox
         self.permissions = permissions
         self.notifications = notifications
         self.settingsOpener = settingsOpener
@@ -47,8 +51,16 @@ final class AlertsViewModel {
         AlertsList.make(from: source.digest(now: now))
     }
 
+    /// Requests and the waitlist from the server; empty when there is no inbox.
+    func inboxAlerts(now: Date) -> InboxAlerts {
+        guard let inbox else { return .empty }
+        return InboxAlerts.make(
+            snapshot: inbox.snapshot, answering: inbox.answering, timeZone: settings.timeZone, now: now
+        )
+    }
+
     func phase(now: Date) -> ScreenPhase {
-        source.phase(isEmpty: list(now: now).isEmpty)
+        source.phase(isEmpty: list(now: now).isEmpty && inboxAlerts(now: now).isEmpty)
     }
 
     var notice: PermissionNotice {
@@ -72,6 +84,7 @@ final class AlertsViewModel {
 
     func refreshAsync() async {
         await source.service.refresh()
+        await inbox?.syncAsync()
         await permissions.refresh()
     }
 

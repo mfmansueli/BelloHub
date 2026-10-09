@@ -36,7 +36,10 @@ struct AlertsContentView: View {
                         EmptyState(icon: .bell, title: "alerts.empty.title", message: "alerts.empty.message")
                             .accessibilityIdentifier("alerts.empty")
                     } content: {
-                        sections(viewModel.list(now: context.date), now: context.date)
+                        sections(
+                            viewModel.list(now: context.date), inbox: viewModel.inboxAlerts(now: context.date),
+                            now: context.date
+                        )
                     }
                 }
             }
@@ -54,7 +57,8 @@ struct AlertsContentView: View {
     // MARK: - Sections
 
     @ViewBuilder
-    private func sections(_ list: AlertsList, now: Date) -> some View {
+    private func sections(_ list: AlertsList, inbox: InboxAlerts, now: Date) -> some View {
+        if !inbox.isEmpty { inboxSection(inbox) }
         if !list.remindersReady.isEmpty {
             SectionHeader(title: "alerts.section.reminders")
             RemindersReadyCard(items: list.remindersReady, formatters: formatters) { item in
@@ -71,6 +75,69 @@ struct AlertsContentView: View {
             if list.followUpCount > 0 { followUpsCard(list.followUpCount) }
             if list.winBackCount > 0 { winBackCard(list.winBackCount) }
         }
+    }
+
+    // MARK: - Inbox (S8)
+
+    @ViewBuilder
+    private func inboxSection(_ inbox: InboxAlerts) -> some View {
+        SectionHeader(title: "alerts.section.requests")
+        ForEach(inbox.bookingRequests) { booking in requestCard(booking) }
+        ForEach(inbox.reschedules) { request in rescheduleCard(request) }
+        if inbox.waitingCount > 0 { waitlistCard(inbox) }
+    }
+
+    private func requestCard(_ booking: IncomingBooking) -> some View {
+        let who = BidiIsolate.wrap(booking.client.name)
+        let when = whenText(booking.startsAt)
+        return AlertCard(
+            icon: .calendar, tone: booking.pendingReason == .noShowLimit ? .rose : .sage,
+            title: Text("alerts.request.title"),
+            message: Text(LocalizedStringResource(
+                "alerts.request.message", defaultValue: "\(who) asks for \(when)."
+            ).localized(in: locale)),
+            identifier: "alerts.request.\(booking.id)"
+        ) {
+            NavigationLink(value: AgendaRoute.bookingRequest(id: booking.id)) { Text("alerts.request.action") }
+                .buttonStyle(.belloSecondary)
+                .accessibilityIdentifier("alerts.request.\(booking.id).action")
+        }
+    }
+
+    private func rescheduleCard(_ request: RescheduleRequest) -> some View {
+        let who = BidiIsolate.wrap(request.clientName)
+        let when = whenText(request.requestedStart)
+        return AlertCard(
+            icon: .repeatArrows, tone: .peach, title: Text("alerts.reschedule.title"),
+            message: Text(LocalizedStringResource(
+                "alerts.reschedule.message", defaultValue: "\(who) asks to move a visit to \(when)."
+            ).localized(in: locale)),
+            identifier: "alerts.reschedule.\(request.id)"
+        ) {
+            NavigationLink(value: AgendaRoute.rescheduleRequest(id: request.id)) { Text("alerts.request.action") }
+                .buttonStyle(.belloSecondary)
+                .accessibilityIdentifier("alerts.reschedule.\(request.id).action")
+        }
+    }
+
+    private func waitlistCard(_ inbox: InboxAlerts) -> some View {
+        AlertCard(
+            icon: .clock, tone: .sage,
+            title: Text(inbox.hasOpenTime ? "alerts.waitlist.openTitle" : "alerts.waitlist.title"),
+            message: Text(LocalizedStringResource(
+                "alerts.waitlist.message", defaultValue: "People waiting: \(inbox.waitingCount)"
+            ).localized(in: locale)),
+            identifier: "alerts.waitlist"
+        ) {
+            NavigationLink(value: AgendaRoute.waitlist) { Text("alerts.waitlist.action") }
+                .buttonStyle(.belloSecondary)
+                .accessibilityIdentifier("alerts.waitlist.action")
+        }
+    }
+
+    /// "Thursday, October 15, 10:00" in the business time zone.
+    private func whenText(_ date: Date) -> String {
+        "\(formatters.weekdayDayMonth(date)), \(BidiIsolate.wrapLeftToRight(formatters.time(date)))"
     }
 
     private func upcomingCard(_ visit: AgendaDigest.Visit) -> some View {

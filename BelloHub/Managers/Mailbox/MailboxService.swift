@@ -204,7 +204,7 @@ final class MailboxService {
             await notifier.post(
                 id: "bello.mailbox.\(item.id)", threadID: "bello.mailbox",
                 title: String(localized: "push.mailbox.form.title", defaultValue: "Health form received"),
-                body: String(localized: "push.mailbox.form.body", defaultValue: "A client sent her health form.")
+                body: String(localized: "push.mailbox.form.body", defaultValue: "A client sent a health form.")
             )
         } catch {
             errorMessage = BookingSyncService.text(for: error)

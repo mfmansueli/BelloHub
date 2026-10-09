@@ -7,13 +7,14 @@
 import Foundation
 
 /// The data `UITestInboxRepository` starts with, relative to `now` in the seeded business time zone: a booking
-/// request from Ana (no-show limit), a new booking from Helena, Camila's booking with a reschedule request, and
-/// three people waiting. DEBUG only.
+/// request from Ana (no-show limit), a new booking from Helena, Camila's booking with a reschedule request, a visit
+/// Júlia cancelled (the time that opened up) and three people waiting for that week. DEBUG only.
 enum UITestInboxFixtures {
     static let requestID = "req-ana"
     static let helenaBookingID = "bk-helena"
     static let camilaBookingID = "bk-camila"
     static let rescheduleID = "rr-camila"
+    static let cancelledBookingID = "bk-julia"
     static let intakeItemID = "7f0f4c6e-1c2b-4d6a-9a1e-000000000001"
     static let glowServiceID = "11111111-1111-4111-8111-111111111111"
     static let zone = TimeZone(identifier: "America/Sao_Paulo") ?? .current
@@ -46,6 +47,14 @@ enum UITestInboxFixtures {
                 timeZoneID: zone.identifier,
                 client: .init(name: "Camila Rocha", phone: "+5511977770002", email: nil, locale: "pt-BR"),
                 policy: policy, createdAt: now.addingTimeInterval(-7 * 86_400)
+            ),
+            IncomingBooking(
+                id: cancelledBookingID, status: .cancelledByClient, serviceId: glowServiceID,
+                serviceName: "Brazilian Glow", durationMinutes: 90, startsAt: at(days: 4, hour: 15, now: now),
+                endsAt: at(days: 4, hour: 16, minutes: 30, now: now), timeZoneID: zone.identifier,
+                client: .init(name: "Júlia Mendes", phone: "+5511977770006", email: nil, locale: "pt-BR"),
+                policy: policy, cancelledAt: now.addingTimeInterval(-1_200), cancelledBy: "client",
+                createdAt: now.addingTimeInterval(-10 * 86_400), updatedAt: now.addingTimeInterval(-1_200)
             )
         ]
     }
