@@ -35,8 +35,9 @@ struct PlanContentView: View {
             .padding(.bottom, Spacing.xl)
         }
         .background(Palette.bg)
-        .navigationTitle(Text(viewModel.mode == .paywall ? "paywall.title" : "plan.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle(Text("plan.title"))
+        // The paywall is a sheet: an inline bar, and the headline that explains the limit sits in the content.
+        .navigationBarTitleDisplayMode(viewModel.mode == .paywall ? .inline : .large)
         .task { await viewModel.load() }
     }
 
@@ -45,6 +46,9 @@ struct PlanContentView: View {
     @ViewBuilder
     private var intro: some View {
         if viewModel.mode == .paywall {
+            Text("paywall.title").font(Typography.title).foregroundStyle(Palette.ink)
+                .accessibilityAddTraits(.isHeader)
+                .accessibilityIdentifier("paywall.title")
             Text("paywall.message").font(Typography.body).foregroundStyle(Palette.ink2)
                 .accessibilityIdentifier("paywall.message")
             InlineNotice(style: .info, title: "paywall.reassurance")
@@ -75,11 +79,11 @@ struct PlanContentView: View {
                 }
                 .foregroundStyle(HeroPalette.ink2)
                 Text(heroTitle).font(Typography.title).foregroundStyle(HeroPalette.ink)
-                    .accessibilityIdentifier("plan.status")
                 Text(heroSubtitle).font(Typography.meta).foregroundStyle(HeroPalette.ink2)
             }
         }
         .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("plan.status")
     }
 
     /// Monthly and yearly as choice cards; the yearly one carries the saving computed from the store's prices.

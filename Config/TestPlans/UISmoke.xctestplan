@@ -15,6 +15,7 @@
         "name": "BelloHubUITests"
       },
       "skippedTests": [
+        "AccountAuditUITests",
         "BookingSetupAuditUITests",
         "ClientsAuditUITests",
         "DesignCatalogAuditUITests",
