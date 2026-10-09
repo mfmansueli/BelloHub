@@ -17,6 +17,7 @@ struct RootView: View {
     @State private var registration: ClientRegistrationService
     @State private var bookingSetup: BookingSetupService
     @State private var appointments: AppointmentService
+    @State private var messages: MessageService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -35,6 +36,7 @@ struct RootView: View {
         _registration = State(initialValue: dependencies.registration)
         _bookingSetup = State(initialValue: dependencies.bookingSetup)
         _appointments = State(initialValue: dependencies.appointments)
+        _messages = State(initialValue: dependencies.messages)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -56,6 +58,7 @@ struct RootView: View {
         .environment(registration)
         .environment(bookingSetup)
         .environment(appointments)
+        .environment(messages)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {
@@ -128,7 +131,7 @@ struct RootView: View {
     private var app: some View {
         #if DEBUG
         if let route = LaunchOptions.current.route {
-            HealthDebugRoute(route: route)
+            if route == "appointments" { AppointmentDebugRoute() } else { HealthDebugRoute(route: route) }
         } else {
             MainView(onSignOut: { Task { await model.signOut() } })
         }

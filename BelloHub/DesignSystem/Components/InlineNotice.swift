@@ -38,8 +38,19 @@ struct InlineNotice: View {
     }
 
     let style: Style
-    let title: LocalizedStringKey
-    var message: LocalizedStringKey?
+    let title: Text
+    let message: Text?
+
+    init(style: Style, title: LocalizedStringKey, message: LocalizedStringKey? = nil) {
+        self.init(style: style, title: Text(title), message: message.map { Text($0) })
+    }
+
+    /// For a title or message with an argument (`Text(LocalizedStringResource(...))`), which a key cannot carry.
+    init(style: Style, title: Text, message: Text? = nil) {
+        self.style = style
+        self.title = title
+        self.message = message
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: Spacing.row) {
@@ -48,9 +59,9 @@ struct InlineNotice: View {
                 .foregroundStyle(style.foreground)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: Spacing.xs) {
-                Text(title).font(Typography.bodyStrong).foregroundStyle(style.foreground)
+                title.font(Typography.bodyStrong).foregroundStyle(style.foreground)
                 if let message {
-                    Text(message).font(Typography.meta).foregroundStyle(style.foreground)
+                    message.font(Typography.meta).foregroundStyle(style.foreground)
                 }
             }
             Spacer(minLength: 0)

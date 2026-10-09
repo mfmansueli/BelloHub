@@ -79,6 +79,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         consentsByID = consentsByID.filter { $0.value.clientID != id }
         patchTestsByID = patchTestsByID.filter { $0.value.clientID != id }
         plansByID = plansByID.filter { $0.value.clientID != id }
+        bookingSetupMemory.messageLogsByID = bookingSetupMemory.messageLogsByID.filter { $0.value.clientID != id }
         clientsByID[id] = nil
         // The registration-ledger entry stays (D42).
         changes.notify()

@@ -39,4 +39,6 @@ enum VaultKind: String, CaseIterable, Sendable {
     case bookingSetup
     /// One quick reply she sends clients (S5).
     case quickReply
+    /// Records that a chat was opened with a message ready (S6). Owned by the client; holds no text.
+    case messageLog
 }
