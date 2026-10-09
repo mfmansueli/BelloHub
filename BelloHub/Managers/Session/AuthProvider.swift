@@ -15,5 +15,8 @@ protocol AuthProvider: Sendable {
     func verify(code: String) async throws -> AuthUser
     /// Signs in with what Apple returned. Throws `AuthError`.
     func signInWithApple(_ credential: AppleCredential) async throws -> AuthUser
+    /// The Firebase ID token of the signed-in user, refreshed by the SDK when it is about to expire. Throws `AuthError`
+    /// (`unavailable` when nobody is signed in or this build cannot sign in, `network` offline).
+    func idToken() async throws -> String
     func signOut() async throws
 }

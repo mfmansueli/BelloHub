@@ -67,6 +67,19 @@ final class SessionService {
         refreshSetupFlag()
     }
 
+    /// The ID token the booking server needs, from the provider that holds the user. Throws `ServerError`
+    /// (`unauthenticated` when nobody is signed in, `network` when the token could not be refreshed offline).
+    func idToken() async throws -> String {
+        guard user != nil else { throw ServerError.unauthenticated }
+        do {
+            return try await provider.idToken()
+        } catch AuthError.network {
+            throw ServerError.network
+        } catch {
+            throw ServerError.unauthenticated
+        }
+    }
+
     func signOut() async {
         try? await provider.signOut()
         state = .signedOut

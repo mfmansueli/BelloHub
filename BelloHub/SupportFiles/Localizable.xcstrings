@@ -17210,91 +17210,91 @@
       }
     },
     "bookingSettings.link.notOnline" : {
-      "comment" : "Shown on the link card: the page is not online yet.",
+      "comment" : "Status line on the link card before her page is published: the link is only a preview.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يصبح جاهزًا عند اتصالك بالإنترنت"
+            "value" : "معاينة فقط. يعمل الرابط عندما تصبح صفحتك متصلة."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bereit, sobald Sie online sind"
+            "value" : "Nur eine Vorschau. Der Link funktioniert, sobald du online bist."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ready once you go online"
+            "value" : "Preview only. The link works once you go online."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ready once you go online"
+            "value" : "Preview only. The link works once you go online."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Estará listo cuando te conectes"
+            "value" : "Solo una vista previa. El enlace funciona cuando te pongas en línea."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Estará listo cuando te conectes"
+            "value" : "Solo una vista previa. El enlace funciona cuando te pongas en línea."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Estará listo cuando te conectes"
+            "value" : "Solo una vista previa. El enlace funciona cuando te pongas en línea."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prêt dès que vous êtes en ligne"
+            "value" : "Simple aperçu. Le lien fonctionne dès que vous êtes en ligne."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ऑनलाइन होते ही तैयार"
+            "value" : "सिर्फ़ प्रीव्यू है। ऑनलाइन होने पर लिंक काम करेगा।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Siap setelah Anda online"
+            "value" : "Hanya pratinjau. Tautan berfungsi setelah Anda online."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sarà pronto quando sei online"
+            "value" : "Solo un'anteprima. Il link funziona quando andrai online."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fica pronto quando você ficar online"
+            "value" : "Só uma prévia. O link funciona quando você entrar no ar."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fica pronta quando estiver online"
+            "value" : "Só uma pré-visualização. A ligação funciona quando ficar online."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Çevrimiçi olduğunuzda hazır olur"
+            "value" : "Yalnızca önizleme. Bağlantı, çevrimiçi olduğunuzda çalışır."
           }
         }
       }
@@ -100237,6 +100237,1806 @@
         }
       }
     },
+    "publish.action.goOnline" : {
+      "comment" : "Button that publishes her booking page for the first time.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تفعيل الصفحة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online gehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Go online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ponerme en línea"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ponerme en línea"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ponerme en línea"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Passer en ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mulai online"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vai online"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entrar no ar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficar online"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi ol"
+          }
+        }
+      }
+    },
+    "publish.action.stop" : {
+      "comment" : "Button that takes her booking page out of service.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إيقاف الصفحة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seite offline nehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take page offline"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Take page offline"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar la página de línea"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar la página de línea"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar la página de línea"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mettre la page hors ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पेज ऑफ़लाइन करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Offline-kan halaman"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Metti la pagina offline"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar a página do ar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar a página do ar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfayı çevrimdışı yap"
+          }
+        }
+      }
+    },
+    "publish.error.addressTaken" : {
+      "comment" : "Error: someone else owns the booking address she chose.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "هذا العنوان مستخدم. اختر عنوانًا آخر."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diese Adresse ist schon vergeben. Wähle eine andere."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "That address is taken. Choose another one."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "That address is taken. Choose another one."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esa dirección ya está en uso. Elige otra."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esa dirección ya está en uso. Elige otra."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esa dirección ya está en uso. Elige otra."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette adresse est déjà prise. Choisissez-en une autre."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह पता पहले से लिया जा चुका है। कोई और चुनें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alamat itu sudah dipakai. Pilih yang lain."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Questo indirizzo è già in uso. Scegline un altro."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esse endereço já está em uso. Escolha outro."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esse endereço já está em uso. Escolha outro."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu adres kullanımda. Başka bir adres seçin."
+          }
+        }
+      }
+    },
+    "publish.error.busy" : {
+      "comment" : "Error: the server is busy or limited the calls; the app retries by itself.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخادم مشغول. سنحاول مرة أخرى بعد قليل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Server ist ausgelastet. Wir versuchen es gleich noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The server is busy. We will try again in a moment."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The server is busy. We will try again in a moment."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El servidor está ocupado. Lo intentaremos de nuevo en un momento."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El servidor está ocupado. Lo intentaremos de nuevo en un momento."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El servidor está ocupado. Lo intentaremos de nuevo en un momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le serveur est occupé. Nous réessaierons dans un instant."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सर्वर व्यस्त है। हम थोड़ी देर में फिर कोशिश करेंगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Server sedang sibuk. Kami akan mencoba lagi sebentar lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il server è occupato. Riproveremo tra poco."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O servidor está ocupado. Tentaremos de novo em instantes."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O servidor está ocupado. Vamos tentar novamente daqui a pouco."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sunucu meşgul. Birazdan yeniden deneyeceğiz."
+          }
+        }
+      }
+    },
+    "publish.error.locked" : {
+      "comment" : "Error: the app is locked, so the page cannot be built.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "افتح قفل Bello Hub لنشر صفحتك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entsperre Bello Hub, um deine Seite zu veröffentlichen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlock Bello Hub to publish your page."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Unlock Bello Hub to publish your page."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloquea Bello Hub para publicar tu página."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloquea Bello Hub para publicar tu página."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloquea Bello Hub para publicar tu página."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déverrouillez Bello Hub pour publier votre page."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पेज प्रकाशित करने के लिए Bello Hub अनलॉक करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Buka kunci Bello Hub untuk menerbitkan halaman Anda."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sblocca Bello Hub per pubblicare la pagina."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloqueie o Bello Hub para publicar sua página."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Desbloqueie o Bello Hub para publicar a sua página."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanızı yayınlamak için Bello Hub kilidini açın."
+          }
+        }
+      }
+    },
+    "publish.error.needsAddress" : {
+      "comment" : "Error: she tried to go online without choosing a booking address.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختر عنوانك أولًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wähle zuerst deine Adresse."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your address first."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choose your address first."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primero elige tu dirección."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primero elige tu dirección."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primero elige tu dirección."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choisissez d'abord votre adresse."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले अपना पता चुनें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pilih alamat Anda terlebih dahulu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scegli prima il tuo indirizzo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escolha seu endereço primeiro."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Escolha primeiro o seu endereço."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Önce adresinizi seçin."
+          }
+        }
+      }
+    },
+    "publish.error.needsService" : {
+      "comment" : "Error: the page needs at least one active service to go online.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أضف خدمة نشطة واحدة على الأقل لتفعيل صفحتك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füge mindestens eine aktive Leistung hinzu, um deine Seite online zu stellen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add at least one active service to put your page online."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add at least one active service to put your page online."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añade al menos un servicio activo para poner tu página en línea."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega al menos un servicio activo para poner tu página en línea."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega al menos un servicio activo para poner tu página en línea."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutez au moins une prestation active pour mettre votre page en ligne."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पेज ऑनलाइन करने के लिए कम से कम एक सक्रिय सेवा जोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambahkan minimal satu layanan aktif agar halaman Anda bisa online."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi almeno un servizio attivo per mettere online la pagina."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione pelo menos um serviço ativo para colocar sua página no ar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione pelo menos um serviço ativo para colocar a sua página online."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanızı yayına almak için en az bir etkin hizmet ekleyin."
+          }
+        }
+      }
+    },
+    "publish.error.offline" : {
+      "comment" : "Error: no connection while her page is not online yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا يوجد اتصال. صفحتك ليست متصلة بعد. حاول مرة أخرى عند عودة الاتصال."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keine Verbindung. Deine Seite ist noch nicht online. Versuche es erneut, wenn du verbunden bist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No connection. Your page is not online yet. Try again when you are connected."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No connection. Your page is not online yet. Try again when you are connected."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página aún no está en línea. Inténtalo de nuevo cuando tengas conexión."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página aún no está en línea. Inténtalo de nuevo cuando tengas conexión."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página aún no está en línea. Inténtalo de nuevo cuando tengas conexión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas de connexion. Votre page n'est pas encore en ligne. Réessayez une fois connectée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कनेक्शन नहीं है। आपका पेज अभी ऑनलाइन नहीं है। कनेक्ट होने पर फिर कोशिश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tidak ada koneksi. Halaman Anda belum online. Coba lagi saat Anda terhubung."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessuna connessione. La pagina non è ancora online. Riprova quando sarai connessa."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sem conexão. Sua página ainda não está no ar. Tente de novo quando estiver conectada."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sem ligação. A sua página ainda não está online. Tente novamente quando tiver ligação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantı yok. Sayfanız henüz çevrimiçi değil. Bağlandığınızda yeniden deneyin."
+          }
+        }
+      }
+    },
+    "publish.error.offlineLive" : {
+      "comment" : "Error: no connection while her page is already online; changes wait.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا يوجد اتصال. صفحتك متصلة، لكن آخر تغييراتك لم تصل إليها بعد. سنرسلها عند عودة الاتصال."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keine Verbindung. Deine Seite ist online, aber deine letzten Änderungen sind noch nicht darauf. Wir senden sie, sobald du verbunden bist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No connection. Your page is online, but your latest changes are not on it yet. We will send them when you are connected."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No connection. Your page is online, but your latest changes are not on it yet. We will send them when you are connected."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página está en línea, pero tus últimos cambios aún no están en ella. Los enviaremos cuando tengas conexión."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página está en línea, pero tus últimos cambios aún no están en ella. Los enviaremos cuando tengas conexión."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin conexión. Tu página está en línea, pero tus últimos cambios aún no están en ella. Los enviaremos cuando tengas conexión."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas de connexion. Votre page est en ligne, mais vos dernières modifications n'y sont pas encore. Nous les enverrons dès que vous serez connectée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कनेक्शन नहीं है। आपका पेज ऑनलाइन है, पर आपके ताज़ा बदलाव अभी उस पर नहीं हैं। कनेक्ट होते ही हम उन्हें भेज देंगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tidak ada koneksi. Halaman Anda online, tetapi perubahan terbaru belum ada di sana. Kami akan mengirimnya saat Anda terhubung."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessuna connessione. La pagina è online, ma le tue ultime modifiche non ci sono ancora. Le invieremo appena sarai connessa."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sem conexão. Sua página está no ar, mas suas últimas alterações ainda não estão nela. Vamos enviá-las quando você estiver conectada."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sem ligação. A sua página está online, mas as suas últimas alterações ainda não estão nela. Vamos enviá-las quando tiver ligação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantı yok. Sayfanız çevrimiçi ama son değişiklikleriniz henüz üzerinde değil. Bağlandığınızda göndereceğiz."
+          }
+        }
+      }
+    },
+    "publish.error.rejected" : {
+      "comment" : "Error: the server refused the page or answered something unreadable.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تعذّر نشر صفحتك. تحقق من بياناتك وحاول مرة أخرى."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Seite konnte nicht veröffentlicht werden. Prüfe deine Angaben und versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your page could not be published. Check your details and try again."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your page could not be published. Check your details and try again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo publicar tu página. Revisa tus datos e inténtalo de nuevo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo publicar tu página. Revisa tus datos e inténtalo de nuevo."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo publicar tu página. Revisa tus datos e inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre page n'a pas pu être publiée. Vérifiez vos informations et réessayez."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका पेज प्रकाशित नहीं हो सका। अपनी जानकारी जाँचें और फिर कोशिश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Halaman Anda tidak dapat diterbitkan. Periksa data Anda dan coba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non è stato possibile pubblicare la pagina. Controlla i tuoi dati e riprova."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível publicar sua página. Confira seus dados e tente de novo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível publicar a sua página. Verifique os seus dados e tente novamente."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanız yayınlanamadı. Bilgilerinizi kontrol edip yeniden deneyin."
+          }
+        }
+      }
+    },
+    "publish.error.signedOut" : {
+      "comment" : "Error: the server no longer accepts her sign-in.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سجّل الدخول مرة أخرى لنشر صفحتك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Melde dich erneut an, um deine Seite zu veröffentlichen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in again to publish your page."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sign in again to publish your page."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Inicia sesión de nuevo para publicar tu página."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Inicia sesión de nuevo para publicar tu página."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Inicia sesión de nuevo para publicar tu página."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reconnectez-vous pour publier votre page."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पेज प्रकाशित करने के लिए फिर से साइन इन करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Masuk lagi untuk menerbitkan halaman Anda."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Accedi di nuovo per pubblicare la pagina."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entre de novo para publicar sua página."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Inicie sessão novamente para publicar a sua página."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanızı yayınlamak için yeniden giriş yapın."
+          }
+        }
+      }
+    },
+    "publish.row.attention" : {
+      "comment" : "Subtitle of the Booking page row in More when publishing failed and no page exists yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تحتاج إلى انتباه"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Braucht Aufmerksamkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs attention"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Needs attention"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesita atención"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesita atención"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesita atención"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nécessite votre attention"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ध्यान देने की ज़रूरत है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Perlu perhatian"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Richiede attenzione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Precisa de atenção"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Precisa de atenção"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dikkat gerekiyor"
+          }
+        }
+      }
+    },
+    "publish.row.notOnline" : {
+      "comment" : "Subtitle of the Booking page row in More while her page is not published.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "غير متصلة بعد"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Noch nicht online"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not online yet"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not online yet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no está en línea"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no está en línea"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aún no está en línea"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pas encore en ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अभी ऑनलाइन नहीं है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum online"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non ancora online"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ainda não está no ar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ainda não está online"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Henüz çevrimiçi değil"
+          }
+        }
+      }
+    },
+    "publish.status.online" : {
+      "comment" : "Status line on the link card when her booking page is published.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "متصلة. يمكن لعملائك الحجز عبر هذا الرابط."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online. Deine Kundschaft kann über diesen Link buchen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online. Clients can book you with this link."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online. Clients can book you with this link."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea. Tus clientes pueden reservar con este enlace."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea. Tus clientes pueden reservar con este enlace."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea. Tus clientes pueden reservar con este enlace."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En ligne. Vos clients peuvent réserver avec ce lien."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन है। ग्राहक इस लिंक से बुकिंग कर सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online. Klien bisa memesan lewat tautan ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online. I clienti possono prenotare con questo link."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No ar. Clientes podem agendar com este link."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online. Os clientes podem marcar consigo com esta ligação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi. Müşterileriniz bu bağlantıyla randevu alabilir."
+          }
+        }
+      }
+    },
+    "publish.status.paused" : {
+      "comment" : "Status line on the link card when the page is published but paused.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "متصلة، لكنها لا تستقبل حجوزات الآن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, nimmt aber gerade keine Buchungen an."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online, not taking bookings right now."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, not taking bookings right now."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, sin aceptar reservas por ahora."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, sin aceptar reservas por ahora."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, sin aceptar reservas por ahora."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En ligne, mais sans réservations pour le moment."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन है, अभी बुकिंग नहीं ले रहे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, tetapi sedang tidak menerima pemesanan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, ma al momento non accetta prenotazioni."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No ar, sem aceitar agendamentos no momento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, sem aceitar marcações de momento."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi, şu anda randevu kabul etmiyor."
+          }
+        }
+      }
+    },
+    "publish.status.publishing" : {
+      "comment" : "Status line on the link card while the page is being sent to the server.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "جارٍ تحديث صفحتك…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Seite wird aktualisiert …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating your page…"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Updating your page…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Actualizando tu página…"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Actualizando tu página…"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Actualizando tu página…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mise à jour de votre page…"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका पेज अपडेट हो रहा है…"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Memperbarui halaman Anda…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiornamento della pagina…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atualizando sua página…"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A atualizar a sua página…"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanız güncelleniyor…"
+          }
+        }
+      }
+    },
+    "publish.status.stale" : {
+      "comment" : "Status line when her page is online but the latest changes could not be sent.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "متصلة، لكن آخر تغييراتك لم تظهر في الصفحة بعد."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, aber deine letzten Änderungen sind noch nicht auf der Seite."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online, but your latest changes are not on the page yet."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, but your latest changes are not on the page yet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, pero tus últimos cambios aún no están en la página."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, pero tus últimos cambios aún no están en la página."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En línea, pero tus últimos cambios aún no están en la página."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En ligne, mais vos dernières modifications ne sont pas encore sur la page."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन है, पर आपके ताज़ा बदलाव अभी पेज पर नहीं हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, tetapi perubahan terbaru Anda belum ada di halaman."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, ma le tue ultime modifiche non sono ancora sulla pagina."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No ar, mas suas últimas alterações ainda não estão na página."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online, mas as suas últimas alterações ainda não estão na página."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi, ancak son değişiklikleriniz henüz sayfada değil."
+          }
+        }
+      }
+    },
+    "publish.stop.confirm" : {
+      "comment" : "Destructive button of the confirmation before taking her page offline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إيقاف"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Offline nehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take offline"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Take offline"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar de línea"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar de línea"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sacar de línea"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mettre hors ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑफ़लाइन करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Offline-kan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Metti offline"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar do ar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar do ar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimdışı yap"
+          }
+        }
+      }
+    },
+    "publish.stop.confirmMessage" : {
+      "comment" : "Message of the confirmation before taking her page offline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سيرى من يفتح رابطك أنك لا تستقبل حجوزات. تبقى الحجوزات الحالية كما هي."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wer deinen Link öffnet, sieht, dass du keine Buchungen annimmst. Bereits gemachte Buchungen bleiben bestehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clients who open your link will see that you are not taking bookings. Bookings already made stay as they are."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clients who open your link will see that you are not taking bookings. Bookings already made stay as they are."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quien abra tu enlace verá que no aceptas reservas. Las reservas ya hechas se quedan como están."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quien abra tu enlace verá que no aceptas reservas. Las reservas ya hechas se quedan como están."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quien abra tu enlace verá que no aceptas reservas. Las reservas ya hechas se quedan como están."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les clients qui ouvrent votre lien verront que vous n'acceptez pas de réservations. Les réservations déjà faites restent inchangées."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका लिंक खोलने वाले ग्राहक देखेंगे कि आप बुकिंग नहीं ले रहे। पहले की बुकिंग जैसी हैं वैसी ही रहेंगी।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klien yang membuka tautan Anda akan melihat bahwa Anda tidak menerima pemesanan. Pemesanan yang sudah ada tetap berlaku."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Chi aprirà il tuo link vedrà che non accetti prenotazioni. Le prenotazioni già fatte restano invariate."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quem abrir seu link verá que você não está aceitando agendamentos. Os agendamentos já feitos continuam como estão."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Quem abrir a sua ligação verá que não está a aceitar marcações. As marcações já feitas ficam como estão."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantınızı açanlar randevu kabul etmediğinizi görür. Daha önce alınmış randevular olduğu gibi kalır."
+          }
+        }
+      }
+    },
+    "publish.stop.confirmTitle" : {
+      "comment" : "Title of the confirmation before taking her page offline.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إيقاف صفحتك؟"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Seite offline nehmen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take your page offline?"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Take your page offline?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Sacar tu página de línea?"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Sacar tu página de línea?"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¿Sacar tu página de línea?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mettre votre page hors ligne ?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पेज ऑफ़लाइन करें?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Offline-kan halaman Anda?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mettere la pagina offline?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar sua página do ar?"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tirar a sua página do ar?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanız çevrimdışı yapılsın mı?"
+          }
+        }
+      }
+    },
     "quickReplies.default.aftercare.text" : {
       "comment" : "Built-in reply: general aftercare advice after a visit. Keep {name} {service}.",
       "extractionState" : "manual",
@@ -119150,91 +120950,91 @@
       }
     },
     "shareLink.address.offline" : {
-      "comment" : "Status: the address cannot be checked until the page goes online.",
+      "comment" : "Status under the address field when the server could not be reached to check the address.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يمكننا التحقق من ذلك عند اتصالك بالإنترنت."
+            "value" : "تعذّر التحقق من هذا العنوان الآن. سيُتحقق منه مجددًا عند تفعيل صفحتك."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir können das prüfen, sobald Sie online sind."
+            "value" : "Wir konnten diese Adresse gerade nicht prüfen. Sie wird erneut geprüft, sobald deine Seite online geht."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We can check this once you go online."
+            "value" : "We could not check this address right now. It is checked again when your page goes online."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "We can check this once you go online."
+            "value" : "We could not check this address right now. It is checked again when your page goes online."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Podremos comprobarlo cuando te conectes."
+            "value" : "No hemos podido comprobar esta dirección ahora. Se comprobará de nuevo cuando tu página esté en línea."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Podremos comprobarlo cuando te conectes."
+            "value" : "No pudimos comprobar esta dirección ahora. Se comprobará de nuevo cuando tu página esté en línea."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Podremos comprobarlo cuando te conectes."
+            "value" : "No pudimos comprobar esta dirección ahora. Se comprobará de nuevo cuando tu página esté en línea."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nous pourrons le vérifier dès que vous serez en ligne."
+            "value" : "Nous n'avons pas pu vérifier cette adresse maintenant. Elle sera vérifiée à nouveau quand votre page passera en ligne."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ऑनलाइन होते ही हम यह जाँच सकेंगे।"
+            "value" : "हम अभी इस पते की जाँच नहीं कर सके। पेज ऑनलाइन होने पर इसे फिर जाँचा जाएगा।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami bisa memeriksanya setelah Anda online."
+            "value" : "Kami belum bisa memeriksa alamat ini sekarang. Alamat akan diperiksa lagi saat halaman Anda online."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Potremo controllare quando sarai online."
+            "value" : "Non siamo riusciti a verificare questo indirizzo ora. Sarà verificato di nuovo quando la pagina andrà online."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Podemos verificar quando você ficar online."
+            "value" : "Não conseguimos verificar este endereço agora. Ele será verificado de novo quando sua página entrar no ar."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Podemos verificar quando estiver online."
+            "value" : "Não foi possível verificar este endereço agora. Será verificado novamente quando a sua página ficar online."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Çevrimiçi olduğunuzda kontrol edebiliriz."
+            "value" : "Bu adresi şu anda kontrol edemedik. Sayfanız çevrimiçi olduğunda yeniden kontrol edilecek."
           }
         }
       }
@@ -120945,6 +122745,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Henüz çevrimiçi değil"
+          }
+        }
+      }
+    },
+    "shareLink.online.message" : {
+      "comment" : "Body of the notice on Share your link when her page is online.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يمكن لعملائك فتح هذا الرابط والحجز لديك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Kundschaft kann diesen Link öffnen und bei dir buchen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clients can open this link and book you."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clients can open this link and book you."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus clientes pueden abrir este enlace y reservar contigo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus clientes pueden abrir este enlace y reservar contigo."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus clientes pueden abrir este enlace y reservar contigo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vos clients peuvent ouvrir ce lien et réserver chez vous."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ग्राहक यह लिंक खोलकर आपके साथ बुकिंग कर सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Klien bisa membuka tautan ini dan memesan pada Anda."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I clienti possono aprire questo link e prenotare con te."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Clientes podem abrir este link e agendar com você."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os clientes podem abrir esta ligação e marcar consigo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Müşterileriniz bu bağlantıyı açıp randevu alabilir."
+          }
+        }
+      }
+    },
+    "shareLink.online.title" : {
+      "comment" : "Title of the notice on Share your link when her page is online.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صفحتك متصلة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Seite ist online"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your page is online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your page is online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu página está en línea"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu página está en línea"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu página está en línea"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre page est en ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका पेज ऑनलाइन है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Halaman Anda online"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La tua pagina è online"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sua página está no ar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A sua página está online"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanız çevrimiçi"
           }
         }
       }
