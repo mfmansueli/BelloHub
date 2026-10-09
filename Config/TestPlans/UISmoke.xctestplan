@@ -26,6 +26,7 @@
         "ImportAuditUITests",
         "MoreAuditUITests",
         "OnboardingAuditUITests",
+        "RecordAuditUITests",
         "ServicesAuditUITests",
         "TreatmentFlowAuditUITests"
       ]

@@ -53,6 +53,7 @@ enum UITestSeeding {
             _ = try? await ClientsFixtures.seed(into: repository, now: Date())
         }
         await TreatmentFlowUITestSeeding.seedIfRequested(dependencies)
+        await RecordUITestSeeding.seedIfRequested(dependencies)
     }
 }
 #endif

@@ -207,6 +207,9 @@ final class RecordHistoryViewModel {
     // MARK: - Private
 
     private func syncDraftText() {
-        draft?.newValue = draftCurrentValue ?? ""
+        // Read first, then write: `draft?.newValue = draftCurrentValue` opens a write on `draft` while the getter reads
+        // it, which the runtime reports as an exclusivity conflict and aborts.
+        let current = draftCurrentValue ?? ""
+        draft?.newValue = current
     }
 }

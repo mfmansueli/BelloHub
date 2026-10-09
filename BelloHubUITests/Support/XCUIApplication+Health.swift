@@ -149,7 +149,8 @@ extension XCUIApplication {
         let screen = windows.firstMatch.frame
         guard screen.height > 0 else { return }
         let bar = [
-            "healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton", "treatmentFlow.form.saveButton"
+            "healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton", "treatmentFlow.form.saveButton",
+            "recordHistory.correction.saveButton", "incident.saveButton", "exportRecord.exportButton"
         ].map { buttons[$0] }
             .first { $0.exists }
         let limit = (bar?.frame.minY ?? screen.height) - screen.height * 0.06
