@@ -77,8 +77,6 @@ test.describe('a client and the real functions', () => {
     await page.getByTestId('verify').click();
 
     await expect(page.getByTestId('confirm')).toBeVisible();
-    await page.getByTestId('heard-friend').click();
-    await page.getByTestId('before-no').click();
     await page.getByTestId('confirm').click();
 
     await expect(page.getByTestId('booking-card')).toBeVisible();

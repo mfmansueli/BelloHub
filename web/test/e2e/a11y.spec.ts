@@ -92,8 +92,6 @@ for (const locale of ['en-US', 'ar'] as const) {
       await verify(page);
       await expect(page.getByTestId('confirm')).toBeVisible();
       await scan(page, 'Bk-7 first visit');
-      await page.getByTestId('heard-friend').click();
-      await page.getByTestId('before-no').click();
       await page.getByTestId('confirm').click();
       await expect(page.getByTestId('booking-card')).toBeVisible();
       await scan(page, 'Bk-8 confirmed');

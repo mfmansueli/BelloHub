@@ -34,7 +34,7 @@ export function buildCreateRequest(
     slug: profile.slug,
     serviceId: draft.serviceId,
     addOnIds: draft.addOnIds,
-    // Guests are a count: the server stores no guest names (API.md 5.8). The names typed on Bk-5 stay on the page.
+    // Guests are a count: the server stores no guest names (API.md 5.8). The page never asks for names (D48).
     guests: draft.guests,
     startsAt: draft.startsAt,
     client: { name: draft.name.trim(), phone: phone.e164, ...(email === '' ? {} : { email }), locale },

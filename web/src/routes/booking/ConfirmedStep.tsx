@@ -45,7 +45,6 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
   const addOns = selectedAddOns(profile.addOns, draft.addOnIds);
   const summary = service === undefined ? null : totals(service, addOns, draft.guests);
   const minutes = Math.round((Date.parse(result.endsAt) - Date.parse(result.startsAt)) / 60_000);
-  const guestNames = draft.guestNames.filter((name) => name.trim() !== '');
   const meta = [format.minutes(minutes), priceText(summary?.price ?? null, format, t)].filter(Boolean).join(' · ');
   const serviceNames = [result.serviceName, ...addOns.map((addOn) => addOn.name)];
 
@@ -65,7 +64,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </b>
         <p class="meta">{meta}</p>
         {draft.guests > 0 ? (
-          <p class="meta">{guestNames.length > 0 ? t('bk8.guest.named', { guest: format.list(guestNames) }) : t('bk8.guest.unnamed', { count: draft.guests })}</p>
+          <p class="meta">{t('bk8.guest.unnamed', { count: draft.guests })}</p>
         ) : null}
         <hr class="rule" />
         <div class="row-flex">

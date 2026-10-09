@@ -7,7 +7,6 @@ export interface BookingInput {
   readonly serviceId?: string;
   readonly addOns?: readonly string[];
   readonly guests?: number;
-  readonly guestNames?: readonly string[];
   readonly name?: string;
   /** What is typed into the phone field (the country is the professional's). */
   readonly phone?: string;
@@ -55,8 +54,6 @@ export async function fillYou(page: Page, input: BookingInput = {}): Promise<voi
   await page.getByTestId('name').fill(input.name ?? DEFAULTS.name);
   await page.getByTestId('phone').fill(input.phone ?? DEFAULTS.phone);
   if (input.email !== undefined || input.channel === 'email') await page.getByTestId('email').fill(input.email ?? DEFAULTS.email);
-  const names = input.guestNames ?? Array.from({ length: input.guests ?? 0 }, (_, index) => `Guest ${index + 1}`);
-  for (const [index, guest] of names.entries()) await page.getByTestId(`guest-name-${index}`).fill(guest);
   await page.getByTestId('send-code').click();
 }
 
@@ -71,8 +68,6 @@ export async function verify(page: Page, input: BookingInput = {}): Promise<void
 /** Bk-7: the optional first-visit questions, answered, then confirm. */
 export async function confirmFirstVisit(page: Page): Promise<void> {
   await expect(page.getByTestId('confirm')).toBeVisible();
-  await page.getByTestId('heard-friend').click();
-  await page.getByTestId('before-no').click();
   await page.getByTestId('confirm').click();
 }
 

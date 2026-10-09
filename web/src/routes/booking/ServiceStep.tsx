@@ -134,7 +134,7 @@ export function ServiceStep({ profile }: { profile: PublicProfile }): JSX.Elemen
                 pressed={draft.guests === count}
                 testId={`guests-${count}`}
                 onToggle={() => {
-                  dispatch({ type: 'setGuests', guests: count, guestNames: draft.guestNames });
+                  dispatch({ type: 'setGuests', guests: count });
                 }}
               >
                 {count === 0 ? t('bk2.guests.none') : t('bk2.guests.plus', { count })}

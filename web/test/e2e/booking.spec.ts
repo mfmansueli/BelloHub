@@ -4,7 +4,7 @@ import { expect, mainText, noHorizontalScroll, open, test } from './support';
 test.describe('booking (Bk-1 to Bk-8)', () => {
   test('books a service with an add-on and a guest, in sequence, and shows the confirmation @core', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria');
-    const startsAt = await bookEverything(page, slug, { serviceId: 'glow', addOns: ['brow'], guests: 1, guestNames: ['Bia'] });
+    const startsAt = await bookEverything(page, slug, { serviceId: 'glow', addOns: ['brow'], guests: 1 });
 
     await expect(page.getByTestId('booking-card')).toContainText('Glow Facial');
     await expect(page.getByTestId('personal-link')).toBeVisible();

@@ -60,8 +60,6 @@ test.describe('Arabic, right to left', () => {
     await chooseSlot(page);
     await fillYou(page, { name: DEFAULTS.name, phone: '١١ ٩٨٧٦٥ ٤٣٢١' });
     await verify(page, { code: '١٢٣٤٥٦' });
-    await page.getByTestId('heard-friend').click();
-    await page.getByTestId('before-no').click();
     await page.getByTestId('confirm').click();
     await expect(page.getByTestId('booking-card')).toBeVisible();
     expect((await mock.bookings(slug))[0]?.client.phone).toBe('+5511987654321');

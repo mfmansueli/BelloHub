@@ -56,7 +56,7 @@ describe('booking state machine (docs/10 section 3)', () => {
     for (const event of [
       { type: 'chooseService', serviceId: 'b', addOnIds: [] },
       { type: 'chooseService', serviceId: 'a', addOnIds: ['x'] },
-      { type: 'setGuests', guests: 1, guestNames: ['Ana'] },
+      { type: 'setGuests', guests: 1 },
     ] as BookingEvent[]) {
       const next = run([event], base);
       expect(next.draft.startsAt).toBeNull();
@@ -64,11 +64,17 @@ describe('booking state machine (docs/10 section 3)', () => {
     }
   });
 
-  it('keeps one name per guest and forgets them when she goes back to coming alone', () => {
-    let state = run([{ type: 'setGuests', guests: 2, guestNames: ['Ana'] }]);
-    expect(state.draft.guestNames).toEqual(['Ana', '']);
-    state = run([{ type: 'setGuests', guests: 0, guestNames: ['Ana'] }], state);
-    expect(state.draft.guestNames).toEqual([]);
+  it('keeps guests as a count only: no names are stored or sent (D48)', () => {
+    let state = run([{ type: 'setGuests', guests: 2 }]);
+    expect(state.draft.guests).toBe(2);
+    expect(Object.keys(state.draft)).not.toContain('guestNames');
+    state = run([{ type: 'setGuests', guests: 0 }], state);
+    expect(state.draft.guests).toBe(0);
+  });
+
+  it('collects no first-visit answers beyond the optional note (D45)', () => {
+    expect(Object.keys(start().firstVisit)).toEqual(['note']);
+    expect(serializeDraft(start().draft)).not.toMatch(/heardFrom|hadBefore|guestNames/);
   });
 
   it('a verification proof is void as soon as the phone, the email or the channel changes, but not the name', () => {

@@ -403,15 +403,11 @@ export interface HoldResponse {
   readonly expiresAt: string;
 }
 
-export type HeardFrom = 'friend' | 'instagram' | 'search' | 'passing' | 'other';
-
 /**
- * The quick first-visit questions (Bk-7). The server stores only `note` on the booking; `heardFrom` and `hadBefore`
- * are asked but not sent until the owner decides where they go (docs/agent-notes/web.md).
+ * What Bk-7 collects. D45: only an optional preference note; "how did you hear" and "been before" are asked in person
+ * by the professional, never on the page.
  */
 export interface FirstVisitAnswers {
-  readonly heardFrom: HeardFrom | null;
-  readonly hadBefore: boolean | null;
   /** A short preference note. The page asks her not to write health details here. */
   readonly note: string;
 }

@@ -1,4 +1,4 @@
-// Bk-5: who is coming. Name, phone (the identity), optional email, a guest's name when she brings one, and "Good to
+// Bk-5: who is coming. Name, phone (the identity), optional email, and "Good to
 // know" (the professional's rules, as published). No account and no password: a code confirms it is her next.
 
 import type { JSX } from 'preact';
@@ -28,7 +28,6 @@ interface Errors {
   name?: string;
   phone?: string;
   email?: string;
-  guests?: string;
 }
 
 export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
@@ -48,7 +47,6 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
   const [country, setCountry] = useState(draft.phoneCountry);
   const [phone, setPhone] = useState(draft.phoneInput);
   const [email, setEmail] = useState(draft.email);
-  const [guests, setGuests] = useState<readonly string[]>(Array.from({ length: draft.guests }, (_, i) => draft.guestNames[i] ?? ''));
   const [errors, setErrors] = useState<Errors>({});
   const [noticeOpen, setNoticeOpen] = useState(false);
 
@@ -62,7 +60,6 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
     if (name.trim().length < 2) next.name = t('bk5.err.name');
     if (!normalizePhone(phone, phoneRegion(country)).ok) next.phone = t('bk5.err.phone');
     if (email.trim() !== '' && !EMAIL.test(email.trim())) next.email = t('bk5.err.email');
-    if (guests.some((guest) => guest.trim() === '')) next.guests = t('bk5.err.guest');
     setErrors(next);
     if (Object.keys(next).length > 0) {
       // Focus the first field with a problem so the keyboard and a screen reader land on it.
@@ -72,7 +69,6 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
       return;
     }
     dispatch({ type: 'setDetails', name: name.trim(), phoneCountry: country, phoneInput: phone.trim(), email: email.trim() });
-    dispatch({ type: 'setGuests', guests: draft.guests, guestNames: guests.map((guest) => guest.trim()) });
     navigate(slugRoute(profile.slug, 'verify'));
   };
 
@@ -101,17 +97,6 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
         <TextField label={t('bk5.name')} value={name} onInput={setName} autoComplete="name" error={errors.name} testId="name" />
         <PhoneField label={t('bk5.phone')} countryLabel={t('bk5.phoneCountry')} country={country} input={phone} defaultCountry={profile.regionCode} error={errors.phone} onChange={(c, p) => { setCountry(c); setPhone(p); }} />
         <TextField label={t('bk5.email')} optional value={email} onInput={setEmail} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" error={errors.email} testId="email" dir="ltr" />
-        {guests.map((guest, index) => (
-          <TextField
-            key={index}
-            label={draft.guests === 1 ? t('bk5.guestName') : t('bk5.guestNameN', { n: index + 1 })}
-            value={guest}
-            onInput={(value) => { setGuests((current) => current.map((existing, i) => (i === index ? value : existing))); }}
-            placeholder={t('bk5.guestNamePlaceholder')}
-            error={guest.trim() === '' ? errors.guests : undefined}
-            testId={`guest-name-${index}`}
-          />
-        ))}
       </form>
 
       <p class="well well-icon">

@@ -23,8 +23,6 @@ export interface Draft {
   readonly serviceId: string | null;
   readonly addOnIds: readonly string[];
   readonly guests: number;
-  /** One name per guest, as many as `guests`. */
-  readonly guestNames: readonly string[];
   readonly startsAt: string | null;
   /** The browser's own key for its soft hold (API.md 5.3): the same key renews the hold, and converts it on booking. */
   readonly holdKey: string;
@@ -55,7 +53,7 @@ export type BookingEvent =
   | { readonly type: 'preselect'; readonly serviceId: string }
   | { readonly type: 'setAddOns'; readonly addOnIds: readonly string[] }
   | { readonly type: 'chooseService'; readonly serviceId: string; readonly addOnIds: readonly string[] }
-  | { readonly type: 'setGuests'; readonly guests: number; readonly guestNames: readonly string[] }
+  | { readonly type: 'setGuests'; readonly guests: number }
   | { readonly type: 'chooseSlot'; readonly startsAt: string; readonly holdExpiresAt: string | null }
   | { readonly type: 'slotTaken'; readonly alternatives: readonly string[] }
   | {
@@ -72,7 +70,7 @@ export type BookingEvent =
   | { readonly type: 'back' }
   | { readonly type: 'reset' };
 
-export const EMPTY_FIRST_VISIT: FirstVisitAnswers = { heardFrom: null, hadBefore: null, note: '' };
+export const EMPTY_FIRST_VISIT: FirstVisitAnswers = { note: '' };
 
 /** A lowercase UUID v4, as the server requires for `idempotencyKey` (API.md section 4). */
 export function newIdempotencyKey(): string {
@@ -98,7 +96,6 @@ export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey:
     serviceId: null,
     addOnIds: [],
     guests: 0,
-    guestNames: [],
     startsAt: null,
     holdKey,
     holdExpiresAt: null,
@@ -147,13 +144,11 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
     }
     case 'setGuests': {
       const changed = draft.guests !== event.guests;
-      const names = Array.from({ length: event.guests }, (_, index) => event.guestNames[index] ?? '');
       return {
         ...state,
         draft: {
           ...draft,
           guests: event.guests,
-          guestNames: names,
           ...(changed ? { startsAt: null, holdExpiresAt: null } : {}),
         },
       };
