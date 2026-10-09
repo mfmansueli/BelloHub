@@ -52,18 +52,14 @@ enum FreeSlotsCalculator {
         let today = calendar.startOfDay(for: request.now)
         guard let last = calendar.date(byAdding: .day, value: request.settings.maxDaysAhead, to: today),
               dayStart >= today, dayStart <= last else { return false }
-        return !request.settings.daysOff.contains { off in
-            let first = calendar.startOfDay(for: off.startDate)
-            let final = calendar.startOfDay(for: off.endDate)
-            return dayStart >= first && dayStart <= final
-        }
+        return dayOff(on: dayStart, settings: request.settings, calendar: calendar) == nil
     }
 
     /// The real-time interval of a local wall-clock stretch. A time that does not exist (spring forward) moves to
     /// the next valid one; a time that happens twice (fall back) means its first occurrence. Midnight at the end of
     /// the day is the start of the next day.
-    private static func interval(startMinutes: Int, endMinutes: Int, dayStart: Date, nextDayStart: Date,
-                                 calendar: Calendar) -> DateInterval? {
+    static func interval(startMinutes: Int, endMinutes: Int, dayStart: Date, nextDayStart: Date,
+                         calendar: Calendar) -> DateInterval? {
         func resolve(_ minutes: Int) -> Date? {
             instant(minutes: minutes, dayStart: dayStart, nextDayStart: nextDayStart, calendar: calendar)
         }
@@ -71,7 +67,7 @@ enum FreeSlotsCalculator {
         return DateInterval(start: start, end: end)
     }
 
-    private static func instant(minutes: Int, dayStart: Date, nextDayStart: Date, calendar: Calendar) -> Date? {
+    static func instant(minutes: Int, dayStart: Date, nextDayStart: Date, calendar: Calendar) -> Date? {
         if minutes >= 24 * 60 { return nextDayStart }
         return calendar.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: dayStart,
                              matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .forward)

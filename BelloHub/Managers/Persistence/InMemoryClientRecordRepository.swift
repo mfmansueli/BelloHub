@@ -35,6 +35,8 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     // Not private: the booking-setup contract lives in `InMemoryClientRecordRepository+BookingSetup.swift`.
     let clock: @Sendable () -> Date
     var bookingSetupMemory = BookingSetupMemory()
+    // Not private: the time blocks live in `InMemoryClientRecordRepository+TimeBlocks.swift`.
+    var timeBlocksByID: [UUID: TimeBlock] = [:]
     let changes = VaultChangeBroadcaster()
 
     init(clock: @escaping @Sendable () -> Date = { Date() }) {

@@ -17,6 +17,7 @@ struct RootView: View {
     @State private var registration: ClientRegistrationService
     @State private var bookingSetup: BookingSetupService
     @State private var appointments: AppointmentService
+    @State private var timeBlocks: TimeBlockService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -35,6 +36,7 @@ struct RootView: View {
         _registration = State(initialValue: dependencies.registration)
         _bookingSetup = State(initialValue: dependencies.bookingSetup)
         _appointments = State(initialValue: dependencies.appointments)
+        _timeBlocks = State(initialValue: dependencies.timeBlocks)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -56,6 +58,7 @@ struct RootView: View {
         .environment(registration)
         .environment(bookingSetup)
         .environment(appointments)
+        .environment(timeBlocks)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {
