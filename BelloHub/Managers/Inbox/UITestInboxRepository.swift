@@ -12,15 +12,14 @@ import Foundation
 /// open-and-import path runs on the simulator. Answers change the data like the server would. DEBUG only.
 ///
 /// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42).
-@MainActor
-final class UITestInboxRepository: InboxRepository {
+actor UITestInboxRepository: InboxRepository {
     enum Scenario: String {
         case fixtures
         case paywall
     }
 
     private let scenario: Scenario
-    private let publicKey: @MainActor () throws -> Curve25519.KeyAgreement.PublicKey
+    private let publicKey: @Sendable @MainActor () throws -> Curve25519.KeyAgreement.PublicKey
     private let now: Date
     private var bookings: [IncomingBooking]
     private var requests: [RescheduleRequest]
@@ -31,7 +30,7 @@ final class UITestInboxRepository: InboxRepository {
     private(set) var devices: [String] = []
 
     init(
-        scenario: Scenario, publicKey: @escaping @MainActor () throws -> Curve25519.KeyAgreement.PublicKey,
+        scenario: Scenario, publicKey: @escaping @Sendable @MainActor () throws -> Curve25519.KeyAgreement.PublicKey,
         now: Date = Date()
     ) {
         self.scenario = scenario
@@ -57,7 +56,7 @@ final class UITestInboxRepository: InboxRepository {
             sealed = true
             let plaintext = UITestInboxFixtures.intakePlaintext(now: now)
             let itemID = UITestInboxFixtures.intakeItemID
-            if let key = try? publicKey(),
+            if let key = try? await publicKey(),
                let envelope = try? EnvelopeOpener.seal(plaintext, to: key, kind: .intake, itemId: itemID) {
                 items.append(MailboxItem(
                     id: itemID, kind: .intake, bookingId: UITestInboxFixtures.helenaBookingID, keyId: envelope.keyId,

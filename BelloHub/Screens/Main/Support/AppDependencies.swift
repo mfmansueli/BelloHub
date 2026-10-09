@@ -150,7 +150,7 @@ struct AppDependencies {
     private static func makeUITestInbox(
         options: LaunchOptions, keyManager: KeyManager, vault: VaultService, appointments: AppointmentService,
         defaults: UserDefaults
-    ) -> (queue: OutboundQueue, bookings: BookingSyncService, mailbox: MailboxService) {
+    ) -> InboxServices {
         let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
             UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
         } ?? OfflineInboxRepository()
@@ -163,7 +163,13 @@ struct AppDependencies {
             repository: inbox, keys: keyManager, vault: vault, queue: queue, bookings: bookings,
             notifier: UITestNotificationPoster(), defaults: defaults
         )
-        return (queue, bookings, mailbox)
+        return InboxServices(queue: queue, bookings: bookings, mailbox: mailbox)
+    }
+
+    private struct InboxServices {
+        let queue: OutboundQueue
+        let bookings: BookingSyncService
+        let mailbox: MailboxService
     }
     #endif
 }
