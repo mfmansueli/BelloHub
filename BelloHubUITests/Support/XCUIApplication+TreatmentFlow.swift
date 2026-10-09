@@ -25,6 +25,7 @@ extension XCUIApplication {
     func typeNotes(_ text: String, file: StaticString = #filePath, line: UInt = #line) {
         let field = descendants(matching: .any).matching(identifier: "treatmentFlow.form.field.notes").firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 10), "no notes field", file: file, line: line)
+        scrollAboveBottomBar(field)
         field.tap()
         field.typeText(text)
         dismissKeyboard()
