@@ -220,7 +220,10 @@ struct ExportRecordContentView: View {
                 .padding(Spacing.md)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .belloCard(cornerRadius: Radius.tile)
-                .accessibilityElement(children: .combine)
+                // A bare file name is not a spoken label; the card says what it is and reads the name as its value.
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text("exportRecord.fileName.label"))
+                .accessibilityValue(Text(verbatim: file.fileName))
                 .accessibilityIdentifier("exportRecord.fileName")
                 Button { isSharing = true } label: {
                     Label { Text("exportRecord.share") } icon: { Image(icon: .share) }

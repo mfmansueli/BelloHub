@@ -73,7 +73,7 @@ final class RecordUITests: XCTestCase {
 
         app.tapButton("exportRecord.exportButton")
         XCTAssertTrue(app.element("exportRecord.ready").waitForExistence(timeout: 20))
-        XCTAssertTrue(app.element("exportRecord.fileName").label.hasSuffix(".pdf"))
+        XCTAssertTrue((app.element("exportRecord.fileName").value as? String)?.hasSuffix(".pdf") == true)
         app.tapButton("exportRecord.backButton")
         XCTAssertTrue(app.element("exportRecord.ready").waitForNonExistence(timeout: 5))
     }

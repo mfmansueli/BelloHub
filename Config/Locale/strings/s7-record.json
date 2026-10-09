@@ -3229,6 +3229,22 @@
    "Foto",
    "फ़ोटो",
    "الصور"
+  ],
+  [
+   "exportRecord.fileName.label",
+   "4.10 ready: VoiceOver label of the file card; the file name is its value",
+   "PDF file",
+   "Arquivo PDF",
+   "Ficheiro PDF",
+   "Archivo PDF",
+   "Archivo PDF",
+   "File PDF",
+   "Fichier PDF",
+   "PDF-Datei",
+   "PDF dosyası",
+   "Berkas PDF",
+   "PDF फ़ाइल",
+   "ملف PDF"
   ]
  ]
 }
