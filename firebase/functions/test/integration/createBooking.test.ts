@@ -6,6 +6,7 @@ import { AppError } from '../../src/lib/errors.js';
 import { ts, refs } from '../../src/lib/store.js';
 import { holdSlot } from '../../src/public/holdSlot.js';
 import { ANA, BIA, asBooked, book, bookingDoc } from '../support/booking.js';
+import type { Outcome } from '../support/booking.js';
 import { createTestEnv, resetEmulators } from '../support/env.js';
 import { ADDON, FRIDAY_10, SERVICE, seedProfessional, captureWorld, restoreWorld } from '../support/seed.js';
 import type { Professional, World } from '../support/seed.js';
@@ -379,6 +380,56 @@ describe('createBooking: holds', () => {
 });
 
 describe('createBooking: input and abuse', () => {
+  it('stores a note and a guest COUNT only: no first-visit answers, no guest names, nothing it was not asked for (D45, D48)', async () => {
+    const { createBooking } = await import('../../src/public/createBooking.js');
+    const base = {
+      slug: pro.slug,
+      serviceId: SERVICE.glowFacial,
+      startsAt: FRIDAY_10,
+      client: { name: ANA.name, phone: ANA.phone, locale: 'pt-BR' },
+      verification: { method: 'phone', idToken: env.phoneToken(ANA.phone) },
+      idempotencyKey: randomUUID()
+    };
+
+    const rejected = await env
+      .call(createBooking, {
+        ...base,
+        heardFrom: 'instagram',
+        hadBefore: false,
+        firstVisit: { heardFrom: 'friend', hadBefore: true },
+        guests: ['Bia Lima', 'Carla'],
+        guestNames: ['Bia Lima'],
+        client: { ...base.client, heardFrom: 'instagram', firstVisit: true }
+      })
+      .catch((caught: unknown) => caught);
+    expect(rejected).toBeInstanceOf(AppError);
+    expect((rejected as AppError).code).toBe('INVALID_ARGUMENT');
+    expect((rejected as AppError).details?.fields).toEqual(
+      expect.arrayContaining(['heardFrom', 'hadBefore', 'firstVisit', 'guests', 'guestNames', 'client.heardFrom', 'client.firstVisit'])
+    );
+    expect(JSON.stringify((rejected as AppError).details)).not.toMatch(/instagram|friend|Bia|Carla/);
+
+    const outcome = asBooked((await env.call(createBooking, { ...base, guests: 1, note: 'Prefiro de manha.' })) as Outcome);
+    const stored = await bookingDoc(env, outcome.bookingId);
+    expect(stored.guestCount).toBe(1);
+    expect(stored.note).toBe('Prefiro de manha.');
+    expect(Object.keys(stored).sort()).toEqual(
+      [
+        'addOns', 'client', 'createdAt', 'durationMinutes', 'endsAt', 'guestCount', 'manageTokenHashes', 'noShowPolicy', 'note', 'origin',
+        'ownerUid', 'phoneHash', 'policy', 'purgeAt', 'rescheduleCount', 'rulesText', 'schemaVersion', 'serviceId', 'serviceName', 'slug',
+        'startsAt', 'status', 'timeZoneID', 'updatedAt'
+      ].sort()
+    );
+    expect(Object.keys(stored.client).sort()).toEqual(['locale', 'name', 'phone']);
+    expect(JSON.stringify(stored)).not.toMatch(/heardFrom|hadBefore|firstVisit|guestNames|Bia|Carla/);
+  });
+
+  it('caps the note at 300 characters and drops an empty one', async () => {
+    await expect(book(env, pro, { note: 'x'.repeat(301) })).rejects.toMatchObject({ code: 'INVALID_ARGUMENT', details: { fields: ['note'] } });
+    const outcome = asBooked(await book(env, pro, { note: '' }));
+    expect((await bookingDoc(env, outcome.bookingId)).note).toBeUndefined();
+  });
+
   it('rejects an unknown field, a bad phone and a bad time with field paths and no values', async () => {
     const error = await env
       .call((await import('../../src/public/createBooking.js')).createBooking, {

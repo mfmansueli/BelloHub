@@ -10,6 +10,7 @@ import { keyedHash } from '../../src/lib/crypto.js';
 import { ProviderClientMessenger } from '../../src/messaging/ProviderClientMessenger.js';
 import { adminApp, clearAuth, clearFirestore, STORAGE_BUCKET, testFirestore } from './emulator.js';
 import {
+  FakeAppleTokenRevoker,
   FakeAppStoreVerifier,
   FakeEmailProvider,
   FakePhoneVerifier,
@@ -29,6 +30,7 @@ export interface TestEnv {
   whatsapp: FakeWhatsAppProvider;
   push: FakePushSender;
   phone: FakePhoneVerifier;
+  apple: FakeAppleTokenRevoker;
   appStore: FakeAppStoreVerifier;
   logs: MemoryLogSink;
   /** Runs a use case through the same gate the deployed function uses (access, strict input, output schema). */
@@ -43,6 +45,7 @@ export function createTestEnv(overrides: { whatsAppAutomation?: boolean; enforce
   const whatsapp = new FakeWhatsAppProvider();
   const push = new FakePushSender();
   const phone = new FakePhoneVerifier();
+  const apple = new FakeAppleTokenRevoker();
   const appStore = new FakeAppStoreVerifier();
   const logs = new MemoryLogSink();
   whatsapp.enabled = overrides.whatsAppAutomation ?? false;
@@ -67,6 +70,7 @@ export function createTestEnv(overrides: { whatsAppAutomation?: boolean; enforce
     messenger: new ProviderClientMessenger(mail, whatsapp, true),
     push,
     phoneVerifier: phone,
+    appleRevoker: apple,
     appStore,
     log: createLogger(logs)
   };
@@ -78,6 +82,7 @@ export function createTestEnv(overrides: { whatsAppAutomation?: boolean; enforce
     whatsapp,
     push,
     phone,
+    apple,
     appStore,
     logs,
     call: (useCase, data, who = {}) =>

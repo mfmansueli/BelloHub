@@ -63,11 +63,14 @@ Not done by Claude Code: it needs accounts, billing and keys that only the owner
    app and download its `GoogleService-Info.plist` into `Config/Firebase/<Env>/`.
 4. Secret Manager: `firebase functions:secrets:set PHONE_HASH_PEPPER` (a long random value; never rotate it, every stored
    contact is keyed by it) and `firebase functions:secrets:set EMAIL_API_KEY` (the Resend API key, H7; any placeholder
-   until the account exists: the key is only read when `EMAIL_FROM` is set). Later: the Meta token (H13).
+   until the account exists: the key is only read when `EMAIL_FROM` is set) and `firebase functions:secrets:set
+   APPLE_SIGNIN_PRIVATE_KEY` (the `.p8` of a Sign in with Apple key, H17, pasted as PEM; any placeholder until the key
+   exists: it is only read when `APPLE_SIGNIN_KEY_ID` is set). Later: the Meta token (H13).
 5. Optional deploy parameters in `functions/.env.<project>`: `WEB_BASE_URL`, `WHATSAPP_AUTOMATION` (keep equal to the Remote
    Config flag), `ENFORCE_APP_CHECK` (only after App Check works on staging, H5), `PLAN_PRODUCT_IDS`, `EMAIL_FROM`
    (`Bello Hub <no-reply@bellohub.app>`, a sender verified at the vendor; empty keeps email off, H7), `APPLE_ENVIRONMENT`
-   and `APPLE_APP_ID` (H14, see `functions/certs/apple/README.md`), `TRUSTED_PROXY_HOPS` (default 1; behind the Hosting
+   and `APPLE_APP_ID` (H14, see `functions/certs/apple/README.md`), `APPLE_SIGNIN_KEY_ID` (H17: the id of the Sign in
+   with Apple key whose `.p8` is the secret above; empty keeps `deleteAccount.appleRevocation` at `skipped`), `TRUSTED_PROXY_HOPS` (default 1; behind the Hosting
    rewrites of `/api/<name>` the client IP is probably the second entry from the end of `X-Forwarded-For`, so log that
    header once on staging and set `2` if so; the Hosting emulator adds no entry, so no local test can decide it).
 6. Deploy to **dev first** (never to `bello-hub`):
@@ -93,4 +96,7 @@ Resend account in the EU region, sign its DPA, verify the sender domain, then se
 secret), H13 WhatsApp
 Business (code and tests exist, disabled), H14 App Store plan verification (`AppleAppStoreVerifier` is wired; it switches
 on when Apple's root certificates are in `functions/certs/apple/`, see the README there, plus `APPLE_ENVIRONMENT` and
-`APPLE_APP_ID` for Production; until then it answers `NOT_CONFIGURED`).
+`APPLE_APP_ID` for Production; until then it answers `NOT_CONFIGURED`), H17 Sign in with Apple revocation on account
+deletion (`AppleSignInTokenRevoker` is wired, D44: Certificates, Identifiers & Profiles > Keys > create a key with
+"Sign in with Apple" for the `com.bellohub` App ID, note its Key ID, download the `.p8` once; set `APPLE_SIGNIN_KEY_ID` and
+the `APPLE_SIGNIN_PRIVATE_KEY` secret; until then `deleteAccount` reports `appleRevocation: "skipped"`).

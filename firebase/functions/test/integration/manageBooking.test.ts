@@ -238,7 +238,9 @@ describe('cancelBooking', () => {
     expect((await book(env, pro, { client: BIA })).status).toBe('confirmed');
   });
 
-  it('needs an honest "yes" for a late cancellation (D12), records it as late and leaves a mark', async () => {
+  it('needs an honest "yes" for a late cancellation (D12), records it as late and leaves a mark when her policy counts it', async () => {
+    // D47: whether a late cancellation counts is fixed at booking time, so the policy is set before the booking is made.
+    await refs(env.deps.db).availability(pro.uid).update({ 'noShow.lateCancelCounts': true });
     const booked = await bookFriday();
     env.clock.set(Date.parse(START) - 10 * HOUR);
 

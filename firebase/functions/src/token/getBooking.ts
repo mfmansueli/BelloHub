@@ -10,7 +10,10 @@ import { consumeRates } from '../lib/rateLimit.js';
 import { intakeIsCurrent } from '../lib/rules.js';
 import { dataOf, ms, msOpt, plainReader, refs } from '../lib/store.js';
 
-/** The management page (Bk-9): the booking, the professional's rules and what the client may do right now. */
+/**
+ * The management page (Bk-9): the booking, the rules it was made under (D47: the booking's own snapshot, not the page's
+ * current policy) and what the client may do right now.
+ */
 export const getBooking = defineUseCase({
   name: 'getBooking',
   access: 'token',
@@ -57,7 +60,8 @@ export const getBooking = defineUseCase({
       serverTime: iso(now),
       client: { name: booking.client.name },
       policy: booking.policy,
-      rulesText: profile.rulesText,
+      rulesText: booking.rulesText ?? profile.rulesText,
+      lateCancelCounts: booking.noShowPolicy ? booking.noShowPolicy.isOn && booking.noShowPolicy.lateCancelCounts : false,
       actions: {
         cancel: actions.cancel,
         reschedule: actions.reschedule,

@@ -87,6 +87,14 @@ describe('sendEmailCode', () => {
     await expect(send()).rejects.toMatchObject({ code: 'RATE_LIMITED' });
   });
 
+  it('limits one caller (IP) to ten codes an hour across addresses, and one professional to a daily cap (D46)', async () => {
+    for (let n = 0; n < 10; n += 1) await send(`visitor${n}@example.com`);
+
+    await expect(send('visitor10@example.com')).rejects.toMatchObject({ code: 'RATE_LIMITED', details: { retryAfterSeconds: expect.any(Number) as number } });
+    // Another caller is not affected.
+    expect(await env.call(sendEmailCode, { slug: pro.slug, email: 'visitor10@example.com', locale: 'pt-BR', purpose: 'booking' }, { ip: '198.51.100.9' })).toMatchObject({ resendAfterSeconds: 30 });
+  });
+
   it('is NOT_CONFIGURED where no email provider exists, and keeps no code behind', async () => {
     const original = env.deps.messenger;
     env.deps.messenger = new ProviderClientMessenger(env.mail, env.whatsapp, false);

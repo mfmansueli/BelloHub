@@ -101,6 +101,16 @@ describe('professionals cannot read each other', () => {
     await assertFails(getDoc(doc(anonymous(), 'accounts', ALICE)));
   });
 
+  it('needs no phone number on the token: an Apple sign-in reads her own account and bookings (D44)', async () => {
+    const appleAlice = env.authenticatedContext(ALICE, { firebase: { sign_in_provider: 'apple.com' }, email: 'a@privaterelay.appleid.com' }).firestore();
+    const appleBob = env.authenticatedContext(BOB, { firebase: { sign_in_provider: 'apple.com' } }).firestore();
+
+    await assertSucceeds(getDoc(doc(appleAlice, 'accounts', ALICE)));
+    await assertSucceeds(getDoc(doc(appleAlice, 'bookings', 'booking-alice')));
+    await assertSucceeds(updateDoc(doc(appleAlice, 'accounts', ALICE), { locale: 'en' }));
+    await assertFails(getDoc(doc(appleBob, 'accounts', ALICE)));
+  });
+
   it('lets a professional read her own bookings and no one else', async () => {
     await assertSucceeds(getDoc(doc(alice(), 'bookings', 'booking-alice')));
     await assertFails(getDoc(doc(alice(), 'bookings', 'booking-bob')));

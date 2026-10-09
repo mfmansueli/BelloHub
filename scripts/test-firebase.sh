@@ -38,12 +38,16 @@ for tool in node npm java firebase; do
 done
 
 # The emulators and the tests read project secrets from the environment; these are fakes used only here. The email key
-# is a placeholder: with EMAIL_FROM unset the provider stays disabled and the key is never read.
+# and Apple key are placeholders: with EMAIL_FROM and APPLE_SIGNIN_KEY_ID unset neither is ever read.
 if [[ ! -f "$FUNCTIONS_DIR/.secret.local" ]]; then
     printf 'PHONE_HASH_PEPPER=local-test-pepper-not-a-secret\n' > "$FUNCTIONS_DIR/.secret.local"
 fi
 if ! grep -q '^EMAIL_API_KEY=' "$FUNCTIONS_DIR/.secret.local"; then
     printf 'EMAIL_API_KEY=unset\n' >> "$FUNCTIONS_DIR/.secret.local"
+fi
+# Same for the Sign in with Apple key (D44): never read while APPLE_SIGNIN_KEY_ID is empty.
+if ! grep -q '^APPLE_SIGNIN_PRIVATE_KEY=' "$FUNCTIONS_DIR/.secret.local"; then
+    printf 'APPLE_SIGNIN_PRIVATE_KEY=unset\n' >> "$FUNCTIONS_DIR/.secret.local"
 fi
 
 if [[ ! -d "$FUNCTIONS_DIR/node_modules" || "$FUNCTIONS_DIR/package-lock.json" -nt "$FUNCTIONS_DIR/node_modules/.package-lock.json" ]]; then

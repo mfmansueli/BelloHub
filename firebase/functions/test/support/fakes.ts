@@ -1,6 +1,7 @@
 // Fakes for everything outside the process (docs/13: services get fakes, never the real thing). They record what they
 // were asked so a test can assert on content, and some can be told to fail.
 
+import type { AppleRevocationOutcome, AppleTokenRevoker } from '../../src/auth/AppleTokenRevoker.js';
 import type { PhoneVerifier } from '../../src/auth/PhoneVerifier.js';
 import type { AppStoreVerifier, VerifiedNotification, VerifiedTransaction } from '../../src/billing/AppStoreVerifier.js';
 import { AppError } from '../../src/lib/errors.js';
@@ -63,6 +64,18 @@ export class FakePhoneVerifier implements PhoneVerifier {
     const known = this.tokens.get(idToken);
     if (!known || now - known.authTime > 10 * 60_000) return Promise.reject(new AppError('VERIFICATION_FAILED'));
     return Promise.resolve({ phoneE164: known.phoneE164 });
+  }
+}
+
+/** Stands in for Apple's revocation endpoint: records the codes it saw and answers what it is told. */
+export class FakeAppleTokenRevoker implements AppleTokenRevoker {
+  configured = true;
+  outcome: AppleRevocationOutcome = 'revoked';
+  readonly codes: string[] = [];
+
+  revoke(authorizationCode: string): Promise<AppleRevocationOutcome> {
+    this.codes.push(authorizationCode);
+    return Promise.resolve(this.outcome);
   }
 }
 

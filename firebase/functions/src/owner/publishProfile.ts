@@ -9,6 +9,7 @@ import { inboxKeyId } from '../lib/crypto.js';
 import type { AccountDoc, IntakeFormDoc, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { applyInboxKey } from '../lib/keyring.js';
+import { keyringUpdate } from '../lib/keyringUpdate.js';
 import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, refs, ts, txReader } from '../lib/store.js';
 import { runTransaction } from '../lib/tx.js';
@@ -88,8 +89,10 @@ export const publishProfile = defineUseCase({
       }
 
       const applied = applyInboxKey(account.inboxKeyring, profile.inboxKey, now);
+      // A key retired as compromised cannot come back through the profile either (D51).
+      if ('failure' in applied) throw new AppError('INVALID_ARGUMENT', { fields: ['profile.inboxKey'] });
       if (applied.changed) {
-        tx.update(r.account(uid), { inboxKeyring: applied.keyring, updatedAt: ts(now) });
+        tx.update(r.account(uid), keyringUpdate(applied.keyring, now));
         writeAudit(tx, deps, { kind: 'inboxKeyChanged', uid, keyId: profile.inboxKey.keyId });
       }
       return slugName;

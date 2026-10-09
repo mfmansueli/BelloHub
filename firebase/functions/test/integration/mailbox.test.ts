@@ -154,13 +154,29 @@ describe('submitSealed', () => {
     expect(await submit(token, envelope({ kind: 'checkin' }, 2 * 1024 * 1024))).toEqual({ ok: true });
   }, 60_000);
 
-  it('refuses a key the professional does not hold, but accepts a key she retired (pending items still open)', async () => {
+  it('refuses a key the professional does not hold, and accepts a retired key for 24 hours only (D51)', async () => {
     const { token } = await bookingToken();
     const strangerKey = newInboxKey();
     await expect(submit(token, envelope({ keyId: strangerKey.keyId }))).rejects.toMatchObject({ code: 'KEY_MISMATCH' });
 
-    await env.call(updateInboxKey, { inboxKey: newInboxKey() }, owner());
+    const next = newInboxKey();
+    await env.call(updateInboxKey, { inboxKey: next }, owner());
+    // A form that was open when she rotated finishes with the old key.
     expect(await submit(token, envelope({ keyId: pro.inboxKey.keyId }))).toEqual({ ok: true });
+    env.clock.advance(24 * 3_600_000 - 1);
+    expect(await submit(token, envelope({ keyId: pro.inboxKey.keyId }))).toEqual({ ok: true });
+    env.clock.advance(1);
+    await expect(submit(token, envelope({ keyId: pro.inboxKey.keyId }))).rejects.toMatchObject({ code: 'KEY_MISMATCH' });
+    expect(await submit(token, envelope({ keyId: next.keyId }))).toEqual({ ok: true });
+  });
+
+  it('refuses a key at once when the rotation reported it compromised (D51)', async () => {
+    const { token } = await bookingToken();
+    const next = newInboxKey();
+    await env.call(updateInboxKey, { inboxKey: next, compromised: true }, owner());
+
+    await expect(submit(token, envelope({ keyId: pro.inboxKey.keyId }))).rejects.toMatchObject({ code: 'KEY_MISMATCH' });
+    expect(await submit(token, envelope({ keyId: next.keyId }))).toEqual({ ok: true });
   });
 
   it('treats a retry of the same envelope as a success and refuses a different ciphertext under the same item id', async () => {

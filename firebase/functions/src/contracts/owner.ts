@@ -92,9 +92,22 @@ export const publishAvailability = {
 };
 
 export const updateInboxKey = {
-  input: z.strictObject({ inboxKey: InboxKeySchema }),
+  input: z.strictObject({
+    inboxKey: InboxKeySchema,
+    /** D51: the key being replaced was exposed; it stops accepting envelopes at once instead of after the 24 h grace. */
+    compromised: z.boolean().optional()
+  }),
   output: z.strictObject({
-    keyring: z.array(z.strictObject({ keyId: z.string(), createdAt: Instant, retiredAt: Instant.optional() }))
+    keyring: z.array(
+      z.strictObject({
+        keyId: z.string(),
+        createdAt: Instant,
+        retiredAt: Instant.optional(),
+        /** Retired keys only: the last instant a new envelope for this key is accepted. */
+        acceptsUntil: Instant.optional(),
+        compromisedAt: Instant.optional()
+      })
+    )
   })
 };
 
@@ -252,6 +265,10 @@ export const deleteClientServerData = {
 };
 
 export const deleteAccount = {
-  input: z.strictObject({ confirm: z.literal(true) }),
-  output: OkSchema
+  input: z.strictObject({
+    confirm: z.literal(true),
+    /** A fresh Sign in with Apple authorization code (D44): the server revokes her Apple grant with it. */
+    appleAuthorizationCode: z.string().min(10).max(2048).optional()
+  }),
+  output: z.strictObject({ ok: z.literal(true), appleRevocation: z.enum(['revoked', 'failed', 'skipped']) })
 };

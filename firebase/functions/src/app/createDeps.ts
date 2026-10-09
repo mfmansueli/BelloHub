@@ -2,7 +2,10 @@ import { getApp, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
+import { AppleSignInTokenRevoker } from '../auth/AppleSignInTokenRevoker.js';
+import type { AppleTokenRevoker } from '../auth/AppleTokenRevoker.js';
 import { FirebasePhoneVerifier } from '../auth/FirebasePhoneVerifier.js';
+import { UnconfiguredAppleTokenRevoker } from '../auth/UnconfiguredAppleTokenRevoker.js';
 import { AppleAppStoreVerifier } from '../billing/AppleAppStoreVerifier.js';
 import type { AppStoreVerifier } from '../billing/AppStoreVerifier.js';
 import { loadAppleRootCertificates } from '../billing/appleRootCertificates.js';
@@ -11,6 +14,10 @@ import {
   APPLE_APP_ID,
   APPLE_ENVIRONMENT,
   APPLE_ROOT_CERTS_DIR,
+  APPLE_SIGNIN_CLIENT_ID,
+  APPLE_SIGNIN_KEY_ID,
+  APPLE_SIGNIN_PRIVATE_KEY,
+  APPLE_SIGNIN_TEAM_ID,
   EMAIL_API_KEY,
   EMAIL_FROM,
   ENFORCE_APP_CHECK,
@@ -23,6 +30,7 @@ import {
 import { GcsBlobStore } from '../lib/blobs.js';
 import { CloudLogSink } from '../lib/cloudLogSink.js';
 import { createLogger } from '../lib/log.js';
+import type { Logger } from '../lib/log.js';
 import { systemRandom } from '../lib/random.js';
 import { DisabledEmailProvider } from '../messaging/DisabledEmailProvider.js';
 import { DisabledWhatsAppProvider } from '../messaging/DisabledWhatsAppProvider.js';
@@ -59,6 +67,7 @@ export function createDeps(): Deps {
     // Already configured by an earlier call in this process.
   }
   const emulator = process.env.FUNCTIONS_EMULATOR === 'true';
+  const log = createLogger(new CloudLogSink());
 
   cached = {
     db,
@@ -83,8 +92,9 @@ export function createDeps(): Deps {
     messenger: emulator ? new ProviderClientMessenger(new EmulatorEmailProvider(db), new DisabledWhatsAppProvider(), true) : createMessenger(),
     push: emulator ? new EmulatorPushSender(db) : new FcmPushSender(),
     phoneVerifier: new FirebasePhoneVerifier(getAuth()),
+    appleRevoker: createAppleRevoker(log),
     appStore: createAppStoreVerifier(),
-    log: createLogger(new CloudLogSink())
+    log
   };
   return cached;
 }
@@ -100,6 +110,19 @@ function createAppStoreVerifier(): AppStoreVerifier {
     appAppleId: Number.isFinite(appAppleId) ? appAppleId : undefined,
     rootCertificates
   });
+}
+
+/** TODO(HUMAN-H17): set `APPLE_SIGNIN_KEY_ID` and the `APPLE_SIGNIN_PRIVATE_KEY` secret (the .p8 of a Sign in with Apple key). */
+function createAppleRevoker(log: Logger): AppleTokenRevoker {
+  const keyId = APPLE_SIGNIN_KEY_ID.value();
+  const revoker = keyId
+    ? AppleSignInTokenRevoker.ifConfigured(
+        { teamId: APPLE_SIGNIN_TEAM_ID, clientId: APPLE_SIGNIN_CLIENT_ID, keyId, privateKeyPem: APPLE_SIGNIN_PRIVATE_KEY.value() },
+        undefined,
+        log
+      )
+    : undefined;
+  return revoker ?? new UnconfiguredAppleTokenRevoker();
 }
 
 /** TODO(HUMAN-H7): set `EMAIL_FROM` and the `EMAIL_API_KEY` secret once the vendor account (Resend, EU region) has a DPA. */
