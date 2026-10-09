@@ -59,6 +59,11 @@ extension XCUIApplication {
     /// while the scroll is still decelerating only stops the scroll, so the first tap can be lost.
     @MainActor
     func selectChip(_ identifier: String, file: StaticString = #filePath, line: UInt = #line) {
+        // The keyboard of the field typed just before covers the chips below it; the sheet scrolls it away.
+        if keyboards.firstMatch.exists {
+            coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3))
+                .press(forDuration: 0.05, thenDragTo: coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7)))
+        }
         let chip = buttons[identifier].firstMatch
         XCTAssertTrue(chip.waitForExistence(timeout: 15), "no chip \(identifier)", file: file, line: line)
         scrollAboveBottomBar(chip)
@@ -133,7 +138,7 @@ extension XCUIApplication {
         let bar = ["healthForm.saveButton", "patch.saveButton", "formTemplates.saveButton"].map { buttons[$0] }
             .first { $0.exists }
         let limit = (bar?.frame.minY ?? screen.height) - screen.height * 0.06
-        for _ in 0..<6 {
+        for _ in 0..<16 {
             let frame = element.frame
             if frame.maxY <= limit && frame.minY >= screen.height * 0.1 { return }
             let move = max(-screen.height * 0.35, min(screen.height * 0.35, frame.midY - screen.height * 0.35))
