@@ -45,8 +45,8 @@ struct URLSessionFirestoreClient: FirestoreClient {
 
     // MARK: - Wire shape
 
-    /// The `structuredQuery` of `runQuery`: owner filter, optional lower bound on `since.field` (ordered by it, which the
-    /// composite index of `bookings` supports), and a limit.
+    /// The `structuredQuery` of `runQuery`: owner filter, optional lower bound on `since.field` (ordered by it, which
+    /// the composite index of `bookings` supports), and a limit.
     static func queryBody(
         collection: String, ownerField: String, uid: String, since: FirestoreSince?, limit: Int
     ) throws -> Data {

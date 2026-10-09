@@ -3,7 +3,8 @@
 //  BelloHub
 //
 
-/// Where a booking made through the link stands on the server (`BookingDoc.status` in firebase/functions/src/lib/docs.ts).
+/// Where a booking made through the link stands on the server (`BookingDoc.status`,
+/// firebase/functions/src/lib/docs.ts).
 /// The server is the source of truth for it; the app only reads it and mirrors it into the agenda.
 enum IncomingBookingStatus: String, PersistedEnum {
     case confirmed

@@ -32,7 +32,9 @@ struct InboxSnapshot: Equatable, Codable, Sendable {
     /// Confirmed, cancelled or client-confirmed bookings she has not looked at since they changed, newest first.
     var unseenChanges: [IncomingBooking] {
         bookings
-            .filter { !$0.isPendingRequest && $0.status != .declined && (seenUpdates[$0.id] ?? .distantPast) < $0.updatedAt }
+            .filter {
+                !$0.isPendingRequest && $0.status != .declined && (seenUpdates[$0.id] ?? .distantPast) < $0.updatedAt
+            }
             .sorted { $0.updatedAt > $1.updatedAt }
     }
 

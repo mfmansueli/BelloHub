@@ -83,7 +83,9 @@ struct AppDependencies {
             outbound: outbound,
             bookingSync: bookingSync,
             mailbox: mailbox,
-            push: PushService(provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults),
+            push: PushService(
+                provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults
+            ),
             defaults: defaults
         )
     }
@@ -106,17 +108,8 @@ struct AppDependencies {
         // No network in a UI test: either the in-memory fake server or none at all.
         let server: any BookingRepository = options.uiOnline == "fake"
             ? UITestBookingRepository() : OfflineBookingRepository()
-        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
-        } ?? OfflineInboxRepository()
-        let outbound = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
-        let bookingSync = BookingSyncService(
-            repository: inbox, queue: outbound, appointments: appointments, vault: vault, defaults: defaults,
-            pollInterval: nil
-        )
-        let mailbox = MailboxService(
-            repository: inbox, keys: keyManager, vault: vault, queue: outbound, bookings: bookingSync,
-            notifier: UITestNotificationPoster(), defaults: defaults
+        let inboxServices = makeUITestInbox(
+            options: options, keyManager: keyManager, vault: vault, appointments: appointments, defaults: defaults
         )
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
@@ -142,15 +135,35 @@ struct AppDependencies {
                 repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
                 debounce: .milliseconds(300), retryDelays: [.seconds(2)]
             ),
-            outbound: outbound,
-            bookingSync: bookingSync,
-            mailbox: mailbox,
+            outbound: inboxServices.queue,
+            bookingSync: inboxServices.bookings,
+            mailbox: inboxServices.mailbox,
             push: PushService(
-                provider: NoPushTokenProvider(), queue: outbound, bookings: bookingSync, mailbox: mailbox,
-                defaults: defaults
+                provider: NoPushTokenProvider(), queue: inboxServices.queue, bookings: inboxServices.bookings,
+                mailbox: inboxServices.mailbox, defaults: defaults
             ),
             defaults: defaults
         )
+    }
+
+    /// The inbox of a UI-test launch: the in-memory inbox server when `-uiInbox` names a scenario, none otherwise.
+    private static func makeUITestInbox(
+        options: LaunchOptions, keyManager: KeyManager, vault: VaultService, appointments: AppointmentService,
+        defaults: UserDefaults
+    ) -> (queue: OutboundQueue, bookings: BookingSyncService, mailbox: MailboxService) {
+        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
+            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
+        } ?? OfflineInboxRepository()
+        let queue = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
+        let bookings = BookingSyncService(
+            repository: inbox, queue: queue, appointments: appointments, vault: vault, defaults: defaults,
+            pollInterval: nil
+        )
+        let mailbox = MailboxService(
+            repository: inbox, keys: keyManager, vault: vault, queue: queue, bookings: bookings,
+            notifier: UITestNotificationPoster(), defaults: defaults
+        )
+        return (queue, bookings, mailbox)
     }
     #endif
 }

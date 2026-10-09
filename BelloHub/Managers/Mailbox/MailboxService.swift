@@ -226,11 +226,12 @@ final class MailboxService {
             // Confirmed bookings are mirrored by the sync; one that is still a request has no client yet.
             return nil
         }
-        if let visit = try await repository.loadAppointments(in: Self.anyTime).first(where: { $0.bookingID == bookingID }) {
-            return visit.clientID
-        }
+        let visits = try await repository.loadAppointments(in: Self.anyTime)
+        if let visit = visits.first(where: { $0.bookingID == bookingID }) { return visit.clientID }
         if let name = payload.clientName {
-            let matches = clients.filter { $0.name.compare(name, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame }
+            let matches = clients.filter {
+                $0.name.compare(name, options: [.caseInsensitive, .diacriticInsensitive]) == .orderedSame
+            }
             if matches.count == 1 { return matches[0].id }
         }
         return nil

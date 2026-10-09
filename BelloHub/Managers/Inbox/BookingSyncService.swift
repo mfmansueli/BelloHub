@@ -244,20 +244,10 @@ final class BookingSyncService {
         switch (action.kind, outcome) {
         case (.respondBookingRequest(let id, _), .bookingRequest(let answer)):
             answering.remove(id)
-            switch answer {
-            case .confirmed: update(booking: id) { $0.status = .confirmed; $0.pendingReason = nil }
-            case .declined: update(booking: id) { $0.status = .declined }
-            case .needsSubscription: needsSubscription.insert(id)
-            }
-            syncNow()
+            didAnswer(booking: id, answer)
         case (.respondRescheduleRequest(let id, _), .reschedule(let answer)):
             answering.remove(id)
-            switch answer {
-            case .accepted: update(request: id) { $0.status = .accepted }
-            case .declined: update(request: id) { $0.status = .declined }
-            case .slotTaken: slotTaken.insert(id)
-            }
-            syncNow()
+            didAnswer(request: id, answer)
         case (.respondBookingRequest(let id, _), .failed(let failure)),
              (.respondRescheduleRequest(let id, _), .failed(let failure)):
             answering.remove(id)
@@ -267,6 +257,28 @@ final class BookingSyncService {
         default:
             break
         }
+    }
+
+    private func didAnswer(booking id: String, _ answer: BookingRequestOutcome) {
+        switch answer {
+        case .confirmed:
+            update(booking: id) {
+                $0.status = .confirmed
+                $0.pendingReason = nil
+            }
+        case .declined: update(booking: id) { $0.status = .declined }
+        case .needsSubscription: needsSubscription.insert(id)
+        }
+        syncNow()
+    }
+
+    private func didAnswer(request id: String, _ answer: RescheduleOutcome) {
+        switch answer {
+        case .accepted: update(request: id) { $0.status = .accepted }
+        case .declined: update(request: id) { $0.status = .declined }
+        case .slotTaken: slotTaken.insert(id)
+        }
+        syncNow()
     }
 
     private func update(booking id: String, _ change: (inout IncomingBooking) -> Void) {

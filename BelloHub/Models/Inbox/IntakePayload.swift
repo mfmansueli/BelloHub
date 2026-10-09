@@ -39,7 +39,8 @@ struct IntakePayload: Equatable, Sendable {
             answers[key] = answer
         }
         let version = object["formVersion"]
-        let formVersion = (version as? Int) ?? (version as? String).flatMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+        let formVersion = (version as? Int)
+            ?? (version as? String).flatMap { Int($0.trimmingCharacters(in: .whitespaces)) }
         return IntakePayload(
             schema: schema,
             bookingId: bookingId,

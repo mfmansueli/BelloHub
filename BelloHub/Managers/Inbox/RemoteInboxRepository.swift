@@ -62,7 +62,8 @@ struct RemoteInboxRepository: InboxRepository {
 
     func respondRescheduleRequest(id: String, accept: Bool) async throws -> RescheduleOutcome {
         let answer: StatusAnswer<RescheduleOutcome> = try await perform(
-            "respondRescheduleRequest", RescheduleDecisionRequest(requestId: id, decision: accept ? "accept" : "decline")
+            "respondRescheduleRequest",
+            RescheduleDecisionRequest(requestId: id, decision: accept ? "accept" : "decline")
         )
         return answer.status
     }
