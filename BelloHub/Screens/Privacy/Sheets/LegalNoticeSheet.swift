@@ -16,7 +16,7 @@ struct LegalNoticeSheet: View {
         NavigationStack {
             ScrollView {
                 Text(LegalTextRenderer.attributed(LegalTextRenderer.fill(
-                    text.body, values: LegalTextValues(), pending: LegalTextRenderer.forThisBuild
+                    text.body, values: LegalTextValues(), pending: .forThisBuild
                 )))
                 .font(Typography.body)
                 .foregroundStyle(Palette.ink)

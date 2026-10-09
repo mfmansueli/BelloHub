@@ -90,7 +90,9 @@ final class NotificationSettingsViewModel {
 
     func setQuietFrom(_ date: Date) {
         let minutes = NotificationSettingsRules.minutes(of: date, calendar: calendar)
-        update { $0.quietHours = QuietHoursWindow(fromMinutes: minutes, untilMinutes: $0.quietHours?.untilMinutes ?? 0) }
+        update {
+            $0.quietHours = QuietHoursWindow(fromMinutes: minutes, untilMinutes: $0.quietHours?.untilMinutes ?? 0)
+        }
     }
 
     func setQuietUntil(_ date: Date) {

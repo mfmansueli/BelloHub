@@ -55,7 +55,8 @@ struct RecoveryKeyContentView: View {
             InlineNotice(
                 style: .warning,
                 title: notice == .noKey ? "recoveryKey.error.noKey.title" : "recoveryKey.error.notRecognized.title",
-                message: notice == .noKey ? "recoveryKey.error.noKey.message" : "recoveryKey.error.notRecognized.message"
+                message: notice == .noKey
+                    ? "recoveryKey.error.noKey.message" : "recoveryKey.error.notRecognized.message"
             )
             .accessibilityIdentifier("recoveryKey.revealError")
         }

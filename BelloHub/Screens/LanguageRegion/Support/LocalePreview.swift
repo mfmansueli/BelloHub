@@ -39,8 +39,10 @@ struct LocalePreview: Equatable, Sendable {
         if let preset {
             let sample = "+\(preset.callingCode)" + String(repeating: "5", count: preset.nationalLengths.first ?? 9)
             let catalog = RegionCatalog(presets: [preset])
-            rows.append(Row(key: "languageRegion.sets.phone", value: PhoneFormatter(catalog: catalog).international(sample)))
-            rows.append(Row(key: "languageRegion.sets.channel", value: channelName(preset.messagingChannel, locale: locale)))
+            let phone = PhoneFormatter(catalog: catalog).international(sample)
+            rows.append(Row(key: "languageRegion.sets.phone", value: phone))
+            let channel = channelName(preset.messagingChannel, locale: locale)
+            rows.append(Row(key: "languageRegion.sets.channel", value: channel))
             rows.append(Row(key: "languageRegion.sets.privacyLaw", value: preset.privacyFrameworkId.uppercased()))
         }
         let values = QuickReplyValues(

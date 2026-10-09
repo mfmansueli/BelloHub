@@ -29,19 +29,25 @@ struct DeleteAccountSheet: View {
             .navigationTitle(Text("account.delete.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if case .done = viewModel.deletion {} else {
+                if !isDone {
                     ToolbarItem(placement: .cancellationAction) {
                         Button { viewModel.send(.cancelled) } label: { Text("account.delete.keep") }
                             .accessibilityIdentifier("deleteAccount.keepButton")
                     }
                 }
             }
-            .sheet(isPresented: $showsExport, onDismiss: { viewModel.send(.exportFinished) }) {
-                NavigationStack { ExportAllView() }
-            }
+            .sheet(
+                isPresented: $showsExport, onDismiss: { viewModel.send(.exportFinished) },
+                content: { NavigationStack { ExportAllView() } }
+            )
         }
         .presentationBackground(Palette.bg)
         .interactiveDismissDisabled(viewModel.isDeleting)
+    }
+
+    private var isDone: Bool {
+        if case .done = viewModel.deletion { return true }
+        return false
     }
 
     // MARK: - Steps

@@ -105,8 +105,10 @@ struct ExportBundleBuilder: Sendable {
                 ).localized(in: locale)),
                 String(localized: LocalizedStringResource(
                     "export.pdf.counts",
-                    defaultValue: "\(snapshot.clients.count) clients, \(snapshot.appointments.count) appointments, " +
-                        "\(snapshot.records.count) records"
+                    defaultValue: """
+                    \(snapshot.clients.count) clients, \(snapshot.appointments.count) appointments, \
+                    \(snapshot.records.count) records
+                    """
                 ).localized(in: locale)),
                 text("export.pdf.privacy")
             ]

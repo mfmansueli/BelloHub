@@ -40,6 +40,8 @@ struct LaunchOptions: Equatable {
     /// Shows one screen directly instead of the tab bar, for UI tests of a screen another stage has not wired in yet:
     /// `health` (4.5, for the seeded client) or `formTemplates` (6.14).
     var route: String?
+    /// The plan a UI test launches with (`-uiPlan none|active`); nil keeps the store the test build would use.
+    var uiPlan: String?
 
     init() {}
 
@@ -57,6 +59,7 @@ struct LaunchOptions: Equatable {
         uiSpreadsheet = Self.value(after: "-uiSpreadsheet", in: arguments)
         uiRegisteredClients = Self.value(after: "-uiRegisteredClients", in: arguments).flatMap(Int.init)
         route = Self.value(after: "-uiRoute", in: arguments)
+        uiPlan = Self.value(after: "-uiPlan", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

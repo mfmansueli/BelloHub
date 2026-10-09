@@ -10,7 +10,7 @@ import UIKit
 /// returns (`Product.displayPrice`, D33); the local `Config/BelloHub.storekit` file serves Xcode runs and tests.
 struct StoreKitSubscriptionProvider: SubscriptionProviding {
     func offers() async throws -> [PlanOffer] {
-        let products = try await Product.products(for: PlanProduct.allCases.map(\.rawValue))
+        let products = try await StoreKit.Product.products(for: PlanProduct.allCases.map(\.rawValue))
         return products.compactMap { product in
             PlanPeriod(productID: product.id).map {
                 PlanOffer(period: $0, displayPrice: product.displayPrice, price: product.price)
@@ -20,7 +20,7 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
     }
 
     func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
-        guard let product = try await Product.products(for: [period.product.rawValue]).first else {
+        guard let product = try await StoreKit.Product.products(for: [period.product.rawValue]).first else {
             throw SubscriptionError.productUnavailable
         }
         switch try await product.purchase() {
@@ -46,7 +46,7 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
         for await result in Transaction.currentEntitlements {
             guard let transaction = try? Self.verified(result),
                   let period = PlanPeriod(productID: transaction.productID) else { continue }
-            let status = try? await transaction.subscriptionStatus
+            let status = await transaction.subscriptionStatus
             let willRenew = (try? status?.renewalInfo.payloadValue.willAutoRenew) ?? true
             if status?.state == .inGracePeriod {
                 return .inGracePeriod(period: period, expiresAt: transaction.expirationDate)

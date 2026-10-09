@@ -153,9 +153,9 @@ struct NotificationSettingsContentView: View {
     }
 
     private func timeRow(
-        _ title: LocalizedStringKey, date: Date, identifier: String, onChange: @escaping (Date) -> Void
+        _ title: LocalizedStringKey, date: Date, identifier: String, onChange: @escaping @MainActor (Date) -> Void
     ) -> some View {
-        DatePicker(selection: Binding(get: { date }, set: onChange), displayedComponents: .hourAndMinute) {
+        DatePicker(selection: Binding(get: { date }, set: { onChange($0) }), displayedComponents: .hourAndMinute) {
             Text(title).font(Typography.body).foregroundStyle(Palette.ink)
         }
         .tint(Palette.roseText)
