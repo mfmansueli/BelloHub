@@ -61,16 +61,44 @@ const signIn = await fetch(`http://${authHost}/identitytoolkit.googleapis.com/v1
 const { idToken } = (await signIn.json()) as { idToken: string };
 
 const inboxKey = demoInboxKey();
+// The same health form the web mock publishes (web/test/mock-server/api.ts), so the page's end-to-end flow answers the
+// same questions against the real functions. `audience: 'adult'` questions are not asked for a minor.
 const intake = {
   formVersion: 1,
   template: {
     questions: [
-      { key: 'allergies', type: 'yesNo', required: true, label: { en: 'Any allergies?', 'pt-BR': 'Alguma alergia?' } },
-      { key: 'notes', type: 'text', required: false, label: { en: 'Anything else Maria should know?', 'pt-BR': 'Algo mais que a Maria deva saber?' } }
+      {
+        key: 'allergies',
+        kind: 'multiChoice',
+        label: { en: 'Any allergies?', 'pt-BR': 'Alguma alergia?' },
+        options: [
+          { value: 'fragrance', label: { en: 'Fragrance', 'pt-BR': 'Fragrância' } },
+          { value: 'latex', label: { en: 'Latex', 'pt-BR': 'Látex' } },
+          { value: 'nuts', label: { en: 'Nuts', 'pt-BR': 'Castanhas' } },
+          { value: 'retinol', label: { en: 'Retinol', 'pt-BR': 'Retinol' } },
+          { value: 'acids', label: { en: 'Acids', 'pt-BR': 'Ácidos' } },
+          { value: 'none', label: { en: 'None', 'pt-BR': 'Nenhuma' } }
+        ],
+        required: true
+      },
+      { key: 'medication', kind: 'yesNo', label: { en: 'Do you take any regular medication?', 'pt-BR': 'Você usa algum medicamento regularmente?' }, required: true },
+      { key: 'pregnant', kind: 'yesNo', label: { en: 'Are you pregnant or breastfeeding?', 'pt-BR': 'Você está grávida ou amamentando?' }, required: true, audience: 'adult' },
+      { key: 'skinCondition', kind: 'yesNo', label: { en: 'Do you have a skin condition, such as eczema or rosacea?', 'pt-BR': 'Você tem alguma condição de pele, como eczema ou rosácea?' }, required: true },
+      { key: 'isotretinoin', kind: 'yesNo', label: { en: 'Have you taken isotretinoin or had a peel in the last 6 months?', 'pt-BR': 'Usou isotretinoína ou fez peeling nos últimos 6 meses?' }, required: true },
+      {
+        key: 'anythingElse',
+        kind: 'text',
+        label: { en: 'Anything else Maria should know?', 'pt-BR': 'Algo mais que a Maria deva saber?' },
+        hint: { en: 'Optional. Skin that reacts easily, products you avoid, a recent procedure.' }
+      }
     ]
   },
   consent: {
-    en: { textVersion: '2026-10', text: 'I agree that Maria keeps this information to take care of me.' },
+    en: {
+      textVersion: '2026-10',
+      text: 'I agree that Maria keeps this information to take care of me.',
+      guardianText: 'I agree, as the guardian, that Maria keeps this information to take care of the person in my care.'
+    },
     'pt-BR': { textVersion: '2026-10', text: 'Concordo que a Maria guarde estas informações para cuidar de mim.' }
   }
 } as const;
@@ -79,6 +107,10 @@ await call('ensureAccount', { countryCode: 'BR', locale: 'pt-BR' }, idToken);
 await call('claimSlug', { slug: SLUG }, idToken);
 await call('publishProfile', { profile: { ...mariaProfile(inboxKey), intake } }, idToken);
 await call('publishAvailability', mariaAvailability(), idToken);
+// With a device registered the emulator's push sender records every push in `emulatorOutbox` (scripts/e2e-local.sh waits
+// on them). The token is any string of 20+ characters: the emulator never talks to FCM.
+const deviceToken = process.env.SEED_DEVICE_TOKEN;
+if (deviceToken) await call('registerDevice', { fcmToken: deviceToken, platform: 'ios', locale: 'pt-BR' }, idToken);
 
 process.stdout.write(
   [
@@ -86,6 +118,7 @@ process.stdout.write(
     `  page       POST ${functionsBase}/getPublicPage  {"data":{"slug":"${SLUG}"}}`,
     `  inbox key  ${inboxKey.keyId}  (private seed "bello-hub-demo-inbox-seed-000001", X25519, demo only)`,
     '  phone SMS  the Auth emulator prints each code in its log; email code is always 123456 (emulator hook)',
+    ...(deviceToken ? ['  device     one iPhone registered, so pushes show up in emulatorOutbox'] : []),
     ''
   ].join('\n')
 );

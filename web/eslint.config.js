@@ -50,7 +50,7 @@ export default tseslint.config(
   },
   {
     // Test code runs in Node and may log, use tuples and non-null assertions on fixtures.
-    files: ['test/**/*.ts', 'test/**/*.tsx', 'scripts/**/*.ts', 'playwright.config.ts', 'vite.config.ts', 'vitest.config.ts'],
+    files: ['test/**/*.ts', 'test/**/*.tsx', 'scripts/**/*.ts', 'playwright.config.ts', 'playwright.e2e-local.config.ts', 'vite.config.ts', 'vitest.config.ts'],
     rules: {
       'no-console': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',

@@ -20,8 +20,10 @@
     "lint": "npm run gen && eslint . --max-warnings 0",
     "test": "npm run gen && vitest run",
     "build:e2e": "npm run gen && vite build --mode e2e --outDir dist-e2e",
+    "build:e2e-local": "npm run gen && vite build --mode e2e-local --outDir dist-e2e-local",
     "mock:e2e": "tsx test/mock-server/main.ts --serve-dist dist-e2e",
-    "e2e": "npm run build:e2e && playwright test"
+    "e2e": "npm run build:e2e && playwright test",
+    "lighthouse": "tsx scripts/lighthouse.ts"
   },
   "dependencies": {
     "@firebase/app": "0.16.3",

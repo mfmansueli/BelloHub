@@ -1,6 +1,7 @@
 node_modules/
 dist/
 dist-e2e/
+dist-e2e-local/
 build/
 coverage/
 playwright-report/
@@ -13,7 +14,6 @@ blob-report/
 # Python tooling (fonts, cross-implementation vectors)
 .venv/
 __pycache__/
-
 # Generated at build time by `npm run gen` from the single sources in the repository
 src/styles/tokens.generated.css
 src/lib/regions.generated.ts

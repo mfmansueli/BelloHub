@@ -3,7 +3,10 @@
   "compilerOptions": {
     "target": "ES2023",
     "allowImportingTsExtensions": true,
-    "types": ["node", "vite/client"]
+    "types": [
+      "node",
+      "vite/client"
+    ]
   },
   "include": [
     "src",
@@ -13,7 +16,10 @@
     "scripts/*.mjs",
     "vite.config.ts",
     "vitest.config.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "playwright.e2e-local.config.ts"
   ],
-  "exclude": ["test/vectors/generate"]
+  "exclude": [
+    "test/vectors/generate"
+  ]
 }

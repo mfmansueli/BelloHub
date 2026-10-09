@@ -104,6 +104,11 @@ if [[ "$mode" == "full" && "$status" == 0 ]]; then
             grep -E '^\s+[0-9]+\) \[' "$LOG" | tail -40 || true
         fi
     fi
+    # Lighthouse CI on the same build (performance >= 0.9 mobile, accessibility >= 0.95; web/lighthouserc.json). Without a
+    # Chrome it prints the command for the owner and passes; LIGHTHOUSE=0 skips it on a slow machine.
+    if [[ "$status" == 0 && "${LIGHTHOUSE:-1}" != 0 ]]; then
+        step "lighthouse" npm run lighthouse || status=1
+    fi
 fi
 
 if [[ "$status" == 0 ]]; then
