@@ -23,6 +23,17 @@ protocol ClientRepository: Sendable {
     /// and a date, and deleting a client never gives a free slot back.
     func deleteClient(id: UUID) async throws
 
+    /// Combines two profiles of the same person: appointments, treatment records (with their corrections), photos,
+    /// incidents, consents, health forms and session plans of `mergedID` move to `keptID`, the two client values are
+    /// combined by `ClientMerger`, and the merged profile is deleted. All or nothing. Moving a record is not an edit
+    /// of it, so a locked record moves with its lock and its corrections intact.
+    ///
+    /// **The registration ledger is not touched** (D42): the merged profile's entry stays, so a merge never frees a
+    /// free registration, and it never adds one. Throws `notFound` when either client does not exist, and when the
+    /// two ids are the same (there is no second profile). Returns the kept client as stored.
+    @discardableResult
+    func mergeClient(keeping keptID: UUID, merging mergedID: UUID) async throws -> Client
+
     /// Every client id ever registered, with the day. Includes deleted clients.
     func registrationLedger() async throws -> [RegistrationLedgerEntry]
 

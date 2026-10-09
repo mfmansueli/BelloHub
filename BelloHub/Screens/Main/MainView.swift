@@ -25,7 +25,7 @@ struct MainView: View {
             .accessibilityIdentifier("main.tab.home")
 
             Tab(value: MainTab.clients) {
-                NavigationStack { ClientsView() }
+                ClientsTabView()
             } label: {
                 Label {
                     Text(verbatim: profile.clientTerm.titlePlural(in: locale))
@@ -61,7 +61,10 @@ struct MainView: View {
 }
 
 #Preview {
+    let vault = VaultService(repository: nil)
     MainView(onSignOut: {})
-        .environment(ProfileService(vault: VaultService(repository: nil)))
+        .environment(ProfileService(vault: vault))
+        .environment(vault)
+        .environment(ClientRegistrationService(vault: vault))
         .environment(AppLockService(keyManager: KeyManager()))
 }

@@ -6,8 +6,9 @@
 #if DEBUG
 import Foundation
 
-/// Ready-made states for UI tests (`-uiSeed onboarded`). DEBUG only. A test that wants the onboarding itself does
-/// not seed: it launches clean and walks it.
+/// Ready-made states for UI tests (`-uiSeed onboarded`, `-uiSeed clients`). DEBUG only. A test that wants the
+/// onboarding itself does not seed: it launches clean and walks it. `clients` is `onboarded` plus the demo clients
+/// (`ClientsFixtures`).
 enum UITestSeeding {
     static let userID = "dev-5511987654321"
     static let phone = "+5511987654321"
@@ -16,13 +17,12 @@ enum UITestSeeding {
     static let healthClientID = UUID(uuidString: "C0FFEE00-0000-4000-8000-000000000001") ?? UUID()
 
     /// A signed-in professional with her workspace set up, so a test can start on the locked screen or the app.
-    /// `clientWithHealth` adds one client with nothing in her health record yet.
+    /// `clientWithHealth` adds one client with nothing in her health record yet; `clients` adds the demo clients.
     @MainActor
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
         await ImportUITestSeeding.seedIfRequested(dependencies, options: options)
-        guard let seed = options.seed, ["onboarded", "clientWithHealth"].contains(seed), !options.keepsState else {
-            return
-        }
+        guard let seed = options.seed, ["onboarded", "clientWithHealth", "clients"].contains(seed), !options.keepsState
+        else { return }
         let defaults = dependencies.defaults
         let user = AuthUser(id: userID, phoneE164: phone)
         defaults.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
@@ -43,6 +43,9 @@ enum UITestSeeding {
         if seed == "clientWithHealth" {
             let client = Client(id: healthClientID, name: "Ana Costa", createdAt: Date())
             _ = try? await dependencies.vault.repository?.save(client)
+        }
+        if seed == "clients", let repository = dependencies.vault.repository {
+            _ = try? await ClientsFixtures.seed(into: repository, now: Date())
         }
     }
 }

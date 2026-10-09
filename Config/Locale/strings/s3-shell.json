@@ -143,22 +143,6 @@
    "ستظهر الحجوزات الجديدة هنا."
   ],
   [
-   "clients.empty.title",
-   "Clients tab empty state (the tab title carries the term she chose).",
-   "Nothing here yet",
-   "Nada por aqui ainda",
-   "Ainda nada por aqui",
-   "Aún no hay nada aquí",
-   "Todavía no hay nada aquí",
-   "Ancora niente qui",
-   "Rien ici pour l'instant",
-   "Noch nichts hier",
-   "Henüz burada bir şey yok",
-   "Belum ada apa-apa di sini",
-   "यहाँ अभी कुछ नहीं है",
-   "لا شيء هنا بعد"
-  ],
-  [
    "clients.empty.message",
    "Clients tab empty state.",
    "Everyone you add, or who books online, will show up here.",
