@@ -35,7 +35,9 @@ enum BookingImporter {
         for client in clients {
             if let phone = normalized(client.phoneE164), byPhone[phone] == nil { byPhone[phone] = client.id }
         }
-        let mirrored = Dictionary(existing.compactMap { visit in visit.bookingID.map { ($0, visit) } }) { first, _ in first }
+        let mirrored = Dictionary(existing.compactMap { visit in visit.bookingID.map { ($0, visit) } }) { first, _ in
+            first
+        }
         let serviceIDs = Set(services.map(\.id))
         let manual = existing.filter { $0.origin == .manual && $0.status.holdsTime }
 
@@ -47,42 +49,54 @@ enum BookingImporter {
                 continue
             }
             guard booking.status != .cancelledByClient, booking.status != .cancelledByPro else { continue }
-            let clientID: UUID
-            if let phone = normalized(booking.client.phone), let known = byPhone[phone] {
-                clientID = known
-            } else {
-                let client = Client(
-                    name: booking.client.name, phoneE164: normalized(booking.client.phone),
-                    email: booking.client.email, source: .bookingLink, createdAt: booking.createdAt
-                )
-                plan.newClients.append(client)
-                if let phone = normalized(booking.client.phone) { byPhone[phone] = client.id }
-                clientID = client.id
-            }
-            let visit = Appointment(
-                clientID: clientID,
-                serviceID: booking.serviceUUID.flatMap { serviceIDs.contains($0) ? $0 : nil },
-                serviceName: booking.serviceName,
-                startsAt: booking.startsAt,
-                endsAt: booking.endsAt,
-                origin: .bookingLink,
-                bookingID: booking.id,
-                addOns: booking.addOns.compactMap { addOn in
-                    UUID(uuidString: addOn.id).map { AppointmentAddOn(addOnID: $0, name: addOn.name, minutes: addOn.minutes) }
-                },
-                createdAt: booking.createdAt
-            )
+            let clientID = clientID(for: booking, byPhone: &byPhone, plan: &plan)
+            let visit = newVisit(for: booking, clientID: clientID, serviceIDs: serviceIDs)
             plan.appointments.append(apply(booking, to: visit, now: now))
         }
 
-        for visit in plan.appointments where visit.status.holdsTime {
-            for other in manual where other.interval.intersects(visit.interval) && other.id != visit.id {
-                if let bookingID = visit.bookingID {
-                    plan.conflicts.append(BookingConflict(bookingID: bookingID, appointmentID: other.id))
-                }
-            }
-        }
+        plan.conflicts = conflicts(of: plan.appointments, with: manual)
         return plan
+    }
+
+    /// Link visits that hold a time over a manual visit that holds the same time.
+    static func conflicts(of visits: [Appointment], with manual: [Appointment]) -> [BookingConflict] {
+        visits.flatMap { visit -> [BookingConflict] in
+            guard visit.status.holdsTime, let bookingID = visit.bookingID else { return [] }
+            return manual
+                .filter { $0.id != visit.id && $0.interval.intersects(visit.interval) }
+                .map { BookingConflict(bookingID: bookingID, appointmentID: $0.id) }
+        }
+    }
+
+    private static func clientID(
+        for booking: IncomingBooking, byPhone: inout [String: UUID], plan: inout Plan
+    ) -> UUID {
+        if let phone = normalized(booking.client.phone), let known = byPhone[phone] { return known }
+        let client = Client(
+            name: booking.client.name, phoneE164: normalized(booking.client.phone),
+            email: booking.client.email, source: .bookingLink, createdAt: booking.createdAt
+        )
+        plan.newClients.append(client)
+        if let phone = normalized(booking.client.phone) { byPhone[phone] = client.id }
+        return client.id
+    }
+
+    private static func newVisit(for booking: IncomingBooking, clientID: UUID, serviceIDs: Set<UUID>) -> Appointment {
+        Appointment(
+            clientID: clientID,
+            serviceID: booking.serviceUUID.flatMap { serviceIDs.contains($0) ? $0 : nil },
+            serviceName: booking.serviceName,
+            startsAt: booking.startsAt,
+            endsAt: booking.endsAt,
+            origin: .bookingLink,
+            bookingID: booking.id,
+            addOns: booking.addOns.compactMap { addOn in
+                UUID(uuidString: addOn.id).map {
+                    AppointmentAddOn(addOnID: $0, name: addOn.name, minutes: addOn.minutes)
+                }
+            },
+            createdAt: booking.createdAt
+        )
     }
 
     /// The server's view of the visit, over what the phone has.

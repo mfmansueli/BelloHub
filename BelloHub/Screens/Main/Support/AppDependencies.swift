@@ -3,7 +3,6 @@
 //  BelloHub
 //
 
-import CryptoKit
 import Foundation
 
 /// The Services of the app session, built in one place so `RootView` creates them once and distributes them with
@@ -99,7 +98,9 @@ struct AppDependencies {
             outbound: outbound,
             bookingSync: bookingSync,
             mailbox: mailbox,
-            push: PushService(provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults),
+            push: PushService(
+                provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults
+            ),
             defaults: defaults
         )
     }
@@ -128,17 +129,8 @@ struct AppDependencies {
         // No network in a UI test: either the in-memory fake server or none at all.
         let server: any BookingRepository = options.uiOnline == "fake"
             ? UITestBookingRepository() : OfflineBookingRepository()
-        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
-        } ?? OfflineInboxRepository()
-        let outbound = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
-        let bookingSync = BookingSyncService(
-            repository: inbox, queue: outbound, appointments: appointments, vault: vault, defaults: defaults,
-            pollInterval: nil
-        )
-        let mailbox = MailboxService(
-            repository: inbox, keys: keyManager, vault: vault, queue: outbound, bookings: bookingSync,
-            notifier: UITestNotificationPoster(), defaults: defaults
+        let inboxServices = makeUITestInbox(
+            options: options, keyManager: keyManager, vault: vault, appointments: appointments, defaults: defaults
         )
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
@@ -168,15 +160,41 @@ struct AppDependencies {
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
             calendar: CalendarIntegrationService(provider: UITestCalendarAccess(), defaults: defaults),
             export: DataExportService(vault: vault),
-            outbound: outbound,
-            bookingSync: bookingSync,
-            mailbox: mailbox,
+            outbound: inboxServices.queue,
+            bookingSync: inboxServices.bookings,
+            mailbox: inboxServices.mailbox,
             push: PushService(
-                provider: NoPushTokenProvider(), queue: outbound, bookings: bookingSync, mailbox: mailbox,
-                defaults: defaults
+                provider: NoPushTokenProvider(), queue: inboxServices.queue, bookings: inboxServices.bookings,
+                mailbox: inboxServices.mailbox, defaults: defaults
             ),
             defaults: defaults
         )
+    }
+
+    /// The inbox of a UI-test launch: the in-memory inbox server when `-uiInbox` names a scenario, none otherwise.
+    private static func makeUITestInbox(
+        options: LaunchOptions, keyManager: KeyManager, vault: VaultService, appointments: AppointmentService,
+        defaults: UserDefaults
+    ) -> InboxServices {
+        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
+            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.currentInboxPublicKey() })
+        } ?? OfflineInboxRepository()
+        let queue = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
+        let bookings = BookingSyncService(
+            repository: inbox, queue: queue, appointments: appointments, vault: vault, defaults: defaults,
+            pollInterval: nil
+        )
+        let mailbox = MailboxService(
+            repository: inbox, keys: keyManager, vault: vault, queue: queue, bookings: bookings,
+            notifier: UITestNotificationPoster(), defaults: defaults
+        )
+        return InboxServices(queue: queue, bookings: bookings, mailbox: mailbox)
+    }
+
+    private struct InboxServices {
+        let queue: OutboundQueue
+        let bookings: BookingSyncService
+        let mailbox: MailboxService
     }
     #endif
 }

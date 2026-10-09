@@ -126,7 +126,8 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         status = IncomingBookingStatus(persisted: try container.decode(String.self, forKey: .status))
-        pendingReason = try container.decodeIfPresent(String.self, forKey: .pendingReason).map(PendingReason.init(persisted:))
+        pendingReason = try container.decodeIfPresent(String.self, forKey: .pendingReason)
+            .map(PendingReason.init(persisted:))
         serviceId = try container.decode(String.self, forKey: .serviceId)
         serviceName = try container.decode(String.self, forKey: .serviceName)
         durationMinutes = try container.decodeIfPresent(Int.self, forKey: .durationMinutes) ?? 0

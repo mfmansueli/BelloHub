@@ -23,7 +23,9 @@ struct MailboxMessage: Identifiable, Equatable, Sendable {
     let submittedAt: Date?
 
     /// Reads a `checkin` or `datarequest` plaintext. Nil when the JSON is not one of them.
-    static func decode(_ data: Data, kind: MailboxKind, id: String, bookingId: String, receivedAt: Date) -> MailboxMessage? {
+    static func decode(
+        _ data: Data, kind: MailboxKind, id: String, bookingId: String, receivedAt: Date
+    ) -> MailboxMessage? {
         guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
         let submitted = (object["submittedAt"] as? String).flatMap { try? Date($0, strategy: .iso8601) }
         switch kind {
