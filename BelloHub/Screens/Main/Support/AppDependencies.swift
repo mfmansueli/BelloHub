@@ -30,10 +30,7 @@ struct AppDependencies {
     let notificationSettings: NotificationSettingsService
     let calendar: CalendarIntegrationService
     let export: DataExportService
-    let outbound: OutboundQueue
-    let bookingSync: BookingSyncService
-    let mailbox: MailboxService
-    let push: PushService
+    let inbox: InboxServices
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -51,23 +48,15 @@ struct AppDependencies {
         let session = SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults)
         let tokens = SessionIDTokenProvider(session: session)
         let client = URLSessionCallableClient(tokens: tokens)
-        let server = RemoteBookingRepository(client: client)
-        let inbox = RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens))
         let profile = ProfileService(vault: vault)
         let permissions = PermissionService()
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
         let subscription = SubscriptionService()
-        let outbound = OutboundQueue(repository: inbox, defaults: defaults)
-        let bookingSync = BookingSyncService(
-            repository: inbox, queue: outbound, appointments: appointments, vault: vault, defaults: defaults
+        let inbox = InboxServices.make(
+            repository: RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens)),
+            keys: keyManager, vault: vault, appointments: appointments, pushProvider: makePushProvider()
         )
-        let mailbox = MailboxService(
-            repository: inbox, keys: keyManager, vault: vault, queue: outbound, bookings: bookingSync,
-            defaults: defaults
-        )
-        let pushProvider = FirebaseMessagingManager()
-        PushBridge.shared.provider = pushProvider
         return AppDependencies(
             session: session,
             keyManager: keyManager,
@@ -87,7 +76,8 @@ struct AppDependencies {
             ),
             treatmentTools: TreatmentTools.make(),
             publishing: PublishingService(
-                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
+                repository: RemoteBookingRepository(client: client),
+                source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
             ),
             subscription: subscription,
             recoveryKey: RecoveryKeyService(keyManager: keyManager, defaults: defaults),
@@ -95,14 +85,17 @@ struct AppDependencies {
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
             calendar: CalendarIntegrationService(defaults: defaults),
             export: DataExportService(vault: vault),
-            outbound: outbound,
-            bookingSync: bookingSync,
-            mailbox: mailbox,
-            push: PushService(
-                provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults
-            ),
+            inbox: inbox,
             defaults: defaults
         )
+    }
+
+    /// The Firebase Messaging token source, also handed to `PushBridge` because the AppDelegate (outside the view
+    /// tree) forwards the APNs token to it.
+    private static func makePushProvider() -> FirebaseMessagingManager {
+        let provider = FirebaseMessagingManager()
+        PushBridge.shared.provider = provider
+        return provider
     }
 
     #if DEBUG
@@ -126,10 +119,7 @@ struct AppDependencies {
             provider: UITestSubscriptionProvider(hasPlan: options.uiPlan == "active"),
             verifier: OfflineSubscriptionVerifier()
         )
-        // No network in a UI test: either the in-memory fake server or none at all.
-        let server: any BookingRepository = options.uiOnline == "fake"
-            ? UITestBookingRepository() : OfflineBookingRepository()
-        let inboxServices = makeUITestInbox(
+        let inbox = makeUITestInbox(
             options: options, keyManager: keyManager, vault: vault, appointments: appointments, defaults: defaults
         )
         return AppDependencies(
@@ -151,7 +141,8 @@ struct AppDependencies {
             ),
             treatmentTools: TreatmentTools.make(),
             publishing: PublishingService(
-                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
+                repository: uiTestBookingServer(options: options),
+                source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
                 debounce: .milliseconds(300), retryDelays: [.seconds(2)]
             ),
             subscription: subscription,
@@ -160,15 +151,14 @@ struct AppDependencies {
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
             calendar: CalendarIntegrationService(provider: UITestCalendarAccess(), defaults: defaults),
             export: DataExportService(vault: vault),
-            outbound: inboxServices.queue,
-            bookingSync: inboxServices.bookings,
-            mailbox: inboxServices.mailbox,
-            push: PushService(
-                provider: NoPushTokenProvider(), queue: inboxServices.queue, bookings: inboxServices.bookings,
-                mailbox: inboxServices.mailbox, defaults: defaults
-            ),
+            inbox: inbox,
             defaults: defaults
         )
+    }
+
+    /// No network in a UI test: either the in-memory fake server (`-uiOnline fake`) or none at all.
+    private static func uiTestBookingServer(options: LaunchOptions) -> any BookingRepository {
+        options.uiOnline == "fake" ? UITestBookingRepository() : OfflineBookingRepository()
     }
 
     /// The inbox of a UI-test launch: the in-memory inbox server when `-uiInbox` names a scenario, none otherwise.
@@ -179,22 +169,11 @@ struct AppDependencies {
         let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
             UITestInboxRepository(scenario: $0, publicKey: { try keyManager.currentInboxPublicKey() })
         } ?? OfflineInboxRepository()
-        let queue = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
-        let bookings = BookingSyncService(
-            repository: inbox, queue: queue, appointments: appointments, vault: vault, defaults: defaults,
-            pollInterval: nil
+        return InboxServices.make(
+            repository: inbox, keys: keyManager, vault: vault, appointments: appointments,
+            pushProvider: NoPushTokenProvider(), defaults: defaults, retryDelays: [.seconds(2)], pollInterval: nil,
+            notifier: UITestNotificationPoster()
         )
-        let mailbox = MailboxService(
-            repository: inbox, keys: keyManager, vault: vault, queue: queue, bookings: bookings,
-            notifier: UITestNotificationPoster(), defaults: defaults
-        )
-        return InboxServices(queue: queue, bookings: bookings, mailbox: mailbox)
-    }
-
-    private struct InboxServices {
-        let queue: OutboundQueue
-        let bookings: BookingSyncService
-        let mailbox: MailboxService
     }
     #endif
 }

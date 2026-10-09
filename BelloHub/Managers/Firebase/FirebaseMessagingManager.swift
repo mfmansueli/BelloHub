@@ -27,7 +27,6 @@ final class FirebaseMessagingManager: NSObject, PushTokenProviding, @unchecked S
         AsyncStream { continuation in
             let id = continuations.add(continuation)
             continuation.onTermination = { [continuations] _ in continuations.remove(id) }
-            if let token = Messaging.messaging().fcmToken { continuation.yield(token) }
         }
     }
 

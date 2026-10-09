@@ -60,9 +60,9 @@ struct RootView: View {
         _publishing = State(initialValue: dependencies.publishing)
         _agendaDigest = State(initialValue: dependencies.agendaDigest)
         _notifications = State(initialValue: dependencies.notifications)
-        _bookingSync = State(initialValue: dependencies.bookingSync)
-        _mailbox = State(initialValue: dependencies.mailbox)
-        _push = State(initialValue: dependencies.push)
+        _bookingSync = State(initialValue: dependencies.inbox.bookings)
+        _mailbox = State(initialValue: dependencies.inbox.mailbox)
+        _push = State(initialValue: dependencies.inbox.push)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile

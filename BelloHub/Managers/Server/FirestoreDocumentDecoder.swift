@@ -40,16 +40,16 @@ enum FirestoreDocumentDecoder {
 
     // MARK: - Values
 
+    /// The REST API writes 64-bit integers as strings; anything too large for `Int` falls back to a `Double`.
+    private static func number(fromInteger integer: Any) -> Any {
+        guard let text = integer as? String else { return integer }
+        if let whole = Int(text) { return whole }
+        return Double(text) ?? 0
+    }
+
     private static func value(from wrapped: [String: Any]) -> Any? {
         if let text = wrapped["stringValue"] as? String { return text }
-        if let integer = wrapped["integerValue"] {
-            // The REST API writes 64-bit integers as strings.
-            if let text = integer as? String {
-                if let whole = Int(text) { return whole }
-                return Double(text) ?? 0
-            }
-            return integer
-        }
+        if let integer = wrapped["integerValue"] { return number(fromInteger: integer) }
         if let number = wrapped["doubleValue"] { return number }
         if let flag = wrapped["booleanValue"] as? Bool { return flag }
         if let stamp = wrapped["timestampValue"] as? String { return instant(stamp) }

@@ -12,7 +12,8 @@ import Foundation
 /// open-and-import path runs on the simulator. Answers change the data like the server would. DEBUG only.
 ///
 /// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42).
-// An actor, not a @MainActor class: `InboxRepository` is Sendable and the services call it from nonisolated tasks.
+///
+/// An actor, not a @MainActor class: `InboxRepository` is Sendable and the services call it from nonisolated tasks.
 actor UITestInboxRepository: InboxRepository {
     enum Scenario: String {
         case fixtures
