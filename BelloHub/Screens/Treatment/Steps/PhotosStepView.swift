@@ -69,7 +69,8 @@ struct PhotosStepView: View {
     private var consent: some View {
         InlineNotice(
             style: .info,
-            title: viewModel.hasPhotoConsent ? "treatmentFlow.photos.consent.signed" : "treatmentFlow.photos.consent.none",
+            title: viewModel.hasPhotoConsent
+                ? "treatmentFlow.photos.consent.signed" : "treatmentFlow.photos.consent.none",
             message: viewModel.hasPhotoConsent ? nil : "treatmentFlow.photos.consent.noneMessage"
         )
         .accessibilityIdentifier("treatmentFlow.photos.consent")

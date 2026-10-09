@@ -6,7 +6,8 @@
 import Foundation
 import Observation
 
-/// The state of the whole treatment flow (5.1 to 5.9): who the visit is for, the questions of her template, what she has
+/// The state of the whole treatment flow (5.1 to 5.9): who the visit is for, the questions of her template, what she
+/// has
 /// answered, the transcript and the proposals of the voice path, the saved record and what follows it. The voice,
 /// review, photo and next-session parts are in extensions of this class (one file each); the rules they apply are pure
 /// types in `Support/`. Nothing here reaches the network: the vault is the only store.
@@ -257,12 +258,11 @@ final class TreatmentFlowViewModel {
         defer { isSaving = false }
         let context = TreatmentRecordBuilder.Context(
             clientID: client.id, appointmentID: request.appointmentID ?? appointment?.id,
-            serviceID: service?.id ?? request.serviceID, serviceName: serviceName
+            serviceID: service?.id ?? request.serviceID, serviceName: serviceName, id: recordID,
+            createdAt: savedRecord?.createdAt ?? now(), source: usedTranscript ? .voice : .manual,
+            aiAssisted: aiAssisted
         )
-        let record = TreatmentRecordBuilder.build(
-            id: recordID, draft: draft, fields: reviewFields, context: context, now: savedRecord?.createdAt ?? now(),
-            source: usedTranscript ? .voice : .manual, aiAssisted: aiAssisted, locale: locale
-        )
+        let record = TreatmentRecordBuilder.build(draft: draft, fields: reviewFields, context: context, locale: locale)
         do {
             try await repository.save(record)
             savedRecord = record

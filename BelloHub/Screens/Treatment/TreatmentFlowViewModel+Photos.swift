@@ -76,7 +76,8 @@ extension TreatmentFlowViewModel {
         }
     }
 
-    /// An earlier photo to lay over the camera as a ghost, so the new one lines up with it: the latest of the other kind.
+    /// An earlier photo to lay over the camera as a ghost, so the new one lines up with it: the latest of the other
+    /// kind.
     func ghostThumbnail(for kind: PhotoKind) -> Data? {
         let other: PhotoKind = kind == .before ? .after : .before
         return photos.last { $0.photo.kind == other }?.data.thumbnail

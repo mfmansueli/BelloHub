@@ -3,7 +3,7 @@
 //  BelloHub
 //
 
-import AVFoundation
+@preconcurrency import AVFoundation
 import UIKit
 
 /// The `AVCaptureSession` and everything that must not depend on the main actor (CLAUDE.md, Concurrency): starting
@@ -51,11 +51,13 @@ final class CameraSessionHandle: @unchecked Sendable {
                 if self.output.supportedFlashModes.contains(flashOn ? .on : .off) {
                     settings.flashMode = flashOn ? .on : .off
                 }
-                let delegate = PhotoDelegate { [weak self] result in
-                    self?.queue.async { self?.delegates[settings.uniqueID] = nil }
+                let id = settings.uniqueID
+                // The delegate holds the handle only until its callback arrives, where the entry is removed.
+                let delegate = PhotoDelegate { result in
+                    self.queue.async { self.delegates[id] = nil }
                     continuation.resume(with: result)
                 }
-                self.delegates[settings.uniqueID] = delegate
+                self.delegates[id] = delegate
                 self.output.capturePhoto(with: settings, delegate: delegate)
             }
         }

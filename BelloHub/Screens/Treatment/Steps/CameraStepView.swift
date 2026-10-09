@@ -6,7 +6,8 @@
 import SwiftUI
 import UIKit
 
-/// 5.8 Camera: the app's own camera, so a photo is saved only in Bello and never in the camera roll. The permission goes
+/// 5.8 Camera: the app's own camera, so a photo is saved only in Bello and never in the camera roll. The permission
+/// goes
 /// through `PermissionService`; a denied permission gets an explanation and the way to Settings (and the library stays
 /// available on the previous screen). After a shot she reviews it, chooses who can see it, and retakes or saves.
 struct CameraStepView: View {

@@ -6,7 +6,8 @@
 import SwiftUI
 
 /// 5.4 Tx-4-Review: what the technology understood, one card per field. She keeps, edits or drops every one; Save stays
-/// off until she has decided on all of them, so nothing she did not look at is saved (docs/12 section 4). The fields that
+/// off until she has decided on all of them, so nothing she did not look at is saved (docs/12 section 4). The fields
+/// that
 /// were not mentioned are listed as empty: they are not guessed.
 struct ReviewStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel

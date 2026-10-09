@@ -159,7 +159,9 @@ struct RegisterStepView: View {
     private var failed: some View {
         VStack(spacing: Spacing.md) {
             ErrorNotice(
-                message: LocalizedStringResource("treatmentFlow.error.load", defaultValue: "We could not open this record. Try again.")
+                message: LocalizedStringResource(
+                    "treatmentFlow.error.load", defaultValue: "We could not open this record. Try again."
+                )
                     .resolved(in: locale), actionTitle: "treatmentFlow.retry",
                 action: viewModel.reload
             )

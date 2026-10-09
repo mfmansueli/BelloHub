@@ -6,7 +6,8 @@
 import SwiftUI
 
 /// 5.5 Tx-Form: the manual record, built from the fields of her profession's template. It is a complete way to record,
-/// not a fallback: every field kind works, the same save path applies, and what she leaves empty stays empty. The 24-hour
+/// not a fallback: every field kind works, the same save path applies, and what she leaves empty stays empty. The
+/// 24-hour
 /// lock is explained before she saves, not after.
 struct FormStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
@@ -69,7 +70,8 @@ struct FormStepView: View {
 
     private var saveLabel: Text {
         Text(LocalizedStringResource(
-            "treatmentFlow.save", defaultValue: "Save to \(BidiIsolate.wrap(viewModel.client?.firstName ?? ""))’s history"
+            "treatmentFlow.save",
+            defaultValue: "Save to \(BidiIsolate.wrap(viewModel.client?.firstName ?? ""))’s history"
         ).localized(in: locale))
     }
 

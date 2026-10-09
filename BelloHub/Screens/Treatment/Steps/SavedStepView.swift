@@ -21,7 +21,9 @@ struct SavedStepView: View {
                 header
                 summary
                 historyLink
-                InlineNotice(style: .info, title: "treatmentFlow.saved.lock.title", message: "treatmentFlow.saved.lock.message")
+                InlineNotice(
+                    style: .info, title: "treatmentFlow.saved.lock.title", message: "treatmentFlow.saved.lock.message"
+                )
                     .accessibilityIdentifier("treatmentFlow.saved.lock")
                 photosRow
             }

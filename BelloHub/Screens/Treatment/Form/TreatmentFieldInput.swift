@@ -37,7 +37,9 @@ struct TreatmentFieldInput: View {
     @ViewBuilder
     private var textInput: some View {
         if field.role == .generic {
-            BelloTextField(titleText: Text(verbatim: field.name), text: $value, isSensitive: true, identifier: identifier)
+            BelloTextField(
+                titleText: Text(verbatim: field.name), text: $value, isSensitive: true, identifier: identifier
+            )
         } else {
             BelloNoteField(title: Text(verbatim: field.name), text: $value, isSensitive: true, identifier: identifier)
         }
@@ -77,7 +79,9 @@ struct TreatmentFieldInput: View {
         )
     }
 
-    private var yesText: String { LocalizedStringResource("health.answer.yes", defaultValue: "Yes").resolved(in: locale) }
+    private var yesText: String {
+        LocalizedStringResource("health.answer.yes", defaultValue: "Yes").resolved(in: locale)
+    }
 
     private var noText: String { LocalizedStringResource("health.answer.no", defaultValue: "No").resolved(in: locale) }
 }

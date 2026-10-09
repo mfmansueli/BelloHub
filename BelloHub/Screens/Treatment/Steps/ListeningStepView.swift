@@ -18,7 +18,8 @@ struct ListeningStepView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.lg) {
-                Text(verbatim: "\(BidiIsolate.wrap(viewModel.client?.name ?? "")) · \(BidiIsolate.wrap(viewModel.serviceName))")
+                Text(verbatim: "\(BidiIsolate.wrap(viewModel.client?.name ?? "")) · "
+                     + BidiIsolate.wrap(viewModel.serviceName))
                     .font(Typography.meta).foregroundStyle(Palette.ink2)
                     .accessibilityIdentifier("treatmentFlow.listening.subtitle")
                 indicator
@@ -91,7 +92,8 @@ struct ListeningStepView: View {
         Duration.seconds(Int(viewModel.elapsed)).formatted(.time(pattern: .minuteSecond).locale(locale))
     }
 
-    /// The ring breathes slowly, only when motion is allowed (Reduce Motion, Low Power Mode and UI tests keep it still).
+    /// The ring breathes slowly, only when motion is allowed (Reduce Motion, Low Power Mode and UI tests keep it
+    /// still).
     private func startPulse() {
         guard policy.allowsAmbient else { return }
         withAnimation(.easeInOut(duration: Motion.Duration.pulse).repeatForever(autoreverses: true)) { pulsing = true }

@@ -32,7 +32,9 @@ struct ImageIOPhotoProcessing: PhotoProcessing {
         return PhotoData(image: image, thumbnail: thumbnail)
     }
 
-    private static func encode(_ source: CGImageSource, side: Int, qualities: [Double], targetBytes: Int) throws -> Data {
+    private static func encode(
+        _ source: CGImageSource, side: Int, qualities: [Double], targetBytes: Int
+    ) throws -> Data {
         guard let scaled = scaledImage(source, side: side) else { throw PhotoProcessingError.unreadable }
         var smallest: Data?
         for quality in qualities {

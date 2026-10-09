@@ -7,7 +7,8 @@ import Foundation
 
 /// Turns the bytes of a photo she took or picked into what the vault stores (docs/05-DATA-MODEL.md, "Photos pipeline"):
 /// the longest side at most 2048 px, around 400 KB, no metadata (above all no location), plus a 320 px thumbnail.
-/// The technology sits behind this protocol (D53) so the owner can swap the default (`ImageIOPhotoProcessing`) after v1.
+/// The technology sits behind this protocol (D53) so the owner can swap the default (`ImageIOPhotoProcessing`) after
+/// v1.
 /// The input never touches the photo library and the output is never written to it: the bytes go straight to
 /// `TreatmentRepository.save(_:data:)`, which seals them.
 protocol PhotoProcessing: Sendable {

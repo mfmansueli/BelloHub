@@ -49,7 +49,8 @@ struct NextSessionStepView: View {
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {
                 Button {
-                    onBook(.newAppointment(clientID: viewModel.clientID, startsAt: viewModel.suggestedDate(calendar: calendar)))
+                    let date = viewModel.suggestedDate(calendar: calendar)
+                    onBook(.newAppointment(clientID: viewModel.clientID, startsAt: date))
                 } label: { Text("treatmentFlow.next.book") }
                     .buttonStyle(.belloPrimary)
                     .accessibilityIdentifier("treatmentFlow.next.bookButton")

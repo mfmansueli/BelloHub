@@ -6,7 +6,8 @@
 import Foundation
 
 /// What she has filled in so far, by field key. Free text, a choice and a number as typed; yes or no as
-/// `RecordFieldEntry.yes` / `.no`; several options and a list of products as lines (`RecordFieldEntry.optionSeparator`).
+/// `RecordFieldEntry.yes` / `.no`; several options and a list of products as lines
+/// (`RecordFieldEntry.optionSeparator`).
 /// A field she did not touch is absent, and stays empty in the record: nothing is guessed or filled in for her.
 struct TreatmentDraft: Equatable, Sendable {
     var result: RecordResult?

@@ -91,7 +91,8 @@ struct ReviewCard: View {
     private var statusLabel: some View {
         switch proposal.decision {
         case .pending:
-            Text("treatmentFlow.review.status.pending").font(Typography.footnoteStrong).foregroundStyle(Palette.amberText)
+            Text("treatmentFlow.review.status.pending").font(Typography.footnoteStrong)
+                .foregroundStyle(Palette.amberText)
         case .accepted:
             Text("treatmentFlow.review.status.kept").font(Typography.footnoteStrong).foregroundStyle(Palette.sageText)
         case .edited:

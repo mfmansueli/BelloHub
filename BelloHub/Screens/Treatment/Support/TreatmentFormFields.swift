@@ -64,7 +64,9 @@ enum TreatmentFormFields {
         return catalog.entry(for: setting.profession)?.fields.first { $0.key == setting.key }?.name
     }
 
-    private static func input(of setting: RecordFieldSetting, role: TreatmentFormField.Role) -> TreatmentFormField.Input {
+    private static func input(
+        of setting: RecordFieldSetting, role: TreatmentFormField.Role
+    ) -> TreatmentFormField.Input {
         if role == .products { return .products }
         switch setting.kind {
         case .text: return .text

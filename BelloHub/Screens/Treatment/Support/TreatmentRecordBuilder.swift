@@ -15,6 +15,12 @@ enum TreatmentRecordBuilder {
         var appointmentID: UUID?
         var serviceID: UUID?
         var serviceName: String
+        /// Fixed when the flow starts, so a retry updates the same record.
+        var id = UUID()
+        var createdAt = Date()
+        var source = RecordSource.manual
+        /// Set only after she reviewed every proposed field.
+        var aiAssisted = false
     }
 
     enum Issue: Equatable, Sendable {
@@ -39,13 +45,12 @@ enum TreatmentRecordBuilder {
 
     /// The record to save. The recommendation for the next visit is in the draft under `nextSessionKey`.
     static func build(
-        id: UUID = UUID(), draft: TreatmentDraft, fields: [TreatmentFormField], context: Context, now: Date,
-        source: RecordSource, aiAssisted: Bool, locale: Locale
+        draft: TreatmentDraft, fields: [TreatmentFormField], context: Context, locale: Locale
     ) -> TreatmentRecord {
         var record = TreatmentRecord(
-            id: id, clientID: context.clientID, appointmentID: context.appointmentID, serviceID: context.serviceID,
-            serviceName: context.serviceName, createdAt: now, source: source, result: draft.result ?? .neutral,
-            aiAssisted: aiAssisted
+            id: context.id, clientID: context.clientID, appointmentID: context.appointmentID,
+            serviceID: context.serviceID, serviceName: context.serviceName, createdAt: context.createdAt,
+            source: context.source, result: draft.result ?? .neutral, aiAssisted: context.aiAssisted
         )
         var entries: [RecordFieldEntry] = []
         for field in fields {
