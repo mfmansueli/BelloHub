@@ -77,28 +77,29 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-**v1 is being finished end to end without stopping between stages (owner's order, 2026-10-09).** Done and tagged: S0 to S5 (`stage-S5`). Order of the rest: S6 (3 slices), S7 front end only (D53), S8 iOS half, S9 integration, S10, S11, S12.
+**v1 is being finished end to end without stopping between stages (owner's order, 2026-10-09).** Done and tagged: S0 to S6, S7 (front end, D53), S10 (`stage-S7`, `stage-S8`, `stage-S10` all at the 2026-10-10 integration head; S8 is tagged as "publish + inbox services", its inbox screens 2.9 to 2.11 are still open). Order of the rest: S8 inbox screens, S9 integration, S11, S12.
 
 **Owner rule 2026-10-09 (later): at most 2 agents at a time, only `model: fable` at `medium` effort** (replaces the 3 sonnet + 1 fable split). Order: s8-publish and s6-home first, then s7-record, s10-account, D55, S8 inbox. Worktree dirs under `.claude/worktrees/`: s6-home = `agent-a9c2564560a1e27e2`, s7-record = `agent-af16371e7560af324`, s8-publish = `agent-ae6aa117cf4712fe2`, s10-account = `agent-a498cf63dedef1f7d`.
 
 **2026-10-09 night:** the booking link WORKS end to end on the owner's iPhone (Debug builds now sign in through Firebase/Apple by default; `-devLogin` keeps the fake login). `s8-publish` is merged. The owner said "continue the production": continue with at most 2 Fable agents at `medium` (weekly usage was at 92%, resets Wednesday 12:00: expect agents to die at the limit; state is always in worktrees and notes). Running: `s10-account` (12 commits, verifying; worktree `agent-a498cf63dedef1f7d`, sim `581B8F64`; remove its `TmpQuietHoursProbeUITests.swift` if still present) and `d55-web-backend`. S6 is tagged. Next when a slot frees: `s7-record` (worktree `agent-af16371e7560af324`, 1 commit + 7 uncommitted), then D55 (web+backend, then iOS), S8 inbox, S9, S11, S12.
 
-### FIRST THING WHEN A SESSION RESUMES (written when the usage limit was reached, 2026-10-09)
+### FIRST THING WHEN A SESSION RESUMES (2026-10-09; SUPERSEDED: read RESUME HERE below)
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
-Last updated 2026-10-09, late night, USAGE CUT (3% left). **State: `build/v1` holds UNTESTED merges** of `audits-s6-s8` (30b61d9), `s10-account` (2d1a03f) and `s8-inbox` WIP (9c9ccf1); nothing was built or tested after them (the owner asked to commit first, test after). **First thing next session:** `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh` on `build/v1` and fix in follow-up commits. Conflicts I resolved by hand: `scripts/merge-strings.py` (kept HEAD, which also prunes InfoPlist), `AppDependencies.swift` and `DefaultsKey.swift` (both sides kept, additive), catalogs regenerated. Rules: up to 4 agents, all `model: fable` at `effort: medium`; commit before every test run ([[feedback-commit-before-tests]]).
+Last updated 2026-10-10, 01:40, by the single integration agent. **State: `build/v1` is GREEN** with everything merged: `audits-s6-s8`, `s10-account` (incl. its notes commit), `s8-inbox` (all commits up to fff325e, still WIP: services, no screens) and **`d55-ios`**. Measured on the merged head: `scripts/test.sh fast` 2008 tests in 278 suites pass (strings 2142 keys, legal 28 bundled notices, server contract, professions, health forms gates included); `scripts/test.sh smoke` 42 UI tests pass (26 min); `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets (SwiftLint included). Tags `stage-S7`, `stage-S8`, `stage-S10` on that head. **D55 backend and web are DEPLOYED to dev** (2026-10-10: all functions updated, Hosting released; `/api/getPublicPage` NOT_FOUND for an unknown slug, page 200). Rules: owner wants v1 finished end to end; commit before every long build or test ([[feedback-commit-before-tests]]); one xcodebuild at a time.
 
-| Work | Branch (worktree under `.claude/worktrees/`) | State |
+| Work | Branch | State |
 |---|---|---|
-| S10 account | `s10-account` (`agent-a498cf63dedef1f7d`, sim `581B8F64`) | Merged into `build/v1` (2d1a03f) UNTESTED after merge; it has Apple-button deletion and the AI assistant row in More (13834d2). Smoke/audit of the slice not confirmed |
-| **D55 iOS** | `d55-ios` (`agent-ad11a0c86ae9dbc01`, sim `0FBF1349`) | 2 commits (77b228c, 1fa7e4c), **NOT merged: merge aborted**. Real conflict: D55 deleted `Managers/Legal/*`, `Models/Health/Legal*`, `scripts/sync-legal-resources.py` and the consent bundles, but S10 (28201e1) bundles `terms-dpa` and `privacy-policy` through that same library (`LegalNotice`, Privacy screen). To merge: in `d55-ios`, `git merge build/v1`, keep a minimal legal reader for `LegalNotice` only (terms + privacy policy), keep `sync-legal-resources.py` with `DOCUMENTS = ["terms-dpa", "privacy-policy"]`, keep `InMemoryClientRecordRepository` vars non-private with `ConsentRecord`, re-add the `recordTemplate.kind.multiChoice` entry to `s4-tags-record-template.json` if lost, regenerate catalogs, build, test |
-| S8 inbox | `s8-inbox` (`agent-a4fad1e70d1273c5e`, sim `9094A22B`) | WIP commit ea60844 merged (9c9ccf1) UNTESTED; models, server reads, mailbox opening, outbound queue, push wiring; screens 2.9 to 2.11 and tests not done; notes `docs/agent-notes/s8-inbox.md` if written |
-| Audits S6 to S8 | `audits-s6-s8` (`agent-ac201191ad6320d8b`, sim `1D7CD4D7`) | Merged (30b61d9): fake-based appointment VM tests, catalog pruning, schemas.json refresh; the `pt-BR`,`de`,`hi` audit runs did not finish; notes `docs/agent-notes/audits-s6-s8.md` |
-| D55 web + backend | merged (`573a50f`) | **NOT DEPLOYED**: deploy only AFTER `d55-ios` is merged and installed |
-| Next | | finish D55 iOS merge, S8 inbox screens, S9, S11, S12 |
+| S10 account | `s10-account` | Merged and green; notes `docs/agent-notes/s10-account.md`; DESIGN.md updated |
+| D55 iOS | `d55-ios` | Merged (7b8d10d) and green. Resolution: a minimal legal reader stays for `LegalNotice` only (terms + privacy policy): `Models/Legal/{LegalFileName,LegalTextRenderer,LegalTextValues}`, `Managers/Legal/{LegalTextError,LegalTextRenderer+Build,LegalNoticeLibrary,BundleLegalNoticeLibrary}`; `scripts/sync-legal-resources.py` bundles only `terms-dpa` and `privacy-policy` (28 files), `check-legal-resources.sh` stays in `test.sh`; `merge-strings.py` = build/v1's version + D55's `--prune` (run `python3 scripts/merge-strings.py --prune` after deleting keys from a batch); `MailboxService` no longer passes the removed `HealthForm` signature/guardian fields |
+| D55 web + backend | merged (`573a50f`) | **Deployed to dev 2026-10-10** |
+| S8 inbox | `s8-inbox` (`agent-a4fad1e70d1273c5e`) | Services merged and green (models, server reads, mailbox opening and import into 4.5, outbound queue, push wiring, UI-test inbox server `-uiInbox fixtures|paywall`); `AppDependencies` builds them through `InboxServices`. **Screens 2.9 Waitlist, 2.10 BookingRequest, 2.11 RescheduleRequest not built**; no `docs/agent-notes/s8-inbox.md` exists |
+| Next | | S8 inbox screens 2.9 to 2.11 (+ tests, strings, audits), S9, S11, S12; the `pt-BR`, `de`, `hi` audit runs of S6 to S8 never finished |
 
-**Deployed to `bello-hub` (dev, D43) on 2026-10-09:** Firestore rules and indexes, Storage rules, all Cloud Functions in `europe-west1` (Node 22, 2nd gen; image cleanup policy of 1 day set), Hosting at `https://bello-hub.web.app`; secrets in Secret Manager: `PHONE_HASH_PEPPER` (generated once, never rotate), `EMAIL_API_KEY` and `APPLE_SIGNIN_PRIVATE_KEY` as placeholders (`unset`); parameters in `firebase/functions/.env.bello-hub` (no secrets; `EMAIL_FROM` and `APPLE_SIGNIN_KEY_ID` empty keep e-mail and Apple revocation off). Smoke test passed (page 200, `/api/getPublicPage` answers `NOT_FOUND` for an unknown slug). Redeploy Hosting with `scripts/deploy-hosting-dev.sh`, functions with `cd firebase && firebase deploy --project dev --only functions`. Not done by me: enable the Apple provider in Firebase Auth, the budget alert, App Check stays off. The iOS app does not publish yet (S8 iOS half).
+Integration fixes made on 2026-10-10 (all committed): `AppDependencies` split through `InboxServices` (SwiftLint body length); `FirestoreDocumentDecoder` integer helper (complexity); orphaned doc comment in `UITestInboxRepository`; the deprecated `Messaging.fcmToken` getter replaced by `TokenContinuations` keeping the last token; the `ConsentRecordViewModelTests` delete-guard test gave the record another client's id.
+
+**Deployed to `bello-hub` (dev, D43) on 2026-10-09 (functions and Hosting redeployed with D55 on 2026-10-10):** Firestore rules and indexes, Storage rules, all Cloud Functions in `europe-west1` (Node 22, 2nd gen; image cleanup policy of 1 day set), Hosting at `https://bello-hub.web.app`; secrets in Secret Manager: `PHONE_HASH_PEPPER` (generated once, never rotate), `EMAIL_API_KEY` and `APPLE_SIGNIN_PRIVATE_KEY` as placeholders (`unset`); parameters in `firebase/functions/.env.bello-hub` (no secrets; `EMAIL_FROM` and `APPLE_SIGNIN_KEY_ID` empty keep e-mail and Apple revocation off). Smoke test passed (page 200, `/api/getPublicPage` answers `NOT_FOUND` for an unknown slug). Redeploy Hosting with `scripts/deploy-hosting-dev.sh`, functions with `cd firebase && firebase deploy --project dev --only functions`. Not done by me: enable the Apple provider in Firebase Auth, the budget alert, App Check stays off. The iOS app does not publish yet (S8 iOS half).
 
 **D55, to apply (owner, 2026-10-09): consents are removed from the app, web and server; only a status record with an optional photo/file of the real document stays.** Work to queue (two slices, Sonnet medium for iOS, Fable medium for web and backend): iOS: delete the consent text, signing and signed-text screens of 4.5, the consent rows and preview of 6.14, `legal.*` strings of the three consent kinds, bundling of consent legal texts (`scripts/check-legal-resources.sh`, `sync-legal-resources`), `ConsentKind` text mapping; replace with a "Consents" status list on 4.5 (label, signed yes/no, date, note, optional photo or file via the vault) with tests, strings and audits. Web and backend: remove `getFormContext.consent`, the consent text and signature from the web form, the `intakeForms` consent text and the consent block of the sealed payload; keep the health questions; update API.md, schemas, tests, e2e. Docs: `docs/05`, `docs/06`, `docs/07`, `legal/STATUS.md` and the legal drafts of the three consent kinds (remove them from the 14-localization bundles).
 
@@ -260,6 +261,17 @@ Measured: fast 1710+ unit tests pass; UISmoke 48 UI tests pass; `scripts/check-w
 Decisions/assumptions: see each notes file (to fold into the table at the next consolidation); Design additions: see each notes file.
 Open questions: Home quick actions are "New appointment" and "Week at a glance" only; Alerts holds local alerts until S8 inbox.
 
+### S7 · Treatment record front end (D53) · done 2026-10-10 · tag stage-S7
+Merged earlier with S6 (`docs/agent-notes/s7-flow.md`, `s7-record.md`): 5.1 to 5.9 with voice and AI as unavailable stubs, the manual form fully real; 4.7, 4.9, 4.10; 7.5 AISettings (row in More → Preferences). Tagged at the 2026-10-10 integration head (fast 2008, smoke 42, zero warnings).
+
+### S8 · Backend and iOS integration (partial) · tag stage-S8 on 2026-10-10
+Done: backend and web (D55 deployed to dev 2026-10-10), the publish slice (booking link live), inbox services (sync, mailbox, outbound queue, push). Open: screens 2.9, 2.10, 2.11, `FirebaseAuthProvider` server deletion swap (`OfflineAccountDeleter`), server subscription verification (`OfflineSubscriptionVerifier`). The tag marks the integration head, not the stage exit.
+
+### S10 · Account and settings · done 2026-10-10 · tag stage-S10
+Done: 7.1 to 7.4 and 7.6 to 7.10 (`docs/agent-notes/s10-account.md`): account with delete-account cascade, language and region, plan and paywall over StoreKit 2, notification settings, integrations, privacy with the legal notices, export all (ZIP of CSVs and a PDF), recovery key with restore from Locked, help. Also D55 iOS (`docs/agent-notes/d55-ios.md`): consent status records with an optional photo or file replace the consent texts and signing.
+Measured: fast 2008 tests in 278 suites; smoke 42 UI tests; `check-warnings.sh` zero warnings; strings 2142 keys in 14 localizations. Audits of the slice (`AccountAuditUITests`, `HealthAuditUITests`) are in the Full plan; not run in this integration.
+Decisions/assumptions: see the two notes files (delete-account order, paywall = Plan screen, device settings survive deletion, consents as records). Design additions: DESIGN.md "Changes from the prototype (S10)" and "Changes from D55".
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -383,9 +395,9 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 2.6 | WeekGlance | S6 | done | `CalendarAuditUITests` |
 | 2.7 | FollowUps | S6 | done | `HomeAuditUITests` |
 | 2.8 | WinBack | S6 | done | `HomeAuditUITests` |
-| 2.9 | Waitlist | S8 | todo |  |
-| 2.10 | BookingRequest | S8 | todo |  |
-| 2.11 | RescheduleRequest | S8 | todo |  |
+| 2.9 | Waitlist | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
+| 2.10 | BookingRequest | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
+| 2.11 | RescheduleRequest | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
 | 2.12 | RunningLate | S6 | done | `AppointmentAuditUITests` |
 | 3.1 | NewAppointment | S6 | done | `CalendarUITests` |
 | 3.2 | Appointment | S6 | done | `AppointmentUITests` |
@@ -399,7 +411,7 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 4.2 | NewClient | S4 | done | `ClientsUITests`, `ClientsAuditUITests`; D42 gate |
 | 4.3 | ClientEdit | S4 | done | `ClientsAuditUITests`; merge |
 | 4.4 | ClientKnowledge | S4 | done | `ClientsAuditUITests` |
-| 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests` |
+| 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests`; D55 consent records (`ConsentRecordViewModelTests`) |
 | 4.6 | ImportClients | S4 | done | `ImportClientsUITests`, `ImportAuditUITests` |
 | 4.7 | RecordHistory | S7 | todo |  |
 | 4.8 | SessionPlan | S6 | done | `AppointmentAuditUITests` |
@@ -430,17 +442,17 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 6.3 | AddOns | S5 | done | `ServicesUITests` |
 | 6.16 | CancelPolicy | S5 | done | `BookingSetupUITests` |
 | 6.15 | NoShowPolicy | S5 | done | `BookingSetupUITests` |
-| 7.1 | Account | S10 | todo |  |
-| 7.2 | LanguageRegion | S10 | todo |  |
-| 7.3 | Plan | S10 | todo |  |
-| 7.4 | NotificationSettings | S10 | todo |  |
-| 7.5 | AISettings | S7 | todo |  |
-| 7.6 | Integrations | S10 | todo |  |
-| 7.7 | Privacy | S10 | todo |  |
-| 7.10 | Help | S10 | todo |  |
+| 7.1 | Account | S10 | done | `AccountUITests`, `AccountAuditUITests` |
+| 7.2 | LanguageRegion | S10 | done | `AccountUITests` |
+| 7.3 | Plan | S10 | done | `AccountUITests` (buy, paywall at the 11th) |
+| 7.4 | NotificationSettings | S10 | done | `AccountAuditUITests` |
+| 7.5 | AISettings | S7 | done | stub (D53); row in More → Preferences |
+| 7.6 | Integrations | S10 | done | `AccountAuditUITests` |
+| 7.7 | Privacy | S10 | done | `AccountAuditUITests` |
+| 7.10 | Help | S10 | done | `AccountAuditUITests` |
 | 7.11 | States | S6 | done | shared States |
-| 7.8 | ExportAll | S10 | todo |  |
-| 7.9 | RecoveryKey | S10 | todo |  |
+| 7.8 | ExportAll | S10 | done | `AccountAuditUITests` |
+| 7.9 | RecoveryKey | S10 | done | `AccountUITests` (reveal, confirm, restore) |
 | 8.1 | Bk-1-Page | S9 | todo |  |
 | 8.2 | Bk-2-Service | S9 | todo |  |
 | 8.3 | Bk-3-Professional | S9 | todo | Route exists and redirects (no team in v1) |
