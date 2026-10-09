@@ -34,7 +34,9 @@ struct InboxAlertsTests {
             bookings: [makeIncomingBooking(id: "bk-c", status: .cancelledByClient, daysAhead: 3)],
             waitlist: [makeWaitlistRequest(id: "a")]
         )
-        let alerts = InboxAlerts.make(snapshot: snapshot, answering: [], timeZone: TestClock.saoPaulo, now: TestClock.now)
+        let alerts = InboxAlerts.make(
+            snapshot: snapshot, answering: [], timeZone: TestClock.saoPaulo, now: TestClock.now
+        )
         #expect(alerts.hasOpenTime && alerts.waitingCount == 1)
     }
 
