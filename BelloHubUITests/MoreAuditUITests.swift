@@ -64,13 +64,27 @@ final class MoreAuditUITests: XCTestCase {
     }
 
     private func walkRecordFields(_ app: XCUIApplication, tag: String) throws {
-        app.tapButton("more.recordFieldsRow")
+        // Coming back from the tags the list is where it was left, and at AX5 this row is above the screen: a tap on
+        // an element outside it does not scroll to it here, so bring it back first.
+        let row = app.buttons["more.recordFieldsRow"]
+        XCTAssertTrue(row.waitForExistence(timeout: 5), "\(tag) record fields row")
+        var drags = 0
+        // The frame, not `isHittable`: XCUITest reports a row scrolled off the top of a list as hittable.
+        let screenHeight = app.windows.firstMatch.frame.height
+        while !(row.frame.minY > screenHeight * 0.15 && row.frame.maxY < screenHeight * 0.85), drags < 24 {
+            let from = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.3))
+            from.press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55)))
+            drags += 1
+        }
+        row.tap()
         XCTAssertTrue(app.navigationBars.firstMatch.waitForExistence(timeout: 5), "\(tag) record fields")
         try audit(app, "\(tag) record fields")
-        XCTAssertTrue(scrollTo(app.buttons["recordTemplate.addFieldButton"], in: app), "\(tag) add field row")
+        // Any element type: at AX5 the list may expose this row as a cell, not as a button.
+        let addField = app.element("recordTemplate.addFieldButton")
+        XCTAssertTrue(scrollTo(addField, in: app), "\(tag) add field row")
         try audit(app, "\(tag) record fields, scrolled")
 
-        app.tapButton("recordTemplate.addFieldButton")
+        addField.tap()
         XCTAssertTrue(app.textFields["fieldEditor.nameField"].waitForExistence(timeout: 5), "\(tag) field sheet")
         try audit(app, "\(tag) field sheet")
         // The second kind is "pick from options": its options input appears.

@@ -101,7 +101,8 @@ extension XCUIApplication {
             if field.value(forKey: "hasKeyboardFocus") as? Bool == true { break }
         }
         if field.value(forKey: "hasKeyboardFocus") as? Bool != true {
-            XCTFail("\(identifier) has no focus: \(saveScreenshot(named: "focus-lost")) \(field.frame)", file: file, line: line)
+            let shot = saveScreenshot(named: "focus-lost")
+            XCTFail("\(identifier) has no focus: \(shot) \(field.frame)", file: file, line: line)
             return
         }
         field.typeText(text)
