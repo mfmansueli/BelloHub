@@ -422,6 +422,11 @@
         "confirm": {
           "type": "boolean",
           "const": true
+        },
+        "appleAuthorizationCode": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2048
         }
       },
       "required": [
@@ -436,10 +441,19 @@
         "ok": {
           "type": "boolean",
           "const": true
+        },
+        "appleRevocation": {
+          "type": "string",
+          "enum": [
+            "revoked",
+            "failed",
+            "skipped"
+          ]
         }
       },
       "required": [
-        "ok"
+        "ok",
+        "appleRevocation"
       ],
       "additionalProperties": false
     }
@@ -990,6 +1004,9 @@
             "type": "string"
           }
         },
+        "lateCancelCounts": {
+          "type": "boolean"
+        },
         "actions": {
           "type": "object",
           "properties": {
@@ -1098,6 +1115,7 @@
         "client",
         "policy",
         "rulesText",
+        "lateCancelCounts",
         "actions",
         "rescheduleCount",
         "intakeRequired",
@@ -4413,6 +4431,9 @@
             "pub"
           ],
           "additionalProperties": false
+        },
+        "compromised": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -4437,6 +4458,14 @@
                 "format": "date-time"
               },
               "retiredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "acceptsUntil": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "compromisedAt": {
                 "type": "string",
                 "format": "date-time"
               }

@@ -75,7 +75,7 @@ The project id **must** start with `demo-`: such an id can never reach the cloud
   listed at `GET http://127.0.0.1:9099/emulator/v1/projects/demo-bellohub/verificationCodes`;
 - App Check is not enforced (a missing token is accepted);
 - pushes are not sent; `emulatorOutbox` records `{type: "push", kind, id}` so a test can wait for one.
-`ENFORCE_APP_CHECK`, `WEB_BASE_URL`, `WHATSAPP_AUTOMATION`, `PLAN_PRODUCT_IDS` and `TRUSTED_PROXY_HOPS` (how many
+`ENFORCE_APP_CHECK`, `WEB_BASE_URL`, `WHATSAPP_AUTOMATION`, `PLAN_PRODUCT_IDS`, `APPLE_SIGNIN_KEY_ID` and `TRUSTED_PROXY_HOPS` (how many
 proxies append to `X-Forwarded-For`; 1 by default, 2 is expected behind the Hosting rewrites once a staging log confirms
 it) are deploy parameters (`functions/.env.<project>`); their defaults suit the emulator.
 
@@ -90,7 +90,7 @@ A Hosting site whose id does not start with `bellohub` or `bello-hub` is refused
 |---|---|---|
 | `public` | App Check token | no login, no token in the input |
 | `token` | App Check token + a secret token in the input | the client's manage link or portal link |
-| `owner` | App Check token + Firebase Auth ID token of the professional | everything under section 6 |
+| `owner` | App Check token + Firebase Auth ID token of the professional (Sign in with Apple, or phone; **no phone number is required on the token**, D44) | everything under section 6 |
 | `http` | none (see each) | `getIcs`, `appStoreNotifications` |
 
 App Check enforcement is a deploy-time parameter (`ENFORCE_APP_CHECK`, default `false`; a human turns it on after
@@ -150,7 +150,9 @@ type Slug      = string;  // /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/, 3 to 30 chars,
 - The slot grid is **15 minutes** from the start of each working stretch (`slotStepMinutes`).
 - **Total duration of a booking** = service minutes + sum of chosen add-on minutes + guests x service minutes
   (guests are the same service, back to back, D19). The server computes it; the client never sends durations.
-- Policy values (`policy`) are copied onto the booking when it is made; later edits never change a client's rights.
+- **Policy snapshot (D47).** `policy`, `rulesText` and the no-show setting that concerns the client (`lateCancelCounts`)
+  are copied onto the booking when it is made; a later `publishProfile` / `publishAvailability` changes only bookings made
+  afterwards. `getBooking` returns the booking's own copy, so the manage page shows the rules in force at booking time.
 
 ### Shared shapes
 
@@ -253,7 +255,8 @@ res: { serviceId: Uuid; addOnIds: Uuid[]; guests: number; startsAt: Instant; end
 Errors: `NOT_FOUND`, `TOKEN_EXPIRED`.
 
 ### 5.5 `sendEmailCode`  (public)
-Sends a 6-digit code (10 minutes, 5 tries). Always offered; it is the fallback when SMS fails (D31, D37).
+Sends a 6-digit code (10 minutes, 5 tries). **The only verification the web page uses (D46):** the page keeps
+`connect-src 'self'` and loads no Firebase SDK. SMS (5.7) stays available for a later API-side SMS provider.
 ```ts
 req: { slug: Slug; email: string; locale: LocaleId; purpose: "booking" | "find" }
 res: { resendAfterSeconds: 30; expiresInSeconds: 600 }
@@ -269,19 +272,21 @@ res: { proof: string; expiresInSeconds: 1800 }       // single use
 ```
 Errors: `INVALID_CODE`, `RATE_LIMITED`.
 
-### 5.7 Verifying a phone
-SMS verification is **Firebase Auth phone sign-in in the browser** (reCAPTCHA Enterprise / App Check, SMS allow-list D37).
-After `confirmationResult.confirm(code)` the web app calls `user.getIdToken()` and passes it as
-`verification: { method: "phone", idToken }` to `createBooking` / `findBookings`. The server accepts the token only if
-its provider is `phone`, `phone_number` equals the phone in the request, and the sign-in is at most 10 minutes old.
+### 5.7 Verifying a phone  (**not used by the web page**, D46)
+The server still accepts `verification: { method: "phone", idToken }` on `createBooking` / `findBookings`: a Firebase Auth
+phone ID token whose provider is `phone`, whose `phone_number` equals the phone in the request, and whose sign-in is at
+most 10 minutes old. The booking page does **not** use it (its CSP forbids the Firebase JS SDK and reCAPTCHA); clients
+verify by e-mail code (5.5, 5.6). The path is kept for an SMS provider behind our own API later (D37 allow-list); no
+client code path requires the phone provider. `features.smsCallingCodes` is still returned for that day.
 
 ### 5.8 `createBooking`  (public)
 ```ts
 req: {
   slug: Slug; serviceId: Uuid; addOnIds?: Uuid[]; guests?: 0 | 1 | 2;
   startsAt: Instant;
-  client: { name: string /* <= 80 */; phone: E164; email?: string; locale: LocaleId };
-  note?: string;                                  // <= 300, shown only to the professional
+  client: { name: string /* <= 80 */; phone: E164; email?: string; locale: LocaleId };   // nothing else about her: no first-visit answers (D45)
+  guests?: 0 | 1 | 2;                             // a COUNT; guest names are never sent or stored (D48)
+  note?: string;                                  // <= 300, shown only to the professional; the only free text
   verification: { method: "phone"; idToken: string } | { method: "email"; proof: string };   // "email" requires client.email = the verified one
   idempotencyKey: Uuid;                           // new for each attempt the user starts; reuse it only to retry the SAME request
   holdKey?: string;                               // converts your hold
@@ -302,6 +307,8 @@ res: { status: "confirmed" | "pendingApproval"; bookingId: string; manageToken: 
   provided the retry carries the same verification (the same email `proof`, or a fresh valid one for that address; a
   phone ID token is checked on every call). An idempotency key alone opens nothing.
 - A confirmation email is sent when `client.email` is given and a provider is configured (`emailSent`).
+- The request is **closed** (D45, D48): any field not listed (`heardFrom`, `hadBefore`, guest names, anything inside
+  `client` beyond the four fields) is `INVALID_ARGUMENT` with its path. The server stores the note and the guest count only.
 - Limits: 10/hour per IP, 5/hour per phone, 300/day per professional.
 Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `VERIFICATION_FAILED`, `CONFLICT` (idempotency key reused with a different request), `RATE_LIMITED`.
 
@@ -338,8 +345,9 @@ res: {
   startsAt: Instant; endsAt: Instant; durationMinutes: number; timeZoneID: string;
   serverTime: Instant;                // the server clock: a phone with a wrong clock still shows the right free window
   client: { name: string };
-  policy: CancellationPolicy;
-  rulesText: Partial<Record<LocaleId, string>>;
+  policy: CancellationPolicy;         // D47: the policy in force when the booking was made (not the page's current one)
+  rulesText: Partial<Record<LocaleId, string>>;   // D47: the rule texts published at booking time (the page's current texts only for bookings older than the snapshot)
+  lateCancelCounts: boolean;          // D47: under the no-show policy of booking time, a late cancellation counts as a missed visit
   actions: {
     cancel: "free" | "allowedWithWarning" | "askByMessage" | "unavailable";
     reschedule: "direct" | "request" | "message" | "unavailable";
@@ -368,7 +376,8 @@ requestReschedule:  req { token; startsAt: Instant; note?: string /* <= 300 */ }
                     res { status: "requested" }
                       | { status: "slotTaken"; alternatives: Instant[] }
 ```
-The rules are the booking's own policy snapshot, evaluated at the server's time (see `actions` in `getBooking`).
+The rules are the booking's own policy snapshot (D47), evaluated at the server's time (see `actions` in `getBooking`).
+A late cancellation is recorded against the client only when `lateCancelCounts` was on at booking time.
 `cancelBooking` after the free window: `allowedWithWarning` needs `acceptLateWarning: true` (else `CONFIRMATION_REQUIRED`);
 `askByMessage` is `NOT_ALLOWED` with `details.action = "message"`. A cancellation frees the slot and can match the waitlist.
 `requestReschedule` leaves the current time reserved until the professional answers (one open request per booking).
@@ -407,7 +416,8 @@ req: { token: Token;
 res: { ok: true }
 ```
 Caps on the decoded ciphertext: `intake` 256 KB + 1 KB, `checkin` 3 MB + 1 KB, `datarequest` 8 KB + 1 KB. Bodies over 200 KB are stored in Cloud
-Storage. `keyId` must be one of the professional's keys (`KEY_MISMATCH` otherwise). Re-sending the same `itemId` with
+Storage. `keyId` must be the professional's current key or one retired less than 24 hours ago and not reported compromised
+(`KEY_MISMATCH` otherwise; refetch `getFormContext`, D51). Re-sending the same `itemId` with
 the same ciphertext is a success (retry); a different ciphertext is `CONFLICT`. The booking must exist and not be
 purged. The server stores ciphertext and metadata (`ownerUid`, `bookingId`, `kind`, `sizeBytes`, `createdAt`, `expiresAt` = +30 days) and
 **never** looks inside. Limits: 5/hour per booking, 20/hour per IP, and at most **20 items per booking** waiting in the
@@ -512,9 +522,16 @@ res { updatedAt: Instant }
 **Do not** include appointments that came from the link (they have a `bookingID`): the server already holds them.
 
 ```ts
-updateInboxKey: req { inboxKey: InboxKey }   res { keyring: { keyId: string; createdAt: Instant; retiredAt?: Instant }[] }
+updateInboxKey: req { inboxKey: InboxKey; compromised?: boolean }
+                res { keyring: { keyId: string; createdAt: Instant; retiredAt?: Instant; acceptsUntil?: Instant; compromisedAt?: Instant }[] }
 ```
-Rotation: the new key becomes current in the account keyring and in the public profile; earlier keys are kept (retired).
+Rotation (D51): the new key becomes current in the account keyring and in the public profile. The key it replaces is
+retired and **still accepts new envelopes for 24 hours** (`acceptsUntil` = `retiredAt` + 24 h) so a form that was already
+open can finish; afterwards `submitSealed` answers `KEY_MISMATCH` for it. With `compromised: true` the replaced key stops
+at once (`acceptsUntil` = `retiredAt`, `compromisedAt` set) and can never be made current again (`INVALID_ARGUMENT`,
+also through `publishProfile`). A retired key stays listed until 30 days after its `acceptsUntil` (no envelope can
+reference it any more), then the cleanup job drops it; keep the matching private key at least that long. Publishing the
+same key again changes nothing; an older, uncompromised key can be made current again (recovery).
 
 ### 6.3 Bookings, requests, waitlist
 
@@ -594,7 +611,7 @@ unregisterDevice: req { fcmToken: string }                                      
 
 ```ts
 deleteClientServerData: req { phone?: E164; bookingIds?: string[]; portalClientRef?: Uuid }   res { deleted: { bookings: number; mailboxItems: number; requests: number; waitlist: number; portals: number; contacts: number } }
-deleteAccount:          req { confirm: true }   res { ok: true }
+deleteAccount:          req { confirm: true; appleAuthorizationCode?: string }   res { ok: true; appleRevocation: "revoked" | "failed" | "skipped" }
 ```
 `deleteClientServerData`: removes that client's bookings, sealed items tied to those bookings, reschedule requests, waitlist
 entries, portal and the stored contact row for the phone (her no-show marks, last form date, "stopped" flag).
@@ -602,6 +619,11 @@ entries, portal and the stored contact row for the phone (her no-show marks, las
 `deleteAccount`: marks `deletion.requestedAt`, removes everything under her uid (bookings, holds, sealed items and Storage
 objects, portals, requests, waitlist, contacts, devices, availability, public page, slug, registrations, account) and the
 Auth user. Safe to call again; a job finishes any account that was interrupted. The promise to users is 30 days; backups age out within a short window.
+**Sign in with Apple (D44):** the app requests a fresh authorization code (`ASAuthorizationAppleIDRequest`) right before
+calling and passes it as `appleAuthorizationCode`; the server exchanges it and revokes her Apple grant
+(`appleRevocation: "revoked"`). `"failed"` means Apple refused or was unreachable, `"skipped"` means no code was sent or the
+Apple key is not configured in this environment (`APPLE_SIGNIN_KEY_ID` + secret `APPLE_SIGNIN_PRIVATE_KEY`, H17). **The
+data is deleted in every case**; the app may tell her to revoke in Settings when the answer is not `"revoked"`.
 
 ---
 
@@ -627,10 +649,10 @@ Authenticated owner, own data only; **no client write anywhere except `devices` 
 
 | Path | Read | Contents (selected fields) |
 |---|---|---|
-| `accounts/{uid}` | owner | `phone`, `slug`, `countryCode`, `locale`, `dataRegion`, `registrations {count, freeLimit}`, `plan {state, expiresAt, source}`, `inboxKeyring[]`, `deletion {requestedAt}` |
+| `accounts/{uid}` | owner | `phone?` (phone sign-in only; absent for Sign in with Apple, D44), `slug`, `countryCode`, `locale`, `dataRegion`, `registrations {count, freeLimit}`, `plan {state, expiresAt, source}`, `inboxKeyring[] {keyId, pub, createdAt, retiredAt?, compromisedAt?}`, `inboxKeyringPruneAt?`, `deletion {requestedAt}` |
 | `accounts/{uid}/registrations/{clientId}` | owner | `registeredAt` (the ledger, ids and dates only) |
 | `publicProfiles/{slug}` | anyone | the published profile (section 4) |
-| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `createdAt`, `updatedAt`, `purgeAt` |
+| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `rulesText?`, `noShowPolicy? {isOn, lateCancelCounts}` (D47 snapshot), `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `createdAt`, `updatedAt`, `purgeAt` |
 | `inbox/{uid}/items/{itemId}` | owner | `kind`, `bookingId`, `createdAt`, `expiresAt`, `sizeBytes`, `keyId`, `envelope?` (inline when <= 200 KB) or `storagePath` |
 | `rescheduleRequests/{id}` | owner (query `ownerUid == uid`) | `bookingId`, `clientName`, `serviceName`, `currentStart`, `currentEnd`, `requestedStart`, `requestedEnd`, `note?`, `status`, `createdAt` |
 | `waitlist/{id}` | owner (query `ownerUid == uid`) | `name`, `phone`, `serviceId?`, `serviceName?`, `dayFrom`, `dayTo`, `status` (`waiting` \| `offered` \| `booked`), `createdAt`, `offeredAt?` |
@@ -658,7 +680,8 @@ Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readabl
 ## 10. Functions that are not callable by apps
 
 `onBookingWritten`, `onInboxItemCreated` (Firestore triggers: generic push to the owner's devices, contact bookkeeping),
-`cleanupJob` (every 10 minutes: holds, envelopes, bookings, codes, portals, waitlist, audit, unfinished deletions),
+`cleanupJob` (every 10 minutes: holds, envelopes, bookings, codes, portals, waitlist, audit, unfinished deletions, dead
+retired inbox keys),
 `sendReminders` (every 5 minutes, only when `WHATSAPP_AUTOMATION` is on), `appStoreNotifications` (HTTPS POST from Apple,
 App Store Server Notifications V2: verifies the signed payload and updates `accounts.plan`).
 
