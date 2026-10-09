@@ -38,7 +38,9 @@ struct RequestSummaryCard<Times: View>: View {
                         .font(Typography.body).foregroundStyle(Palette.sageText)
                         .padding(Spacing.md)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Palette.sageWash, in: RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
+                        .background(
+                            Palette.sageWash, in: RoundedRectangle(cornerRadius: Radius.tile, style: .continuous)
+                        )
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("\(identifier).note")

@@ -27,8 +27,10 @@ struct WaitlistContentView: View {
                     Text(board.openTime == nil ? "waitlist.subtitle.none" : "waitlist.subtitle")
                         .font(Typography.body).foregroundStyle(Palette.ink2)
                     if let message = viewModel.errorMessage {
-                        ErrorNotice(message: message, actionTitle: "appointment.error.dismiss", action: viewModel.dismissError)
-                            .accessibilityIdentifier("waitlist.error")
+                        ErrorNotice(
+                            message: message, actionTitle: "appointment.error.dismiss", action: viewModel.dismissError
+                        )
+                        .accessibilityIdentifier("waitlist.error")
                     }
                     states(board)
                 }

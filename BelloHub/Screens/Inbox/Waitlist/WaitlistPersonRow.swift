@@ -40,7 +40,9 @@ struct WaitlistPersonRow: View {
         }
         .padding(Spacing.md)
         .contextMenu {
-            Button(role: .destructive, action: onRemove) { Label("waitlist.remove", systemImage: Icon.trash.symbolName) }
+            Button(role: .destructive, action: onRemove) {
+                Label("waitlist.remove", systemImage: Icon.trash.symbolName)
+            }
         }
         .accessibilityAction(named: Text("waitlist.remove"), onRemove)
     }

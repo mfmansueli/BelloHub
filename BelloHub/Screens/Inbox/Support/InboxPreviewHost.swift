@@ -16,7 +16,9 @@ struct InboxPreviewHost<Content: View>: View {
     init(@ViewBuilder content: @escaping () -> Content) {
         let vault = VaultService(repository: InMemoryClientRecordRepository())
         let defaults = UserDefaults(suiteName: "app.bellohub.previews.inbox") ?? .standard
-        let repository = UITestInboxRepository(scenario: .fixtures, publicKey: { throw BookingRepositoryError.rejected })
+        let repository = UITestInboxRepository(
+            scenario: .fixtures, publicKey: { throw BookingRepositoryError.rejected }
+        )
         let queue = OutboundQueue(repository: repository, defaults: defaults)
         _vault = State(initialValue: vault)
         _sync = State(initialValue: BookingSyncService(
