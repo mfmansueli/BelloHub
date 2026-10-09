@@ -1,23 +1,26 @@
 # Agent notes: S9, the client web app (`web/`)
 
-Branch `worktree-agent-ac7ea3c725dfcc9b0`, based on 407427e. Five commits on top (248bedd foundation and app, 1f25deb
-before it, 52e5948 localizations, 265f170 privacy gate and unit tests, 27e6f2d Playwright suite). Nothing was pushed.
-Everything this agent touched is under `web/` plus this file. `docs/PROGRESS.md`, `DESIGN.md`, `firebase/` and every
-iOS file are untouched. This is a hand-off: a fresh agent continues from here. Read "What remains" first.
+Branch `worktree-agent-ac7ea3c725dfcc9b0`, based on 407427e. Nine commits on top: 248bedd foundation and app,
+52e5948 localizations, 265f170 privacy gate and unit tests, 27e6f2d Playwright suite, 6ca27f2 first notes, then the
+second session: da20d8d (speaks API.md exactly), 3275f3f (the WebKit CSP report found and scoped), 4bceba0
+(`scripts/test-web.sh`), and this notes update. Nothing was pushed. Everything touched is under `web/`,
+`scripts/test-web.sh` and this file. `docs/PROGRESS.md`, `DESIGN.md`, `firebase/` and every iOS file are untouched.
 
 ## 1. State in one paragraph
 
-The SPA is complete against a mock API that this agent wrote from `docs/10-WEB-BOOKING.md` and
-`docs/11-BACKEND-FIREBASE.md` section 3 (no `firebase/functions/API.md` was available). Every page of the brief
-exists and is covered by tests: booking Bk-1..Bk-8, approval/pause Bk-10, find Bk-11, management Bk-9, reschedule
-Cl-9, cancel Cl-6, portal Cl-2, rebook Cl-3, health intake Cl-4 (adult and minor), skin check-in Cl-5, my data Cl-7.
-Fourteen localizations pass the gate. The independent HPKE vectors pass in both directions. Chromium and the throttled
-low-end project were green in the last full run; the WebKit project has failures (section 5). Not written yet:
-`scripts/test-web.sh`, the Lighthouse CI config, and the review of the WebKit problem.
+The SPA speaks `firebase/functions/API.md` (contract v1, read at the backend commit 983279c) exactly: callable
+transport, the wire shapes of sections 4 and 5, the error table of section 3. Every page of the brief exists and is
+covered by tests: booking Bk-1..Bk-8, approval/pause Bk-10, find Bk-11, management Bk-9, reschedule Cl-9, cancel
+Cl-6, portal Cl-2, rebook Cl-3, health intake Cl-4 (adult and minor), skin check-in Cl-5, my data Cl-7. Fourteen
+localizations pass the gate. `scripts/test-web.sh full` is green: lint, typecheck, i18n, contrast, privacy, 221 unit
+tests, the production build inside its size budget, and 175 Playwright tests passed with 15 skipped across
+Chromium, WebKit and the throttled low-end project. The WebKit CSP problem of the first session is understood (an
+engine quirk on `<select>`, section 5) and no longer fails the suite. Not done: Lighthouse CI, the Hosting merge,
+the human tasks, and the owner decisions of section 9.
 
 ## 2. What is done, with paths
 
-All paths are relative to `web/` unless they start with `docs/`.
+All paths are relative to `web/` unless they start with `docs/` or `scripts/`.
 
 **Stack and tooling.** Preact 10 + TypeScript 5.9 strict (`noUncheckedIndexedAccess`) + Vite 7 + Vitest 4 + ESLint
 flat config `strictTypeChecked` (zero warnings). `package.json`, `tsconfig.json` (src), `tsconfig.node.json`
@@ -25,178 +28,187 @@ flat config `strictTypeChecked` (zero warnings). `package.json`, `tsconfig.json`
 `.env.e2e`, `.gitignore`. Exact dependency versions, `npm audit` clean at the last install.
 
 **Source.**
+- `src/api/` one typed client that speaks API.md: `types.ts` (the wire types of API.md sections 4 and 5, then the
+  page types `parse.ts` derives from them), `errors.ts` (the server's codes mapped onto the page's vocabulary),
+  `transport.ts` (the only `fetch`: callable POST `{data}` -> `{result}`), `parse.ts` (wire -> page, with the
+  derived fields: first name, `rulesText` split into lines, the professional's profile beside a booking, the
+  questions of the opaque template), `client.ts` (the `Api` interface; the token pages are composed from
+  `getBooking`/`getPortal` plus one cached `getPublicPage` per slug), `appcheck.ts`, `firebasePhone.ts`,
+  `verifier.ts`.
 - `src/lib/` pure helpers: `locales.ts`, `digits.ts`, `bidi.ts`, `base64url.ts`, `phone.ts`, `countries.ts`,
   `datetime.ts` (everything in the professional's time zone), `format.ts` (`Formatter`), `policy.ts` (cancel and
-  reschedule rules, shared fixture `test/fixtures/policy-cases.json` with the iOS side), `ics.ts`, `storage.ts`,
+  reschedule rules for wording deadlines; the server's `actions` decide what is offered), `ics.ts`, `storage.ts`,
   `config.ts`, `whatsapp.ts`, `text.ts`, `inapp.ts`, `image.ts`.
-- `src/api/` one typed client: `types.ts` (the whole contract), `errors.ts`, `transport.ts` (the only `fetch`),
-  `parse.ts`, `client.ts`, `appcheck.ts`, `firebasePhone.ts`, `verifier.ts`.
 - `src/crypto/` `envelope.ts` (constants, AAD, key id, padding, payload types), `seal.ts` (HPKE, lazy chunk),
   `submit.ts`.
-- `src/app/` router, store, page data, `booking/machine.ts` (pure state machine), `booking/store.ts`,
-  `booking/summary.ts`, `booking/slotDays.ts`.
+- `src/app/` router, store, page data, `booking/machine.ts` (pure state machine: `holdKey`, `alternatives`, UUID
+  idempotency keys), `booking/store.ts`, `booking/summary.ts`, `booking/slotDays.ts`.
 - `src/i18n/` fourteen catalogs (12 authored + derived `es-419.json` and `en-GB.json`), `overrides/`, `manifest.json`
-  (all `needs_review`), `translate.ts`, `index.ts`.
+  (all `needs_review`), `translate.ts`, `index.ts`. 413 keys (eleven that no screen used any more were removed).
 - `src/legal/` generated legal texts (`scripts/build-legal.ts` embeds the iOS legal drafts, 5 documents x 14 locales).
 - `src/components/`, `src/routes/{booking,manage,portal,form,checkin,data}/`, `src/styles/`.
 
-**Scripts** (`scripts/`): `gen-regions.ts`, `gen-tokens.ts` (CSS tokens from the iOS Swift palette, light, dark and
-Increase Contrast), `check-contrast.ts` (140 text/background pairs from the same Swift files), `build-legal.ts`,
-`check-size.ts` (initial JS <= 80 KB gzip, CSS <= 15, sealing chunk <= 60, language and legal chunks <= 15),
-`check-i18n.ts` (full localization gate), `derive-locales.py`, `check-privacy.ts` (syntax-tree gate), `vite-integrity.ts`
-(SRI and `/.well-known/bellohub-build.txt`), `screenshots.ts` (design-review tool), `make-fonts.py`, `list-keys.ts`.
+**Scripts** (`web/scripts/`): `gen-regions.ts`, `gen-tokens.ts`, `check-contrast.ts`, `build-legal.ts`,
+`check-size.ts`, `check-i18n.ts` (also fails on a catalog key no screen uses), `derive-locales.py`,
+`check-privacy.ts`, `vite-integrity.ts` (SRI and `/.well-known/bellohub-build.txt`), `screenshots.ts`,
+`make-fonts.py`, `list-keys.ts`. Repository root: `scripts/test-web.sh` (section 3).
 
 **Tests.**
-- Unit (Vitest): `test/unit/*.test.ts`, 12 files, 211 tests: crypto vectors and cross-implementation, date/time,
-  digits/bidi, formatter, ICS, locales, phone, policy, booking state machine, `translate` (all 14 catalogs rendered for
-  every plural count), intake rules, `groupByDay`.
-- Vectors: `test/vectors/inbox-v1.json` (9 positive, 12 negative) produced by `test/vectors/generate/generate.py` with
-  pyhpke and cryptography (a different implementation from the page's hpke-js), `rfc9180-vectors.json`,
-  `js-sealed.json`, README in `test/vectors/generate/README.md`.
-- Mock API: `test/mock-server/{api,fixtures,slots,server,main}.ts`. Serves `dist-e2e/` with the headers of
-  `hosting.json`, gzips text like Firebase Hosting, decrypts the sealed inbox with a test key, and gives every test its
-  own professional (`maria-t<id>` is `maria` with private state). Test controls under `/__test/*`.
+- Unit (Vitest): `test/unit/*.test.ts`, 13 files, 221 tests. New: `api.test.ts` (the callable envelope, the error
+  table, the parsers, the client composition).
+- Vectors: `test/vectors/inbox-v1.json` (9 positive, 12 negative) made with pyhpke and cryptography,
+  `rfc9180-vectors.json`, `js-sealed.json`, README in `test/vectors/generate/README.md`.
+- Mock API: `test/mock-server/{api,fixtures,slots,server,main}.ts`. Speaks API.md: callable envelope, 405 on any
+  GET, the error table with HTTP and callable statuses, `getSlots` days (42-day cap), `holdKey`, idempotency with
+  `CONFLICT`, `VERIFICATION_FAILED`, `KEY_MISMATCH`, `PAYLOAD_TOO_LARGE` with `maxBytes`, retry/`CONFLICT` on a
+  reused `itemId`, `TOKEN_EXPIRED`/`NOT_FOUND` without details. Serves `dist-e2e/` with the headers of
+  `hosting.json`, gzips text like Firebase Hosting, decrypts the sealed inbox with a test key, gives every test its
+  own professional (`maria-t<id>`). Test controls under `/__test/*` (plain JSON, not the callable envelope).
 - Playwright: `test/e2e/*.spec.ts` (booking, manage, portal, sealed, rtl, languages, a11y, interaction, security,
-  perf), `support.ts` (fixtures and the `guard`), `flows.ts`. 188 tests across the three projects.
+  perf), `support.ts` (fixtures and the `guard`), `flows.ts`. 190 tests across the three projects.
 
 ## 3. How to run the checks (and the last known result)
 
-All from `web/`. Node >= 22.18.
+From the repository root: `scripts/test-web.sh [quick|full]` (default `full`). It installs what is missing
+(`web/node_modules`, the Playwright browsers, the optional Python venv for the vectors), runs lint, typecheck,
+i18n, contrast, privacy, the unit tests and the production build with its size budget, then in `full` mode the e2e
+build and the whole Playwright suite. Only failures and a result line are printed; the full log is
+`build/logs/test-web-<mode>-<stamp>.log`; one Playwright run per checkout (`build/.playwright.lock`). `E2E_PORT`
+picks the mock's port when 4010 is busy (the backend agent's emulators use 5001, 9099, 8080, 9199, 4000, 15001).
+
+Last result: `** WEB TESTS SUCCEEDED (full) **`, 175 passed, 15 skipped (WebKit skips the axe scans, the keyboard
+tests and the low-end budget; low-end skips what the layout tests already cover), 1.1 minutes.
+
+The individual commands, from `web/` (Node >= 22.18):
 
 | Command | What it does | Last result |
 |---|---|---|
-| `npm ci` (or `npm install`) | install | clean |
+| `npm ci` | install | clean |
 | `npm run typecheck` | gen + `tsc` for src and for tests/scripts | clean |
 | `npm run lint` | gen + ESLint `--max-warnings 0` | clean |
-| `npm test` | gen + Vitest | 211 passed |
-| `npm run i18n` | derive check + `check-i18n.ts` | 14 localizations, 424 keys, 0 problems |
-| `npm run contrast` | contrast from the iOS Swift tokens | 140/140 pairs pass, 0 CSS misuses |
+| `npm test` | gen + Vitest | 221 passed |
+| `npm run i18n` | derive check + `check-i18n.ts` | 14 localizations, 413 keys, 0 problems |
+| `npm run contrast` | contrast from the iOS Swift tokens | 140/140 pairs pass |
 | `npm run privacy` | privacy gate | passed |
 | `npm run build` | gen + production build + size budget | initial JS about 52 KB gzip (budget 80), CSS 6.8 KB |
-| `npm run e2e` | `build:e2e` then all Playwright projects | see below |
-| `npx playwright test --project=chromium` (and `webkit`, `lowend`) | one project; run `npm run build:e2e` after any source change, the mock serves `dist-e2e/` | |
-| `npx tsx scripts/screenshots.ts --locale ar --out build/screens/ar` | design review screenshots (needs `npm run mock:e2e` running) | |
-
-Playwright last full run (188 tests, 4 workers): no failing test listed for Chromium or the low-end project; WebKit had
-about 25 failures (section 5). The final summary line of that run was cut off, so treat the Chromium and low-end
-result as "no failure seen" and re-run to confirm. Spec-level runs on Chromium that passed in full: booking 11, manage
-11, sealed 11, portal 5, rtl 11, languages 8, a11y 12 (axe, zero violations, en and ar, plus dark and Increase
-Contrast), interaction 11, security 10; low-end 12 (including the performance budget).
-
-Low-end measurement (Moto G4 profile, CPU 4x, 1.6 Mbit/s, 150 ms): LCP about 2.1 s, CLS 0, blocking time about 0-16 ms,
-JS 57.8 KB, CSS 6.8 KB, fonts 46 KB, 6 requests. Budgets in `test/e2e/perf.spec.ts`: LCP < 3000, CLS < 0.05.
-
-The cross-implementation vectors need Python: `python3 -m venv .venv && .venv/bin/pip install -r
-test/vectors/generate/requirements.txt && .venv/bin/python test/vectors/generate/generate.py` regenerates
-`inbox-v1.json`; `npx tsx test/vectors/generate-js.ts` regenerates `js-sealed.json`. The unit tests read the committed files.
+| `npm run e2e` | `build:e2e` then all Playwright projects | 175 passed, 15 skipped |
+| `npx playwright test --project=chromium` (and `webkit`, `lowend`) | one project; run `npm run build:e2e` after any source change | |
 
 Mind the repository's two `derive-locales.py`: the one in the repo root is the iOS catalog; the web one is
 `web/scripts/derive-locales.py`. Run the right one from the right place.
 
 ## 4. What remains, in priority order
 
-1. **`scripts/test-web.sh`** (repo root, like the other wrappers): install if `web/node_modules` is missing (and the
-   Python venv for the vectors), then `npm run lint`, `typecheck`, `i18n`, `contrast`, `privacy`, `npm test`,
-   `npm run build` (size budget), `npm run e2e`; print only failures and a result line; full log to `build/logs/`;
-   one `playwright` at a time. Not written. The npm scripts above are what it should call.
-2. **WebKit.** Section 5. Decide whether the failures are real before anything else: they may be a Safari-only CSP
-   report on the phone country picker, which would block real iPhone users on the "you" step.
-3. **Lighthouse CI.** Not set up. Plan: `@lhci/cli` as a dev dependency, `lighthouserc.json` with `collect.startServerCommand`
-   `npx tsx test/mock-server/main.ts --serve-dist dist-e2e`, URLs `/maria` and a seeded `/m/<token>` (needs the seed
-   call first, so use a small Node script), `CHROME_PATH` pointing at the Playwright Chromium, assertions
-   `categories:performance >= 0.9` (mobile preset) and `categories:accessibility >= 0.95`. If Chrome cannot be found
-   the command to give the owner is `npx lhci autorun --config=lighthouserc.json`. The Playwright low-end test already
-   guards LCP, CLS and the byte budgets.
-4. **Reconcile with `firebase/functions/API.md`** when it lands (section 6 lists every assumption). The only file to
-   change should be `src/api/{types,client,transport,parse}.ts` and the mock.
-5. **Hosting merge** (section 7) and the build step before deploy.
-6. **Human tasks** (section 8).
-7. Smaller: strict legal build (`BELLO_STRICT_LEGAL=1`) needs the operator details; the portfolio switch and struck-out
-   times (below) were deliberately left out.
+1. **Owner decisions** (section 9): the first-visit answers, the guest names, the consent texts, the "counts as
+   missed" wording, the Google Calendar link. Each is a small change once decided.
+2. **Lighthouse CI.** Not set up. Plan: `@lhci/cli` as a dev dependency, `lighthouserc.json` with
+   `collect.startServerCommand` `npx tsx test/mock-server/main.ts --serve-dist dist-e2e`, URLs `/maria` and a seeded
+   `/m/<token>` (needs the seed call first, so a small Node script), `CHROME_PATH` pointing at the Playwright
+   Chromium, assertions `categories:performance >= 0.9` (mobile preset) and `categories:accessibility >= 0.95`. The
+   Playwright low-end test already guards LCP, CLS and the byte budgets. Add it as a step of `scripts/test-web.sh`.
+3. **Hosting merge** (section 7) and the build step before deploy; the Hosting site id must start with `bellohub`
+   or `bello-hub` (API.md CORS) if the page ever calls the functions cross-origin.
+4. **Human tasks** (section 8), above all the real-iPhone check of the `<select>` console line (section 5).
+5. Smaller: strict legal build (`BELLO_STRICT_LEGAL=1`) needs the operator details; the portfolio switch and
+   struck-out times were deliberately left out; `DESIGN.md` should mention that colour fades of chips, buttons and
+   options now respect Reduce Motion (this agent did not edit `DESIGN.md`).
 
-## 5. The CSP / WebKit problem (unfinished)
+## 5. The WebKit CSP report: found, scoped, not a page bug
 
-Symptom, WebKit project only (Playwright WebKit with the iPhone 14 profile): the `guard` fixture reports
-`style-src-attr inline` on every test that goes through the booking "you" step, the waiting-list sheet, the find page
-and the data-request sheet. Console text: "Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline'
-does not appear in the style-src directive". The app writes no inline style anywhere (`grep style= src` is empty; no
-`.style`, no `setAttribute('style')`), and the same pages are clean in Chromium.
+Symptom (first session): under Playwright's WebKit every page with the phone country picker reported
+`style-src-attr inline` and the guard failed about 20 tests.
 
-What was learned with `scratchpad/csp-webkit.mjs` (a scratch script, not committed): the home page, the manage pages and
-the health form are clean in WebKit. The report appears when the page moves from the time step to the "you" step, and
-the event says `sourceFile` = the entry bundle, line 2, column 7864, which is inside Preact's `diffElementNodes` (element
-creation). Patching `cssText`, `setProperty` and `setAttribute('style')` logged nothing, so no script wrote a style.
-Common to the failing pages: they all render `PhoneField`, a `<select>` with about 250 `<option>` country entries next to
-`<input type="tel">`. Hypothesis: WebKit (not our code) adds an inline style while creating or sizing that `<select>` or
-the tel input, and reports it against `style-src 'self'`. Not proven.
+Bisection (this session, static pages served by the mock under the shipped policy, no CSS, no script): the report
+fires once per `<select>` element WebKit creates. It fires for an empty `<select>`, a hidden one, a listbox
+(`multiple`, `size`), a menulist, with `appearance: none` from a stylesheet, on the iPhone profile and on desktop,
+with or without focus or touch. The `<input type="tel">` with every attribute (`inputmode`, `autocomplete`,
+`dir`) is innocent, as are `<input type="text">` and Preact. The sample is empty and the source is the script that
+created the element (the entry bundle in the app, nothing on a static page). Chromium reports nothing. The refused
+style changes nothing: the computed style, the box and the behaviour of the select are byte-identical with and
+without the policy header (`getComputedStyle`, `getBoundingClientRect`, option count, `value` after a change).
 
-Next steps: (a) in WebKit, load a static page under the same CSP containing only that `<select>` and `<input
-type="tel" autocomplete="tel-national">` and see if the report appears; bisect by removing `autocomplete`, `inputmode`,
-`dir`, the option count; (b) check on a real iPhone (H8) because Playwright's WebKit is not Safari; (c) if it is a
-WebKit quirk with no workaround, the choices are to accept the report (it only says a style was refused; the page still
-works) if real Safari does not show it, or to replace the native country `<select>` with another control, which departs
-from the native-components rule and needs the owner's decision. Do not add `'unsafe-inline'` or `'unsafe-hashes'` to
-`style-src`.
+Cause: WebKit's own user-agent shadow tree for `<select>` carries an inline style attribute, and this WebKit build
+applies the page's CSP to it. It is the engine, not the page: no element of ours has a `style` attribute (the privacy
+gate and `grep` both say so) and no script writes one.
 
-Other WebKit failures in the same run that are expected, not bugs: the "first Tab reaches Skip to content" test (Safari
-does not Tab to links without the system option; mark it `test.skip` for webkit like the two other keyboard tests) and
-tests that fail only because the guard sees the report above. Re-run after the cause is found and list what is left.
+What was done: the guard (`test/e2e/support.ts`) now reports every violation of every page and navigation through a
+context binding (before, only the pages still open at the end were read) and excuses exactly one signature: WebKit,
+`style-src-attr`, blocked URI `inline`, empty sample, while the page holds a `<select>`; the matching console line
+("Refused to apply a stylesheet...") is excused once per such report. Any other violation, in any browser, still
+fails the test. `'unsafe-inline'` and `'unsafe-hashes'` were not added; `hosting.json` is unchanged; the native
+`<select>` stays.
 
-## 6. Deviations and unconfirmed assumptions (API and behavior)
+For the owner, H8: on a real iPhone, open the "you" step of the booking with the Web Inspector attached and see
+whether Safari prints the same "Refused to apply a stylesheet" line. If it does, it is cosmetic (no `report-uri`
+or `report-to` is set, so nothing is sent anywhere); if the picker looked or behaved wrong, the alternatives would
+be a custom country picker (departs from the native-components rule; needs a decision) or a `datalist`-backed text
+field. Nothing else needs to change.
 
-No `API.md` existed. These are assumptions in `src/api/types.ts` and `client.ts`, mirrored by the mock:
+Other WebKit results: the "first Tab reaches Skip to content" test is now skipped on WebKit like the two other
+keyboard tests (Safari does not Tab to links without the system option). The WebKit project is green: 74 passed,
+15 skipped.
 
-- Functions live at `{API_BASE}/{name}` (default `/api`, `VITE_API_BASE_URL`). `getPublicPage` and the slug variant of
-  `getSlots` are GET with a query string; everything else is POST JSON, and every call that carries a token is POST with
-  the token in the body, never in a URL (the mock answers 405 to a GET of those; a test asserts it).
-- Success is 2xx with the typed body. Errors are non-2xx with `{ error: { code, retryAfterSeconds?, professional?:
-  { displayName, firstName, whatsappE164? } } }`. Codes the page handles: `notFound`, `expired`, `slotTaken`,
-  `codeInvalid`, `codeExpired`, `tooManyAttempts`, `rateLimited`, `invalidInput`, `notAllowed`, `tooLarge`,
-  `unavailable`, `appCheck`. An unknown token and an expired one look the same to the person.
-- `getSlots` token variant takes `purpose: 'reschedule' | 'rebook'` and returns `{ slots, durationMinutes }`.
-- `holdSlot` returns `{ holdId, expiresAt }` (5 minutes) and can fail with `slotTaken`.
-- `createBooking` returns one of `confirmed { manageToken, booking }`, `pendingApproval { reason, manageToken }` (reason
-  `newClient` or `noShowLimit`), `paused { scope: 'page' | 'client' }`, `slotTaken { nextSlots }`. It takes the
-  verification proof (`{ kind: 'sms', idToken }` = Firebase ID token, or `{ kind: 'email', token }`), an
-  `idempotencyKey`, and optional `firstVisit { heardFrom, hadBefore, note }`. The page never learns whether a phone is
-  already a client: the approval decision is the server's.
-- `sendEmailCode` and `verifyEmailCode`; `sendSmsCode` and `verifySmsCode` exist only for `VITE_SMS_VERIFIER=api` (tests).
-- `findBookings` returns a fresh manage token per result. Token endpoints accept a manage or a portal token.
-- `BookingView` carries the policy snapshot, `serverNow`, optional `client.firstName`, `forms { intake, checkIn }`,
-  `rules` per locale. The public profile carries `rules` per locale as `{ kind, text }[]`, `inboxKey`
-  `{ keyId, alg: 'hpke-v1', pub }`, `channels.whatsAppAutomation`, optional `weekStart` and `use24Hour`.
-- Cancel `reason` is a key: `conflict | unwell | changed | other`.
-- Intake payload adds optional `consent.photos` (the guardian's photo box) beyond docs/06 section 3.4. `clientName` is the
-  typed signature (adult) or the guardian's name (minor). The data request carries `name` and `phone`.
-- The sealed envelope is `{ v: 1, suite, keyId, kind, itemId, enc, ct }`; the mock enforces the plaintext limits of
-  docs/06 section 3.4 plus the 16-byte tag.
+## 6. How the page reads API.md (deviations and derived behaviour)
 
-Behavior that departs from the docs or the prototype (candidates for ASSUMPTION entries):
+What the page sends and reads is API.md sections 4 and 5 exactly; `src/api/types.ts` is the list. Where the page
+derives something or had to decide:
 
-- **Guest count is chosen on Bk-2**, not Bk-5, because the total duration drives the slots; Bk-5 only asks for one name
-  per guest (D19 keeps guests in sequence).
-- **First-visit questions are profession-neutral** (how did you hear, been before, a preference note with a "no health
-  details here" warning) instead of the prototype's skincare goals.
-- **Booking draft in `sessionStorage`**: name, phone, email, service, time, guest names (never a code, proof, answer or
-  token), so a refresh does not lose them. The brief says "only the language in localStorage"; this is tab-scoped and
-  cleared with the tab. Remove `src/app/booking/store.ts` persistence if the owner wants strictly nothing.
-- **D42**: the "waiting for approval" page uses the generic new-client reason and never mentions money, plans or limits;
-  `maria-approval` tests assert the absence of those words.
-- **reCAPTCHA vs "no third-party scripts"**: Firebase App Check with reCAPTCHA Enterprise and Firebase phone auth load
-  Google scripts and frames, which conflicts with docs/06 section 6 on pages with a form. The strict CSP baseline in
-  `hosting.json` has none of that. Both are lazy and config-gated (`VITE_SMS_VERIFIER`, `VITE_APP_CHECK`,
-  `VITE_FIREBASE_CONFIG`, `VITE_APP_CHECK_SITE_KEY`, `VITE_AUTH_EMULATOR_URL`). The coordinator must choose: a looser CSP
-  variant for the booking page (`script-src` and `frame-src` for `https://www.google.com/recaptcha/` and
-  `https://www.gstatic.com/recaptcha/`, `connect-src` for `identitytoolkit.googleapis.com`, `securetoken.googleapis.com`,
-  `firebaseappcheck.googleapis.com`) while the sealed pages keep the strict one (per-path `headers` rules), or SMS through
-  the API only. The Firebase packages are the scoped `@firebase/app`, `@firebase/app-check`, `@firebase/auth` (the
-  umbrella `firebase` package pulled an advisory through Firestore; `npm audit` is clean without it).
-- **MX clock**: the browser data says Mexico uses a 12-hour clock; the professional's `use24Hour` overrides it.
-- **Not built on purpose**: struck-out unavailable times in reschedule, and the portfolio-photo switch in Cl-7 (shown as
-  an explanation only).
-- **No SRI on lazy chunks** (language files, sealing library, Firebase): dynamic imports cannot carry an integrity
-  attribute; `script-src 'self'` and the published bundle hash cover them.
-- `form-action 'self'` in the CSP; docs/10 may want `'none'` since there are no HTML forms that submit.
+- **Transport.** Every function is a callable POST at `{API_BASE}/{name}` (default `/api`, `VITE_API_BASE_URL`)
+  with `{ data }` and `{ result }`; no GET anywhere (a GET of any function is 405 in the mock and a test asserts
+  it). Errors map by `error.message` (section 3) onto the page's codes: `NOT_FOUND` -> `notFound`, `TOKEN_EXPIRED` ->
+  `expired` (both pages look the same to the person), `RATE_LIMITED` -> `rateLimited` with `details.retryAfterSeconds`,
+  `VERIFICATION_FAILED` -> `codeExpired` ("send a new code"), `INVALID_CODE` -> `codeInvalid`, `NOT_ALLOWED`,
+  `CONFIRMATION_REQUIRED` and `BOOKING_NOT_ACTIVE` -> `notAllowed`, `KEY_MISMATCH` -> `keyMismatch` (the sealed
+  pages drop their envelope and her cached page, then show "cannot be sealed right now"), `PAYLOAD_TOO_LARGE` ->
+  `tooLarge`, `NOT_CONFIGURED` and `TRY_AGAIN` -> `unavailable`, `CONFLICT` and `INTERNAL` -> `server`. An error
+  never carries a contact, so the expired-link page has no "Message Maria" button any more.
+- **Profile.** `firstName` = the first word of `displayName`; `defaultLocale` = `locales[0]`; `rulesText` is split
+  into lines (blank lines dropped, a leading `- `/`•` removed) and shown as "Maria's rules"; `bio` is one string;
+  `businessName` is shown under the name; `credentials` are flat; a service `price` is `Money` and an add-on's
+  `priceText` is words that are never summed (the per-person price is the service price only). `headline`, `tags`,
+  `verifiedByPro`, `weekStart`, `use24Hour`, `askFirstVisitQuestions`, `waitlist` and `channels.emailCode` do not
+  exist: the waiting list is always offered, email codes are always offered (a `NOT_CONFIGURED` answer shows as an
+  error when sending), the first-visit questions are always asked, the region decides the week start and the clock.
+- **Slots.** `getSlots` takes calendar days in the business zone (the month view asks from today to the end of the
+  month, capped at the horizon; reschedule asks 28 days with `rescheduleToken`; rebook asks 35 days by slug and
+  service); the `days[]` are flattened into one ascending list. The hold uses the draft's `holdKey` (random,
+  per attempt, kept in the session draft so a refresh keeps the hold); `holdSlot` answers of `slotTaken` and
+  `paused` become the page's `slotTaken`/`paused` errors, which the time screen already handles.
+- **Booking.** `guests` is a count; `createBooking` sends only `note` (<= 300) from Bk-7; the proof is
+  `{ method: 'phone', idToken }` or `{ method: 'email', proof }` and travels with every attempt, retries included (the
+  proof stays in memory; the request is rebuilt from the same draft, so the idempotent replay carries the same
+  verification as API.md 5.8 requires). `pendingApproval` has no reason: Bk-10 always says "she confirms new
+  clients herself" (D42, never money or limits). `paused` has no scope: the page fetches her page again and shows
+  Bk-1's notice if she stopped accepting bookings, Bk-10's "paused for you" otherwise. The confirmation (Bk-8)
+  renders the server's times and service name plus the add-ons, guests and price from the draft; the health-form
+  card shows when `intakeAvailable`.
+- **Management.** The server's `actions` decide what Bk-9, Cl-6 and Cl-9 offer; `lib/policy.ts` only words the
+  deadline. Cancelling after the window sends `acceptLateWarning: true` (the page already asked her); the done
+  page reads `isLateCancellation`. A visit is "completed" when `status === 'confirmed' && phase === 'past'`.
+  `reportLate` offers 10, 15, 20, 30. No `proReply`, `movedFrom`, price or guest names on the page.
+- **Token pages.** `getBooking` and `getPortal` return a header only, so the client also calls `getPublicPage(slug)`
+  (cached per slug) to get her languages, zone, currency, photo and city. `getFormContext` is composed from
+  `getBooking` + the profile + `getFormContext`; a `NOT_FOUND` (no form published) leaves the check-in and the data
+  request working with the key from her page. The template's questions are read from `template.questions` (or the
+  template itself as a list), a question names its kind as `kind` or `type`, an unknown kind is left out.
+- **Portal.** Only what `getPortal` returns: upcoming visits are listed without links, "book again" shows when a
+  `rebook` section exists, the past list shows `summary`, aftercare shows `title` and `date`. There are no form,
+  check-in or data links in the portal: `getFormContext` and `submitSealed` need a booking (a manage link). The
+  outcome of a rebook (approval, pause) is only known from the server's answer, so the page shows no gate before it.
+- **Waitlist.** `dayFrom`/`dayTo` are calendar days; `serviceId` is sent when known.
+- **Find.** `findBookings` carries the phone with the proof; the list shows the duration from `endsAt - startsAt`
+  and the professional's name from her page.
+- **Sealed.** Unchanged: `{ v: 1, suite, keyId, kind, itemId, enc, ct }`; the page's plaintext limits are the caps of
+  docs/06 section 3.4 (the server allows +1 KB for the tag and framing). A 21st unacknowledged item answers
+  `RATE_LIMITED`, shown as "Too many tries. Wait a moment and try again." (`details.maxItems` is not worded).
+- **Not called:** `getHold` (the waitlist offer link `/{slug}/time?offer=<holdKey>` is not built yet), `getIcs`
+  (the calendar file is built in the browser; the server's variant would put the manage token in a URL).
+
+Behaviour that departs from the docs or the prototype (candidates for ASSUMPTION entries), unchanged from the
+first session: guest count chosen on Bk-2; profession-neutral first-visit questions; the booking draft in
+`sessionStorage` (name, phone, email, service, time, guest names, hold key; never a code, proof, answer or token);
+D42 wording on Bk-10; reCAPTCHA vs "no third-party scripts" (section 7, item 4); MX clock follows the region;
+struck-out times and the portfolio switch not built; no SRI on lazy chunks; `form-action 'self'`.
 
 ## 7. Hosting: the exact `firebase.json` changes for the coordinator
 
@@ -209,13 +221,19 @@ Behavior that departs from the docs or the prototype (candidates for ASSUMPTION 
    no-referrer`, COOP, CORP, Permissions-Policy, `Cache-Control: no-cache`) and the blocks for `/m/**` and `/p/**`
    (`no-store`, `X-Robots-Tag: noindex, nofollow`), `/api/**` (`no-store`), `/assets/**` (immutable), `/fonts/**`,
    `/.well-known/**`.
-3. `hosting.rewrites`: one `/api/{name}` rewrite per public function to `europe-west1` (the 18 listed, add a line per new
-   function) and the catch-all `** -> /index.html` last. If the function names in the backend differ, change them here
-   and in `test/mock-server/server.ts` (`POST_ONLY`).
-4. Decide the CSP variant from the reCAPTCHA item above and keep `/{slug}` and the sealed paths consistent with it.
+3. `hosting.rewrites`: one `/api/{name}` rewrite per public function to `europe-west1` (the 18 listed, add a line per
+   new function) and the catch-all `** -> /index.html` last. If the function names in the backend differ, change them
+   here and in `test/mock-server/server.ts` (`callFunction`).
+4. Decide the CSP variant from the reCAPTCHA item: Firebase phone sign-in and App Check with reCAPTCHA Enterprise
+   load Google scripts and frames, which the strict baseline forbids. Either a looser CSP for the booking paths
+   (`script-src` and `frame-src` for `https://www.google.com/recaptcha/` and `https://www.gstatic.com/recaptcha/`,
+   `connect-src` for `identitytoolkit.googleapis.com`, `securetoken.googleapis.com`,
+   `firebaseappcheck.googleapis.com`) while the sealed paths keep the strict one, or SMS through the API only.
 5. Domain (H6): the rewrites assume the page and `/api` share one origin, so the CSP can say `connect-src 'self'`.
-   Slugs are `a-z0-9-` 3 to 30 characters; the reserved list is `RESERVED_SLUGS` in `src/app/router.ts` and must match the
-   backend's.
+   If the page ever calls `https://europe-west1-<project>.cloudfunctions.net` directly, the Hosting site id must start
+   with `bellohub` or `bello-hub` (API.md CORS, backend commit b0a1aaa) and `connect-src` must name that origin.
+   Slugs are `a-z0-9-` 3 to 30 characters; the reserved list is `RESERVED_SLUGS` in `src/app/router.ts` and must match
+   the backend's.
 
 The Playwright suite and the mock read the same `headers`, so what is tested is what ships.
 
@@ -223,54 +241,96 @@ The Playwright suite and the mock read the same `headers`, so what is tested is 
 
 - **H8, in-app browsers (WhatsApp, Instagram) and real iPhone.** On a real iPhone (Safari) and from a link tapped inside
   WhatsApp and Instagram, check: the page renders and the language is right; the booking runs to the confirmation
-  (the phone country picker and the SMS code are the risk from section 5); the calendar `.ics` and Google links work or
-  the in-app note appears (`cal.inApp`); the personal link copies, or the manual selection fallback appears; a photo can
-  be chosen in the check-in (camera and library) and previews; `<dialog>` sheets open, trap focus, close with the back
-  gesture; no horizontal scroll; Arabic mirrors; Dynamic Type at the largest sizes; Low Power Mode; storage blocked
-  (private mode) still books; links to WhatsApp open the app; nothing asks for cookies or permissions.
+  (the SMS code is the risk); whether the console shows the `<select>` line of section 5; the calendar `.ics` and
+  Google links work or the in-app note appears (`cal.inApp`); the personal link copies, or the manual selection
+  fallback appears; a photo can be chosen in the check-in (camera and library) and previews; `<dialog>` sheets open,
+  trap focus, close with the back gesture; no horizontal scroll; Arabic mirrors; Dynamic Type at the largest sizes;
+  Low Power Mode; storage blocked (private mode) still books; links to WhatsApp open the app; nothing asks for
+  cookies or permissions.
 - **H6, domain.** DNS and the Hosting site for the real domain, HSTS preload submission, the `/privacy` operator details
   (name, address, contact, DPO) via the legal build variables, then `BELLO_STRICT_LEGAL=1 npm run build`.
 - **H4, Firebase.** The web app config (`VITE_FIREBASE_CONFIG`), the App Check site key (`VITE_APP_CHECK_SITE_KEY`) and the
   phone provider in the real project. Local runs use the emulators with `--project demo-bellohub`; this agent never
-  touched a real project.
+  touched a real project. Against the emulators the page needs `VITE_API_BASE_URL=http://127.0.0.1:5001/demo-bellohub/europe-west1`
+  (or a dev proxy) and `VITE_AUTH_EMULATOR_URL`; the email code is `123456` there.
 - Native-language review is not planned (D41); `src/i18n/manifest.json` keeps every locale `needs_review`.
 
-## 9. Known issues and findings
+## 9. Decisions needed from the owner
 
-- WebKit CSP report and the resulting failures (section 5).
-- One flaky observation: an axe color-contrast hit on the Arabic guests chip appeared once and did not repeat; the a11y
-  tests run with `reducedMotion: 'reduce'` because axe samples colours mid-fade otherwise. Run the Arabic booking-flow axe
-  test with `--repeat-each=5` before trusting it.
-- Real bugs the suite found and fixed: `cl9.noTimes` rendered without `{name}`; the calendar overflowed 320 px; top bars
-  and the action bar sat outside landmarks (action bar is now a named region, new string `common.actions`); the photo
-  input had no accessible name; text buttons and `<summary>` were 22 px high; portal tabs lacked Home and End.
+1. **First-visit answers (Bk-7).** The page asks "how did you hear about her" and "been before" but sends only the
+   note (API.md stores `note` only). Keep asking and send them sealed, drop the two questions, or add them to
+   `createBooking`? Until then the UI stays and the answers go nowhere.
+2. **Guest names (Bk-5).** The page asks one name per guest; the server stores a count (API.md 5.8). Drop the name
+   fields, or send them sealed with the intake? They stay on the page only (they are in the session draft).
+3. **Consent texts.** `getFormContext` returns the consent texts she published per language; the page still shows
+   its own embedded consent drafts (`src/legal`, with the checkbox statement and sign label) and records their
+   version in the sealed payload. Which text is the contract: hers (then the page needs a layout for plain text) or
+   the embedded one (then `publishProfile.intake.consent` is unused)?
+4. **"Counts as a missed appointment."** The policy on the booking has no `lateCancelCounts` (it is a no-show
+   setting the profile does not publish). After the free window the page now always warns that a late cancellation
+   may count, and Bk-9 says "it counts" in the cancel row. Either publish the flag or accept the wording.
+5. **Google Calendar link.** The event's description carries the personal link, so tapping "Google Calendar" sends
+   the manage token to Google in the URL (by her own action, like saving the `.ics`). Keep (useful: the link is in
+   her calendar) or leave the link out of the Google variant?
+6. **Portal and the sealed pages.** `getFormContext`/`submitSealed` accept a manage link only, so the portal has no
+   path to the form, the check-in or the data request. Fine for v1, or should the backend accept a portal token for
+   `getFormContext` (with the latest booking) and `submitSealed`?
+7. **Reduce Motion.** Colour fades of chips, buttons and options now stop under Reduce Motion (they ran regardless
+   and axe sampled a mid-fade colour). `DESIGN.md` motion section should say so; this agent did not edit it.
+
+## 10. Security checklist (this session's review; one line per item)
+
+- **HPKE suite and framing.** Fine. `envelope.ts` and `seal.ts` match docs/06 section 3.1 and 3.3 and the vectors
+  README: base mode, DHKEM(X25519, HKDF-SHA256) + HKDF-SHA256 + ChaCha20-Poly1305, `info` `bellohub/inbox/v1`, AAD
+  `bellohub/v1|<kind>|<itemId>|<keyId>`, `keyId = base64url(SHA-256(pub)[0..<8])`, `_pad` to 1 KiB (16 KiB for a
+  check-in with a photo), base64url without padding. The 9 positive vectors made with pyhpke reproduce byte for
+  byte and the 12 negative ones fail to open (`npm test`). The item id is a fresh UUID v4 per seal; a retry resends
+  the same bytes and the server treats a different ciphertext under the same id as `CONFLICT`.
+- **Key verification.** Residual (known, accepted by docs/06): the page checks that `pub` is 32 bytes and that
+  `keyId` is its hash, so a swapped key with a stale id is refused (a test proves it); a server that swaps the key
+  AND recomputes the id is only caught by the app's own check (docs/06 section 3.2). New this session: a
+  `KEY_MISMATCH` answer drops the envelope and the cached profile so no retry ever reuses the old key.
+- **Manage tokens in transit and at rest.** Fine. Tokens travel only in POST bodies (a test fails if any `/api/`
+  URL contains one); the pages `/m/**` and `/p/**` are `no-store` and `noindex`; `Referrer-Policy: no-referrer`
+  as a header and a meta; every outbound link is `noopener noreferrer`; `sessionStorage` holds the booking draft
+  only (never a token, a code, a proof or an answer; a unit test greps the serialized draft); nothing calls
+  `console.*` (the privacy gate parses the syntax tree); the error type carries a code only.
+- **Token exposure by the client's own action.** Residual: the personal link is copied to the clipboard on tap and
+  is written into the `.ics` description and the Google Calendar URL (decision 9.5); browser history keeps `/m/<token>`
+  (the URL is the key by design); link previews by WhatsApp or Instagram fetch the HTML shell only (the token is
+  never in the HTML; the API needs a POST).
+- **Error details.** Fixed. The expired-link page no longer expects a contact in the error: API.md never puts
+  personal data in `details`, and an unknown and an expired link look the same.
+- **Privacy gate and guard.** Fine, with one change. `check-privacy.ts` still forbids storage and cookies on the
+  sealed routes, markup from strings, `console.*`, and any absolute URL other than the two the client taps. The
+  guard now sees every CSP violation of every page and navigation (a context binding, not a read of the pages left
+  open), every request, cookie and storage key. The only tolerance is the WebKit `<select>` signature of section 5.
+- **CSP.** Fine. `default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:;
+  connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; manifest-src 'none'; object-src
+  'none'`, no `unsafe-*`, no wildcard, no remote host; a test asserts the directives and their absence. Residual:
+  the reCAPTCHA/phone sign-in variant (section 7, item 4) is an owner decision; `form-action 'self'` could be
+  `'none'` since no form submits.
+- **SRI.** Fine. Every `<script>` and stylesheet `<link>` of `index.html` carries `integrity="sha384-..."` written
+  from the built file at build time; `/.well-known/bellohub-build.txt` lists the SHA-256 of every served file and a
+  hash over the list, and a test fetches eight files and recomputes them. Residual (known): lazy chunks (language
+  files, the sealing library, Firebase) cannot carry `integrity` on a dynamic import; `script-src 'self'` and the
+  published list cover them.
+- **Mock versus real backend.** Fine for what is tested: the mock enforces what API.md says the functions enforce
+  (token-only POST, idempotency and `CONFLICT`, verification matching the phone or email, size caps, approval and
+  pause decided server-side, no phone enumeration in `findBookings`). Not mirrored in the mock: rate limits, the
+  20-item mailbox cap, App Check, the 7-day token expiry after the visit (the mock expires tokens the same way but
+  nothing tests it).
+
+## 11. Known issues and findings
+
+- The portal tabs moved focus in a `setTimeout` after rendering the panel in a microtask; under load a second
+  arrow key acted on the old tab (3 of 12 runs). Focus now moves synchronously in the key handler.
+- The guests chip on Bk-2 faded its colours regardless of Reduce Motion; axe sampled the mid-fade colour and
+  failed the booking-flow scan every run of this session. Chips, buttons and options now only transition under
+  `prefers-reduced-motion: no-preference`.
+- Real bugs the suite found and fixed in the first session: `cl9.noTimes` without `{name}`; the calendar overflowed
+  320 px; bars outside landmarks; the photo input without a name; 22 px text buttons; portal tabs without Home/End.
 - The Vite chunk warning is silenced with a justified limit in `vite.config.ts`; the real budget is `check-size.ts`.
 - For the next agent: after editing any source file run `npm run build:e2e` before Playwright; the mock serves the
-  built `dist-e2e/`, not the source.
-- Scratch files live outside the repository (`/private/tmp/.../scratchpad`): `csp-webkit.mjs`, `overflow*.mjs`,
-  `paint.mjs`, `kbd.mjs`, `add_key.py`. Nothing there is needed.
-
-## 10. What deserves an adversarial security review
-
-1. **Sealed envelope and HPKE.** `src/crypto/envelope.ts`, `seal.ts`, `submit.ts`. Check the suite ids, `info`, the AAD
-   string, padding and the size limits against docs/06 section 3, the base64url handling, the single-use item id and the
-   same-bytes retry. The independent vectors (`test/vectors/`) were made with pyhpke, but the framing (padding and AAD
-   assembly) was written by the same agent in both; a third reader should compare against the spec. Known limit:
-   `verifiedPublicKey` proves only that `keyId` is the hash of `pub`. A compromised server that swaps the key AND
-   recomputes the id is not detected by the page; the real check is the app's (docs/06 section 3.2). A reviewer should
-   confirm that limit is acceptable and that the page never reuses an envelope across kinds.
-2. **Token handling.** Tokens live in the page path `/m/<token>`, `/p/<token>`; they are sent only in POST bodies, the
-   pages are `no-store` and `noindex`, `Referrer-Policy: no-referrer`, links out use `noopener noreferrer`. Review: link
-   previews by WhatsApp and Instagram fetching the page, browser history and tab sync exposure, what an unknown or
-   expired token reveals (kept identical), and whether a manage token should be rotated after a reschedule.
-3. **The privacy gate and the guard fixture.** `scripts/check-privacy.ts` (storage, console, string markup, URLs in the
-   syntax tree) and `test/e2e/support.ts` (`guard`: every request, cookie, CSP violation, storage key). Check they
-   cannot be bypassed, for instance by a URL assembled at run time or by a request the page makes before the init
-   script is installed.
-4. **CSP and SRI.** `hosting.json` headers, `scripts/vite-integrity.ts`, and the Firebase and reCAPTCHA variant decision.
-5. **Mock versus real backend.** The mock enforces rules that the real functions must also enforce (idempotency,
-   token-only POST, size limits, approval decided server-side, no phone enumeration). Anything the mock does that the
-   backend does not is a test that proves nothing.
-6. **Sensitive text in the page.** `src/routes/form/payload.ts` (what goes into the payload), `image.ts` (EXIF stripped by
-   a canvas re-encode), and the rule that the first-visit note is not clinical (it travels to `createBooking` in clear;
-   the UI warns, nothing technical stops a person typing health data there).
+  built `dist-e2e/`, not the source. The probe pages of the CSP bisection were written under `dist-e2e/probe/` and
+  removed; nothing outside the repository is needed (scratch scripts lived in the session scratchpad).
