@@ -1007,6 +1007,11 @@
         "lateCancelCounts": {
           "type": "boolean"
         },
+        "noShowLimit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
         "actions": {
           "type": "object",
           "properties": {

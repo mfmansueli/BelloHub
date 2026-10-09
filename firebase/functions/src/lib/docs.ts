@@ -182,7 +182,7 @@ export interface BookingDoc {
   /** D47: the rule texts (per booking language) published at booking time. Absent on bookings made before the snapshot. */
   rulesText?: Partial<Record<LocaleId, string>>;
   /** D47: what the no-show policy meant for this client at booking time. Absent on bookings made before the snapshot. */
-  noShowPolicy?: { isOn: boolean; lateCancelCounts: boolean };
+  noShowPolicy?: { isOn: boolean; limit: number; lateCancelCounts: boolean };
   clientConfirmedAt?: Timestamp;
   lateByMinutes?: number;
   lateReportedAt?: Timestamp;
