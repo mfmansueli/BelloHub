@@ -15,7 +15,7 @@ export interface Busy {
   readonly startsAt: number;
   readonly endsAt: number;
   /** Holds of the same session never block themselves. */
-  readonly sessionKey?: string;
+  readonly holdKey?: string;
   readonly bookingId?: string;
 }
 
@@ -33,7 +33,7 @@ export function overlaps(a: { startsAt: number; endsAt: number }, b: { startsAt:
   return a.startsAt < b.endsAt + bufferMs && b.startsAt < a.endsAt + bufferMs;
 }
 
-export function isFree(start: number, durationMinutes: number, rules: SlotRules, busy: readonly Busy[], now: number, ignore?: { sessionKey?: string; bookingId?: string }): boolean {
+export function isFree(start: number, durationMinutes: number, rules: SlotRules, busy: readonly Busy[], now: number, ignore?: { holdKey?: string; bookingId?: string }): boolean {
   const end = start + durationMinutes * MINUTE;
   if (start < now + rules.minNoticeHours * 3_600_000) return false;
   if (start > now + rules.maxDaysAhead * 24 * 3_600_000) return false;
@@ -43,14 +43,14 @@ export function isFree(start: number, durationMinutes: number, rules: SlotRules,
   const inWindow = WINDOWS.some(([from, to]) => start >= instantFromZoned(day, Math.floor(from / 60), from % 60, rules.timeZone) && end <= instantFromZoned(day, Math.floor(to / 60), to % 60, rules.timeZone));
   if (!inWindow) return false;
   return !busy.some((item) => {
-    if (ignore?.sessionKey !== undefined && item.sessionKey === ignore.sessionKey) return false;
+    if (ignore?.holdKey !== undefined && item.holdKey === ignore.holdKey) return false;
     if (ignore?.bookingId !== undefined && item.bookingId === ignore.bookingId) return false;
     return overlaps({ startsAt: start, endsAt: end }, item, rules.bufferMinutes * MINUTE);
   });
 }
 
 /** Free start times in `[from, to)`, as UTC ISO strings, ascending. */
-export function freeSlots(from: number, to: number, durationMinutes: number, rules: SlotRules, busy: readonly Busy[], now: number, ignore?: { sessionKey?: string; bookingId?: string }): string[] {
+export function freeSlots(from: number, to: number, durationMinutes: number, rules: SlotRules, busy: readonly Busy[], now: number, ignore?: { holdKey?: string; bookingId?: string }): string[] {
   const out: string[] = [];
   let day: DateKey = addDays(zonedDateKey(from, rules.timeZone), -1);
   const last = addDays(zonedDateKey(to, rules.timeZone), 1);

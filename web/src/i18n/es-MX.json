@@ -5,10 +5,6 @@
     "one": "{count} certificado",
     "other": "{count} certificados"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} certificado · verificado por {name}",
-    "other": "{count} certificados · verificados por {name}"
-  },
   "bk1.find": "¿Ya agendaste? Encuentra tu cita",
   "bk1.messageWa": "Escribir a {name} por WhatsApp",
   "bk1.paused.back": "{name} regresa el {date}. Envía un mensaje y tendrás respuesta.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Envía un mensaje y tendrás respuesta en cuanto sea posible.",
   "bk1.rules": "Cancelaciones y cambios",
   "bk1.services": "Servicios",
-  "bk1.tags": "Especialidades",
-
   "bk10.back": "Volver a la página de {name}",
   "bk10.blocked.text": "A {name} le gusta conversar antes de tu próxima visita. Envía un mensaje y volverás pronto a la agenda.",
   "bk10.blocked.title": "La reserva en línea está en pausa por ahora.",
   "bk10.reason.newClient": "{name} confirma personalmente la primera cita de cada cliente. Suele tardar unas horas. Después podrás agendar con libertad.",
-  "bk10.reason.noShowLimit": "Algunas citas anteriores no se atendieron sin aviso, así que {name} revisa personalmente las citas nuevas. Suele tardar unas horas.",
   "bk10.request": "Tu solicitud",
   "bk10.sent": "Solicitud enviada.",
   "bk10.sentText": "{name} responde por WhatsApp, normalmente en pocas horas. No queda nada agendado hasta entonces. Cuando {name} confirme, tu enlace personal llega por WhatsApp para que puedas cambiar o cancelar cuando quieras.",
@@ -30,7 +23,6 @@
   "bk10.why": "¿Por qué veo esto?",
   "bk10.whyMore": "Esto solo aplica con {name}. No te sigue con otros profesionales. Si crees que es un error, avísale a {name} y la reserva en línea puede reabrirse.",
   "bk10.whyText": "{name} pide a sus clientes que avisen a tiempo cuando no puedan asistir: es sin costo hasta {window} antes. Tras algunas inasistencias sin aviso, {name} conversa contigo antes de otra cita. Tus próximas citas no se ven afectadas.",
-
   "bk11.back": "Volver a la página de {name}",
   "bk11.code": "Código",
   "bk11.codeSub": "Enviamos un código de 6 dígitos a {phone}.",
@@ -50,7 +42,6 @@
   "bk11.send": "Enviar código",
   "bk11.sub": "Escribe el número con el que agendaste. Enviamos un código para que solo tú puedas abrirla.",
   "bk11.title": "Encuentra tu cita",
-
   "bk2.addOns": "Agrega a tu visita",
   "bk2.addOnsHint": "Extras opcionales. Suman tiempo.",
   "bk2.guests.hint": "{name} los atiende uno tras otro.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Primero elige un servicio.",
   "bk2.title": "Elige un servicio",
   "bk2.with": "con {name}",
-
   "bk4.noTimesEnd": "Ya no hay horarios libres. Se puede agendar hasta el {date}.",
   "bk4.noTimesMonth": "No hay horarios libres este mes. Revisa el siguiente.",
   "bk4.pickError": "Primero elige un horario.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Horarios en la hora de {place}.",
   "bk4.zoneDevice": "Tu dispositivo está en otra zona horaria.",
   "bk4.zoneYours": "Donde estás, serían las {time}.",
-
   "bk5.email": "Correo",
   "bk5.err.email": "Ese correo no parece correcto.",
   "bk5.err.guest": "Escribe el primer nombre de tu acompañante.",
@@ -98,7 +87,6 @@
   "bk5.send": "Enviar código de verificación",
   "bk5.sub": "{date} a las {time}. Cuéntale a {name} quién viene.",
   "bk5.title": "Ya casi.",
-
   "bk6.channel": "Enviar el código por",
   "bk6.code": "Código de verificación",
   "bk6.emailHint": "Agrega un correo en el paso anterior si prefieres recibir ahí el código.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Verificar",
   "bk6.viaEmail": "Enviamos un código de 6 dígitos a tu correo, {email}.",
   "bk6.viaSms": "Enviamos un código de 6 dígitos por SMS al número que termina en {last}.",
-
   "bk7.agree": "Al confirmar, aceptas las reglas de {name}. {line}",
   "bk7.before": "¿Ya te habías hecho este tratamiento?",
   "bk7.before.no": "No, es la primera vez",
@@ -132,7 +119,6 @@
   "bk7.skip": "Omitir por ahora",
   "bk7.sub": "Opcional. Ayuda a que tu primer {service} se sienta hecho para ti.",
   "bk7.title": "Cuéntale un poco de ti a {name}.",
-
   "bk8.again": "Volver a la página de {name}",
   "bk8.change.text": "Ábrelo cuando quieras para cancelar o reprogramar: sin app y sin contraseña. {line}",
   "bk8.change.title": "¿Cambian tus planes? Usa tu enlace.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} a {end}",
   "bk8.title": "Cita agendada.",
   "bk8.view": "Ver cita",
-
   "bk9.askedMove": "Pediste cambiarla a {when}. Hasta que {name} responda, este horario sigue siendo tuyo.",
   "bk9.attend.no": "No puedo asistir",
   "bk9.attend.noText": "Reprograma o cancela abajo para que {name} pueda ofrecer tu horario a otra persona.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Agendar otro horario",
   "bk9.cancel": "Cancelar cita",
   "bk9.cancel.free": "Sin costo hasta {deadline}",
-  "bk9.cancel.late": "A {name} le avisamos al instante",
   "bk9.cancel.lateCounts": "A {name} le avisamos al instante · cuenta como inasistencia",
   "bk9.cancel.message": "Escribe a {name} para cancelar",
   "bk9.cancelledByProText": "{name} canceló esta cita. Puedes agendar otro horario cuando quieras.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "La atención empezará unos {minutes} después de las {time}. Tu horario está reservado.",
   "bk9.late.knows": "{name} ya lo sabe.",
   "bk9.late.over": "Eso es más de los {grace} que se espera. Es posible que recibas un mensaje para cambiar la visita.",
-  "bk9.late.reply": "{name} respondió: {reply}",
   "bk9.late.text": "Dile a {name} cuánto vas a tardar. Tu horario se reserva por {minutes}.",
   "bk9.late.title": "¿Vas a llegar tarde ese día?",
   "bk9.messageWa": "Mensaje por WhatsApp",
-  "bk9.movedFrom": "Se movió desde el {date} a las {time}",
   "bk9.myData": "Tu información",
   "bk9.note.free": "Cambios sin costo hasta {deadline}.",
   "bk9.note.late": "El plazo sin costo terminó el {deadline}. Ahora los cambios siguen las reglas de las últimas horas, abajo.",
@@ -211,7 +193,6 @@
   "bk9.title": "Tu cita",
   "bk9.with": "con {name} · {meta}",
   "bk9.zone": "hasta las {end} · hora de {place}",
-
   "cal.add": "Agregar al calendario",
   "cal.file": "Archivo de calendario (.ics)",
   "cal.google": "Google Calendar",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Mes anterior",
   "cal.saved": "Archivo de calendario guardado.",
   "cal.unavailable": "{date}, no disponible",
-
   "cl2.after": "Después de tu {service} · {date}",
   "cl2.bookAgain": "Agendar de nuevo",
   "cl2.careEmpty": "{name} todavía no compartió cuidados posteriores.",
   "cl2.completed": "Completada",
-  "cl2.dataSub": "Lo que guarda {name} y cómo pedir una copia",
   "cl2.hi": "Hola, {name}.",
   "cl2.journeyEmpty": "Todavía no hay nada compartido. Cuando {name} comparta una nota sobre una visita, aparecerá aquí.",
   "cl2.next": "Próxima sesión",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Secciones",
   "cl2.upcoming": "Próxima",
   "cl2.usedIn": "Usado en tu tratamiento",
-
-  "cl3.approvalGate": "{name} confirma personalmente las citas nuevas. Pide un horario y recibirás respuesta por WhatsApp.",
-  "cl3.ask": "Pedir {when} a {name}",
   "cl3.back": "Volver",
   "cl3.best": "Ideal",
   "cl3.bestNote": "“Ideal” marca la fecha de regreso que recomienda {name}.",
@@ -260,7 +236,6 @@
   "cl3.time": "Elige la hora",
   "cl3.title": "Qué gusto verte de nuevo, {name}.",
   "cl3.titleAnon": "Qué gusto verte de nuevo.",
-
   "cl4.agree": "Estoy de acuerdo",
   "cl4.already.text": "{name} ya tiene tu ficha de salud, enviada en los últimos 12 meses. No hay nada más que hacer.",
   "cl4.already.title": "Ya la enviaste.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Gracias.",
   "cl4.title": "Unas preguntas antes de tu visita.",
   "cl4.writeHere": "Escribe aquí",
-
   "cl5.addPhoto": "Agregar una foto",
   "cl5.anything": "¿Algo que agregar?",
   "cl5.back": "Volver a mis citas",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Gracias, {name}.",
   "cl5.title": "¿Cómo está tu piel hoy?",
   "cl5.worried": "{name} se pondrá en contacto contigo hoy. Si se siente fuerte o sigue empeorando, acude con un médico.",
-
   "cl6.askInstead": "Mejor pedir reprogramar",
   "cl6.bookAgain": "Agendar otro horario",
   "cl6.confirm.free": "Cancelar cita",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "Esto cuenta como inasistencia.",
   "cl6.why": "¿Por qué cancelas?",
   "cl6.whyHint": "Opcional. Ayuda a {name} a ofrecerte un mejor horario.",
-
   "cl7.choices": "Tus opciones",
   "cl7.contact": "Datos de contacto",
   "cl7.contactSub": "Nombre, WhatsApp y correo",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "¿Pedir una copia a {name}?",
   "cl7.form.title.delete": "¿Pedir a {name} que borre tus datos?",
   "cl7.health": "Ficha de salud y consentimiento",
-  "cl7.healthSigned": "Firmada el {date} · sellada, solo {name} puede abrirla",
   "cl7.healthSub": "Sellada, solo {name} puede abrirla",
   "cl7.how": "Cómo funcionan las solicitudes",
   "cl7.keeps": "Lo que guarda {name}",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Solicitud enviada. {name} confirmará cuando esté hecho.",
   "cl7.sub": "Esto es lo que guarda {name} sobre ti, y solo {name} puede verlo.",
   "cl7.title": "Tu información",
-
   "cl9.back": "Tu cita",
   "cl9.back2": "Volver a mi cita",
   "cl9.changeOf": "Este es el cambio {current} de {max}.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "Escribe a {name}",
   "cl9.title.self": "Elige un nuevo horario",
   "cl9.youAsked": "Pediste",
-
   "common.actions": "Acciones",
   "common.back": "Atrás",
   "common.by": "Citas con Bello Hub",
@@ -421,7 +390,6 @@
   "common.skip": "Ir al contenido",
   "common.step": "Paso {current} de {total}",
   "common.yes": "Sí",
-
   "err.appCheck": "No pudimos confirmar que esta solicitud viene de esta página. Recarga la página e intenta de nuevo.",
   "err.generic": "Algo salió mal. Revisa tu conexión e intenta de nuevo.",
   "err.invalidInput": "Revisa lo que escribiste e intenta de nuevo.",
@@ -432,39 +400,30 @@
   "err.timeout": "Está tardando demasiado. Intenta de nuevo.",
   "err.tooLarge": "Eso es demasiado grande para enviarlo. Quita la foto o acorta la nota.",
   "err.unavailable": "El servicio está ocupado ahora. Intenta de nuevo en unos minutos.",
-
   "ics.change": "Cambiar o cancelar: {link}",
   "ics.summary": "{service} con {name}",
-
   "landing.home": "Volver al inicio",
   "landing.text": "Abre el enlace de reserva que te envió el profesional.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "Tu confirmación y tus recordatorios usarán este idioma.",
   "lang.title": "Idioma",
-
   "legal.noticeLink": "Cómo se usa la información de tu cita",
   "legal.privacyLink": "Aviso de privacidad",
-
   "price.from": "Desde {price}",
   "price.onRequest": "Precio a consultar",
-
   "state.crash.text": "La página dejó de funcionar. Recárgala e intenta de nuevo. No se envió nada de lo que escribiste.",
   "state.crash.title": "Algo salió mal.",
-  "state.expired.text": "Los enlaces funcionan hasta que termina la visita y unos días después. Escribe a {name} para pedir uno nuevo.",
   "state.expired.textNoName": "Los enlaces funcionan hasta que termina la visita y unos días después. Pide uno nuevo a quien te lo envió.",
   "state.expired.title": "Este enlace venció.",
   "state.loadFailed.text": "Revisa tu conexión e intenta de nuevo.",
   "state.loadFailed.title": "Esta página no cargó.",
   "state.notFound.text": "Revisa el enlace o pregunta a quien te lo envió.",
   "state.notFound.title": "No encontramos esta página.",
-
   "wa.blocked": "Hola, {name}, vi que la reserva en línea está en pausa para mí. Me gustaría hablar sobre mi próxima visita.",
   "wa.book": "Hola, {name}, me gustaría agendar una cita.",
   "wa.cancel": "Hola, {name}, necesito cancelar mi {service} del {date} a las {time}.",
   "wa.hello": "Hola, {name}, tengo una duda sobre mi cita.",
   "wa.reschedule": "Hola, {name}, me gustaría reprogramar mi {service} del {date} a las {time}.",
-
   "wait.err.days": "El último día no puede ser anterior al primero.",
   "wait.from": "Desde",
   "wait.submit": "Unirme a la lista de espera",

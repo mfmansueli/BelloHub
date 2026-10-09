@@ -19,8 +19,6 @@ export function formatterFor(professional: ProfessionalLite, locale: LocaleId): 
     regionCode: professional.regionCode,
     timeZone: professional.timeZoneID,
     currency: professional.currencyCode,
-    ...(professional.weekStart === undefined ? {} : { weekStart: professional.weekStart }),
-    ...(professional.use24Hour === undefined ? {} : { use24Hour: professional.use24Hour }),
   });
 }
 

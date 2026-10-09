@@ -1,32 +1,44 @@
-// The typed API: one method per Cloud Function of docs/11 section 3 that the page calls. Components and the
-// booking machine depend on this interface and never on `fetch`, so tests inject a fake and the coordinator can
-// reconcile it with firebase/functions/API.md in one place. Token-bearing calls are POSTs so a token never
-// appears in a URL (docs/06 section 5: tokens are never logged).
+// The typed API: one method per function of API.md section 5 that the page calls. Components and the booking
+// machine depend on this interface and never on `fetch`, so tests inject a fake. Every call is a POST with the
+// request in the body (callable protocol, transport.ts), so a token never appears in a URL (docs/06 section 5).
+//
+// The token pages need more than `getBooking` / `getPortal` return (her languages, zone, currency, photo), so
+// those methods also fetch her public page by slug, once per slug, and hand the screens one composed view.
 
 import { createTransport, type Transport } from './transport';
 import {
-  parseBookingResult,
-  parseBookingView,
-  parseFormContext,
+  bookingView,
+  formContext,
+  parseBookingOutcome,
+  parseCancelled,
+  parseConfirmed,
   parseFound,
   parseHold,
-  parsePortal,
-  parsePublicProfile,
+  parseLate,
+  parseMoved,
+  parseProof,
+  parsePublicPage,
+  parseRequested,
   parseSendCode,
   parseSlots,
-  parseToken,
+  parseWireBooking,
+  parseWireFormContext,
+  parseWirePortal,
+  portalView,
 } from './parse';
+import { ApiError } from './errors';
 import type {
-  BookingResult,
+  BookingOutcome,
   BookingView,
   CancelRequest,
-  CancelResponse,
   CreateBookingRequest,
+  FindBookingsRequest,
   FormContext,
   FoundBooking,
   HoldRequest,
   HoldResponse,
   LateResponse,
+  MovedResponse,
   PortalView,
   PublicProfile,
   RebookRequest,
@@ -37,91 +49,114 @@ import type {
   SendEmailCodeRequest,
   SlotQuery,
   SlotsResponse,
-  VerificationProof,
   WaitlistRequest,
 } from './types';
 import { config } from '../lib/config';
 import { getAppCheckToken } from './appcheck';
 
 export interface Api {
+  /** Her public page, one request per slug; a failure is forgotten so a retry asks again. */
   getPublicPage(slug: string): Promise<PublicProfile>;
+  forgetPublicPage(slug: string): void;
   getSlots(query: SlotQuery): Promise<SlotsResponse>;
+  /** Throws `slotTaken` or `paused` when the hold is not granted. */
   holdSlot(request: HoldRequest): Promise<HoldResponse>;
   sendEmailCode(request: SendEmailCodeRequest): Promise<SendCodeResponse>;
+  /** Returns the single-use proof for `verification: { method: 'email', proof }`. */
   verifyEmailCode(email: string, code: string): Promise<string>;
-  /** Only used when `VITE_SMS_VERIFIER=api` (tests and local dev); production uses Firebase Auth. */
+  /**
+   * Not in API.md: the mock server's stand-in for Firebase phone sign-in, used only when `VITE_SMS_VERIFIER=api`
+   * (tests and local development). Production verifies phones in the browser (API.md 5.7) and never calls these.
+   */
   sendSmsCode(phone: string, slug: string): Promise<SendCodeResponse>;
   verifySmsCode(phone: string, code: string): Promise<string>;
-  createBooking(request: CreateBookingRequest): Promise<BookingResult>;
+  createBooking(request: CreateBookingRequest): Promise<BookingOutcome>;
   joinWaitlist(request: WaitlistRequest): Promise<void>;
-  findBookings(slug: string, verification: VerificationProof): Promise<FoundBooking[]>;
+  findBookings(request: FindBookingsRequest): Promise<FoundBooking[]>;
   getBooking(token: string): Promise<BookingView>;
-  confirmPresence(token: string): Promise<void>;
+  confirmPresence(token: string): Promise<string>;
   reportLate(token: string, minutes: number): Promise<LateResponse>;
-  rescheduleBooking(request: RescheduleDirect): Promise<BookingView>;
-  requestReschedule(request: RescheduleAsk): Promise<BookingView>;
-  cancelBooking(request: CancelRequest): Promise<CancelResponse>;
-  rebook(request: RebookRequest): Promise<BookingResult>;
+  /** Direct mode only; throws `slotTaken` when the time went meanwhile. */
+  rescheduleBooking(request: RescheduleDirect): Promise<MovedResponse>;
+  /** Request mode only; throws `slotTaken` when the time went meanwhile. */
+  requestReschedule(request: RescheduleAsk): Promise<void>;
+  cancelBooking(request: CancelRequest): Promise<{ isLateCancellation: boolean }>;
+  rebook(request: RebookRequest): Promise<BookingOutcome>;
   getPortal(token: string): Promise<PortalView>;
+  /** The booking, her profile and the published form (absent when she published none) in one context. */
   getFormContext(token: string): Promise<FormContext>;
   submitSealed(token: string, envelope: SealedEnvelope): Promise<void>;
 }
 
 export function createApi(transport: Transport): Api {
+  const pages = new Map<string, Promise<PublicProfile>>();
+
+  const getPublicPage = (slug: string): Promise<PublicProfile> => {
+    let promise = pages.get(slug);
+    if (promise === undefined) {
+      promise = transport.call('getPublicPage', { slug }).then(parsePublicPage);
+      pages.set(slug, promise);
+      promise.catch(() => {
+        pages.delete(slug);
+      });
+    }
+    return promise;
+  };
+
+  const getBooking = async (token: string): Promise<BookingView> => {
+    const wire = parseWireBooking(await transport.call('getBooking', { token }));
+    const profile = await getPublicPage(wire.slug);
+    return bookingView(wire, profile);
+  };
+
   return {
-    getPublicPage: async (slug) => parsePublicProfile(await transport.get('getPublicPage', { slug })),
-
-    getSlots: async (query) =>
-      parseSlots(
-        'token' in query
-          ? await transport.post('getSlots', query)
-          : await transport.get('getSlots', {
-              slug: query.slug,
-              serviceId: query.serviceId,
-              addOns: query.addOnIds,
-              guests: query.guests,
-              from: query.from,
-              to: query.to,
-            }),
-      ),
-
-    holdSlot: async (request) => parseHold(await transport.post('holdSlot', request)),
-    sendEmailCode: async (request) => parseSendCode(await transport.post('sendEmailCode', request)),
-    verifyEmailCode: async (email, code) => parseToken(await transport.post('verifyEmailCode', { email, code })),
-    sendSmsCode: async (phone, slug) => parseSendCode(await transport.post('sendSmsCode', { phone, slug })),
-    verifySmsCode: async (phone, code) => parseToken(await transport.post('verifySmsCode', { phone, code })),
-    createBooking: async (request) => parseBookingResult(await transport.post('createBooking', request)),
+    getPublicPage,
+    forgetPublicPage: (slug) => {
+      pages.delete(slug);
+    },
+    getSlots: async (query) => parseSlots(await transport.call('getSlots', query)),
+    holdSlot: async (request) => parseHold(await transport.call('holdSlot', request)),
+    sendEmailCode: async (request) => parseSendCode(await transport.call('sendEmailCode', request)),
+    verifyEmailCode: async (email, code) => parseProof(await transport.call('verifyEmailCode', { email, code })),
+    sendSmsCode: async (phone, slug) => parseSendCode(await transport.call('sendSmsCode', { phone, slug })),
+    verifySmsCode: async (phone, code) => parseProof(await transport.call('verifySmsCode', { phone, code })),
+    createBooking: async (request) => parseBookingOutcome(await transport.call('createBooking', request)),
 
     joinWaitlist: async (request) => {
-      await transport.post('joinWaitlist', request);
+      await transport.call('joinWaitlist', request);
     },
 
-    findBookings: async (slug, verification) => parseFound(await transport.post('findBookings', { slug, verification })),
-    getBooking: async (token) => parseBookingView(await transport.post('getBooking', { token })),
+    findBookings: async (request) => parseFound(await transport.call('findBookings', request)),
+    getBooking,
+    confirmPresence: async (token) => parseConfirmed(await transport.call('confirmPresence', { token })),
+    reportLate: async (token, minutes) => parseLate(await transport.call('reportLate', { token, minutes })),
+    rescheduleBooking: async (request) => parseMoved(await transport.call('rescheduleBooking', request)),
+    requestReschedule: async (request) => {
+      parseRequested(await transport.call('requestReschedule', request));
+    },
+    cancelBooking: async (request) => parseCancelled(await transport.call('cancelBooking', request)),
+    rebook: async (request) => parseBookingOutcome(await transport.call('rebook', request)),
 
-    confirmPresence: async (token) => {
-      await transport.post('confirmPresence', { token });
+    getPortal: async (token) => {
+      const wire = parseWirePortal(await transport.call('getPortal', { token }));
+      return portalView(wire, await getPublicPage(wire.slug));
     },
 
-    reportLate: async (token, minutes) => {
-      const raw = (await transport.post('reportLate', { token, minutes })) as Partial<LateResponse> | null;
-      return { lateByMinutes: raw?.lateByMinutes ?? minutes, ...(raw?.proReply === undefined ? {} : { proReply: raw.proReply }) };
+    getFormContext: async (token) => {
+      const booking = await getBooking(token);
+      const profile = await getPublicPage(booking.slug);
+      let form = null;
+      try {
+        form = parseWireFormContext(await transport.call('getFormContext', { token }));
+      } catch (error) {
+        // No health form published: the check-in and the data request still work with the key from her page.
+        if (!(error instanceof ApiError && error.code === 'notFound')) throw error;
+      }
+      return formContext(booking, form, profile.inboxKey);
     },
-
-    rescheduleBooking: async (request) => parseBookingView(await transport.post('rescheduleBooking', request)),
-    requestReschedule: async (request) => parseBookingView(await transport.post('requestReschedule', request)),
-
-    cancelBooking: async (request) => {
-      const raw = (await transport.post('cancelBooking', request)) as { booking?: unknown; countedAsLate?: unknown } | null;
-      return { booking: parseBookingView(raw?.booking), countedAsLate: raw?.countedAsLate === true };
-    },
-
-    rebook: async (request) => parseBookingResult(await transport.post('rebook', request)),
-    getPortal: async (token) => parsePortal(await transport.post('getPortal', { token })),
-    getFormContext: async (token) => parseFormContext(await transport.post('getFormContext', { token })),
 
     submitSealed: async (token, envelope) => {
-      await transport.post('submitSealed', { token, envelope });
+      await transport.call('submitSealed', { token, envelope });
     },
   };
 }

@@ -1,5 +1,6 @@
-// "Maria's rules": the lines her app generated from her policy, published once per localization so the iPhone and
-// the web can never disagree (docs/07 section 7). Shown as published; the page only picks the right language.
+// "Maria's rules": the text her app generated from her policy, published once per localization so the iPhone and
+// the web can never disagree (docs/07 section 7, API.md `rulesText`). Shown as published, line by line; the page only
+// picks the right language.
 
 import type { JSX } from 'preact';
 
@@ -22,7 +23,7 @@ export function RuleList({ lines, lang }: { lines: readonly RuleLine[]; lang: st
   return (
     <ul class="check-list" lang={lang} data-testid="rules">
       {lines.map((line, index) => (
-        <li key={index} data-kind={line.kind}>
+        <li key={index}>
           <Icon name="check" />
           <span>{line.text}</span>
         </li>

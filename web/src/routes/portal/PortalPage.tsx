@@ -1,12 +1,13 @@
 // Cl-2: the client portal (/p/{token}). Next session, past visits, and the aftercare and products the professional
-// chose to share. She sees only what she published ("You only see what Maria chooses to share with you").
+// chose to share. She sees only what she published ("You only see what Maria chooses to share with you"), as
+// API.md 5.16 returns it. The sealed pages (form, check-in, data) open from a booking's own link, not from here.
 
 import type { JSX } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 
 import type { PortalView } from '../../api/types';
 import { useFormatter } from '../../app/context';
-import { manageRoute, routePath, type Route } from '../../app/router';
+import type { Route } from '../../app/router';
 import { Link, LinkButton } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { StatusChip } from '../../components/Feedback';
@@ -25,10 +26,10 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
   const pro = portal.professional;
   const [tab, setTab] = useState<TabId>('appts');
   const list = useRef<HTMLDivElement>(null);
-  useDocumentTitle(t('cl2.hi', { name: portal.client.firstName }));
+  useDocumentTitle(t('cl2.hi', { name: portal.clientFirstName }));
 
   const rebook: Route | string = `/p/${token}/rebook`;
-  const canRebook = portal.next !== undefined && portal.rebookMode !== 'paused';
+  const canRebook = portal.rebook !== undefined;
 
   const onKey = (event: KeyboardEvent, index: number): void => {
     // The tabs pattern of the ARIA practices: arrows move (mirrored in right-to-left), Home and End jump.
@@ -58,13 +59,13 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
             <Avatar name={pro.displayName} photo={pro.photo} />
             <bdi>{pro.displayName}</bdi>
           </div>
-          <Avatar name={portal.client.firstName} size="sm" />
+          <Avatar name={portal.clientFirstName} size="sm" />
         </header>
       }
     >
       <div>
         <h1 id="page-title" class="title" tabIndex={-1}>
-          {t('cl2.hi', { name: portal.client.firstName })}
+          {t('cl2.hi', { name: portal.clientFirstName })}
         </h1>
         <p class="lead">{t('cl2.sub', { name: pro.displayName })}</p>
       </div>
@@ -90,7 +91,7 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
       </div>
 
       <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} class="stack-lg" tabIndex={0}>
-        {tab === 'appts' ? <Appointments token={token} portal={portal} rebook={canRebook ? rebook : null} /> : null}
+        {tab === 'appts' ? <Appointments portal={portal} rebook={canRebook ? rebook : null} /> : null}
         {tab === 'journey' ? <Journey portal={portal} /> : null}
         {tab === 'care' ? <Aftercare portal={portal} /> : null}
       </div>
@@ -100,10 +101,9 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
   );
 }
 
-function Appointments({ token, portal, rebook }: { token: string; portal: PortalView; rebook: Route | string | null }): JSX.Element {
+function Appointments({ portal, rebook }: { portal: PortalView; rebook: Route | string | null }): JSX.Element {
   const { t } = useI18n();
   const format = useFormatter();
-  const pro = portal.professional;
   return (
     <>
       {portal.next === undefined ? null : (
@@ -121,15 +121,18 @@ function Appointments({ token, portal, rebook }: { token: string; portal: Portal
         </section>
       )}
 
-      {portal.upcoming === undefined ? null : (
-        <Link to={manageRoute(portal.upcoming.manageToken)} class="card list-row" testId="upcoming">
-          <span class="grow">
-            <span class="meta">{t('cl2.upcoming')}</span>
-            <b class="strong"><bdi>{portal.upcoming.serviceName}</bdi></b>
-            <span class="sub">{`${format.weekdayDate(portal.upcoming.startsAt)} · ${format.time(portal.upcoming.startsAt)}`}</span>
-          </span>
-          <Icon name="chevron" class="icon-quiet" />
-        </Link>
+      {portal.upcoming.length === 0 ? null : (
+        <ul class="card card-flush list" data-testid="upcoming">
+          {portal.upcoming.map((visit, index) => (
+            <li key={index} class="list-row">
+              <span class="grow">
+                <span class="meta">{t('cl2.upcoming')}</span>
+                <b class="strong"><bdi>{visit.serviceName}</bdi></b>
+                <span class="sub">{`${format.weekdayDate(visit.startsAt)} · ${format.time(visit.startsAt)}`}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
 
       {portal.past.length === 0 ? null : (
@@ -149,30 +152,6 @@ function Appointments({ token, portal, rebook }: { token: string; portal: Portal
         </section>
       )}
 
-      <ul class="card card-flush list">
-        {portal.forms.intake === 'pending' ? (
-          <li>
-            <Link to={manageRoute(token, 'form')} class="list-row" testId="portal-form">
-              <span class="grow"><b>{t('bk8.form.title')}</b><span class="sub">{t('bk8.form.text', { name: pro.firstName })}</span></span>
-              <Icon name="chevron" class="icon-quiet" />
-            </Link>
-          </li>
-        ) : null}
-        {portal.forms.checkIn === 'available' ? (
-          <li>
-            <Link to={manageRoute(token, 'checkin')} class="list-row" testId="portal-checkin">
-              <span class="grow"><b>{t('bk9.checkin.title')}</b><span class="sub">{t('bk9.checkin.text', { name: pro.firstName })}</span></span>
-              <Icon name="chevron" class="icon-quiet" />
-            </Link>
-          </li>
-        ) : null}
-        <li>
-          <Link to={routePath(manageRoute(token, 'data'))} class="list-row" testId="portal-data">
-            <span class="grow"><b>{t('bk9.myData')}</b><span class="sub">{t('cl2.dataSub', { name: pro.firstName })}</span></span>
-            <Icon name="chevron" class="icon-quiet" />
-          </Link>
-        </li>
-      </ul>
     </>
   );
 }
@@ -180,7 +159,7 @@ function Appointments({ token, portal, rebook }: { token: string; portal: Portal
 function Journey({ portal }: { portal: PortalView }): JSX.Element {
   const { t } = useI18n();
   const format = useFormatter();
-  const shared = portal.past.filter((visit) => visit.note !== undefined && visit.note !== '');
+  const shared = portal.past.filter((visit) => visit.summary !== undefined && visit.summary !== '');
   return (
     <>
       {shared.length === 0 ? <p class="lead" data-testid="journey-empty">{t('cl2.journeyEmpty', { name: portal.professional.firstName })}</p> : null}
@@ -191,7 +170,7 @@ function Journey({ portal }: { portal: PortalView }): JSX.Element {
             <b class="strong"><bdi>{visit.serviceName}</bdi></b>
             <div class="well">
               <b class="strong">{t('cl2.shared', { name: portal.professional.firstName })}</b>
-              <p>{visit.note}</p>
+              <p>{visit.summary}</p>
             </div>
           </li>
         ))}
@@ -212,7 +191,7 @@ function Aftercare({ portal }: { portal: PortalView }): JSX.Element {
       {portal.aftercare.length === 0 ? <p class="lead" data-testid="care-empty">{t('cl2.careEmpty', { name: portal.professional.firstName })}</p> : null}
       {portal.aftercare.map((entry, index) => (
         <section key={index} class="card stack-sm">
-          <h2 class="strong">{t('cl2.after', { service: entry.serviceName, date: format.dayMonth(entry.date) })}</h2>
+          <h2 class="strong">{entry.date === undefined ? entry.title : t('cl2.after', { service: entry.title, date: format.dayMonth(entry.date) })}</h2>
           <ul class="check-list">
             {entry.lines.map((line, i) => (
               <li key={i}><Icon name="check" /><span>{line}</span></li>

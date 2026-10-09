@@ -28,7 +28,7 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 .progress i.on { background: var(--ink); }
 
 /* Buttons: one primary action per screen */
-.btn { display: flex; align-items: center; justify-content: center; gap: 8px; inline-size: 100%; min-block-size: 56px; padding: 12px 20px; border-radius: var(--radius-button); font-size: var(--fs-body); font-weight: 600; text-align: center; line-height: 1.25; transition: background-color var(--dur-press) ease, color var(--dur-press) ease, border-color var(--dur-press) ease; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; inline-size: 100%; min-block-size: 56px; padding: 12px 20px; border-radius: var(--radius-button); font-size: var(--fs-body); font-weight: 600; text-align: center; line-height: 1.25; }
 .btn-primary { background: var(--ink); color: var(--ink-on-fill); box-shadow: 0 10px 20px -10px rgba(36, 35, 33, 0.5); }
 .btn-secondary { background: var(--surface); color: var(--ink); border: 1.5px solid var(--field-border); }
 .btn-tertiary { background: transparent; color: var(--rose-text); min-block-size: var(--space-touch-target); }
@@ -43,7 +43,7 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 
 /* Chips (toggle buttons) */
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
-.chip { display: inline-flex; align-items: center; justify-content: center; min-block-size: 44px; padding-inline: 16px; border-radius: 22px; background: var(--surface); color: var(--ink); border: 1.5px solid var(--field-border); font-size: var(--fs-meta); font-weight: 600; transition: background-color var(--dur-press) ease, color var(--dur-press) ease; }
+.chip { display: inline-flex; align-items: center; justify-content: center; min-block-size: 44px; padding-inline: 16px; border-radius: 22px; background: var(--surface); color: var(--ink); border: 1.5px solid var(--field-border); font-size: var(--fs-meta); font-weight: 600; }
 .chip[aria-pressed='true'], .chip[aria-checked='true'] { background: var(--ink); color: var(--ink-on-fill); border-color: var(--ink); }
 .pill { display: inline-flex; align-items: center; min-block-size: 30px; padding-inline: 12px; border-radius: 15px; background: var(--sunken); color: var(--neutral-text); font-size: var(--fs-footnote); font-weight: 600; }
 
@@ -117,7 +117,7 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 
 /* Options: a card that is a radio or a checkbox (native input inside, so the keyboard and screen readers just work) */
-.option { position: relative; display: flex; align-items: center; gap: var(--space-row); min-block-size: 68px; padding: 14px 16px; background: var(--surface); border: 1.5px solid var(--hairline); border-radius: var(--radius-card); cursor: pointer; transition: border-color var(--dur-press) ease; }
+.option { position: relative; display: flex; align-items: center; gap: var(--space-row); min-block-size: 68px; padding: 14px 16px; background: var(--surface); border: 1.5px solid var(--hairline); border-radius: var(--radius-card); cursor: pointer; }
 .option + .option { margin-block-start: 10px; }
 .option:has(input:checked) { border-color: var(--ink); }
 .option:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }

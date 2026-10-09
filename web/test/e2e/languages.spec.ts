@@ -87,6 +87,11 @@ test.describe('all fourteen localizations', () => {
   });
 });
 
+/** The published text, line by line, as the page shows it. */
+function lines(text: string | undefined): string[] {
+  return (text ?? '').split('\n').filter((line) => line !== '');
+}
+
 test.describe('what the professional published', () => {
   test('her rules are shown exactly as published, in the page language when she wrote it', async ({ page, slugFor }) => {
     const published = rulesFor(DEFAULT_POLICY);
@@ -95,7 +100,7 @@ test.describe('what the professional published', () => {
     const rules = page.getByTestId('rules');
     await expect(rules).toBeVisible();
     const shown = (await rules.locator('li').allInnerTexts()).map((line) => line.trim());
-    expect(shown).toEqual((published['pt-BR'] ?? []).map((line) => line.text));
+    expect(shown).toEqual(lines(published['pt-BR']));
   });
 
   test('when she did not publish the page language, the text falls back to hers and says which language it is in', async ({ page, slugFor }) => {
@@ -106,7 +111,7 @@ test.describe('what the professional published', () => {
     await expect(rules).toBeVisible();
     // German was not published; her default language (pt-BR) is. Never a machine translation of her rules.
     const shown = (await rules.locator('li').allInnerTexts()).map((line) => line.trim());
-    expect(shown).toEqual((published['pt-BR'] ?? []).map((line) => line.text));
+    expect(shown).toEqual(lines(published['pt-BR']));
     await expect(rules).toHaveAttribute('lang', 'pt-BR');
   });
 
@@ -115,6 +120,6 @@ test.describe('what the professional published', () => {
     await page.context().addInitScript(() => { window.localStorage.setItem('bh.lang', 'ar'); });
     await open(page, `/${slugFor('maria')}`);
     const shown = (await page.getByTestId('rules').locator('li').allInnerTexts()).map((line) => line.trim());
-    expect(shown).toEqual((published['ar'] ?? []).map((line) => line.text));
+    expect(shown).toEqual(lines(published['ar']));
   });
 });

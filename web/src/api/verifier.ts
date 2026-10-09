@@ -1,5 +1,6 @@
 // Phone and email verification behind one small interface (D31, D37): the page asks a Verifier to send a code
-// and to confirm it, and gets back a proof the server checks. Which implementation runs is build configuration.
+// and to confirm it, and gets back the proof the server checks (API.md 5.6 and 5.7). Which implementation runs is
+// build configuration.
 
 import type { Api } from './client';
 import { ApiError } from './errors';
@@ -44,7 +45,7 @@ class EmailVerifier implements Verifier {
   }
 
   async confirm(code: string): Promise<VerificationProof> {
-    return { kind: 'email', token: await this.context.api.verifyEmailCode(this.target.email, code) };
+    return { method: 'email', proof: await this.context.api.verifyEmailCode(this.target.email, code) };
   }
 }
 
@@ -60,7 +61,7 @@ class ApiSmsVerifier implements Verifier {
   }
 
   async confirm(code: string): Promise<VerificationProof> {
-    return { kind: 'sms', idToken: await this.context.api.verifySmsCode(this.target.phone, code) };
+    return { method: 'phone', idToken: await this.context.api.verifySmsCode(this.target.phone, code) };
   }
 }
 
@@ -95,7 +96,7 @@ class FirebaseSmsVerifier implements Verifier {
   async confirm(code: string): Promise<VerificationProof> {
     if (this.session === null) throw new ApiError('codeExpired');
     try {
-      return { kind: 'sms', idToken: await this.session.confirm(code) };
+      return { method: 'phone', idToken: await this.session.confirm(code) };
     } catch {
       throw new ApiError('codeInvalid');
     }

@@ -33,7 +33,7 @@ export function parseDraft(text: string | null, slug: string, defaultCountry: st
       guests,
       guestNames: Array.isArray(stored['guestNames']) ? stored['guestNames'].filter((n): n is string => typeof n === 'string').slice(0, guests) : [],
       startsAt: nullableStr(stored['startsAt']),
-      holdId: nullableStr(stored['holdId']),
+      holdKey: /^[A-Za-z0-9_-]{16,64}$/.test(str(stored['holdKey'])) ? str(stored['holdKey']) : fresh.holdKey,
       holdExpiresAt: nullableStr(stored['holdExpiresAt']),
       name: str(stored['name']),
       phoneCountry: str(stored['phoneCountry'], defaultCountry),

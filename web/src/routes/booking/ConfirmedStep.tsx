@@ -1,7 +1,8 @@
 // Bk-8: "You're booked." The service, the final time, the personal link (copy), add to calendar, and the health
-// form when she has not sent one. The words about how the link reaches her depend on the channel (D31): with
-// WhatsApp automation off the page says "save your link" (and "we emailed it" when she gave an email); only with
-// automation on does it promise a WhatsApp confirmation.
+// form when she publishes one. The words about how the link reaches her depend on the channel (D31): with
+// WhatsApp automation off the page says "save your link" (and "we emailed it" when the server did); only with
+// automation on does it promise a WhatsApp confirmation. The server answers with the times and the service name
+// (API.md 5.8); the add-ons, the guests and the price are what she chose, still in the draft.
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -11,14 +12,14 @@ import { useFormatter } from '../../app/context';
 import { navigate, slugRoute, manageRoute } from '../../app/router';
 import { allowedStep } from '../../app/booking/machine';
 import { dispatchBooking, useBooking } from '../../app/booking/store';
-import { bookedPriceText } from '../../app/booking/priceText';
+import { priceText } from '../../app/booking/priceText';
+import { selectedAddOns, totals } from '../../app/booking/summary';
 import { CalendarSheet } from '../../components/CalendarSheet';
 import { Button, Link, LinkButton } from '../../components/Button';
 import { Icon } from '../../components/Icon';
 import { Avatar, Footer, Screen, Title, useDocumentTitle } from '../../components/Layout';
 import { Notice, Seal } from '../../components/Feedback';
 import { PersonalLink } from '../../components/PersonalLink';
-import { useRules } from '../../components/RuleList';
 import { useI18n } from '../../i18n';
 import { linkBase } from '../../lib/config';
 
@@ -26,7 +27,6 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
   const { t } = useI18n();
   const format = useFormatter();
   const [state] = useBooking(profile.slug, profile.regionCode);
-  const rules = useRules(profile.rules, profile);
   const [calendarOpen, setCalendarOpen] = useState(false);
   useDocumentTitle(t('bk8.title'));
 
@@ -37,14 +37,17 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
 
   const result = state.result;
   if (redirect || result?.status !== 'confirmed') return null;
-  const { booking, manageToken } = result;
+  const { draft } = state;
+  const { manageToken } = result;
   const link = `${linkBase()}/m/${manageToken}`;
-  const hasEmail = state.draft.email.trim() !== '';
-  const sub = profile.channels.whatsAppAutomation ? t('bk8.sub.whatsapp') : hasEmail ? t('bk8.sub.emailed') : t('bk8.sub.saveLink');
-  const noShow = rules.lines.find((line) => line.kind === 'noShow')?.text;
-  const changes = rules.lines.find((line) => line.kind === 'changes')?.text ?? '';
-  const guestNames = booking.guestNames?.filter(Boolean) ?? [];
-  const meta = [format.minutes(booking.totalMinutes), bookedPriceText(booking.price, format, t)].filter(Boolean).join(' · ');
+  const sub = profile.features.whatsAppAutomation ? t('bk8.sub.whatsapp') : result.emailSent ? t('bk8.sub.emailed') : t('bk8.sub.saveLink');
+  const service = profile.services.find((candidate) => candidate.id === draft.serviceId);
+  const addOns = selectedAddOns(profile.addOns, draft.addOnIds);
+  const summary = service === undefined ? null : totals(service, addOns, draft.guests);
+  const minutes = Math.round((Date.parse(result.endsAt) - Date.parse(result.startsAt)) / 60_000);
+  const guestNames = draft.guestNames.filter((name) => name.trim() !== '');
+  const meta = [format.minutes(minutes), priceText(summary?.price ?? null, format, t)].filter(Boolean).join(' · ');
+  const serviceNames = [result.serviceName, ...addOns.map((addOn) => addOn.name)];
 
   return (
     <Screen>
@@ -58,19 +61,19 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
 
       <section class="card" aria-label={t('bk8.summary')} data-testid="booking-card">
         <b class="strong section">
-          <bdi>{[booking.service.name, ...booking.addOns.map((addOn) => addOn.name)].join(' + ')}</bdi>
+          <bdi>{serviceNames.join(' + ')}</bdi>
         </b>
         <p class="meta">{meta}</p>
-        {booking.guestCount > 0 ? (
-          <p class="meta">{guestNames.length > 0 ? t('bk8.guest.named', { guest: format.list(guestNames) }) : t('bk8.guest.unnamed', { count: booking.guestCount })}</p>
+        {draft.guests > 0 ? (
+          <p class="meta">{guestNames.length > 0 ? t('bk8.guest.named', { guest: format.list(guestNames) }) : t('bk8.guest.unnamed', { count: draft.guests })}</p>
         ) : null}
         <hr class="rule" />
         <div class="row-flex">
           <Icon name="calendar" />
           <div>
-            <b class="strong">{format.weekdayDate(booking.startsAt)}</b>
+            <b class="strong">{format.weekdayDate(result.startsAt)}</b>
             <br />
-            <span class="meta tn">{t('bk8.timeRange', { start: format.time(booking.startsAt), end: format.time(booking.endsAt) })}</span>
+            <span class="meta tn">{t('bk8.timeRange', { start: format.time(result.startsAt), end: format.time(result.endsAt) })}</span>
           </div>
         </div>
         <div class="row-flex mt-md">
@@ -101,7 +104,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </Button>
       </div>
 
-      {booking.forms.intake === 'pending' ? (
+      {profile.intakeAvailable ? (
         <Link to={manageRoute(manageToken, 'form')} class="card list-row" testId="health-form">
           <span class="grow">
             <b class="strong">{t('bk8.form.title')}</b>
@@ -115,13 +118,11 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         <h2 id="change-title" class="strong">
           {t('bk8.change.title')}
         </h2>
-        <p>{t('bk8.change.text', { line: changes }).trim()}</p>
+        <p>{t('bk8.change.text', { line: '' }).trim()}</p>
         <PersonalLink url={link} />
-        {noShow === undefined ? null : (
-          <Notice kind="quiet" icon="alert">
-            {t('bk8.noShow', { name: profile.firstName })} {noShow}
-          </Notice>
-        )}
+        <Notice kind="quiet" icon="alert">
+          {t('bk8.noShow', { name: profile.firstName })}
+        </Notice>
       </section>
 
       <p class="center">
@@ -139,7 +140,12 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </Button>
       </p>
       <Footer />
-      <CalendarSheet open={calendarOpen} onClose={() => { setCalendarOpen(false); }} booking={booking} link={link} />
+      <CalendarSheet
+        open={calendarOpen}
+        onClose={() => { setCalendarOpen(false); }}
+        booking={{ bookingId: result.bookingId, startsAt: result.startsAt, endsAt: result.endsAt, serviceNames, professional: { displayName: profile.displayName, city: profile.city } }}
+        link={link}
+      />
     </Screen>
   );
 }

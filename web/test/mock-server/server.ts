@@ -1,4 +1,5 @@
-// The HTTP side of the mock: the API under /api, the built page under everything else (with the headers of
+// The HTTP side of the mock: the API under /api (the callable protocol of API.md section 1: POST `{data}`, answers
+// `{result}`, errors `{error:{status,message,details}}`), the built page under everything else (with the headers of
 // hosting.json, so the tests run against the Content-Security-Policy that will ship), and test controls under /__test.
 
 import { gzipSync } from 'node:zlib';
@@ -42,14 +43,14 @@ async function readBody(request: IncomingMessage): Promise<unknown> {
   for await (const chunk of request) {
     const buffer = chunk as Buffer;
     size += buffer.length;
-    if (size > 8 * 1024 * 1024) throw new MockError('tooLarge', 413);
+    if (size > 8 * 1024 * 1024) throw new MockError('PAYLOAD_TOO_LARGE', { maxBytes: 8 * 1024 * 1024 }, 413);
     chunks.push(buffer);
   }
   if (chunks.length === 0) return {};
   try {
     return JSON.parse(Buffer.concat(chunks).toString('utf8')) as unknown;
   } catch {
-    throw new MockError('invalidInput', 400);
+    throw new MockError('INVALID_ARGUMENT');
   }
 }
 
@@ -68,65 +69,66 @@ export interface MockServer {
   close(): Promise<void>;
 }
 
-/** A POST-only function takes its token in the body, never in the URL (docs/06 section 5). */
-const POST_ONLY = new Set(['getBooking', 'confirmPresence', 'reportLate', 'rescheduleBooking', 'requestReschedule', 'cancelBooking', 'rebook', 'getPortal', 'getFormContext', 'submitSealed', 'holdSlot', 'createBooking', 'joinWaitlist', 'findBookings', 'sendEmailCode', 'verifyEmailCode', 'sendSmsCode', 'verifySmsCode']);
 
 export async function startMock(port: number, distDirectory: string | null): Promise<MockServer> {
   const api = new MockApi();
   await api.init();
   const headerRules = loadHeaders();
 
-  async function handleApi(name: string, method: string, query: URLSearchParams, request: IncomingMessage, response: ServerResponse): Promise<void> {
-    if (method === 'GET' && POST_ONLY.has(name)) throw new MockError('invalidInput', 405);
-    const body: Json = method === 'POST' ? ((await readBody(request)) as Json) : {};
+  /** Every function is a callable: POST only, `{ data }` in, `{ result }` out. A GET never reaches a function. */
+  async function handleApi(name: string, method: string, request: IncomingMessage, response: ServerResponse): Promise<void> {
+    if (method !== 'POST') throw new MockError('INVALID_ARGUMENT', undefined, 405);
+    const envelope = (await readBody(request)) as Json;
+    if (typeof envelope['data'] !== 'object' || envelope['data'] === null) throw new MockError('INVALID_ARGUMENT', { fields: ['data'] });
+    const data = envelope['data'] as Json;
+    const result = await callFunction(name, data);
+    send(response, 200, { result });
+  }
+
+  async function callFunction(name: string, data: Json): Promise<unknown> {
     switch (name) {
       case 'getPublicPage':
-        return send(response, 200, api.getPublicPage(query.get('slug') ?? ''));
-      case 'getSlots': {
-        const params: Json = method === 'GET' ? { ...Object.fromEntries(query.entries()) } : body;
-        return send(response, 200, api.getSlots(params));
-      }
+        return api.getPublicPage(data);
+      case 'getSlots':
+        return api.getSlots(data);
       case 'holdSlot':
-        return send(response, 200, api.holdSlot(body));
+        return api.holdSlot(data);
       case 'sendSmsCode':
-        return send(response, 200, api.sendCode('sms', body));
+        return api.sendCode('phone', data);
       case 'verifySmsCode':
-        return send(response, 200, api.verifyCode('sms', body));
+        return api.verifyCode('phone', data);
       case 'sendEmailCode':
-        return send(response, 200, api.sendCode('email', body));
+        return api.sendCode('email', data);
       case 'verifyEmailCode':
-        return send(response, 200, api.verifyCode('email', body));
+        return api.verifyCode('email', data);
       case 'createBooking':
-        return send(response, 200, api.createBooking(body as never));
+        return api.createBooking(data);
       case 'joinWaitlist':
-        api.joinWaitlist(body);
-        return send(response, 200, { ok: true });
+        return api.joinWaitlist(data);
       case 'findBookings':
-        return send(response, 200, api.findBookings(body));
+        return api.findBookings(data);
       case 'getBooking':
-        return send(response, 200, api.getBooking(String(body['token'])));
+        return api.getBooking(data);
       case 'confirmPresence':
-        api.confirmPresence(String(body['token']));
-        return send(response, 200, { ok: true });
+        return api.confirmPresence(data);
       case 'reportLate':
-        return send(response, 200, api.reportLate(String(body['token']), Number(body['minutes'])));
+        return api.reportLate(data);
       case 'rescheduleBooking':
-        return send(response, 200, api.rescheduleBooking(body));
+        return api.rescheduleBooking(data);
       case 'requestReschedule':
-        return send(response, 200, api.requestReschedule(body));
+        return api.requestReschedule(data);
       case 'cancelBooking':
-        return send(response, 200, api.cancelBooking(body));
+        return api.cancelBooking(data);
       case 'rebook':
-        return send(response, 200, api.rebook(body));
+        return api.rebook(data);
       case 'getPortal':
-        return send(response, 200, api.getPortal(String(body['token'])));
+        return api.getPortal(data);
       case 'getFormContext':
-        return send(response, 200, api.getFormContext(String(body['token'])));
+        return api.getFormContext(data);
       case 'submitSealed':
-        await api.submitSealed(body);
-        return send(response, 200, { ok: true });
+        return api.submitSealed(data);
       default:
-        throw new MockError('notFound', 404);
+        throw new MockError('NOT_FOUND');
     }
   }
 
@@ -158,7 +160,7 @@ export async function startMock(port: number, distDirectory: string | null): Pro
       case '/__test/requests':
         return send(response, 200, { items: api.rescheduleRequests });
       default:
-        throw new MockError('notFound', 404);
+        throw new MockError('NOT_FOUND');
     }
   }
 
@@ -200,15 +202,15 @@ export async function startMock(port: number, distDirectory: string | null): Pro
     const url = new URL(request.url ?? '/', 'http://localhost');
     const method = request.method ?? 'GET';
     const run = async (): Promise<void> => {
-      if (url.pathname.startsWith('/api/')) return handleApi(url.pathname.slice(5), method, url.searchParams, request, response);
+      if (url.pathname.startsWith('/api/')) return handleApi(url.pathname.slice(5), method, request, response);
       if (url.pathname.startsWith('/__test/')) return handleTest(url.pathname, method, url.searchParams, request, response);
       serveStatic(url, request.headers['accept-encoding'] ?? '', response);
     };
     run().catch((error: unknown) => {
       if (error instanceof MockError) {
-        send(response, error.status, { error: { code: error.code, ...error.extra } });
+        send(response, error.status, { error: { status: error.callableStatus, message: error.code, ...(error.details === undefined ? {} : { details: error.details }) } });
       } else {
-        send(response, 500, { error: { code: 'server' } });
+        send(response, 500, { error: { status: 'INTERNAL', message: 'INTERNAL' } });
       }
     });
   });

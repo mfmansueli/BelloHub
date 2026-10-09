@@ -5,10 +5,6 @@
     "one": "{count} sertifika",
     "other": "{count} sertifika"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} sertifika · {name} tarafından doğrulandı",
-    "other": "{count} sertifika · {name} tarafından doğrulandı"
-  },
   "bk1.find": "Zaten randevu aldınız mı? Randevunuzu bulun",
   "bk1.messageWa": "{name} ile WhatsApp'tan yazışın",
   "bk1.paused.back": "{name} {date} tarihinde dönüyor. Mesaj gönderin, yanıt alırsınız.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Mesaj gönderin, en kısa sürede yanıt alırsınız.",
   "bk1.rules": "İptaller ve değişiklikler",
   "bk1.services": "Hizmetler",
-  "bk1.tags": "Uzmanlık alanları",
-
   "bk10.back": "{name} sayfasına dön",
   "bk10.blocked.text": "{name}, bir sonraki ziyaretinizden önce sizinle konuşmak istiyor. Mesaj gönderin, kısa sürede takvime dönersiniz.",
   "bk10.blocked.title": "Çevrimiçi randevu şimdilik duraklatıldı.",
   "bk10.reason.newClient": "{name}, her yeni müşterinin ilk randevusunu kendisi onaylar. Bu genellikle birkaç saat sürer. Sonrasında özgürce randevu alabilirsiniz.",
-  "bk10.reason.noShowLimit": "Önceki bazı randevulara haber verilmeden gelinmedi; bu yüzden {name} yeni randevuları kendisi inceliyor. Bu genellikle birkaç saat sürer.",
   "bk10.request": "Talebiniz",
   "bk10.sent": "Talep gönderildi.",
   "bk10.sentText": "{name} WhatsApp'tan yanıt verir, genellikle birkaç saat içinde. O zamana kadar hiçbir şey ayrılmış olmaz. {name} onayladığında kişisel bağlantınız WhatsApp'tan gelir; istediğiniz zaman değiştirebilir veya iptal edebilirsiniz.",
@@ -30,7 +23,6 @@
   "bk10.why": "Bunu neden görüyorum?",
   "bk10.whyMore": "Bu yalnızca {name} için geçerlidir. Başka uzmanlara taşınmaz. Bir hata olduğunu düşünüyorsanız {name} ile konuşun; çevrimiçi randevu yeniden açılabilir.",
   "bk10.whyText": "{name}, gelemeyecek müşterilerinin zamanında haber vermesini ister: {window} öncesine kadar ücretsizdir. Haber verilmeden gelinmeyen birkaç randevudan sonra {name}, yeni bir randevudan önce sizinle konuşur. Gelecek randevularınız etkilenmez.",
-
   "bk11.back": "{name} sayfasına dön",
   "bk11.code": "Kod",
   "bk11.codeSub": "{phone} numarasına 6 haneli bir kod gönderdik.",
@@ -50,7 +42,6 @@
   "bk11.send": "Kodu gönder",
   "bk11.sub": "Randevu alırken kullandığınız numarayı yazın. Yalnızca sizin açabilmeniz için bir kod gönderiyoruz.",
   "bk11.title": "Randevunuzu bulun",
-
   "bk2.addOns": "Ziyaretinize ekleyin",
   "bk2.addOnsHint": "İsteğe bağlı ekler. Süreyi uzatırlar.",
   "bk2.guests.hint": "{name} herkesi art arda karşılar.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Önce bir hizmet seçin.",
   "bk2.title": "Bir hizmet seçin",
   "bk2.with": "{name} ile",
-
   "bk4.noTimesEnd": "Boş saat kalmadı. Randevu {date} tarihine kadar açık.",
   "bk4.noTimesMonth": "Bu ay boş saat yok. Sonraki aya bakın.",
   "bk4.pickError": "Önce bir saat seçin.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Saatler {place} saat dilimine göredir.",
   "bk4.zoneDevice": "Cihazınız başka bir saat diliminde.",
   "bk4.zoneYours": "Bulunduğunuz yerde saat {time} olur.",
-
   "bk5.email": "E-posta",
   "bk5.err.email": "Bu e-posta doğru görünmüyor.",
   "bk5.err.guest": "Eşlikçinin adını yazın.",
@@ -98,7 +87,6 @@
   "bk5.send": "Doğrulama kodunu gönder",
   "bk5.sub": "{date}, saat {time}. {name} ile kimin geleceğini paylaşın.",
   "bk5.title": "Neredeyse bitti.",
-
   "bk6.channel": "Kodu şununla gönder",
   "bk6.code": "Doğrulama kodu",
   "bk6.emailHint": "Kodu e-postada almak isterseniz önceki adımda bir e-posta ekleyin.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Doğrula",
   "bk6.viaEmail": "6 haneli bir kodu {email} adresine gönderdik.",
   "bk6.viaSms": "6 haneli bir kodu SMS ile {last} ile biten numaraya gönderdik.",
-
   "bk7.agree": "Onaylayarak {name} kurallarını kabul edersiniz. {line}",
   "bk7.before": "Bu işlemi daha önce yaptırdınız mı?",
   "bk7.before.no": "Hayır, ilk kez",
@@ -132,7 +119,6 @@
   "bk7.skip": "Şimdilik atla",
   "bk7.sub": "İsteğe bağlı. İlk {service} işleminizin size göre yapılmasına yardımcı olur.",
   "bk7.title": "{name} ile kendinizden biraz bahsedin.",
-
   "bk8.again": "{name} sayfasına dön",
   "bk8.change.text": "İptal etmek veya ertelemek için istediğiniz zaman açın: uygulama yok, parola yok. {line}",
   "bk8.change.title": "Planlarınız mı değişti? Bağlantınızı kullanın.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} – {end}",
   "bk8.title": "Randevu alındı.",
   "bk8.view": "Randevuyu gör",
-
   "bk9.askedMove": "{when} tarihine ertelenmesini istediniz. {name} yanıt verene kadar bu saat sizin için ayrılmış kalır.",
   "bk9.attend.no": "Gelemiyorum",
   "bk9.attend.noText": "{name} saatinizi başkasına verebilsin diye aşağıdan erteleyin veya iptal edin.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Başka bir saat için randevu al",
   "bk9.cancel": "Randevuyu iptal et",
   "bk9.cancel.free": "{deadline} tarihine kadar ücretsiz",
-  "bk9.cancel.late": "{name} hemen haberdar olur",
   "bk9.cancel.lateCounts": "{name} hemen haberdar olur · gelinmeyen randevu sayılır",
   "bk9.cancel.message": "İptal için {name} ile yazışın",
   "bk9.cancelledByProText": "{name} bu randevuyu iptal etti. İstediğiniz zaman başka bir saat için randevu alabilirsiniz.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "İşlem {time} saatinden yaklaşık {minutes} sonra başlayacak. Saatiniz ayrılmış durumda.",
   "bk9.late.knows": "{name} biliyor.",
   "bk9.late.over": "Bu, tanınan {grace} süreden fazla. Ziyareti ertelemek için bir mesaj alabilirsiniz.",
-  "bk9.late.reply": "{name} yanıtladı: {reply}",
   "bk9.late.text": "{name} kişisine ne kadar geç kalacağınızı söyleyin. Saatiniz {minutes} boyunca ayrılmış kalır.",
   "bk9.late.title": "O gün geç mi kalacaksınız?",
   "bk9.messageWa": "WhatsApp'tan mesaj",
-  "bk9.movedFrom": "{date}, saat {time} tarihinden ertelendi",
   "bk9.myData": "Bilgileriniz",
   "bk9.note.free": "{deadline} tarihine kadar değişiklik ücretsiz.",
   "bk9.note.late": "Ücretsiz süre {deadline} tarihinde sona erdi. Değişiklikler artık aşağıdaki son saat kurallarına tabidir.",
@@ -211,7 +193,6 @@
   "bk9.title": "Randevunuz",
   "bk9.with": "{name} ile · {meta}",
   "bk9.zone": "{end} saatine kadar · {place} saati",
-
   "cal.add": "Takvime ekle",
   "cal.file": "Takvim dosyası (.ics)",
   "cal.google": "Google Takvim",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Önceki ay",
   "cal.saved": "Takvim dosyası kaydedildi.",
   "cal.unavailable": "{date}, müsait değil",
-
   "cl2.after": "{service} işleminizden sonra · {date}",
   "cl2.bookAgain": "Tekrar randevu al",
   "cl2.careEmpty": "{name} henüz bakım önerisi paylaşmadı.",
   "cl2.completed": "Tamamlandı",
-  "cl2.dataSub": "{name} neleri saklıyor ve kopya nasıl istenir",
   "cl2.hi": "Merhaba {name}.",
   "cl2.journeyEmpty": "Henüz paylaşılan bir şey yok. {name} bir ziyaret hakkında not paylaştığında burada görünür.",
   "cl2.next": "Sonraki seans",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Bölümler",
   "cl2.upcoming": "Yaklaşan",
   "cl2.usedIn": "İşleminizde kullanıldı",
-
-  "cl3.approvalGate": "{name} yeni randevuları kendisi onaylar. Bir saat isteyin, yanıt WhatsApp'tan gelir.",
-  "cl3.ask": "{name} kişisinden {when} isteyin",
   "cl3.back": "Geri",
   "cl3.best": "İdeal",
   "cl3.bestNote": "“İdeal”, {name} kişisinin önerdiği dönüş tarihini gösterir.",
@@ -260,7 +236,6 @@
   "cl3.time": "Saati seçin",
   "cl3.title": "Tekrar hoş geldiniz, {name}.",
   "cl3.titleAnon": "Tekrar hoş geldiniz.",
-
   "cl4.agree": "Kabul ediyorum",
   "cl4.already.text": "{name} sağlık formunuzu zaten aldı; son 12 ay içinde gönderilmiş. Yapmanız gereken başka bir şey yok.",
   "cl4.already.title": "Zaten gönderdiniz.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Teşekkürler.",
   "cl4.title": "Ziyaretinizden önce birkaç soru.",
   "cl4.writeHere": "Buraya yazın",
-
   "cl5.addPhoto": "Fotoğraf ekle",
   "cl5.anything": "Eklemek istediğiniz bir şey var mı?",
   "cl5.back": "Randevularıma dön",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Teşekkürler, {name}.",
   "cl5.title": "Cildiniz bugün nasıl?",
   "cl5.worried": "{name} bugün sizinle iletişime geçecek. Şiddetliyse veya kötüleşmeye devam ediyorsa bir hekime başvurun.",
-
   "cl6.askInstead": "Bunun yerine ertelemeyi isteyin",
   "cl6.bookAgain": "Başka bir saat için randevu al",
   "cl6.confirm.free": "Randevuyu iptal et",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "Bu, gelinmeyen randevu sayılır.",
   "cl6.why": "Neden iptal ediyorsunuz?",
   "cl6.whyHint": "İsteğe bağlı. {name} kişisinin size daha iyi bir saat sunmasına yardımcı olur.",
-
   "cl7.choices": "Seçenekleriniz",
   "cl7.contact": "İletişim bilgileri",
   "cl7.contactSub": "Ad, WhatsApp ve e-posta",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "{name} kişisinden kopya istensin mi?",
   "cl7.form.title.delete": "{name} kişisinden verileriniz silinsin mi?",
   "cl7.health": "Sağlık formu ve onam",
-  "cl7.healthSigned": "{date} tarihinde imzalandı · mühürlü, yalnızca {name} açabilir",
   "cl7.healthSub": "Mühürlü, yalnızca {name} açabilir",
   "cl7.how": "Talepler nasıl işler",
   "cl7.keeps": "{name} neleri saklıyor",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Talep gönderildi. {name} tamamlandığında onaylayacak.",
   "cl7.sub": "{name} hakkınızda bunları saklıyor ve yalnızca {name} görebilir.",
   "cl7.title": "Bilgileriniz",
-
   "cl9.back": "Randevunuz",
   "cl9.back2": "Randevuma dön",
   "cl9.changeOf": "Bu, {max} değişiklik hakkınızdan {current}. değişiklik.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "{name} ile yazışın",
   "cl9.title.self": "Yeni bir saat seçin",
   "cl9.youAsked": "İstediğiniz",
-
   "common.actions": "İşlemler",
   "common.back": "Geri",
   "common.by": "Bello Hub ile randevu",
@@ -421,7 +390,6 @@
   "common.skip": "İçeriğe geç",
   "common.step": "Adım {current} / {total}",
   "common.yes": "Evet",
-
   "err.appCheck": "Bu isteğin bu sayfadan geldiğini doğrulayamadık. Sayfayı yenileyip tekrar deneyin.",
   "err.generic": "Bir şeyler ters gitti. Bağlantınızı kontrol edip tekrar deneyin.",
   "err.invalidInput": "Yazdıklarınızı kontrol edip tekrar deneyin.",
@@ -432,39 +400,30 @@
   "err.timeout": "Çok uzun sürüyor. Tekrar deneyin.",
   "err.tooLarge": "Bu, göndermek için çok büyük. Fotoğrafı kaldırın veya notu kısaltın.",
   "err.unavailable": "Hizmet şu anda yoğun. Birkaç dakika sonra tekrar deneyin.",
-
   "ics.change": "Değiştir veya iptal et: {link}",
   "ics.summary": "{name} ile {service}",
-
   "landing.home": "Ana sayfaya dön",
   "landing.text": "Uzmanın size gönderdiği randevu bağlantısını açın.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "Onayınız ve hatırlatmalarınız bu dilde olacak.",
   "lang.title": "Dil",
-
   "legal.noticeLink": "Randevu bilgileriniz nasıl kullanılır",
   "legal.privacyLink": "Gizlilik politikası",
-
   "price.from": "{price} ile başlayan",
   "price.onRequest": "Fiyat sorulur",
-
   "state.crash.text": "Sayfa çalışmayı bıraktı. Yenileyip tekrar deneyin. Yazdıklarınızdan hiçbiri gönderilmedi.",
   "state.crash.title": "Bir şeyler ters gitti.",
-  "state.expired.text": "Bağlantılar ziyaretin sonuna ve sonrasındaki birkaç güne kadar çalışır. Yenisini istemek için {name} ile yazışın.",
   "state.expired.textNoName": "Bağlantılar ziyaretin sonuna ve sonrasındaki birkaç güne kadar çalışır. Yenisini size gönderen kişiden isteyin.",
   "state.expired.title": "Bu bağlantının süresi doldu.",
   "state.loadFailed.text": "Bağlantınızı kontrol edip tekrar deneyin.",
   "state.loadFailed.title": "Bu sayfa yüklenmedi.",
   "state.notFound.text": "Bağlantıyı kontrol edin veya size gönderen kişiye sorun.",
   "state.notFound.title": "Bu sayfayı bulamadık.",
-
   "wa.blocked": "Merhaba {name}, çevrimiçi randevunun benim için duraklatıldığını gördüm. Bir sonraki ziyaretimi konuşmak isterim.",
   "wa.book": "Merhaba {name}, bir randevu almak istiyorum.",
   "wa.cancel": "Merhaba {name}, {date} saat {time} {service} randevumu iptal etmem gerekiyor.",
   "wa.hello": "Merhaba {name}, randevumla ilgili bir sorum var.",
   "wa.reschedule": "Merhaba {name}, {date} saat {time} {service} randevumu ertelemek istiyorum.",
-
   "wait.err.days": "Son gün ilk günden önce olamaz.",
   "wait.from": "Başlangıç",
   "wait.submit": "Bekleme listesine katıl",

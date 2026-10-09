@@ -1,47 +1,79 @@
-// A faithful stand-in for the Cloud Functions of docs/11 section 3, for the Playwright suite and local development.
-// It keeps everything in memory, applies the real rules (availability, policy, verification, approval, no-show
-// protection, sealed inbox), and decrypts what the page seals with a test inbox key so a test can prove that what
-// was typed is exactly what arrived, while the request body held only the envelope.
+// A faithful stand-in for the Cloud Functions of firebase/functions/API.md (contract v1), for the Playwright suite and
+// local development. It keeps everything in memory, applies the real rules (availability, policy, verification,
+// approval, no-show protection, sealed inbox), answers the exact shapes and codes of API.md, and decrypts what the
+// page seals with a test inbox key so a test can prove that what was typed is exactly what arrived, while the
+// request body held only the envelope.
 //
-// Contract assumptions made here are the page's (src/api/types.ts); firebase/functions/API.md is reconciled later.
+// Anything the mock enforces that the real functions do not is a test that proves nothing: keep the two in step.
 
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 
 import type {
-  BookingResult,
+  BookingActions,
+  BookingOutcome,
+  BookingPhase,
   BookingStatus,
-  BookingView,
   CreateBookingRequest,
-  FormContext,
-  FormQuestion,
   InboxKey,
-  PortalView,
-  ProfessionalLite,
-  PublicProfile,
   SealedEnvelope,
   VerificationProof,
+  WireBooking,
+  WireFormContext,
+  WirePortal,
+  WireProfile,
 } from '../../src/api/types';
 import { totals } from '../../src/app/booking/summary';
-import { instantFromZoned, zonedDateKey } from '../../src/lib/datetime';
+import { addDays, compareDateKeys, dayBounds, instantFromZoned, zonedDateKey } from '../../src/lib/datetime';
 import { cancelMode, freeUntil, rescheduleMode, type PolicyValues } from '../../src/lib/policy';
 import { decodeBase64Url } from '../../src/lib/base64url';
 import { PAYLOAD_LIMITS, keyIdOf } from '../../src/crypto/envelope';
 import { inboxKeyFromSeed, openEnvelope } from '../support/open';
-import { createHash } from 'node:crypto';
 import { SEED_INBOX_LABEL, scenarios, type Scenario } from './fixtures';
 import { DEFAULT_RULES, freeSlots, isFree, type Busy, type SlotRules } from './slots';
 
 const MINUTE = 60_000;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
 const SMS_CODE = '123456';
 const EMAIL_CODE = '654321';
+const MAX_RANGE_DAYS = 42;
+
+/** The HTTP status and callable status of each code (API.md section 3). */
+const CODES: Readonly<Record<string, { http: number; status: string }>> = {
+  INVALID_ARGUMENT: { http: 400, status: 'INVALID_ARGUMENT' },
+  UNAUTHENTICATED: { http: 401, status: 'UNAUTHENTICATED' },
+  APP_CHECK_REQUIRED: { http: 401, status: 'UNAUTHENTICATED' },
+  FORBIDDEN: { http: 403, status: 'PERMISSION_DENIED' },
+  NOT_FOUND: { http: 404, status: 'NOT_FOUND' },
+  TOKEN_EXPIRED: { http: 404, status: 'NOT_FOUND' },
+  RATE_LIMITED: { http: 429, status: 'RESOURCE_EXHAUSTED' },
+  VERIFICATION_FAILED: { http: 403, status: 'PERMISSION_DENIED' },
+  INVALID_CODE: { http: 400, status: 'INVALID_ARGUMENT' },
+  NOT_ALLOWED: { http: 400, status: 'FAILED_PRECONDITION' },
+  CONFIRMATION_REQUIRED: { http: 400, status: 'FAILED_PRECONDITION' },
+  BOOKING_NOT_ACTIVE: { http: 400, status: 'FAILED_PRECONDITION' },
+  SLUG_TAKEN: { http: 409, status: 'ALREADY_EXISTS' },
+  KEY_MISMATCH: { http: 400, status: 'FAILED_PRECONDITION' },
+  PAYLOAD_TOO_LARGE: { http: 400, status: 'INVALID_ARGUMENT' },
+  CONFLICT: { http: 409, status: 'ABORTED' },
+  NOT_CONFIGURED: { http: 503, status: 'UNAVAILABLE' },
+  TRY_AGAIN: { http: 503, status: 'UNAVAILABLE' },
+  INTERNAL: { http: 500, status: 'INTERNAL' },
+};
 
 export class MockError extends Error {
+  readonly status: number;
+  readonly callableStatus: string;
+
   constructor(
     readonly code: string,
-    readonly status: number,
-    readonly extra: Record<string, unknown> = {},
+    readonly details?: Record<string, unknown>,
+    http?: number,
   ) {
     super(code);
+    const known = CODES[code] ?? CODES['INTERNAL'] ?? { http: 500, status: 'INTERNAL' };
+    this.status = http ?? known.http;
+    this.callableStatus = known.status;
   }
 }
 
@@ -51,21 +83,18 @@ interface StoredBooking {
   status: BookingStatus;
   serviceId: string;
   addOnIds: string[];
-  guestNames: string[];
+  guests: number;
   startsAt: number;
   endsAt: number;
-  totalMinutes: number;
+  durationMinutes: number;
   client: { name: string; phone: string; email?: string; locale: string };
+  note?: string;
   policy: PolicyValues;
   rescheduleCount: number;
   clientConfirmedAt?: string;
   lateByMinutes?: number;
-  proReply?: string;
-  rescheduleRequest?: { requestedStart: string };
-  movedFrom?: string;
-  intake: 'pending' | 'done' | 'notNeeded';
-  checkIn: 'available' | 'none';
-  idempotencyKey?: string;
+  pendingReschedule?: { requestedStart: string; status: 'pending' | 'declined' };
+  intakeSubmittedAt?: string;
 }
 
 interface Hold {
@@ -73,8 +102,16 @@ interface Hold {
   slug: string;
   startsAt: number;
   endsAt: number;
-  sessionKey: string;
+  holdKey: string;
   expiresAt: number;
+}
+
+interface Portal {
+  slug: string;
+  phone: string;
+  name: string;
+  /** What the server would answer to `rebook` for this client (approval or a pause still apply, API.md 5.13). */
+  mode: 'direct' | 'approval' | 'paused';
 }
 
 export interface InboxItem {
@@ -88,47 +125,90 @@ export interface InboxItem {
 
 const token = (): string => randomBytes(16).toString('base64url');
 const sha = (text: string): Buffer => createHash('sha256').update(text).digest();
+const iso = (ms: number): string => new Date(ms).toISOString();
 
-const QUESTIONS: readonly FormQuestion[] = [
-  {
-    key: 'allergies',
-    kind: 'multiChoice',
-    label: { en: 'Any allergies?', 'pt-BR': 'Alguma alergia?', ar: 'هل لديك أي حساسية؟' },
-    options: [
-      { value: 'fragrance', label: { en: 'Fragrance', 'pt-BR': 'Fragrância', ar: 'العطور' } },
-      { value: 'latex', label: { en: 'Latex', 'pt-BR': 'Látex', ar: 'اللاتكس' } },
-      { value: 'nuts', label: { en: 'Nuts', 'pt-BR': 'Castanhas', ar: 'المكسرات' } },
-      { value: 'retinol', label: { en: 'Retinol', 'pt-BR': 'Retinol', ar: 'الريتينول' } },
-      { value: 'acids', label: { en: 'Acids', 'pt-BR': 'Ácidos', ar: 'الأحماض' } },
-      { value: 'none', label: { en: 'None', 'pt-BR': 'Nenhuma', ar: 'لا شيء' } },
-    ],
-    required: true,
-  },
-  { key: 'medication', kind: 'yesNo', label: { en: 'Do you take any regular medication?', 'pt-BR': 'Você usa algum medicamento regularmente?', ar: 'هل تتناول أي دواء بانتظام؟' }, required: true },
-  { key: 'pregnant', kind: 'yesNo', label: { en: 'Are you pregnant or breastfeeding?', 'pt-BR': 'Você está grávida ou amamentando?', ar: 'هل أنتِ حامل أو مرضعة؟' }, required: true, audience: 'adult' },
-  { key: 'skinCondition', kind: 'yesNo', label: { en: 'Do you have a skin condition, such as eczema or rosacea?', 'pt-BR': 'Você tem alguma condição de pele, como eczema ou rosácea?', ar: 'هل لديك حالة جلدية مثل الإكزيما أو الوردية؟' }, required: true },
-  { key: 'isotretinoin', kind: 'yesNo', label: { en: 'Have you taken isotretinoin or had a peel in the last 6 months?', 'pt-BR': 'Usou isotretinoína ou fez peeling nos últimos 6 meses?', ar: 'هل تناولتِ الإيزوتريتينوين أو أجريتِ تقشيرًا خلال آخر 6 أشهر؟' }, required: true },
-  {
-    key: 'anythingElse',
-    kind: 'text',
-    label: { en: 'Anything else the professional should know?', 'pt-BR': 'Mais alguma coisa que a profissional deva saber?', ar: 'هل هناك أي شيء آخر يجب أن تعرفه المختصة؟' },
-    hint: { en: 'Optional. Skin that reacts easily, products you avoid, a recent procedure.' },
-  },
-];
+/** The opaque template her app publishes (docs/10 section 5): the questions, each with a `kind`. */
+const TEMPLATE = {
+  questions: [
+    {
+      key: 'allergies',
+      kind: 'multiChoice',
+      label: { en: 'Any allergies?', 'pt-BR': 'Alguma alergia?', ar: 'هل لديك أي حساسية؟' },
+      options: [
+        { value: 'fragrance', label: { en: 'Fragrance', 'pt-BR': 'Fragrância', ar: 'العطور' } },
+        { value: 'latex', label: { en: 'Latex', 'pt-BR': 'Látex', ar: 'اللاتكس' } },
+        { value: 'nuts', label: { en: 'Nuts', 'pt-BR': 'Castanhas', ar: 'المكسرات' } },
+        { value: 'retinol', label: { en: 'Retinol', 'pt-BR': 'Retinol', ar: 'الريتينول' } },
+        { value: 'acids', label: { en: 'Acids', 'pt-BR': 'Ácidos', ar: 'الأحماض' } },
+        { value: 'none', label: { en: 'None', 'pt-BR': 'Nenhuma', ar: 'لا شيء' } },
+      ],
+      required: true,
+    },
+    { key: 'medication', kind: 'yesNo', label: { en: 'Do you take any regular medication?', 'pt-BR': 'Você usa algum medicamento regularmente?', ar: 'هل تتناول أي دواء بانتظام؟' }, required: true },
+    { key: 'pregnant', kind: 'yesNo', label: { en: 'Are you pregnant or breastfeeding?', 'pt-BR': 'Você está grávida ou amamentando?', ar: 'هل أنتِ حامل أو مرضعة؟' }, required: true, audience: 'adult' },
+    { key: 'skinCondition', kind: 'yesNo', label: { en: 'Do you have a skin condition, such as eczema or rosacea?', 'pt-BR': 'Você tem alguma condição de pele, como eczema ou rosácea?', ar: 'هل لديك حالة جلدية مثل الإكزيما أو الوردية؟' }, required: true },
+    { key: 'isotretinoin', kind: 'yesNo', label: { en: 'Have you taken isotretinoin or had a peel in the last 6 months?', 'pt-BR': 'Usou isotretinoína ou fez peeling nos últimos 6 meses?', ar: 'هل تناولتِ الإيزوتريتينوين أو أجريتِ تقشيرًا خلال آخر 6 أشهر؟' }, required: true },
+    {
+      key: 'anythingElse',
+      kind: 'text',
+      label: { en: 'Anything else the professional should know?', 'pt-BR': 'Mais alguma coisa que a profissional deva saber?', ar: 'هل هناك أي شيء آخر يجب أن تعرفه المختصة؟' },
+      hint: { en: 'Optional. Skin that reacts easily, products you avoid, a recent procedure.' },
+    },
+  ],
+} as const;
+
+const CONSENT = {
+  en: { textVersion: '2026-10', text: 'I agree that Maria keeps this information to take care of me.', guardianText: 'I agree, as the guardian, that Maria keeps this information to take care of the person in my care.' },
+  'pt-BR': { textVersion: '2026-10', text: 'Concordo que a Maria guarde estas informações para cuidar de mim.' },
+} as const;
+
+type Json = Record<string, unknown>;
+
+function str(value: unknown, field: string): string {
+  if (typeof value !== 'string' || value === '') throw new MockError('INVALID_ARGUMENT', { fields: [field] });
+  return value;
+}
+
+function instant(value: unknown, field: string): number {
+  const ms = Date.parse(str(value, field));
+  if (!Number.isFinite(ms)) throw new MockError('INVALID_ARGUMENT', { fields: [field] });
+  return ms;
+}
+
+function localDate(value: unknown, field: string): string {
+  const text = str(value, field);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text)) throw new MockError('INVALID_ARGUMENT', { fields: [field] });
+  return text;
+}
+
+function guestsOf(value: unknown): number {
+  if (value === undefined) return 0;
+  if (value !== 0 && value !== 1 && value !== 2) throw new MockError('INVALID_ARGUMENT', { fields: ['guests'] });
+  return value;
+}
+
+function idsOf(value: unknown, field: string): string[] {
+  if (value === undefined) return [];
+  if (!Array.isArray(value) || !value.every((id) => typeof id === 'string')) throw new MockError('INVALID_ARGUMENT', { fields: [field] });
+  return value;
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+const E164 = /^\+[1-9]\d{7,14}$/;
 
 export class MockApi {
   private readonly scenarioBySlug = new Map<string, Scenario>();
   private readonly bookings = new Map<string, StoredBooking>();
   private readonly manageTokens = new Map<string, string>();
-  private readonly portalTokens = new Map<string, { slug: string; phone: string; name: string; mode: PortalView['rebookMode'] }>();
+  private readonly portalTokens = new Map<string, Portal>();
   private readonly holds = new Map<string, Hold>();
-  private readonly expiredTokens = new Map<string, string>();
-  private readonly idempotent = new Map<string, BookingResult>();
+  private readonly expiredTokens = new Set<string>();
+  private readonly idempotent = new Map<string, { request: string; result: BookingOutcome }>();
   private readonly attempts = new Map<string, number>();
-  private readonly itemIds = new Set<string>();
+  private readonly items = new Map<string, string>();
   readonly inbox: InboxItem[] = [];
-  readonly waitlist: Record<string, unknown>[] = [];
-  readonly rescheduleRequests: Record<string, unknown>[] = [];
+  readonly waitlist: Json[] = [];
+  readonly rescheduleRequests: Json[] = [];
   private readonly failures = new Map<string, { code: string; status: number; times: number }>();
   resendAfterSeconds = 30;
   private inboxSeed = new Uint8Array(sha(SEED_INBOX_LABEL));
@@ -150,7 +230,7 @@ export class MockApi {
     this.expiredTokens.clear();
     this.idempotent.clear();
     this.attempts.clear();
-    this.itemIds.clear();
+    this.items.clear();
     this.inbox.length = 0;
     this.waitlist.length = 0;
     this.rescheduleRequests.length = 0;
@@ -167,7 +247,7 @@ export class MockApi {
     if (failure === undefined) return;
     failure.times -= 1;
     if (failure.times <= 0) this.failures.delete(name);
-    throw new MockError(failure.code, failure.status);
+    throw new MockError(failure.code, undefined, failure.status);
   }
 
   // MARK: Lookups
@@ -182,226 +262,327 @@ export class MockApi {
     if (found !== undefined) return found;
     const parent = /^(.+)-t[a-z0-9]{3,}$/.exec(slug)?.[1];
     const instance = parent === undefined ? undefined : this.scenarioBySlug.get(parent);
-    if (instance === undefined) throw new MockError('notFound', 404);
+    if (instance === undefined) throw new MockError('NOT_FOUND');
     return instance;
   }
 
-  private profile(slug: string): PublicProfile {
+  private profile(slug: string): WireProfile {
     if (this.inboxKey === null) throw new Error('mock not initialised');
     return { ...this.scenario(slug).profile(this.inboxKey), slug };
   }
 
-  private lite(profile: PublicProfile): ProfessionalLite {
-    const { slug, displayName, firstName, photo, whatsappE164, locales, defaultLocale, regionCode, timeZoneID, currencyCode, city, weekStart, use24Hour } = profile;
-    return { slug, displayName, firstName, locales, defaultLocale, regionCode, timeZoneID, currencyCode, ...(photo === undefined ? {} : { photo }), ...(whatsappE164 === undefined ? {} : { whatsappE164 }), ...(city === undefined ? {} : { city }), ...(weekStart === undefined ? {} : { weekStart }), ...(use24Hour === undefined ? {} : { use24Hour }) };
+  private header(profile: WireProfile): WireBooking['professional'] {
+    return {
+      displayName: profile.displayName,
+      ...(profile.businessName === undefined ? {} : { businessName: profile.businessName }),
+      ...(profile.whatsappE164 === undefined ? {} : { whatsappE164: profile.whatsappE164 }),
+    };
   }
 
-  private bookingByToken(value: string): StoredBooking {
-    const id = this.manageTokens.get(value);
+  private bookingByToken(value: unknown, now = Date.now()): StoredBooking {
+    const text = str(value, 'token');
+    const id = this.manageTokens.get(text);
     const booking = id === undefined ? undefined : this.bookings.get(id);
-    if (booking === undefined) {
-      // A portal token also opens the client's latest booking for the pages that only need the professional.
-      const portal = this.portalTokens.get(value);
-      if (portal !== undefined) {
-        const latest = [...this.bookings.values()].filter((b) => b.slug === portal.slug && b.client.phone === portal.phone).sort((a, b) => b.startsAt - a.startsAt)[0];
-        if (latest !== undefined) return latest;
-      }
-      const expiredFor = this.expiredTokens.get(value);
-      // An expired link names who to message; a link that never existed does not.
-      if (expiredFor !== undefined) throw new MockError('expired', 410, { professional: this.lite(this.profile(expiredFor)) });
-      throw new MockError('notFound', 404);
-    }
+    // An expired token and one that never existed carry no detail (API.md: `details` never holds personal data).
+    if (booking === undefined) throw new MockError(this.expiredTokens.has(text) ? 'TOKEN_EXPIRED' : 'NOT_FOUND');
+    if (booking.endsAt + 7 * DAY < now) throw new MockError('TOKEN_EXPIRED');
     return booking;
   }
 
-  private busy(slug: string, ignore?: { sessionKey?: string; bookingId?: string }, now = Date.now()): Busy[] {
+  private busy(slug: string, now = Date.now()): Busy[] {
     const fromBookings = [...this.bookings.values()]
       .filter((b) => b.slug === slug && (b.status === 'confirmed' || b.status === 'pendingApproval'))
       .map((b): Busy => ({ startsAt: b.startsAt, endsAt: b.endsAt, bookingId: b.id }));
-    const fromHolds = [...this.holds.values()].filter((h) => h.slug === slug && h.expiresAt > now).map((h): Busy => ({ startsAt: h.startsAt, endsAt: h.endsAt, sessionKey: h.sessionKey }));
-    void ignore;
+    const fromHolds = [...this.holds.values()].filter((h) => h.slug === slug && h.expiresAt > now).map((h): Busy => ({ startsAt: h.startsAt, endsAt: h.endsAt, holdKey: h.holdKey }));
     return [...fromBookings, ...fromHolds];
   }
 
-  private rules(profile: PublicProfile): SlotRules {
+  private rules(profile: WireProfile): SlotRules {
     return { ...DEFAULT_RULES, timeZone: profile.timeZoneID, maxDaysAhead: profile.booking.maxDaysAhead };
   }
 
-  private duration(profile: PublicProfile, serviceId: string, addOnIds: readonly string[], guests: number): number {
+  private duration(profile: WireProfile, serviceId: string, addOnIds: readonly string[], guests: number): number {
     const service = profile.services.find((s) => s.id === serviceId);
-    if (service === undefined) throw new MockError('invalidInput', 400);
+    if (service === undefined) throw new MockError('NOT_FOUND');
     return totals(service, profile.addOns.filter((a) => addOnIds.includes(a.id)), guests).totalMinutes;
+  }
+
+  private isPaused(profile: WireProfile, now: number): boolean {
+    const until = profile.booking.pausedUntil === undefined ? null : Date.parse(profile.booking.pausedUntil);
+    return !profile.booking.acceptingBookings || (until !== null && until > now);
+  }
+
+  private alternatives(slug: string, start: number, minutes: number, now: number, ignore?: { bookingId?: string; holdKey?: string }): string[] {
+    const profile = this.profile(slug);
+    return freeSlots(start, start + 5 * DAY, minutes, this.rules(profile), this.busy(slug, now), now, ignore).slice(0, 5);
   }
 
   // MARK: Views
 
-  private view(booking: StoredBooking, now: number): BookingView {
+  private phase(booking: StoredBooking, now: number): BookingPhase {
+    if (now < booking.startsAt) return 'upcoming';
+    if (now < booking.endsAt) return 'inProgress';
+    return 'past';
+  }
+
+  private actions(booking: StoredBooking, now: number): BookingActions {
+    const active = (booking.status === 'confirmed' || booking.status === 'pendingApproval') && now < booking.endsAt;
+    const phase = this.phase(booking, now);
+    const cancel = cancelMode(booking.startsAt, booking.policy, now);
+    const resched = rescheduleMode(booking.startsAt, booking.policy, now, booking.rescheduleCount);
+    const inside = now <= freeUntil(booking.startsAt, booking.policy);
+    return {
+      cancel: !active ? 'unavailable' : cancel === 'free' ? 'free' : cancel === 'allowLate' ? 'allowedWithWarning' : 'askByMessage',
+      reschedule: !active || booking.status !== 'confirmed' || phase !== 'upcoming' ? 'unavailable' : resched,
+      isInsideFreeWindow: inside,
+      hoursUntilStart: Math.round(((booking.startsAt - now) / HOUR) * 100) / 100,
+      cancellationWouldBeLate: !inside,
+      canConfirmPresence: booking.status === 'confirmed' && booking.policy.askConfirmation && booking.clientConfirmedAt === undefined && phase === 'upcoming',
+      canReportLate: booking.status === 'confirmed' && now >= booking.startsAt - 3 * HOUR && now < booking.endsAt,
+    };
+  }
+
+  private view(booking: StoredBooking, now: number): WireBooking {
     const profile = this.profile(booking.slug);
     const service = profile.services.find((s) => s.id === booking.serviceId);
-    if (service === undefined) throw new MockError('notFound', 404);
+    if (service === undefined) throw new MockError('NOT_FOUND');
+    const scenario = this.scenario(booking.slug);
     const addOns = profile.addOns.filter((a) => booking.addOnIds.includes(a.id));
-    const sum = totals(service, addOns, booking.guestNames.length);
     return {
-      id: booking.id,
+      bookingId: booking.id,
       status: booking.status,
-      service: { id: service.id, name: service.name, durationMinutes: service.durationMinutes },
+      phase: this.phase(booking, now),
+      slug: booking.slug,
+      professional: this.header(profile),
+      service: { id: service.id, name: service.name },
       addOns: addOns.map((a) => ({ id: a.id, name: a.name, minutes: a.minutes })),
-      guestCount: booking.guestNames.length,
-      ...(booking.guestNames.some(Boolean) ? { guestNames: booking.guestNames } : {}),
-      startsAt: new Date(booking.startsAt).toISOString(),
-      endsAt: new Date(booking.endsAt).toISOString(),
-      totalMinutes: sum.totalMinutes,
-      ...(sum.price === null ? {} : { price: sum.price.kind === 'onRequest' ? { display: 'onRequest' as const, currency: profile.currencyCode } : { display: sum.price.kind === 'amount' ? ('show' as const) : ('startingFrom' as const), amount: sum.price.amount, currency: profile.currencyCode } }),
-      professional: this.lite(profile),
-      client: { firstName: booking.client.name.split(/\s+/)[0] ?? booking.client.name },
-      rules: profile.rules,
+      guestCount: booking.guests,
+      startsAt: iso(booking.startsAt),
+      endsAt: iso(booking.endsAt),
+      durationMinutes: booking.durationMinutes,
+      timeZoneID: profile.timeZoneID,
+      serverTime: iso(now),
+      client: { name: booking.client.name },
       policy: booking.policy,
-      rescheduleCount: booking.rescheduleCount,
+      rulesText: profile.rulesText,
+      actions: this.actions(booking, now),
       ...(booking.clientConfirmedAt === undefined ? {} : { clientConfirmedAt: booking.clientConfirmedAt }),
       ...(booking.lateByMinutes === undefined ? {} : { lateByMinutes: booking.lateByMinutes }),
-      ...(booking.proReply === undefined ? {} : { proReply: booking.proReply }),
-      ...(booking.rescheduleRequest === undefined ? {} : { rescheduleRequest: booking.rescheduleRequest }),
-      ...(booking.movedFrom === undefined ? {} : { movedFrom: booking.movedFrom }),
-      forms: { intake: booking.intake, checkIn: booking.checkIn },
-      serverNow: new Date(now).toISOString(),
+      rescheduleCount: booking.rescheduleCount,
+      ...(booking.pendingReschedule === undefined ? {} : { pendingReschedule: booking.pendingReschedule }),
+      intakeRequired: booking.intakeSubmittedAt === undefined && scenario.intakeCompleted !== true,
+      tokenExpiresAt: iso(booking.endsAt + 7 * DAY),
+    };
+  }
+
+  private booked(booking: StoredBooking, manageToken: string, profile: WireProfile): BookingOutcome {
+    const service = profile.services.find((s) => s.id === booking.serviceId);
+    return {
+      status: booking.status === 'pendingApproval' ? 'pendingApproval' : 'confirmed',
+      bookingId: booking.id,
+      manageToken,
+      startsAt: iso(booking.startsAt),
+      endsAt: iso(booking.endsAt),
+      timeZoneID: profile.timeZoneID,
+      serviceName: service?.name ?? '',
+      emailSent: booking.client.email !== undefined,
     };
   }
 
   // MARK: Public functions
 
-  getPublicPage(slug: string): PublicProfile {
+  getPublicPage(input: Json, now = Date.now()): Json {
     this.maybeFail('getPublicPage');
-    return this.profile(slug);
+    const slug = str(input['slug'], 'slug');
+    const scenario = this.scenario(slug);
+    return {
+      profile: this.profile(slug),
+      intakeAvailable: scenario.intakeAvailable !== false,
+      features: { whatsAppAutomation: scenario.whatsAppAutomation === true, smsCallingCodes: ['55', '351', '966'] },
+      serverTime: iso(now),
+    };
   }
 
-  getSlots(query: Record<string, unknown>, now = Date.now()): { slots: string[]; durationMinutes: number } {
+  getSlots(input: Json, now = Date.now()): Json {
     this.maybeFail('getSlots');
-    const from = Date.parse(String(query['from']));
-    const to = Date.parse(String(query['to']));
-    if (!Number.isFinite(from) || !Number.isFinite(to) || to <= from || to - from > 70 * 24 * 3_600_000) throw new MockError('invalidInput', 400);
-    if (typeof query['token'] === 'string') {
-      const booking = this.bookingByToken(query['token']);
-      const profile = this.profile(booking.slug);
-      const rules = this.rules(profile);
-      const rebook = query['purpose'] === 'rebook';
-      const minutes = booking.totalMinutes;
-      return { slots: freeSlots(from, to, minutes, rules, this.busy(booking.slug, undefined, now), now, rebook ? {} : { bookingId: booking.id }), durationMinutes: minutes };
+    const slug = str(input['slug'], 'slug');
+    const profile = this.profile(slug);
+    const from = localDate(input['from'], 'from');
+    const to = localDate(input['to'], 'to');
+    if (compareDateKeys(from, to) > 0 || compareDateKeys(addDays(from, MAX_RANGE_DAYS), to) < 0) throw new MockError('INVALID_ARGUMENT', { fields: ['to'] });
+    const zone = profile.timeZoneID;
+    let minutes: number;
+    let ignore: { bookingId?: string; holdKey?: string } = {};
+    let paused = false;
+    if (typeof input['rescheduleToken'] === 'string') {
+      // Moving a booked visit: its own time does not block it, and a pause does not stop it (D15).
+      const booking = this.bookingByToken(input['rescheduleToken'], now);
+      minutes = booking.durationMinutes;
+      ignore = { bookingId: booking.id };
+    } else {
+      minutes = this.duration(profile, str(input['serviceId'], 'serviceId'), idsOf(input['addOnIds'], 'addOnIds'), guestsOf(input['guests']));
+      if (typeof input['holdKey'] === 'string') ignore = { holdKey: input['holdKey'] };
+      paused = this.isPaused(profile, now);
     }
-    const slug = String(query['slug']);
-    const profile = this.profile(slug);
-    const addOns = typeof query['addOns'] === 'string' && query['addOns'] !== '' ? query['addOns'].split(',') : Array.isArray(query['addOns']) ? (query['addOns'] as string[]) : [];
-    const minutes = this.duration(profile, String(query['serviceId']), addOns, Number(query['guests'] ?? 0));
-    return { slots: freeSlots(from, to, minutes, this.rules(profile), this.busy(slug, undefined, now), now), durationMinutes: minutes };
+    const days: { date: string; slots: string[] }[] = [];
+    for (let day = from; compareDateKeys(day, to) <= 0; day = addDays(day, 1)) {
+      const bounds = dayBounds(day, zone);
+      days.push({ date: day, slots: paused ? [] : freeSlots(bounds.start, bounds.end, minutes, this.rules(profile), this.busy(slug, now), now, ignore) });
+    }
+    return { timeZoneID: zone, durationMinutes: minutes, paused, days };
   }
 
-  holdSlot(body: Record<string, unknown>, now = Date.now()): { holdId: string; expiresAt: string } {
+  holdSlot(input: Json, now = Date.now()): Json {
     this.maybeFail('holdSlot');
-    const slug = String(body['slug']);
+    const slug = str(input['slug'], 'slug');
     const profile = this.profile(slug);
-    const minutes = this.duration(profile, String(body['serviceId']), (body['addOnIds'] as string[] | undefined) ?? [], Number(body['guests'] ?? 0));
-    const start = Date.parse(String(body['startsAt']));
-    const sessionKey = String(body['sessionKey']);
-    if (!Number.isFinite(start) || !isFree(start, minutes, this.rules(profile), this.busy(slug, undefined, now), now, { sessionKey })) throw new MockError('slotTaken', 409);
-    for (const hold of [...this.holds.values()]) if (hold.sessionKey === sessionKey) this.holds.delete(hold.id);
-    const hold: Hold = { id: `h_${token()}`, slug, startsAt: start, endsAt: start + minutes * MINUTE, sessionKey, expiresAt: now + 5 * MINUTE };
+    const holdKey = str(input['holdKey'], 'holdKey');
+    if (holdKey.length < 16 || holdKey.length > 64) throw new MockError('INVALID_ARGUMENT', { fields: ['holdKey'] });
+    const minutes = this.duration(profile, str(input['serviceId'], 'serviceId'), idsOf(input['addOnIds'], 'addOnIds'), guestsOf(input['guests']));
+    const start = instant(input['startsAt'], 'startsAt');
+    if (this.isPaused(profile, now)) return { status: 'paused' };
+    if (!isFree(start, minutes, this.rules(profile), this.busy(slug, now), now, { holdKey })) {
+      return { status: 'slotTaken', alternatives: this.alternatives(slug, start, minutes, now, { holdKey }) };
+    }
+    for (const hold of [...this.holds.values()]) if (hold.holdKey === holdKey) this.holds.delete(hold.id);
+    const hold: Hold = { id: `h_${token()}`, slug, startsAt: start, endsAt: start + minutes * MINUTE, holdKey, expiresAt: now + 5 * MINUTE };
     this.holds.set(hold.id, hold);
-    return { holdId: hold.id, expiresAt: new Date(hold.expiresAt).toISOString() };
+    return { status: 'held', holdId: hold.id, expiresAt: iso(hold.expiresAt) };
   }
 
-  sendCode(kind: 'sms' | 'email', body: Record<string, unknown>): { resendAfterSeconds: number } {
-    this.maybeFail(kind === 'sms' ? 'sendSmsCode' : 'sendEmailCode');
-    this.attempts.set(`${kind}:${String(body[kind === 'sms' ? 'phone' : 'email'])}`, 0);
-    return { resendAfterSeconds: this.resendAfterSeconds };
+  sendCode(kind: 'phone' | 'email', input: Json): Json {
+    this.maybeFail(kind === 'phone' ? 'sendSmsCode' : 'sendEmailCode');
+    if (kind === 'email') this.scenario(str(input['slug'], 'slug'));
+    const target = str(input[kind], kind);
+    this.attempts.set(`${kind}:${target}`, 0);
+    return { resendAfterSeconds: this.resendAfterSeconds, expiresInSeconds: 600 };
   }
 
-  verifyCode(kind: 'sms' | 'email', body: Record<string, unknown>): { token: string } {
-    const target = String(body[kind === 'sms' ? 'phone' : 'email']);
+  verifyCode(kind: 'phone' | 'email', input: Json): Json {
+    const target = str(input[kind], kind);
     const key = `${kind}:${target}`;
     const tries = (this.attempts.get(key) ?? 0) + 1;
     this.attempts.set(key, tries);
-    if (tries > 5) throw new MockError('tooManyAttempts', 429);
-    const expected = kind === 'sms' ? SMS_CODE : EMAIL_CODE;
-    if (String(body['code']) !== expected) throw new MockError('codeInvalid', 400);
-    return { token: `${kind}:${target}` };
+    if (tries > 5) throw new MockError('RATE_LIMITED', { retryAfterSeconds: 600 });
+    const expected = kind === 'phone' ? SMS_CODE : EMAIL_CODE;
+    if (str(input['code'], 'code') !== expected) throw new MockError('INVALID_CODE');
+    // The real proof is an opaque single-use string; the mock's names its target so it can check the match.
+    return { proof: `${kind}:${target}`, expiresInSeconds: 1800 };
   }
 
-  private proofTarget(proof: VerificationProof): { kind: 'sms' | 'email'; target: string } {
-    const value = proof.kind === 'sms' ? proof.idToken : proof.token;
-    const [kind, ...rest] = value.split(':');
-    if ((kind !== 'sms' && kind !== 'email') || rest.length === 0 || kind !== proof.kind) throw new MockError('codeInvalid', 400);
-    return { kind, target: rest.join(':') };
+  /** The target a proof stands for, or VERIFICATION_FAILED. */
+  private verified(value: unknown): { method: 'phone' | 'email'; target: string } {
+    if (typeof value !== 'object' || value === null) throw new MockError('INVALID_ARGUMENT', { fields: ['verification'] });
+    const proof = value as Partial<VerificationProof>;
+    const raw = proof.method === 'phone' ? proof.idToken : proof.method === 'email' ? proof.proof : undefined;
+    if (typeof raw !== 'string') throw new MockError('INVALID_ARGUMENT', { fields: ['verification'] });
+    const [kind, ...rest] = raw.split(':');
+    if ((kind !== 'phone' && kind !== 'email') || kind !== proof.method || rest.length === 0) throw new MockError('VERIFICATION_FAILED');
+    return { method: kind, target: rest.join(':') };
   }
 
-  createBooking(request: CreateBookingRequest, now = Date.now()): BookingResult {
+  createBooking(input: Json, now = Date.now()): BookingOutcome {
     this.maybeFail('createBooking');
-    const previous = this.idempotent.get(request.idempotencyKey);
-    if (previous !== undefined) return previous;
-    const scenario = this.scenario(request.slug);
-    const profile = this.profile(request.slug);
-    const proof = this.proofTarget(request.verification);
-    if (proof.kind === 'sms' && proof.target !== request.client.phone) throw new MockError('codeInvalid', 400);
-    if (proof.kind === 'email' && proof.target !== request.client.email) throw new MockError('codeInvalid', 400);
+    const idempotencyKey = str(input['idempotencyKey'], 'idempotencyKey');
+    if (!UUID.test(idempotencyKey)) throw new MockError('INVALID_ARGUMENT', { fields: ['idempotencyKey'] });
+    const fingerprint = JSON.stringify({ ...input, idempotencyKey: undefined });
+    const previous = this.idempotent.get(idempotencyKey);
+    if (previous !== undefined) {
+      if (previous.request !== fingerprint) throw new MockError('CONFLICT');
+      return previous.result;
+    }
+    const slug = str(input['slug'], 'slug');
+    const scenario = this.scenario(slug);
+    const profile = this.profile(slug);
+    const client = (typeof input['client'] === 'object' && input['client'] !== null ? input['client'] : {}) as Partial<CreateBookingRequest['client']>;
+    const name = str(client.name, 'client.name');
+    const phone = str(client.phone, 'client.phone');
+    if (!E164.test(phone)) throw new MockError('INVALID_ARGUMENT', { fields: ['client.phone'] });
+    const locale = str(client.locale, 'client.locale');
+    const email = typeof client.email === 'string' ? client.email.trim().toLowerCase() : undefined;
+    const note = input['note'];
+    if (note !== undefined && (typeof note !== 'string' || note.length > 300)) throw new MockError('INVALID_ARGUMENT', { fields: ['note'] });
+    for (const forbidden of ['firstVisit', 'heardFrom', 'hadBefore', 'guestNames', 'holdId', 'sessionKey']) {
+      if (forbidden in input) throw new MockError('INVALID_ARGUMENT', { fields: [forbidden] });
+    }
+    const proof = this.verified(input['verification']);
+    if (proof.method === 'phone' && proof.target !== phone) throw new MockError('VERIFICATION_FAILED');
+    if (proof.method === 'email' && proof.target !== email) throw new MockError('VERIFICATION_FAILED');
 
-    let result: BookingResult;
-    const phone = request.client.phone;
+    let result: BookingOutcome;
     const noShow = scenario.noShow[phone];
-    if (!profile.booking.accepting) {
-      result = { status: 'paused', scope: 'page', ...(profile.booking.pausedUntil === undefined ? {} : { pausedUntil: profile.booking.pausedUntil }) };
+    if (this.isPaused(profile, now)) {
+      result = { status: 'paused', ...(profile.booking.pausedUntil === undefined ? {} : { pausedUntil: profile.booking.pausedUntil }) };
     } else if (noShow === 'pauseOnline') {
-      result = { status: 'paused', scope: 'client' };
+      result = { status: 'paused' };
     } else {
-      const minutes = this.duration(profile, request.serviceId, request.addOnIds, request.guests.length);
-      const start = Date.parse(request.startsAt);
-      const ignoreSession = request.holdId === undefined ? undefined : this.holds.get(request.holdId)?.sessionKey;
-      if (!isFree(start, minutes, this.rules(profile), this.busy(request.slug, undefined, now), now, ignoreSession === undefined ? {} : { sessionKey: ignoreSession })) {
-        const next = freeSlots(start, start + 5 * 24 * 3_600_000, minutes, this.rules(profile), this.busy(request.slug, undefined, now), now).slice(0, 4);
-        result = { status: 'slotTaken', nextSlots: next };
+      const serviceId = str(input['serviceId'], 'serviceId');
+      const addOnIds = idsOf(input['addOnIds'], 'addOnIds');
+      const guests = guestsOf(input['guests']);
+      const minutes = this.duration(profile, serviceId, addOnIds, guests);
+      const start = instant(input['startsAt'], 'startsAt');
+      const holdKey = typeof input['holdKey'] === 'string' ? input['holdKey'] : undefined;
+      if (!isFree(start, minutes, this.rules(profile), this.busy(slug, now), now, holdKey === undefined ? {} : { holdKey })) {
+        result = { status: 'slotTaken', alternatives: this.alternatives(slug, start, minutes, now) };
       } else {
-        const isKnown = scenario.knownClients.includes(phone) || [...this.bookings.values()].some((b) => b.slug === request.slug && b.client.phone === phone);
-        const needsApproval = (profile.booking.confirmNewClients && !isKnown) || noShow === 'approveNewBookings';
+        const isKnown = scenario.knownClients.includes(phone) || [...this.bookings.values()].some((b) => b.slug === slug && b.client.phone === phone);
+        const needsApproval = (profile.booking.requiresApproval && !isKnown) || noShow === 'approveNewBookings';
         const stored: StoredBooking = {
           id: `bk_${token()}`,
-          slug: request.slug,
+          slug,
           status: needsApproval ? 'pendingApproval' : 'confirmed',
-          serviceId: request.serviceId,
-          addOnIds: [...request.addOnIds],
-          guestNames: request.guests.map((g) => g.name),
+          serviceId,
+          addOnIds,
+          guests,
           startsAt: start,
           endsAt: start + minutes * MINUTE,
-          totalMinutes: minutes,
-          client: { ...request.client },
+          durationMinutes: minutes,
+          client: { name, phone, locale, ...(email === undefined || email === '' ? {} : { email }) },
+          ...(typeof note === 'string' && note !== '' ? { note } : {}),
           policy: profile.policy,
           rescheduleCount: 0,
-          intake: scenario.intakeCompleted === true ? 'done' : 'pending',
-          checkIn: 'none',
-          idempotencyKey: request.idempotencyKey,
         };
         this.bookings.set(stored.id, stored);
-        if (request.holdId !== undefined) this.holds.delete(request.holdId);
+        if (holdKey !== undefined) for (const hold of [...this.holds.values()]) if (hold.holdKey === holdKey) this.holds.delete(hold.id);
         const manageToken = token();
         this.manageTokens.set(manageToken, stored.id);
-        result = needsApproval
-          ? { status: 'pendingApproval', reason: noShow === 'approveNewBookings' ? 'noShowLimit' : 'newClient', manageToken }
-          : { status: 'confirmed', manageToken, booking: this.view(stored, now) };
+        result = this.booked(stored, manageToken, profile);
       }
     }
-    if (result.status !== 'slotTaken') this.idempotent.set(request.idempotencyKey, result);
+    if (result.status !== 'slotTaken') this.idempotent.set(idempotencyKey, { request: fingerprint, result });
     return result;
   }
 
-  joinWaitlist(body: Record<string, unknown>): void {
+  joinWaitlist(input: Json): Json {
     this.maybeFail('joinWaitlist');
-    this.profile(String(body['slug']));
-    this.waitlist.push(body);
+    const slug = str(input['slug'], 'slug');
+    this.profile(slug);
+    const entry = {
+      slug,
+      ...(typeof input['serviceId'] === 'string' ? { serviceId: input['serviceId'] } : {}),
+      name: str(input['name'], 'name'),
+      phone: str(input['phone'], 'phone'),
+      locale: str(input['locale'], 'locale'),
+      dayFrom: localDate(input['dayFrom'], 'dayFrom'),
+      dayTo: localDate(input['dayTo'], 'dayTo'),
+    };
+    if (!E164.test(entry.phone)) throw new MockError('INVALID_ARGUMENT', { fields: ['phone'] });
+    for (const forbidden of ['dateFrom', 'dateTo', 'email', 'note']) if (forbidden in input) throw new MockError('INVALID_ARGUMENT', { fields: [forbidden] });
+    const same = this.waitlist.some((item) => item['slug'] === slug && item['phone'] === entry.phone && item['serviceId'] === entry.serviceId && item['dayFrom'] === entry.dayFrom && item['dayTo'] === entry.dayTo);
+    if (!same) this.waitlist.push(entry);
+    return { ok: true };
   }
 
-  findBookings(body: Record<string, unknown>, now = Date.now()): { bookings: unknown[] } {
+  findBookings(input: Json, now = Date.now()): Json {
     this.maybeFail('findBookings');
-    const slug = String(body['slug']);
-    const proof = body['verification'] as VerificationProof;
-    const { target } = this.proofTarget(proof);
-    const profile = this.profile(slug);
-    const mine = [...this.bookings.values()].filter((b) => b.slug === slug && b.endsAt > now && (b.status === 'confirmed' || b.status === 'pendingApproval') && (proof.kind === 'sms' ? b.client.phone === target : b.client.email === target));
+    const slug = str(input['slug'], 'slug');
+    this.profile(slug);
+    const proof = this.verified(input['verification']);
+    const phone = typeof input['phone'] === 'string' ? input['phone'] : undefined;
+    const email = typeof input['email'] === 'string' ? input['email'].trim().toLowerCase() : undefined;
+    if (proof.method === 'phone' && proof.target !== phone) throw new MockError('VERIFICATION_FAILED');
+    if (proof.method === 'email' && proof.target !== email) throw new MockError('VERIFICATION_FAILED');
+    const mine = [...this.bookings.values()].filter((b) => b.slug === slug && b.endsAt > now && (b.status === 'confirmed' || b.status === 'pendingApproval') && (proof.method === 'phone' ? b.client.phone === phone : b.client.email === email));
     return {
       bookings: mine
         .sort((a, b) => a.startsAt - b.startsAt)
@@ -409,219 +590,261 @@ export class MockApi {
           const manageToken = token();
           this.manageTokens.set(manageToken, b.id);
           const view = this.view(b, now);
-          return { manageToken, serviceName: view.service.name, startsAt: view.startsAt, endsAt: view.endsAt, totalMinutes: view.totalMinutes, professionalName: profile.displayName };
+          return { bookingId: b.id, manageToken, serviceName: view.service.name, startsAt: view.startsAt, endsAt: view.endsAt, timeZoneID: view.timeZoneID, status: b.status };
         }),
     };
   }
 
-  getBooking(value: string, now = Date.now()): BookingView {
+  // MARK: Token functions
+
+  getBooking(input: Json, now = Date.now()): WireBooking {
     this.maybeFail('getBooking');
-    return this.view(this.bookingByToken(value), now);
+    return this.view(this.bookingByToken(input['token'], now), now);
   }
 
-  confirmPresence(value: string, now = Date.now()): void {
+  private active(booking: StoredBooking, now: number): StoredBooking {
+    if (!(booking.status === 'confirmed' || booking.status === 'pendingApproval') || now >= booking.endsAt) throw new MockError('BOOKING_NOT_ACTIVE', { status: booking.status });
+    return booking;
+  }
+
+  confirmPresence(input: Json, now = Date.now()): Json {
     this.maybeFail('confirmPresence');
-    this.bookingByToken(value).clientConfirmedAt = new Date(now).toISOString();
+    const booking = this.active(this.bookingByToken(input['token'], now), now);
+    booking.clientConfirmedAt = iso(now);
+    return { clientConfirmedAt: booking.clientConfirmedAt };
   }
 
-  reportLate(value: string, minutes: number): { lateByMinutes: number; proReply?: string } {
+  reportLate(input: Json, now = Date.now()): Json {
     this.maybeFail('reportLate');
-    const booking = this.bookingByToken(value);
+    const booking = this.active(this.bookingByToken(input['token'], now), now);
+    const minutes = input['minutes'];
+    if (minutes !== 10 && minutes !== 15 && minutes !== 20 && minutes !== 30) throw new MockError('INVALID_ARGUMENT', { fields: ['minutes'] });
     booking.lateByMinutes = minutes;
-    if (minutes >= 20) booking.proReply = 'I will wait for you.';
-    return { lateByMinutes: minutes, ...(booking.proReply === undefined ? {} : { proReply: booking.proReply }) };
+    return { lateByMinutes: minutes, reportedAt: iso(now) };
   }
 
-  rescheduleBooking(body: Record<string, unknown>, now = Date.now()): BookingView {
+  rescheduleBooking(input: Json, now = Date.now()): Json {
     this.maybeFail('rescheduleBooking');
-    const booking = this.bookingByToken(String(body['token']));
-    if (rescheduleMode(booking.startsAt, booking.policy, now, booking.rescheduleCount) !== 'direct') throw new MockError('notAllowed', 403);
+    const booking = this.active(this.bookingByToken(input['token'], now), now);
+    if (this.actions(booking, now).reschedule !== 'direct') throw new MockError('NOT_ALLOWED', { action: this.actions(booking, now).reschedule === 'request' ? 'request' : 'message' });
     const profile = this.profile(booking.slug);
-    const start = Date.parse(String(body['startsAt']));
-    if (!isFree(start, booking.totalMinutes, this.rules(profile), this.busy(booking.slug, undefined, now), now, { bookingId: booking.id })) throw new MockError('slotTaken', 409);
-    booking.movedFrom = new Date(booking.startsAt).toISOString();
+    const start = instant(input['startsAt'], 'startsAt');
+    if (!isFree(start, booking.durationMinutes, this.rules(profile), this.busy(booking.slug, now), now, { bookingId: booking.id })) {
+      return { status: 'slotTaken', alternatives: this.alternatives(booking.slug, start, booking.durationMinutes, now, { bookingId: booking.id }) };
+    }
     booking.startsAt = start;
-    booking.endsAt = start + booking.totalMinutes * MINUTE;
+    booking.endsAt = start + booking.durationMinutes * MINUTE;
     booking.rescheduleCount += 1;
-    delete booking.rescheduleRequest;
-    return this.view(booking, now);
+    delete booking.pendingReschedule;
+    return { status: 'moved', startsAt: iso(booking.startsAt), endsAt: iso(booking.endsAt), rescheduleCount: booking.rescheduleCount };
   }
 
-  requestReschedule(body: Record<string, unknown>, now = Date.now()): BookingView {
+  requestReschedule(input: Json, now = Date.now()): Json {
     this.maybeFail('requestReschedule');
-    const booking = this.bookingByToken(String(body['token']));
-    if (rescheduleMode(booking.startsAt, booking.policy, now, booking.rescheduleCount) !== 'request') throw new MockError('notAllowed', 403);
+    const booking = this.active(this.bookingByToken(input['token'], now), now);
+    if (this.actions(booking, now).reschedule !== 'request') throw new MockError('NOT_ALLOWED', { action: this.actions(booking, now).reschedule === 'direct' ? 'direct' : 'message' });
     const profile = this.profile(booking.slug);
-    const start = Date.parse(String(body['startsAt']));
-    if (!isFree(start, booking.totalMinutes, this.rules(profile), this.busy(booking.slug, undefined, now), now, { bookingId: booking.id })) throw new MockError('slotTaken', 409);
-    booking.rescheduleRequest = { requestedStart: new Date(start).toISOString() };
-    this.rescheduleRequests.push({ slug: booking.slug, bookingId: booking.id, startsAt: new Date(start).toISOString(), note: body['note'] });
-    return this.view(booking, now);
+    const start = instant(input['startsAt'], 'startsAt');
+    const note = input['note'];
+    if (note !== undefined && (typeof note !== 'string' || note.length > 300)) throw new MockError('INVALID_ARGUMENT', { fields: ['note'] });
+    if (!isFree(start, booking.durationMinutes, this.rules(profile), this.busy(booking.slug, now), now, { bookingId: booking.id })) {
+      return { status: 'slotTaken', alternatives: this.alternatives(booking.slug, start, booking.durationMinutes, now, { bookingId: booking.id }) };
+    }
+    booking.pendingReschedule = { requestedStart: iso(start), status: 'pending' };
+    this.rescheduleRequests.push({ slug: booking.slug, bookingId: booking.id, startsAt: iso(start), ...(typeof note === 'string' ? { note } : {}) });
+    return { status: 'requested' };
   }
 
-  cancelBooking(body: Record<string, unknown>, now = Date.now()): { booking: BookingView; countedAsLate: boolean } {
+  cancelBooking(input: Json, now = Date.now()): Json {
     this.maybeFail('cancelBooking');
-    const booking = this.bookingByToken(String(body['token']));
-    const mode = cancelMode(booking.startsAt, booking.policy, now);
-    if (mode === 'message') throw new MockError('notAllowed', 403);
+    const booking = this.active(this.bookingByToken(input['token'], now), now);
+    const reason = input['reason'];
+    if (reason !== undefined && (typeof reason !== 'string' || reason.length > 200)) throw new MockError('INVALID_ARGUMENT', { fields: ['reason'] });
+    const verdict = this.actions(booking, now).cancel;
+    if (verdict === 'askByMessage' || verdict === 'unavailable') throw new MockError('NOT_ALLOWED', { action: 'message' });
+    if (verdict === 'allowedWithWarning' && input['acceptLateWarning'] !== true) throw new MockError('CONFIRMATION_REQUIRED');
     booking.status = 'cancelledByClient';
-    return { booking: this.view(booking, now), countedAsLate: mode === 'allowLate' && booking.policy.lateCancelCounts === true };
+    return { status: 'cancelled', isLateCancellation: verdict === 'allowedWithWarning' };
   }
 
   // MARK: Portal
 
-  seedPortal(slug: string, name: string, phone: string, mode: PortalView['rebookMode'] = 'direct'): string {
+  seedPortal(slug: string, name: string, phone: string, mode: Portal['mode'] = 'direct'): string {
     this.scenario(slug);
     const value = token();
     this.portalTokens.set(value, { slug, phone, name, mode });
     return value;
   }
 
-  getPortal(value: string, now = Date.now()): PortalView {
+  getPortal(input: Json, now = Date.now()): WirePortal {
     this.maybeFail('getPortal');
-    const portal = this.portalTokens.get(value);
-    if (portal === undefined) throw new MockError('expired', 410);
+    const portal = this.portalTokens.get(str(input['token'], 'token'));
+    if (portal === undefined) throw new MockError(this.expiredTokens.has(String(input['token'])) ? 'TOKEN_EXPIRED' : 'NOT_FOUND');
     const profile = this.profile(portal.slug);
     const mine = [...this.bookings.values()].filter((b) => b.slug === portal.slug && b.client.phone === portal.phone);
-    const upcoming = mine.filter((b) => b.status === 'confirmed' && b.endsAt > now).sort((a, b) => a.startsAt - b.startsAt)[0];
-    const past = mine.filter((b) => b.status === 'completed').sort((a, b) => b.startsAt - a.startsAt);
-    const recommended = zonedDateKey(now + 28 * 24 * 3_600_000, profile.timeZoneID);
+    const upcoming = mine.filter((b) => b.status === 'confirmed' && b.endsAt > now).sort((a, b) => a.startsAt - b.startsAt);
+    const past = mine.filter((b) => b.status === 'confirmed' && b.endsAt <= now).sort((a, b) => b.startsAt - a.startsAt);
+    const serviceName = (id: string): string => profile.services.find((s) => s.id === id)?.name ?? '';
     const service = profile.services[1] ?? profile.services[0];
-    if (service === undefined) throw new MockError('notFound', 404);
-    const upcomingToken = upcoming === undefined ? undefined : [...this.manageTokens.entries()].find(([, id]) => id === upcoming.id)?.[0];
+    if (service === undefined) throw new MockError('NOT_FOUND');
+    const recommended = zonedDateKey(now + 28 * DAY, profile.timeZoneID);
     return {
-      professional: this.lite(profile),
-      client: { firstName: portal.name },
-      next: { serviceId: service.id, serviceName: service.name, durationMinutes: service.durationMinutes, recommendedDate: recommended },
-      past: past.map((b) => ({ date: new Date(b.startsAt).toISOString(), serviceName: profile.services.find((s) => s.id === b.serviceId)?.name ?? '', note: 'Your skin responded well. Keep products gentle and fragrance-free.' })),
-      aftercare: past.length === 0 ? [] : [{ date: new Date(past[0]?.startsAt ?? now).toISOString(), serviceName: service.name, lines: ['Use only a gentle, fragrance-free cleanser tonight.', 'Wear sunscreen in the morning.', 'Message Maria if anything feels uncomfortable.'] }],
+      slug: portal.slug,
+      professional: this.header(profile),
+      clientName: portal.name,
+      upcoming: upcoming.map((b) => ({ serviceName: serviceName(b.serviceId), startsAt: iso(b.startsAt), endsAt: iso(b.endsAt), timeZoneID: profile.timeZoneID })),
+      next: { serviceName: service.name, recommendedDate: recommended },
+      past: past.map((b) => ({ serviceName: serviceName(b.serviceId), date: zonedDateKey(b.startsAt, profile.timeZoneID), summary: 'Your skin responded well. Keep products gentle and fragrance-free.' })),
+      aftercare: past.length === 0 ? [] : [{ title: service.name, lines: ['Use only a gentle, fragrance-free cleanser tonight.', 'Wear sunscreen in the morning.', 'Message Maria if anything feels uncomfortable.'], date: zonedDateKey(past[0]?.startsAt ?? now, profile.timeZoneID) }],
       products: [{ name: 'Calming serum', note: 'Used in your treatment' }],
-      forms: { intake: 'pending', checkIn: 'available' },
-      ...(upcoming === undefined || upcomingToken === undefined ? {} : { upcoming: { manageToken: upcomingToken, startsAt: new Date(upcoming.startsAt).toISOString(), serviceName: profile.services.find((s) => s.id === upcoming.serviceId)?.name ?? '' } }),
-      rebookMode: portal.mode,
+      rebook: { serviceId: service.id, addOnIds: [] },
+      expiresAt: iso(now + 180 * DAY),
     };
   }
 
-  rebook(body: Record<string, unknown>, now = Date.now()): BookingResult {
+  rebook(input: Json, now = Date.now()): BookingOutcome {
     this.maybeFail('rebook');
-    const value = String(body['token']);
+    const value = str(input['token'], 'token');
+    const idempotencyKey = str(input['idempotencyKey'], 'idempotencyKey');
+    if (!UUID.test(idempotencyKey)) throw new MockError('INVALID_ARGUMENT', { fields: ['idempotencyKey'] });
+    const fingerprint = JSON.stringify({ ...input, idempotencyKey: undefined });
+    const previous = this.idempotent.get(idempotencyKey);
+    if (previous !== undefined) {
+      if (previous.request !== fingerprint) throw new MockError('CONFLICT');
+      return previous.result;
+    }
     const portal = this.portalTokens.get(value);
     let slug: string;
     let client: StoredBooking['client'];
     let serviceId: string;
-    let policy: PolicyValues;
+    let addOnIds: string[];
+    let mode: Portal['mode'];
     if (portal !== undefined) {
       slug = portal.slug;
       client = { name: portal.name, phone: portal.phone, locale: 'en' };
-      serviceId = 'brazilian';
-      policy = this.profile(slug).policy;
-      if (portal.mode === 'paused') return { status: 'paused', scope: 'client' };
+      serviceId = typeof input['serviceId'] === 'string' ? input['serviceId'] : 'brazilian';
+      addOnIds = idsOf(input['addOnIds'], 'addOnIds');
+      mode = portal.mode;
     } else {
-      const base = this.bookingByToken(value);
+      const base = this.bookingByToken(value, now);
       slug = base.slug;
       client = base.client;
-      serviceId = base.serviceId;
-      policy = this.profile(slug).policy;
+      serviceId = typeof input['serviceId'] === 'string' ? input['serviceId'] : base.serviceId;
+      addOnIds = input['addOnIds'] === undefined ? base.addOnIds : idsOf(input['addOnIds'], 'addOnIds');
+      mode = this.scenario(slug).noShow[client.phone] === 'pauseOnline' ? 'paused' : this.scenario(slug).noShow[client.phone] === 'approveNewBookings' ? 'approval' : 'direct';
     }
     const profile = this.profile(slug);
-    const service = profile.services.find((s) => s.id === serviceId);
-    if (service === undefined) throw new MockError('notFound', 404);
-    const start = Date.parse(String(body['startsAt']));
-    if (!isFree(start, service.durationMinutes, this.rules(profile), this.busy(slug, undefined, now), now)) {
-      return { status: 'slotTaken', nextSlots: freeSlots(start, start + 5 * 24 * 3_600_000, service.durationMinutes, this.rules(profile), this.busy(slug, undefined, now), now).slice(0, 4) };
+    let result: BookingOutcome;
+    if (mode === 'paused' || this.isPaused(profile, now)) {
+      result = { status: 'paused', ...(profile.booking.pausedUntil === undefined ? {} : { pausedUntil: profile.booking.pausedUntil }) };
+    } else {
+      const minutes = this.duration(profile, serviceId, addOnIds, 0);
+      const start = instant(input['startsAt'], 'startsAt');
+      if (!isFree(start, minutes, this.rules(profile), this.busy(slug, now), now)) {
+        result = { status: 'slotTaken', alternatives: this.alternatives(slug, start, minutes, now) };
+      } else {
+        const stored: StoredBooking = {
+          id: `bk_${token()}`,
+          slug,
+          status: mode === 'approval' ? 'pendingApproval' : 'confirmed',
+          serviceId,
+          addOnIds,
+          guests: 0,
+          startsAt: start,
+          endsAt: start + minutes * MINUTE,
+          durationMinutes: minutes,
+          client,
+          policy: profile.policy,
+          rescheduleCount: 0,
+          intakeSubmittedAt: iso(now - 30 * DAY),
+        };
+        this.bookings.set(stored.id, stored);
+        const manageToken = token();
+        this.manageTokens.set(manageToken, stored.id);
+        result = this.booked(stored, manageToken, profile);
+      }
     }
-    const approval = portal?.mode === 'approval';
-    const stored: StoredBooking = {
-      id: `bk_${token()}`,
-      slug,
-      status: approval ? 'pendingApproval' : 'confirmed',
-      serviceId,
-      addOnIds: [],
-      guestNames: [],
-      startsAt: start,
-      endsAt: start + service.durationMinutes * MINUTE,
-      totalMinutes: service.durationMinutes,
-      client,
-      policy,
-      rescheduleCount: 0,
-      intake: 'done',
-      checkIn: 'none',
-    };
-    this.bookings.set(stored.id, stored);
-    const manageToken = token();
-    this.manageTokens.set(manageToken, stored.id);
-    return approval ? { status: 'pendingApproval', reason: 'newClient', manageToken } : { status: 'confirmed', manageToken, booking: this.view(stored, now) };
+    if (result.status !== 'slotTaken') this.idempotent.set(idempotencyKey, { request: fingerprint, result });
+    return result;
   }
 
   // MARK: Sealed forms
 
-  getFormContext(value: string, now = Date.now()): FormContext {
+  getFormContext(input: Json, now = Date.now()): WireFormContext {
     this.maybeFail('getFormContext');
     if (this.inboxKey === null) throw new Error('mock not initialised');
-    const booking = this.bookingByToken(value);
+    const booking = this.bookingByToken(input['token'], now);
+    const scenario = this.scenario(booking.slug);
+    if (scenario.intakeAvailable === false) throw new MockError('NOT_FOUND');
     const profile = this.profile(booking.slug);
-    void now;
     return {
-      professional: this.lite(profile),
       bookingId: booking.id,
-      client: { firstName: booking.client.name.split(/\s+/)[0] ?? booking.client.name },
+      professional: { displayName: profile.displayName },
+      formVersion: 1,
+      template: TEMPLATE,
+      consent: CONSENT,
       inboxKey: this.inboxKey,
-      intake: {
-        available: booking.status === 'confirmed' || booking.status === 'completed' || booking.status === 'pendingApproval',
-        completedWithin12Months: booking.intake === 'done',
-        formVersion: '2026-10.1',
-        questions: QUESTIONS,
-      },
-      checkIn: { available: booking.checkIn === 'available' || booking.status === 'completed', serviceName: profile.services.find((s) => s.id === booking.serviceId)?.name ?? '' },
-      ...(booking.intake === 'done' ? { lastIntakeAt: new Date(now - 20 * 24 * 3_600_000).toISOString() } : {}),
+      intakeCompletedWithinMonths: booking.intakeSubmittedAt !== undefined || scenario.intakeCompleted === true,
     };
   }
 
-  async submitSealed(body: Record<string, unknown>): Promise<void> {
+  async submitSealed(input: Json, now = Date.now()): Promise<Json> {
     this.maybeFail('submitSealed');
     if (this.inboxKey === null) throw new Error('mock not initialised');
-    const booking = this.bookingByToken(String(body['token']));
-    const envelope = body['envelope'] as SealedEnvelope | undefined;
-    if (envelope === undefined || envelope.v !== 1 || envelope.keyId !== this.inboxKey.keyId || !['intake', 'checkin', 'datarequest'].includes(envelope.kind)) throw new MockError('invalidInput', 400);
-    if (typeof envelope.itemId !== 'string' || typeof envelope.enc !== 'string' || typeof envelope.ct !== 'string') throw new MockError('invalidInput', 400);
-    // The server never sees the answers. This stand-in opens the envelope only so a test can compare it to what was typed.
+    const booking = this.bookingByToken(input['token'], now);
+    const envelope = input['envelope'] as Partial<SealedEnvelope> | undefined;
+    if (envelope === undefined || envelope.v !== 1 || envelope.suite !== 'hpke-x25519-hkdf-sha256-chacha20poly1305') throw new MockError('INVALID_ARGUMENT', { fields: ['envelope'] });
+    if (envelope.kind !== 'intake' && envelope.kind !== 'checkin' && envelope.kind !== 'datarequest') throw new MockError('INVALID_ARGUMENT', { fields: ['envelope.kind'] });
+    if (typeof envelope.itemId !== 'string' || !UUID.test(envelope.itemId) || typeof envelope.enc !== 'string' || typeof envelope.ct !== 'string') throw new MockError('INVALID_ARGUMENT', { fields: ['envelope'] });
+    if (envelope.keyId !== this.inboxKey.keyId) throw new MockError('KEY_MISMATCH');
+    const maxBytes = PAYLOAD_LIMITS[envelope.kind] + 1024;
     const ctBytes = decodeBase64Url(envelope.ct).length;
-    if (ctBytes > PAYLOAD_LIMITS[envelope.kind] + 64) throw new MockError('tooLarge', 413);
-    if (this.itemIds.has(envelope.itemId)) return;
+    if (ctBytes > maxBytes) throw new MockError('PAYLOAD_TOO_LARGE', { maxBytes });
+    const seen = this.items.get(envelope.itemId);
+    if (seen !== undefined) {
+      // The same bytes again is a retry; different bytes under the same id is a conflict.
+      if (seen !== envelope.ct) throw new MockError('CONFLICT');
+      return { ok: true };
+    }
+    // The server never sees the answers. This stand-in opens the envelope only so a test can compare it to what was typed.
     let text: string;
     try {
-      text = await openEnvelope(envelope, this.inboxSeed);
+      text = await openEnvelope(envelope as SealedEnvelope, this.inboxSeed);
     } catch {
-      throw new MockError('invalidInput', 400);
+      throw new MockError('INVALID_ARGUMENT', { fields: ['envelope.ct'] });
     }
-    this.itemIds.add(envelope.itemId);
-    this.inbox.push({ slug: booking.slug, bookingId: booking.id, kind: envelope.kind, itemId: envelope.itemId, payload: JSON.parse(text) as Record<string, unknown>, sizeBytes: ctBytes });
-    if (envelope.kind === 'intake') booking.intake = 'done';
+    this.items.set(envelope.itemId, envelope.ct);
+    this.inbox.push({ slug: booking.slug, bookingId: booking.id, kind: envelope.kind, itemId: envelope.itemId, payload: JSON.parse(text) as Json, sizeBytes: ctBytes });
+    if (envelope.kind === 'intake') booking.intakeSubmittedAt = iso(now);
+    return { ok: true };
   }
 
   // MARK: Test controls
 
-  seedBooking(input: { slug: string; startsInMinutes: number; status?: BookingStatus; serviceId?: string; phone?: string; name?: string; rescheduleCount?: number; intake?: 'pending' | 'done'; guests?: number; policy?: Partial<PolicyValues>; checkIn?: boolean }, now = Date.now()): { token: string; bookingId: string; portalToken: string } {
+  seedBooking(
+    input: { slug: string; startsInMinutes: number; status?: BookingStatus | 'completed'; serviceId?: string; phone?: string; name?: string; rescheduleCount?: number; intake?: 'pending' | 'done'; guests?: number; policy?: Partial<PolicyValues> },
+    now = Date.now(),
+  ): { token: string; bookingId: string; portalToken: string } {
     const profile = this.profile(input.slug);
     const serviceId = input.serviceId ?? 'brazilian';
-    const guests = Array.from({ length: input.guests ?? 0 }, () => 'Guest');
-    const minutes = this.duration(profile, serviceId, [], guests.length);
+    const guests = input.guests ?? 0;
+    const minutes = this.duration(profile, serviceId, [], guests);
     const start = now + input.startsInMinutes * MINUTE;
     const stored: StoredBooking = {
       id: `bk_${token()}`,
       slug: input.slug,
-      status: input.status ?? 'confirmed',
+      // "completed" is a confirmed visit in the past (the API has no such status: `phase` says it).
+      status: input.status === 'completed' ? 'confirmed' : (input.status ?? 'confirmed'),
       serviceId,
       addOnIds: [],
-      guestNames: guests,
+      guests,
       startsAt: start,
       endsAt: start + minutes * MINUTE,
-      totalMinutes: minutes,
+      durationMinutes: minutes,
       client: { name: input.name ?? 'Helena Duarte', phone: input.phone ?? '+5511987654321', locale: 'en' },
       policy: { ...profile.policy, ...input.policy },
       rescheduleCount: input.rescheduleCount ?? 0,
-      intake: input.intake ?? 'pending',
-      checkIn: input.checkIn === true ? 'available' : 'none',
+      ...(input.intake === 'done' ? { intakeSubmittedAt: iso(now - 20 * DAY) } : {}),
     };
     this.bookings.set(stored.id, stored);
     const manageToken = token();
@@ -631,7 +854,7 @@ export class MockApi {
   }
 
   /** What the server holds for a professional's bookings, so a test can compare it with what the page showed. */
-  listBookings(slug: string): Record<string, unknown>[] {
+  listBookings(slug: string): Json[] {
     return [...this.bookings.values()]
       .filter((booking) => booking.slug === slug)
       .map((booking) => ({
@@ -639,21 +862,22 @@ export class MockApi {
         status: booking.status,
         serviceId: booking.serviceId,
         addOnIds: booking.addOnIds,
-        guestNames: booking.guestNames,
-        startsAt: new Date(booking.startsAt).toISOString(),
-        totalMinutes: booking.totalMinutes,
+        guests: booking.guests,
+        startsAt: iso(booking.startsAt),
+        durationMinutes: booking.durationMinutes,
         client: booking.client,
+        note: booking.note ?? null,
         rescheduleCount: booking.rescheduleCount,
         clientConfirmedAt: booking.clientConfirmedAt ?? null,
         lateByMinutes: booking.lateByMinutes ?? null,
-        intake: booking.intake,
+        intake: booking.intakeSubmittedAt === undefined ? 'pending' : 'done',
       }));
   }
 
   seedExpired(slug: string): string {
     this.scenario(slug);
     const value = token();
-    this.expiredTokens.set(value, slug);
+    this.expiredTokens.add(value);
     return value;
   }
 
@@ -664,11 +888,11 @@ export class MockApi {
 
   freeUntilFor(bookingId: string): string | null {
     const booking = this.bookings.get(bookingId);
-    return booking === undefined ? null : new Date(freeUntil(booking.startsAt, booking.policy)).toISOString();
+    return booking === undefined ? null : iso(freeUntil(booking.startsAt, booking.policy));
   }
 
-  dayKey(slug: string, instant: number): string {
-    return zonedDateKey(instant, this.profile(slug).timeZoneID);
+  dayKey(slug: string, instantMs: number): string {
+    return zonedDateKey(instantMs, this.profile(slug).timeZoneID);
   }
 
   instantAt(slug: string, day: string, hour: number, minute: number): number {

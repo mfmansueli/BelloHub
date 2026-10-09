@@ -19,27 +19,23 @@ import { LegalDocumentView } from '../../components/Legal';
 import { RuleList, useRules } from '../../components/RuleList';
 import { Sheet } from '../../components/Sheet';
 import { useI18n } from '../../i18n';
-import { pickLocalized } from '../../lib/locales';
-import { langAttribute } from '../../lib/text';
 import { whatsAppUrl } from '../../lib/whatsapp';
 
 export function BookingHome({ profile }: { profile: PublicProfile }): JSX.Element {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const format = useFormatter();
   const [credentialsOpen, setCredentialsOpen] = useState(false);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const rules = useRules(profile.rules, profile);
   useDocumentTitle(profile.displayName);
 
-  const headline = pickLocalized(profile.headline, locale, profile.defaultLocale);
-  const bio = pickLocalized(profile.bio, locale, profile.defaultLocale);
-  const accepting = profile.booking.accepting;
-  const credentials = profile.credentials.items;
+  const accepting = profile.booking.acceptingBookings;
+  const credentials = profile.credentials;
 
   const pauseText =
     profile.booking.pausedUntil === undefined
       ? t('bk1.paused.unsure')
-      : t('bk1.paused.back', { date: format.longDateOf(profile.booking.pausedUntil), name: profile.firstName });
+      : t('bk1.paused.back', { date: format.longDate(profile.booking.pausedUntil), name: profile.firstName });
   const message = whatsAppUrl(profile.whatsappE164, t('wa.hello', { name: profile.firstName }));
 
   const bar = accepting ? (
@@ -61,24 +57,15 @@ export function BookingHome({ profile }: { profile: PublicProfile }): JSX.Elemen
         <h1 id="page-title" class="title" tabIndex={-1}>
           <bdi>{profile.displayName}</bdi>
         </h1>
-        {headline === null ? null : (
-          <p class="lead" lang={langAttribute(headline, locale)}>
-            {headline.text}
+        {profile.businessName === undefined ? null : (
+          <p class="lead">
+            <bdi>{profile.businessName}</bdi>
           </p>
         )}
-        {bio === null ? null : (
-          <p class="lead" lang={langAttribute(bio, locale)}>
-            {bio.text}
+        {profile.bio === undefined || profile.bio === '' ? null : (
+          <p class="lead bio">
+            {profile.bio}
           </p>
-        )}
-        {profile.tags === undefined || profile.tags.length === 0 ? null : (
-          <ul class="chips" aria-label={t('bk1.tags')}>
-            {profile.tags.map((tag) => (
-              <li key={tag} class="pill">
-                <bdi>{tag}</bdi>
-              </li>
-            ))}
-          </ul>
         )}
       </div>
 
@@ -93,7 +80,7 @@ export function BookingHome({ profile }: { profile: PublicProfile }): JSX.Elemen
           <span class="grow">
             <b class="strong">{t('bk1.credentials')}</b>
             <span class="sub">
-              {t(profile.credentials.verifiedByPro ? 'bk1.credentialsVerified' : 'bk1.credentialsCount', { count: credentials.length, name: profile.firstName })}
+              {t('bk1.credentialsCount', { count: credentials.length, name: profile.firstName })}
             </span>
           </span>
           <Icon name="chevron" class="icon-quiet" />

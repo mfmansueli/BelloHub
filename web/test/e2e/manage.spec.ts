@@ -48,7 +48,8 @@ test.describe('managing a booking from its link (Bk-9)', () => {
     const expired = await mock.seedExpired(slugFor('maria'));
     await open(page, `/m/${expired}`);
     await expect(page.getByTestId('expired')).toBeVisible();
-    await expect(page.getByTestId('message-pro')).toBeVisible();
+    // API.md section 3: an error never names the professional, so there is nobody to message from here.
+    await expect(page.getByTestId('message-pro')).toHaveCount(0);
     await open(page, '/m/short');
     await expect(page.getByTestId('not-found')).toBeVisible();
   });
@@ -80,7 +81,7 @@ test.describe('rescheduling (Cl-9)', () => {
     expect(after?.startsAt).not.toBe(before);
     expect(after?.rescheduleCount).toBe(1);
     await page.getByTestId('back-to-appointment').click();
-    await expect(page.getByTestId('moved-from')).toBeVisible();
+    await expect(page.getByTestId('booking-card')).toContainText(new RegExp(String(new Date(target).getUTCDate())));
   });
 
   test('after the free window it sends a request the professional answers, and the current time stays held', async ({ page, mock, slugFor }) => {
@@ -122,7 +123,7 @@ test.describe('cancelling (Cl-6)', () => {
     await expect(page.getByTestId('cancelled')).toBeVisible();
   });
 
-  test('a late cancellation says before it happens that it counts as a missed appointment', async ({ page, mock, slugFor }) => {
+  test('a late cancellation says before it happens that it counts as a missed appointment', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
     const { token } = await mock.seed({ slug, startsInMinutes: 5 * HOUR });
     await open(page, `/m/${token}/cancel`);
@@ -131,5 +132,8 @@ test.describe('cancelling (Cl-6)', () => {
     await page.getByTestId('confirm-cancel').click();
     await expect(page.getByTestId('done-text')).toContainText(/counts/i);
     expect((await mock.bookings(slug))[0]?.status).toBe('cancelledByClient');
+    // The page told the server it accepted the warning (API.md 5.12), with the request in the body.
+    const cancel = guard.requests.find((request) => request.url.endsWith('/api/cancelBooking'));
+    expect(JSON.parse(cancel?.body ?? '{}')).toMatchObject({ data: { token, acceptLateWarning: true } });
   });
 });

@@ -46,7 +46,7 @@ export function WaitlistSheet({ open, onClose, profile, serviceId }: Props): JSX
     setBusy(true);
     setFailure(null);
     try {
-      await api.joinWaitlist({ slug: profile.slug, serviceId, name: name.trim(), phone: normalized.e164, dateFrom: from, dateTo: to, locale });
+      await api.joinWaitlist({ slug: profile.slug, serviceId, name: name.trim(), phone: normalized.e164, locale, dayFrom: from, dayTo: to });
       setDone(true);
     } catch (error) {
       setFailure(error);

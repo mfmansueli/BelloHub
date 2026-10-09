@@ -1,32 +1,35 @@
-// Cl-3: book again. Opened from the portal (/p/{token}/rebook), from a finished or cancelled appointment
-// (/m/{token}/rebook) or from the reminder: her details are saved, she only chooses a time (docs/10 section 3,
-// "Return visits"). The server decides the outcome like any booking: confirmed, waiting for approval, or paused.
+// Cl-3: book again. Opened from the portal (/p/{token}/rebook) or from a finished or cancelled appointment
+// (/m/{token}/rebook): her details are saved, she only chooses a time (docs/10 section 3, "Return visits"). The
+// server decides the outcome like any booking (API.md 5.13): confirmed, waiting for approval, or paused; the page
+// does not know beforehand and never pretends to.
 
 import type { JSX } from 'preact';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 
 import { api } from '../../api/client';
 import { ApiError } from '../../api/errors';
-import type { BookingResult, ProfessionalLite } from '../../api/types';
+import type { BookingOutcome, ProfessionalLite } from '../../api/types';
 import { TokenLayout } from '../../app/TokenLayout';
 import { useFormatter } from '../../app/context';
+import { newIdempotencyKey } from '../../app/booking/machine';
+import { loadPublicPage } from '../../app/pageData';
 import { manageRoute, routePath, type Route } from '../../app/router';
 import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
 import { DayStrip, SlotList } from '../../components/Calendar';
-import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
+import { ErrorNotice, Seal } from '../../components/Feedback';
 import { Avatar, Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
-import type { DateKey } from '../../lib/datetime';
-import { zonedDateKey } from '../../lib/datetime';
+import { addDays, zonedDateKey, type DateKey } from '../../lib/datetime';
 import { whatsAppUrl } from '../../lib/whatsapp';
 
 interface RebookInfo {
   readonly professional: ProfessionalLite;
   readonly firstName: string | undefined;
-  readonly service: { readonly name: string; readonly durationMinutes: number };
+  readonly service: { readonly id: string; readonly name: string; readonly durationMinutes: number };
+  readonly addOnIds: readonly string[];
+  readonly guests: number;
   readonly recommendedDate: string | undefined;
-  readonly mode: 'direct' | 'approval' | 'paused';
   readonly back: Route | string;
 }
 
@@ -39,23 +42,28 @@ export function RebookPage({ token, kind }: { token: string; kind: 'manage' | 'p
       load={async (): Promise<RebookInfo> => {
         if (kind === 'portal') {
           const portal = await api.getPortal(token);
-          if (portal.next === undefined) throw new ApiError('notFound');
+          if (portal.rebook === undefined) throw new ApiError('notFound');
+          const profile = await loadPublicPage(portal.slug);
+          const service = profile.services.find((candidate) => candidate.id === portal.rebook?.serviceId);
+          if (service === undefined) throw new ApiError('notFound');
           return {
             professional: portal.professional,
-            firstName: portal.client.firstName,
-            service: { name: portal.next.serviceName, durationMinutes: portal.next.durationMinutes },
-            recommendedDate: portal.next.recommendedDate,
-            mode: portal.rebookMode,
+            firstName: portal.clientFirstName,
+            service: { id: service.id, name: service.name, durationMinutes: service.durationMinutes },
+            addOnIds: portal.rebook.addOnIds,
+            guests: 0,
+            recommendedDate: portal.next?.recommendedDate,
             back: `/p/${token}`,
           };
         }
         const booking = await api.getBooking(token);
         return {
           professional: booking.professional,
-          firstName: booking.client?.firstName,
-          service: { name: booking.service.name, durationMinutes: booking.service.durationMinutes },
+          firstName: booking.client.firstName,
+          service: { id: booking.service.id, name: booking.service.name, durationMinutes: booking.durationMinutes },
+          addOnIds: booking.addOns.map((addOn) => addOn.id),
+          guests: booking.guestCount,
           recommendedDate: undefined,
-          mode: 'direct',
           back: manageRoute(token),
         };
       }}
@@ -81,15 +89,16 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   const [pick, setPick] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<unknown>(null);
-  const [result, setResult] = useState<BookingResult | null>(null);
+  const [result, setResult] = useState<BookingOutcome | null>(null);
+  // One key per time she picks: a retry of the same request reuses it, a different time is a new attempt.
+  const idempotencyKey = useMemo(() => newIdempotencyKey(), [pick]);
 
   useEffect(() => {
-    if (info.mode === 'paused') return;
     let current = true;
     setLoad({ status: 'loading' });
-    const from = Date.now();
+    const from = zonedDateKey(Date.now(), pro.timeZoneID);
     api
-      .getSlots({ token, purpose: 'rebook', from: new Date(from).toISOString(), to: new Date(from + DAYS_AHEAD * 24 * 3_600_000).toISOString() })
+      .getSlots({ slug: pro.slug, serviceId: info.service.id, addOnIds: info.addOnIds, guests: info.guests, from, to: addDays(from, DAYS_AHEAD) })
       .then(
         (response) => {
           if (!current) return;
@@ -106,7 +115,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
     return () => {
       current = false;
     };
-  }, [token, attempt, info.mode]);
+  }, [token, attempt]);
 
   const byDay = load.status === 'ready' ? load.byDay : new Map<DateKey, readonly string[]>();
   const best = info.recommendedDate === undefined ? undefined : zonedDateKey(Date.parse(info.recommendedDate), pro.timeZoneID);
@@ -119,7 +128,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
     setBusy(true);
     setFailure(null);
     try {
-      const response = await api.rebook({ token, startsAt: pick });
+      const response = await api.rebook({ token, serviceId: info.service.id, addOnIds: info.addOnIds, startsAt: pick, idempotencyKey });
       if (response.status === 'slotTaken') {
         setPick(null);
         setAttempt((value) => value + 1);
@@ -140,14 +149,14 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
         <div class="stack">
           <Seal />
           <Title>{info.firstName === undefined ? t('cl3.doneTitleAnon') : t('cl3.doneTitle', { name: info.firstName })}</Title>
-          <p class="lead" data-testid="done-text">{t('cl3.doneText', { service: info.service.name })}</p>
+          <p class="lead" data-testid="done-text">{t('cl3.doneText', { service: result.serviceName })}</p>
         </div>
         <section class="card" data-testid="done-card">
-          <b class="strong section"><bdi>{info.service.name}</bdi></b>
-          <p class="meta">{t('bk9.with', { name: pro.displayName, meta: format.minutes(result.booking.totalMinutes) })}</p>
+          <b class="strong section"><bdi>{result.serviceName}</bdi></b>
+          <p class="meta">{t('bk9.with', { name: pro.displayName, meta: format.minutes(Math.round((Date.parse(result.endsAt) - Date.parse(result.startsAt)) / 60_000)) })}</p>
           <hr class="rule" />
-          <b class="strong">{format.weekdayDate(result.booking.startsAt)}</b>
-          <p class="moment tn">{format.time(result.booking.startsAt)}</p>
+          <b class="strong">{format.weekdayDate(result.startsAt)}</b>
+          <p class="moment tn">{format.time(result.startsAt)}</p>
         </section>
         <LinkButton to={routePath(manageRoute(result.manageToken))} testId="view-appointment">{t('bk8.view')}</LinkButton>
         <Footer />
@@ -157,7 +166,15 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   if (result !== null) {
     const sent = result.status === 'pendingApproval';
     return (
-      <Screen>
+      <Screen
+        bar={
+          sent || message === null ? undefined : (
+            <ExternalLink href={message} variant="primary" testId="message-pro">
+              {t('bk1.messageWa', { name: pro.firstName })}
+            </ExternalLink>
+          )
+        }
+      >
         <div class="stack">
           <Seal tone="amber" />
           <Title>{sent ? t('cl3.sentTitle') : t('bk10.blocked.title')}</Title>
@@ -170,31 +187,19 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   }
 
   const when = pick === null ? '' : `${format.shortDate(pick)} · ${format.time(pick)}`;
-  const bar =
-    info.mode === 'paused' ? (
-      message === null ? undefined : (
-        <ExternalLink href={message} variant="primary" testId="message-pro">
-          {t('bk1.messageWa', { name: pro.firstName })}
-        </ExternalLink>
-      )
-    ) : (
-      <Button busy={busy} disabled={pick === null} onClick={() => { void submit(); }} testId="rebook">
-        {pick === null ? t('cl3.pickFirst') : info.mode === 'approval' ? t('cl3.ask', { name: pro.firstName, when }) : t('cl3.rebook', { when })}
-      </Button>
-    );
-
   return (
-    <Screen top={<TopBar back={info.back} backLabel={t('cl3.back')} />} bar={bar}>
+    <Screen
+      top={<TopBar back={info.back} backLabel={t('cl3.back')} />}
+      bar={
+        <Button busy={busy} disabled={pick === null} onClick={() => { void submit(); }} testId="rebook">
+          {pick === null ? t('cl3.pickFirst') : t('cl3.rebook', { when })}
+        </Button>
+      }
+    >
       <div>
         <Title>{info.firstName === undefined ? t('cl3.titleAnon') : t('cl3.title', { name: info.firstName })}</Title>
         <p class="lead">{t('cl3.sub')}</p>
       </div>
-
-      {info.mode === 'direct' ? null : (
-        <Notice kind="warning" icon="info" testId="gate">
-          {info.mode === 'paused' ? t('cl3.pausedGate', { name: pro.firstName }) : t('cl3.approvalGate', { name: pro.firstName })}
-        </Notice>
-      )}
 
       <section class="card row-flex">
         <Avatar name={pro.displayName} photo={pro.photo} />
@@ -205,7 +210,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
         </div>
       </section>
 
-      {info.mode === 'paused' ? null : load.status === 'error' ? (
+      {load.status === 'error' ? (
         <div class="stack">
           <ErrorNotice error={load.error} />
           <Button variant="secondary" inline onClick={() => { setAttempt((value) => value + 1); }}>{t('common.retry')}</Button>

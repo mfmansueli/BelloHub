@@ -5,10 +5,6 @@
     "one": "{count} certificado",
     "other": "{count} certificados"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} certificado · verificado por {name}",
-    "other": "{count} certificados · verificados por {name}"
-  },
   "bk1.find": "Já marcou? Encontre a sua marcação",
   "bk1.messageWa": "Enviar mensagem a {name} no WhatsApp",
   "bk1.paused.back": "{name} regressa a {date}. Envie uma mensagem e obterá resposta.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Envie uma mensagem e obterá resposta assim que possível.",
   "bk1.rules": "Desmarcações e alterações",
   "bk1.services": "Serviços",
-  "bk1.tags": "Especialidades",
-
   "bk10.back": "Voltar à página de {name}",
   "bk10.blocked.text": "{name} prefere conversar antes da sua próxima visita. Envie uma mensagem e voltará depressa à agenda.",
   "bk10.blocked.title": "A marcação online está em pausa por agora.",
   "bk10.reason.newClient": "{name} confirma pessoalmente a primeira marcação de cada cliente. Costuma demorar algumas horas. Depois disso, pode marcar livremente.",
-  "bk10.reason.noShowLimit": "Algumas marcações anteriores foram faltas sem aviso, por isso {name} confirma pessoalmente as novas marcações. Costuma demorar algumas horas.",
   "bk10.request": "O seu pedido",
   "bk10.sent": "Pedido enviado.",
   "bk10.sentText": "{name} responde pelo WhatsApp, normalmente em poucas horas. Nada fica marcado até lá. Quando {name} confirmar, o seu link pessoal chega pelo WhatsApp para poder alterar ou desmarcar quando quiser.",
@@ -30,7 +23,6 @@
   "bk10.why": "Porque estou a ver isto?",
   "bk10.whyMore": "Isto aplica-se apenas a {name}. Não o acompanha para outros profissionais. Se achar que é um engano, diga a {name} e a marcação online pode ser reaberta.",
   "bk10.whyText": "{name} pede aos clientes que avisem a tempo quando não puderem comparecer: é sem encargos até {window} antes. Depois de algumas faltas sem aviso, {name} conversa consigo antes de nova marcação. As suas próximas marcações não são afetadas.",
-
   "bk11.back": "Voltar à página de {name}",
   "bk11.code": "Código",
   "bk11.codeSub": "Enviámos um código de 6 dígitos para {phone}.",
@@ -50,7 +42,6 @@
   "bk11.send": "Enviar código",
   "bk11.sub": "Indique o número com que marcou. Enviamos um código, para que só quem marcou a consiga abrir.",
   "bk11.title": "Encontre a sua marcação",
-
   "bk2.addOns": "Acrescente à sua visita",
   "bk2.addOnsHint": "Extras opcionais. Acrescentam tempo.",
   "bk2.guests.hint": "{name} atende todos em sequência.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Escolha primeiro um serviço.",
   "bk2.title": "Escolha um serviço",
   "bk2.with": "com {name}",
-
   "bk4.noTimesEnd": "Já não há horários livres. As marcações estão abertas até {date}.",
   "bk4.noTimesMonth": "Sem horários livres neste mês. Veja o seguinte.",
   "bk4.pickError": "Escolha primeiro um horário.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Horários no fuso de {place}.",
   "bk4.zoneDevice": "O seu dispositivo está noutro fuso horário.",
   "bk4.zoneYours": "Isso são {time} onde se encontra.",
-
   "bk5.email": "E-mail",
   "bk5.err.email": "Esse e-mail não parece correto.",
   "bk5.err.guest": "Indique o primeiro nome do acompanhante.",
@@ -98,7 +87,6 @@
   "bk5.send": "Enviar código de verificação",
   "bk5.sub": "{date} às {time}. Diga a {name} quem vem.",
   "bk5.title": "Quase lá.",
-
   "bk6.channel": "Enviar o código por",
   "bk6.code": "Código de verificação",
   "bk6.emailHint": "Indique um e-mail no passo anterior se preferir receber lá o código.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Verificar",
   "bk6.viaEmail": "Enviámos um código de 6 dígitos para o seu e-mail, {email}.",
   "bk6.viaSms": "Enviámos um código de 6 dígitos por SMS para o número terminado em {last}.",
-
   "bk7.agree": "Ao confirmar, aceita as regras de {name}. {line}",
   "bk7.before": "Já fez este tratamento antes?",
   "bk7.before.no": "Não, é a primeira vez",
@@ -132,7 +119,6 @@
   "bk7.skip": "Saltar por agora",
   "bk7.sub": "Opcional. Ajuda a que o seu primeiro {service} seja feito à sua medida.",
   "bk7.title": "Conte um pouco sobre si a {name}.",
-
   "bk8.again": "Voltar à página de {name}",
   "bk8.change.text": "Abra-o quando quiser para desmarcar ou remarcar: sem aplicação e sem palavra-passe. {line}",
   "bk8.change.title": "Precisa de mudar de planos? Use o seu link.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} às {end}",
   "bk8.title": "Marcação feita.",
   "bk8.view": "Ver marcação",
-
   "bk9.askedMove": "Pediu para mudar para {when}. Até {name} responder, este horário continua seu.",
   "bk9.attend.no": "Não posso ir",
   "bk9.attend.noText": "Remarque ou desmarque abaixo para que {name} possa oferecer o seu horário a outra pessoa.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Marcar outro horário",
   "bk9.cancel": "Desmarcar",
   "bk9.cancel.free": "Sem encargos até {deadline}",
-  "bk9.cancel.late": "{name} recebe o aviso de imediato",
   "bk9.cancel.lateCounts": "{name} recebe o aviso de imediato · conta como falta",
   "bk9.cancel.message": "Enviar mensagem a {name} para desmarcar",
   "bk9.cancelledByProText": "{name} cancelou esta marcação. Pode marcar outro horário quando quiser.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "O atendimento começa cerca de {minutes} depois das {time}. O seu horário está reservado.",
   "bk9.late.knows": "{name} já sabe.",
   "bk9.late.over": "Isso é mais do que os {grace} de espera. Pode receber uma mensagem para mudar a visita.",
-  "bk9.late.reply": "{name} respondeu: {reply}",
   "bk9.late.text": "Diga a {name} quanto se vai atrasar. O seu horário fica reservado durante {minutes}.",
   "bk9.late.title": "Vai chegar com atraso no dia?",
   "bk9.messageWa": "Mensagem no WhatsApp",
-  "bk9.movedFrom": "Mudou de {date} às {time}",
   "bk9.myData": "As suas informações",
   "bk9.note.free": "Alterações sem encargos até {deadline}.",
   "bk9.note.late": "O prazo sem encargos terminou em {deadline}. Agora as alterações seguem as regras das últimas horas, abaixo.",
@@ -211,7 +193,6 @@
   "bk9.title": "A sua marcação",
   "bk9.with": "com {name} · {meta}",
   "bk9.zone": "até às {end} · hora de {place}",
-
   "cal.add": "Adicionar ao calendário",
   "cal.file": "Ficheiro de calendário (.ics)",
   "cal.google": "Google Calendar",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Mês anterior",
   "cal.saved": "Ficheiro de calendário guardado.",
   "cal.unavailable": "{date}, indisponível",
-
   "cl2.after": "Depois do seu {service} · {date}",
   "cl2.bookAgain": "Marcar de novo",
   "cl2.careEmpty": "{name} ainda não partilhou cuidados pós-tratamento.",
   "cl2.completed": "Concluída",
-  "cl2.dataSub": "O que {name} guarda e como pedir uma cópia",
   "cl2.hi": "Olá, {name}.",
   "cl2.journeyEmpty": "Ainda nada partilhado. Quando {name} partilhar uma nota sobre uma visita, aparece aqui.",
   "cl2.next": "Próxima sessão",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Secções",
   "cl2.upcoming": "Próxima",
   "cl2.usedIn": "Usado no seu tratamento",
-
-  "cl3.approvalGate": "{name} confirma pessoalmente as novas marcações. Peça um horário e receberá resposta pelo WhatsApp.",
-  "cl3.ask": "Pedir {when} a {name}",
   "cl3.back": "Voltar",
   "cl3.best": "Ideal",
   "cl3.bestNote": "“Ideal” marca a data de regresso que {name} recomenda.",
@@ -260,7 +236,6 @@
   "cl3.time": "Escolha a hora",
   "cl3.title": "Olá de novo, {name}.",
   "cl3.titleAnon": "Olá de novo.",
-
   "cl4.agree": "Concordo",
   "cl4.already.text": "{name} já tem a sua ficha de saúde, enviada nos últimos 12 meses. Não há mais nada a fazer.",
   "cl4.already.title": "Já a enviou.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Agradecemos.",
   "cl4.title": "Algumas perguntas antes da sua visita.",
   "cl4.writeHere": "Escreva aqui",
-
   "cl5.addPhoto": "Adicionar uma fotografia",
   "cl5.anything": "Quer acrescentar alguma coisa?",
   "cl5.back": "Voltar às minhas marcações",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Agradecemos, {name}.",
   "cl5.title": "Como está a sua pele hoje?",
   "cl5.worried": "{name} entra em contacto consigo hoje. Se for intenso ou continuar a piorar, contacte um médico.",
-
   "cl6.askInstead": "Pedir antes para remarcar",
   "cl6.bookAgain": "Marcar outro horário",
   "cl6.confirm.free": "Desmarcar",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "Isto conta como falta.",
   "cl6.why": "Porque está a desmarcar?",
   "cl6.whyHint": "Opcional. Ajuda {name} a propor-lhe um horário melhor.",
-
   "cl7.choices": "As suas escolhas",
   "cl7.contact": "Dados de contacto",
   "cl7.contactSub": "Nome, WhatsApp e e-mail",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "Pedir uma cópia a {name}?",
   "cl7.form.title.delete": "Pedir a {name} que apague os seus dados?",
   "cl7.health": "Ficha de saúde e consentimento",
-  "cl7.healthSigned": "Assinada a {date} · selada, só {name} a consegue abrir",
   "cl7.healthSub": "Selada, só {name} a consegue abrir",
   "cl7.how": "Como funcionam os pedidos",
   "cl7.keeps": "O que {name} guarda",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Pedido enviado. {name} confirma quando estiver feito.",
   "cl7.sub": "Isto é o que {name} guarda sobre si, e só {name} o pode ver.",
   "cl7.title": "As suas informações",
-
   "cl9.back": "A sua marcação",
   "cl9.back2": "Voltar à minha marcação",
   "cl9.changeOf": "Esta é a alteração {current} de {max}.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "Envie mensagem a {name}",
   "cl9.title.self": "Escolha um novo horário",
   "cl9.youAsked": "Pediu",
-
   "common.actions": "Ações",
   "common.back": "Voltar",
   "common.by": "Marcações por Bello Hub",
@@ -421,7 +390,6 @@
   "common.skip": "Saltar para o conteúdo",
   "common.step": "Passo {current} de {total}",
   "common.yes": "Sim",
-
   "err.appCheck": "Não foi possível confirmar que este pedido veio desta página. Recarregue a página e tente novamente.",
   "err.generic": "Algo correu mal. Verifique a ligação e tente novamente.",
   "err.invalidInput": "Verifique o que escreveu e tente novamente.",
@@ -432,39 +400,30 @@
   "err.timeout": "Está a demorar demasiado. Tente novamente.",
   "err.tooLarge": "Isso é demasiado grande para enviar. Remova a fotografia ou encurte a nota.",
   "err.unavailable": "O serviço está ocupado neste momento. Tente novamente dentro de alguns minutos.",
-
   "ics.change": "Alterar ou desmarcar: {link}",
   "ics.summary": "{service} com {name}",
-
   "landing.home": "Voltar ao início",
   "landing.text": "Abra o link de marcação que o profissional lhe enviou.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "A confirmação e os lembretes usarão este idioma.",
   "lang.title": "Idioma",
-
   "legal.noticeLink": "Como são usadas as informações da sua marcação",
   "legal.privacyLink": "Política de privacidade",
-
   "price.from": "A partir de {price}",
   "price.onRequest": "Preço sob consulta",
-
   "state.crash.text": "A página deixou de funcionar. Recarregue e tente novamente. Nada do que escreveu foi enviado.",
   "state.crash.title": "Algo correu mal.",
-  "state.expired.text": "Os links funcionam até ao fim da visita e alguns dias depois. Envie mensagem a {name} para pedir um novo.",
   "state.expired.textNoName": "Os links funcionam até ao fim da visita e alguns dias depois. Peça um novo a quem o enviou.",
   "state.expired.title": "Este link expirou.",
   "state.loadFailed.text": "Verifique a ligação e tente novamente.",
   "state.loadFailed.title": "Esta página não carregou.",
   "state.notFound.text": "Verifique o link ou pergunte a quem o enviou.",
   "state.notFound.title": "Não encontrámos esta página.",
-
   "wa.blocked": "Olá, {name}, vi que a marcação online está em pausa para mim. Gostava de falar sobre a minha próxima visita.",
   "wa.book": "Olá, {name}, gostava de marcar uma visita.",
   "wa.cancel": "Olá, {name}, preciso de desmarcar o meu {service} de {date} às {time}.",
   "wa.hello": "Olá, {name}, tenho uma dúvida sobre a minha marcação.",
   "wa.reschedule": "Olá, {name}, gostava de remarcar o meu {service} de {date} às {time}.",
-
   "wait.err.days": "O último dia não pode ser anterior ao primeiro.",
   "wait.from": "De",
   "wait.submit": "Entrar na lista de espera",

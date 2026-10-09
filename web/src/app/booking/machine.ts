@@ -26,7 +26,8 @@ export interface Draft {
   /** One name per guest, as many as `guests`. */
   readonly guestNames: readonly string[];
   readonly startsAt: string | null;
-  readonly holdId: string | null;
+  /** The browser's own key for its soft hold (API.md 5.3): the same key renews the hold, and converts it on booking. */
+  readonly holdKey: string;
   readonly holdExpiresAt: string | null;
   readonly name: string;
   readonly phoneCountry: string;
@@ -46,7 +47,7 @@ export interface BookingState {
   readonly firstVisit: FirstVisitAnswers;
   readonly result: BookingResult | null;
   /** Shown above the times after "that time was just taken". */
-  readonly slotTaken: { readonly nextSlots: readonly string[] } | null;
+  readonly slotTaken: { readonly alternatives: readonly string[] } | null;
 }
 
 export type BookingEvent =
@@ -55,8 +56,8 @@ export type BookingEvent =
   | { readonly type: 'setAddOns'; readonly addOnIds: readonly string[] }
   | { readonly type: 'chooseService'; readonly serviceId: string; readonly addOnIds: readonly string[] }
   | { readonly type: 'setGuests'; readonly guests: number; readonly guestNames: readonly string[] }
-  | { readonly type: 'chooseSlot'; readonly startsAt: string; readonly holdId: string | null; readonly holdExpiresAt: string | null }
-  | { readonly type: 'slotTaken'; readonly nextSlots: readonly string[] }
+  | { readonly type: 'chooseSlot'; readonly startsAt: string; readonly holdExpiresAt: string | null }
+  | { readonly type: 'slotTaken'; readonly alternatives: readonly string[] }
   | {
       readonly type: 'setDetails';
       readonly name: string;
@@ -73,12 +74,25 @@ export type BookingEvent =
 
 export const EMPTY_FIRST_VISIT: FirstVisitAnswers = { heardFrom: null, hadBefore: null, note: '' };
 
+/** A lowercase UUID v4, as the server requires for `idempotencyKey` (API.md section 4). */
 export function newIdempotencyKey(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = ((bytes[6] ?? 0) & 0x0f) | 0x40;
+  bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80;
+  const hex = [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
-export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey: string = newIdempotencyKey()): Draft {
+/** 16 to 64 random characters (API.md 5.3); not a secret, but never guessable by another tab. */
+export function newHoldKey(): string {
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey: string = newIdempotencyKey(), holdKey: string = newHoldKey()): Draft {
   return {
     slug,
     serviceId: null,
@@ -86,7 +100,7 @@ export function emptyDraft(slug: string, defaultCountry: string, idempotencyKey:
     guests: 0,
     guestNames: [],
     startsAt: null,
-    holdId: null,
+    holdKey,
     holdExpiresAt: null,
     name: '',
     phoneCountry: defaultCountry,
@@ -116,18 +130,18 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
       return {
         ...state,
         phase: 'service',
-        draft: { ...draft, serviceId: event.serviceId, addOnIds: [], startsAt: null, holdId: null, holdExpiresAt: null },
+        draft: { ...draft, serviceId: event.serviceId, addOnIds: [], startsAt: null, holdExpiresAt: null },
       };
     }
     case 'setAddOns': {
       if (sameSet(draft.addOnIds, event.addOnIds)) return state;
-      return { ...state, draft: { ...draft, addOnIds: [...event.addOnIds], startsAt: null, holdId: null, holdExpiresAt: null } };
+      return { ...state, draft: { ...draft, addOnIds: [...event.addOnIds], startsAt: null, holdExpiresAt: null } };
     }
     case 'chooseService': {
       const changed = draft.serviceId !== event.serviceId || !sameSet(draft.addOnIds, event.addOnIds);
       // A different service or add-ons means a different total duration: the chosen time and its hold no longer fit.
       const next: Draft = changed
-        ? { ...draft, serviceId: event.serviceId, addOnIds: [...event.addOnIds], startsAt: null, holdId: null, holdExpiresAt: null }
+        ? { ...draft, serviceId: event.serviceId, addOnIds: [...event.addOnIds], startsAt: null, holdExpiresAt: null }
         : draft;
       return { ...state, phase: 'time', draft: next, slotTaken: null };
     }
@@ -140,7 +154,7 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
           ...draft,
           guests: event.guests,
           guestNames: names,
-          ...(changed ? { startsAt: null, holdId: null, holdExpiresAt: null } : {}),
+          ...(changed ? { startsAt: null, holdExpiresAt: null } : {}),
         },
       };
     }
@@ -149,14 +163,14 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
         ...state,
         phase: 'you',
         slotTaken: null,
-        draft: { ...draft, startsAt: event.startsAt, holdId: event.holdId, holdExpiresAt: event.holdExpiresAt },
+        draft: { ...draft, startsAt: event.startsAt, holdExpiresAt: event.holdExpiresAt },
       };
     case 'slotTaken':
       return {
         ...state,
         phase: 'time',
-        slotTaken: { nextSlots: event.nextSlots },
-        draft: { ...draft, startsAt: null, holdId: null, holdExpiresAt: null },
+        slotTaken: { alternatives: event.alternatives },
+        draft: { ...draft, startsAt: null, holdExpiresAt: null },
       };
     case 'setDetails': {
       const nextDraft: Draft = {
@@ -188,7 +202,7 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
         case 'paused':
           return { ...state, phase: 'blocked', result };
         case 'slotTaken':
-          return reduce(state, { type: 'slotTaken', nextSlots: result.nextSlots });
+          return reduce(state, { type: 'slotTaken', alternatives: result.alternatives });
       }
       return state;
     }

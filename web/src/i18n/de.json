@@ -5,10 +5,6 @@
     "one": "{count} Zertifikat",
     "other": "{count} Zertifikate"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} Zertifikat · geprüft von {name}",
-    "other": "{count} Zertifikate · geprüft von {name}"
-  },
   "bk1.find": "Schon gebucht? Termin wiederfinden",
   "bk1.messageWa": "{name} per WhatsApp schreiben",
   "bk1.paused.back": "{name} ist ab dem {date} wieder da. Schreiben Sie eine Nachricht, Sie bekommen eine Antwort.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Schreiben Sie eine Nachricht, Sie bekommen so bald wie möglich eine Antwort.",
   "bk1.rules": "Absagen und Änderungen",
   "bk1.services": "Leistungen",
-  "bk1.tags": "Schwerpunkte",
-
   "bk10.back": "Zurück zur Seite von {name}",
   "bk10.blocked.text": "{name} spricht vor Ihrem nächsten Besuch gern kurz mit Ihnen. Schreiben Sie eine Nachricht, dann sind Sie bald wieder im Kalender.",
   "bk10.blocked.title": "Die Online-Buchung ist vorerst pausiert.",
   "bk10.reason.newClient": "{name} bestätigt den ersten Termin jeder neuen Kundschaft persönlich. Das dauert meist ein paar Stunden. Danach können Sie frei buchen.",
-  "bk10.reason.noShowLimit": "Einige frühere Termine sind ohne Absage ausgefallen, deshalb prüft {name} neue Buchungen persönlich. Das dauert meist ein paar Stunden.",
   "bk10.request": "Ihre Anfrage",
   "bk10.sent": "Anfrage gesendet.",
   "bk10.sentText": "{name} antwortet per WhatsApp, meist innerhalb weniger Stunden. Bis dahin ist nichts gebucht. Sobald {name} bestätigt, kommt Ihr persönlicher Link per WhatsApp, damit Sie jederzeit ändern oder absagen können.",
@@ -30,7 +23,6 @@
   "bk10.why": "Warum sehe ich das?",
   "bk10.whyMore": "Das gilt nur bei {name}. Es folgt Ihnen nicht zu anderen Fachkräften. Wenn Sie einen Irrtum vermuten, sagen Sie es {name}, dann kann die Online-Buchung wieder geöffnet werden.",
   "bk10.whyText": "{name} bittet die Kundschaft, rechtzeitig abzusagen, wenn ein Termin nicht passt: bis {window} vorher ist das kostenlos. Nach einigen nicht abgesagten Terminen spricht {name} vor einer neuen Buchung mit Ihnen. Ihre kommenden Termine bleiben davon unberührt.",
-
   "bk11.back": "Zurück zur Seite von {name}",
   "bk11.code": "Code",
   "bk11.codeSub": "Wir haben einen 6-stelligen Code an {phone} gesendet.",
@@ -50,7 +42,6 @@
   "bk11.send": "Code senden",
   "bk11.sub": "Geben Sie die Nummer ein, mit der Sie gebucht haben. Wir senden einen Code, damit nur Sie ihn öffnen können.",
   "bk11.title": "Termin wiederfinden",
-
   "bk2.addOns": "Zu Ihrem Besuch hinzufügen",
   "bk2.addOnsHint": "Optionale Extras. Sie verlängern die Dauer.",
   "bk2.guests.hint": "{name} behandelt alle nacheinander.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Wählen Sie zuerst eine Leistung.",
   "bk2.title": "Leistung wählen",
   "bk2.with": "bei {name}",
-
   "bk4.noTimesEnd": "Es gibt keine freien Zeiten mehr. Buchungen sind bis {date} möglich.",
   "bk4.noTimesMonth": "In diesem Monat sind keine Zeiten frei. Sehen Sie im nächsten nach.",
   "bk4.pickError": "Wählen Sie zuerst eine Uhrzeit.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Zeiten in der Ortszeit von {place}.",
   "bk4.zoneDevice": "Ihr Gerät ist auf eine andere Zeitzone eingestellt.",
   "bk4.zoneYours": "An Ihrem Standort ist es dann {time}.",
-
   "bk5.email": "E-Mail",
   "bk5.err.email": "Diese E-Mail-Adresse sieht nicht richtig aus.",
   "bk5.err.guest": "Geben Sie den Vornamen der Begleitperson ein.",
@@ -98,7 +87,6 @@
   "bk5.send": "Bestätigungscode senden",
   "bk5.sub": "{date} um {time}. Sagen Sie {name}, wer kommt.",
   "bk5.title": "Fast geschafft.",
-
   "bk6.channel": "Code senden per",
   "bk6.code": "Bestätigungscode",
   "bk6.emailHint": "Geben Sie im vorigen Schritt eine E-Mail-Adresse an, wenn Sie den Code lieber dort erhalten möchten.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Bestätigen",
   "bk6.viaEmail": "Wir haben einen 6-stelligen Code an Ihre E-Mail-Adresse {email} gesendet.",
   "bk6.viaSms": "Wir haben einen 6-stelligen Code per SMS an die Nummer gesendet, die auf {last} endet.",
-
   "bk7.agree": "Mit der Bestätigung akzeptieren Sie die Regeln von {name}. {line}",
   "bk7.before": "Hatten Sie diese Behandlung schon einmal?",
   "bk7.before.no": "Nein, das ist das erste Mal",
@@ -132,7 +119,6 @@
   "bk7.skip": "Vorerst überspringen",
   "bk7.sub": "Optional. Das hilft, Ihre erste Behandlung ({service}) auf Sie abzustimmen.",
   "bk7.title": "Erzählen Sie {name} ein wenig von sich.",
-
   "bk8.again": "Zurück zur Seite von {name}",
   "bk8.change.text": "Öffnen Sie ihn jederzeit, um abzusagen oder zu verschieben: ohne App, ohne Passwort. {line}",
   "bk8.change.title": "Pläne ändern sich? Nutzen Sie Ihren Link.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} bis {end}",
   "bk8.title": "Termin gebucht.",
   "bk8.view": "Termin ansehen",
-
   "bk9.askedMove": "Sie haben um eine Verschiebung auf {when} gebeten. Bis {name} antwortet, bleibt diese Zeit für Sie reserviert.",
   "bk9.attend.no": "Ich kann nicht kommen",
   "bk9.attend.noText": "Verschieben oder sagen Sie unten ab, damit {name} Ihre Zeit weitergeben kann.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Andere Zeit buchen",
   "bk9.cancel": "Termin absagen",
   "bk9.cancel.free": "Kostenlos bis {deadline}",
-  "bk9.cancel.late": "{name} erfährt es sofort",
   "bk9.cancel.lateCounts": "{name} erfährt es sofort · zählt als nicht wahrgenommener Termin",
   "bk9.cancel.message": "{name} schreiben, um abzusagen",
   "bk9.cancelledByProText": "{name} hat diesen Termin abgesagt. Sie können jederzeit eine andere Zeit buchen.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "Die Behandlung beginnt etwa {minutes} nach {time}. Ihre Zeit bleibt reserviert.",
   "bk9.late.knows": "{name} weiß Bescheid.",
   "bk9.late.over": "Das ist mehr als die {grace} Wartezeit. Möglicherweise erhalten Sie eine Nachricht zur Verschiebung des Besuchs.",
-  "bk9.late.reply": "{name} hat geantwortet: {reply}",
   "bk9.late.text": "Sagen Sie {name}, wie viel später Sie kommen. Ihre Zeit bleibt {minutes} lang reserviert.",
   "bk9.late.title": "Kommen Sie an dem Tag später?",
   "bk9.messageWa": "Nachricht per WhatsApp",
-  "bk9.movedFrom": "Verschoben vom {date} um {time}",
   "bk9.myData": "Ihre Daten",
   "bk9.note.free": "Änderungen kostenlos bis {deadline}.",
   "bk9.note.late": "Die kostenlose Frist endete am {deadline}. Änderungen folgen jetzt den Regeln für die letzten Stunden, siehe unten.",
@@ -211,7 +193,6 @@
   "bk9.title": "Ihr Termin",
   "bk9.with": "bei {name} · {meta}",
   "bk9.zone": "bis {end} · Ortszeit von {place}",
-
   "cal.add": "Zum Kalender hinzufügen",
   "cal.file": "Kalenderdatei (.ics)",
   "cal.google": "Google Kalender",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Vorheriger Monat",
   "cal.saved": "Kalenderdatei gespeichert.",
   "cal.unavailable": "{date}, nicht verfügbar",
-
   "cl2.after": "Nach Ihrer Behandlung ({service}) · {date}",
   "cl2.bookAgain": "Erneut buchen",
   "cl2.careEmpty": "{name} hat noch keine Pflegehinweise geteilt.",
   "cl2.completed": "Abgeschlossen",
-  "cl2.dataSub": "Was {name} speichert und wie Sie eine Kopie anfordern",
   "cl2.hi": "Hallo {name}.",
   "cl2.journeyEmpty": "Noch nichts geteilt. Sobald {name} eine Notiz zu einem Besuch teilt, erscheint sie hier.",
   "cl2.next": "Nächste Sitzung",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Bereiche",
   "cl2.upcoming": "Als Nächstes",
   "cl2.usedIn": "Bei Ihrer Behandlung verwendet",
-
-  "cl3.approvalGate": "{name} bestätigt neue Buchungen persönlich. Fragen Sie eine Zeit an, die Antwort kommt per WhatsApp.",
-  "cl3.ask": "{when} bei {name} anfragen",
   "cl3.back": "Zurück",
   "cl3.best": "Ideal",
   "cl3.bestNote": "„Ideal“ markiert den Termin, den {name} für Ihre Rückkehr empfiehlt.",
@@ -260,7 +236,6 @@
   "cl3.time": "Uhrzeit wählen",
   "cl3.title": "Schön, dass Sie wieder da sind, {name}.",
   "cl3.titleAnon": "Schön, dass Sie wieder da sind.",
-
   "cl4.agree": "Ich stimme zu",
   "cl4.already.text": "{name} hat Ihren Gesundheitsbogen bereits, gesendet in den letzten 12 Monaten. Sie müssen nichts weiter tun.",
   "cl4.already.title": "Sie haben ihn schon gesendet.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Danke.",
   "cl4.title": "Ein paar Fragen vor Ihrem Besuch.",
   "cl4.writeHere": "Hier schreiben",
-
   "cl5.addPhoto": "Foto hinzufügen",
   "cl5.anything": "Möchten Sie noch etwas ergänzen?",
   "cl5.back": "Zurück zu meinen Terminen",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Danke, {name}.",
   "cl5.title": "Wie geht es Ihrer Haut heute?",
   "cl5.worried": "{name} meldet sich heute bei Ihnen. Wenn es stark ist oder weiter schlimmer wird, suchen Sie ärztliche Hilfe.",
-
   "cl6.askInstead": "Stattdessen um Verschiebung bitten",
   "cl6.bookAgain": "Andere Zeit buchen",
   "cl6.confirm.free": "Termin absagen",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "Das zählt als nicht wahrgenommener Termin.",
   "cl6.why": "Warum sagen Sie ab?",
   "cl6.whyHint": "Optional. Das hilft {name}, Ihnen eine bessere Zeit anzubieten.",
-
   "cl7.choices": "Ihre Möglichkeiten",
   "cl7.contact": "Kontaktdaten",
   "cl7.contactSub": "Name, WhatsApp und E-Mail",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "Eine Kopie bei {name} anfordern?",
   "cl7.form.title.delete": "{name} bitten, Ihre Daten zu löschen?",
   "cl7.health": "Gesundheitsbogen und Einwilligung",
-  "cl7.healthSigned": "Unterschrieben am {date} · versiegelt, nur {name} kann ihn öffnen",
   "cl7.healthSub": "Versiegelt, nur {name} kann ihn öffnen",
   "cl7.how": "So funktionieren Anfragen",
   "cl7.keeps": "Was {name} speichert",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Anfrage gesendet. {name} bestätigt, sobald es erledigt ist.",
   "cl7.sub": "Das speichert {name} zu Ihnen, und nur {name} kann es sehen.",
   "cl7.title": "Ihre Daten",
-
   "cl9.back": "Ihr Termin",
   "cl9.back2": "Zurück zu meinem Termin",
   "cl9.changeOf": "Das ist die Änderung {current} von {max}.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "Schreiben Sie {name}",
   "cl9.title.self": "Neue Zeit wählen",
   "cl9.youAsked": "Sie haben angefragt",
-
   "common.actions": "Aktionen",
   "common.back": "Zurück",
   "common.by": "Buchungen mit Bello Hub",
@@ -421,7 +390,6 @@
   "common.skip": "Zum Inhalt springen",
   "common.step": "Schritt {current} von {total}",
   "common.yes": "Ja",
-
   "err.appCheck": "Wir konnten nicht bestätigen, dass diese Anfrage von dieser Seite kommt. Laden Sie die Seite neu und versuchen Sie es erneut.",
   "err.generic": "Etwas ist schiefgelaufen. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
   "err.invalidInput": "Prüfen Sie Ihre Eingabe und versuchen Sie es erneut.",
@@ -432,39 +400,30 @@
   "err.timeout": "Das dauert zu lange. Versuchen Sie es erneut.",
   "err.tooLarge": "Das ist zu groß zum Senden. Entfernen Sie das Foto oder kürzen Sie die Notiz.",
   "err.unavailable": "Der Dienst ist gerade ausgelastet. Versuchen Sie es in ein paar Minuten erneut.",
-
   "ics.change": "Ändern oder absagen: {link}",
   "ics.summary": "{service} bei {name}",
-
   "landing.home": "Zur Startseite",
   "landing.text": "Öffnen Sie den Buchungslink, den Sie von der Fachkraft erhalten haben.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "Ihre Bestätigung und Erinnerungen verwenden diese Sprache.",
   "lang.title": "Sprache",
-
   "legal.noticeLink": "Wie die Angaben zu Ihrem Termin verwendet werden",
   "legal.privacyLink": "Datenschutzerklärung",
-
   "price.from": "Ab {price}",
   "price.onRequest": "Preis auf Anfrage",
-
   "state.crash.text": "Die Seite funktioniert nicht mehr. Laden Sie sie neu und versuchen Sie es erneut. Nichts von Ihren Eingaben wurde gesendet.",
   "state.crash.title": "Etwas ist schiefgelaufen.",
-  "state.expired.text": "Links funktionieren bis zum Ende des Besuchs und einige Tage danach. Schreiben Sie {name}, um einen neuen Link zu erhalten.",
   "state.expired.textNoName": "Links funktionieren bis zum Ende des Besuchs und einige Tage danach. Bitten Sie die absendende Person um einen neuen.",
   "state.expired.title": "Dieser Link ist abgelaufen.",
   "state.loadFailed.text": "Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
   "state.loadFailed.title": "Diese Seite wurde nicht geladen.",
   "state.notFound.text": "Prüfen Sie den Link oder fragen Sie die Person, von der Sie ihn haben.",
   "state.notFound.title": "Wir haben diese Seite nicht gefunden.",
-
   "wa.blocked": "Hallo {name}, ich habe gesehen, dass die Online-Buchung für mich pausiert ist. Ich würde gern über meinen nächsten Besuch sprechen.",
   "wa.book": "Hallo {name}, ich möchte gern einen Termin buchen.",
   "wa.cancel": "Hallo {name}, ich muss meinen Termin ({service}) am {date} um {time} absagen.",
   "wa.hello": "Hallo {name}, ich habe eine Frage zu meinem Termin.",
   "wa.reschedule": "Hallo {name}, ich möchte meinen Termin ({service}) am {date} um {time} verschieben.",
-
   "wait.err.days": "Der letzte Tag darf nicht vor dem ersten liegen.",
   "wait.from": "Von",
   "wait.submit": "In die Warteliste eintragen",

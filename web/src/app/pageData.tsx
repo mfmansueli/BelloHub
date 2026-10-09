@@ -12,23 +12,13 @@ import { languageForPage, setLanguage, useI18n } from '../i18n';
 import { ProfessionalProvider } from './context';
 import { useAsync } from './useAsync';
 
-const cache = new Map<string, Promise<PublicProfile>>();
-
-/** One request per slug; a failure is forgotten so a retry asks again. Also used to start the request early. */
+/** One request per slug (the client caches it); a failure is forgotten so a retry asks again. */
 export function loadPublicPage(slug: string): Promise<PublicProfile> {
-  let promise = cache.get(slug);
-  if (promise === undefined) {
-    promise = api.getPublicPage(slug);
-    cache.set(slug, promise);
-    promise.catch(() => {
-      cache.delete(slug);
-    });
-  }
-  return promise;
+  return api.getPublicPage(slug);
 }
 
 export function forgetPublicPage(slug: string): void {
-  cache.delete(slug);
+  api.forgetPublicPage(slug);
 }
 
 interface SlugLayoutProps {

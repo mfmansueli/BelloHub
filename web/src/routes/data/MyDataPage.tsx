@@ -10,7 +10,6 @@ import { api } from '../../api/client';
 import { ApiError } from '../../api/errors';
 import type { FormContext, SealedEnvelope } from '../../api/types';
 import { TokenLayout } from '../../app/TokenLayout';
-import { useFormatter } from '../../app/context';
 import { manageRoute } from '../../app/router';
 import { SealError } from '../../crypto/envelope';
 import { sealInBrowser, sendEnvelope } from '../../crypto/submit';
@@ -37,7 +36,6 @@ type Request = 'copy' | 'delete';
 
 function MyData({ token, context }: { token: string; context: FormContext }): JSX.Element {
   const { t } = useI18n();
-  const format = useFormatter();
   const pro = context.professional;
   const [open, setOpen] = useState<Request | null>(null);
   const [sent, setSent] = useState<ReadonlySet<Request>>(new Set());
@@ -48,7 +46,7 @@ function MyData({ token, context }: { token: string; context: FormContext }): JS
     {
       icon: 'shield',
       title: t('cl7.health'),
-      sub: context.lastIntakeAt === undefined ? t('cl7.healthSub', { name: pro.firstName }) : t('cl7.healthSigned', { date: format.dayMonth(context.lastIntakeAt), name: pro.firstName }),
+      sub: t('cl7.healthSub', { name: pro.firstName }),
     },
     { icon: 'doc', title: t('cl7.records'), sub: t('cl7.recordsSub', { name: pro.firstName }) },
     { icon: 'image', title: t('cl7.photos'), sub: t('cl7.photosSub', { name: pro.firstName }) },

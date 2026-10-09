@@ -111,7 +111,7 @@ export function ServiceStep({ profile }: { profile: PublicProfile }): JSX.Elemen
                 checked={draft.addOnIds.includes(addOn.id)}
                 title={addOn.name}
                 detail={`+${format.minutes(addOn.minutes)}`}
-                price={addOn.priceAmount === undefined ? undefined : format.money(addOn.priceAmount)}
+                price={addOn.priceText}
                 testId={`addon-${addOn.id}`}
                 onChange={(on) => {
                   const next = on ? [...draft.addOnIds, addOn.id] : draft.addOnIds.filter((id) => id !== addOn.id);

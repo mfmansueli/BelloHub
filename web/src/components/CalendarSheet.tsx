@@ -4,7 +4,6 @@
 import type { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 
-import type { BookingView } from '../api/types';
 import { useFormatter } from '../app/context';
 import { useI18n } from '../i18n';
 import { buildIcs, googleCalendarUrl, type CalendarEvent } from '../lib/ics';
@@ -13,13 +12,21 @@ import { ExternalLink } from './Button';
 import { Icon } from './Icon';
 import { Sheet } from './Sheet';
 
-export function calendarEvent(booking: BookingView, link: string, t: (key: string, params?: Record<string, string>) => string, language: string): CalendarEvent {
-  const names = [booking.service.name, ...booking.addOns.map((addOn) => addOn.name)].join(' + ');
+/** What a calendar entry needs: the booking id (a stable UID), the times, the service names and who with. */
+export interface CalendarDetails {
+  readonly bookingId: string;
+  readonly startsAt: string;
+  readonly endsAt: string;
+  readonly serviceNames: readonly string[];
+  readonly professional: { readonly displayName: string; readonly city?: string | undefined };
+}
+
+export function calendarEvent(booking: CalendarDetails, link: string, t: (key: string, params?: Record<string, string>) => string, language: string): CalendarEvent {
   return {
-    uid: booking.id,
+    uid: booking.bookingId,
     startMs: Date.parse(booking.startsAt),
     endMs: Date.parse(booking.endsAt),
-    summary: t('ics.summary', { service: names, name: booking.professional.displayName }),
+    summary: t('ics.summary', { service: booking.serviceNames.join(' + '), name: booking.professional.displayName }),
     description: t('ics.change', { link }),
     ...(booking.professional.city === undefined ? {} : { location: booking.professional.city }),
     language,
@@ -29,7 +36,7 @@ export function calendarEvent(booking: BookingView, link: string, t: (key: strin
 interface Props {
   readonly open: boolean;
   readonly onClose: () => void;
-  readonly booking: BookingView;
+  readonly booking: CalendarDetails;
   readonly link: string;
 }
 

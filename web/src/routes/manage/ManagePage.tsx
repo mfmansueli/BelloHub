@@ -1,8 +1,9 @@
 // Bk-9: the management page, opened from the personal link (docs/10 section 4). It shows the booking and only
 // the actions her policy allows at this moment: confirm she is coming, tell the professional she is running late,
 // reschedule (directly, by request, or by message), cancel (free, or late with an honest warning, or by message),
-// add to calendar, read the rules, message her. Which actions show is decided by lib/policy.ts from the policy
-// stored on the booking and the SERVER's clock; the server refuses anything the policy does not allow anyway.
+// add to calendar, read the rules, message her. Which actions show is the SERVER's verdict (`actions` of API.md
+// 5.11, evaluated from the policy stored on the booking and the server clock); lib/policy.ts only words the
+// deadline. The server refuses anything the policy does not allow anyway.
 
 import type { JSX } from 'preact';
 import { useState } from 'preact/hooks';
@@ -11,7 +12,6 @@ import { api } from '../../api/client';
 import type { BookingView } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { manageRoute, slugRoute, type Route } from '../../app/router';
-import { bookedPriceText } from '../../app/booking/priceText';
 import { Button, ExternalLink, Link } from '../../components/Button';
 import { CalendarSheet } from '../../components/CalendarSheet';
 import { ErrorNotice, Notice, StatusChip, type StatusKind } from '../../components/Feedback';
@@ -21,21 +21,31 @@ import { Footer, Screen, Title, TopBar, Avatar, useDocumentTitle } from '../../c
 import { RuleList, useRules } from '../../components/RuleList';
 import { useI18n } from '../../i18n';
 import { linkBase } from '../../lib/config';
-import { cancelMode, freeUntil, lateCancelCountsAgainst, rescheduleMode, reschedulesLeft } from '../../lib/policy';
+import { freeUntil, reschedulesLeft } from '../../lib/policy';
 import { whatsAppUrl } from '../../lib/whatsapp';
 
 const LATE_MINUTES = [10, 15, 20, 30] as const;
-const HOUR = 3_600_000;
 
 export function serverClock(booking: BookingView): () => number {
-  const skew = Date.parse(booking.serverNow) - Date.now();
+  const skew = Date.parse(booking.serverTime) - Date.now();
   return () => Date.now() + (Number.isFinite(skew) ? skew : 0);
 }
 
+/** A request the professional has not answered yet. */
+export function openRequest(booking: BookingView): { requestedStart: string } | undefined {
+  return booking.pendingReschedule?.status === 'pending' ? booking.pendingReschedule : undefined;
+}
+
+/** A visit that took place: confirmed and in the past. */
+export function isCompleted(booking: BookingView): boolean {
+  return booking.status === 'confirmed' && booking.phase === 'past';
+}
+
 function statusOf(booking: BookingView, attending: boolean): { kind: StatusKind; key: string } {
-  if (booking.rescheduleRequest !== undefined && booking.status === 'confirmed') return { kind: 'pending', key: 'bk9.status.changeRequested' };
+  if (openRequest(booking) !== undefined && booking.status === 'confirmed') return { kind: 'pending', key: 'bk9.status.changeRequested' };
   switch (booking.status) {
     case 'confirmed':
+      if (isCompleted(booking)) return { kind: 'done', key: 'bk9.status.completed' };
       return attending || booking.clientConfirmedAt !== undefined ? { kind: 'confirmed', key: 'bk9.status.willBeThere' } : { kind: 'confirmed', key: 'bk9.status.confirmed' };
     case 'pendingApproval':
       return { kind: 'pending', key: 'bk9.status.pending' };
@@ -45,8 +55,6 @@ function statusOf(booking: BookingView, attending: boolean): { kind: StatusKind;
       return { kind: 'attention', key: 'bk9.status.cancelledByPro' };
     case 'declined':
       return { kind: 'attention', key: 'bk9.status.declined' };
-    case 'completed':
-      return { kind: 'done', key: 'bk9.status.completed' };
     case 'noShow':
       return { kind: 'attention', key: 'bk9.status.noShow' };
   }
@@ -68,26 +76,27 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   const policy = booking.policy;
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [attend, setAttend] = useState<'yes' | 'no' | null>(null);
-  const [late, setLate] = useState<{ minutes: number; reply?: string } | null>(booking.lateByMinutes === undefined ? null : { minutes: booking.lateByMinutes, ...(booking.proReply === undefined ? {} : { reply: booking.proReply }) });
+  const [late, setLate] = useState<number | null>(booking.lateByMinutes ?? null);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<unknown>(null);
   useDocumentTitle(t('bk9.title'));
 
   const status = statusOf(booking, attend === 'yes');
-  const active = (booking.status === 'confirmed' || booking.status === 'pendingApproval') && now < endsAt;
+  const active = (booking.status === 'confirmed' || booking.status === 'pendingApproval') && booking.phase !== 'past' && now < endsAt;
   const gone = booking.status === 'cancelledByClient' || booking.status === 'cancelledByPro' || booking.status === 'declined';
   const link = `${linkBase()}/m/${token}`;
   const place = pro.city ?? pro.timeZoneID.split('/').at(-1)?.replace(/_/g, ' ') ?? pro.timeZoneID;
 
-  const cancel = cancelMode(startsAt, policy, now);
-  const resched = rescheduleMode(startsAt, policy, now, booking.rescheduleCount);
+  const { actions } = booking;
+  const cancel = actions.cancel;
+  const resched = actions.reschedule;
   const left = reschedulesLeft(policy, booking.rescheduleCount);
   const deadline = `${format.shortDate(freeUntil(startsAt, policy))} · ${format.time(freeUntil(startsAt, policy))}`;
   const dateAndTime = { date: format.dayMonth(startsAt), time: format.time(startsAt) };
   const message = (key: string): string | null => whatsAppUrl(pro.whatsappE164, t(key, { name: pro.firstName, service: booking.service.name, ...dateAndTime }));
 
-  const showAttend = booking.status === 'confirmed' && policy.askConfirmation && booking.clientConfirmedAt === undefined && now < startsAt && booking.rescheduleRequest === undefined;
-  const showLate = booking.status === 'confirmed' && now >= startsAt - 3 * HOUR && now <= endsAt;
+  const showAttend = actions.canConfirmPresence && booking.clientConfirmedAt === undefined && openRequest(booking) === undefined;
+  const showLate = actions.canReportLate && now <= endsAt;
 
   const confirmPresence = async (): Promise<void> => {
     setBusy(true);
@@ -107,7 +116,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
     setFailure(null);
     try {
       const response = await api.reportLate(token, minutes);
-      setLate({ minutes: response.lateByMinutes, ...(response.proReply === undefined ? {} : { reply: response.proReply }) });
+      setLate(response.lateByMinutes);
     } catch (error) {
       setFailure(error);
     } finally {
@@ -116,14 +125,15 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   };
 
   const resSub = ((): string => {
-    if (resched === 'message') return t('bk9.reschedule.message', { name: pro.firstName });
+    if (resched === 'message' || resched === 'unavailable') return t('bk9.reschedule.message', { name: pro.firstName });
     if (resched === 'request') return t('bk9.reschedule.request', { name: pro.firstName });
     return left === null ? t('bk9.reschedule.direct') : t('bk9.reschedule.directLimit', { count: left });
   })();
   const cancelSub = ((): string => {
     if (cancel === 'free') return t('bk9.cancel.free', { deadline });
-    if (cancel === 'message') return t('bk9.cancel.message', { name: pro.firstName });
-    return lateCancelCountsAgainst(cancel, policy) ? t('bk9.cancel.lateCounts', { name: pro.firstName }) : t('bk9.cancel.late', { name: pro.firstName });
+    if (cancel === 'askByMessage' || cancel === 'unavailable') return t('bk9.cancel.message', { name: pro.firstName });
+    // Whether a late cancellation counts against her is not published; the honest words are "it may count".
+    return t('bk9.cancel.lateCounts', { name: pro.firstName });
   })();
 
   const row = (title: string, sub: string | null, content: { to: Route | string } | { href: string | null } | { onClick: () => void }, options: { danger?: boolean; testId: string }): JSX.Element => {
@@ -161,16 +171,12 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </div>
       </div>
 
-      {booking.movedFrom === undefined ? null : (
-        <Notice kind="quiet" icon="repeat" testId="moved-from">
-          {t('bk9.movedFrom', { date: format.weekdayDate(booking.movedFrom), time: format.time(booking.movedFrom) })}
-        </Notice>
-      )}
-      {booking.rescheduleRequest === undefined ? null : (
-        <Notice kind="warning" icon="clock" testId="asked-move">
-          {t('bk9.askedMove', { when: `${format.weekdayDate(booking.rescheduleRequest.requestedStart)} · ${format.time(booking.rescheduleRequest.requestedStart)}`, name: pro.firstName })}
-        </Notice>
-      )}
+      {((request) =>
+        request === undefined ? null : (
+          <Notice kind="warning" icon="clock" testId="asked-move">
+            {t('bk9.askedMove', { when: `${format.weekdayDate(request.requestedStart)} · ${format.time(request.requestedStart)}`, name: pro.firstName })}
+          </Notice>
+        ))(openRequest(booking))}
 
       <section class="card" aria-label={t('bk8.summary')} data-testid="booking-card">
         <p class="meta strong">{format.weekdayDate(startsAt)}</p>
@@ -181,15 +187,9 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
           <bdi>{[booking.service.name, ...booking.addOns.map((addOn) => addOn.name)].join(' + ')}</bdi>
         </b>
         <p class="meta">
-          {t('bk9.with', { name: pro.displayName, meta: [format.minutes(booking.totalMinutes), bookedPriceText(booking.price, format, t)].filter(Boolean).join(' · ') })}
+          {t('bk9.with', { name: pro.displayName, meta: format.minutes(booking.durationMinutes) })}
         </p>
-        {booking.guestCount > 0 ? (
-          <p class="meta">
-            {(booking.guestNames?.filter(Boolean).length ?? 0) > 0
-              ? t('bk8.guest.named', { guest: format.list(booking.guestNames?.filter(Boolean) ?? []) })
-              : t('bk8.guest.unnamed', { count: booking.guestCount })}
-          </p>
-        ) : null}
+        {booking.guestCount > 0 ? <p class="meta">{t('bk8.guest.unnamed', { count: booking.guestCount })}</p> : null}
       </section>
 
       {booking.status === 'pendingApproval' ? (
@@ -225,14 +225,13 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
           <p class="meta" aria-live="polite">
             {late === null
               ? t('bk9.late.text', { name: pro.firstName, minutes: format.minutes(policy.graceMinutes) })
-              : late.minutes <= policy.graceMinutes
-                ? t('bk9.late.held', { minutes: format.minutes(late.minutes), time: format.time(startsAt) })
+              : late <= policy.graceMinutes
+                ? t('bk9.late.held', { minutes: format.minutes(late), time: format.time(startsAt) })
                 : t('bk9.late.over', { grace: format.minutes(policy.graceMinutes) })}
           </p>
-          {late?.reply === undefined ? null : <Notice kind="info" icon="chat" testId="pro-reply">{t('bk9.late.reply', { name: pro.firstName, reply: late.reply })}</Notice>}
           <div class="chips" role="group" aria-label={t('bk9.late.title')}>
             {LATE_MINUTES.map((minutes) => (
-              <Chip key={minutes} pressed={late?.minutes === minutes} testId={`late-${minutes}`} onToggle={() => { void reportLate(minutes); }}>
+              <Chip key={minutes} pressed={late === minutes} testId={`late-${minutes}`} onToggle={() => { void reportLate(minutes); }}>
                 {format.minutes(minutes)}
               </Chip>
             ))}
@@ -260,13 +259,13 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
               {row(
                 t('bk9.reschedule'),
                 resSub,
-                resched === 'message' ? { href: message('wa.reschedule') } : { to: manageRoute(token, 'reschedule') },
+                resched === 'direct' || resched === 'request' ? { to: manageRoute(token, 'reschedule') } : { href: message('wa.reschedule') },
                 { testId: 'reschedule' },
               )}
             </li>
           ) : null}
           <li>
-            {row(t('bk9.cancel'), cancelSub, cancel === 'message' ? { href: message('wa.cancel') } : { to: manageRoute(token, 'cancel') }, { danger: true, testId: 'cancel' })}
+            {row(t('bk9.cancel'), cancelSub, cancel === 'free' || cancel === 'allowedWithWarning' ? { to: manageRoute(token, 'cancel') } : { href: message('wa.cancel') }, { danger: true, testId: 'cancel' })}
           </li>
         </ul>
       ) : null}
@@ -277,7 +276,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </Notice>
       ) : null}
 
-      {booking.status === 'completed' && booking.forms.checkIn === 'available' ? (
+      {isCompleted(booking) ? (
         <Link to={manageRoute(token, 'checkin')} class="card list-row" testId="checkin-link">
           <span class="grow">
             <b class="strong">{t('bk9.checkin.title')}</b>
@@ -287,7 +286,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </Link>
       ) : null}
 
-      {active && booking.forms.intake === 'pending' ? (
+      {active && booking.intakeRequired ? (
         <Link to={manageRoute(token, 'form')} class="card list-row" testId="health-form">
           <span class="grow">
             <b class="strong">{t('bk8.form.title')}</b>
@@ -326,7 +325,12 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </Link>
       </p>
       <Footer />
-      <CalendarSheet open={calendarOpen} onClose={() => { setCalendarOpen(false); }} booking={booking} link={link} />
+      <CalendarSheet
+        open={calendarOpen}
+        onClose={() => { setCalendarOpen(false); }}
+        booking={{ bookingId: booking.bookingId, startsAt: booking.startsAt, endsAt: booking.endsAt, serviceNames: [booking.service.name, ...booking.addOns.map((addOn) => addOn.name)], professional: { displayName: pro.displayName, city: pro.city } }}
+        link={link}
+      />
     </Screen>
   );
 }

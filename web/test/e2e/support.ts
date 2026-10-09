@@ -40,10 +40,11 @@ export interface StoredBookingView {
   readonly status: string;
   readonly serviceId: string;
   readonly addOnIds: string[];
-  readonly guestNames: string[];
+  readonly guests: number;
   readonly startsAt: string;
-  readonly totalMinutes: number;
+  readonly durationMinutes: number;
   readonly client: { name: string; phone: string; email?: string; locale: string };
+  readonly note: string | null;
   readonly rescheduleCount: number;
   readonly clientConfirmedAt: string | null;
   readonly lateByMinutes: number | null;

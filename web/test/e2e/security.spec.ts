@@ -35,7 +35,8 @@ test.describe('response headers', () => {
       expect(secret.headers()['cache-control'], path).toBe('no-store');
       expect(secret.headers()['x-robots-tag'], path).toContain('noindex');
     }
-    const api = await request.post('/api/getBooking', { data: { token } });
+    const api = await request.post('/api/getBooking', { data: { data: { token } } });
+    expect(api.status()).toBe(200);
     expect(api.headers()['cache-control']).toBe('no-store');
     expect(api.headers()['set-cookie']).toBeUndefined();
   });
@@ -49,9 +50,17 @@ test.describe('response headers', () => {
     expect((await request.get('/maria')).headers()['cache-control']).toBe('no-cache');
   });
 
-  test('a token is never accepted in a URL: token endpoints are POST only', async ({ request }) => {
+  test('a token is never accepted in a URL: every function is POST only (callable protocol)', async ({ request }) => {
     const response = await request.get('/api/getBooking?token=AAAAAAAAAAAAAAAAAAAAAA');
     expect(response.status()).toBe(405);
+    const read = await request.get('/api/getPublicPage?slug=maria');
+    expect(read.status()).toBe(405);
+  });
+
+  test('errors carry a stable code and never personal data', async ({ request }) => {
+    const response = await request.post('/api/getBooking', { data: { data: { token: 'AAAAAAAAAAAAAAAAAAAAAA' } } });
+    expect(response.status()).toBe(404);
+    expect(await response.json()).toEqual({ error: { status: 'NOT_FOUND', message: 'NOT_FOUND' } });
   });
 });
 
@@ -97,12 +106,15 @@ test.describe('professional-supplied text is data, never markup', () => {
     const slug = slugFor('maria');
     await page.route('**/api/getPublicPage*', async (route) => {
       const response = await route.fetch();
-      const json = (await response.json()) as Record<string, unknown>;
+      const json = (await response.json()) as { result: { profile: Record<string, unknown> } };
       const evil = '<img src=x onerror="window.__xss=1"><script>window.__xss=2</script>';
-      json['displayName'] = `Maria ${evil}`;
-      json['headline'] = { en: evil, 'pt-BR': evil };
-      json['bio'] = { en: `<b>bold</b> ${evil}`, 'pt-BR': evil };
-      json['tags'] = [evil];
+      const profile = json.result.profile;
+      profile['displayName'] = `Maria ${evil}`;
+      profile['businessName'] = evil;
+      profile['bio'] = `<b>bold</b> ${evil}`;
+      profile['city'] = evil;
+      profile['rulesText'] = { en: evil, 'pt-BR': evil };
+      profile['credentials'] = [{ title: evil, institution: evil }];
       await route.fulfill({ response, json });
     });
     await open(page, `/${slug}`);
@@ -117,8 +129,8 @@ test.describe('professional-supplied text is data, never markup', () => {
   test('a photo that is not a small data image is not loaded from anywhere', async ({ page, guard, slugFor }) => {
     await page.route('**/api/getPublicPage*', async (route) => {
       const response = await route.fetch();
-      const json = (await response.json()) as Record<string, unknown>;
-      json['photo'] = 'https://tracker.example/pixel.png';
+      const json = (await response.json()) as { result: { profile: Record<string, unknown> } };
+      json.result.profile['photo'] = 'https://tracker.example/pixel.png';
       await route.fulfill({ response, json });
     });
     await open(page, `/${slugFor('maria')}`);

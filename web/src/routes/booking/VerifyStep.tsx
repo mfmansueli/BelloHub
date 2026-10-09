@@ -17,7 +17,6 @@ import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout
 import { useI18n } from '../../i18n';
 import { ltr } from '../../lib/bidi';
 import { lastFour, maskEmail, normalizePhone, phoneRegion } from '../../lib/phone';
-import { submitBooking } from './submit';
 import { useVerification } from './useVerification';
 
 export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
@@ -33,7 +32,8 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
   }, [redirect, profile.slug]);
 
   const phone = normalizePhone(draft.phoneInput, phoneRegion(draft.phoneCountry));
-  const emailAvailable = draft.email.trim() !== '' && profile.channels.emailCode !== false;
+  // Email codes are always offered (API.md 5.5); a NOT_CONFIGURED answer shows as an error on sending.
+  const emailAvailable = draft.email.trim() !== '';
   const channel = draft.channel === 'email' && emailAvailable ? 'email' : 'sms';
   const captcha = useRef<HTMLDivElement>(null);
   const verification = useVerification({
@@ -45,12 +45,9 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
   });
 
   const [code, setCode] = useState('');
-  const [working, setWorking] = useState(false);
-  const [failure, setFailure] = useState<unknown>(null);
 
   if (redirect || !phone.ok) return null;
 
-  const askQuestions = profile.booking.askFirstVisitQuestions !== false;
   const via = channel === 'email' ? t('bk6.viaEmail', { email: ltr(maskEmail(draft.email.trim())) }) : t('bk6.viaSms', { last: ltr(lastFour(phone.e164)) });
 
   const codeError = ((): string | undefined => {
@@ -68,33 +65,15 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
   })();
 
   const verify = async (): Promise<void> => {
-    if (code.length !== 6) {
-      setFailure(null);
-      return;
-    }
+    if (code.length !== 6) return;
     const proof = await verification.confirm(code);
     if (proof === null) return;
-    const verified = { ...state, proof, proofFor: proofTarget(draft) };
     dispatch({ type: 'verified', proof, target: proofTarget(draft) });
-    if (askQuestions) {
-      navigate(slugRoute(profile.slug, 'firstVisit'));
-      return;
-    }
-    // Nothing more to ask: the booking is created now.
-    setWorking(true);
-    try {
-      await submitBooking(profile, verified, locale, state.firstVisit, dispatch);
-    } catch (error) {
-      setFailure(error);
-      navigate(slugRoute(profile.slug, 'firstVisit'), true);
-    } finally {
-      setWorking(false);
-    }
+    navigate(slugRoute(profile.slug, 'firstVisit'));
   };
 
   const switchTo = (next: 'sms' | 'email'): void => {
     setCode('');
-    setFailure(null);
     dispatch({ type: 'setChannel', channel: next });
   };
 
@@ -102,7 +81,7 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
     <Screen
       top={<TopBar back={slugRoute(profile.slug, 'you')} step={{ current: 4, total: FLOW_STEPS }} />}
       bar={
-        <Button busy={verification.confirming || working} disabled={code.length !== 6} onClick={() => { void verify(); }} testId="verify">
+        <Button busy={verification.confirming} disabled={code.length !== 6} onClick={() => { void verify(); }} testId="verify">
           {t('bk6.verify')}
         </Button>
       }
@@ -152,7 +131,6 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
 
       <div aria-live="polite">
         {verification.status === 'failed' && codeError === undefined ? <ErrorNotice error={verification.error} /> : null}
-        {failure === null ? null : <ErrorNotice error={failure} />}
       </div>
       {/* Where Firebase Auth may draw its invisible reCAPTCHA. */}
       <div ref={captcha} />

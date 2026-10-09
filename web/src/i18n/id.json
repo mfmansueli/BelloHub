@@ -4,9 +4,6 @@
   "bk1.credentialsCount": {
     "other": "{count} sertifikat"
   },
-  "bk1.credentialsVerified": {
-    "other": "{count} sertifikat · diverifikasi oleh {name}"
-  },
   "bk1.find": "Sudah membuat janji? Temukan janji Anda",
   "bk1.messageWa": "Kirim pesan ke {name} lewat WhatsApp",
   "bk1.paused.back": "{name} kembali pada {date}. Kirim pesan dan Anda akan mendapat balasan.",
@@ -14,13 +11,10 @@
   "bk1.paused.unsure": "Kirim pesan dan Anda akan mendapat balasan secepatnya.",
   "bk1.rules": "Pembatalan dan perubahan",
   "bk1.services": "Layanan",
-  "bk1.tags": "Keahlian",
-
   "bk10.back": "Kembali ke halaman {name}",
   "bk10.blocked.text": "{name} ingin berbicara dengan Anda sebelum kunjungan berikutnya. Kirim pesan dan Anda akan segera kembali ke jadwal.",
   "bk10.blocked.title": "Pemesanan online dijeda untuk sementara.",
   "bk10.reason.newClient": "{name} mengonfirmasi sendiri janji pertama setiap klien baru. Biasanya butuh beberapa jam. Setelah itu Anda bisa membuat janji dengan bebas.",
-  "bk10.reason.noShowLimit": "Beberapa janji sebelumnya tidak dihadiri tanpa kabar, jadi {name} memeriksa sendiri janji baru. Biasanya butuh beberapa jam.",
   "bk10.request": "Permintaan Anda",
   "bk10.sent": "Permintaan terkirim.",
   "bk10.sentText": "{name} membalas lewat WhatsApp, biasanya dalam beberapa jam. Sampai saat itu belum ada yang terjadwal. Setelah {name} mengonfirmasi, tautan pribadi Anda dikirim lewat WhatsApp agar Anda bisa mengubah atau membatalkan kapan saja.",
@@ -28,7 +22,6 @@
   "bk10.why": "Mengapa saya melihat ini?",
   "bk10.whyMore": "Ini hanya berlaku untuk {name}. Tidak terbawa ke profesional lain. Jika menurut Anda ini keliru, sampaikan ke {name} dan pemesanan online bisa dibuka kembali.",
   "bk10.whyText": "{name} meminta klien memberi kabar tepat waktu jika tidak bisa hadir: gratis sampai {window} sebelumnya. Setelah beberapa janji tidak dihadiri tanpa kabar, {name} berbicara dengan Anda sebelum janji baru. Janji Anda berikutnya tidak terpengaruh.",
-
   "bk11.back": "Kembali ke halaman {name}",
   "bk11.code": "Kode",
   "bk11.codeSub": "Kami mengirim kode 6 digit ke {phone}.",
@@ -47,7 +40,6 @@
   "bk11.send": "Kirim kode",
   "bk11.sub": "Masukkan nomor yang Anda pakai saat memesan. Kami mengirim kode agar hanya Anda yang bisa membukanya.",
   "bk11.title": "Temukan janji Anda",
-
   "bk2.addOns": "Tambahkan ke kunjungan Anda",
   "bk2.addOnsHint": "Tambahan opsional. Menambah durasi.",
   "bk2.guests.hint": "{name} melayani semuanya satu per satu.",
@@ -60,7 +52,6 @@
   "bk2.pickError": "Pilih layanan terlebih dahulu.",
   "bk2.title": "Pilih layanan",
   "bk2.with": "bersama {name}",
-
   "bk4.noTimesEnd": "Tidak ada lagi jam kosong. Pemesanan dibuka sampai {date}.",
   "bk4.noTimesMonth": "Tidak ada jam kosong bulan ini. Lihat bulan berikutnya.",
   "bk4.pickError": "Pilih jam terlebih dahulu.",
@@ -75,7 +66,6 @@
   "bk4.zone": "Jam menurut zona waktu {place}.",
   "bk4.zoneDevice": "Perangkat Anda disetel ke zona waktu lain.",
   "bk4.zoneYours": "Di lokasi Anda, itu pukul {time}.",
-
   "bk5.email": "Email",
   "bk5.err.email": "Email ini tampaknya tidak benar.",
   "bk5.err.guest": "Masukkan nama pendamping.",
@@ -94,7 +84,6 @@
   "bk5.send": "Kirim kode verifikasi",
   "bk5.sub": "{date} pukul {time}. Beri tahu {name} siapa yang datang.",
   "bk5.title": "Hampir selesai.",
-
   "bk6.channel": "Kirim kode lewat",
   "bk6.code": "Kode verifikasi",
   "bk6.emailHint": "Tambahkan email di langkah sebelumnya jika Anda ingin menerima kode di sana.",
@@ -110,7 +99,6 @@
   "bk6.verify": "Verifikasi",
   "bk6.viaEmail": "Kami mengirim kode 6 digit ke email Anda, {email}.",
   "bk6.viaSms": "Kami mengirim kode 6 digit lewat SMS ke nomor yang berakhiran {last}.",
-
   "bk7.agree": "Dengan mengonfirmasi, Anda menyetujui aturan {name}. {line}",
   "bk7.before": "Pernahkah Anda menjalani perawatan ini sebelumnya?",
   "bk7.before.no": "Belum, ini yang pertama",
@@ -128,7 +116,6 @@
   "bk7.skip": "Lewati dulu",
   "bk7.sub": "Opsional. Membantu membuat {service} pertama Anda sesuai dengan Anda.",
   "bk7.title": "Ceritakan sedikit tentang Anda kepada {name}.",
-
   "bk8.again": "Kembali ke halaman {name}",
   "bk8.change.text": "Buka kapan saja untuk membatalkan atau menjadwalkan ulang: tanpa aplikasi, tanpa kata sandi. {line}",
   "bk8.change.title": "Rencana berubah? Gunakan tautan Anda.",
@@ -150,7 +137,6 @@
   "bk8.timeRange": "{start} – {end}",
   "bk8.title": "Janji dibuat.",
   "bk8.view": "Lihat janji",
-
   "bk9.askedMove": "Anda meminta pindah ke {when}. Sampai {name} membalas, jam ini tetap milik Anda.",
   "bk9.attend.no": "Saya tidak bisa hadir",
   "bk9.attend.noText": "Jadwalkan ulang atau batalkan di bawah agar {name} bisa menawarkan jam Anda ke orang lain.",
@@ -163,7 +149,6 @@
   "bk9.bookAgain": "Buat janji di jam lain",
   "bk9.cancel": "Batalkan janji",
   "bk9.cancel.free": "Gratis sampai {deadline}",
-  "bk9.cancel.late": "{name} langsung diberi tahu",
   "bk9.cancel.lateCounts": "{name} langsung diberi tahu · dihitung sebagai tidak hadir",
   "bk9.cancel.message": "Kirim pesan ke {name} untuk membatalkan",
   "bk9.cancelledByProText": "{name} membatalkan janji ini. Anda bisa membuat janji di jam lain kapan saja.",
@@ -175,11 +160,9 @@
   "bk9.late.held": "Layanan dimulai sekitar {minutes} setelah pukul {time}. Jam Anda tetap dipegang.",
   "bk9.late.knows": "{name} sudah tahu.",
   "bk9.late.over": "Itu lebih dari batas {grace}. Anda mungkin menerima pesan untuk menjadwalkan ulang kunjungan.",
-  "bk9.late.reply": "{name} membalas: {reply}",
   "bk9.late.text": "Beri tahu {name} seberapa terlambat Anda. Jam Anda dipegang selama {minutes}.",
   "bk9.late.title": "Akan terlambat hari itu?",
   "bk9.messageWa": "Pesan lewat WhatsApp",
-  "bk9.movedFrom": "Dipindah dari {date} pukul {time}",
   "bk9.myData": "Informasi Anda",
   "bk9.note.free": "Perubahan gratis sampai {deadline}.",
   "bk9.note.late": "Masa gratis berakhir pada {deadline}. Kini perubahan mengikuti aturan jam-jam terakhir, di bawah.",
@@ -205,7 +188,6 @@
   "bk9.title": "Janji Anda",
   "bk9.with": "bersama {name} · {meta}",
   "bk9.zone": "sampai {end} · waktu {place}",
-
   "cal.add": "Tambahkan ke kalender",
   "cal.file": "Berkas kalender (.ics)",
   "cal.google": "Google Calendar",
@@ -214,12 +196,10 @@
   "cal.prevMonth": "Bulan sebelumnya",
   "cal.saved": "Berkas kalender disimpan.",
   "cal.unavailable": "{date}, tidak tersedia",
-
   "cl2.after": "Setelah {service} Anda · {date}",
   "cl2.bookAgain": "Buat janji lagi",
   "cl2.careEmpty": "{name} belum membagikan panduan perawatan lanjutan.",
   "cl2.completed": "Selesai",
-  "cl2.dataSub": "Apa yang disimpan {name} dan cara meminta salinan",
   "cl2.hi": "Halo, {name}.",
   "cl2.journeyEmpty": "Belum ada yang dibagikan. Saat {name} membagikan catatan tentang kunjungan, catatan itu muncul di sini.",
   "cl2.next": "Sesi berikutnya",
@@ -235,9 +215,6 @@
   "cl2.tabs": "Bagian",
   "cl2.upcoming": "Berikutnya",
   "cl2.usedIn": "Dipakai dalam perawatan Anda",
-
-  "cl3.approvalGate": "{name} mengonfirmasi sendiri janji baru. Minta satu jam dan balasan datang lewat WhatsApp.",
-  "cl3.ask": "Minta {when} ke {name}",
   "cl3.back": "Kembali",
   "cl3.best": "Ideal",
   "cl3.bestNote": "“Ideal” menandai tanggal kembali yang disarankan {name}.",
@@ -254,7 +231,6 @@
   "cl3.time": "Pilih jam",
   "cl3.title": "Selamat datang kembali, {name}.",
   "cl3.titleAnon": "Selamat datang kembali.",
-
   "cl4.agree": "Saya setuju",
   "cl4.already.text": "{name} sudah memiliki formulir kesehatan Anda, dikirim dalam 12 bulan terakhir. Tidak ada lagi yang perlu dilakukan.",
   "cl4.already.title": "Anda sudah mengirimnya.",
@@ -287,7 +263,6 @@
   "cl4.thanks": "Terima kasih.",
   "cl4.title": "Beberapa pertanyaan sebelum kunjungan Anda.",
   "cl4.writeHere": "Tulis di sini",
-
   "cl5.addPhoto": "Tambahkan foto",
   "cl5.anything": "Ada yang ingin ditambahkan?",
   "cl5.back": "Kembali ke janji saya",
@@ -311,7 +286,6 @@
   "cl5.thanks": "Terima kasih, {name}.",
   "cl5.title": "Bagaimana kondisi kulit Anda hari ini?",
   "cl5.worried": "{name} akan menghubungi Anda hari ini. Jika terasa parah atau terus memburuk, temui dokter.",
-
   "cl6.askInstead": "Minta penjadwalan ulang saja",
   "cl6.bookAgain": "Buat janji di jam lain",
   "cl6.confirm.free": "Batalkan janji",
@@ -340,7 +314,6 @@
   "cl6.warn.title": "Ini dihitung sebagai tidak hadir.",
   "cl6.why": "Mengapa Anda membatalkan?",
   "cl6.whyHint": "Opsional. Membantu {name} menawarkan jam yang lebih cocok.",
-
   "cl7.choices": "Pilihan Anda",
   "cl7.contact": "Data kontak",
   "cl7.contactSub": "Nama, WhatsApp, dan email",
@@ -354,7 +327,6 @@
   "cl7.form.title.copy": "Minta salinan dari {name}?",
   "cl7.form.title.delete": "Minta {name} menghapus data Anda?",
   "cl7.health": "Formulir kesehatan dan persetujuan",
-  "cl7.healthSigned": "Ditandatangani pada {date} · disegel, hanya {name} yang bisa membukanya",
   "cl7.healthSub": "Disegel, hanya {name} yang bisa membukanya",
   "cl7.how": "Cara kerja permintaan",
   "cl7.keeps": "Apa yang disimpan {name}",
@@ -370,7 +342,6 @@
   "cl7.sentDelete": "Permintaan terkirim. {name} akan mengonfirmasi setelah selesai.",
   "cl7.sub": "Inilah yang disimpan {name} tentang Anda, dan hanya {name} yang dapat melihatnya.",
   "cl7.title": "Informasi Anda",
-
   "cl9.back": "Janji Anda",
   "cl9.back2": "Kembali ke janji saya",
   "cl9.changeOf": "Ini perubahan ke-{current} dari {max}.",
@@ -400,7 +371,6 @@
   "cl9.title.msg": "Kirim pesan ke {name}",
   "cl9.title.self": "Pilih jam baru",
   "cl9.youAsked": "Anda meminta",
-
   "common.actions": "Tindakan",
   "common.back": "Kembali",
   "common.by": "Pemesanan dengan Bello Hub",
@@ -414,7 +384,6 @@
   "common.skip": "Langsung ke konten",
   "common.step": "Langkah {current} dari {total}",
   "common.yes": "Ya",
-
   "err.appCheck": "Kami tidak bisa memastikan permintaan ini berasal dari halaman ini. Muat ulang halaman dan coba lagi.",
   "err.generic": "Terjadi kesalahan. Periksa koneksi Anda dan coba lagi.",
   "err.invalidInput": "Periksa yang Anda ketik dan coba lagi.",
@@ -425,39 +394,30 @@
   "err.timeout": "Terlalu lama. Coba lagi.",
   "err.tooLarge": "Ini terlalu besar untuk dikirim. Hapus foto atau persingkat catatan.",
   "err.unavailable": "Layanan sedang sibuk. Coba lagi dalam beberapa menit.",
-
   "ics.change": "Ubah atau batalkan: {link}",
   "ics.summary": "{service} bersama {name}",
-
   "landing.home": "Kembali ke awal",
   "landing.text": "Buka tautan pemesanan yang dikirim oleh profesional Anda.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "Konfirmasi dan pengingat Anda akan memakai bahasa ini.",
   "lang.title": "Bahasa",
-
   "legal.noticeLink": "Cara informasi janji Anda digunakan",
   "legal.privacyLink": "Kebijakan privasi",
-
   "price.from": "Mulai dari {price}",
   "price.onRequest": "Harga sesuai permintaan",
-
   "state.crash.text": "Halaman berhenti berfungsi. Muat ulang dan coba lagi. Tidak ada yang Anda ketik yang terkirim.",
   "state.crash.title": "Terjadi kesalahan.",
-  "state.expired.text": "Tautan berlaku sampai kunjungan selesai dan beberapa hari sesudahnya. Kirim pesan ke {name} untuk meminta yang baru.",
   "state.expired.textNoName": "Tautan berlaku sampai kunjungan selesai dan beberapa hari sesudahnya. Minta yang baru kepada pengirimnya.",
   "state.expired.title": "Tautan ini sudah kedaluwarsa.",
   "state.loadFailed.text": "Periksa koneksi Anda dan coba lagi.",
   "state.loadFailed.title": "Halaman ini tidak termuat.",
   "state.notFound.text": "Periksa tautannya atau tanyakan kepada pengirimnya.",
   "state.notFound.title": "Kami tidak menemukan halaman ini.",
-
   "wa.blocked": "Halo {name}, saya melihat pemesanan online dijeda untuk saya. Saya ingin membicarakan kunjungan berikutnya.",
   "wa.book": "Halo {name}, saya ingin membuat janji.",
   "wa.cancel": "Halo {name}, saya perlu membatalkan {service} saya pada {date} pukul {time}.",
   "wa.hello": "Halo {name}, saya punya pertanyaan tentang janji saya.",
   "wa.reschedule": "Halo {name}, saya ingin menjadwalkan ulang {service} saya pada {date} pukul {time}.",
-
   "wait.err.days": "Hari terakhir tidak boleh sebelum hari pertama.",
   "wait.from": "Dari",
   "wait.submit": "Gabung ke daftar tunggu",

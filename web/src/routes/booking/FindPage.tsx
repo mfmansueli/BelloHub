@@ -84,7 +84,7 @@ function CodeStep({ profile, phone, onFound }: { profile: PublicProfile; phone: 
     setBusy(true);
     setFailure(null);
     try {
-      onFound(await api.findBookings(profile.slug, proof));
+      onFound(await api.findBookings({ slug: profile.slug, phone, verification: proof }));
     } catch (error) {
       setFailure(error);
       setBusy(false);
@@ -143,7 +143,7 @@ function ListStep({ profile, bookings }: { profile: PublicProfile; bookings: Fou
                   <bdi>{booking.serviceName}</bdi>
                 </b>
                 <span class="sub">
-                  {t('bk9.with', { name: booking.professionalName, meta: format.minutes(booking.totalMinutes) })}
+                  {t('bk9.with', { name: profile.displayName, meta: format.minutes(Math.round((Date.parse(booking.endsAt) - Date.parse(booking.startsAt)) / 60_000)) })}
                 </span>
                 <span class="strong rose">{t('bk11.open')}</span>
               </span>

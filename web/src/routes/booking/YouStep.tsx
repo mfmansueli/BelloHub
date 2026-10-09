@@ -133,7 +133,7 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
           <ul class="check-list mt-sm" lang={rules.lang}>
             {rules.lines.map((line, index) => (
               <li key={index}>
-                <Icon name={line.kind === 'link' ? 'link' : line.kind === 'noShow' ? 'alert' : 'clock'} />
+                <Icon name="check" />
                 <span>{line.text}</span>
               </li>
             ))}

@@ -1,10 +1,12 @@
-// The only place that calls `fetch`. One function per HTTPS Cloud Function: GET with a query string for reads,
-// POST with a JSON body for everything that changes state. Success is a 2xx with the response type as the body;
-// failure is a non-2xx whose body is `{"error":{"code":"...","retryAfterSeconds":n}}` (the status is the fallback).
-// If the real functions use another envelope (callable `{data}` / `{result}`), this file is the only thing to change.
+// The only place that calls `fetch`. Every function is a Firebase callable spoken by hand (API.md section 1, "Web"):
+//
+//   POST <base>/<name>      { "data": <request> }        -> 200 { "result": <response> }
+//                                                        -> 4xx/5xx { "error": { "status", "message": CODE, "details"? } }
+//
+// Reads are POSTs too, so a token is never in a URL (docs/06 section 5). `error.message` is a stable machine code,
+// never prose; `details` never holds personal data (only `retryAfterSeconds`, `fields`, `action`, `maxBytes`).
 
-import { ApiError, codeForStatus, isApiErrorCode } from './errors';
-import type { ErrorContact } from './types';
+import { ApiError, codeForServer, codeForStatus } from './errors';
 
 export interface TransportOptions {
   readonly baseUrl: string;
@@ -14,42 +16,30 @@ export interface TransportOptions {
   readonly timeoutMs?: number;
 }
 
-export type Query = Readonly<Record<string, string | number | readonly string[] | undefined>>;
-
 export interface Transport {
-  get(name: string, query?: Query): Promise<unknown>;
-  post(name: string, body: unknown): Promise<unknown>;
-}
-
-function queryString(query: Query): string {
-  const params = new URLSearchParams();
-  for (const [key, value] of Object.entries(query)) {
-    if (value === undefined) continue;
-    params.set(key, typeof value === 'object' ? value.join(',') : String(value));
-  }
-  const text = params.toString();
-  return text === '' ? '' : `?${text}`;
+  /** Calls one function with its request object and returns the `result` object. */
+  call(name: string, data: unknown): Promise<unknown>;
 }
 
 export function createTransport(options: TransportOptions): Transport {
   const timeoutMs = options.timeoutMs ?? 15_000;
 
-  async function request(name: string, init: RequestInit, search = ''): Promise<unknown> {
+  async function call(name: string, data: unknown): Promise<unknown> {
     const fetchImpl = options.fetchImpl ?? fetch;
     const controller = new AbortController();
-    const timer = window.setTimeout(() => {
+    const timer = setTimeout(() => {
       controller.abort();
     }, timeoutMs);
     try {
       const token = await options.appCheckToken();
-      const headers = new Headers(init.headers);
-      headers.set('Accept', 'application/json');
+      const headers = new Headers({ Accept: 'application/json', 'Content-Type': 'application/json' });
       if (token !== null) headers.set('X-Firebase-AppCheck', token);
       let response: Response;
       try {
-        response = await fetchImpl(`${options.baseUrl}/${name}${search}`, {
-          ...init,
+        response = await fetchImpl(`${options.baseUrl}/${name}`, {
+          method: 'POST',
           headers,
+          body: JSON.stringify({ data }),
           signal: controller.signal,
           credentials: 'omit',
           cache: 'no-store',
@@ -65,38 +55,29 @@ export function createTransport(options: TransportOptions): Transport {
         payload = null;
       }
       if (!response.ok) throw toError(response.status, payload);
-      return payload;
+      return unwrap(payload);
     } finally {
-      window.clearTimeout(timer);
+      clearTimeout(timer);
     }
   }
 
-  return {
-    get: (name, query = {}) => request(name, { method: 'GET' }, queryString(query)),
-    post: (name, body) =>
-      request(name, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }),
-  };
+  return { call };
 }
 
-function toError(status: number, payload: unknown): ApiError {
+/** A 2xx whose body is not `{ result }` is a server fault, not a success. */
+function unwrap(payload: unknown): unknown {
+  if (typeof payload !== 'object' || payload === null || !('result' in payload)) throw new ApiError('server', 200);
+  return payload.result;
+}
+
+export function toError(status: number, payload: unknown): ApiError {
   if (typeof payload === 'object' && payload !== null) {
     const error = (payload as Record<string, unknown>)['error'];
     if (typeof error === 'object' && error !== null) {
-      const { code, retryAfterSeconds, professional } = error as Record<string, unknown>;
-      return new ApiError(
-        isApiErrorCode(code) ? code : codeForStatus(status),
-        status,
-        typeof retryAfterSeconds === 'number' ? retryAfterSeconds : undefined,
-        toContact(professional),
-      );
+      const { message, details } = error as Record<string, unknown>;
+      const retryAfter = typeof details === 'object' && details !== null ? (details as Record<string, unknown>)['retryAfterSeconds'] : undefined;
+      return new ApiError(codeForServer(message) ?? codeForStatus(status), status, typeof retryAfter === 'number' ? retryAfter : undefined);
     }
   }
   return new ApiError(codeForStatus(status), status);
-}
-
-function toContact(value: unknown): ErrorContact | undefined {
-  if (typeof value !== 'object' || value === null) return undefined;
-  const { displayName, firstName, whatsappE164 } = value as Record<string, unknown>;
-  if (typeof displayName !== 'string' || typeof firstName !== 'string') return undefined;
-  return { displayName, firstName, ...(typeof whatsappE164 === 'string' ? { whatsappE164 } : {}) };
 }

@@ -43,7 +43,7 @@ async function answerIntake(page: Page, options: { minor?: boolean } = {}): Prom
 function envelopes(guard: Guard): Envelope[] {
   return guard.requests
     .filter((request) => request.method === 'POST' && request.url.endsWith('/api/submitSealed'))
-    .map((request) => (JSON.parse(request.body ?? '{}') as { envelope: Envelope }).envelope);
+    .map((request) => (JSON.parse(request.body ?? '{}') as { data: { envelope: Envelope } }).data.envelope);
 }
 
 /** Nothing typed into a sealed page may appear in clear in any request URL or body. */
@@ -128,7 +128,7 @@ test.describe('the health form (Cl-4)', () => {
     let calls = 0;
     await page.route('**/api/submitSealed', async (route) => {
       calls += 1;
-      if (calls === 1) await route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: { code: 'unavailable' } }) });
+      if (calls === 1) await route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: { status: 'UNAVAILABLE', message: 'TRY_AGAIN' } }) });
       else await route.continue();
     });
     await open(page, `/m/${token}/form`);
@@ -149,8 +149,9 @@ test.describe('the health form (Cl-4)', () => {
     const { token } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: 50 * HOUR });
     await page.route('**/api/getFormContext', async (route) => {
       const response = await route.fetch();
-      const json = (await response.json()) as { inboxKey: { pub: string } };
-      json.inboxKey.pub = (json.inboxKey.pub.startsWith('A') ? 'B' : 'A') + json.inboxKey.pub.slice(1);
+      const json = (await response.json()) as { result: { inboxKey: { pub: string } } };
+      const key = json.result.inboxKey;
+      key.pub = (key.pub.startsWith('A') ? 'B' : 'A') + key.pub.slice(1);
       await route.fulfill({ response, json });
     });
     await open(page, `/m/${token}/form`);

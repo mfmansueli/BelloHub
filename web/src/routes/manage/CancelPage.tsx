@@ -1,6 +1,7 @@
-// Cl-6: cancel (docs/10 section 4, D11, D12). Inside the free window it is immediate and costs nothing. After it she
-// can still cancel, with an honest warning when it counts as a missed appointment, or she is asked to message the
-// professional, depending on her policy as it was when she booked. The reason is optional and sent as a key.
+// Cl-6: cancel (docs/10 section 4, D11, D12, API.md 5.12). Inside the free window it is immediate and costs nothing.
+// After it she can still cancel, with an honest warning that it may count as a missed appointment (and the page
+// says so to the server with `acceptLateWarning`), or she is asked to message the professional, as the server's
+// verdict on her policy says. The reason is optional and sent as a short key.
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -14,9 +15,8 @@ import { Chip } from '../../components/Choices';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
-import { cancelMode, freeUntil, lateCancelCountsAgainst, rescheduleMode } from '../../lib/policy';
+import { freeUntil } from '../../lib/policy';
 import { whatsAppUrl } from '../../lib/whatsapp';
-import { serverClock } from './ManagePage';
 
 const REASONS = [
   { value: 'conflict', key: 'cl6.reason.conflict' },
@@ -29,17 +29,18 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
   const { t } = useI18n();
   const format = useFormatter();
   const pro = booking.professional;
-  const now = serverClock(booking)();
   const startsAt = Date.parse(booking.startsAt);
   const policy = booking.policy;
-  const mode = cancelMode(startsAt, policy, now);
-  const resched = rescheduleMode(startsAt, policy, now, booking.rescheduleCount);
-  const counts = lateCancelCountsAgainst(mode, policy);
-  const cancellable = booking.status === 'confirmed' || booking.status === 'pendingApproval';
+  const { actions } = booking;
+  const mode = actions.cancel === 'free' ? 'free' : actions.cancel === 'allowedWithWarning' ? 'allowLate' : 'message';
+  const resched = actions.reschedule;
+  // Whether a late cancellation counts against her is not published (API.md): the warning says it may.
+  const counts = mode === 'allowLate';
+  const cancellable = (booking.status === 'confirmed' || booking.status === 'pendingApproval') && actions.cancel !== 'unavailable';
   const [reason, setReason] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState<unknown>(null);
-  const [done, setDone] = useState<{ counted: boolean } | null>(null);
+  const [done, setDone] = useState<{ late: boolean } | null>(null);
   useDocumentTitle(mode === 'free' ? t('cl6.title.free') : mode === 'allowLate' ? t('cl6.title.late') : t('cl6.title.message', { name: pro.firstName }));
 
   useEffect(() => {
@@ -53,8 +54,8 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
     setBusy(true);
     setFailure(null);
     try {
-      const response = await api.cancelBooking({ token, ...(reason === null ? {} : { reason }) });
-      setDone({ counted: response.countedAsLate });
+      const response = await api.cancelBooking({ token, ...(reason === null ? {} : { reason }), ...(mode === 'allowLate' ? { acceptLateWarning: true } : {}) });
+      setDone({ late: response.isLateCancellation });
     } catch (error) {
       setFailure(error);
     } finally {
@@ -63,7 +64,7 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
   };
 
   if (done !== null) {
-    const late = mode !== 'free';
+    const late = done.late;
     return (
       <Screen>
         <div class="stack">
@@ -71,7 +72,7 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
           <Title>{late ? t('cl6.done.late', { name: pro.firstName }) : t('cl6.done.free')}</Title>
           <p class="lead" data-testid="done-text">
             {late ? t('cl6.doneText.late') : t('cl6.doneText.free', { name: pro.firstName })}
-            {done.counted ? ` ${t('cl6.doneText.counts')}` : ''}
+            {done.late ? ` ${t('cl6.doneText.counts')}` : ''}
           </p>
         </div>
         <LinkButton to={manageRoute(token, 'rebook')} testId="book-again">
@@ -136,7 +137,7 @@ export function CancelPage({ token, booking }: { token: string; booking: Booking
         <b class="strong section">
           <bdi>{booking.service.name}</bdi>
         </b>
-        <p class="meta">{format.minutes(booking.totalMinutes)}</p>
+        <p class="meta">{format.minutes(booking.durationMinutes)}</p>
         <p class="meta tn">{`${format.weekdayDate(startsAt)} · ${format.time(startsAt)}`}</p>
       </section>
 

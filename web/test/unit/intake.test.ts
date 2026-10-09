@@ -22,7 +22,7 @@ function makeContext(): FormContext {
     bookingId: 'booking-1',
     client: { firstName: 'Ana' },
     inboxKey: { keyId: 'AAAAAAAAAAA', alg: 'hpke-v1', pub: 'x' },
-    intake: { available: true, completedWithin12Months: false, formVersion: 'v7', questions },
+    intake: { available: true, completedWithin12Months: false, formVersion: 'v7', questions, consent: {} },
     checkIn: { available: false },
   };
 }

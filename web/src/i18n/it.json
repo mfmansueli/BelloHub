@@ -5,10 +5,6 @@
     "one": "{count} certificato",
     "other": "{count} certificati"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} certificato · verificato da {name}",
-    "other": "{count} certificati · verificati da {name}"
-  },
   "bk1.find": "Hai già prenotato? Trova il tuo appuntamento",
   "bk1.messageWa": "Scrivi a {name} su WhatsApp",
   "bk1.paused.back": "{name} torna il {date}. Manda un messaggio e riceverai una risposta.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Manda un messaggio e riceverai una risposta appena possibile.",
   "bk1.rules": "Annullamenti e modifiche",
   "bk1.services": "Servizi",
-  "bk1.tags": "Specialità",
-
   "bk10.back": "Torna alla pagina di {name}",
   "bk10.blocked.text": "{name} preferisce parlarti prima del prossimo appuntamento. Manda un messaggio e tornerai presto in agenda.",
   "bk10.blocked.title": "La prenotazione online è in pausa per ora.",
   "bk10.reason.newClient": "{name} conferma di persona la prima prenotazione di ogni nuovo cliente. Di solito ci vogliono poche ore. Dopo potrai prenotare liberamente.",
-  "bk10.reason.noShowLimit": "Alcuni appuntamenti precedenti sono saltati senza avviso, quindi {name} controlla di persona le nuove prenotazioni. Di solito ci vogliono poche ore.",
   "bk10.request": "La tua richiesta",
   "bk10.sent": "Richiesta inviata.",
   "bk10.sentText": "{name} risponde su WhatsApp, di solito entro poche ore. Fino ad allora non è prenotato nulla. Quando {name} conferma, il tuo link personale arriva su WhatsApp, così potrai modificare o annullare quando vuoi.",
@@ -30,7 +23,6 @@
   "bk10.why": "Perché vedo questo?",
   "bk10.whyMore": "Vale solo per {name}. Non ti segue presso altri professionisti. Se pensi che sia un errore, dillo a {name} e la prenotazione online potrà essere riaperta.",
   "bk10.whyText": "{name} chiede ai clienti di avvisare in tempo quando non possono venire: è gratis fino a {window} prima. Dopo alcuni appuntamenti saltati senza avviso, {name} parla con te prima di una nuova prenotazione. I tuoi prossimi appuntamenti non cambiano.",
-
   "bk11.back": "Torna alla pagina di {name}",
   "bk11.code": "Codice",
   "bk11.codeSub": "Abbiamo inviato un codice di 6 cifre a {phone}.",
@@ -50,7 +42,6 @@
   "bk11.send": "Invia codice",
   "bk11.sub": "Inserisci il numero con cui hai prenotato. Inviamo un codice, così solo tu puoi aprirlo.",
   "bk11.title": "Trova il tuo appuntamento",
-
   "bk2.addOns": "Aggiungi alla tua visita",
   "bk2.addOnsHint": "Extra facoltativi. Aggiungono tempo.",
   "bk2.guests.hint": "{name} vi riceve uno dopo l'altro.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Scegli prima un servizio.",
   "bk2.title": "Scegli un servizio",
   "bk2.with": "con {name}",
-
   "bk4.noTimesEnd": "Non ci sono più orari liberi. Si può prenotare fino al {date}.",
   "bk4.noTimesMonth": "Nessun orario libero questo mese. Prova il prossimo.",
   "bk4.pickError": "Scegli prima un orario.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Orari nel fuso di {place}.",
   "bk4.zoneDevice": "Il tuo dispositivo è impostato su un altro fuso orario.",
   "bk4.zoneYours": "Dove sei tu sono le {time}.",
-
   "bk5.email": "Email",
   "bk5.err.email": "Questa email non sembra corretta.",
   "bk5.err.guest": "Scrivi il nome di chi viene con te.",
@@ -98,7 +87,6 @@
   "bk5.send": "Invia codice di verifica",
   "bk5.sub": "{date} alle {time}. Dì a {name} chi viene.",
   "bk5.title": "Ci siamo quasi.",
-
   "bk6.channel": "Invia il codice tramite",
   "bk6.code": "Codice di verifica",
   "bk6.emailHint": "Aggiungi un'email nel passaggio precedente se preferisci ricevere lì il codice.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Verifica",
   "bk6.viaEmail": "Abbiamo inviato un codice di 6 cifre alla tua email, {email}.",
   "bk6.viaSms": "Abbiamo inviato un codice di 6 cifre via SMS al numero che termina con {last}.",
-
   "bk7.agree": "Confermando, accetti le regole di {name}. {line}",
   "bk7.before": "Hai già fatto questo trattamento?",
   "bk7.before.no": "No, è la prima volta",
@@ -132,7 +119,6 @@
   "bk7.skip": "Salta per ora",
   "bk7.sub": "Facoltativo. Aiuta a rendere il tuo primo {service} su misura per te.",
   "bk7.title": "Racconta qualcosa di te a {name}.",
-
   "bk8.again": "Torna alla pagina di {name}",
   "bk8.change.text": "Aprilo quando vuoi per annullare o spostare: niente app, niente password. {line}",
   "bk8.change.title": "Cambiano i piani? Usa il tuo link.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} – {end}",
   "bk8.title": "Prenotazione fatta.",
   "bk8.view": "Vedi appuntamento",
-
   "bk9.askedMove": "Hai chiesto di spostarlo a {when}. Finché {name} non risponde, questo orario resta tuo.",
   "bk9.attend.no": "Non posso venire",
   "bk9.attend.noText": "Sposta o annulla qui sotto, così {name} può offrire il tuo orario a un'altra persona.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Prenota un altro orario",
   "bk9.cancel": "Annulla appuntamento",
   "bk9.cancel.free": "Gratis fino a {deadline}",
-  "bk9.cancel.late": "{name} lo sa subito",
   "bk9.cancel.lateCounts": "{name} lo sa subito · conta come mancato",
   "bk9.cancel.message": "Scrivi a {name} per annullare",
   "bk9.cancelledByProText": "{name} ha annullato questo appuntamento. Puoi prenotare un altro orario quando vuoi.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "La visita inizierà circa {minutes} dopo le {time}. Il tuo orario è riservato.",
   "bk9.late.knows": "{name} lo sa.",
   "bk9.late.over": "Sono più dei {grace} per cui l'orario è riservato. Potresti ricevere un messaggio per spostare la visita.",
-  "bk9.late.reply": "{name} ha risposto: {reply}",
   "bk9.late.text": "Dì a {name} quanto tarderai. Il tuo orario resta riservato per {minutes}.",
   "bk9.late.title": "Farai tardi quel giorno?",
   "bk9.messageWa": "Messaggio su WhatsApp",
-  "bk9.movedFrom": "Spostato dal {date} alle {time}",
   "bk9.myData": "Le tue informazioni",
   "bk9.note.free": "Modifiche gratuite fino a {deadline}.",
   "bk9.note.late": "Il periodo gratuito è finito il {deadline}. Ora le modifiche seguono le regole delle ultime ore, qui sotto.",
@@ -211,7 +193,6 @@
   "bk9.title": "Il tuo appuntamento",
   "bk9.with": "con {name} · {meta}",
   "bk9.zone": "fino alle {end} · ora di {place}",
-
   "cal.add": "Aggiungi al calendario",
   "cal.file": "File di calendario (.ics)",
   "cal.google": "Google Calendar",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Mese precedente",
   "cal.saved": "File di calendario salvato.",
   "cal.unavailable": "{date}, non disponibile",
-
   "cl2.after": "Dopo il tuo {service} · {date}",
   "cl2.bookAgain": "Prenota di nuovo",
   "cl2.careEmpty": "{name} non ha ancora condiviso indicazioni post-trattamento.",
   "cl2.completed": "Completato",
-  "cl2.dataSub": "Cosa conserva {name} e come chiedere una copia",
   "cl2.hi": "Ciao, {name}.",
   "cl2.journeyEmpty": "Ancora niente di condiviso. Quando {name} condividerà una nota su una visita, apparirà qui.",
   "cl2.next": "Prossima seduta",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Sezioni",
   "cl2.upcoming": "In programma",
   "cl2.usedIn": "Usato nel tuo trattamento",
-
-  "cl3.approvalGate": "{name} conferma di persona le nuove prenotazioni. Chiedi un orario e riceverai risposta su WhatsApp.",
-  "cl3.ask": "Chiedi {when} a {name}",
   "cl3.back": "Indietro",
   "cl3.best": "Ideale",
   "cl3.bestNote": "«Ideale» indica la data di ritorno consigliata da {name}.",
@@ -260,7 +236,6 @@
   "cl3.time": "Scegli l'orario",
   "cl3.title": "Che bello rivederti, {name}.",
   "cl3.titleAnon": "Che bello rivederti.",
-
   "cl4.agree": "Sono d'accordo",
   "cl4.already.text": "{name} ha già la tua scheda sanitaria, inviata negli ultimi 12 mesi. Non c'è altro da fare.",
   "cl4.already.title": "L'hai già inviata.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Grazie.",
   "cl4.title": "Qualche domanda prima della visita.",
   "cl4.writeHere": "Scrivi qui",
-
   "cl5.addPhoto": "Aggiungi una foto",
   "cl5.anything": "Vuoi aggiungere qualcosa?",
   "cl5.back": "Torna ai miei appuntamenti",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Grazie, {name}.",
   "cl5.title": "Come sta oggi la tua pelle?",
   "cl5.worried": "{name} ti contatterà oggi. Se è intenso o continua a peggiorare, rivolgiti a un medico.",
-
   "cl6.askInstead": "Chiedi invece di spostare",
   "cl6.bookAgain": "Prenota un altro orario",
   "cl6.confirm.free": "Annulla appuntamento",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "Questo conta come appuntamento mancato.",
   "cl6.why": "Perché annulli?",
   "cl6.whyHint": "Facoltativo. Aiuta {name} a proporti un orario migliore.",
-
   "cl7.choices": "Le tue scelte",
   "cl7.contact": "Dati di contatto",
   "cl7.contactSub": "Nome, WhatsApp ed email",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "Chiedere una copia a {name}?",
   "cl7.form.title.delete": "Chiedere a {name} di cancellare i tuoi dati?",
   "cl7.health": "Scheda sanitaria e consenso",
-  "cl7.healthSigned": "Firmata il {date} · sigillata, solo {name} può aprirla",
   "cl7.healthSub": "Sigillata, solo {name} può aprirla",
   "cl7.how": "Come funzionano le richieste",
   "cl7.keeps": "Cosa conserva {name}",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Richiesta inviata. {name} confermerà quando sarà fatto.",
   "cl7.sub": "Questo è ciò che {name} conserva su di te, e solo {name} può vederlo.",
   "cl7.title": "Le tue informazioni",
-
   "cl9.back": "Il tuo appuntamento",
   "cl9.back2": "Torna al mio appuntamento",
   "cl9.changeOf": "Questa è la modifica {current} di {max}.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "Scrivi a {name}",
   "cl9.title.self": "Scegli un nuovo orario",
   "cl9.youAsked": "Hai chiesto",
-
   "common.actions": "Azioni",
   "common.back": "Indietro",
   "common.by": "Prenotazioni con Bello Hub",
@@ -421,7 +390,6 @@
   "common.skip": "Vai al contenuto",
   "common.step": "Passo {current} di {total}",
   "common.yes": "Sì",
-
   "err.appCheck": "Non siamo riusciti a confermare che la richiesta venga da questa pagina. Ricarica la pagina e riprova.",
   "err.generic": "Qualcosa è andato storto. Controlla la connessione e riprova.",
   "err.invalidInput": "Controlla quello che hai scritto e riprova.",
@@ -432,39 +400,30 @@
   "err.timeout": "Sta impiegando troppo. Riprova.",
   "err.tooLarge": "È troppo grande per essere inviato. Rimuovi la foto o accorcia la nota.",
   "err.unavailable": "Il servizio è occupato al momento. Riprova tra qualche minuto.",
-
   "ics.change": "Modifica o annulla: {link}",
   "ics.summary": "{service} con {name}",
-
   "landing.home": "Torna all'inizio",
   "landing.text": "Apri il link di prenotazione che ti ha mandato il professionista.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "La conferma e i promemoria useranno questa lingua.",
   "lang.title": "Lingua",
-
   "legal.noticeLink": "Come vengono usate le informazioni della tua prenotazione",
   "legal.privacyLink": "Informativa sulla privacy",
-
   "price.from": "Da {price}",
   "price.onRequest": "Prezzo su richiesta",
-
   "state.crash.text": "La pagina ha smesso di funzionare. Ricaricala e riprova. Non è stato inviato nulla di ciò che hai scritto.",
   "state.crash.title": "Qualcosa è andato storto.",
-  "state.expired.text": "I link funzionano fino alla fine della visita e per qualche giorno dopo. Scrivi a {name} per averne uno nuovo.",
   "state.expired.textNoName": "I link funzionano fino alla fine della visita e per qualche giorno dopo. Chiedine uno nuovo a chi te l'ha mandato.",
   "state.expired.title": "Questo link è scaduto.",
   "state.loadFailed.text": "Controlla la connessione e riprova.",
   "state.loadFailed.title": "Questa pagina non si è caricata.",
   "state.notFound.text": "Controlla il link o chiedi a chi te l'ha mandato.",
   "state.notFound.title": "Non abbiamo trovato questa pagina.",
-
   "wa.blocked": "Ciao {name}, ho visto che la prenotazione online è in pausa per me. Vorrei parlare della mia prossima visita.",
   "wa.book": "Ciao {name}, vorrei prenotare un appuntamento.",
   "wa.cancel": "Ciao {name}, devo annullare il mio {service} del {date} alle {time}.",
   "wa.hello": "Ciao {name}, ho una domanda sul mio appuntamento.",
   "wa.reschedule": "Ciao {name}, vorrei spostare il mio {service} del {date} alle {time}.",
-
   "wait.err.days": "L'ultimo giorno non può essere prima del primo.",
   "wait.from": "Dal",
   "wait.submit": "Iscrivimi alla lista d'attesa",

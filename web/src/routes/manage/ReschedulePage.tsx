@@ -1,6 +1,6 @@
-// Cl-9: reschedule (docs/10 section 4). Three modes, chosen by her policy as it was when she booked: pick a new time
-// and it moves at once (inside the free window), ask for one and the old time stays hers until the professional
-// answers (after it), or message her (when changes are closed or the limit is reached).
+// Cl-9: reschedule (docs/10 section 4, API.md 5.12). Three modes, the server's verdict on her policy as it was when
+// she booked: pick a new time and it moves at once (inside the free window), ask for one and the old time stays
+// hers until the professional answers (after it), or message her (when changes are closed or the limit is reached).
 
 import type { JSX } from 'preact';
 import { useEffect, useMemo, useState } from 'preact/hooks';
@@ -18,10 +18,9 @@ import { TextField } from '../../components/Field';
 import { Icon } from '../../components/Icon';
 import { Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
-import type { DateKey } from '../../lib/datetime';
-import { freeUntil, rescheduleMode, reschedulesLeft } from '../../lib/policy';
+import { addDays, zonedDateKey, type DateKey } from '../../lib/datetime';
+import { freeUntil, reschedulesLeft } from '../../lib/policy';
 import { whatsAppUrl } from '../../lib/whatsapp';
-import { serverClock } from './ManagePage';
 
 const DAYS_AHEAD = 28;
 const DAY_CHOICES = 10;
@@ -32,11 +31,11 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
   const { t } = useI18n();
   const format = useFormatter();
   const pro = booking.professional;
-  const now = serverClock(booking)();
   const startsAt = Date.parse(booking.startsAt);
-  const mode = rescheduleMode(startsAt, booking.policy, now, booking.rescheduleCount);
+  const verdict = booking.actions.reschedule;
+  const mode = verdict === 'direct' || verdict === 'request' ? verdict : 'message';
   const left = reschedulesLeft(booking.policy, booking.rescheduleCount);
-  const editable = booking.status === 'confirmed';
+  const editable = booking.status === 'confirmed' && verdict !== 'unavailable';
   useDocumentTitle(mode === 'request' ? t('cl9.title.ask') : mode === 'direct' ? t('cl9.title.self') : t('cl9.title.msg', { name: pro.firstName }));
 
   useEffect(() => {
@@ -56,9 +55,9 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
     if (!editable || mode === 'message') return;
     let current = true;
     setLoad({ status: 'loading' });
-    const from = Date.now();
+    const from = zonedDateKey(Date.now(), pro.timeZoneID);
     api
-      .getSlots({ token, purpose: 'reschedule', from: new Date(from).toISOString(), to: new Date(from + DAYS_AHEAD * 24 * 3_600_000).toISOString() })
+      .getSlots({ slug: pro.slug, serviceId: booking.service.id, from, to: addDays(from, DAYS_AHEAD), rescheduleToken: token })
       .then(
         (response) => {
           if (!current) return;

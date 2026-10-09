@@ -10,7 +10,7 @@ import { ApiError } from '../../api/errors';
 import type { PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute } from '../../app/router';
-import { allowedStep, FLOW_STEPS, newIdempotencyKey } from '../../app/booking/machine';
+import { allowedStep, FLOW_STEPS } from '../../app/booking/machine';
 import { groupByDay } from '../../app/booking/slotDays';
 import { useBooking } from '../../app/booking/store';
 import { selectedAddOns, totals } from '../../app/booking/summary';
@@ -78,10 +78,11 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
     if (service === undefined) return;
     let current = true;
     setLoad({ status: 'loading' });
+    // The month as calendar days in the business zone, from today to the horizon (at most 42 days, API.md 5.2).
     const bounds = monthBounds(view.year, view.month, zone);
-    const from = Math.max(bounds.start, Date.now());
-    const to = Math.min(bounds.end, instantFromZoned(addDays(horizonEnd, 1), 0, 0, zone));
-    if (from >= to) {
+    const from = zonedDateKey(Math.max(bounds.start, Date.now()), zone);
+    const to = zonedDateKey(Math.min(bounds.end - 1, instantFromZoned(horizonEnd, 12, 0, zone)), zone);
+    if (compareDateKeys(from, to) > 0) {
       setLoad({ status: 'ready', byDay: new Map() });
       return;
     }
@@ -91,8 +92,9 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
         serviceId: service.id,
         addOnIds: draft.addOnIds,
         guests: draft.guests,
-        from: new Date(from).toISOString(),
-        to: new Date(to).toISOString(),
+        from,
+        to,
+        holdKey: draft.holdKey,
       })
       .then(
         (response) => {
@@ -129,7 +131,7 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
   }, [load]);
 
   const slots = day === null ? [] : (byDay.get(day) ?? []);
-  const suggestions = state.slotTaken?.nextSlots ?? [];
+  const suggestions = state.slotTaken?.alternatives ?? [];
   const pickedInstant = pick === null ? null : Date.parse(pick);
   const showDeviceWarning = deviceClockDiffers(pickedInstant ?? Date.now(), zone, deviceZone);
   const place = profile.city ?? zone.split('/').at(-1)?.replace(/_/g, ' ') ?? zone;
@@ -155,15 +157,15 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
         addOnIds: draft.addOnIds,
         guests: draft.guests,
         startsAt: pick,
-        sessionKey: draft.idempotencyKey || newIdempotencyKey(),
+        holdKey: draft.holdKey,
       });
-      dispatch({ type: 'chooseSlot', startsAt: pick, holdId: hold.holdId, holdExpiresAt: hold.expiresAt });
+      dispatch({ type: 'chooseSlot', startsAt: pick, holdExpiresAt: hold.expiresAt });
       navigate(slugRoute(profile.slug, 'you'));
     } catch (error) {
       if (error instanceof ApiError && error.code === 'slotTaken') {
         // Show what is free now, after the time she wanted.
         const next = [...byDay.values()].flat().filter((slot) => slot > pick).slice(0, NEXT_SLOTS_SHOWN);
-        dispatch({ type: 'slotTaken', nextSlots: next });
+        dispatch({ type: 'slotTaken', alternatives: next });
         setPick(null);
         setAttempt((value) => value + 1);
       } else {
@@ -263,14 +265,12 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
       ) : null}
       <ErrorNotice error={holdError} />
 
-      {profile.booking.waitlist ? (
-        <button type="button" class="card list-row" onClick={() => { setWaitlistOpen(true); }} aria-haspopup="dialog" data-testid="waitlist-open">
-          <span class="grow">
-            <b class="strong">{t('bk4.waitTitle')}</b>
-            <span class="sub">{t('bk4.waitSub', { name: profile.firstName })}</span>
-          </span>
-        </button>
-      ) : null}
+      <button type="button" class="card list-row" onClick={() => { setWaitlistOpen(true); }} aria-haspopup="dialog" data-testid="waitlist-open">
+        <span class="grow">
+          <b class="strong">{t('bk4.waitTitle')}</b>
+          <span class="sub">{t('bk4.waitSub', { name: profile.firstName })}</span>
+        </span>
+      </button>
 
       <WaitlistSheet open={waitlistOpen} onClose={() => { setWaitlistOpen(false); }} profile={profile} serviceId={draft.serviceId} />
     </Screen>

@@ -15,9 +15,10 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
       status: 'confirmed',
       serviceId: 'glow',
       addOnIds: ['brow'],
-      guestNames: ['Bia'],
+      // The server keeps a guest count, never guest names (API.md 5.8).
+      guests: 1,
       // 60 minutes of facial plus 15 of eyebrow tint, for two people one after the other.
-      totalMinutes: 150,
+      durationMinutes: 150,
       client: { name: DEFAULTS.name, phone: '+5511987654321' },
     });
     expect(new Date(booking?.startsAt ?? '').toISOString()).toBe(startsAt);
@@ -83,7 +84,9 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await page.getByTestId('wait-submit').click();
     await expect(page.getByTestId('waitlist-done')).toBeVisible();
     const [entry] = await mock.waitlist(slug);
-    expect(entry).toMatchObject({ slug, name: 'Helena Duarte' });
+    expect(entry).toMatchObject({ slug, name: 'Helena Duarte', phone: '+5511987654321', serviceId: 'brazilian' });
+    expect(entry?.['dayFrom']).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(entry?.['dayTo']).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 });
 
@@ -99,9 +102,11 @@ test.describe('approval, no-show protection and pause (Bk-10)', () => {
     expect((await mock.bookings(slug))[0]?.status).toBe('pendingApproval');
   });
 
-  test('a client past the no-show limit with "approve new bookings" waits for approval with the matching reason', async ({ page, slugFor }) => {
+  test('a client past the no-show limit with "approve new bookings" waits for approval, and the page cannot tell why', async ({ page, slugFor }) => {
     await bookUntilResult(page, slugFor('maria-noshow'), { phone: '11 90000 0001' });
-    await expect(page.getByTestId('review-reason')).toContainText(/did not take place|missed|without/i);
+    // API.md 5.8: the response never says which rule asked for approval, so the words are the same for everyone.
+    await expect(page.getByTestId('review-reason')).toBeVisible();
+    await expect(page.getByTestId('review-reason')).not.toContainText(/missed|no-show|did not take place/i);
   });
 
   test('a client past the no-show limit with "pause online" is sent to message the professional', async ({ page, slugFor }) => {

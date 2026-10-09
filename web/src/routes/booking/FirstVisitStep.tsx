@@ -1,5 +1,6 @@
 // Bk-7: a few non-clinical questions for the first visit, then the booking is created. Health answers are never
-// asked here: they exist only in the sealed form (docs/10 section 2), and this screen says so.
+// asked here: they exist only in the sealed form (docs/10 section 2), and this screen says so. Of the three answers
+// only the note travels to the server (API.md 5.8); "how did you hear" and "been before" wait for the owner's decision.
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -16,7 +17,7 @@ import { TextArea } from '../../components/Field';
 import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useRules } from '../../components/RuleList';
 import { useI18n } from '../../i18n';
-import { submitBooking } from './submit';
+import { NOTE_MAX_LENGTH, submitBooking } from './submit';
 
 const HEARD: readonly { value: HeardFrom; key: string }[] = [
   { value: 'friend', key: 'bk7.heard.friend' },
@@ -43,7 +44,6 @@ export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Ele
   if (redirect) return null;
 
   const service = profile.services.find((candidate) => candidate.id === state.draft.serviceId);
-  const freeLine = rules.lines.find((line) => line.kind === 'changes')?.text ?? '';
 
   const finish = async (withAnswers: boolean): Promise<void> => {
     setBusy(withAnswers ? 'confirm' : 'skip');
@@ -63,7 +63,7 @@ export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Ele
       bar={
         <>
           <p class="bar-note" lang={rules.lang}>
-            {t('bk7.agree', { name: profile.firstName, line: freeLine }).trim()}
+            {t('bk7.agree', { name: profile.firstName, line: '' }).trim()}
           </p>
           <Button busy={busy === 'confirm'} onClick={() => { void finish(true); }} testId="confirm">
             {t('bk7.confirm')}
@@ -113,7 +113,7 @@ export function FirstVisitStep({ profile }: { profile: PublicProfile }): JSX.Ele
         onInput={(note) => { dispatch({ type: 'setFirstVisit', answers: { ...answers, note } }); }}
         placeholder={t('bk7.notePlaceholder')}
         hint={t('bk7.noteWarn', { name: profile.firstName })}
-        maxLength={300}
+        maxLength={NOTE_MAX_LENGTH}
         sensitive
         testId="preferences"
       />

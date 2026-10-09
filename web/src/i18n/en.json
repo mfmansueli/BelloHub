@@ -5,10 +5,6 @@
     "one": "{count} credential",
     "other": "{count} credentials"
   },
-  "bk1.credentialsVerified": {
-    "one": "{count} credential · verified by {name}",
-    "other": "{count} credentials · verified by {name}"
-  },
   "bk1.find": "Already booked? Find my appointment",
   "bk1.messageWa": "Message {name} on WhatsApp",
   "bk1.paused.back": "{name} is back on {date}. Send a message and you will get an answer.",
@@ -16,13 +12,10 @@
   "bk1.paused.unsure": "Send a message and you will get an answer as soon as possible.",
   "bk1.rules": "Cancellations and changes",
   "bk1.services": "Services",
-  "bk1.tags": "Specialties",
-
   "bk10.back": "Back to {name}'s page",
   "bk10.blocked.text": "{name} likes to talk before your next visit. Send a message and you will be back on the calendar quickly.",
   "bk10.blocked.title": "Online booking is paused for now.",
   "bk10.reason.newClient": "{name} meets every new client by confirming the first booking personally. It usually takes a few hours. After that you can book freely.",
-  "bk10.reason.noShowLimit": "Some earlier appointments were missed without a message, so {name} checks new bookings personally. It usually takes a few hours.",
   "bk10.request": "Your request",
   "bk10.sent": "Request sent.",
   "bk10.sentText": "{name} will answer on WhatsApp, usually within a few hours. Nothing is booked until then. When {name} confirms, your personal link arrives on WhatsApp so you can change or cancel any time.",
@@ -30,7 +23,6 @@
   "bk10.why": "Why am I seeing this?",
   "bk10.whyMore": "This only applies to {name}. It does not follow you to other professionals. If you think it is a mistake, tell {name} and online booking can be opened again.",
   "bk10.whyText": "{name} asks clients to say so in time when they cannot come: it is free up to {window} before. After a few missed appointments without a message, {name} talks with you before booking again. Your upcoming appointments are not affected.",
-
   "bk11.back": "Back to {name}'s page",
   "bk11.code": "Code",
   "bk11.codeSub": "We sent a 6-digit code to {phone}.",
@@ -50,7 +42,6 @@
   "bk11.send": "Send code",
   "bk11.sub": "Enter the number you booked with. We send a code, so only you can open it.",
   "bk11.title": "Find your appointment",
-
   "bk2.addOns": "Add to your visit",
   "bk2.addOnsHint": "Optional extras. They add time.",
   "bk2.guests.hint": "{name} can see you both back to back.",
@@ -64,7 +55,6 @@
   "bk2.pickError": "Choose a service first.",
   "bk2.title": "Choose a service",
   "bk2.with": "with {name}",
-
   "bk4.noTimesEnd": "No free times left. Bookings are open until {date}.",
   "bk4.noTimesMonth": "No free times this month. Try the next one.",
   "bk4.pickError": "Choose a time first.",
@@ -79,7 +69,6 @@
   "bk4.zone": "Times shown in {place} time.",
   "bk4.zoneDevice": "Your device is set to a different time zone.",
   "bk4.zoneYours": "That is {time} where you are.",
-
   "bk5.email": "Email",
   "bk5.err.email": "That email does not look right.",
   "bk5.err.guest": "Please type your guest's first name.",
@@ -98,7 +87,6 @@
   "bk5.send": "Send verification code",
   "bk5.sub": "{date} at {time}. Tell {name} who is coming.",
   "bk5.title": "Almost there.",
-
   "bk6.channel": "Send the code by",
   "bk6.code": "Verification code",
   "bk6.emailHint": "Add an email on the previous step if you would rather get the code there.",
@@ -114,7 +102,6 @@
   "bk6.verify": "Verify",
   "bk6.viaEmail": "We sent a 6-digit code to your email, {email}.",
   "bk6.viaSms": "We sent a 6-digit code by SMS to the number ending in {last}.",
-
   "bk7.agree": "By confirming, you accept {name}'s rules. {line}",
   "bk7.before": "Have you had this treatment before?",
   "bk7.before.no": "No, first time",
@@ -132,7 +119,6 @@
   "bk7.skip": "Skip for now",
   "bk7.sub": "Optional. It helps your first {service} feel made for you.",
   "bk7.title": "Tell {name} a little about you.",
-
   "bk8.again": "Back to {name}'s page",
   "bk8.change.text": "Open it any time to cancel or reschedule: no app, no password. {line}",
   "bk8.change.title": "Need to change plans? Use your link.",
@@ -155,7 +141,6 @@
   "bk8.timeRange": "{start} to {end}",
   "bk8.title": "You're booked.",
   "bk8.view": "View appointment",
-
   "bk9.askedMove": "You asked to move this to {when}. Until {name} says yes, this time stays yours.",
   "bk9.attend.no": "I cannot make it",
   "bk9.attend.noText": "Please reschedule or cancel below so {name} can offer your time to someone else.",
@@ -168,7 +153,6 @@
   "bk9.bookAgain": "Book another time",
   "bk9.cancel": "Cancel appointment",
   "bk9.cancel.free": "Free until {deadline}",
-  "bk9.cancel.late": "{name} is told right away",
   "bk9.cancel.lateCounts": "{name} is told right away · counts as missed",
   "bk9.cancel.message": "Message {name} to cancel",
   "bk9.cancelledByProText": "{name} cancelled this appointment. You can book another time whenever you like.",
@@ -180,11 +164,9 @@
   "bk9.late.held": "You will be seen about {minutes} after {time}. Your time is held.",
   "bk9.late.knows": "{name} knows.",
   "bk9.late.over": "That is longer than the {grace} your time is held. You may get a message to move the visit.",
-  "bk9.late.reply": "{name} answered: {reply}",
   "bk9.late.text": "Tell {name} how late you will be. Your time is held for {minutes}.",
   "bk9.late.title": "Running late on the day?",
   "bk9.messageWa": "Message on WhatsApp",
-  "bk9.movedFrom": "Moved from {date} at {time}",
   "bk9.myData": "Your information",
   "bk9.note.free": "Free changes until {deadline}.",
   "bk9.note.late": "The free period ended {deadline}. Changes now follow the last-hours rules below.",
@@ -211,7 +193,6 @@
   "bk9.title": "Your appointment",
   "bk9.with": "with {name} · {meta}",
   "bk9.zone": "to {end} · {place} time",
-
   "cal.add": "Add to calendar",
   "cal.file": "Calendar file (.ics)",
   "cal.google": "Google Calendar",
@@ -220,12 +201,10 @@
   "cal.prevMonth": "Previous month",
   "cal.saved": "Calendar file saved.",
   "cal.unavailable": "{date}, unavailable",
-
   "cl2.after": "After your {service} · {date}",
   "cl2.bookAgain": "Book again",
   "cl2.careEmpty": "{name} has not shared aftercare yet.",
   "cl2.completed": "Completed",
-  "cl2.dataSub": "What {name} keeps, and how to ask for a copy",
   "cl2.hi": "Hi {name}.",
   "cl2.journeyEmpty": "Nothing shared yet. When {name} shares a note about a visit, it appears here.",
   "cl2.next": "Next session",
@@ -241,9 +220,6 @@
   "cl2.tabs": "Sections",
   "cl2.upcoming": "Upcoming",
   "cl2.usedIn": "Used in your treatment",
-
-  "cl3.approvalGate": "{name} confirms new bookings personally. Ask for a time and you will get an answer on WhatsApp.",
-  "cl3.ask": "Ask {name} for {when}",
   "cl3.back": "Back",
   "cl3.best": "Best",
   "cl3.bestNote": "\"Best\" marks the return date {name} recommends.",
@@ -260,7 +236,6 @@
   "cl3.time": "Choose a time",
   "cl3.title": "Welcome back, {name}.",
   "cl3.titleAnon": "Welcome back.",
-
   "cl4.agree": "I agree",
   "cl4.already.text": "{name} already has your health form, sent in the last 12 months. There is nothing more to do.",
   "cl4.already.title": "You already sent it.",
@@ -293,7 +268,6 @@
   "cl4.thanks": "Thank you.",
   "cl4.title": "A few questions before your visit.",
   "cl4.writeHere": "Write here",
-
   "cl5.addPhoto": "Add a photo",
   "cl5.anything": "Anything to add?",
   "cl5.back": "Back to my appointments",
@@ -317,7 +291,6 @@
   "cl5.thanks": "Thank you, {name}.",
   "cl5.title": "How is your skin today?",
   "cl5.worried": "{name} will get in touch with you today. If it feels severe or keeps getting worse, please contact a doctor.",
-
   "cl6.askInstead": "Ask to reschedule instead",
   "cl6.bookAgain": "Book another time",
   "cl6.confirm.free": "Cancel appointment",
@@ -347,7 +320,6 @@
   "cl6.warn.title": "This counts as a missed appointment.",
   "cl6.why": "Why are you cancelling?",
   "cl6.whyHint": "Optional. It helps {name} offer you a better time.",
-
   "cl7.choices": "Your choices",
   "cl7.contact": "Contact details",
   "cl7.contactSub": "Name, WhatsApp and email",
@@ -361,7 +333,6 @@
   "cl7.form.title.copy": "Ask {name} for a copy?",
   "cl7.form.title.delete": "Ask {name} to delete your data?",
   "cl7.health": "Health form and consent",
-  "cl7.healthSigned": "Signed {date} · sealed, only {name} can open it",
   "cl7.healthSub": "Sealed, only {name} can open it",
   "cl7.how": "How requests work",
   "cl7.keeps": "What {name} keeps",
@@ -377,7 +348,6 @@
   "cl7.sentDelete": "Request sent. {name} will confirm when it is done.",
   "cl7.sub": "This is what {name} keeps about you, and only {name} can see it.",
   "cl7.title": "Your information",
-
   "cl9.back": "Your appointment",
   "cl9.back2": "Back to my appointment",
   "cl9.changeOf": "This is change {current} of {max}.",
@@ -407,7 +377,6 @@
   "cl9.title.msg": "Please message {name}",
   "cl9.title.self": "Pick a new time",
   "cl9.youAsked": "You asked for",
-
   "common.actions": "Actions",
   "common.back": "Back",
   "common.by": "Booking by Bello Hub",
@@ -421,7 +390,6 @@
   "common.skip": "Skip to the content",
   "common.step": "Step {current} of {total}",
   "common.yes": "Yes",
-
   "err.appCheck": "We could not confirm this request came from this page. Reload the page and try again.",
   "err.generic": "Something went wrong. Check your connection and try again.",
   "err.invalidInput": "Please check what you typed and try again.",
@@ -432,39 +400,30 @@
   "err.timeout": "This is taking too long. Try again.",
   "err.tooLarge": "That is too big to send. Remove the photo or shorten the note.",
   "err.unavailable": "The service is busy right now. Try again in a few minutes.",
-
   "ics.change": "Change or cancel: {link}",
   "ics.summary": "{service} with {name}",
-
   "landing.home": "Back to the start",
   "landing.text": "Open the booking link your professional sent you.",
   "landing.title": "Bello Hub",
-
   "lang.hint": "Your confirmation and reminders will use this language.",
   "lang.title": "Language",
-
   "legal.noticeLink": "How your booking information is used",
   "legal.privacyLink": "Privacy policy",
-
   "price.from": "From {price}",
   "price.onRequest": "Price on request",
-
   "state.crash.text": "The page stopped working. Reload it and try again. Nothing you typed has been sent.",
   "state.crash.title": "Something went wrong.",
-  "state.expired.text": "Links work until the visit is over, and a few days after. Message {name} for a new one.",
   "state.expired.textNoName": "Links work until the visit is over, and a few days after. Ask the person who sent it for a new one.",
   "state.expired.title": "This link has expired.",
   "state.loadFailed.text": "Check your connection and try again.",
   "state.loadFailed.title": "This page did not load.",
   "state.notFound.text": "Check the link, or ask the person who sent it.",
   "state.notFound.title": "We could not find this page.",
-
   "wa.blocked": "Hello {name}, I saw that online booking is paused for me. I would like to talk about my next visit.",
   "wa.book": "Hello {name}, I would like to book an appointment.",
   "wa.cancel": "Hello {name}, I need to cancel my {service} on {date} at {time}.",
   "wa.hello": "Hello {name}, I have a question about my appointment.",
   "wa.reschedule": "Hello {name}, I would like to reschedule my {service} on {date} at {time}.",
-
   "wait.err.days": "The last day cannot be before the first.",
   "wait.from": "From",
   "wait.submit": "Join the waitlist",

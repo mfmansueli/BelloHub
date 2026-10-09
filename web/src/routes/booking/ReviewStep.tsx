@@ -1,6 +1,6 @@
-// Bk-10: "Maria will confirm this one." The booking was created and waits for the professional. The page says only
-// that she confirms it herself (a new client, or earlier appointments missed without a message); it never explains
-// how many free registrations she has left, or anything about money (D42). And the other case: online booking is
+// Bk-10: "Maria will confirm this one." The booking was created and waits for the professional. The server never
+// says why (API.md 5.8: a new client, the free registrations, or missed appointments all look the same), so the
+// page says only that she confirms it herself, and nothing about money or limits (D42). And the other case: online booking is
 // paused for this client only, with a way to message her.
 
 import type { JSX } from 'preact';
@@ -76,14 +76,13 @@ export function ReviewStep({ profile }: { profile: PublicProfile }): JSX.Element
 
   const draft = state.draft;
   const service = profile.services.find((candidate) => candidate.id === draft.serviceId);
-  const reason = result.status === 'pendingApproval' ? result.reason : 'newClient';
   return (
     <Screen top={<header class="topbar"><ProHeader professional={profile} /></header>}>
       <div class="stack">
         <Seal tone="amber" />
         <Title>{t('bk10.title', { name: profile.firstName })}</Title>
         <p class="lead" data-testid="review-reason">
-          {reason === 'noShowLimit' ? t('bk10.reason.noShowLimit', { name: profile.firstName }) : t('bk10.reason.newClient', { name: profile.firstName })}
+          {t('bk10.reason.newClient', { name: profile.firstName })}
         </p>
       </div>
 
