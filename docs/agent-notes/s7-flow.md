@@ -87,19 +87,17 @@ consent, processing, failure), Camera (live, denied, no camera, review), NextSes
 
 ## What is not done
 
-- `scripts/check-warnings.sh` (clean builds for simulator, device and Release): see "State at the checkpoint".
 - Audit in `pt-BR`, `de`, `hi` (the default list); only `en,ar` were run.
-- The two ASSUMPTION/deviation items above (sensitivity suggestion, reminders, slider/timeline).
+- The deviation items above (sensitivity suggestion, reminders, slider/timeline).
 - No unit test for the AV camera or the real voice (they sit behind protocols; D53).
 
 ## State at the checkpoint
 
-See the last commit on `s7-flow`. All exit checks listed under Tests passed except where "not done" says otherwise.
+Everything is committed on `s7-flow`. Passed: `scripts/test.sh fast` (1426 tests), `scripts/test.sh smoke` (all UISmoke tests, including the 2 new ones), `scripts/check-warnings.sh` (zero warnings: simulator, device, Release, test targets), `scripts/check-strings.sh`, the audit in `en,ar` at default size and AX5.
 
 ## Next commands
 
 ```
 cd .claude/worktrees/agent-a1d5e53e13c286df5
-SIM_UDID=9368BE88-0772-4897-B0DC-C8D8C61668CF scripts/check-warnings.sh
 TEST_RUNNER_AUDIT_LOCALES=pt-BR,de,hi ONLY_TESTING=BelloHubUITests/TreatmentFlowAuditUITests scripts/test.sh full
 ```
