@@ -6,21 +6,22 @@ The iOS half of S8 (`RemoteBookingRepository`, `MailboxService`, outbound queue,
 
 ## 1. State at checkpoint: green
 
-Last full run of `scripts/test-firebase.sh` (22:19, 6 min): **all green**.
+Last full run of `scripts/test-firebase.sh` (2026-10-09, ~7 min): **all green**.
 
 | Stage | Result |
 |---|---|
 | lint (ESLint strict-type-checked, `--max-warnings 0`) | 0 problems |
 | typecheck (`tsc`, strict, `noUncheckedIndexedAccess`) / build | ok |
 | `npm audit --audit-level=high` | 0 vulnerabilities (needs `overrides` of `@grpc/grpc-js`, kept in package.json) |
-| unit (no emulator) | **725** passed |
+| unit (no emulator) | **739** passed |
 | Firestore + Storage rules (emulator) | **65** passed |
-| use cases on Firestore/Auth/Storage emulators | **245** passed |
+| use cases on Firestore/Auth/Storage emulators | **258** passed (13 of them in `securityReview.test.ts`) |
 | transport (Functions emulator, callable protocol) | **17** passed |
 
 Commits (all on this branch, none pushed): `37b5f79` config split, `d803bc2` API.md, `8452eee` functions package + pure rules + Swift fixture,
 `23bb1d7` rules + rules tests, `67d1abe` use cases + first suites, `f7691b4` owner/mailbox/retention/deletion/logging suites,
-`a41a41a` unit tests + schemas, `9180a76` transport tests + wrapper + indexes + seed + sms script, `3716d98` READMEs, gate and race tests.
+`a41a41a` unit tests + schemas, `9180a76` transport tests + wrapper + indexes + seed + sms script, `3716d98` READMEs, gate and race tests,
+`be05846` these notes, `b0a1aaa` security review fixes + tests, `f6c4655` Apple verifier adapter (H14), `af14857` Resend email adapter (H7).
 
 ## 2. Commands
 
@@ -33,7 +34,7 @@ cd firebase && firebase emulators:exec --config firebase.test.json --project dem
 node firebase/scripts/sms-regions.mjs [--json]                  SMS allow-list for H4
 firebase/scripts/rules-fixtures/generate.sh                      regenerate rules.fixture.json from the Swift sources (needs swiftc)
 ```
-Requirements: Node (ran on 26, `engines` says 22), Java 21, firebase-tools 15. `functions/.secret.local` (fake pepper) is created by the wrapper; it and
+Requirements: Node (ran on 26, `engines` says 22), Java 21, firebase-tools 15. `functions/.secret.local` (fake pepper + `EMAIL_API_KEY=unset`) is created/completed by the wrapper; it and
 `.env.local` (written by the CLI) are git-ignored. Tests use ports 14400/14500/15001/18080/18085/19099/19199 (`firebase.test.json`), not the defaults.
 Hard safety rules were respected: only `demo-bellohub`, no deploy, no gcloud, nothing written to `bello-hub`.
 
@@ -49,7 +50,8 @@ Hard safety rules were respected: only `demo-bellohub`, no deploy, no gcloud, no
     in Lisbon/Madrid/Rome/Berlin/London/New York, 280 cancellation, 40 late, 180 quota cases); 627 unit tests read it.
   - `src/lib/calendar.ts` (the booking transaction design), `bookingCreate.ts` (the single place a booking is made), `registrations.ts` (D42), `deletion.ts`, `contacts.ts`, `keyring.ts`, `ics.ts`, `log.ts`.
   - `src/{public,token,owner}/*.ts` one use case per file; `src/app/registry.ts` + `src/index.ts` wire them.
-  - `src/messaging/` (ClientMessenger, email templates in 14 localizations x 7 kinds, disabled WhatsApp + tested Cloud API provider), `src/push/` (interface, FCM payload builder, FCM + emulator senders), `src/auth/`, `src/billing/`.
+  - `src/messaging/` (ClientMessenger, email templates in 14 localizations x 7 kinds, `ResendEmailProvider` (H7, on when `EMAIL_FROM` + secret `EMAIL_API_KEY` are set), disabled WhatsApp + tested Cloud API provider),
+    `src/push/` (interface, FCM payload builder, FCM + emulator senders), `src/auth/`, `src/billing/` (`AppleAppStoreVerifier` on `@apple/app-store-server-library`, on when `certs/apple/*.cer` exist, H14).
   - `src/jobs/` (`runCleanup` steps, `runReminders`), `src/triggers/`, `src/http/` (`invokeUseCase` gate, callable wrapper, ICS and Apple webhook handlers).
   - Tests: `test/{unit,rules,integration,transport}`, helpers in `test/support`. `scripts/seed.ts` loads Maria into running emulators through the public API (idempotent).
 
@@ -73,9 +75,10 @@ push behind an interface, ClientMessenger (email stub/disabled, WhatsApp disable
    detection). Needs from the iOS side: localized strings for the push `loc-key`s (`push.booking.new`, `push.booking.late`, `push.booking.clientConfirmed`, `push.reschedule.request`,
    `push.waitlist.new`) in 14 localizations; pass `appAccountToken` (from `ensureAccount`) to StoreKit; publish `busy` (manual appointments `kind:"appointment"`, time blocks `kind:"block"`,
    **excluding** appointments that came from the link); keep `timeZoneID` equal in `publishProfile` and `publishAvailability`; add `ClientEdit` "stop online booking" -> `setOnlineBookingStopped`.
-3. **Apple verifier adapter** (`src/billing/AppleAppStoreVerifier.ts`, H14): only the interface and `UnconfiguredAppStoreVerifier` exist; `syncPlan` and the webhook are fully tested with a fake.
-   Plan: `@apple/app-store-server-library` `SignedDataVerifier` with Apple root certs, bundle id `com.bellohub`, app Apple id, environment.
-4. **Email provider adapter** (H7): `DisabledEmailProvider` is wired in `createDeps.ts` with a `TODO(HUMAN-H7)`; the adapter is one small class (HTTP API) plus a `defineSecret`.
+3. **Apple verifier (H14), human part only**: drop Apple's root `.cer` files in `functions/certs/apple/` (README there), set `APPLE_ENVIRONMENT=Production` + `APPLE_APP_ID` for the
+   production project, then verify one sandbox purchase end to end (`syncPlan`) and one App Store Server Notification (the library's signature check is not exercised by any test).
+4. **Email (H7), human part only**: Resend account in the EU region with a signed DPA, verified sender domain, `EMAIL_FROM` parameter and the `EMAIL_API_KEY` secret
+   (`firebase functions:secrets:set EMAIL_API_KEY`; the secret must exist for any deploy, a placeholder is fine while `EMAIL_FROM` is empty). Vendor swap = replace `ResendEmailProvider.ts`.
 5. Scheduled functions are not exercised in the Functions emulator (it ignores them without the Pub/Sub emulator); their logic is tested directly (`runCleanup`, `runReminders`).
    Add `pubsub` to the test emulators if a trigger-level test is wanted.
 6. `scripts/e2e-local.sh` (S8 exit criterion) needs the web app's Playwright run: not started (needs `web/`).
@@ -121,20 +124,37 @@ Code and API.md agree (a test enforces function names, error table and schemas).
 7. Scheduled jobs/`sendReminders` were never run on a real scheduler; `sendReminders` mints a new manage link per reminder (<= 5 valid).
 8. Node 26 locally vs `engines: 22`: the emulator warns and runs on the host Node; not run on Node 22.
 
-## 7. Adversarial review wanted (security-relevant)
+## 7. Security review 2026-10 (the list of the previous section 7, item by item)
 
-- `firestore.rules` and `test/rules/*` (can any client write `plan`, `registrations`, `inboxKeyring`, `slug`, `deletion`, bookings, inbox; list profiles; read another uid via collection-group query?).
-- D42 counter: `lib/registrations.ts`, `lib/bookingCreate.ts` (registration on confirm), `owner/respondBookingRequest.ts`, `lib/deletion.ts` (never touches counter on client delete). Look for any path that
-  increments without the calendar lock, double-counts a phone, or lets `needsSubscription` slip into `confirmed`.
-- Double booking: `lib/calendar.ts` lock usage — every writer of occupied time must read+bump `calendarLocks/{uid}` (createBooking, holdSlot, rescheduleBooking, respondRescheduleRequest, offerWaitlistSlot,
-  moveBookingByOwner, registrations). Check nothing writes `startsAt` without it.
-- Sealed mailbox: `public/submitSealed.ts` (key ring check, size caps, retry/CONFLICT semantics, Storage object ownership on races), `owner/getMailboxItem.ts`, retention of envelopes (`jobs/steps/expireEnvelopes.ts`, `reconcileBlobs.ts`).
-  The server never decrypts (a test greps for decryption primitives) and never logs envelope fields.
-- Tokens: `lib/bookingAccess.ts` (SHA-256 with `manage:` prefix; 5 max; expiry = `purgeAt`), idempotent replay in `bookingCreate.ts` returns an extra token for anyone holding the idempotency key + same request.
-- Verification: `auth/FirebasePhoneVerifier.ts` (provider must be `phone`, <= 10 min), email proofs (`lib/emailProof.ts`, single use), `findBookings` (mints links after proof only).
-- Logging: `lib/log.ts` closed field list; `test/integration/logging.test.ts` searches a whole day of logs for personal data.
-- Rate limits / abuse: `config/limits.ts`, `lib/rateLimit.ts`; email cost caps per owner.
-- App Check handling (item 2 above) and CORS list in `http/callable.ts`.
+Tests: `test/integration/securityReview.test.ts` (13), plus a CORS test in `test/unit/libraries.test.ts`. Each "fixed" line had a failing test first.
+
+- **Rules**: fine. No client write to `plan`, `registrations`, `inboxKeyring`, `slug`, `deletion`, bookings or inbox (only `accounts.locale` and own `devices/*/tokens`); `publicProfiles` get-only;
+  collection-group queries on `items`, `tokens`, `registrations` denied (`test/rules/firestore.rules.test.ts`). Storage: deny all.
+- **D42 counter**: fine. Every increment (`writeRegistration`, `applyRegistrations`) runs in a transaction that read and bumps `calendarLocks/{uid}`; a phone is keyed by `contacts.registered`
+  so it never counts twice; `needsSubscription` returns before any write in `respondBookingRequest`; `deleteClientServerData` never touches the counter (test "never lowers the count").
+- **Double booking**: fine. All seven writers of `startsAt` read + bump the lock (createBooking, holdSlot, rescheduleBooking, respondRescheduleRequest, offerWaitlistSlot,
+  moveBookingByOwner, registrations); test "moving a booking races a new booking". Residual by design: `moveBookingByOwner` skips the free-slot check (she may work outside her hours).
+- **Sealed mailbox, Storage race**: **fixed**. Two different ciphertexts under one `itemId` shared one object name; the loser's clean-up deleted the winner's bytes. Object names now
+  carry the ciphertext hash (`inbox/{uid}/{itemId}.{ctHash16}.json`); `reconcileBlobs` deletes any object the item does not point at.
+- **Sealed mailbox, volume**: **fixed**. 5/hour per booking let one link store ~120 x 3 MB a day for 30 days; now at most 20 unacknowledged items per booking (`RATE_LIMITED`, `details.maxItems`).
+- **Sealed mailbox, key ring / caps / server never decrypts**: fine (`isKnownKey`, size caps per kind, source grep for decryption primitives). Residual: a retired key is still accepted for
+  new envelopes (the app keeps old private keys; after a compromise-driven rotation the owner may want `updateInboxKey` to drop keys, not implemented).
+- **Manage tokens**: fine. SHA-256 with `manage:` prefix, 5 per booking, expiry = `purgeAt`, 22-char base64url. **Idempotent replay: fixed**: the key + same request alone minted a new
+  token; a replay now needs the same email proof (hash stored on the idempotency record) or a fresh valid one, phone tokens are re-verified on every call.
+- **Verification**: fine. Phone: provider `phone`, `auth_time` <= 10 min; email proof single use (`usedAt`), 30 min, bound to the email hash; codes hashed, 5 attempts, 10 min, 30 s resend;
+  `findBookings` mints links only after proof. **Rate allowance: fixed**: made-up proofs no longer spend the phone's, the address's or the professional's counters, only the caller's IP.
+- **Logging**: fine. Closed field list with shape checks; a rejected input whose field NAME is a phone never reaches the logs (test).
+- **Rate limits**: fine, and now ordered IP -> proof -> others. Residual: fixed windows, one trusted proxy hop (set `trustedProxyHops: 2` behind Hosting rewrites, untested outside the emulator).
+- **App Check**: residual (unchanged): enforcement is the runtime param `ENFORCE_APP_CHECK` (default off) checked in `invokeUseCase`; `consumeAppCheckToken` replay protection unused.
+- **CORS**: **tightened**. `*.web.app` / `*.firebaseapp.com` allowed any Firebase site; now only `bellohub*` / `bello-hub*` site ids (preview channels included). If the web agent's
+  Hosting site id does not start with one of those, add it to `ALLOWED_ORIGINS` in `src/http/callable.ts` (and the unit test).
+- **Input edges**: fine (impossible dates, unknown zones, huge numbers, oversized envelopes, bidi/invisible characters in names: tested).
+
+### API.md changes in this round (for the web agent)
+1. Section 1, CORS: the exact allow-list (`bellohub*`/`bello-hub*` Hosting sites only).
+2. 5.8 `createBooking`: a replay with the same `idempotencyKey` must carry the same verification (same email `proof`, or a fresh one); phone tokens are checked every time.
+3. 5.15 `submitSealed`: new cap, at most 20 unacknowledged items per booking -> `RATE_LIMITED` with `details.maxItems`.
+No request or response shape changed; `contracts/schemas.json` is unchanged.
 
 ## 8. API summary (full contract: `firebase/functions/API.md`)
 
@@ -159,3 +179,6 @@ headers `X-Firebase-AppCheck`, `Authorization: Bearer <ID token>` (owner functio
 - `typescript-eslint@8` does not support TypeScript 7 yet: the package pins `typescript ~6.0.3`.
 - The Auth emulator supports headless phone sign-in (`accounts:sendVerificationCode` -> `/emulator/v1/projects/<p>/verificationCodes` -> `accounts:signInWithPhoneNumber`), which the transport tests and the web e2e can use.
 - The Functions emulator starts one worker per function on first call (~4 s each), so the transport suite samples functions instead of calling all 43 empty.
+- A `defineSecret` that is bound to a function must exist in Secret Manager for the deploy to pass; an unset one reads as `""` (with a warning) at run time, so `createDeps` reads
+  `EMAIL_API_KEY` only after `EMAIL_FROM` is set. `@apple/app-store-server-library@3.1.0` (CJS) imports fine from ESM; `SignedDataVerifier` requires `appAppleId` in Production and
+  checks bundle id + environment itself (the adapter checks them again before a plan can unlock).
