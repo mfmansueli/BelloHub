@@ -6,7 +6,7 @@
 import Foundation
 
 /// Something she offers. Contraindications warn and never block (D16); a patch test is a per-service setting.
-struct Service: Identifiable, Hashable, Codable, Sendable {
+struct Service: Identifiable, Hashable, Codable, Sendable, Positioned {
     let id: UUID
     var name: String
     var category: String
