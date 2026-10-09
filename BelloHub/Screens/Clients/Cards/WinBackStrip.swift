@@ -12,9 +12,18 @@ struct WinBackStrip: View {
     /// What she calls the people she serves, for several of them or one: "clients", "patients".
     let noun: String
     @Environment(\.locale) private var locale
+    @Environment(\.dynamicTypeSize) private var typeSize
+
+    /// At accessibility sizes the icon goes above the text: beside it, the text got a column 240 pt wide and the strip
+    /// grew past 400 pt, pushing the first client out of the screen (found by the AX5 audit in German).
+    private var layout: AnyLayout {
+        typeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.sm))
+            : AnyLayout(HStackLayout(spacing: Spacing.row))
+    }
 
     var body: some View {
-        HStack(spacing: Spacing.row) {
+        layout {
             Image(icon: .repeatArrows)
                 .font(.system(size: 17, weight: .medium))
                 .foregroundStyle(Palette.peachText)
