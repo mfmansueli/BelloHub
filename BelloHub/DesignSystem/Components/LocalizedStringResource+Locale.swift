@@ -15,4 +15,9 @@ extension LocalizedStringResource {
         copy.locale = locale
         return copy
     }
+
+    /// The text itself, for the components that take a `String` (`ToggleRow`, `ChoiceCard`).
+    func resolved(in locale: Locale) -> String {
+        String(localized: localized(in: locale))
+    }
 }
