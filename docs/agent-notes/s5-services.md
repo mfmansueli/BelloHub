@@ -121,4 +121,18 @@ from earlier batches: `onb.service.*`, `more.row.*`, `tags.*` (retry, dismiss, s
 
 ## State at the checkpoint
 
-(filled in at the end of the run)
+Everything is committed; nothing is WIP. Results on this worktree (simulator 9368BE88):
+
+| Check | Result |
+|---|---|
+| `scripts/test.sh fast` | 1129 tests in 146 suites pass |
+| `scripts/test.sh smoke` | 14 tests; 12 pass including `ServicesUITests`. `FormTemplatesUITests` failed once in the full run and passes alone (flake). `HealthUITests` fails (`patch.hours.48` chip not found, xcodebuild watchdog) **also on base 78a7317 in a clean checkout**, so it is not from this slice (S4 health-forms area, to be looked at at integration) |
+| `scripts/check-warnings.sh` | zero warnings (simulator, device, Release, test targets), SwiftLint clean |
+| `scripts/check-strings.sh` | passes (772 keys, 14 localizations) |
+| `ServicesAuditUITests`, `en,ar`, default size and AX5 | both tests pass |
+
+Not run: the audit for the other default locales (pt-BR, de, hi); `scripts/test.sh full` as a whole.
+Next command: `TEST_RUNNER_AUDIT_LOCALES=pt-BR,de,hi ONLY_TESTING=BelloHubUITests/ServicesAuditUITests SIM_UDID=<udid> scripts/test.sh full`.
+Audit fixes made: the credentials preview sheet is `.large` only; contraindication rows use a 52 pt row with explicit insets;
+the audit walks scroll to rows a lazy list has not built yet; a product-name `textClipped` report in the product list is
+filtered as a false positive (screenshots show the name whole).
