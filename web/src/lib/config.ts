@@ -19,3 +19,12 @@ export const config: AppConfig = readConfig(import.meta.env);
 export function linkBase(): string {
   return config.webBaseUrl ?? window.location.origin;
 }
+
+/**
+ * The public booking page of a professional. D50: this, never a manage or portal link, is the only address that goes
+ * into the calendar file and the Google Calendar link, because a token in a URL leaks through calendar sharing,
+ * history and referrers.
+ */
+export function pageUrl(slug: string): string {
+  return `${linkBase()}/${slug}`;
+}

@@ -382,7 +382,7 @@
   "err.timeout": "Está demorando demais. Tente de novo.",
   "err.tooLarge": "Isso é grande demais para enviar. Remova a foto ou encurte a nota.",
   "err.unavailable": "O serviço está ocupado agora. Tente de novo em alguns minutos.",
-  "ics.change": "Alterar ou cancelar: {link}",
+  "ics.page": "Agendar de novo ou encontrar seu agendamento: {link}",
   "ics.summary": "{service} com {name}",
   "landing.home": "Voltar ao início",
   "landing.text": "Abra o link de agendamento que o profissional enviou para você.",

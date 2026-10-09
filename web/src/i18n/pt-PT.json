@@ -382,7 +382,7 @@
   "err.timeout": "Está a demorar demasiado. Tente novamente.",
   "err.tooLarge": "Isso é demasiado grande para enviar. Remova a fotografia ou encurte a nota.",
   "err.unavailable": "O serviço está ocupado neste momento. Tente novamente dentro de alguns minutos.",
-  "ics.change": "Alterar ou desmarcar: {link}",
+  "ics.page": "Marcar de novo ou encontrar a sua marcação: {link}",
   "ics.summary": "{service} com {name}",
   "landing.home": "Voltar ao início",
   "landing.text": "Abra o link de marcação que o profissional lhe enviou.",

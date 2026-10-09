@@ -21,7 +21,7 @@ import { Avatar, Footer, Screen, Title, useDocumentTitle } from '../../component
 import { Notice, Seal } from '../../components/Feedback';
 import { PersonalLink } from '../../components/PersonalLink';
 import { useI18n } from '../../i18n';
-import { linkBase } from '../../lib/config';
+import { linkBase, pageUrl } from '../../lib/config';
 
 export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
   const { t } = useI18n();
@@ -143,7 +143,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         open={calendarOpen}
         onClose={() => { setCalendarOpen(false); }}
         booking={{ bookingId: result.bookingId, startsAt: result.startsAt, endsAt: result.endsAt, serviceNames, professional: { displayName: profile.displayName, city: profile.city } }}
-        link={link}
+        pageUrl={pageUrl(profile.slug)}
       />
     </Screen>
   );

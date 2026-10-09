@@ -376,7 +376,7 @@
   "err.timeout": "Terlalu lama. Coba lagi.",
   "err.tooLarge": "Ini terlalu besar untuk dikirim. Hapus foto atau persingkat catatan.",
   "err.unavailable": "Layanan sedang sibuk. Coba lagi dalam beberapa menit.",
-  "ics.change": "Ubah atau batalkan: {link}",
+  "ics.page": "Pesan lagi atau temukan janji Anda: {link}",
   "ics.summary": "{service} bersama {name}",
   "landing.home": "Kembali ke awal",
   "landing.text": "Buka tautan pemesanan yang dikirim oleh profesional Anda.",

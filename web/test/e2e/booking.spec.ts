@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 import { bookEverything, bookUntilResult, chooseService, chooseSlot, confirmFirstVisit, DEFAULTS, EMAIL_CODE, fillYou, verify } from './flows';
 import { expect, mainText, noHorizontalScroll, open, test } from './support';
 
@@ -32,6 +34,11 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await page.getByTestId('ics-download').click();
     const file = await download;
     expect(file.suggestedFilename()).toMatch(/\.ics$/);
+    // D50: the calendar entry carries the public booking page, never the manage link.
+    const ics = readFileSync((await file.path()), 'utf8');
+    expect(ics).toContain(`/${slugFor('maria')}`);
+    expect(ics).not.toContain('/m/');
+    expect(decodeURIComponent((await page.getByTestId('google-calendar').getAttribute('href')) ?? '')).not.toContain('/m/');
     await page.keyboard.press('Escape');
     await page.getByTestId('view-appointment').click();
     await expect(page.getByTestId('actions')).toBeVisible();

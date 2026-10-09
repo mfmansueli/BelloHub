@@ -382,7 +382,7 @@
   "err.timeout": "Está tardando demasiado. Inténtalo de nuevo.",
   "err.tooLarge": "Eso es demasiado grande para enviarlo. Quita la foto o acorta la nota.",
   "err.unavailable": "El servicio está ocupado ahora mismo. Inténtalo de nuevo en unos minutos.",
-  "ics.change": "Cambiar o cancelar: {link}",
+  "ics.page": "Reservar de nuevo o encontrar tu cita: {link}",
   "ics.summary": "{service} con {name}",
   "landing.home": "Volver al inicio",
   "landing.text": "Abre el enlace de reserva que te envió el profesional.",

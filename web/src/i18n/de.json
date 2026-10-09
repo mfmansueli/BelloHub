@@ -382,7 +382,7 @@
   "err.timeout": "Das dauert zu lange. Versuchen Sie es erneut.",
   "err.tooLarge": "Das ist zu groß zum Senden. Entfernen Sie das Foto oder kürzen Sie die Notiz.",
   "err.unavailable": "Der Dienst ist gerade ausgelastet. Versuchen Sie es in ein paar Minuten erneut.",
-  "ics.change": "Ändern oder absagen: {link}",
+  "ics.page": "Erneut buchen oder Ihren Termin finden: {link}",
   "ics.summary": "{service} bei {name}",
   "landing.home": "Zur Startseite",
   "landing.text": "Öffnen Sie den Buchungslink, den Sie von der Fachkraft erhalten haben.",

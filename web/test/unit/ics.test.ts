@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildIcs, escapeIcsText, foldIcsLine, googleCalendarUrl, toIcsUtc, type CalendarEvent } from '../../src/lib/ics';
+import { buildIcs, calendarEvent, escapeIcsText, foldIcsLine, googleCalendarUrl, toIcsUtc, type CalendarEvent } from '../../src/lib/ics';
 
 const event: CalendarEvent = {
   uid: 'bk_7Hq2xkP9',
   startMs: Date.parse('2026-10-01T18:00:00Z'),
   endMs: Date.parse('2026-10-01T19:30:00Z'),
   summary: 'Brazilian Glow, with Maria Beauty',
-  description: 'Change or cancel: https://bellohub.app/m/7Hq2xk\nFree changes until Wed, Sep 30 at 15:00.',
+  description: 'Book again or find your appointment: https://bellohub.app/maria\nFree changes until Wed, Sep 30 at 15:00.',
   location: 'São Paulo',
   language: 'en',
 };
@@ -53,5 +53,27 @@ describe('iCalendar (RFC 5545)', () => {
     expect(url.searchParams.get('action')).toBe('TEMPLATE');
     expect(url.searchParams.get('dates')).toBe('20261001T180000Z/20261001T193000Z');
     expect(url.searchParams.get('text')).toBe(event.summary);
+  });
+});
+
+describe('what a calendar entry carries (D50)', () => {
+  const booking = {
+    bookingId: 'bk_7Hq2xkP9',
+    startsAt: '2026-10-01T18:00:00.000Z',
+    endsAt: '2026-10-01T19:30:00.000Z',
+    serviceNames: ['Glow Facial'],
+    professional: { displayName: 'Maria Beauty', city: 'São Paulo' },
+  };
+  const t = (key: string, params?: Record<string, string>): string => `${key}|${params?.['link'] ?? ''}`;
+
+  it('carries the public booking page address and nothing else that is a link', () => {
+    const entry = calendarEvent(booking, 'https://bellohub.app/maria', t, 'en');
+    expect(entry.description).toBe('ics.page|https://bellohub.app/maria');
+    const file = buildIcs(entry, 0);
+    const url = googleCalendarUrl(entry);
+    expect(file).toContain('https://bellohub.app/maria');
+    expect(url).toContain(encodeURIComponent('https://bellohub.app/maria'));
+    expect(file).not.toContain('/m/');
+    expect(url).not.toContain('%2Fm%2F');
   });
 });

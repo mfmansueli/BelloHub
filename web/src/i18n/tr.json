@@ -382,7 +382,7 @@
   "err.timeout": "Çok uzun sürüyor. Tekrar deneyin.",
   "err.tooLarge": "Bu, göndermek için çok büyük. Fotoğrafı kaldırın veya notu kısaltın.",
   "err.unavailable": "Hizmet şu anda yoğun. Birkaç dakika sonra tekrar deneyin.",
-  "ics.change": "Değiştir veya iptal et: {link}",
+  "ics.page": "Yeniden randevu alın veya randevunuzu bulun: {link}",
   "ics.summary": "{name} ile {service}",
   "landing.home": "Ana sayfaya dön",
   "landing.text": "Uzmanın size gönderdiği randevu bağlantısını açın.",
