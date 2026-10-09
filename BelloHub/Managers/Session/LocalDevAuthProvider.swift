@@ -46,6 +46,15 @@ final class LocalDevAuthProvider: AuthProvider, Sendable {
         return user
     }
 
+    /// A fixed fake token: the DEBUG and UI-test transports never send it anywhere (the live smoke command signs in
+    /// with a real dev token instead).
+    static let fakeToken = "dev-id-token"
+
+    func idToken() async throws -> String {
+        guard await currentUser() != nil else { throw AuthError.unavailable }
+        return Self.fakeToken
+    }
+
     func signOut() async throws {
         defaults.value.removeObject(forKey: DefaultsKey.localDevUser)
         pendingPhone.withLock { $0 = nil }

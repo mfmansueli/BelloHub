@@ -23,6 +23,10 @@ final class MessageService {
         case needsShareSheet(text: String)
     }
 
+    /// When she last opened a chat for each client during this session, so a list (follow-ups, win back) can mark the
+    /// ones she already wrote to. In memory only: the persisted trace is the `MessageLog` entry.
+    private(set) var recentlyOpened: [UUID: Date] = [:]
+
     /// Looked up on each use, because the vault may be unavailable (nil) when the store could not be opened.
     private let source: @MainActor () -> (any MessageLogRepository)?
     private let sender: any MessageSending
@@ -51,6 +55,7 @@ final class MessageService {
             case .whatsApp(let url), .sms(let url):
                 guard await sender.openInApp(url) else { continue }
                 await log(clientID: clientID, channel: attempt.channel, template: template, now: now)
+                recentlyOpened[clientID] = now
                 return .opened(attempt.channel)
             case .share:
                 await log(clientID: clientID, channel: .share, template: template, now: now)

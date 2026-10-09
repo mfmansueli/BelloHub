@@ -11,12 +11,18 @@ import SwiftUI
 struct ShareLinkView: View {
     @State private var viewModel: ShareLinkViewModel
     @State private var cardImage: Image?
+    let publishing: PublishingService
 
     @Environment(\.locale) private var locale
 
-    init(editor: BookingSetupEditor, displayName: String, businessName: String, localization: AppLocalization) {
+    init(
+        editor: BookingSetupEditor, publishing: PublishingService, displayName: String, businessName: String,
+        localization: AppLocalization
+    ) {
+        self.publishing = publishing
         _viewModel = State(initialValue: ShareLinkViewModel(
-            editor: editor, displayName: displayName, businessName: businessName, localization: localization
+            editor: editor, displayName: displayName, businessName: businessName, localization: localization,
+            booking: publishing.repository
         ))
     }
 
@@ -30,10 +36,7 @@ struct ShareLinkView: View {
                 }
                 address
                 if let link = viewModel.savedLink, let texts = viewModel.texts {
-                    InlineNotice(
-                        style: .info, title: "shareLink.notOnline.title", message: "shareLink.notOnline.message"
-                    )
-                        .accessibilityIdentifier("shareLink.notOnline")
+                    publishNotice
                     qrCard(link: link, texts: texts)
                     actions(link: link, texts: texts)
                     whereToPutIt(texts: texts)
@@ -49,6 +52,29 @@ struct ShareLinkView: View {
         .navigationBarTitleDisplayMode(.large)
         .onAppear { viewModel.appear() }
         .task(id: viewModel.savedLink) { renderCard() }
+    }
+
+    // MARK: - Publishing
+
+    /// Online (the link works), preview (it does not yet, with the button that puts her online) or the failure.
+    @ViewBuilder
+    private var publishNotice: some View {
+        if case .error(let failure, let wasOnline) = publishing.state {
+            PublishFailureNotice(failure: failure, wasOnline: wasOnline, onRetry: publishing.retry)
+                .accessibilityIdentifier("shareLink.publishError")
+        }
+        if publishing.state.isLive {
+            InlineNotice(style: .info, title: "shareLink.online.title", message: "shareLink.online.message")
+                .accessibilityIdentifier("shareLink.online")
+        } else {
+            InlineNotice(style: .info, title: "shareLink.notOnline.title", message: "shareLink.notOnline.message")
+                .accessibilityIdentifier("shareLink.notOnline")
+            Button { publishing.goOnline() } label: {
+                if case .publishing = publishing.state { ProgressView() } else { Text("publish.action.goOnline") }
+            }
+            .buttonStyle(.belloPrimary)
+            .accessibilityIdentifier("shareLink.goOnlineButton")
+        }
     }
 
     // MARK: - Address

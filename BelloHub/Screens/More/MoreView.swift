@@ -15,6 +15,7 @@ struct MoreView: View {
     @Environment(ProfileService.self) private var profile
     @Environment(AppLockService.self) private var lock
     @Environment(BookingSetupService.self) private var bookingSetup
+    @Environment(PublishingService.self) private var publishing
     @Environment(\.locale) private var locale
     @State private var confirmsSignOut = false
 
@@ -192,14 +193,16 @@ struct MoreView: View {
         ).localized(in: locale))
     }
 
-    /// "Taking bookings", "Paused" or "Paused until Oct 20"; nothing until the settings are read.
+    /// "Not online yet" until her page is published, then "Taking bookings", "Paused" or "Paused until Oct 20"; nothing
+    /// until the settings are read.
     private var bookingPageSubtitle: Text? {
         guard bookingSetup.hasLoaded else { return nil }
         let zone = timeZone
         let formatters = Formatters(locale: locale, timeZone: zone, currencyCode: "EUR")
-        return Text(BookingSetupSummary.page(
+        let summary = BookingSetupSummary.page(
             bookingSetup.setup.page, now: Date(), timeZone: zone, formatters: formatters
-        ).localized(in: locale))
+        )
+        return Text(PublishStatusText.rowSubtitle(publishing.state, pageSummary: summary).localized(in: locale))
     }
 
     /// "Tue to Sat · 09:00 – 19:00"; nothing until the settings are read.
@@ -236,4 +239,5 @@ struct MoreView: View {
         .environment(ProfileService(vault: VaultService(repository: nil)))
         .environment(AppLockService(keyManager: KeyManager()))
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
+        .environment(PublishingService.preview)
 }

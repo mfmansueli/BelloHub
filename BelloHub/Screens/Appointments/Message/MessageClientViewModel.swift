@@ -115,6 +115,11 @@ final class MessageClientViewModel {
             template: AppointmentMessageKind.quickReply(reply).logTemplate, preferred: business.preferredChannel,
             now: now()
         )
+        // The reminder (the "Confirm appointment" message) was opened: "Reminders ready" now shows it as opened (D31).
+        if case .opened? = outcome, reply.builtInKey == BuiltInQuickReply.confirm.rawValue,
+           visit.appointment.status.holdsTime {
+            _ = try? await appointments.markReminderSent(id: visit.appointment.id, now: now())
+        }
     }
 
     func dismissShare() {

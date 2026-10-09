@@ -22,6 +22,7 @@ if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-privacy.sh" > /dev/null
     "$ROOT/scripts/check-legal-status.sh" > /dev/null
     "$ROOT/scripts/check-legal-resources.sh" > /dev/null
+    "$ROOT/scripts/check-server-contract.sh" > /dev/null
     "$ROOT/scripts/check-professions.sh" > /dev/null
     "$ROOT/scripts/check-health-forms.sh" > /dev/null
 fi

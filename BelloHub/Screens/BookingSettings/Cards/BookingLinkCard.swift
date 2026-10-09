@@ -5,15 +5,20 @@
 
 import SwiftUI
 
-/// The dark card at the top of the booking page settings: her link, a line saying clients need nothing installed, and
-/// Copy and Share. Before she chose an address it invites her to, and says the page is not online yet. The card is
-/// the prototype's hero, with the hero palette's text colors, which are measured on its gradient.
+/// The dark card at the top of the booking page settings: her link, a line saying clients need nothing installed, what
+/// the link does right now (online, or only a preview until she goes online) and Copy and Share. Before she chose an
+/// address it invites her to. The card is the prototype's hero, with the hero palette's text colors, which are measured
+/// on its gradient.
 struct BookingLinkCard<Destination: View>: View {
     let link: BookingLink?
     let shareMessage: String
     let isCopied: Bool
+    let state: PublishState
     let onCopy: () -> Void
+    let onGoOnline: () -> Void
     @ViewBuilder let chooseAddress: () -> Destination
+
+    @Environment(\.locale) private var locale
 
     var body: some View {
         HeroCard {
@@ -32,8 +37,9 @@ struct BookingLinkCard<Destination: View>: View {
                         .accessibilityIdentifier("bookingSettings.linkText")
                 }
                 Text("bookingSettings.link.subtitle").font(Typography.meta).foregroundStyle(HeroPalette.ink2)
-                Text("bookingSettings.link.notOnline").font(Typography.metaStrong).foregroundStyle(HeroPalette.ink2)
-                    .accessibilityIdentifier("bookingSettings.notOnline")
+                Text(PublishStatusText.linkStatus(state).localized(in: locale))
+                    .font(Typography.metaStrong).foregroundStyle(HeroPalette.ink2)
+                    .accessibilityIdentifier(statusIdentifier)
                 buttons
             }
         }
@@ -42,6 +48,7 @@ struct BookingLinkCard<Destination: View>: View {
     @ViewBuilder
     private var buttons: some View {
         if let link {
+            if !state.isLive { goOnlineButton }
             HStack(spacing: Spacing.row) {
                 Button(action: onCopy) {
                     Text(isCopied ? "bookingSettings.link.copied" : "bookingSettings.link.copy")
@@ -59,5 +66,26 @@ struct BookingLinkCard<Destination: View>: View {
                 .buttonStyle(.belloOnHero)
                 .accessibilityIdentifier("bookingSettings.chooseAddressButton")
         }
+    }
+
+    private var statusIdentifier: String {
+        state.isLive ? "bookingSettings.onlineStatus" : "bookingSettings.notOnline"
+    }
+
+    private var isPublishing: Bool {
+        if case .publishing = state { true } else { false }
+    }
+
+    private var goOnlineButton: some View {
+        Button(action: onGoOnline) {
+            if isPublishing {
+                ProgressView()
+            } else {
+                Text("publish.action.goOnline")
+            }
+        }
+        .buttonStyle(.belloOnHero)
+        .disabled(isPublishing)
+        .accessibilityIdentifier("bookingSettings.goOnlineButton")
     }
 }

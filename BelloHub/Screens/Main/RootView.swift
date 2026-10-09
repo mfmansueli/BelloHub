@@ -19,6 +19,9 @@ struct RootView: View {
     @State private var appointments: AppointmentService
     @State private var timeBlocks: TimeBlockService
     @State private var messages: MessageService
+    @State private var publishing: PublishingService
+    @State private var agendaDigest: AgendaDigestService
+    @State private var notifications: NotificationService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -39,6 +42,9 @@ struct RootView: View {
         _appointments = State(initialValue: dependencies.appointments)
         _timeBlocks = State(initialValue: dependencies.timeBlocks)
         _messages = State(initialValue: dependencies.messages)
+        _publishing = State(initialValue: dependencies.publishing)
+        _agendaDigest = State(initialValue: dependencies.agendaDigest)
+        _notifications = State(initialValue: dependencies.notifications)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -62,7 +68,10 @@ struct RootView: View {
         .environment(appointments)
         .environment(timeBlocks)
         .environment(messages)
+        .environment(agendaDigest)
+        .environment(notifications)
         .treatmentTools(dependencies.treatmentTools)
+        .environment(publishing)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {
@@ -79,8 +88,21 @@ struct RootView: View {
             }
         }
         .onChange(of: model.stage) { _, stage in
-            // Her hours, policies and messages leave memory when the app locks or she signs out.
-            if stage != .app { bookingSetup.clear() }
+            // Her hours, policies and messages leave memory when the app locks or she signs out; her page keeps
+            // publishing only while the app is open and unlocked.
+            if stage == .app, let userID = session.user?.id {
+                publishing.start(userID: userID)
+            } else if stage != .app {
+                bookingSetup.clear()
+                publishing.clear()
+                agendaDigest.stopListening()
+                notifications.stopListening()
+            }
+            // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
+            if stage.isSignedOut { Task { await notifications.removeAll() } }
+        }
+        .onChange(of: session.user?.id) { previous, current in
+            if let previous, current == nil { publishing.clearForSignOut(userID: previous) }
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }

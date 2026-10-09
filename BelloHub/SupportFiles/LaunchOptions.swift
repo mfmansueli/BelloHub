@@ -44,6 +44,9 @@ struct LaunchOptions: Equatable {
     var uiVoice: String?
     /// `scripted` replaces the camera with one that "takes" a generated picture (a simulator has no camera).
     var uiCamera: String?
+    /// `fake` makes the booking server an in-memory fake, so a UI test can go online and see the real states without
+    /// network. Without it a UI-test launch has no server at all (publishing says "not online").
+    var uiOnline: String?
 
     init() {}
 
@@ -63,6 +66,7 @@ struct LaunchOptions: Equatable {
         route = Self.value(after: "-uiRoute", in: arguments)
         uiVoice = Self.value(after: "-uiVoice", in: arguments)
         uiCamera = Self.value(after: "-uiCamera", in: arguments)
+        uiOnline = Self.value(after: "-uiOnline", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

@@ -11,9 +11,10 @@ import SwiftUI
 struct BookingSettingsView: View {
     @Environment(BookingSetupService.self) private var bookingSetup
     @Environment(ProfileService.self) private var profile
+    @Environment(PublishingService.self) private var publishing
 
     var body: some View {
-        BookingSettingsContentView(service: bookingSetup, profile: profile.profile)
+        BookingSettingsContentView(service: bookingSetup, publishing: publishing, profile: profile.profile)
     }
 }
 
@@ -21,4 +22,5 @@ struct BookingSettingsView: View {
     NavigationStack { BookingSettingsView() }
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
         .environment(ProfileService(vault: VaultService(repository: nil)))
+        .environment(PublishingService.preview)
 }

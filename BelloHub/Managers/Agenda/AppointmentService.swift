@@ -78,6 +78,18 @@ final class AppointmentService {
         try await change(id) { AppointmentTransitions.late($0, byMinutes: minutes, now: now) }
     }
 
+    /// Remembers that she opened a reminder chat for the visit (D31: "Reminders ready" then shows it as opened). The
+    /// app never sends by itself, so this means "she was about to send".
+    @discardableResult
+    func markReminderSent(id: UUID, now: Date = Date()) async throws -> Appointment {
+        try await change(id) {
+            var visit = $0
+            visit.reminderSentAt = now
+            visit.updatedAt = now
+            return visit
+        }
+    }
+
     // MARK: - Private
 
     private func change(_ id: UUID, _ transition: (Appointment) -> Appointment) async throws -> Appointment {

@@ -17,4 +17,10 @@ enum DefaultsKey {
     static let localDevUser = "session.localDevUser"
     /// The on-device assistant's preferences (`AIPreferences`, JSON). Absent means the defaults.
     static let aiPreferences = "ai.preferences"
+    /// The user id whose booking page she put online from this phone (`PublishingService`). While it equals the
+    /// signed-in
+    /// user, changes to her page are published by themselves; stopping removes it.
+    static let publishingOnlineUserID = "publishing.onlineUserID"
+    /// `NotificationPrefs` as JSON: what reaches her and when (`DefaultsNotificationPrefsStore`).
+    static let notificationPrefs = "notifications.prefs"
 }
