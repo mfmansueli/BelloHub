@@ -1,0 +1,330 @@
+{
+ "localization": "fr",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Allergies",
+   "prompt": "Avez-vous des allergies ?",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "Parfums"
+    },
+    {
+     "key": "latex",
+     "name": "Latex"
+    },
+    {
+     "key": "nuts",
+     "name": "Fruits à coque"
+    },
+    {
+     "key": "retinol",
+     "name": "Rétinol"
+    },
+    {
+     "key": "acids",
+     "name": "Acides"
+    },
+    {
+     "key": "dyes",
+     "name": "Coloration capillaire ou henné"
+    },
+    {
+     "key": "adhesives",
+     "name": "Adhésifs ou colle"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Médicaments",
+   "prompt": "Prenez-vous des médicaments de façon régulière ?",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Grossesse ou allaitement",
+   "prompt": "Êtes-vous en période de grossesse ou d'allaitement ?",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Problèmes de peau",
+   "prompt": "Avez-vous des problèmes de peau ?",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "Peau sensible"
+    },
+    {
+     "key": "eczema",
+     "name": "Eczéma"
+    },
+    {
+     "key": "rosacea",
+     "name": "Rosacée"
+    },
+    {
+     "key": "acne",
+     "name": "Acné"
+    },
+    {
+     "key": "psoriasis",
+     "name": "Psoriasis"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Problèmes de santé",
+   "prompt": "Avez-vous l'un de ces problèmes de santé ?",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "Diabète"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "Anticoagulants"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "Hypertension"
+    },
+    {
+     "key": "epilepsy",
+     "name": "Épilepsie"
+    },
+    {
+     "key": "immune",
+     "name": "Système immunitaire affaibli"
+    },
+    {
+     "key": "keloids",
+     "name": "Chéloïdes ou cicatrices en relief"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Soins récents",
+   "prompt": "Ces 6 derniers mois, avez-vous eu l'un de ces soins ?",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "Isotrétinoïne"
+    },
+    {
+     "key": "peel",
+     "name": "Peeling chimique"
+    },
+    {
+     "key": "laser",
+     "name": "Laser ou lumière pulsée"
+    },
+    {
+     "key": "injectables",
+     "name": "Injections (comblement ou toxine botulique)"
+    },
+    {
+     "key": "microneedling",
+     "name": "Microneedling"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "Exposition au soleil",
+   "prompt": "Ces 2 dernières semaines, y a-t-il eu un coup de soleil ou une séance de bronzage UV ?",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Problèmes oculaires",
+   "prompt": "Avez-vous des problèmes aux yeux ?",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "Lentilles de contact"
+    },
+    {
+     "key": "dryEyes",
+     "name": "Yeux secs ou sensibles"
+    },
+    {
+     "key": "infection",
+     "name": "Infection oculaire le mois dernier"
+    },
+    {
+     "key": "surgery",
+     "name": "Chirurgie des yeux ces 6 derniers mois"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Problèmes d'ongles",
+   "prompt": "Avez-vous des problèmes aux ongles ou aux mains ?",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "Mycose des ongles"
+    },
+    {
+     "key": "brittle",
+     "name": "Ongles cassants ou qui se dédoublent"
+    },
+    {
+     "key": "injury",
+     "name": "Blessure récente à l'ongle"
+    },
+    {
+     "key": "dermatitis",
+     "name": "Dermatite ou eczéma des mains"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Problèmes du cuir chevelu",
+   "prompt": "Avez-vous un problème de cuir chevelu ou une chute de cheveux ?",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Soins capillaires",
+   "prompt": "Ces 6 derniers mois, avez-vous eu l'un de ces soins capillaires ?",
+   "options": [
+    {
+     "key": "color",
+     "name": "Coloration"
+    },
+    {
+     "key": "bleach",
+     "name": "Décoloration"
+    },
+    {
+     "key": "relaxer",
+     "name": "Lissage ou kératine"
+    },
+    {
+     "key": "perm",
+     "name": "Permanente"
+    },
+    {
+     "key": "henna",
+     "name": "Henné"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Réaction aux colorations",
+   "prompt": "Avez-vous déjà eu une réaction à une coloration capillaire ?",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Autre chose",
+   "prompt": "Y a-t-il autre chose d'important à savoir avant le rendez-vous ?",
+   "options": []
+  }
+ ]
+}

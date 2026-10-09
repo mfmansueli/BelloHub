@@ -12,11 +12,17 @@ enum UITestSeeding {
     static let userID = "dev-5511987654321"
     static let phone = "+5511987654321"
 
+    /// The client `-uiSeed clientWithHealth` creates, so `-uiRoute health` can open her Health and consent screen.
+    static let healthClientID = UUID(uuidString: "C0FFEE00-0000-4000-8000-000000000001") ?? UUID()
+
     /// A signed-in professional with her workspace set up, so a test can start on the locked screen or the app.
+    /// `clientWithHealth` adds one client with nothing in her health record yet.
     @MainActor
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
         await ImportUITestSeeding.seedIfRequested(dependencies, options: options)
-        guard options.seed == "onboarded", !options.keepsState else { return }
+        guard let seed = options.seed, ["onboarded", "clientWithHealth"].contains(seed), !options.keepsState else {
+            return
+        }
         let defaults = dependencies.defaults
         let user = AuthUser(id: userID, phoneE164: phone)
         defaults.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
@@ -34,6 +40,10 @@ enum UITestSeeding {
         let result = OnboardingBuilder.build(draft: draft, catalog: catalog, now: Date())
         try? dependencies.keyManager.prepare(createIfMissing: true)
         try? await dependencies.vault.repository?.saveOnboarding(result)
+        if seed == "clientWithHealth" {
+            let client = Client(id: healthClientID, name: "Ana Costa", createdAt: Date())
+            _ = try? await dependencies.vault.repository?.save(client)
+        }
     }
 }
 #endif

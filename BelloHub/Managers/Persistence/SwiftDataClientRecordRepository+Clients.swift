@@ -39,7 +39,10 @@ extension SwiftDataClientRecordRepository {
         for record in records {
             try deleteItems(kind: .correction, ownerID: record.id)
         }
-        for kind in [VaultKind.appointment, .treatmentRecord, .incident, .photo, .healthForm, .consent, .sessionPlan] {
+        let owned: [VaultKind] = [
+            .appointment, .treatmentRecord, .incident, .photo, .healthForm, .consent, .patchTest, .sessionPlan
+        ]
+        for kind in owned {
             try deleteItems(kind: kind, ownerID: id)
         }
         if let client = try item(kind: .client, id: id) { delete([client]) }

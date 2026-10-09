@@ -109,9 +109,22 @@ struct RootView: View {
             case .locked:
                 LockedView()
             case .app:
-                MainView(onSignOut: { Task { await model.signOut() } })
+                app
             }
         }
+    }
+
+    @ViewBuilder
+    private var app: some View {
+        #if DEBUG
+        if let route = LaunchOptions.current.route {
+            HealthDebugRoute(route: route)
+        } else {
+            MainView(onSignOut: { Task { await model.signOut() } })
+        }
+        #else
+        MainView(onSignOut: { Task { await model.signOut() } })
+        #endif
     }
 
     private var initialRegion: RegionPreset {

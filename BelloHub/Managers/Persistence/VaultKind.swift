@@ -23,4 +23,8 @@ enum VaultKind: String, CaseIterable, Sendable {
     case tag
     /// Which record fields and intake items she switched on. One per vault.
     case recordTemplate
+    /// One version of the health form she asks. Versions are kept, never rewritten (S4).
+    case healthFormTemplate
+    /// One entry of a client's patch-test log (S4).
+    case patchTest
 }

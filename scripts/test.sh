@@ -15,13 +15,15 @@ case "${1:-full}" in
         ;;
 esac
 
-# The cheap gates (strings, privacy, legal drafts, profession catalogs) run before the simulator does
-# (docs/13-TESTING-QUALITY.md).
+# The cheap gates (strings, privacy, legal drafts, their bundled copies, profession and health form catalogs) run
+# before the simulator does (docs/13-TESTING-QUALITY.md).
 if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-strings.sh" > /dev/null
     "$ROOT/scripts/check-privacy.sh" > /dev/null
     "$ROOT/scripts/check-legal-status.sh" > /dev/null
+    "$ROOT/scripts/check-legal-resources.sh" > /dev/null
     "$ROOT/scripts/check-professions.sh" > /dev/null
+    "$ROOT/scripts/check-health-forms.sh" > /dev/null
 fi
 
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).
