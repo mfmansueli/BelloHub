@@ -2,9 +2,8 @@ import { AppError } from '../lib/errors.js';
 import type { EmailMessage, EmailProvider } from './EmailProvider.js';
 
 /**
- * The provider until a human picks a vendor and stores its key (H7): every send fails with NOT_CONFIGURED, so the web
- * app offers SMS only and a booking simply carries on without its confirmation email.
- * TODO(HUMAN-H7): replace with the adapter of the chosen vendor in createDeps().
+ * The provider while `EMAIL_FROM` and the `EMAIL_API_KEY` secret are not set (H7): every send fails with NOT_CONFIGURED,
+ * so the web app offers SMS only and a booking simply carries on without its confirmation email.
  */
 export class DisabledEmailProvider implements EmailProvider {
   send(_message: EmailMessage): Promise<void> {

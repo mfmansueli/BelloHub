@@ -9,6 +9,7 @@ import { DisabledWhatsAppProvider } from '../../src/messaging/DisabledWhatsAppPr
 import { EMAIL_TEMPLATE_IDS, emailTextsFor } from '../../src/messaging/emailTemplates.js';
 import { ProviderClientMessenger } from '../../src/messaging/ProviderClientMessenger.js';
 import { fillTemplate, formatWhen, isolate } from '../../src/messaging/render.js';
+import { ResendEmailProvider } from '../../src/messaging/ResendEmailProvider.js';
 import { WhatsAppCloudProvider } from '../../src/messaging/WhatsAppCloudProvider.js';
 import { WHATSAPP_LANGUAGE, WHATSAPP_TEMPLATES, whatsAppTemplateName } from '../../src/messaging/whatsAppTemplates.js';
 import { buildFcmMessage } from '../../src/push/fcmMessage.js';
@@ -218,5 +219,61 @@ describe('push payloads (docs/11 section 7)', () => {
 
   it('has a localization key for every alert kind, all under push.*', () => {
     for (const key of Object.values(PUSH_ALERT_KEYS)) expect(key).toMatch(/^push\.[a-z]+\.[A-Za-z]+$/);
+  });
+});
+
+describe('ResendEmailProvider (mocked vendor, H7)', () => {
+  const config = { apiKey: 're_secret', from: 'Bello Hub <no-reply@bellohub.app>' };
+  const message = { to: 'ana@example.com', subject: 'Your visit', text: 'Friday 10:00. https://bellohub.app/m/x' };
+
+  it('posts one plain-text message with the key in the header and the sender from the configuration', async () => {
+    const calls: { url: string; headers: Record<string, string>; body: unknown }[] = [];
+    const provider = new ResendEmailProvider(config, (url, init) => {
+      calls.push({ url, headers: init.headers, body: JSON.parse(init.body) });
+      return Promise.resolve({ ok: true, status: 200 });
+    });
+
+    await provider.send(message);
+
+    expect(calls[0]?.url).toBe('https://api.resend.com/emails');
+    expect(calls[0]?.headers).toEqual({ Authorization: 'Bearer re_secret', 'Content-Type': 'application/json' });
+    expect(calls[0]?.body).toEqual({ from: config.from, to: ['ana@example.com'], subject: 'Your visit', text: message.text });
+  });
+
+  it('turns vendor failures into generic errors: retry on 429 and 5xx, give up on the rest, never quoting the message', async () => {
+    const outcomes = await Promise.all(
+      [429, 503, 400, 401].map(async (status): Promise<{ code: string; message: string }> => {
+        try {
+          await new ResendEmailProvider(config, () => Promise.resolve({ ok: false, status })).send(message);
+          return { code: 'none', message: '' };
+        } catch (error: unknown) {
+          return error as { code: string; message: string };
+        }
+      })
+    );
+
+    expect(outcomes.map((error) => error.code)).toEqual(['TRY_AGAIN', 'TRY_AGAIN', 'INTERNAL', 'INTERNAL']);
+    for (const error of outcomes) expect(error.message).not.toContain('ana@');
+  });
+
+  it('exists only when both the key and the sender are set, so createDeps keeps email disabled otherwise', () => {
+    expect(ResendEmailProvider.ifConfigured({ apiKey: '', from: config.from })).toBeUndefined();
+    expect(ResendEmailProvider.ifConfigured({ apiKey: 're_x', from: '  ' })).toBeUndefined();
+    expect(ResendEmailProvider.ifConfigured({ apiKey: 're_x', from: config.from })).toBeInstanceOf(ResendEmailProvider);
+  });
+
+  it('is what the messenger uses when it is the configured provider', async () => {
+    const bodies: unknown[] = [];
+    const provider = new ResendEmailProvider(config, (_url, init) => {
+      bodies.push(JSON.parse(init.body));
+      return Promise.resolve({ ok: true, status: 200 });
+    });
+    const messenger = new ProviderClientMessenger(provider, undefined, true);
+
+    await messenger.sendEmail({ template: 'verificationCode', to: 'ana@example.com', locale: 'en', vars: { code: '123456', professional: 'Maria' } });
+
+    expect(messenger.emailAvailable).toBe(true);
+    expect(bodies[0]).toMatchObject({ to: ['ana@example.com'] });
+    expect(JSON.stringify(bodies[0])).toContain('123456');
   });
 });

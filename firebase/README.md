@@ -62,9 +62,12 @@ Not done by Claude Code: it needs accounts, billing and keys that only the owner
    `node firebase/scripts/sms-regions.mjs` (D37), an SMS budget alert; upload the APNs auth key (Cloud Messaging); add the iOS
    app and download its `GoogleService-Info.plist` into `Config/Firebase/<Env>/`.
 4. Secret Manager: `firebase functions:secrets:set PHONE_HASH_PEPPER` (a long random value; never rotate it, every stored
-   contact is keyed by it). Later: the email provider key (H7) and the Meta token (H13).
+   contact is keyed by it) and `firebase functions:secrets:set EMAIL_API_KEY` (the Resend API key, H7; any placeholder
+   until the account exists: the key is only read when `EMAIL_FROM` is set). Later: the Meta token (H13).
 5. Optional deploy parameters in `functions/.env.<project>`: `WEB_BASE_URL`, `WHATSAPP_AUTOMATION` (keep equal to the Remote
-   Config flag), `ENFORCE_APP_CHECK` (only after App Check works on staging, H5), `PLAN_PRODUCT_IDS`.
+   Config flag), `ENFORCE_APP_CHECK` (only after App Check works on staging, H5), `PLAN_PRODUCT_IDS`, `EMAIL_FROM`
+   (`Bello Hub <no-reply@bellohub.app>`, a sender verified at the vendor; empty keeps email off, H7), `APPLE_ENVIRONMENT`
+   and `APPLE_APP_ID` (H14, see `functions/certs/apple/README.md`).
 6. Deploy to **dev first** (never to `bello-hub`):
    `cd firebase && firebase deploy --project dev --only firestore:rules,firestore:indexes,storage,functions`.
    Then run `scripts/test-firebase.sh` locally once more and smoke test the dev project with the seed data of a throwaway
@@ -79,7 +82,9 @@ Not done by Claude Code: it needs accounts, billing and keys that only the owner
 
 ## What the humans still owe (see docs/agent-notes/backend.md)
 
-H4 projects and keys, H5 App Check, H6 domain and Hosting, H7 email provider (the adapter is one small class), H13 WhatsApp
+H4 projects and keys, H5 App Check, H6 domain and Hosting, H7 email provider (`ResendEmailProvider` is wired: create the
+Resend account in the EU region, sign its DPA, verify the sender domain, then set `EMAIL_FROM` and the `EMAIL_API_KEY`
+secret), H13 WhatsApp
 Business (code and tests exist, disabled), H14 App Store plan verification (`AppleAppStoreVerifier` is wired; it switches
 on when Apple's root certificates are in `functions/certs/apple/`, see the README there, plus `APPLE_ENVIRONMENT` and
 `APPLE_APP_ID` for Production; until then it answers `NOT_CONFIGURED`).

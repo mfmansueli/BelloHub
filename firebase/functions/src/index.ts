@@ -9,7 +9,7 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { createDeps } from './app/createDeps.js';
 import { findUseCase } from './app/registry.js';
 import type { AnyUseCase } from './app/UseCase.js';
-import { PHONE_HASH_PEPPER } from './config/params.js';
+import { FUNCTION_SECRETS } from './config/params.js';
 import { FUNCTIONS_REGION } from './config/region.js';
 import { handleAppStoreNotification } from './http/appStoreHandler.js';
 import { defineCallable } from './http/callable.js';
@@ -82,7 +82,7 @@ export const deleteAccount = defineCallable(useCase('deleteAccount'), { timeoutS
 // MARK: - Plain HTTPS
 
 /** `GET getIcs?token=&locale=`: the calendar file of a booking (API.md section 5.17). */
-export const getIcs = onRequest({ cors: false, secrets: [PHONE_HASH_PEPPER], memory: '256MiB' }, async (request, response) => {
+export const getIcs = onRequest({ cors: false, secrets: FUNCTION_SECRETS, memory: '256MiB' }, async (request, response) => {
   if (request.method !== 'GET') {
     response.status(405).end();
     return;
@@ -95,7 +95,7 @@ export const getIcs = onRequest({ cors: false, secrets: [PHONE_HASH_PEPPER], mem
 });
 
 /** App Store Server Notifications V2 (docs/11 section 3). Apple POSTs `{ "signedPayload": "<JWS>" }`. */
-export const appStoreNotifications = onRequest({ cors: false, secrets: [PHONE_HASH_PEPPER] }, async (request, response) => {
+export const appStoreNotifications = onRequest({ cors: false, secrets: FUNCTION_SECRETS }, async (request, response) => {
   if (request.method !== 'POST') {
     response.status(405).end();
     return;
@@ -108,7 +108,7 @@ export const appStoreNotifications = onRequest({ cors: false, secrets: [PHONE_HA
 // MARK: - Triggers
 
 export const onBookingWritten = onDocumentWritten(
-  { document: 'bookings/{bookingId}', secrets: [PHONE_HASH_PEPPER] },
+  { document: 'bookings/{bookingId}', secrets: FUNCTION_SECRETS },
   async (event) => {
     const change = event.data;
     if (!change) return;
@@ -119,7 +119,7 @@ export const onBookingWritten = onDocumentWritten(
 );
 
 export const onInboxItemCreated = onDocumentCreated(
-  { document: 'inbox/{ownerUid}/items/{itemId}', secrets: [PHONE_HASH_PEPPER] },
+  { document: 'inbox/{ownerUid}/items/{itemId}', secrets: FUNCTION_SECRETS },
   async (event) => {
     await handleInboxItemCreated(createDeps(), event.params.ownerUid, event.params.itemId);
   }
@@ -128,7 +128,7 @@ export const onInboxItemCreated = onDocumentCreated(
 // MARK: - Scheduled jobs
 
 export const cleanupJob = onSchedule(
-  { schedule: 'every 10 minutes', timeoutSeconds: 540, secrets: [PHONE_HASH_PEPPER] },
+  { schedule: 'every 10 minutes', timeoutSeconds: 540, secrets: FUNCTION_SECRETS },
   async () => {
     await runCleanup(createDeps());
   }
@@ -136,7 +136,7 @@ export const cleanupJob = onSchedule(
 
 /** Does nothing unless `WHATSAPP_AUTOMATION` is on (D31). */
 export const sendReminders = onSchedule(
-  { schedule: 'every 5 minutes', timeoutSeconds: 300, secrets: [PHONE_HASH_PEPPER] },
+  { schedule: 'every 5 minutes', timeoutSeconds: 300, secrets: FUNCTION_SECRETS },
   async () => {
     await runReminders(createDeps());
   }

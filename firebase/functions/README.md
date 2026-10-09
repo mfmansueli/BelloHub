@@ -14,7 +14,7 @@ src/
   public/ token/ owner/   one use case per file; `access` says who may call it
   lib/              pure rules (rules.ts, freeSlots.ts, time.ts), calendar (the booking transaction), registrations (D42),
                     deletion cascades, contacts, ics, log (scrubbing logger), rate limiting, sanitize, store helpers
-  messaging/        ClientMessenger, EmailProvider (+ disabled and emulator stand-ins), WhatsApp (+ Cloud API provider, disabled)
+  messaging/        ClientMessenger, EmailProvider (Resend adapter, disabled and emulator stand-ins), WhatsApp (+ Cloud API provider, disabled)
                     and the email texts in 14 localizations
   push/             PushSender (+ FCM and emulator senders), the FCM payload builder
   auth/ billing/    PhoneVerifier (Firebase Auth phone provider), AppStoreVerifier (Apple adapter; Unconfigured until the certs of H14 exist)

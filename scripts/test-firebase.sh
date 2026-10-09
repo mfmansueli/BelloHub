@@ -37,9 +37,13 @@ for tool in node npm java firebase; do
     }
 done
 
-# The emulators and the tests read project secrets from the environment; this one is a fake used only here.
+# The emulators and the tests read project secrets from the environment; these are fakes used only here. The email key
+# is a placeholder: with EMAIL_FROM unset the provider stays disabled and the key is never read.
 if [[ ! -f "$FUNCTIONS_DIR/.secret.local" ]]; then
     printf 'PHONE_HASH_PEPPER=local-test-pepper-not-a-secret\n' > "$FUNCTIONS_DIR/.secret.local"
+fi
+if ! grep -q '^EMAIL_API_KEY=' "$FUNCTIONS_DIR/.secret.local"; then
+    printf 'EMAIL_API_KEY=unset\n' >> "$FUNCTIONS_DIR/.secret.local"
 fi
 
 if [[ ! -d "$FUNCTIONS_DIR/node_modules" || "$FUNCTIONS_DIR/package-lock.json" -nt "$FUNCTIONS_DIR/node_modules/.package-lock.json" ]]; then

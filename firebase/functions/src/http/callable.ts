@@ -5,7 +5,7 @@ import { createDeps } from '../app/createDeps.js';
 import type { Deps } from '../app/Deps.js';
 import type { AnyUseCase } from '../app/UseCase.js';
 import { FUNCTIONS_REGION } from '../config/region.js';
-import { PHONE_HASH_PEPPER } from '../config/params.js';
+import { FUNCTION_SECRETS } from '../config/params.js';
 import { clientIpFrom } from '../lib/clientIp.js';
 import { keyedHash } from '../lib/crypto.js';
 import { ERROR_STATUS, isAppError } from '../lib/errors.js';
@@ -52,7 +52,7 @@ export function defineCallable(useCase: AnyUseCase, options: { timeoutSeconds?: 
     {
       region: FUNCTIONS_REGION,
       cors: ALLOWED_ORIGINS,
-      secrets: [PHONE_HASH_PEPPER],
+      secrets: FUNCTION_SECRETS,
       memory: options.memory ?? '256MiB',
       timeoutSeconds: options.timeoutSeconds ?? 60,
       maxInstances: 20

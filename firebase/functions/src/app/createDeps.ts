@@ -11,6 +11,8 @@ import {
   APPLE_APP_ID,
   APPLE_ENVIRONMENT,
   APPLE_ROOT_CERTS_DIR,
+  EMAIL_API_KEY,
+  EMAIL_FROM,
   ENFORCE_APP_CHECK,
   PHONE_HASH_PEPPER,
   PLAN_PRODUCT_IDS,
@@ -25,6 +27,7 @@ import { DisabledEmailProvider } from '../messaging/DisabledEmailProvider.js';
 import { DisabledWhatsAppProvider } from '../messaging/DisabledWhatsAppProvider.js';
 import { EmulatorEmailProvider } from '../messaging/EmulatorEmailProvider.js';
 import { ProviderClientMessenger } from '../messaging/ProviderClientMessenger.js';
+import { ResendEmailProvider } from '../messaging/ResendEmailProvider.js';
 import { EmulatorPushSender } from '../push/EmulatorPushSender.js';
 import { FcmPushSender } from '../push/FcmPushSender.js';
 import type { Deps } from './Deps.js';
@@ -36,8 +39,8 @@ let cached: Deps | undefined;
 
 /**
  * Wires the real world: Admin SDK, Cloud Logging, FCM, and in the emulator the recording stand-ins. Built once per
- * instance. HUMAN tasks live here as TODO markers: the email provider (H7), the App Store verifier (H14) and the
- * WhatsApp provider (H13) are the only places that will change when those accounts exist.
+ * instance. The email provider (H7) and the App Store verifier (H14) switch themselves on from their parameters; the
+ * WhatsApp provider (H13) is the one TODO left.
  */
 export function createDeps(): Deps {
   if (cached) return cached;
@@ -76,10 +79,7 @@ export function createDeps(): Deps {
         .map((id) => id.trim())
         .filter((id) => id.length > 0)
     },
-    // TODO(HUMAN-H7): construct the chosen email provider here and pass `true` as the third argument.
-    messenger: emulator
-      ? new ProviderClientMessenger(new EmulatorEmailProvider(db), new DisabledWhatsAppProvider(), true)
-      : new ProviderClientMessenger(new DisabledEmailProvider(), new DisabledWhatsAppProvider(), false),
+    messenger: emulator ? new ProviderClientMessenger(new EmulatorEmailProvider(db), new DisabledWhatsAppProvider(), true) : createMessenger(),
     push: emulator ? new EmulatorPushSender(db) : new FcmPushSender(),
     phoneVerifier: new FirebasePhoneVerifier(getAuth()),
     appStore: createAppStoreVerifier(),
@@ -99,4 +99,11 @@ function createAppStoreVerifier(): AppStoreVerifier {
     appAppleId: Number.isFinite(appAppleId) ? appAppleId : undefined,
     rootCertificates
   });
+}
+
+/** TODO(HUMAN-H7): set `EMAIL_FROM` and the `EMAIL_API_KEY` secret once the vendor account (Resend, EU region) has a DPA. */
+function createMessenger(): ProviderClientMessenger {
+  const from = EMAIL_FROM.value();
+  const email = from ? ResendEmailProvider.ifConfigured({ apiKey: EMAIL_API_KEY.value(), from }) : undefined;
+  return new ProviderClientMessenger(email ?? new DisabledEmailProvider(), new DisabledWhatsAppProvider(), email !== undefined);
 }

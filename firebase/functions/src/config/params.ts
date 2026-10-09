@@ -1,6 +1,6 @@
 // Deploy-time parameters (functions/.env.<project> or the CLI prompt) and secrets (Secret Manager). Nothing secret is
-// ever in the repository; the only secret the code needs today is the hashing pepper (H4). The email provider key and the
-// WhatsApp token are declared together with their adapters when a human chooses the provider (H7, H13).
+// ever in the repository: the hashing pepper (H4) and the email API key (H7) live in Secret Manager. The WhatsApp token
+// is declared with its adapter when a human enables the provider (H13).
 
 import { defineBoolean, defineSecret, defineString } from 'firebase-functions/params';
 
@@ -23,6 +23,17 @@ export const PLAN_PRODUCT_IDS = defineString('PLAN_PRODUCT_IDS', {
 
 /** HMAC key for phone, email and IP hashes. Rotating it detaches every stored contact, so treat it as permanent. */
 export const PHONE_HASH_PEPPER = defineSecret('PHONE_HASH_PEPPER');
+
+/**
+ * Transactional email (H7): the vendor's API key in Secret Manager and the verified sender as a parameter. The provider is
+ * built only when `EMAIL_FROM` is set (then the key is read); with it empty the secret is never read and email stays off.
+ * The secret must exist for the deploy to go through: set a placeholder until the vendor account exists.
+ */
+export const EMAIL_API_KEY = defineSecret('EMAIL_API_KEY');
+export const EMAIL_FROM = defineString('EMAIL_FROM', { default: '' });
+
+/** Every function binds the same secrets, so any of them can hash and send email. */
+export const FUNCTION_SECRETS = [PHONE_HASH_PEPPER, EMAIL_API_KEY];
 
 /**
  * App Store verification (H14). The adapter is built only when `APPLE_ROOT_CERTS_DIR` holds at least one DER
