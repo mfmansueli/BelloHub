@@ -16,5 +16,9 @@ struct UnconfiguredAuthProvider: AuthProvider {
         throw AuthError.unavailable
     }
 
+    func signInWithApple(_ credential: AppleCredential) async throws -> AuthUser {
+        throw AuthError.unavailable
+    }
+
     func signOut() async throws {}
 }
