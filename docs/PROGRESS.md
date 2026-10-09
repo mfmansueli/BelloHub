@@ -77,9 +77,27 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-`S5` (business setup) is done (tag `stage-S5`). **Stopped here: the owner says when S6 starts.**
-Pending, not merged into `build/v1`: the `backend-web` branch (worktree `agent-a9394d7fc4d39a42c`: backend + web merged, Hosting block, `scripts/e2e-local.sh` 6/6, Lighthouse CI; notes `docs/agent-notes/backend-web-integration.md`) and the `s4-audits` agent (audits of S4 in `pt-BR`, `de`, `hi`; notes `docs/agent-notes/s4-audits.md`). Merge them when they finish, then run `scripts/test.sh fast`.
-Owner decisions still waiting: the 16 listed in `docs/agent-notes/backend-web-integration.md` section 7, headed by (a) sign-in for the professional (Apple first, phone second recommended), (b) first-visit questions on the booking page (drop recommended), (c) the CSP variant for phone sign-in and App Check on form pages. Deploy to `bello-hub` (dev, D43) only after that; never turn on App Check enforcement.
+**v1 is being finished end to end without stopping between stages (owner's order, 2026-10-09).** Done and tagged: S0 to S5 (`stage-S5`). Order of the rest: S6 (3 slices), S7 front end only (D53), S8 iOS half, S9 integration, S10, S11, S12.
+
+### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+Last updated 2026-10-09. Rules: at most 3 agents on `model: sonnet` at `medium` + 1 on `model: fable` at `medium`; each in its own worktree (`isolation: worktree`) and its own simulator (`SIM_UDID`: `9368BE88-0772-4897-B0DC-C8D8C61668CF`, `9094A22B-D96D-4AB6-8132-AAC9C1D88AFE`, `1D7CD4D7-E81E-4320-BCEB-1AD9C6FB6F3D`; the coordinator keeps `AD05C836-857D-4911-98CB-1F728EA4D736`); a dead agent is replaced by a new one pointed at the same worktree and its notes. Agents write `docs/agent-notes/<slice>.md` and never edit this file, `DESIGN.md` or `Localizable.xcstrings` (batches in `Config/Locale/strings/`, merged with `scripts/merge-strings.py`). Integration of a slice: merge the branch into `build/v1`, regenerate the catalog, `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, then fold the notes here and into `DESIGN.md`, tag, push (never `main`).
+
+| Work | Branch (worktree under `.claude/worktrees/`) | State |
+|---|---|---|
+| Decisions D44 to D53 | on `build/v1` | Written in `docs/02-DECISIONS.md` (Apple sign-in for the professional, no first-visit questions, policy snapshot, e-mail-code web verification, S7 front end only) |
+| Policy clarity (D47) in the app | on `build/v1` (`b1ed521`) | Done: notice on both policy screens |
+| S6 contract | on `build/v1` | Done: `AppointmentService`, `AppointmentTransitions`, `AgendaRoute`, `AgendaSheet`, 14 placeholders in `Screens/Shared/Agenda/Placeholders/` |
+| S6 slice "calendar" (2.3, 2.6, 3.1, 3.4, 6.6) | `s6-calendar` (`agent-a1bbfa95986563d9f`) | Running (Sonnet) |
+| S6 slice "appointment" (3.2, 3.3, 3.5, 3.6, 3.7, 2.12, 4.8, 4.11, messages with WhatsApp) | not started | Next free Sonnet slot |
+| S6 slice "home" (2.1, 2.7, 2.8, 2.4 local alerts, local notifications, 7.11 States) | not started | After the one above |
+| Sign in with Apple in the app (D44) | `apple-signin` (`agent-a45feef1aa2f8ba2b`) | Running (Sonnet); not merged |
+| Backend decisions D44, D47, D51 | `backend-decisions` (`agent-a5bf7dac51bd09b62`) | Running (Fable); also asked to snapshot `rulesText`, add `lateCancelCounts` and `noShowLimit` to the policy snapshot, fix API.md 5.5/5.7/5.9 |
+| Web decisions D45 to D52 | `web-decisions` (finished, `881e922`; notes `docs/agent-notes/web-decisions.md`) | Done, not merged; merge it with `backend-decisions`, then run `scripts/e2e-local.sh` (its e2e spec was changed for e-mail only) |
+| Backend + web integration (Hosting, e2e-local, Lighthouse) | merged into `build/v1` | Done |
+
+**After the S6 slices:** S7 front end (5.1 to 5.9, 4.7, 4.9, 4.10, 7.5; fakes behind protocols for voice, AI, photos, PDF; manual `Tx-Form` fully real; D53), then S8 iOS half (`RemoteBookingRepository`, `BookingSyncService`, `MailboxService`, outbound queue, `FirebaseAuthProvider` with Apple, FCM and silent push; see `docs/agent-notes/backend.md` section 4 item 2), S9 (web against the app), S10 (9 screens: account, plan with StoreKit, privacy, export, recovery key, help), S11, S12.
+
+**Owner tasks that do not block building** (list in `docs/14-HUMAN-TASKS.md` and the agent notes): Resend account and sender domain, Apple Sign-In key (.p8), Apple root certificates, App Store Connect products and account, domain `bellohub.app`, staging Firebase project, checks on a real iPhone (contact picker, CSV from Excel, Face ID, camera, microphone). Never deploy to Firebase before the backend and web are merged and e2e passes; never enable App Check enforcement.
 
 ## Stage log
 One block per finished stage (newest last):
