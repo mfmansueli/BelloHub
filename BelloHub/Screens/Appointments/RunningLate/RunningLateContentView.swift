@@ -74,8 +74,8 @@ struct RunningLateContentView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.vertical, Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) { doneButton }
         .accessibilityIdentifier("runningLate.form")
+        .safeAreaInset(edge: .bottom) { doneButton }
     }
 
     private var delay: some View {

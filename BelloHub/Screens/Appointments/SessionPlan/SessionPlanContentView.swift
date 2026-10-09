@@ -73,8 +73,8 @@ struct SessionPlanContentView: View {
             .padding(.vertical, Spacing.md)
         }
         .scrollDismissesKeyboard(.interactively)
-        .safeAreaInset(edge: .bottom) { saveButton }
         .accessibilityIdentifier("sessionPlan.form")
+        .safeAreaInset(edge: .bottom) { saveButton }
     }
 
     private var steppers: some View {

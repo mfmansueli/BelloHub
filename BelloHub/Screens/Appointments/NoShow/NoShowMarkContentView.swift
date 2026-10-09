@@ -91,8 +91,8 @@ struct NoShowMarkContentView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.vertical, Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) { if viewModel.canMark { buttons } }
         .accessibilityIdentifier("noShowMark.form")
+        .safeAreaInset(edge: .bottom) { if viewModel.canMark { buttons } }
     }
 
     private func question(name: String) -> some View {

@@ -84,8 +84,8 @@ struct CancelAppointmentContentView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.vertical, Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) { if viewModel.canCancel { buttons } }
         .accessibilityIdentifier("cancelAppointment.form")
+        .safeAreaInset(edge: .bottom) { if viewModel.canCancel { buttons } }
     }
 
     private func who(_ visit: VisitContext) -> some View {

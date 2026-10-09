@@ -3,8 +3,8 @@
 //  BelloHubTests
 //
 
-import Foundation
 @testable import BelloHub
+import Foundation
 
 /// A phone that records the links it was asked to open. `opens` decides, per scheme, whether an app took the link.
 @MainActor

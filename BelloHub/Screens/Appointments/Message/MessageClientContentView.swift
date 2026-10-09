@@ -86,8 +86,8 @@ struct MessageClientContentView: View {
             .padding(.horizontal, Spacing.gutter)
             .padding(.vertical, Spacing.md)
         }
-        .safeAreaInset(edge: .bottom) { openButton }
         .accessibilityIdentifier("messageClient.form")
+        .safeAreaInset(edge: .bottom) { openButton }
     }
 
     private var replies: some View {
