@@ -12,7 +12,11 @@ import Foundation
 actor InMemoryClientRecordRepository: ClientRecordRepository {
     private var clientsByID: [UUID: Client] = [:]
     private var appointmentsByID: [UUID: Appointment] = [:]
-    private var servicesByID: [UUID: Service] = [:]
+    // Not private: the catalog part of the contract lives in `InMemoryClientRecordRepository+Catalog.swift`.
+    var servicesByID: [UUID: Service] = [:]
+    var addOnsByID: [UUID: AddOn] = [:]
+    var productsByID: [UUID: Product] = [:]
+    var credentialsByID: [UUID: Credential] = [:]
     private var recordsByID: [UUID: TreatmentRecord] = [:]
     private var correctionsByID: [UUID: RecordCorrection] = [:]
     private var incidentsByID: [UUID: Incident] = [:]
