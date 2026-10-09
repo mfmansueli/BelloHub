@@ -71,6 +71,7 @@ describe('callable transport (API.md section 1)', () => {
       ['CONFIRMATION_REQUIRED', 400, 'notAllowed'],
       ['BOOKING_NOT_ACTIVE', 400, 'notAllowed'],
       ['PAYLOAD_TOO_LARGE', 400, 'tooLarge'],
+      ['KEY_MISMATCH', 400, 'keyMismatch'],
       ['NOT_CONFIGURED', 503, 'unavailable'],
       ['TRY_AGAIN', 503, 'unavailable'],
       ['APP_CHECK_REQUIRED', 401, 'appCheck'],

@@ -35,8 +35,8 @@ const SERVER_CODES: Readonly<Record<string, ApiErrorCode>> = {
   CONFIRMATION_REQUIRED: 'notAllowed',
   BOOKING_NOT_ACTIVE: 'notAllowed',
   SLUG_TAKEN: 'server',
-  // A rotated inbox key: the sealed pages reload their context on this (never a silent retry with the old key).
-  KEY_MISMATCH: 'invalidInput',
+  // A rotated inbox key: the sealed pages drop their envelope and ask for a fresh key (never a retry with the old one).
+  KEY_MISMATCH: 'keyMismatch',
   PAYLOAD_TOO_LARGE: 'tooLarge',
   CONFLICT: 'server',
   NOT_CONFIGURED: 'unavailable',

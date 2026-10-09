@@ -480,6 +480,8 @@ export type ApiErrorCode =
   | 'tooManyAttempts'
   | 'notAllowed'
   | 'tooLarge'
+  /** The inbox key the envelope was sealed to is not hers any more (rotated): seal again with a fresh key. */
+  | 'keyMismatch'
   | 'unavailable'
   | 'network'
   | 'timeout'

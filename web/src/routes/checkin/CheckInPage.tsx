@@ -119,7 +119,13 @@ function CheckIn({ token, context }: { token: string; context: FormContext }): J
       setDone(feeling);
     } catch (error) {
       if (error instanceof SealError) setSealFailed(true);
-      else setFailure(error instanceof ApiError ? error : new ApiError('network'));
+      else if (error instanceof ApiError && error.code === 'keyMismatch') {
+        // Her key was rotated since this page loaded: the sealed bytes are for the old key. Forget them and her
+        // cached page, so a retry seals to the key a reload brings.
+        envelope.current = null;
+        api.forgetPublicPage(pro.slug);
+        setSealFailed(true);
+      } else setFailure(error instanceof ApiError ? error : new ApiError('network'));
     } finally {
       setBusy(false);
     }

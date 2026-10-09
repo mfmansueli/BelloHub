@@ -41,7 +41,9 @@ export function PortalPage({ token, portal }: { token: string; portal: PortalVie
     const next = TABS[target];
     if (next === undefined) return;
     setTab(next.id);
-    window.setTimeout(() => { list.current?.querySelector<HTMLElement>(`#tab-${next.id}`)?.focus(); }, 0);
+    // Focus moves now, not in a timer: the panel renders in a microtask, and a second key press arriving before a
+    // timer fired would still act on the old tab.
+    list.current?.querySelector<HTMLElement>(`#tab-${next.id}`)?.focus();
   };
 
   return (

@@ -80,6 +80,7 @@ test.describe('touch targets are at least 44 x 44 CSS px', () => {
 
 test.describe('keyboard', () => {
   test('the first Tab reaches "Skip to content" and Enter moves focus to the main area', async ({ page, slugFor }) => {
+    test.skip(test.info().project.name === 'webkit', 'Safari does not Tab to links and buttons unless the system option is on');
     await open(page, `/${slugFor('maria')}`);
     await page.keyboard.press('Tab');
     const skip = page.locator('a.skip, a[href="#main"]').first();

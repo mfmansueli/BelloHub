@@ -100,6 +100,7 @@ const ERROR_KEYS: Readonly<Record<ApiErrorCode, string>> = {
   tooManyAttempts: 'err.rateLimited',
   notAllowed: 'err.notAllowed',
   tooLarge: 'err.tooLarge',
+  keyMismatch: 'err.generic',
   unavailable: 'err.unavailable',
   network: 'err.network',
   timeout: 'err.timeout',

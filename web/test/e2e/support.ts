@@ -123,10 +123,24 @@ interface Fixtures {
   readonly guard: Guard;
 }
 
-declare global {
-  interface Window {
-    __cspViolations?: string[];
-  }
+interface CspViolation {
+  readonly directive: string;
+  readonly blockedURI: string;
+  readonly sample: string;
+  readonly source: string;
+  /** How many `<select>` elements the page held when the violation fired. */
+  readonly selects: number;
+}
+
+/**
+ * WebKit (Playwright's build, iPhone profile and desktop alike) reports one `style-src-attr inline` violation with
+ * an empty sample for every `<select>` element it creates: the style is in its own user-agent shadow tree, not in
+ * the page (bisected with static pages under the same policy; the refused style changes nothing: computed style,
+ * box and behaviour are identical with and without the policy; docs/agent-notes/web.md section 5). Only that exact
+ * signature is tolerated, only on WebKit, only when the page holds a `<select>`; any other violation still fails.
+ */
+function isWebKitSelectQuirk(violation: CspViolation, browserName: string): boolean {
+  return browserName === 'webkit' && violation.selects > 0 && violation.directive === 'style-src-attr' && violation.blockedURI === 'inline' && violation.sample === '';
 }
 
 const SILENT_SCHEMES = /^(data|blob|about):/;
@@ -163,24 +177,31 @@ export const test = base.extend<Fixtures & Options>({
   },
 
   guard: [
-    async ({ context, baseURL }, use) => {
+    async ({ context, baseURL, browserName }, use) => {
       const requests: SeenRequest[] = [];
       const problems: string[] = [];
+      let quirks = 0;
       const storageAllowed: RegExp[] = [/^bh\.lang$/, /^bh\.draft\./];
       const origin = new URL(baseURL ?? 'http://127.0.0.1:4010').origin;
 
+      // Every violation of every page and navigation reaches the test at once (a page that navigated away keeps nothing).
+      await context.exposeBinding('__cspReport', (_source, violation: CspViolation) => {
+        if (isWebKitSelectQuirk(violation, browserName)) quirks += 1;
+        else problems.push(`CSP violation: ${violation.directive} ${violation.blockedURI} ${violation.sample} ${violation.source}`);
+      });
       await context.addInitScript(() => {
-        window.__cspViolations = [];
         document.addEventListener('securitypolicyviolation', (event) => {
-          window.__cspViolations?.push(`${event.violatedDirective} ${event.blockedURI} ${event.sample} ${event.sourceFile}:${event.lineNumber}`);
+          const report = (window as unknown as { __cspReport?: (violation: CspViolation) => void }).__cspReport;
+          report?.({ directive: event.violatedDirective, blockedURI: event.blockedURI, sample: event.sample, source: `${event.sourceFile}:${event.lineNumber}`, selects: document.querySelectorAll('select').length });
         });
       });
       context.on('request', (request) => {
         requests.push({ url: request.url(), method: request.method(), body: request.postData() });
         if (!SILENT_SCHEMES.test(request.url()) && new URL(request.url()).origin !== origin) problems.push(`request left the allowed origins: ${request.url()}`);
       });
+      const consoleReports: string[] = [];
       context.on('console', (message) => {
-        if (message.type() === 'error' && /content security policy|refused to/i.test(message.text())) problems.push(`CSP: ${message.text()}`);
+        if (message.type() === 'error' && /content security policy|refused to/i.test(message.text())) consoleReports.push(`CSP: ${message.text()}`);
       });
       context.on('weberror', (error) => {
         problems.push(`uncaught error in the page: ${error.error().message}`);
@@ -198,12 +219,10 @@ export const test = base.extend<Fixtures & Options>({
         if (page.isClosed() || !page.url().startsWith('http')) continue;
         try {
           const state = await page.evaluate(() => ({
-            violations: window.__cspViolations ?? [],
             local: Object.keys(window.localStorage),
             session: Object.keys(window.sessionStorage),
             cookie: document.cookie,
           }));
-          for (const violation of state.violations) problems.push(`CSP violation: ${violation}`);
           for (const key of [...state.local, ...state.session]) {
             if (!storageAllowed.some((allowed) => allowed.test(key))) problems.push(`browser storage holds ${key}`);
           }
@@ -211,6 +230,13 @@ export const test = base.extend<Fixtures & Options>({
         } catch {
           // A page that is navigating or crashed has nothing left to inspect.
         }
+      }
+      // The console line that accompanies the quirk ("Refused to apply a stylesheet...") is excused once per quirk;
+      // a real refused style keeps its console line as a problem.
+      let excused = quirks;
+      for (const report of consoleReports) {
+        if (excused > 0 && /refused to apply a stylesheet/i.test(report)) excused -= 1;
+        else problems.push(report);
       }
       const cookies = await context.cookies();
       if (cookies.length > 0) problems.push(`cookies were set: ${cookies.map((cookie) => cookie.name).join(', ')}`);

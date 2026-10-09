@@ -163,7 +163,12 @@ function RequestSheet({ kind, token, context, onClose, onSent }: SheetProps): JS
       onSent();
     } catch (error) {
       if (error instanceof SealError) setSealFailed(true);
-      else setFailure(error instanceof ApiError ? error : new ApiError('network'));
+      else if (error instanceof ApiError && error.code === 'keyMismatch') {
+        // Her key was rotated since this page loaded (see IntakePage): drop the envelope and the cached page.
+        envelope.current = null;
+        api.forgetPublicPage(pro.slug);
+        setSealFailed(true);
+      } else setFailure(error instanceof ApiError ? error : new ApiError('network'));
     } finally {
       setBusy(false);
     }
