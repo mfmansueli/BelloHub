@@ -48,9 +48,10 @@ Nothing was pushed, deployed, or run against a real project; every emulator run 
 - Already stored: `bookings/{id}.policy` (the cancellation policy at booking time) and every client action was already
   evaluated from it. Missing: the rule TEXT (`getBooking` read the live profile) and the no-show setting that concerns the
   client. Added to `BookingDoc` (`lib/bookingCreate.ts`, the single writer, so `rebook` and waitlist offers get it too):
-  `rulesText` (the published map, every booking language, <= 2000 chars each) and `noShowPolicy: { isOn, lateCancelCounts }`.
+  `rulesText` (the published map, every booking language, <= 2000 chars each) and `noShowPolicy: { isOn, limit, lateCancelCounts }`.
 - `getBooking`: `rulesText` comes from the booking (the profile only for bookings made before this change), new field
-  `lateCancelCounts: boolean`. `policy` was already the snapshot. The portal has no server-side bookings (its `upcoming`
+  `lateCancelCounts: boolean` and `noShowLimit?: number` (only when the booking-time policy was on, so the page states the
+  limit only when the policy says so). `policy` was already the snapshot. The portal has no server-side bookings (its `upcoming`
   is app-published content, and D52 keeps forms/check-in off the portal), so nothing to add there.
 - `cancelBooking`: a late cancellation writes the `lateCancel` mark only when the booking-time policy said it counts
   (bookings without the snapshot keep the old "always record" behaviour). `markNoShow` (the professional's own action)
@@ -58,7 +59,7 @@ Nothing was pushed, deployed, or run against a real project; every emulator run 
 - Tests: `test/integration/policySnapshot.test.ts` (4: publish A, book, publish B (profile + availability), read back A
   and the new booking reads B, stored doc checked; `actions` evaluated per snapshot at the same instant: A -> free/direct,
   B -> askByMessage/message and `cancelBooking` is `NOT_ALLOWED` for B only; the late-cancel mark follows booking-time
-  `lateCancelCounts`; a legacy booking without the snapshot falls back to the page texts). `manageBooking.test.ts`:
+  `lateCancelCounts`; `noShowLimit` absent when the policy was off; a legacy booking without the snapshot falls back to the page texts). `manageBooking.test.ts`:
   the existing late-cancel test now sets `lateCancelCounts` BEFORE booking.
 
 ### D51: inbox keys
@@ -100,9 +101,12 @@ Nothing was pushed, deployed, or run against a real project; every emulator run 
 
 1. Section 2 access table: owner = Sign in with Apple or phone, **no phone number required on the token** (D44).
 2. Section 4 conventions: the policy snapshot paragraph (D47).
-3. 5.5 `sendEmailCode`: the only verification the page uses (D46). 5.7 retitled "**not used by the web page**".
+3. 5.5 `sendEmailCode`: the only verification the page uses (D46). 5.7 retitled "**not used by the web page**". 5.9
+   `findBookings`: the page calls it with `email` + an e-mail proof. Section 2: **the browser sends no App Check token, so
+   `ENFORCE_APP_CHECK` must stay off for the web** (or the public/token functions exempted first).
 4. 5.8 `createBooking`: `guests` documented as a count, `client` closed, a note that unknown fields are rejected by path (D45, D48).
-5. 5.11 `getBooking`: `policy` and `rulesText` documented as the booking's snapshot; **new field `lateCancelCounts: boolean`** (D47).
+5. 5.11 `getBooking`: `policy` and `rulesText` documented as the booking's snapshot; **new fields `lateCancelCounts: boolean`,
+   `noShowLimit?: number`** (D47).
 6. 5.12: late cancellation recorded only when `lateCancelCounts` was on at booking time.
 7. 5.15 `submitSealed`: `KEY_MISMATCH` rule (current key, or retired < 24 h and not compromised) (D51).
 8. 6.2 `updateInboxKey`: **input `compromised?: boolean`; output entries gain `acceptsUntil?`, `compromisedAt?`**; the grace,
@@ -114,7 +118,7 @@ Nothing was pushed, deployed, or run against a real project; every emulator run 
 `contracts/schemas.json` regenerated (`deleteAccount`, `updateInboxKey`, `getBooking`).
 
 Response shapes that CHANGED for existing callers: `deleteAccount` (new required `appleRevocation` field),
-`updateInboxKey` (two optional fields), `getBooking` (new required `lateCancelCounts`). Inputs only gained optional fields.
+`updateInboxKey` (two optional fields), `getBooking` (new required `lateCancelCounts`, optional `noShowLimit`). Inputs only gained optional fields.
 
 ## 4. Results
 
@@ -125,7 +129,7 @@ Response shapes that CHANGED for existing callers: `deleteAccount` (new required
 | lint (ESLint `--max-warnings 0`), typecheck, build, `npm audit --audit-level=high` | 0 problems |
 | unit (no emulator) | **755** passed (739 before: +7 Apple revoker, +4 keyring, +5 rewritten keyring block net) |
 | Firestore + Storage rules | **66** passed (65 + the Apple-provider rule test) |
-| use cases on the emulators | **274** passed (258 + 5 owner identity, 4 policy snapshot, 2 createBooking D45/D48, 1 e-mail IP limit, 1 mailbox, 2 profile, 1 retention) |
+| use cases on the emulators | **275** passed (258 + 5 owner identity, 5 policy snapshot, 2 createBooking D45/D48, 1 e-mail IP limit, 1 mailbox, 2 profile, 1 retention) |
 | transport (Functions emulator) | **19** passed (17 + Apple-provider owner token, phone-provider owner token) |
 
 `scripts/e2e-local.sh`: first run **failed** on "she cancels for free" (the page showed the late-cancellation warning).
@@ -165,7 +169,14 @@ Port handling: `firebase.test.json` ports were free; `e2e-local.sh` took its def
 Also for the iOS agent: `deleteAccount` wants a fresh `ASAuthorizationAppleIDRequest` authorization code taken right
 before the call (codes expire in 5 minutes and are single-use); show "revoke in Settings" when the answer is not `revoked`.
 
-## 6. Not done / open
+## 6. Coordinator follow-up (web agent's requests, 2026-10-09)
+
+1. `getBooking.rulesText` snapshot per booking: done (commit `a7325de`, stored at `createBooking`, returned with `policy`).
+2. `lateCancelCounts` and `noShowLimit` on the snapshot: done (`lateCancelCounts` in `a7325de`, `noShowLimit` in the
+   follow-up commit; `noShowLimit` is present only when the booking-time policy was on).
+3. API.md 5.5, 5.7, 5.9 rewritten for e-mail-only verification; the App Check sentence added to section 2.
+
+## 7. Not done / open
 
 - The iOS half of D44 (Sign in with Apple in the app, passing the code to `deleteAccount`) and of D47 (the policy screens'
   copy is on `build/v1` at `b1ed521`, by another agent) are outside `firebase/`.

@@ -14,7 +14,10 @@ final class FakeAuthProvider: AuthProvider, Sendable {
         var verifyError: AuthError?
         var requestedPhones: [String] = []
         var verifiedCodes: [String] = []
+        var appleError: AuthError?
+        var appleCredentials: [AppleCredential] = []
         var signedOut = false
+        var tokenError: AuthError?
     }
 
     private let state = OSAllocatedUnfairLock(initialState: State())
@@ -33,6 +36,12 @@ final class FakeAuthProvider: AuthProvider, Sendable {
         set { state.withLock { $0.verifyError = newValue } }
     }
 
+    var appleError: AuthError? {
+        get { state.withLock { $0.appleError } }
+        set { state.withLock { $0.appleError = newValue } }
+    }
+
+    var appleCredentials: [AppleCredential] { state.withLock { $0.appleCredentials } }
     var requestedPhones: [String] { state.withLock { $0.requestedPhones } }
     var verifiedCodes: [String] { state.withLock { $0.verifiedCodes } }
     var didSignOut: Bool { state.withLock { $0.signedOut } }
@@ -52,9 +61,31 @@ final class FakeAuthProvider: AuthProvider, Sendable {
         try state.withLock { state in
             state.verifiedCodes.append(code)
             if let error = state.verifyError { throw error }
-            let user = AuthUser(id: "fake-user", phoneE164: state.requestedPhones.last ?? "+0")
+            let user = AuthUser(id: "fake-user", method: .phone, phoneE164: state.requestedPhones.last ?? "+0")
             state.user = user
             return user
+        }
+    }
+
+    func signInWithApple(_ credential: AppleCredential) async throws -> AuthUser {
+        try state.withLock { state in
+            state.appleCredentials.append(credential)
+            if let error = state.appleError { throw error }
+            let user = AuthUser(id: "fake-apple-user", method: .apple, displayName: credential.fullName)
+            state.user = user
+            return user
+        }
+    }
+
+    var tokenError: AuthError? {
+        get { state.withLock { $0.tokenError } }
+        set { state.withLock { $0.tokenError = newValue } }
+    }
+
+    func idToken() async throws -> String {
+        try state.withLock { state in
+            if let error = state.tokenError { throw error }
+            return "fake-id-token"
         }
     }
 

@@ -192,6 +192,8 @@ export const getBooking = {
     rulesText: RulesText,
     /** D47: under the no-show policy of booking time, a late cancellation counts as a missed visit. */
     lateCancelCounts: z.boolean(),
+    /** D47: the no-show limit of booking time, only when that policy was on (the page may state it then). */
+    noShowLimit: z.number().int().optional(),
     actions: z.strictObject({
       cancel: z.enum(['free', 'allowedWithWarning', 'askByMessage', 'unavailable']),
       reschedule: z.enum(['direct', 'request', 'message', 'unavailable']),
@@ -272,10 +274,6 @@ export const getFormContext = {
     professional: z.strictObject({ displayName: z.string() }),
     formVersion: z.number().int(),
     template: z.record(z.string(), z.unknown()),
-    consent: z.partialRecord(
-      LocaleSchema,
-      z.strictObject({ textVersion: z.string(), text: z.string(), guardianText: z.string().optional() })
-    ),
     inboxKey: InboxKeySchema,
     intakeCompletedWithinMonths: z.boolean()
   })

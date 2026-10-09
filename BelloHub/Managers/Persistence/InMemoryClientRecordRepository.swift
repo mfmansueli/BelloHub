@@ -34,6 +34,8 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     var patchTestsByID: [UUID: PatchTest] = [:]
     let clock: @Sendable () -> Date
     var bookingSetupMemory = BookingSetupMemory()
+    // Not private: the time blocks live in `InMemoryClientRecordRepository+TimeBlocks.swift`.
+    var timeBlocksByID: [UUID: TimeBlock] = [:]
     let changes = VaultChangeBroadcaster()
 
     init(clock: @escaping @Sendable () -> Date = { Date() }) {
@@ -78,6 +80,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         consentsByID = consentsByID.filter { $0.value.clientID != id }
         patchTestsByID = patchTestsByID.filter { $0.value.clientID != id }
         plansByID = plansByID.filter { $0.value.clientID != id }
+        bookingSetupMemory.messageLogsByID = bookingSetupMemory.messageLogsByID.filter { $0.value.clientID != id }
         clientsByID[id] = nil
         // The registration-ledger entry stays (D42).
         changes.notify()

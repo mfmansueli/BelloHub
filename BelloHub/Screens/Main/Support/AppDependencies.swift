@@ -18,6 +18,12 @@ struct AppDependencies {
     let registration: ClientRegistrationService
     let bookingSetup: BookingSetupService
     let appointments: AppointmentService
+    let timeBlocks: TimeBlockService
+    let messages: MessageService
+    let agendaDigest: AgendaDigestService
+    let notifications: NotificationService
+    let treatmentTools: TreatmentTools
+    let publishing: PublishingService
     let subscription: SubscriptionService
     let recoveryKey: RecoveryKeyService
     let account: AccountService
@@ -38,18 +44,35 @@ struct AppDependencies {
         let keyStore = KeychainKeyStore()
         let keyManager = KeyManager(store: keyStore)
         let vault = VaultService.live(keyManager: keyManager)
+        let session = SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults)
+        let client = URLSessionCallableClient(tokens: SessionIDTokenProvider(session: session))
+        let server = RemoteBookingRepository(client: client)
+        let profile = ProfileService(vault: vault)
         let permissions = PermissionService()
+        let appointments = AppointmentService(vault: vault)
+        let timeBlocks = TimeBlockService(vault: vault)
         let subscription = SubscriptionService()
         return AppDependencies(
-            session: SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults),
+            session: session,
             keyManager: keyManager,
             appLock: AppLockService(keyManager: keyManager, defaults: defaults),
             permissions: permissions,
             vault: vault,
-            profile: ProfileService(vault: vault),
+            profile: profile,
             registration: ClientRegistrationService(vault: vault, subscription: subscription),
             bookingSetup: BookingSetupService(vault: vault),
-            appointments: AppointmentService(vault: vault),
+            appointments: appointments,
+            timeBlocks: timeBlocks,
+            messages: MessageService(vault: vault),
+            agendaDigest: AgendaDigestService(appointments: appointments, timeBlocks: timeBlocks, vault: vault),
+            notifications: NotificationService(
+                appointments: appointments, vault: vault, permissions: permissions, profile: profile,
+                prefs: DefaultsNotificationPrefsStore(defaults: defaults)
+            ),
+            treatmentTools: TreatmentTools.make(),
+            publishing: PublishingService(
+                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
+            ),
             subscription: subscription,
             recoveryKey: RecoveryKeyService(keyManager: keyManager, defaults: defaults),
             account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),
@@ -71,23 +94,41 @@ struct AppDependencies {
         let keyStore = InMemoryKeyStore(seed: uiTestSeed)
         let keyManager = KeyManager(store: keyStore)
         let vault = VaultService(repository: InMemoryClientRecordRepository())
+        let profile = ProfileService(vault: vault)
+        let permissions = PermissionService(provider: UITestPermissionProvider())
+        let appointments = AppointmentService(vault: vault)
+        let timeBlocks = TimeBlockService(vault: vault)
         let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
         let biometrics = UITestBiometrics(mode: mode)
-        let permissions = PermissionService(provider: UITestPermissionProvider())
         let subscription = SubscriptionService(
             provider: UITestSubscriptionProvider(hasPlan: options.uiPlan == "active"),
             verifier: OfflineSubscriptionVerifier()
         )
+        // No network in a UI test: either the in-memory fake server or none at all.
+        let server: any BookingRepository = options.uiOnline == "fake"
+            ? UITestBookingRepository() : OfflineBookingRepository()
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
             keyManager: keyManager,
             appLock: AppLockService(keyManager: keyManager, biometrics: biometrics, defaults: defaults),
             permissions: permissions,
             vault: vault,
-            profile: ProfileService(vault: vault),
+            profile: profile,
             registration: ClientRegistrationService(vault: vault, subscription: subscription),
             bookingSetup: BookingSetupService(vault: vault),
-            appointments: AppointmentService(vault: vault),
+            appointments: appointments,
+            timeBlocks: timeBlocks,
+            messages: MessageService(vault: vault, sender: UITestMessageSender()),
+            agendaDigest: AgendaDigestService(appointments: appointments, timeBlocks: timeBlocks, vault: vault),
+            notifications: NotificationService(
+                appointments: appointments, vault: vault, permissions: permissions, profile: profile,
+                prefs: DefaultsNotificationPrefsStore(defaults: defaults), scheduler: UITestNotificationScheduler()
+            ),
+            treatmentTools: TreatmentTools.make(),
+            publishing: PublishingService(
+                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
+                debounce: .milliseconds(300), retryDelays: [.seconds(2)]
+            ),
             subscription: subscription,
             recoveryKey: RecoveryKeyService(keyManager: keyManager, biometrics: biometrics, defaults: defaults),
             account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),

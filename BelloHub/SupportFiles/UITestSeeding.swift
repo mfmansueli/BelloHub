@@ -22,7 +22,11 @@ enum UITestSeeding {
     static func seedIfRequested(_ dependencies: AppDependencies, options: LaunchOptions) async {
         await ImportUITestSeeding.seedIfRequested(dependencies, options: options)
         await CatalogUITestSeeding.seedIfRequested(dependencies)
-        guard let seed = options.seed, ["onboarded", "clientWithHealth", "clients"].contains(seed), !options.keepsState
+        await CalendarUITestSeeding.seedIfRequested(dependencies)
+        await AppointmentUITestSeeding.seedIfRequested(dependencies, options: options)
+        await HomeUITestSeeding.seedIfRequested(dependencies)
+        let seeds = ["onboarded", "clientWithHealth", "clients", "appointments"]
+        guard let seed = options.seed, seeds.contains(seed), !options.keepsState
         else { return }
         let defaults = dependencies.defaults
         let user = AuthUser(id: userID, phoneE164: phone)
@@ -48,6 +52,8 @@ enum UITestSeeding {
         if seed == "clients", let repository = dependencies.vault.repository {
             _ = try? await ClientsFixtures.seed(into: repository, now: Date())
         }
+        await TreatmentFlowUITestSeeding.seedIfRequested(dependencies)
+        await RecordUITestSeeding.seedIfRequested(dependencies)
     }
 }
 #endif

@@ -25,8 +25,8 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 
 | Model | Encrypted fields |
 |---|---|
-| `HealthForm` | all `answers`, `signatureImage`, `guardianName`, `minorName` |
-| `Consent` | `signatureImage`, `typedSignature` |
+| `HealthForm` | all `answers`, `minorName` |
+| `ConsentRecord` | `label`, `note`, `document` (photo or file of the real signed paper) |
 | `TreatmentRecord` | `notes`, `technique`, `productsUsed`, `result` detail text, `aftercare`, `nextSessionSuggestion` |
 | `RecordCorrection` | `oldValue`, `newValue`, `reason` |
 | `Incident` | `symptoms`, `actionTaken`, `followUp` |
@@ -54,8 +54,8 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 
 ### Clients
 - **Client**: `name`, `phoneE164?`, `email?`, `photo?`, `tags`, `source` (`bookingLink`, `import`, `manual`, `referral`), `birthday?`, `isArchived`, `onlineBookingStopped`, `remindersEnabled`, plus the encrypted fields above.
-- **HealthForm**: `client`, `formVersion`, `answers` (key → value; includes isotretinoin or peel in the last 6 months), `filledBy` (`client`, `professional`), `isForMinor`, `signedAt?`, `importedFromItemID?` (dedup).
-- **Consent**: `client`, `kind` (`treatment`, `photos`), `signedAt`, `textVersion`, `localeID`. Photo consent drives `Photo.visibility`.
+- **HealthForm**: `client`, `formVersion`, `answers` (key → value; includes isotretinoin or peel in the last 6 months), `filledBy` (`client`, `professional`), `isForMinor`, `submittedAt?`, `importedFromItemID?` (dedup). No consent text, agreement or signature travels with it (D55).
+- **ConsentRecord** (D55; consents are the professional's own business; the app only records their status): `client`, `label` (free, hers: "treatment", "photos", "guardian"…), `isSigned`, `date`, `note?`, `document?` (encrypted photo or file of the real signed paper). The app writes no consent text; a `photos` record she marks signed is what drives `Photo.visibility`.
 - **SessionPlan**: `client`, `name`, `totalSessions`, `intervalWeeks`, `startDate`, `currentIndex`.
 
 ### Agenda
@@ -100,7 +100,7 @@ Region per D29. Collections (details, rules and functions in `11-BACKEND-FIREBAS
 | `rescheduleRequests/{id}`, `waitlist/{id}` | request data (name, phone, requested time, note) | Functions only | The owner |
 | `devices/{uid}/tokens/{id}` | push tokens | The app | Functions |
 
-What the server **does** know: client first name or name and phone for the people who book, service, time, status, and the fact that a sealed form exists for a booking. It **never** knows: health answers, consent signature, notes, photos, allergies, habits, tags, anything from the record.
+What the server **does** know: client first name or name and phone for the people who book, service, time, status, and the fact that a sealed form exists for a booking. It **never** knows: health answers, consent records, notes, photos, allergies, habits, tags, anything from the record.
 
 Time zones: store UTC instants plus the business `timeZoneID`; render in the **business** time zone on the web ("15:00 in São Paulo") and tell clients if their device is in a different zone.
 

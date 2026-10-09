@@ -13,4 +13,8 @@ enum AlertKind: String, CaseIterable, Sendable {
     case followUpsDue
     case birthday
     case dailySummary
+    /// The professional's own next visit is about to start (a local notification).
+    case nextVisit
+    /// Client reminders are ready for her to send by WhatsApp (D31, a local notification).
+    case remindersReady
 }

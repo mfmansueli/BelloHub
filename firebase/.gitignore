@@ -16,3 +16,5 @@ functions/*.tsbuildinfo
 
 # Local emulator state
 emulator-data/
+.hosting-public/
+firebase.hosting-deploy.json

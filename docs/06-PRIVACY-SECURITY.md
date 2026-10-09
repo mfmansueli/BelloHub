@@ -10,7 +10,7 @@ This is the most important document after the product rules. Privacy here is **a
 
 | Class | Examples | Where it may live | Rule |
 |---|---|---|---|
-| **S · Sensitive** | health answers, consent signature, treatment notes, allergies, sensitivities, incident details, photos, audio, transcripts, client habits, private notes | iPhone vault + her iCloud (encrypted by the app, D26). In transit from a client: **sealed envelope** only | Never readable by any server, log, analytics, notification, email, WhatsApp text, crash report or third party |
+| **S · Sensitive** | health answers, consent records (status and the photo of the signed paper), treatment notes, allergies, sensitivities, incident details, photos, audio, transcripts, client habits, private notes | iPhone vault + her iCloud (encrypted by the app, D26). In transit from a client: **sealed envelope** only | Never readable by any server, log, analytics, notification, email, WhatsApp text, crash report or third party |
 | **O · Operational** | client name, phone, optional email, service, time, status, policy values, availability, busy blocks, push tokens | Firestore/Functions (D3), iPhone | Minimum necessary; deleted per D30; no PII in logs |
 | **P · Public** | business name, bio, photo, city, public credentials, services the professional chose to publish, rules text, inbox **public** key | Firestore `publicProfiles`, the web page | Only what she publishes |
 
@@ -63,7 +63,7 @@ Server-side metadata next to it: `ownerUid`, `bookingId`, `createdAt`, `expiresA
 
 ### 3.4 Payload kinds (UTF-8 JSON before sealing)
 
-- `intake` (≤ 256 KB): `{schema:1, bookingId, clientName, localeId, formVersion, answers:{<questionKey>:<value>}, isForMinor, minorName?, guardianName?, consent:{textVersion, textLocaleId, acceptedAt, typedSignature}, signaturePng?:<base64, ≤ 64 KB>, submittedAt, _pad}`
+- `intake` (≤ 256 KB): `{schema:2, bookingId, localeId, formVersion, answers:{<questionKey>:<value>}, isForMinor, minorName?, submittedAt, _pad}`. D55: no consent block, no signature, no guardian name; consents are the professional's own business; the app only records their status. (Schema 1, before D55, also carried `clientName`, `guardianName`, `consent{…}` and `signaturePng`; the app still opens one if a browser sealed it before the change.)
 - `checkin` (≤ 3 MB, stored in Cloud Storage when > 200 KB): `{schema:1, bookingId, feeling:"good"|"okay"|"irritated"|"reaction", note?, photoJpeg?:<base64 ≤ 1.5 MB>, submittedAt, _pad}`
 - `datarequest` (≤ 8 KB): `{schema:1, request:"copy"|"delete", name, phone, note?, submittedAt, _pad}`
 
@@ -76,7 +76,7 @@ Question keys and answer value types are defined by the professional's `FormTemp
 3. **iPhone:** `MailboxService.sync()` runs on push, on foreground, and on pull-to-refresh in `Notifications`. For each item: download → find the private key by `keyId` → open → validate the schema → `ClientRecordRepository.importIntake(_, itemID:)` in one transaction (idempotent by `itemId`) → `acknowledgeMailboxItem(itemID)`. Then it raises a normal alert "A client sent her health form" (no name on the lock screen).
 4. **Function:** on acknowledge, deletes the item (and Storage object) immediately; a scheduled job deletes anything past `expiresAt`.
 5. **Failure handling:** decrypt or schema failure → keep a local `undecryptable` record (id and time only), alert "A form could not be opened. Ask the client to send it again", leave the server item until TTL. App crash between import and acknowledge → next sync sees the id already imported, skips the import and acknowledges.
-6. **Client feedback:** after submit, the page shows exactly: "Your answers were sealed and sent. Only Maria can read them, and your consent is saved with them. You will not be asked again for 12 months." (localized, with the professional's first name).
+6. **Client feedback:** after submit, the page shows exactly: "Your answers were sealed and sent. Only Maria can read them. You will not be asked again for 12 months." (localized, with the professional's first name).
 
 ### 3.6 What the server learns
 
@@ -165,11 +165,11 @@ The honest limit: **the server serves the code that encrypts.** A compromised or
 | United States | State laws: **CCPA/CPRA** (California), **Washington My Health My Data Act**, others (Texas, Virginia…); HIPAA generally **does not** apply to a non-covered independent beauty professional, but some aesthetic-health roles may be covered entities | Consumer-health-data notice and consent flows, deletion on request, no sale or sharing of health data. Let the professional state if she is a HIPAA covered entity (setting in `Privacy` → help text only, no feature in v1). |
 
 Cross-cutting engineering requirements that follow:
-- **Consent** is recorded with `textVersion`, locale, timestamp and signature (typed or drawn), per purpose (treatment, photos).
+- **Consent** (D55): consents are the professional's own business; the app only records their status. Bello Hub writes no consent, treatment-agreement, photo-consent or guardian text in the app, on the web or on the server; per client she keeps consent records (label, signed yes/no, date, note, optional photo or file of the real signed paper, encrypted in the vault). The only legal link on the booking page is Bello Hub's own privacy policy (as processor), which is not a consent text.
 - **Data-subject requests** reach the professional through `datarequest` envelopes and `Cl-7-MyData`; she fulfills them from `Privacy`/`ExportRecord`/`ExportAll`; deletion cascades (device + server).
 - **Retention** per profession is a setting with a conservative default and a note that legal minimums may apply (do not auto-delete clinical records by default; warn instead).
 - **Breach plan:** a documented one-page procedure in `docs/` for the owners (what to log, who to notify, how to revoke tokens and rotate keys).
-- **Minors:** guardian flow (D17); texts provisional.
+- **Minors:** the form asks whether the visit is for someone under 18 and the young person's name (D17, a status); the guardian's consent is hers to collect in person (D55), no text and no signature on the web.
 
 ## 10. Threat model (summary)
 

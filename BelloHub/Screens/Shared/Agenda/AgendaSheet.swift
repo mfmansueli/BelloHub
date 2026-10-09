@@ -24,6 +24,8 @@ enum AgendaSheet: Hashable, Identifiable, Sendable {
     case runningLate(appointmentID: UUID)
     /// 6.6 BlockTime.
     case blockTime(day: Date?)
+    /// A follow-up, win-back or birthday message to a client (not about one visit).
+    case clientMessage(ClientMessageRequest)
 
     var id: Self { self }
 }

@@ -56,13 +56,11 @@ export const BookingSettingsPublishSchema = z.strictObject({
   maxDaysAhead: z.number().int().min(1).max(365)
 });
 
+// D55: the health form is only the questions. Consent texts are the professional's own business, handled outside the
+// app; the server carries none, so a `consent` field here is refused like any other unknown field.
 export const IntakePublishSchema = z.strictObject({
   formVersion: z.number().int().min(1).max(1000),
-  template: z.record(z.string(), z.unknown()),
-  consent: z.partialRecord(
-    LocaleSchema,
-    z.strictObject({ textVersion: text(32), text: text(20_000, true), guardianText: text(20_000, true).optional() })
-  )
+  template: z.record(z.string(), z.unknown())
 });
 
 const profileFields = {

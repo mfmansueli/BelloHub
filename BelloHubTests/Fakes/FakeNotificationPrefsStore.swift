@@ -4,25 +4,39 @@
 //
 
 @testable import BelloHub
+import os
 
 /// Notification preferences held in memory, with a switch that makes every save fail.
-@MainActor
-final class FakeNotificationPrefsStore: NotificationPrefsStoring {
-    private(set) var stored: NotificationPrefs?
-    var failsSaves = false
-    private(set) var saveCount = 0
-
-    init(stored: NotificationPrefs? = nil) {
-        self.stored = stored
+final class FakeNotificationPrefsStore: NotificationPrefsStoring, Sendable {
+    private struct State {
+        var stored: NotificationPrefs?
+        var failsSaves = false
+        var saveCount = 0
     }
 
-    func load() -> NotificationPrefs? {
-        stored
+    private let state: OSAllocatedUnfairLock<State>
+
+    init(stored: NotificationPrefs? = nil) {
+        state = OSAllocatedUnfairLock(initialState: State(stored: stored))
+    }
+
+    var stored: NotificationPrefs? { state.withLock { $0.stored } }
+    var saveCount: Int { state.withLock { $0.saveCount } }
+    var failsSaves: Bool {
+        get { state.withLock { $0.failsSaves } }
+        set { state.withLock { $0.failsSaves = newValue } }
+    }
+
+    func load() -> NotificationPrefs {
+        stored ?? .standard
     }
 
     func save(_ prefs: NotificationPrefs) throws {
-        saveCount += 1
-        if failsSaves { throw FakeStoreError() }
-        stored = prefs
+        let fails = state.withLock { current -> Bool in
+            current.saveCount += 1
+            return current.failsSaves
+        }
+        if fails { throw FakeStoreError() }
+        state.withLock { $0.stored = prefs }
     }
 }

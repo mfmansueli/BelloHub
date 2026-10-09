@@ -12,6 +12,8 @@ struct BookingSetupMemory: Sendable {
     var availability: AvailabilitySettings?
     var setup: BookingSetup?
     var quickRepliesByID: [UUID: QuickReply] = [:]
+    /// The message log (S6) rides here for the same reason: the actor's main file takes no more stored properties.
+    var messageLogsByID: [UUID: MessageLog] = [:]
 }
 
 extension InMemoryClientRecordRepository {

@@ -40,7 +40,7 @@ beforeAll(async () => {
   inboxKey = newInboxKey();
   await callOk('ensureAccount', { countryCode: 'BR', locale: 'pt-BR' }, { idToken: ownerToken });
   await callOk('claimSlug', { slug }, { idToken: ownerToken });
-  await callOk('publishProfile', { profile: mariaProfile(inboxKey, { intake: { formVersion: 1, template: { questions: [] }, consent: { en: { textVersion: '2026-10', text: 'I agree' } } } }) }, { idToken: ownerToken });
+  await callOk('publishProfile', { profile: mariaProfile(inboxKey, { intake: { formVersion: 1, template: { questions: [] } } }) }, { idToken: ownerToken });
   await callOk('publishAvailability', mariaAvailability(), { idToken: ownerToken });
   await callOk('registerDevice', { fcmToken: `fcm-${'t'.repeat(60)}`, platform: 'ios' }, { idToken: ownerToken });
 }, 120_000);

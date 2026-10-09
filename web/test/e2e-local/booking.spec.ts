@@ -132,8 +132,9 @@ test.describe('a client and the real functions', () => {
     await tap(page, 'answer-skinCondition-no');
     await tap(page, 'answer-isotretinoin-no');
     await page.getByTestId('answer-anythingElse').fill(SECRET);
-    await page.getByTestId('typed-signature').fill(CLIENT.name);
-    await tap(page, 'consent');
+    // D55: nothing to tick or sign; the questions are the whole form.
+    await expect(page.getByTestId('consent')).toHaveCount(0);
+    await expect(page.getByTestId('typed-signature')).toHaveCount(0);
     await page.getByTestId('submit-intake').click();
     await expect(page.getByTestId('sealed-message')).toBeVisible();
 

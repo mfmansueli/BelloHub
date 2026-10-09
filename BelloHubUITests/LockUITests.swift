@@ -43,6 +43,6 @@ final class LockUITests: XCTestCase {
         app.tapButton("account.signOutButton")
         app.tapButton("account.signOutConfirmButton")
 
-        XCTAssertTrue(app.buttons["welcome.getStartedButton"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["signIn.appleButton"].waitForExistence(timeout: 5))
     }
 }

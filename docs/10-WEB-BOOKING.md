@@ -31,7 +31,7 @@ Screens are in the prototype as `Bk-1…Bk-11` (booking) and `Cl-1…Cl-9` (clie
 | `/m/{token}` | `Bk-9-Appointment` | Management page |
 | `/m/{token}/reschedule` | `Cl-9-Reschedule` | Reschedule (direct / request / message) |
 | `/m/{token}/cancel` | `Cl-6-Cancel` | Cancel with rules and reason |
-| `/m/{token}/form` | `Cl-4-Intake` | Health form and consent (sealed) |
+| `/m/{token}/form` | `Cl-4-Intake` | Health form (the questions, sealed); no consent text (D55) |
 | `/m/{token}/checkin` | `Cl-5-CheckIn` | One-tap skin check-in, optional note/photo (sealed) |
 | `/m/{token}/data` | `Cl-7-MyData` | What the professional keeps; request copy or deletion (sealed `datarequest`) |
 | `/p/{token}` | `Cl-2-Portal` | Portal: next session, past visits, aftercare she shared |
@@ -66,11 +66,11 @@ Shows: service, add-ons, guests, time (business zone), professional, status chip
 
 `Cl-4-Intake` and `Cl-5-CheckIn` and `Cl-7-MyData` follow `06-PRIVACY-SECURITY.md` §3 exactly.
 
-- Load: `getFormContext(token)` returns the form template version (questions, localized labels, required flags, branching for minors), the consent texts for her language and version, the professional's `inboxKey`, and whether an intake was already completed within 12 months (server flag, no content).
+- Load: `getFormContext(token)` returns the form template version (questions, localized labels, required flags, branching for minors), the professional's `inboxKey`, and whether an intake was already completed within 12 months (server flag, no content). No consent text: consents are the professional's own business; the app only records their status (D55).
 - Answers live in component state only. **No `localStorage`, `sessionStorage`, cookies, URL, console, analytics or error-reporting payload may contain an answer.** The error boundary logs only an error code.
 - Autofill and spellcheck are **off** on clinical fields (`autocomplete="off"`, `spellcheck="false"`, `autocapitalize="off"`) so browsers do not send text to third parties.
-- Signature: typed name required; drawn signature optional (canvas → PNG ≤ 64 KB).
-- Minors: checkbox "This visit is for someone under 18" reveals minor's name and guardian fields; the consent text switches to the guardian version.
+- No consent, agreement or signature step of any kind (D55): the page shows nothing to read and agree to, collects no typed or drawn signature, and the only legal link on the booking pages is Bello Hub's own privacy policy.
+- Minors: the switch "Is this visit for someone under 18?" reveals the young person's name and the minor questions; no guardian text and no guardian signature.
 - Photo for check-in: `<input type="file" accept="image/*">` (camera or library), re-encoded in a canvas to JPEG ≤ 1.5 MB, which also **strips EXIF**; preview with remove.
 - Seal and submit, show the exact success copy (`06` §3.5). Network failure: keep the sealed envelope in memory and offer retry (never store).
 

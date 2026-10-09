@@ -1007,6 +1007,11 @@
         "lateCancelCounts": {
           "type": "boolean"
         },
+        "noShowLimit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
         "actions": {
           "type": "object",
           "properties": {
@@ -1171,47 +1176,6 @@
           },
           "additionalProperties": {}
         },
-        "consent": {
-          "type": "object",
-          "propertyNames": {
-            "type": "string",
-            "enum": [
-              "pt-BR",
-              "pt-PT",
-              "es-MX",
-              "es-419",
-              "es",
-              "en",
-              "en-GB",
-              "it",
-              "fr",
-              "de",
-              "tr",
-              "id",
-              "hi",
-              "ar"
-            ]
-          },
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "textVersion": {
-                "type": "string"
-              },
-              "text": {
-                "type": "string"
-              },
-              "guardianText": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "textVersion",
-              "text"
-            ],
-            "additionalProperties": false
-          }
-        },
         "inboxKey": {
           "type": "object",
           "properties": {
@@ -1244,7 +1208,6 @@
         "professional",
         "formVersion",
         "template",
-        "consent",
         "inboxKey",
         "intakeCompletedWithinMonths"
       ],
@@ -3396,56 +3359,11 @@
                     "type": "string"
                   },
                   "additionalProperties": {}
-                },
-                "consent": {
-                  "type": "object",
-                  "propertyNames": {
-                    "type": "string",
-                    "enum": [
-                      "pt-BR",
-                      "pt-PT",
-                      "es-MX",
-                      "es-419",
-                      "es",
-                      "en",
-                      "en-GB",
-                      "it",
-                      "fr",
-                      "de",
-                      "tr",
-                      "id",
-                      "hi",
-                      "ar"
-                    ]
-                  },
-                  "additionalProperties": {
-                    "type": "object",
-                    "properties": {
-                      "textVersion": {
-                        "type": "string",
-                        "maxLength": 128
-                      },
-                      "text": {
-                        "type": "string",
-                        "maxLength": 80000
-                      },
-                      "guardianText": {
-                        "type": "string",
-                        "maxLength": 80000
-                      }
-                    },
-                    "required": [
-                      "textVersion",
-                      "text"
-                    ],
-                    "additionalProperties": false
-                  }
                 }
               },
               "required": [
                 "formVersion",
-                "template",
-                "consent"
+                "template"
               ],
               "additionalProperties": false
             }

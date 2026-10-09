@@ -1,0 +1,4447 @@
+{
+  "acknowledgeMailboxItem": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      },
+      "required": [
+        "itemId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "cancelBooking": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 800
+        },
+        "acceptLateWarning": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "cancelled"
+        },
+        "isLateCancellation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "status",
+        "isLateCancellation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "cancelBookingByOwner": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 800
+        }
+      },
+      "required": [
+        "bookingId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "const": "cancelled"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "claimSlug": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "confirmPresence": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "clientConfirmedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "clientConfirmedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "createBooking": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "addOnIds": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "guests": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "phone": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            },
+            "email": {
+              "type": "string",
+              "maxLength": 254,
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "locale": {
+              "type": "string",
+              "enum": [
+                "pt-BR",
+                "pt-PT",
+                "es-MX",
+                "es-419",
+                "es",
+                "en",
+                "en-GB",
+                "it",
+                "fr",
+                "de",
+                "tr",
+                "id",
+                "hi",
+                "ar"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "phone",
+            "locale"
+          ],
+          "additionalProperties": false
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "verification": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "phone"
+                },
+                "idToken": {
+                  "type": "string",
+                  "minLength": 20,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "method",
+                "idToken"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "email"
+                },
+                "proof": {
+                  "type": "string",
+                  "minLength": 20,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "method",
+                "proof"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "holdKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,64}$"
+        }
+      },
+      "required": [
+        "slug",
+        "serviceId",
+        "startsAt",
+        "client",
+        "verification",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "confirmed",
+                "pendingApproval"
+              ]
+            },
+            "bookingId": {
+              "type": "string"
+            },
+            "manageToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{22}$"
+            },
+            "startsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "timeZoneID": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "serviceName": {
+              "type": "string"
+            },
+            "emailSent": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "status",
+            "bookingId",
+            "manageToken",
+            "startsAt",
+            "endsAt",
+            "timeZoneID",
+            "serviceName",
+            "emailSent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            },
+            "alternatives": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "alternatives"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "paused"
+            },
+            "pausedUntil": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "deleteAccount": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "confirm": {
+          "type": "boolean",
+          "const": true
+        },
+        "appleAuthorizationCode": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "confirm"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "appleRevocation": {
+          "type": "string",
+          "enum": [
+            "revoked",
+            "failed",
+            "skipped"
+          ]
+        }
+      },
+      "required": [
+        "ok",
+        "appleRevocation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "deleteClientServerData": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        },
+        "bookingIds": {
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          }
+        },
+        "portalClientRef": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "deleted": {
+          "type": "object",
+          "properties": {
+            "bookings": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "mailboxItems": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "requests": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "waitlist": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "portals": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "contacts": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "bookings",
+            "mailboxItems",
+            "requests",
+            "waitlist",
+            "portals",
+            "contacts"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "deleted"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "ensureAccount": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "locale": {
+          "type": "string",
+          "enum": [
+            "pt-BR",
+            "pt-PT",
+            "es-MX",
+            "es-419",
+            "es",
+            "en",
+            "en-GB",
+            "it",
+            "fr",
+            "de",
+            "tr",
+            "id",
+            "hi",
+            "ar"
+          ]
+        }
+      },
+      "required": [
+        "countryCode",
+        "locale"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "appAccountToken": {},
+        "dataRegion": {
+          "type": "string",
+          "const": "eu"
+        },
+        "registrations": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "freeLimit": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "count",
+            "freeLimit"
+          ],
+          "additionalProperties": false
+        },
+        "plan": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "none",
+                "active",
+                "grace",
+                "expired",
+                "revoked"
+              ]
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "additionalProperties": false
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        }
+      },
+      "required": [
+        "uid",
+        "appAccountToken",
+        "dataRegion",
+        "registrations",
+        "plan"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "findBookings": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 254,
+          "format": "email",
+          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "verification": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "phone"
+                },
+                "idToken": {
+                  "type": "string",
+                  "minLength": 20,
+                  "maxLength": 4096
+                }
+              },
+              "required": [
+                "method",
+                "idToken"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "email"
+                },
+                "proof": {
+                  "type": "string",
+                  "minLength": 20,
+                  "maxLength": 256
+                }
+              },
+              "required": [
+                "method",
+                "proof"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "slug",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bookingId": {
+                "type": "string"
+              },
+              "manageToken": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{22}$"
+              },
+              "serviceName": {
+                "type": "string"
+              },
+              "startsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timeZoneID": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "confirmed",
+                  "pendingApproval"
+                ]
+              }
+            },
+            "required": [
+              "bookingId",
+              "manageToken",
+              "serviceName",
+              "startsAt",
+              "endsAt",
+              "timeZoneID",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "bookings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getBooking": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "confirmed",
+            "pendingApproval",
+            "cancelledByClient",
+            "cancelledByPro",
+            "declined",
+            "noShow"
+          ]
+        },
+        "phase": {
+          "type": "string",
+          "enum": [
+            "upcoming",
+            "inProgress",
+            "past"
+          ]
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "businessName": {
+              "type": "string"
+            },
+            "whatsappE164": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            }
+          },
+          "required": [
+            "displayName"
+          ],
+          "additionalProperties": false
+        },
+        "service": {
+          "type": "object",
+          "properties": {
+            "id": {},
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "addOns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {},
+              "name": {
+                "type": "string"
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": -9007199254740991,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "minutes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "guestCount": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "timeZoneID": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "serverTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "freeWindowHours": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "const": 2
+                },
+                {
+                  "type": "number",
+                  "const": 12
+                },
+                {
+                  "type": "number",
+                  "const": 24
+                },
+                {
+                  "type": "number",
+                  "const": 48
+                },
+                {
+                  "type": "number",
+                  "const": 72
+                }
+              ]
+            },
+            "clientCanReschedule": {
+              "type": "boolean"
+            },
+            "maxReschedules": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            },
+            "afterWindowCancel": {
+              "type": "string",
+              "enum": [
+                "allow",
+                "message"
+              ]
+            },
+            "afterWindowReschedule": {
+              "type": "string",
+              "enum": [
+                "request",
+                "message"
+              ]
+            },
+            "askConfirmation": {
+              "type": "boolean"
+            },
+            "graceMinutes": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "freeWindowHours",
+            "clientCanReschedule",
+            "afterWindowCancel",
+            "afterWindowReschedule",
+            "askConfirmation",
+            "graceMinutes"
+          ],
+          "additionalProperties": false
+        },
+        "rulesText": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "pt-PT",
+              "es-MX",
+              "es-419",
+              "es",
+              "en",
+              "en-GB",
+              "it",
+              "fr",
+              "de",
+              "tr",
+              "id",
+              "hi",
+              "ar"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "lateCancelCounts": {
+          "type": "boolean"
+        },
+        "noShowLimit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "actions": {
+          "type": "object",
+          "properties": {
+            "cancel": {
+              "type": "string",
+              "enum": [
+                "free",
+                "allowedWithWarning",
+                "askByMessage",
+                "unavailable"
+              ]
+            },
+            "reschedule": {
+              "type": "string",
+              "enum": [
+                "direct",
+                "request",
+                "message",
+                "unavailable"
+              ]
+            },
+            "isInsideFreeWindow": {
+              "type": "boolean"
+            },
+            "hoursUntilStart": {
+              "type": "number"
+            },
+            "cancellationWouldBeLate": {
+              "type": "boolean"
+            },
+            "canConfirmPresence": {
+              "type": "boolean"
+            },
+            "canReportLate": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "cancel",
+            "reschedule",
+            "isInsideFreeWindow",
+            "hoursUntilStart",
+            "cancellationWouldBeLate",
+            "canConfirmPresence",
+            "canReportLate"
+          ],
+          "additionalProperties": false
+        },
+        "clientConfirmedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lateByMinutes": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "rescheduleCount": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "pendingReschedule": {
+          "type": "object",
+          "properties": {
+            "requestedStart": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "declined"
+              ]
+            }
+          },
+          "required": [
+            "requestedStart",
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        "intakeRequired": {
+          "type": "boolean"
+        },
+        "tokenExpiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "bookingId",
+        "status",
+        "phase",
+        "slug",
+        "professional",
+        "service",
+        "addOns",
+        "guestCount",
+        "startsAt",
+        "endsAt",
+        "durationMinutes",
+        "timeZoneID",
+        "serverTime",
+        "client",
+        "policy",
+        "rulesText",
+        "lateCancelCounts",
+        "actions",
+        "rescheduleCount",
+        "intakeRequired",
+        "tokenExpiresAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getFormContext": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string"
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "displayName"
+          ],
+          "additionalProperties": false
+        },
+        "formVersion": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "template": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {}
+        },
+        "inboxKey": {
+          "type": "object",
+          "properties": {
+            "keyId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{11}$"
+            },
+            "alg": {
+              "type": "string",
+              "const": "hpke-v1"
+            },
+            "pub": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          },
+          "required": [
+            "keyId",
+            "alg",
+            "pub"
+          ],
+          "additionalProperties": false
+        },
+        "intakeCompletedWithinMonths": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "bookingId",
+        "professional",
+        "formVersion",
+        "template",
+        "inboxKey",
+        "intakeCompletedWithinMonths"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getHold": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "holdKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,64}$"
+        }
+      },
+      "required": [
+        "slug",
+        "holdKey"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "serviceId": {},
+        "addOnIds": {
+          "type": "array",
+          "items": {}
+        },
+        "guests": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "serviceId",
+        "addOnIds",
+        "guests",
+        "startsAt",
+        "endsAt",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getMailboxItem": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      },
+      "required": [
+        "itemId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "itemId": {},
+        "kind": {
+          "type": "string",
+          "enum": [
+            "intake",
+            "checkin",
+            "datarequest"
+          ]
+        },
+        "bookingId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "envelope": {
+          "type": "object",
+          "properties": {
+            "v": {
+              "type": "number",
+              "const": 1
+            },
+            "suite": {
+              "type": "string",
+              "const": "hpke-x25519-hkdf-sha256-chacha20poly1305"
+            },
+            "keyId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{11}$"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "intake",
+                "checkin",
+                "datarequest"
+              ]
+            },
+            "itemId": {},
+            "enc": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            },
+            "ct": {
+              "type": "string",
+              "maxLength": 4198400,
+              "pattern": "^[A-Za-z0-9_-]{22,}$"
+            }
+          },
+          "required": [
+            "v",
+            "suite",
+            "keyId",
+            "kind",
+            "itemId",
+            "enc",
+            "ct"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "itemId",
+        "kind",
+        "bookingId",
+        "createdAt",
+        "envelope"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getPortal": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string"
+            },
+            "businessName": {
+              "type": "string"
+            },
+            "whatsappE164": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            }
+          },
+          "required": [
+            "displayName"
+          ],
+          "additionalProperties": false
+        },
+        "clientName": {
+          "type": "string"
+        },
+        "upcoming": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "serviceName": {
+                "type": "string"
+              },
+              "startsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timeZoneID": {
+                "type": "string",
+                "maxLength": 64
+              }
+            },
+            "required": [
+              "serviceName",
+              "startsAt",
+              "endsAt",
+              "timeZoneID"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "next": {
+          "type": "object",
+          "properties": {
+            "serviceName": {
+              "type": "string"
+            },
+            "recommendedDate": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "serviceName"
+          ],
+          "additionalProperties": false
+        },
+        "past": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "serviceName": {
+                "type": "string"
+              },
+              "date": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "serviceName",
+              "date"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "aftercare": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "lines": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "date": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "lines"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "note": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "rebook": {
+          "type": "object",
+          "properties": {
+            "serviceId": {},
+            "addOnIds": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "serviceId",
+            "addOnIds"
+          ],
+          "additionalProperties": false
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "slug",
+        "professional",
+        "clientName",
+        "upcoming",
+        "past",
+        "aftercare",
+        "products",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getPublicPage": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "object",
+          "properties": {
+            "schemaVersion": {
+              "type": "number",
+              "const": 1
+            },
+            "slug": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+            },
+            "displayName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "businessName": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "bio": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 600
+            },
+            "city": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            "regionCode": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            "photo": {
+              "type": "string",
+              "maxLength": 165000,
+              "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+            },
+            "timeZoneID": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "currencyCode": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "locales": {
+              "minItems": 1,
+              "maxItems": 6,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "pt-PT",
+                  "es-MX",
+                  "es-419",
+                  "es",
+                  "en",
+                  "en-GB",
+                  "it",
+                  "fr",
+                  "de",
+                  "tr",
+                  "id",
+                  "hi",
+                  "ar"
+                ]
+              }
+            },
+            "whatsappE164": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            },
+            "credentials": {
+              "maxItems": 20,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "institution": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "year": {
+                    "type": "integer",
+                    "minimum": 1950,
+                    "maximum": 2100
+                  },
+                  "registrationNumber": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "services": {
+              "minItems": 1,
+              "maxItems": 60,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {},
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "category": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 60
+                  },
+                  "durationMinutes": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 720
+                  },
+                  "price": {
+                    "type": "object",
+                    "properties": {
+                      "display": {
+                        "type": "string",
+                        "enum": [
+                          "show",
+                          "startingFrom",
+                          "onRequest"
+                        ]
+                      },
+                      "amount": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1000000,
+                        "multipleOf": 0.01
+                      }
+                    },
+                    "required": [
+                      "display"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "durationMinutes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "addOns": {
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {},
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "minutes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 240
+                  },
+                  "priceText": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "minutes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "booking": {
+              "type": "object",
+              "properties": {
+                "acceptingBookings": {
+                  "type": "boolean"
+                },
+                "pausedUntil": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "requiresApproval": {
+                  "type": "boolean"
+                },
+                "maxGuests": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 0
+                    },
+                    {
+                      "type": "number",
+                      "const": 1
+                    },
+                    {
+                      "type": "number",
+                      "const": 2
+                    }
+                  ]
+                },
+                "maxDaysAhead": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 365
+                }
+              },
+              "required": [
+                "acceptingBookings",
+                "requiresApproval",
+                "maxGuests",
+                "maxDaysAhead"
+              ],
+              "additionalProperties": false
+            },
+            "policy": {
+              "type": "object",
+              "properties": {
+                "freeWindowHours": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 2
+                    },
+                    {
+                      "type": "number",
+                      "const": 12
+                    },
+                    {
+                      "type": "number",
+                      "const": 24
+                    },
+                    {
+                      "type": "number",
+                      "const": 48
+                    },
+                    {
+                      "type": "number",
+                      "const": 72
+                    }
+                  ]
+                },
+                "clientCanReschedule": {
+                  "type": "boolean"
+                },
+                "maxReschedules": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "afterWindowCancel": {
+                  "type": "string",
+                  "enum": [
+                    "allow",
+                    "message"
+                  ]
+                },
+                "afterWindowReschedule": {
+                  "type": "string",
+                  "enum": [
+                    "request",
+                    "message"
+                  ]
+                },
+                "askConfirmation": {
+                  "type": "boolean"
+                },
+                "graceMinutes": {
+                  "type": "integer",
+                  "minimum": 5,
+                  "maximum": 20
+                }
+              },
+              "required": [
+                "freeWindowHours",
+                "clientCanReschedule",
+                "afterWindowCancel",
+                "afterWindowReschedule",
+                "askConfirmation",
+                "graceMinutes"
+              ],
+              "additionalProperties": false
+            },
+            "rulesText": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "pt-PT",
+                  "es-MX",
+                  "es-419",
+                  "es",
+                  "en",
+                  "en-GB",
+                  "it",
+                  "fr",
+                  "de",
+                  "tr",
+                  "id",
+                  "hi",
+                  "ar"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "legalNotice": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "inboxKey": {
+              "type": "object",
+              "properties": {
+                "keyId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{11}$"
+                },
+                "alg": {
+                  "type": "string",
+                  "const": "hpke-v1"
+                },
+                "pub": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{43}$"
+                }
+              },
+              "required": [
+                "keyId",
+                "alg",
+                "pub"
+              ],
+              "additionalProperties": false
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "schemaVersion",
+            "slug",
+            "displayName",
+            "regionCode",
+            "timeZoneID",
+            "currencyCode",
+            "locales",
+            "credentials",
+            "services",
+            "addOns",
+            "booking",
+            "policy",
+            "rulesText",
+            "inboxKey",
+            "updatedAt"
+          ],
+          "additionalProperties": false
+        },
+        "intakeAvailable": {
+          "type": "boolean"
+        },
+        "features": {
+          "type": "object",
+          "properties": {
+            "whatsAppAutomation": {
+              "type": "boolean"
+            },
+            "smsCallingCodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "whatsAppAutomation",
+            "smsCallingCodes"
+          ],
+          "additionalProperties": false
+        },
+        "serverTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "profile",
+        "intakeAvailable",
+        "features",
+        "serverTime"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "getSlots": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "addOnIds": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "guests": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "holdKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,64}$"
+        },
+        "rescheduleToken": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "slug",
+        "serviceId",
+        "from",
+        "to"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "timeZoneID": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "durationMinutes": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "slots": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "required": [
+              "date",
+              "slots"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "timeZoneID",
+        "durationMinutes",
+        "paused",
+        "days"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "holdSlot": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "addOnIds": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "guests": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "holdKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,64}$"
+        }
+      },
+      "required": [
+        "slug",
+        "serviceId",
+        "startsAt",
+        "holdKey"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "held"
+            },
+            "holdId": {
+              "type": "string"
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "status",
+            "holdId",
+            "expiresAt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            },
+            "alternatives": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "alternatives"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "paused"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "isSlugAvailable": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "enum": [
+            "taken",
+            "reserved",
+            "invalid"
+          ]
+        }
+      },
+      "required": [
+        "available"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "joinWaitlist": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 320
+        },
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        },
+        "locale": {
+          "type": "string",
+          "enum": [
+            "pt-BR",
+            "pt-PT",
+            "es-MX",
+            "es-419",
+            "es",
+            "en",
+            "en-GB",
+            "it",
+            "fr",
+            "de",
+            "tr",
+            "id",
+            "hi",
+            "ar"
+          ]
+        },
+        "dayFrom": {
+          "type": "string"
+        },
+        "dayTo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "name",
+        "phone",
+        "locale",
+        "dayFrom",
+        "dayTo"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "markNoShow": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "mark",
+            "forgive",
+            "reset"
+          ]
+        },
+        "markId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "markedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        }
+      },
+      "required": [
+        "phone",
+        "action"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "counted": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "counted"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "moveBookingByOwner": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "bookingId",
+        "startsAt"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endsAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "startsAt",
+        "endsAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "offerWaitlistSlot": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "waitlistId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "addOnIds": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "guests": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 0
+            },
+            {
+              "type": "number",
+              "const": 1
+            },
+            {
+              "type": "number",
+              "const": 2
+            }
+          ]
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "holdMinutes": {
+          "type": "integer",
+          "minimum": 15,
+          "maximum": 1440
+        }
+      },
+      "required": [
+        "waitlistId",
+        "serviceId",
+        "startsAt"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "offered"
+            },
+            "holdKey": {
+              "type": "string"
+            },
+            "holdId": {
+              "type": "string"
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "status",
+            "holdKey",
+            "holdId",
+            "expiresAt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "publishAvailability": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "timeZoneID": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "weekly": {
+          "maxItems": 56,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "weekday": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7
+              },
+              "startMinutes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1440
+              },
+              "endMinutes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1440
+              }
+            },
+            "required": [
+              "weekday",
+              "startMinutes",
+              "endMinutes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "breaks": {
+          "maxItems": 28,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "weekday": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7
+              },
+              "startMinutes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1440
+              },
+              "endMinutes": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 1440
+              }
+            },
+            "required": [
+              "startMinutes",
+              "endMinutes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "daysOff": {
+          "maxItems": 100,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startDate": {
+                "type": "string"
+              },
+              "endDate": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "startDate",
+              "endDate"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "bufferMinutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "minNoticeHours": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 336
+        },
+        "maxDaysAhead": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 365
+        },
+        "busy": {
+          "maxItems": 600,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "startsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endsAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "appointment",
+                  "block"
+                ]
+              }
+            },
+            "required": [
+              "startsAt",
+              "endsAt",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "noShow": {
+          "type": "object",
+          "properties": {
+            "isOn": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "tell",
+                "approveNewBookings",
+                "pauseOnline"
+              ]
+            },
+            "lateCancelCounts": {
+              "type": "boolean"
+            },
+            "countingMonths": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "const": 3
+                },
+                {
+                  "type": "number",
+                  "const": 6
+                },
+                {
+                  "type": "number",
+                  "const": 12
+                }
+              ]
+            }
+          },
+          "required": [
+            "isOn",
+            "limit",
+            "action",
+            "lateCancelCounts",
+            "countingMonths"
+          ],
+          "additionalProperties": false
+        },
+        "reminderHourLocal": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 23
+        }
+      },
+      "required": [
+        "timeZoneID",
+        "weekly",
+        "breaks",
+        "daysOff",
+        "bufferMinutes",
+        "minNoticeHours",
+        "maxDaysAhead",
+        "busy",
+        "noShow"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "publishPortal": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "clientRef": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "revoke": {
+          "type": "boolean"
+        },
+        "content": {
+          "type": "object",
+          "properties": {
+            "clientName": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "upcoming": {
+              "maxItems": 20,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "serviceName": {
+                    "type": "string",
+                    "maxLength": 320
+                  },
+                  "startsAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endsAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "timeZoneID": {
+                    "type": "string",
+                    "maxLength": 64
+                  }
+                },
+                "required": [
+                  "serviceName",
+                  "startsAt",
+                  "endsAt",
+                  "timeZoneID"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "next": {
+              "type": "object",
+              "properties": {
+                "serviceName": {
+                  "type": "string",
+                  "maxLength": 320
+                },
+                "recommendedDate": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "serviceName"
+              ],
+              "additionalProperties": false
+            },
+            "past": {
+              "maxItems": 100,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "serviceName": {
+                    "type": "string",
+                    "maxLength": 320
+                  },
+                  "date": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string",
+                    "maxLength": 1200
+                  }
+                },
+                "required": [
+                  "serviceName",
+                  "date"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "aftercare": {
+              "maxItems": 50,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 480
+                  },
+                  "lines": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 2000
+                    }
+                  },
+                  "date": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "lines"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "products": {
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "maxLength": 320
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 800
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "rebook": {
+              "type": "object",
+              "properties": {
+                "serviceId": {
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                },
+                "addOnIds": {
+                  "maxItems": 10,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  }
+                },
+                "client": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "maxLength": 320
+                    },
+                    "phone": {
+                      "type": "string",
+                      "pattern": "^\\+[1-9]\\d{7,14}$"
+                    },
+                    "email": {
+                      "type": "string",
+                      "maxLength": 254,
+                      "format": "email",
+                      "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                    },
+                    "locale": {
+                      "type": "string",
+                      "enum": [
+                        "pt-BR",
+                        "pt-PT",
+                        "es-MX",
+                        "es-419",
+                        "es",
+                        "en",
+                        "en-GB",
+                        "it",
+                        "fr",
+                        "de",
+                        "tr",
+                        "id",
+                        "hi",
+                        "ar"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "phone",
+                    "locale"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "serviceId",
+                "addOnIds",
+                "client"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "clientName",
+            "past",
+            "aftercare",
+            "products"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "token",
+        "clientRef"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ok",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "publishProfile": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "object",
+          "properties": {
+            "displayName": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "businessName": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "bio": {
+              "type": "string",
+              "maxLength": 2400
+            },
+            "city": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "regionCode": {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            "photo": {
+              "type": "string",
+              "maxLength": 165000,
+              "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+            },
+            "timeZoneID": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "currencyCode": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$"
+            },
+            "locales": {
+              "minItems": 1,
+              "maxItems": 6,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "pt-PT",
+                  "es-MX",
+                  "es-419",
+                  "es",
+                  "en",
+                  "en-GB",
+                  "it",
+                  "fr",
+                  "de",
+                  "tr",
+                  "id",
+                  "hi",
+                  "ar"
+                ]
+              }
+            },
+            "whatsappE164": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            },
+            "credentials": {
+              "maxItems": 20,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 480
+                  },
+                  "institution": {
+                    "type": "string",
+                    "maxLength": 480
+                  },
+                  "year": {
+                    "type": "integer",
+                    "minimum": 1950,
+                    "maximum": 2100
+                  },
+                  "registrationNumber": {
+                    "type": "string",
+                    "maxLength": 160
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "services": {
+              "minItems": 1,
+              "maxItems": 60,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 320
+                  },
+                  "category": {
+                    "type": "string",
+                    "maxLength": 240
+                  },
+                  "durationMinutes": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "maximum": 720
+                  },
+                  "price": {
+                    "type": "object",
+                    "properties": {
+                      "display": {
+                        "type": "string",
+                        "enum": [
+                          "show",
+                          "startingFrom",
+                          "onRequest"
+                        ]
+                      },
+                      "amount": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1000000,
+                        "multipleOf": 0.01
+                      }
+                    },
+                    "required": [
+                      "display"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "durationMinutes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "addOns": {
+              "maxItems": 30,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 320
+                  },
+                  "minutes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 240
+                  },
+                  "priceText": {
+                    "type": "string",
+                    "maxLength": 160
+                  }
+                },
+                "required": [
+                  "id",
+                  "name",
+                  "minutes"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "booking": {
+              "type": "object",
+              "properties": {
+                "acceptingBookings": {
+                  "type": "boolean"
+                },
+                "pausedUntil": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "requiresApproval": {
+                  "type": "boolean"
+                },
+                "maxGuests": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 0
+                    },
+                    {
+                      "type": "number",
+                      "const": 1
+                    },
+                    {
+                      "type": "number",
+                      "const": 2
+                    }
+                  ]
+                },
+                "maxDaysAhead": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 365
+                }
+              },
+              "required": [
+                "acceptingBookings",
+                "requiresApproval",
+                "maxGuests",
+                "maxDaysAhead"
+              ],
+              "additionalProperties": false
+            },
+            "policy": {
+              "type": "object",
+              "properties": {
+                "freeWindowHours": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "const": 2
+                    },
+                    {
+                      "type": "number",
+                      "const": 12
+                    },
+                    {
+                      "type": "number",
+                      "const": 24
+                    },
+                    {
+                      "type": "number",
+                      "const": 48
+                    },
+                    {
+                      "type": "number",
+                      "const": 72
+                    }
+                  ]
+                },
+                "clientCanReschedule": {
+                  "type": "boolean"
+                },
+                "maxReschedules": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "afterWindowCancel": {
+                  "type": "string",
+                  "enum": [
+                    "allow",
+                    "message"
+                  ]
+                },
+                "afterWindowReschedule": {
+                  "type": "string",
+                  "enum": [
+                    "request",
+                    "message"
+                  ]
+                },
+                "askConfirmation": {
+                  "type": "boolean"
+                },
+                "graceMinutes": {
+                  "type": "integer",
+                  "minimum": 5,
+                  "maximum": 20
+                }
+              },
+              "required": [
+                "freeWindowHours",
+                "clientCanReschedule",
+                "afterWindowCancel",
+                "afterWindowReschedule",
+                "askConfirmation",
+                "graceMinutes"
+              ],
+              "additionalProperties": false
+            },
+            "rulesText": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "pt-PT",
+                  "es-MX",
+                  "es-419",
+                  "es",
+                  "en",
+                  "en-GB",
+                  "it",
+                  "fr",
+                  "de",
+                  "tr",
+                  "id",
+                  "hi",
+                  "ar"
+                ]
+              },
+              "additionalProperties": {
+                "type": "string",
+                "maxLength": 8000
+              }
+            },
+            "legalNotice": {
+              "type": "string",
+              "maxLength": 8000
+            },
+            "inboxKey": {
+              "type": "object",
+              "properties": {
+                "keyId": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{11}$"
+                },
+                "alg": {
+                  "type": "string",
+                  "const": "hpke-v1"
+                },
+                "pub": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{43}$"
+                }
+              },
+              "required": [
+                "keyId",
+                "alg",
+                "pub"
+              ],
+              "additionalProperties": false
+            },
+            "intake": {
+              "type": "object",
+              "properties": {
+                "formVersion": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "template": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              },
+              "required": [
+                "formVersion",
+                "template"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "displayName",
+            "regionCode",
+            "timeZoneID",
+            "currencyCode",
+            "locales",
+            "credentials",
+            "services",
+            "addOns",
+            "booking",
+            "policy",
+            "rulesText",
+            "inboxKey"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "slug",
+        "updatedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "rebook": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "addOnIds": {
+          "maxItems": 10,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          }
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        }
+      },
+      "required": [
+        "token",
+        "startsAt",
+        "idempotencyKey"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "confirmed",
+                "pendingApproval"
+              ]
+            },
+            "bookingId": {
+              "type": "string"
+            },
+            "manageToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{22}$"
+            },
+            "startsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "timeZoneID": {
+              "type": "string",
+              "maxLength": 64
+            },
+            "serviceName": {
+              "type": "string"
+            },
+            "emailSent": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "status",
+            "bookingId",
+            "manageToken",
+            "startsAt",
+            "endsAt",
+            "timeZoneID",
+            "serviceName",
+            "emailSent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            },
+            "alternatives": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "alternatives"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "paused"
+            },
+            "pausedUntil": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "registerDevice": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "fcmToken": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 4096
+        },
+        "platform": {
+          "type": "string",
+          "const": "ios"
+        },
+        "locale": {
+          "type": "string",
+          "enum": [
+            "pt-BR",
+            "pt-PT",
+            "es-MX",
+            "es-419",
+            "es",
+            "en",
+            "en-GB",
+            "it",
+            "fr",
+            "de",
+            "tr",
+            "id",
+            "hi",
+            "ar"
+          ]
+        }
+      },
+      "required": [
+        "fcmToken",
+        "platform"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "removeWaitlistEntry": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "waitlistId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        }
+      },
+      "required": [
+        "waitlistId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "reportLate": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "minutes": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 10
+            },
+            {
+              "type": "number",
+              "const": 15
+            },
+            {
+              "type": "number",
+              "const": 20
+            },
+            {
+              "type": "number",
+              "const": 30
+            }
+          ]
+        }
+      },
+      "required": [
+        "token",
+        "minutes"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "lateByMinutes": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "reportedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "lateByMinutes",
+        "reportedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "requestReschedule": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 1200
+        }
+      },
+      "required": [
+        "token",
+        "startsAt"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "requested"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            },
+            "alternatives": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "alternatives"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "rescheduleBooking": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "token",
+        "startsAt"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "moved"
+            },
+            "startsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endsAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "rescheduleCount": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "status",
+            "startsAt",
+            "endsAt",
+            "rescheduleCount"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            },
+            "alternatives": {
+              "maxItems": 5,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "required": [
+            "status",
+            "alternatives"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "reserveRegistration": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        }
+      },
+      "required": [
+        "clientId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "decision": {
+          "type": "string",
+          "enum": [
+            "allowed",
+            "needsSubscription"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "freeLimit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "alreadyCounted": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "decision",
+        "count",
+        "freeLimit",
+        "alreadyCounted"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "reserveRegistrations": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "clients": {
+          "minItems": 1,
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "clientId": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              },
+              "phone": {
+                "type": "string",
+                "pattern": "^\\+[1-9]\\d{7,14}$"
+              }
+            },
+            "required": [
+              "clientId"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "clients"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "clientId": {},
+              "decision": {
+                "type": "string",
+                "enum": [
+                  "allowed",
+                  "needsSubscription"
+                ]
+              },
+              "alreadyCounted": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "clientId",
+              "decision",
+              "alreadyCounted"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "freeLimit": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "results",
+        "count",
+        "freeLimit"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "respondBookingRequest": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "approve",
+            "decline"
+          ]
+        }
+      },
+      "required": [
+        "bookingId",
+        "decision"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "confirmed",
+            "declined",
+            "needsSubscription"
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "respondRescheduleRequest": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "requestId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "accept",
+            "decline"
+          ]
+        }
+      },
+      "required": [
+        "requestId",
+        "decision"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "accepted",
+            "declined",
+            "slotTaken"
+          ]
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "sendEmailCode": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 254,
+          "format": "email",
+          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "locale": {
+          "type": "string",
+          "enum": [
+            "pt-BR",
+            "pt-PT",
+            "es-MX",
+            "es-419",
+            "es",
+            "en",
+            "en-GB",
+            "it",
+            "fr",
+            "de",
+            "tr",
+            "id",
+            "hi",
+            "ar"
+          ]
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "booking",
+            "find"
+          ]
+        }
+      },
+      "required": [
+        "slug",
+        "email",
+        "locale",
+        "purpose"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "resendAfterSeconds": {
+          "type": "number",
+          "const": 30
+        },
+        "expiresInSeconds": {
+          "type": "number",
+          "const": 600
+        }
+      },
+      "required": [
+        "resendAfterSeconds",
+        "expiresInSeconds"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "setOnlineBookingStopped": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
+        },
+        "stopped": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "phone",
+        "stopped"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "submitSealed": {
+    "access": "token",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "envelope": {
+          "type": "object",
+          "properties": {
+            "v": {
+              "type": "number",
+              "const": 1
+            },
+            "suite": {
+              "type": "string",
+              "const": "hpke-x25519-hkdf-sha256-chacha20poly1305"
+            },
+            "keyId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{11}$"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "intake",
+                "checkin",
+                "datarequest"
+              ]
+            },
+            "itemId": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+            },
+            "enc": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            },
+            "ct": {
+              "type": "string",
+              "maxLength": 4198400,
+              "pattern": "^[A-Za-z0-9_-]{22,}$"
+            }
+          },
+          "required": [
+            "v",
+            "suite",
+            "keyId",
+            "kind",
+            "itemId",
+            "enc",
+            "ct"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "token",
+        "envelope"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "syncPlan": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "signedTransaction": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 20000
+        }
+      },
+      "required": [
+        "signedTransaction"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "plan": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "none",
+                "active",
+                "grace",
+                "expired",
+                "revoked"
+              ]
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "unregisterDevice": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "fcmToken": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "fcmToken"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "updateInboxKey": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "inboxKey": {
+          "type": "object",
+          "properties": {
+            "keyId": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{11}$"
+            },
+            "alg": {
+              "type": "string",
+              "const": "hpke-v1"
+            },
+            "pub": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          },
+          "required": [
+            "keyId",
+            "alg",
+            "pub"
+          ],
+          "additionalProperties": false
+        },
+        "compromised": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "inboxKey"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "keyring": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "keyId": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "retiredAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "acceptsUntil": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "compromisedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "required": [
+              "keyId",
+              "createdAt"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "keyring"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "verifyEmailCode": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "maxLength": 254,
+          "format": "email",
+          "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^\\d{6}$"
+        }
+      },
+      "required": [
+        "email",
+        "code"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "proof": {
+          "type": "string"
+        },
+        "expiresInSeconds": {
+          "type": "number",
+          "const": 1800
+        }
+      },
+      "required": [
+        "proof",
+        "expiresInSeconds"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

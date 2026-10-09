@@ -62,6 +62,7 @@ export const getBooking = defineUseCase({
       policy: booking.policy,
       rulesText: booking.rulesText ?? profile.rulesText,
       lateCancelCounts: booking.noShowPolicy ? booking.noShowPolicy.isOn && booking.noShowPolicy.lateCancelCounts : false,
+      ...(booking.noShowPolicy?.isOn ? { noShowLimit: booking.noShowPolicy.limit } : {}),
       actions: {
         cancel: actions.cancel,
         reschedule: actions.reschedule,

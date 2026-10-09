@@ -12,8 +12,8 @@ This file is the contract between the server (`firebase/functions`), the web boo
 Specs: `docs/05-DATA-MODEL.md` (layer B), `docs/06-PRIVACY-SECURITY.md`, `docs/10-WEB-BOOKING.md`,
 `docs/11-BACKEND-FIREBASE.md`. Decisions cited as D-numbers are in `docs/02-DECISIONS.md`.
 
-> **Privacy line.** The server never receives a health answer, a consent signature, a note, a photo or an allergy in
-> readable form. Everything sensitive travels as a sealed envelope (`submitSealed`). The only free text from a client is
+> **Privacy line.** The server never receives a health answer, a note, a photo or an allergy in readable form, and it
+> carries no consent text: consents are the professional's own business; the app only records their status (D55). Everything sensitive travels as a sealed envelope (`submitSealed`). The only free text from a client is
 > her name, phone, optional email, an optional short note to the professional (<= 300 chars) and a cancel reason
 > (<= 200 chars). The page must tell her not to write health information in those two fields.
 
@@ -94,7 +94,9 @@ A Hosting site whose id does not start with `bellohub` or `bello-hub` is refused
 | `http` | none (see each) | `getIcs`, `appStoreNotifications` |
 
 App Check enforcement is a deploy-time parameter (`ENFORCE_APP_CHECK`, default `false`; a human turns it on after
-staging passes, H5). With it off, a missing token is accepted and the call is still rate limited.
+staging passes, H5). With it off, a missing token is accepted and the call is still rate limited. **The browser sends no
+App Check token** (D46: no Firebase SDK, no reCAPTCHA, `connect-src 'self'`), so `ENFORCE_APP_CHECK` must stay off for
+the projects the web page calls, or the public/token functions must be exempted before it is turned on.
 
 **Rate limits** (all return `RATE_LIMITED` with `details.retryAfterSeconds`): per IP, per token, per phone or email and
 per professional, listed on each function. The numbers are in `functions/src/config/limits.ts`.
@@ -196,8 +198,9 @@ type PublicProfile = {
 };
 ```
 
-`intake` (the health-form template and consent texts) is published inside `publishProfile` but is **not** part of
-`getPublicPage`; it is returned by `getFormContext`.
+`intake` (the health-form template: the questions) is published inside `publishProfile` but is **not** part of
+`getPublicPage`; it is returned by `getFormContext`. No consent, agreement or guardian text exists anywhere in the
+contract (D55); documents written before D55 may still hold a `consent` map, which the server ignores.
 
 ---
 
@@ -313,8 +316,9 @@ res: { status: "confirmed" | "pendingApproval"; bookingId: string; manageToken: 
 Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `VERIFICATION_FAILED`, `CONFLICT` (idempotency key reused with a different request), `RATE_LIMITED`.
 
 ### 5.9 `findBookings`  (public)  -> Bk-11
+The web page calls it with `email` and an e-mail proof from 5.6 (D46); the phone form is kept for a later SMS provider.
 ```ts
-req: { slug: Slug; phone?: E164; email?: string;
+req: { slug: Slug; phone?: E164; email?: string;    // email + an "email" proof (the page), or phone + a "phone" token (not used by the page)
        verification: { method: "phone"; idToken: string } | { method: "email"; proof: string } }
 res: { bookings: { bookingId: string; manageToken: Token; serviceName: string; startsAt: Instant; endsAt: Instant;
                    timeZoneID: string; status: "confirmed" | "pendingApproval" }[] }   // upcoming only
@@ -348,6 +352,7 @@ res: {
   policy: CancellationPolicy;         // D47: the policy in force when the booking was made (not the page's current one)
   rulesText: Partial<Record<LocaleId, string>>;   // D47: the rule texts published at booking time (the page's current texts only for bookings older than the snapshot)
   lateCancelCounts: boolean;          // D47: under the no-show policy of booking time, a late cancellation counts as a missed visit
+  noShowLimit?: number;               // D47: her no-show limit at booking time; present only when that policy was on (say it only then)
   actions: {
     cancel: "free" | "allowedWithWarning" | "askByMessage" | "unavailable";
     reschedule: "direct" | "request" | "message" | "unavailable";
@@ -401,7 +406,6 @@ res: {
   professional: { displayName: string };
   formVersion: number;
   template: object;                   // opaque to the server: the questions published by the app (docs/10 section 5)
-  consent: Partial<Record<LocaleId, { textVersion: string; text: string; guardianText?: string }>>;
   inboxKey: InboxKey;
   intakeCompletedWithinMonths: boolean;   // a sealed intake was submitted in the last 12 months (a flag, no content)
 }
@@ -499,8 +503,7 @@ publishProfile:  req { profile: PublicProfileInput }   res { slug: Slug; updated
 ```
 `PublicProfileInput` is `PublicProfile` without `slug`, `schemaVersion`, `updatedAt`, plus an optional
 ```ts
-intake?: { formVersion: number; template: object /* <= 200 KB, opaque */;
-           consent: Partial<Record<LocaleId, { textVersion: string; text: string; guardianText?: string }>> /* <= 100 KB */ }
+intake?: { formVersion: number; template: object /* <= 200 KB, opaque */ }   // D55: no consent texts; a `consent` field is INVALID_ARGUMENT
 ```
 She must have claimed a slug. The server validates and size-limits everything (whole document <= 700 KB), strips
 control characters, checks that `inboxKey.keyId` matches `pub`, registers a **changed** key in the account keyring
@@ -652,7 +655,7 @@ Authenticated owner, own data only; **no client write anywhere except `devices` 
 | `accounts/{uid}` | owner | `phone?` (phone sign-in only; absent for Sign in with Apple, D44), `slug`, `countryCode`, `locale`, `dataRegion`, `registrations {count, freeLimit}`, `plan {state, expiresAt, source}`, `inboxKeyring[] {keyId, pub, createdAt, retiredAt?, compromisedAt?}`, `inboxKeyringPruneAt?`, `deletion {requestedAt}` |
 | `accounts/{uid}/registrations/{clientId}` | owner | `registeredAt` (the ledger, ids and dates only) |
 | `publicProfiles/{slug}` | anyone | the published profile (section 4) |
-| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `rulesText?`, `noShowPolicy? {isOn, lateCancelCounts}` (D47 snapshot), `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `createdAt`, `updatedAt`, `purgeAt` |
+| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `rulesText?`, `noShowPolicy? {isOn, limit, lateCancelCounts}` (D47 snapshot), `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `createdAt`, `updatedAt`, `purgeAt` |
 | `inbox/{uid}/items/{itemId}` | owner | `kind`, `bookingId`, `createdAt`, `expiresAt`, `sizeBytes`, `keyId`, `envelope?` (inline when <= 200 KB) or `storagePath` |
 | `rescheduleRequests/{id}` | owner (query `ownerUid == uid`) | `bookingId`, `clientName`, `serviceName`, `currentStart`, `currentEnd`, `requestedStart`, `requestedEnd`, `note?`, `status`, `createdAt` |
 | `waitlist/{id}` | owner (query `ownerUid == uid`) | `name`, `phone`, `serviceId?`, `serviceName?`, `dayFrom`, `dayTo`, `status` (`waiting` \| `offered` \| `booked`), `createdAt`, `offeredAt?` |

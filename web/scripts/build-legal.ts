@@ -19,8 +19,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const legalRoot = resolve(here, '../../legal');
 const outRoot = resolve(here, '../src/legal/generated');
 
-/** The documents the web shows (privacy policy for the /privacy page, the rest inside the flows). D49: the consent texts are not here: the
- * consent a client signs is the one the server serves for that professional. */
+/** The documents the web shows (privacy policy for the /privacy page, the two notices inside the flows). D55: no
+ * consent, agreement, photo or guardian text exists on the web; consents are the professional's own business. */
 export const DOCUMENTS = ['client-notice', 'data-requests', 'privacy-policy'] as const;
 export type LegalDocument = (typeof DOCUMENTS)[number];
 
@@ -31,9 +31,7 @@ export type Inline = { k: 't'; v: string } | { k: 'b'; v: string } | { k: 'a'; v
 export type Block =
   | { type: 'h1'; text: Inline[] }
   | { type: 'p'; text: Inline[] }
-  | { type: 'ul'; items: Inline[][] }
-  | { type: 'check'; text: Inline[] }
-  | { type: 'consent'; heading: Inline[]; statement: Inline[]; signLabel: string };
+  | { type: 'ul'; items: Inline[][] };
 
 export interface LegalFile {
   version: string;
@@ -118,27 +116,12 @@ function parse(markdown: string, fill: (text: string) => string): LegalFile {
         blocks.push({ type: 'ul', items: list });
       }
       list.push(inlines(line.slice(2)));
-    } else if (line.startsWith('☐')) {
-      list = null;
-      blocks.push({ type: 'check', text: inlines(line.slice(1).trim()) });
+    } else if (line.includes('☐')) {
+      // A tick box or a signature line is a consent form, which the web never shows (D55).
+      throw new Error(`${line.slice(0, 40)}: a consent form has no place in a web notice`);
     } else {
       list = null;
-      const consent = /^\*\*(.+?)\*\*\s*☐\s*(.+)$/.exec(line);
-      if (consent !== null) {
-        const rest = consent[2] ?? '';
-        // The statement ends at the last sentence end; what follows is the label of the signature field.
-        let cut = -1;
-        for (const boundary of rest.matchAll(/[.。।]\s/g)) cut = boundary.index + 1;
-        if (cut < 0) throw new Error('consent paragraph without a signature label');
-        blocks.push({
-          type: 'consent',
-          heading: inlines(consent[1] ?? ''),
-          statement: inlines(rest.slice(0, cut).trim()),
-          signLabel: rest.slice(cut).trim().replace(/\s*[:：]$/, ''),
-        });
-      } else {
-        blocks.push({ type: 'p', text: inlines(line) });
-      }
+      blocks.push({ type: 'p', text: inlines(line) });
     }
   }
   return { version, blocks };

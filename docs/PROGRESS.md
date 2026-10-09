@@ -79,22 +79,48 @@ Under D40 and D41 the first two columns are not gates: the owner opens markets b
 ## Current stage
 **v1 is being finished end to end without stopping between stages (owner's order, 2026-10-09).** Done and tagged: S0 to S5 (`stage-S5`). Order of the rest: S6 (3 slices), S7 front end only (D53), S8 iOS half, S9 integration, S10, S11, S12.
 
+**Owner rule 2026-10-09 (later): at most 2 agents at a time, only `model: fable` at `medium` effort** (replaces the 3 sonnet + 1 fable split). Order: s8-publish and s6-home first, then s7-record, s10-account, D55, S8 inbox. Worktree dirs under `.claude/worktrees/`: s6-home = `agent-a9c2564560a1e27e2`, s7-record = `agent-af16371e7560af324`, s8-publish = `agent-ae6aa117cf4712fe2`, s10-account = `agent-a498cf63dedef1f7d`.
+
+**2026-10-09 night:** the booking link WORKS end to end on the owner's iPhone (Debug builds now sign in through Firebase/Apple by default; `-devLogin` keeps the fake login). `s8-publish` is merged. The owner said "continue the production": continue with at most 2 Fable agents at `medium` (weekly usage was at 92%, resets Wednesday 12:00: expect agents to die at the limit; state is always in worktrees and notes). Running: `s10-account` (12 commits, verifying; worktree `agent-a498cf63dedef1f7d`, sim `581B8F64`; remove its `TmpQuietHoursProbeUITests.swift` if still present) and `d55-web-backend`. S6 is tagged. Next when a slot frees: `s7-record` (worktree `agent-af16371e7560af324`, 1 commit + 7 uncommitted), then D55 (web+backend, then iOS), S8 inbox, S9, S11, S12.
+
+### FIRST THING WHEN A SESSION RESUMES (written when the usage limit was reached, 2026-10-09)
+`build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
+
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
-Last updated 2026-10-09. Rules: at most 3 agents on `model: sonnet` at `medium` + 1 on `model: fable` at `medium`; each in its own worktree (`isolation: worktree`) and its own simulator (`SIM_UDID`: `9368BE88-0772-4897-B0DC-C8D8C61668CF`, `9094A22B-D96D-4AB6-8132-AAC9C1D88AFE`, `1D7CD4D7-E81E-4320-BCEB-1AD9C6FB6F3D`; the coordinator keeps `AD05C836-857D-4911-98CB-1F728EA4D736`); a dead agent is replaced by a new one pointed at the same worktree and its notes. Agents write `docs/agent-notes/<slice>.md` and never edit this file, `DESIGN.md` or `Localizable.xcstrings` (batches in `Config/Locale/strings/`, merged with `scripts/merge-strings.py`). Integration of a slice: merge the branch into `build/v1`, regenerate the catalog, `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, then fold the notes here and into `DESIGN.md`, tag, push (never `main`).
+Last updated 2026-10-09, later (backend and web are deployed to `bello-hub`; S6 calendar and appointment and S7 flow are merged; the session limit killed all four agents once more; they were relaunched on the same worktrees and branches; a dead agent is always replaced by a new one pointed at its worktree, whose git log/status and notes carry the state). Rules: at most 3 agents on `model: sonnet` at `medium` + 1 on `model: fable` at `medium`; each in its own worktree (`isolation: worktree`) and its own simulator (`SIM_UDID`: `9368BE88-0772-4897-B0DC-C8D8C61668CF`, `9094A22B-D96D-4AB6-8132-AAC9C1D88AFE`, `1D7CD4D7-E81E-4320-BCEB-1AD9C6FB6F3D`; the coordinator keeps `AD05C836-857D-4911-98CB-1F728EA4D736`); a dead agent is replaced by a new one pointed at the same worktree and its notes. Agents write `docs/agent-notes/<slice>.md` and never edit this file, `DESIGN.md` or `Localizable.xcstrings` (batches in `Config/Locale/strings/`, merged with `scripts/merge-strings.py`). Integration of a slice: merge the branch into `build/v1`, regenerate the catalog, `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, then fold the notes here and into `DESIGN.md`, tag, push (never `main`).
 
 | Work | Branch (worktree under `.claude/worktrees/`) | State |
 |---|---|---|
 | Decisions D44 to D53 | on `build/v1` | Written in `docs/02-DECISIONS.md` (Apple sign-in for the professional, no first-visit questions, policy snapshot, e-mail-code web verification, S7 front end only) |
 | Policy clarity (D47) in the app | on `build/v1` (`b1ed521`) | Done: notice on both policy screens |
 | S6 contract | on `build/v1` | Done: `AppointmentService`, `AppointmentTransitions`, `AgendaRoute`, `AgendaSheet`, 14 placeholders in `Screens/Shared/Agenda/Placeholders/` |
-| S6 slice "calendar" (2.3, 2.6, 3.1, 3.4, 6.6) | `s6-calendar` (`agent-a1bbfa95986563d9f`) | Running (Sonnet) |
-| S6 slice "appointment" (3.2, 3.3, 3.5, 3.6, 3.7, 2.12, 4.8, 4.11, messages with WhatsApp) | not started | Next free Sonnet slot |
-| S6 slice "home" (2.1, 2.7, 2.8, 2.4 local alerts, local notifications, 7.11 States) | not started | After the one above |
-| Sign in with Apple in the app (D44) | `apple-signin` (`agent-a45feef1aa2f8ba2b`) | Running (Sonnet); not merged |
+| S6 slice "calendar" (2.3, 2.6, 3.1, 3.4, 6.6; time blocks) | merged into `build/v1` | Done; audit only `en,ar`; notes `docs/agent-notes/s6-calendar.md` |
+| S6 slice "appointment" (3.2, 3.3, 3.5, 3.6, 3.7, 2.12, 4.8, 4.11; WhatsApp messages) | merged into `build/v1` | Done; only `NoShowMarkViewModel` has fake-based VM tests; notes `docs/agent-notes/s6-appointment.md` |
+| S6 slice "home" (2.1, 2.7, 2.8, 2.4, local notifications, 7.11) | `s6-home` (worktree dir `agent-a9c2564560a1e27e2`, sim `1D7CD4D7`) | Running (Sonnet) |
+| S7 slice "record" (4.7, 4.9, 4.10, 7.5) | merged into `build/v1` (`7e59797`) | Done (found and fixed a PDF export bug: zero pages); AI settings More row waits for S10 `MoreRoute`; audit `pt-BR`,`de`,`hi` not run; notes `docs/agent-notes/s7-record.md` |
+| S8 slice "publish" (CallableClient, RemoteBookingRepository, PublishingService, HPKE inbox key, real link state) | `s8-publish` (worktree dir `agent-ae6aa117cf4712fe2`, sim `9094A22B`) | Running (Sonnet) |
+| S8 slice "inbox" (incoming bookings, mailbox import, push, screens 2.9 to 2.11) | not started | After "publish" |
+| D55 consent removal, web + backend | merged into `build/v1` (`573a50f`) | Done; `scripts/test-firebase.sh` green (755, 66, 277, 19), `test-web.sh full` green, `e2e-local` 6/6. **NOT DEPLOYED**: the dev backend still runs the old code; `publishProfile` with an `intake.consent` is now rejected, so deploy backend and web only AFTER the iOS D55 is merged and installed (functions: `cd firebase && firebase deploy --project dev --only functions`; web: `scripts/deploy-hosting-dev.sh`) |
+| D55 consent removal, iOS (4.5, 6.14, legal bundle, strings, Consents status list) | `d55-ios` (agent `ad11a0c86ae9dbc01`, Fable, sim `0FBF1349`) | Running |
+| Sign in with Apple in the app (D44) | merged into `build/v1` | Done: entitlement back, `AuthUser` with optional phone and method, `AppleNonce`, `AppleCredentialProviding`, real `FirebaseAuthProvider` (Apple path compiled, NOT verified: needs the Apple provider enabled in the Firebase console and a real Apple sheet), native Apple button on Welcome and SignIn, name prefill, DEBUG stub `-uiTesting`; notes `docs/agent-notes/apple-signin.md`; S10 deletion must pass a fresh authorization code. Fast 1378 + UISmoke 21 pass |
 | Backend decisions D44, D47, D51 | merged into `build/v1` (`34fad59`) | Done: Apple owner sign-in + token revocation (`deleteAccount.appleAuthorizationCode`), per-booking policy and rule-text snapshot, inbox key grace and compromise; `scripts/test-firebase.sh` green (755 unit, 66 rules, 274 use cases, 19 transport). Owner actions H17 in `docs/agent-notes/backend-decisions.md` §5 (Apple Sign-In key). iOS half (pass the fresh authorization code at deletion) belongs to S10/S8 |
 | Web decisions D45 to D52 | merged into `build/v1` (`34fad59`) | Done: e-mail-code verification only (no Firebase JS), no first-visit questions, guests as a count, consent from the server, no token in calendar links, rules from the booking snapshot; `scripts/test-web.sh full` green (229 unit, 183 Playwright) and `scripts/e2e-local.sh` 6/6. Known flake: the web e2e story picks `slots.first()` before the chosen day loads |
+| S7 slice "flow" (5.1 to 5.9, `PhotoProcessing`) | merged into `build/v1` | Done; no AI sensitivity card, no photo slider/timeline, no remind parts in 5.9; notes `docs/agent-notes/s7-flow.md` |
+| S6 slice "home" (2.1, 2.7, 2.8, 2.4, local notifications, 7.11) | `s6-home` (worktree dir `agent-a9c2564560a1e27e2`, sim `1D7CD4D7`) | Running (Sonnet) |
+| S7 slice "record" (4.7, 4.9, 4.10, 7.5) | merged into `build/v1` (`7e59797`) | Done (found and fixed a PDF export bug: zero pages); AI settings More row waits for S10 `MoreRoute`; audit `pt-BR`,`de`,`hi` not run; notes `docs/agent-notes/s7-record.md` |
+| S8 slice "publish" (CallableClient, RemoteBookingRepository, PublishingService, HPKE inbox key, real link state) | `s8-publish` (worktree dir `agent-ae6aa117cf4712fe2`, sim `9094A22B`) | Running (Sonnet) |
+| S8 slice "inbox" (incoming bookings, mailbox import, push, screens 2.9 to 2.11) | not started | After "publish" |
+| D55 consent removal, web + backend | merged into `build/v1` (`573a50f`) | Done; `scripts/test-firebase.sh` green (755, 66, 277, 19), `test-web.sh full` green, `e2e-local` 6/6. **NOT DEPLOYED**: the dev backend still runs the old code; `publishProfile` with an `intake.consent` is now rejected, so deploy backend and web only AFTER the iOS D55 is merged and installed (functions: `cd firebase && firebase deploy --project dev --only functions`; web: `scripts/deploy-hosting-dev.sh`) |
+| D55 consent removal, iOS (4.5, 6.14, legal bundle, strings, Consents status list) | `d55-ios` (agent `ad11a0c86ae9dbc01`, Fable, sim `0FBF1349`) | Running |
+| S7 contract (front end only, D53) | on `build/v1` | Done: `VoiceCapturing`/`UnavailableVoiceCapture`, `RecordStructuring`/`UnavailableRecordStructuring`, `StructuredRecordDraft`, environment entries `voiceCapture`/`recordStructuring`, `TreatmentFlowRequest` + `.treatmentFlow(item:)`, `RecordRoute`/`RecordSheet` + `.recordDestinations()`/`.recordSheet(item:)`, 5 placeholders in `Screens/Shared/Treatment/Placeholders/`. Two slices to launch when Sonnet slots free: "treatment flow" (5.1 to 5.9, `TreatmentFlowView`, manual `Tx-Form` fully real, review screen, photos step, camera UI) and "record" (4.7, 4.9, 4.10, 7.5, photo pipeline default, PDF export). Wire at integration: "Start" actions of the appointment and the client profile open `.treatmentFlow`; client profile rows push `RecordRoute.history`, open incident/export sheets; More gets the AI settings row after S10 is merged (S10 changes `MoreRoute`) |
 | Backend + web integration (Hosting, e2e-local, Lighthouse) | merged into `build/v1` | Done |
-| S10 slice (7.1 to 7.4, 7.6 to 7.10: account, language/region, plan with StoreKit, notifications, integrations, privacy, export all, recovery key, help) | `s10-account` | Running (Fable, simulator `581B8F64-5D7C-4D9F-B30F-177C13ED50A8`, boot it first) |
+| S10 slice (7.1 to 7.4, 7.6 to 7.10) | `s10-account` (worktree `agent-a498cf63dedef1f7d`, sim `581B8F64`, boot it first) | Resumed (Fable); 70 files were uncommitted when it died |
+
+**Deployed to `bello-hub` (dev, D43) on 2026-10-09:** Firestore rules and indexes, Storage rules, all Cloud Functions in `europe-west1` (Node 22, 2nd gen; image cleanup policy of 1 day set), Hosting at `https://bello-hub.web.app`; secrets in Secret Manager: `PHONE_HASH_PEPPER` (generated once, never rotate), `EMAIL_API_KEY` and `APPLE_SIGNIN_PRIVATE_KEY` as placeholders (`unset`); parameters in `firebase/functions/.env.bello-hub` (no secrets; `EMAIL_FROM` and `APPLE_SIGNIN_KEY_ID` empty keep e-mail and Apple revocation off). Smoke test passed (page 200, `/api/getPublicPage` answers `NOT_FOUND` for an unknown slug). Redeploy Hosting with `scripts/deploy-hosting-dev.sh`, functions with `cd firebase && firebase deploy --project dev --only functions`. Not done by me: enable the Apple provider in Firebase Auth, the budget alert, App Check stays off. The iOS app does not publish yet (S8 iOS half).
+
+**D55, to apply (owner, 2026-10-09): consents are removed from the app, web and server; only a status record with an optional photo/file of the real document stays.** Work to queue (two slices, Sonnet medium for iOS, Fable medium for web and backend): iOS: delete the consent text, signing and signed-text screens of 4.5, the consent rows and preview of 6.14, `legal.*` strings of the three consent kinds, bundling of consent legal texts (`scripts/check-legal-resources.sh`, `sync-legal-resources`), `ConsentKind` text mapping; replace with a "Consents" status list on 4.5 (label, signed yes/no, date, note, optional photo or file via the vault) with tests, strings and audits. Web and backend: remove `getFormContext.consent`, the consent text and signature from the web form, the `intakeForms` consent text and the consent block of the sealed payload; keep the health questions; update API.md, schemas, tests, e2e. Docs: `docs/05`, `docs/06`, `docs/07`, `legal/STATUS.md` and the legal drafts of the three consent kinds (remove them from the 14-localization bundles).
+
+**Booking link until the domain exists (D54):** base `https://bellohub.web.app` (create the Hosting site `bellohub` in `bello-hub` at the first deploy); `BookingLink.defaultBaseURL` (today `https://bellohub.app`) must read a configuration value (`BELLO_WEB_BASE_URL`), and the booking-page screens must say the link is a preview until she is online. Part of S8 iOS half. Owner tasks: budget alert of about 5 EUR on the Firebase project; enable the Apple provider in Firebase Auth; Apple Sign-In key.
 
 **After the S6 slices:** S7 front end (5.1 to 5.9, 4.7, 4.9, 4.10, 7.5; fakes behind protocols for voice, AI, photos, PDF; manual `Tx-Form` fully real; D53), then S8 iOS half (`RemoteBookingRepository`, `BookingSyncService`, `MailboxService`, outbound queue, `FirebaseAuthProvider` with Apple, FCM and silent push; see `docs/agent-notes/backend.md` section 4 item 2), S9 (web against the app), S10 (9 screens: account, plan with StoreKit, privacy, export, recovery key, help), S11, S12.
 
@@ -245,6 +271,13 @@ Measured: fast 1362 unit tests in 166 suites pass; UISmoke 21 UI tests pass (631
 Open questions: do saved policies apply to bookings already made (today they keep their snapshot, the prototype footer said otherwise; owner); should "Always" return as a no-show counting period (needs a model case and the server's `countingMonths`); should the credentials page switch survive with no credential; should these screens follow `clientTerm` instead of "clients".
 Human tasks created: none.
 
+### S6 · Home, calendar and appointments · done 2026-10-09 · tag stage-S6
+Built by three slices (notes `docs/agent-notes/s6-calendar.md`, `s6-appointment.md`, `s6-home.md`) on the contract (`AppointmentService`, `AppointmentTransitions`, `AgendaRoute`, `AgendaSheet`); also merged in the same integration: the S7 treatment flow front end (5.1 to 5.9, D53; `docs/agent-notes/s7-flow.md`) and the S8 publish slice (the booking link works end to end, `docs/agent-notes/s8-publish.md`).
+Done: day and week calendar with the warnings engine, NewAppointment, Reschedule, BlockTime, WeekGlance; appointment detail with cancel, no-show, running late, before-you-start, messages through WhatsApp, session plan, no-show history; Home, follow-ups, win back, Alerts (local), shared states, local notifications with no names; time blocks in the vault.
+Measured: fast 1710+ unit tests pass; UISmoke 48 UI tests pass; `scripts/check-warnings.sh` zero warnings on simulator, device, Release and the test targets; `scripts/check-strings.sh` passes (1596 strings, 14 localizations). Audits (`en`, `ar`, default size and AX5) for Calendar, Appointment, Home; not run: `pt-BR`, `de`, `hi`, dark mode inspected by eye, `scripts/test.sh full`.
+Decisions/assumptions: see each notes file (to fold into the table at the next consolidation); Design additions: see each notes file.
+Open questions: Home quick actions are "New appointment" and "Week at a glance" only; Alerts holds local alerts until S8 inbox.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -310,6 +343,7 @@ Human tasks created: none.
 ## Conventions learned while building (read before writing code)
 - Agent concurrency (owner request): at most 3 agents at a time from the next task on (the six running agents of S4, backend and web finish first); a stage with more slices runs in waves of three.
 - Agent effort (owner-approved, from S5): `high` by default, `xhigh` for security and privacy slices (rules, counters, sealed envelopes, health and consent, vault), `medium` for mechanical work (strings, legal sync, lint, docs), `max` only for a hard bug already retried.
+- **Agent effort (owner rule, 2026-10-09, overrides the line above): no agent on any model above `medium`** (never `high`, `xhigh` or `max`), to save tokens.
 - Parallel work: the owner asked for parallel agents on every stage. Commit a shared contract first (protocols, DTOs, routes, fakes), then one agent per slice with `isolation: worktree`, a distinct existing simulator each (`SIM_UDID`), no edits to PROGRESS.md, DESIGN.md or the generated string catalog (`docs/agent-notes/<slice>.md` instead). Integrate by merging branches, regenerating the catalog with `scripts/merge-strings.py`, deleting `Screens/Clients/Placeholders/`, then fast, smoke and `check-warnings.sh` on the merged result.
 - Strings: semantic keys; arguments through `LocalizedStringResource` with a default value; batches in `Config/Locale/strings/`; `scripts/check-strings.sh` is the gate (`Config/Locale/README.md`).
 - Accessibility identifiers go on elements, never on containers.
@@ -359,26 +393,26 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 1.9 | Permissions | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 1.10 | Onb-7-Ready | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
 | 1.11 | Locked | S3 | done | `OnboardingUITests`, `OnboardingAuditUITests` |
-| 2.1 | Home | S6 | in-progress | Greeting and empty state exist since S3 |
+| 2.1 | Home | S6 | done | `HomeUITests`, `HomeAuditUITests` |
 | 2.2 | Clients | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
-| 2.3 | Calendar | S6 | in-progress | Empty state since S3 |
-| 2.4 | Notifications | S6 | in-progress | Empty state since S3 (the tab is called Alerts) |
+| 2.3 | Calendar | S6 | done | `CalendarUITests`, `CalendarAuditUITests` |
+| 2.4 | Notifications | S6 | done | local alerts; server alerts in S8 |
 | 2.5 | More | S3 | done | Profile card, Lock now, Sign out; Clients section (S4); Business and Messages rows wired to S5 placeholders |
-| 2.6 | WeekGlance | S6 | todo |  |
-| 2.7 | FollowUps | S6 | todo |  |
-| 2.8 | WinBack | S6 | todo |  |
+| 2.6 | WeekGlance | S6 | done | `CalendarAuditUITests` |
+| 2.7 | FollowUps | S6 | done | `HomeAuditUITests` |
+| 2.8 | WinBack | S6 | done | `HomeAuditUITests` |
 | 2.9 | Waitlist | S8 | todo |  |
 | 2.10 | BookingRequest | S8 | todo |  |
 | 2.11 | RescheduleRequest | S8 | todo |  |
-| 2.12 | RunningLate | S6 | todo |  |
-| 3.1 | NewAppointment | S6 | todo |  |
-| 3.2 | Appointment | S6 | todo |  |
-| 3.3 | BeforeYouStart | S6 | todo |  |
-| 3.4 | Reschedule | S6 | todo |  |
-| 3.5 | CancelAppointment | S6 | todo |  |
-| 3.6 | MessageClient | S6 | todo |  |
-| 6.6 | BlockTime | S6 | todo |  |
-| 3.7 | NoShowMark | S6 | todo |  |
+| 2.12 | RunningLate | S6 | done | `AppointmentAuditUITests` |
+| 3.1 | NewAppointment | S6 | done | `CalendarUITests` |
+| 3.2 | Appointment | S6 | done | `AppointmentUITests` |
+| 3.3 | BeforeYouStart | S6 | done | `AppointmentAuditUITests` |
+| 3.4 | Reschedule | S6 | done | `CalendarUITests` |
+| 3.5 | CancelAppointment | S6 | done | `AppointmentUITests` |
+| 3.6 | MessageClient | S6 | done | `AppointmentAuditUITests` |
+| 6.6 | BlockTime | S6 | done | `CalendarAuditUITests` |
+| 3.7 | NoShowMark | S6 | done | `AppointmentUITests` |
 | 4.1 | ClientProfile | S4 | done | `ClientsUITests`, `ClientsAuditUITests` |
 | 4.2 | NewClient | S4 | done | `ClientsUITests`, `ClientsAuditUITests`; D42 gate |
 | 4.3 | ClientEdit | S4 | done | `ClientsAuditUITests`; merge |
@@ -386,19 +420,19 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests` |
 | 4.6 | ImportClients | S4 | done | `ImportClientsUITests`, `ImportAuditUITests` |
 | 4.7 | RecordHistory | S7 | todo |  |
-| 4.8 | SessionPlan | S6 | todo |  |
+| 4.8 | SessionPlan | S6 | done | `AppointmentAuditUITests` |
 | 4.9 | Incident | S7 | todo |  |
 | 4.10 | ExportRecord | S7 | todo |  |
-| 4.11 | NoShowHistory | S6 | todo |  |
-| 5.1 | Tx-1-Register | S7 | todo |  |
-| 5.2 | Tx-2-Listening | S7 | todo |  |
-| 5.3 | Tx-3-Organizing | S7 | todo |  |
-| 5.4 | Tx-4-Review | S7 | todo |  |
-| 5.5 | Tx-Form | S7 | todo |  |
-| 5.6 | Tx-5-Saved | S7 | todo |  |
-| 5.7 | Tx-6-Photos | S7 | todo |  |
-| 5.8 | Camera | S7 | todo |  |
-| 5.9 | Tx-7-NextSession | S7 | todo |  |
+| 4.11 | NoShowHistory | S6 | done | `AppointmentAuditUITests` |
+| 5.1 | Tx-1-Register | S7 | done | `TreatmentFlowUITests` |
+| 5.2 | Tx-2-Listening | S7 | done | `TreatmentFlowUITests` |
+| 5.3 | Tx-3-Organizing | S7 | done | `TreatmentFlowUITests` |
+| 5.4 | Tx-4-Review | S7 | done | `TreatmentFlowUITests` |
+| 5.5 | Tx-Form | S7 | done | `TreatmentFlowUITests` |
+| 5.6 | Tx-5-Saved | S7 | done | `TreatmentFlowUITests` |
+| 5.7 | Tx-6-Photos | S7 | done | `TreatmentFlowUITests` |
+| 5.8 | Camera | S7 | done | `TreatmentFlowUITests` |
+| 5.9 | Tx-7-NextSession | S7 | done | `TreatmentFlowUITests` |
 | 6.1 | Services | S5 | done | `ServicesUITests`, `ServicesAuditUITests` |
 | 6.2 | ServiceEdit | S5 | done | `ServicesUITests` |
 | 6.4 | Products | S5 | done | `ServicesAuditUITests` |
@@ -422,7 +456,7 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 7.6 | Integrations | S10 | todo |  |
 | 7.7 | Privacy | S10 | todo |  |
 | 7.10 | Help | S10 | todo |  |
-| 7.11 | States | S6 | todo | Shared state components |
+| 7.11 | States | S6 | done | shared States |
 | 7.8 | ExportAll | S10 | todo |  |
 | 7.9 | RecoveryKey | S10 | todo |  |
 | 8.1 | Bk-1-Page | S9 | todo |  |

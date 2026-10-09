@@ -15,6 +15,12 @@ enum DefaultsKey {
     static let lockGraceSeconds = "lock.graceSeconds"
     /// The signed-in dummy user of `LocalDevAuthProvider`. Exists only in DEBUG builds.
     static let localDevUser = "session.localDevUser"
+    /// The on-device assistant's preferences (`AIPreferences`, JSON). Absent means the defaults.
+    static let aiPreferences = "ai.preferences"
+    /// The user id whose booking page she put online from this phone (`PublishingService`). While it equals the
+    /// signed-in
+    /// user, changes to her page are published by themselves; stopping removes it.
+    static let publishingOnlineUserID = "publishing.onlineUserID"
     /// When she said she put her 12 words somewhere safe (a `Date`); absent until she does.
     static let recoveryKeySavedAt = "recoveryKey.savedAt"
     /// Her notification choices (`NotificationPrefs` as JSON).
@@ -28,6 +34,6 @@ enum DefaultsKey {
     /// (the lock) stay.
     static let clearedOnAccountDeletion = [
         setupCompletedUserID, localDevUser, recoveryKeySavedAt, notificationPrefs, hideNamesOnLockScreen,
-        appleCalendarEnabled
+        appleCalendarEnabled, aiPreferences, publishingOnlineUserID
     ]
 }

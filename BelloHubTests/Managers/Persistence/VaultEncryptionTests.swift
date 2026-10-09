@@ -152,7 +152,7 @@ struct VaultEncryptionTests {
                                          "recurringRequests", "stopReason"])
         #expect(Appointment.sensitiveKeys == ["privateNote"])
         #expect(TreatmentRecord.sensitiveKeys == ["notes", "technique", "productsUsed", "resultDetail", "aftercare",
-                                                  "nextSessionSuggestion"])
+                                                  "nextSessionSuggestion", "fieldEntries"])
         #expect(RecordCorrection.sensitiveKeys == ["oldValue", "newValue", "reason"])
         #expect(Incident.sensitiveKeys == ["symptoms", "area", "actionTaken", "followUp"])
         #expect(HealthForm.sensitiveKeys == ["answers", "signatureImage", "guardianName", "minorName"])

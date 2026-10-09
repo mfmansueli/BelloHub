@@ -92,14 +92,6 @@ const intake = {
         hint: { en: 'Optional. Skin that reacts easily, products you avoid, a recent procedure.' }
       }
     ]
-  },
-  consent: {
-    en: {
-      textVersion: '2026-10',
-      text: 'I agree that Maria keeps this information to take care of me.',
-      guardianText: 'I agree, as the guardian, that Maria keeps this information to take care of the person in my care.'
-    },
-    'pt-BR': { textVersion: '2026-10', text: 'Concordo que a Maria guarde estas informações para cuidar de mim.' }
   }
 } as const;
 

@@ -16,15 +16,20 @@
       },
       "skippedTests": [
         "AccountAuditUITests",
+        "AppointmentAuditUITests",
         "BookingSetupAuditUITests",
+        "CalendarAuditUITests",
         "ClientsAuditUITests",
         "DesignCatalogAuditUITests",
         "HealthAuditUITests",
         "HealthMinorUITests",
+        "HomeAuditUITests",
         "ImportAuditUITests",
         "MoreAuditUITests",
         "OnboardingAuditUITests",
-        "ServicesAuditUITests"
+        "RecordAuditUITests",
+        "ServicesAuditUITests",
+        "TreatmentFlowAuditUITests"
       ]
     }
   ],

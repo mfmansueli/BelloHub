@@ -89,4 +89,5 @@ struct MoreTab: View {
         .environment(BookingSetupService(vault: vault))
         .environment(SubscriptionService())
         .environment(RecoveryKeyService(keyManager: keys))
+        .environment(PublishingService.preview)
 }

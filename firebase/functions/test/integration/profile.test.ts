@@ -93,7 +93,7 @@ describe('publishProfile', () => {
   });
 
   it('keeps the health form out of the public page, in a function-only document', async () => {
-    const intake = { formVersion: 3, template: { questions: [{ key: 'allergies', label: { en: 'Any allergies?' } }] }, consent: { en: { textVersion: '2026-10', text: 'I agree' } } };
+    const intake = { formVersion: 3, template: { questions: [{ key: 'allergies', label: { en: 'Any allergies?' } }] } };
     await env.call(publishProfile, { profile: { ...mariaProfile(pro.inboxKey), intake } }, who());
 
     const page = (await refs(env.deps.db).profile('maria').get()).data();
@@ -103,6 +103,12 @@ describe('publishProfile', () => {
 
     await env.call(publishProfile, { profile: mariaProfile(pro.inboxKey) }, who());
     expect((await refs(env.deps.db).intakeForm(pro.uid).get()).exists).toBe(false);
+  });
+
+  it('refuses consent texts with the health form: consents are the professional\'s own business (D55)', async () => {
+    const intake = { formVersion: 3, template: { questions: [] }, consent: { en: { textVersion: '2026-10', text: 'I agree' } } };
+
+    await expect(env.call(publishProfile, { profile: { ...mariaProfile(pro.inboxKey), intake } }, who())).rejects.toMatchObject({ code: 'INVALID_ARGUMENT' });
   });
 
   it('needs a claimed address', async () => {
@@ -143,7 +149,7 @@ describe('publishProfile', () => {
     await env.call(publishProfile, { profile: dirty }, who());
     expect(((await refs(env.deps.db).profile('maria').get()).data() as PublicProfileDoc).bio).toBe('Hello world');
 
-    const huge = mariaProfile(pro.inboxKey, { intake: { formVersion: 1, template: { blob: 'x'.repeat(250_000) }, consent: {} } });
+    const huge = mariaProfile(pro.inboxKey, { intake: { formVersion: 1, template: { blob: 'x'.repeat(250_000) } } });
     await expect(env.call(publishProfile, { profile: huge }, who())).rejects.toMatchObject({ code: 'PAYLOAD_TOO_LARGE' });
     const photo = `data:image/jpeg;base64,${'A'.repeat(170_000)}`;
     await expect(env.call(publishProfile, { profile: mariaProfile(pro.inboxKey, { photo }) }, who())).rejects.toMatchObject({ code: 'INVALID_ARGUMENT' });

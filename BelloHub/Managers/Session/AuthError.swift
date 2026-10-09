@@ -3,7 +3,7 @@
 //  BelloHub
 //
 
-/// Why phone sign-in failed, in terms the screen can explain. A provider maps its own errors to these, so nothing
+/// Why sign-in failed, in terms the screen can explain. A provider maps its own errors to these, so nothing
 /// above `Managers/Session` ever sees an SDK error type.
 enum AuthError: Error, Equatable, Sendable {
     /// The phone number was refused.
@@ -16,4 +16,8 @@ enum AuthError: Error, Equatable, Sendable {
     case network
     /// This build has no sign-in provider yet (the Firebase provider arrives in S8).
     case unavailable
+    /// She closed the Apple sheet. A choice, not a failure: the screen shows nothing.
+    case cancelled
+    /// Apple or the auth backend refused or could not complete the Apple sign-in.
+    case appleFailed
 }

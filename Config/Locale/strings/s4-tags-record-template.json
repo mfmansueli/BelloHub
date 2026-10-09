@@ -1003,6 +1003,22 @@
    "اختيار من خيارات"
   ],
   [
+   "recordTemplate.kind.multiChoice",
+   "How a field is filled: several of the options she lists.",
+   "Pick several options",
+   "Escolher várias opções",
+   "Escolher várias opções",
+   "Elegir varias opciones",
+   "Elegir varias opciones",
+   "Scegliere più opzioni",
+   "Choisir plusieurs options",
+   "Mehrere Optionen auswählen",
+   "Birden fazla seçenek seç",
+   "Pilih beberapa opsi",
+   "कई विकल्प चुनें",
+   "اختيار عدة خيارات"
+  ],
+  [
    "recordTemplate.kind.number",
    "How a field is filled: a number with an optional unit.",
    "Number",

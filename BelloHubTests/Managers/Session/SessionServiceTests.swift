@@ -29,6 +29,39 @@ struct SessionServiceTests {
         #expect(session.user == user)
     }
 
+    @Test("Signing in with Apple signs her in without a phone, and a failure leaves her signed out")
+    func appleSignIn() async throws {
+        let (defaults, name) = makeDefaults()
+        defer { defaults.removePersistentDomain(forName: name) }
+        let provider = FakeAuthProvider()
+        let session = SessionService(provider: provider, defaults: defaults)
+
+        provider.appleError = .appleFailed
+        let sample = FakeAppleCredentialProvider.sample
+        await #expect(throws: AuthError.appleFailed) { try await session.signInWithApple(sample) }
+        #expect(session.user == nil)
+
+        provider.appleError = nil
+        try await session.signInWithApple(sample)
+        #expect(session.user?.method == .apple)
+        #expect(session.user?.phoneE164 == nil)
+        #expect(session.user?.displayName == "Maria Silva")
+        #expect(!session.hasCompletedSetup)
+    }
+
+    @Test("The development provider signs a fixed Apple user in and remembers it")
+    func devApple() async throws {
+        let (defaults, name) = makeDefaults()
+        defer { defaults.removePersistentDomain(forName: name) }
+        let provider = LocalDevAuthProvider(defaults: defaults)
+
+        let user = try await provider.signInWithApple(.devStub)
+
+        #expect(user.method == .apple)
+        #expect(user.displayName == "Helena Duarte")
+        #expect(await LocalDevAuthProvider(defaults: defaults).currentUser() == user)
+    }
+
     @Test("With no saved user restore says signed out")
     func restoreSignedOut() async {
         let (defaults, name) = makeDefaults()

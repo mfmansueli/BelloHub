@@ -40,7 +40,7 @@ final class OnboardingUITests: XCTestCase {
 
     func testAWrongCodeIsExplained() {
         let app = XCUIApplication.launchedForUITests()
-        app.tapButton("welcome.getStartedButton")
+        app.tapButton("welcome.phoneButton")
         app.type("+14155552671", intoField: "signIn.phoneField")
         app.tapButton("signIn.sendButton")
 

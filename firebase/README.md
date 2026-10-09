@@ -22,9 +22,10 @@ firebase/
 
 ## Safety rules of this folder
 
-1. **Nothing here is ever deployed by an agent.** The existing project `bello-hub` keeps deny-all rules and an empty
-   database until a human creates dev and staging (H4, ASSUMPTION-1). A bare `firebase deploy` fails on purpose: the default
-   project is `demo-bellohub`.
+1. **Deploys go only to `bello-hub`, which is the dev environment (D43, 2026-10-08), with `--project dev`.** A bare
+   `firebase deploy` fails on purpose: the default project is `demo-bellohub`. Hosting goes through
+   `scripts/deploy-hosting-dev.sh` (a real deploy refuses `public: ../web/dist`). A real prod project must exist and stay
+   deny-all before launch (H4).
 2. **All tests run on local emulators** with the project id `demo-bellohub`. A `demo-` id never reaches the cloud.
 3. **No personal data in logs**, generic errors to clients, secrets only through parameters and Secret Manager, no analytics.
 

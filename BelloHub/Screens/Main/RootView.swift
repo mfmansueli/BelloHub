@@ -23,6 +23,11 @@ struct RootView: View {
     @State private var notificationSettings: NotificationSettingsService
     @State private var calendar: CalendarIntegrationService
     @State private var export: DataExportService
+    @State private var timeBlocks: TimeBlockService
+    @State private var messages: MessageService
+    @State private var publishing: PublishingService
+    @State private var agendaDigest: AgendaDigestService
+    @State private var notifications: NotificationService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -47,6 +52,11 @@ struct RootView: View {
         _notificationSettings = State(initialValue: dependencies.notificationSettings)
         _calendar = State(initialValue: dependencies.calendar)
         _export = State(initialValue: dependencies.export)
+        _timeBlocks = State(initialValue: dependencies.timeBlocks)
+        _messages = State(initialValue: dependencies.messages)
+        _publishing = State(initialValue: dependencies.publishing)
+        _agendaDigest = State(initialValue: dependencies.agendaDigest)
+        _notifications = State(initialValue: dependencies.notifications)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -68,6 +78,12 @@ struct RootView: View {
         .environment(registration)
         .environment(bookingSetup)
         .environment(appointments)
+        .environment(timeBlocks)
+        .environment(messages)
+        .environment(agendaDigest)
+        .environment(notifications)
+        .treatmentTools(dependencies.treatmentTools)
+        .environment(publishing)
         .environment(subscription)
         .environment(recoveryKey)
         .environment(account)
@@ -91,8 +107,21 @@ struct RootView: View {
             }
         }
         .onChange(of: model.stage) { _, stage in
-            // Her hours, policies and messages leave memory when the app locks or she signs out.
-            if stage != .app { bookingSetup.clear() }
+            // Her hours, policies and messages leave memory when the app locks or she signs out; her page keeps
+            // publishing only while the app is open and unlocked.
+            if stage == .app, let userID = session.user?.id {
+                publishing.start(userID: userID)
+            } else if stage != .app {
+                bookingSetup.clear()
+                publishing.clear()
+                agendaDigest.stopListening()
+                notifications.stopListening()
+            }
+            // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
+            if stage.isSignedOut { Task { await notifications.removeAll() } }
+        }
+        .onChange(of: session.user?.id) { previous, current in
+            if let previous, current == nil { publishing.clearForSignOut(userID: previous) }
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
@@ -123,7 +152,9 @@ struct RootView: View {
             case .loading:
                 Palette.bg.ignoresSafeArea()
             case .welcome:
-                WelcomeView(onGetStarted: { model.choose(.create) }, onSignIn: { model.choose(.existing) })
+                WelcomeView(
+                    session: session, onSignedIn: { await model.didSignIn() }, onUsePhone: { model.choose(.create) }
+                )
             case .signIn(let mode):
                 SignInView(
                     mode: mode, session: session, regions: regions, initialRegion: initialRegion,
@@ -132,7 +163,8 @@ struct RootView: View {
                 )
             case .setup:
                 SetupView(
-                    profile: profile, regions: regions, onFinished: model.didFinishSetup,
+                    profile: profile, regions: regions, suggestedName: session.user?.displayName,
+                    onFinished: model.didFinishSetup,
                     onExit: { Task { await model.signOut() } }
                 )
             case .locked:
@@ -147,7 +179,7 @@ struct RootView: View {
     private var app: some View {
         #if DEBUG
         if let route = LaunchOptions.current.route {
-            HealthDebugRoute(route: route)
+            if route == "appointments" { AppointmentDebugRoute() } else { HealthDebugRoute(route: route) }
         } else {
             MainView(onSignOut: { Task { await model.signOut() } })
         }

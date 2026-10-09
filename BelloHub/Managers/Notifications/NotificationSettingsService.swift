@@ -29,7 +29,7 @@ final class NotificationSettingsService {
         self.store = store ?? DefaultsNotificationPrefsStore(defaults: defaults)
         self.permissions = permissions
         self.defaults = defaults
-        prefs = self.store.load() ?? .standard
+        prefs = self.store.load()
         hideNamesOnLockScreen = defaults.object(forKey: DefaultsKey.hideNamesOnLockScreen) as? Bool ?? true
     }
 

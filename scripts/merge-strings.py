@@ -56,6 +56,14 @@ def main():
     paths = sys.argv[1:] or sorted(glob.glob(os.path.join(lib.BATCH_DIR, "*.json")))
     catalog = lib.load_catalog()
     catalog["sourceLanguage"] = lib.SOURCE_LANGUAGE
+    # A build in Xcode adds an entry for every literal it extracts (a stub with no localizations, or an English
+    # value marked "new"); every authored entry is "manual", so the rest is dropped here instead of failing
+    # check-strings in every localization.
+    stubs = [key for key, entry in catalog["strings"].items() if entry.get("extractionState") != "manual"]
+    for key in stubs:
+        del catalog["strings"][key]
+    if stubs:
+        print(f"Dropped {len(stubs)} Xcode-extracted stub(s): {', '.join(sorted(stubs))}")
     total = sum(merge(path, catalog) for path in paths)
     lib.save_catalog(catalog)
     print(f"Merged {total} strings from {len(paths)} batch file(s)")
