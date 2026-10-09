@@ -21,6 +21,11 @@
 		<string>hi</string>
 		<string>ar</string>
 	</array>
+	<!-- Where the app talks to: the callable functions and the web address of the booking page. -->
+	<key>BelloFunctionsBaseURL</key>
+	<string>$(BELLO_FUNCTIONS_BASE_URL)</string>
+	<key>BelloWebBaseURL</key>
+	<string>$(BELLO_WEB_BASE_URL)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<!-- Silent pushes wake the app to fetch sealed mailbox items (docs/06-PRIVACY-SECURITY.md section 3.5). -->

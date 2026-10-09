@@ -20,5 +20,9 @@ struct UnconfiguredAuthProvider: AuthProvider {
         throw AuthError.unavailable
     }
 
+    func idToken() async throws -> String {
+        throw AuthError.unavailable
+    }
+
     func signOut() async throws {}
 }

@@ -17,6 +17,7 @@ final class FakeAuthProvider: AuthProvider, Sendable {
         var appleError: AuthError?
         var appleCredentials: [AppleCredential] = []
         var signedOut = false
+        var tokenError: AuthError?
     }
 
     private let state = OSAllocatedUnfairLock(initialState: State())
@@ -73,6 +74,18 @@ final class FakeAuthProvider: AuthProvider, Sendable {
             let user = AuthUser(id: "fake-apple-user", method: .apple, displayName: credential.fullName)
             state.user = user
             return user
+        }
+    }
+
+    var tokenError: AuthError? {
+        get { state.withLock { $0.tokenError } }
+        set { state.withLock { $0.tokenError = newValue } }
+    }
+
+    func idToken() async throws -> String {
+        try state.withLock { state in
+            if let error = state.tokenError { throw error }
+            return "fake-id-token"
         }
     }
 

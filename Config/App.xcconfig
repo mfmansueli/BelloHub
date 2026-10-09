@@ -17,6 +17,12 @@ ENABLE_PREVIEWS = YES
 LD_RUNPATH_SEARCH_PATHS = @executable_path/Frameworks
 SWIFT_EMIT_LOC_STRINGS = YES
 
+// MARK: - Server addresses (read by ServerConfig through Config/App-Info.plist)
+// `//` starts a comment in an xcconfig, so the scheme separator is written `/$()/`. D54: the link base is the Firebase
+// Hosting address until a custom domain exists. Functions are the dev project's `bello-hub` in europe-west1.
+BELLO_FUNCTIONS_BASE_URL = https:/$()/europe-west1-bello-hub.cloudfunctions.net
+BELLO_WEB_BASE_URL = https:/$()/bello-hub.web.app
+
 // MARK: - Generated Info.plist
 
 GENERATE_INFOPLIST_FILE = YES

@@ -19,6 +19,7 @@ struct AppDependencies {
     let bookingSetup: BookingSetupService
     let appointments: AppointmentService
     let timeBlocks: TimeBlockService
+    let publishing: PublishingService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -32,8 +33,11 @@ struct AppDependencies {
         let defaults = UserDefaults.standard
         let keyManager = KeyManager()
         let vault = VaultService.live(keyManager: keyManager)
+        let session = SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults)
+        let client = URLSessionCallableClient(tokens: SessionIDTokenProvider(session: session))
+        let server = RemoteBookingRepository(client: client)
         return AppDependencies(
-            session: SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults),
+            session: session,
             keyManager: keyManager,
             appLock: AppLockService(keyManager: keyManager, defaults: defaults),
             permissions: PermissionService(),
@@ -43,6 +47,9 @@ struct AppDependencies {
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
+            publishing: PublishingService(
+                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
+            ),
             defaults: defaults
         )
     }
@@ -58,6 +65,9 @@ struct AppDependencies {
         let keyManager = KeyManager(store: InMemoryKeyStore(seed: uiTestSeed))
         let vault = VaultService(repository: InMemoryClientRecordRepository())
         let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
+        // No network in a UI test: either the in-memory fake server or none at all.
+        let server: any BookingRepository = options.uiOnline == "fake"
+            ? UITestBookingRepository() : OfflineBookingRepository()
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
             keyManager: keyManager,
@@ -71,6 +81,10 @@ struct AppDependencies {
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
+            publishing: PublishingService(
+                repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
+                debounce: .milliseconds(300), retryDelays: [.seconds(2)]
+            ),
             defaults: defaults
         )
     }

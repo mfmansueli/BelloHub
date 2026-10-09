@@ -15,4 +15,8 @@ enum DefaultsKey {
     static let lockGraceSeconds = "lock.graceSeconds"
     /// The signed-in dummy user of `LocalDevAuthProvider`. Exists only in DEBUG builds.
     static let localDevUser = "session.localDevUser"
+    /// The user id whose booking page she put online from this phone (`PublishingService`). While it equals the
+    /// signed-in
+    /// user, changes to her page are published by themselves; stopping removes it.
+    static let publishingOnlineUserID = "publishing.onlineUserID"
 }

@@ -40,6 +40,15 @@ struct FirebaseAuthProvider: AuthProvider {
         }
     }
 
+    func idToken() async throws -> String {
+        guard let user = Auth.auth().currentUser else { throw AuthError.unavailable }
+        do {
+            return try await user.getIDToken()
+        } catch {
+            throw Self.map(error)
+        }
+    }
+
     func signOut() async throws {
         try Auth.auth().signOut()
     }
