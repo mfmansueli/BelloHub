@@ -7,6 +7,11 @@ legal compliance. The professional-facing app does not show the word "draft"; th
 Status values: `draft` (written, not reviewed by a lawyer) or `reviewed` (a lawyer returned final text; reviewer and
 date recorded). `scripts/check-legal-status.sh` prints this table from the files.
 
+**D55 (2026-10-09): the three consent kinds are no longer produced.** Health-form consent, photo consent and guardian
+consent are the professional's own business; the app only records their status. Their rows below are history: the
+drafts stay on disk, are not in the web legal bundle (`web/scripts/build-legal.ts`) nor in the app bundle, and get no
+new versions. The documents still in use are `terms-dpa`, `privacy-policy`, `client-notice` and `data-requests`.
+
 The document set per region and the languages are in `docs/07-LOCALIZATION.md` section 8 and `docs/16-MARKETS.md`.
 The legal pass (plan item L in `docs/PROGRESS.md`) wrote the 98 drafts below (7 documents x 14 localizations, version
 `2026-10`). How the files are organised, the fill-in fields and the facts every text may state are in
@@ -23,8 +28,9 @@ reviewer starts from the right places and nobody mistakes a draft for a finished
    the EU/UK, an EU/UK representative (GDPR art. 27) and a data protection officer or contact may be required.
 2. **Roles.** The drafts treat the professional as controller and Bello Hub as processor for client data, and Bello Hub as
    controller of the professional's account. Confirm this split, especially for the booking pages shown to clients.
-3. **Minors.** The product says clients are 18 or older, with a guardian consenting for a minor. Ages of digital and
-   health consent differ by country (13 to 18). Confirm the cut-off and the guardian flow per market.
+3. **Minors.** The product says clients are 18 or older; for a minor the form records the young person's name and the
+   guardian's consent is collected by the professional in person (D55). Ages of digital and health consent differ by
+   country (13 to 18). Confirm the cut-off per market.
 4. **Time limits we state.** 30 days for access/deletion answers (Brazil's LGPD art. 19 says 15 days for the full
    declaration; Mexico's LFPDPPP says 20 business days; both are written into those drafts), 72 hours for breach notice
    from processor to controller, 7 days booking retention, 30 days sealed health-form retention. Confirm against local rules.
