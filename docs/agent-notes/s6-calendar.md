@@ -17,11 +17,13 @@ Branch `s6-calendar` (based on `build/v1` at 143e649).
 - `scripts/test.sh fast`: passed. `scripts/test.sh smoke`: 20 UI tests, CalendarUITests passes; one failure,
   `BookingSetupUITests.testPoliciesAndQuickReplies` ("noShowPolicy.masterSwitch did not respond"), a test owned by the
   S5 booking slice, not touched here.
-- Audit en,ar: see the final report of the session / run the command below.
+- Audit `CalendarAuditUITests` en,ar at default size and AX5: passes (day is now `DayAgendaList` at accessibility
+  sizes; text inside timeline blocks is exempt from the clipped-text heuristic, since blocks truncate by design).
+- `scripts/check-warnings.sh`: zero warnings (simulator, device, Release, test targets).
 
-## Not done / to check
-- `scripts/check-warnings.sh` (clean builds for simulator, device, Release) was not run by the resumed agent.
-- DESIGN.md additions are left for the coordinator (never hand-edited here).
+## Not done
+- `pt-BR`, `de`, `hi` audit locales not run. DESIGN.md additions left to the coordinator.
+- Smoke has one failure outside this slice: `BookingSetupUITests.testPoliciesAndQuickReplies`.
 
 ## Next commands
     export SIM_UDID=9094A22B-D96D-4AB6-8132-AAC9C1D88AFE
