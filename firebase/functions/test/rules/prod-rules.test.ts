@@ -51,10 +51,12 @@ describe('the default project cannot reach the cloud by accident', () => {
     expect(rc.projects.default).toMatch(/^demo-/);
   });
 
-  it('keeps the real project reachable only by an explicit alias', () => {
+  it('keeps the real project reachable only by explicit aliases (deny-all target and the dev target, D43)', () => {
     const rc = JSON.parse(read('../../../.firebaserc')) as { projects: Record<string, string> };
     expect(rc.projects['bello-hub-deny-all']).toBe('bello-hub');
-    expect(Object.entries(rc.projects).filter(([, id]) => id === 'bello-hub')).toHaveLength(1);
+    expect(rc.projects.dev).toBe('bello-hub');
+    const aliases = Object.entries(rc.projects).filter(([, id]) => id === 'bello-hub').map(([alias]) => alias).sort();
+    expect(aliases).toEqual(['bello-hub-deny-all', 'dev']);
   });
 });
 

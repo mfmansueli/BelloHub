@@ -33,8 +33,7 @@ beforeAll(async () => {
         ...mariaProfile(pro.inboxKey),
         intake: {
           formVersion: 2,
-          template: { questions: [{ key: 'allergies', required: true }] },
-          consent: { 'pt-BR': { textVersion: '2026-10', text: 'Eu concordo.' }, en: { textVersion: '2026-10', text: 'I agree.' } }
+          template: { questions: [{ key: 'allergies', required: true }] }
         }
       }
     },
@@ -73,20 +72,33 @@ async function bookingToken(): Promise<{ token: string; bookingId: string }> {
 const submit = (token: string, sealed: Record<string, unknown>, ip = '203.0.113.5') => env.call(submitSealed, { token, envelope: sealed }, { ip });
 
 describe('getFormContext', () => {
-  it('gives the browser the questions, the consent texts and the PUBLIC key, and only a flag about earlier forms', async () => {
+  it('gives the browser the questions and the PUBLIC key, and only a flag about earlier forms', async () => {
     const { token, bookingId } = await bookingToken();
 
     const context = (await env.call(getFormContext, { token })) as {
       bookingId: string; professional: { displayName: string }; formVersion: number; template: unknown;
-      consent: Record<string, unknown>; inboxKey: { keyId: string; pub: string }; intakeCompletedWithinMonths: boolean;
+      inboxKey: { keyId: string; pub: string }; intakeCompletedWithinMonths: boolean;
     };
 
     expect(context.bookingId).toBe(bookingId);
     expect(context.formVersion).toBe(2);
-    expect(Object.keys(context.consent)).toEqual(['pt-BR', 'en']);
+    expect(context).not.toHaveProperty('consent');
     expect(context.inboxKey).toMatchObject({ keyId: pro.inboxKey.keyId, pub: pro.inboxKey.pub, alg: 'hpke-v1' });
     expect(context.intakeCompletedWithinMonths).toBe(false);
     expect(JSON.stringify(context)).not.toContain('Ana');
+  });
+
+  it('never returns the consent texts an older health-form document still carries (D55 keeps old data readable)', async () => {
+    const { token } = await bookingToken();
+    await refs(env.deps.db).intakeForm(pro.uid).update({
+      consent: { en: { textVersion: '2026-10', text: 'I agree that Maria keeps this information.' } }
+    });
+
+    const context = await env.call(getFormContext, { token });
+
+    expect(context).not.toHaveProperty('consent');
+    expect(JSON.stringify(context)).not.toContain('I agree');
+    expect((context as { formVersion: number }).formVersion).toBe(2);
   });
 
   it('is NOT_FOUND when the professional published no health form, and refuses unknown links', async () => {

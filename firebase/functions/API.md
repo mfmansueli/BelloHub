@@ -12,8 +12,8 @@ This file is the contract between the server (`firebase/functions`), the web boo
 Specs: `docs/05-DATA-MODEL.md` (layer B), `docs/06-PRIVACY-SECURITY.md`, `docs/10-WEB-BOOKING.md`,
 `docs/11-BACKEND-FIREBASE.md`. Decisions cited as D-numbers are in `docs/02-DECISIONS.md`.
 
-> **Privacy line.** The server never receives a health answer, a consent signature, a note, a photo or an allergy in
-> readable form. Everything sensitive travels as a sealed envelope (`submitSealed`). The only free text from a client is
+> **Privacy line.** The server never receives a health answer, a note, a photo or an allergy in readable form, and it
+> carries no consent text: consents are the professional's own business; the app only records their status (D55). Everything sensitive travels as a sealed envelope (`submitSealed`). The only free text from a client is
 > her name, phone, optional email, an optional short note to the professional (<= 300 chars) and a cancel reason
 > (<= 200 chars). The page must tell her not to write health information in those two fields.
 
@@ -198,8 +198,9 @@ type PublicProfile = {
 };
 ```
 
-`intake` (the health-form template and consent texts) is published inside `publishProfile` but is **not** part of
-`getPublicPage`; it is returned by `getFormContext`.
+`intake` (the health-form template: the questions) is published inside `publishProfile` but is **not** part of
+`getPublicPage`; it is returned by `getFormContext`. No consent, agreement or guardian text exists anywhere in the
+contract (D55); documents written before D55 may still hold a `consent` map, which the server ignores.
 
 ---
 
@@ -405,7 +406,6 @@ res: {
   professional: { displayName: string };
   formVersion: number;
   template: object;                   // opaque to the server: the questions published by the app (docs/10 section 5)
-  consent: Partial<Record<LocaleId, { textVersion: string; text: string; guardianText?: string }>>;
   inboxKey: InboxKey;
   intakeCompletedWithinMonths: boolean;   // a sealed intake was submitted in the last 12 months (a flag, no content)
 }
@@ -503,8 +503,7 @@ publishProfile:  req { profile: PublicProfileInput }   res { slug: Slug; updated
 ```
 `PublicProfileInput` is `PublicProfile` without `slug`, `schemaVersion`, `updatedAt`, plus an optional
 ```ts
-intake?: { formVersion: number; template: object /* <= 200 KB, opaque */;
-           consent: Partial<Record<LocaleId, { textVersion: string; text: string; guardianText?: string }>> /* <= 100 KB */ }
+intake?: { formVersion: number; template: object /* <= 200 KB, opaque */ }   // D55: no consent texts; a `consent` field is INVALID_ARGUMENT
 ```
 She must have claimed a slug. The server validates and size-limits everything (whole document <= 700 KB), strips
 control characters, checks that `inboxKey.keyId` matches `pub`, registers a **changed** key in the account keyring

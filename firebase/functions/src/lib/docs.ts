@@ -119,13 +119,16 @@ export interface PublicProfileDoc {
   updatedAt: Timestamp;
 }
 
-/** Function-only. The health-form template and consent texts: not in the world-readable profile. */
+/**
+ * Function-only. The health-form template (the questions): not in the world-readable profile. Documents written before
+ * D55 may still carry a `consent` map of texts; it is never read or returned, and the next `publishProfile` replaces
+ * the whole document without it.
+ */
 export interface IntakeFormDoc {
   ownerUid: string;
   slug: string;
   formVersion: number;
   template: Record<string, unknown>;
-  consent: Partial<Record<LocaleId, { textVersion: string; text: string; guardianText?: string }>>;
   updatedAt: Timestamp;
 }
 

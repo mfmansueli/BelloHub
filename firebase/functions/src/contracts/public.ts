@@ -274,10 +274,6 @@ export const getFormContext = {
     professional: z.strictObject({ displayName: z.string() }),
     formVersion: z.number().int(),
     template: z.record(z.string(), z.unknown()),
-    consent: z.partialRecord(
-      LocaleSchema,
-      z.strictObject({ textVersion: z.string(), text: z.string(), guardianText: z.string().optional() })
-    ),
     inboxKey: InboxKeySchema,
     intakeCompletedWithinMonths: z.boolean()
   })

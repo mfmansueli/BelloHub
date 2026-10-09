@@ -117,8 +117,7 @@ export async function publishProfileWithIntake(env: TestEnv, pro: Professional):
         ...mariaProfile(pro.inboxKey),
         intake: {
           formVersion: 2,
-          template: { questions: [{ key: 'allergies', required: true }] },
-          consent: { en: { textVersion: '2026-10', text: 'I agree.' } }
+          template: { questions: [{ key: 'allergies', required: true }] }
         }
       }
     },
