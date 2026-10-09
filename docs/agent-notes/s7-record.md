@@ -102,9 +102,20 @@ New tokens: none.
 - The More row for AI settings (after S10 merges).
 - The deviation items above.
 
-## State at the checkpoint
+## State at the checkpoint (2026-10-09, evening)
 
-See the last section of this file (updated at every milestone).
+Everything is committed on `s7-record` (merged with `build/v1` at f22c582). Passed: `scripts/test.sh fast` (1888
+tests in 248 suites), `scripts/check-warnings.sh` (zero warnings: simulator, device, Release, test targets),
+`scripts/check-strings.sh`, the `en,ar` record audit at default size and AX5 (`RecordAuditUITests`), and the 4
+`RecordUITests` in UISmoke. Bugs found and fixed on the way: `RecordHistoryViewModel.syncDraftText` aborted on an
+exclusivity conflict when "Add correction" was tapped; `PDFRecordExporter` ended the PDF context in a `defer` after
+the bytes were copied, so every exported PDF was unreadable (zero pages); the exported file card had no spoken label.
+
+`scripts/test.sh smoke`: 35 of 36 pass. The one failure is `CalendarUITests.testBookFromAFreeHourThenRescheduleIt`
+(line 27: tapping `calendar.slot.9` does not open the new appointment sheet), reproduced twice between 18:30 and
+19:00 CEST. Nothing in this slice touches the calendar; the seed used is `clients -uiCalendar`. It looks like a
+time-of-day case (the first hittable hour is already past) that arrived with the `s6-home` merge or the day's clock;
+to be rerun in the morning or checked on `build/v1` by the coordinator before blaming this branch.
 
 ## Next commands
 
