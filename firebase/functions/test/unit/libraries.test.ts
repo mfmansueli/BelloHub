@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 
 import { cleanText } from '../../src/lib/sanitize.js';
 import { clientIpFrom } from '../../src/lib/clientIp.js';
+import { ALLOWED_ORIGINS } from '../../src/http/callable.js';
 import { base64url, base64urlByteLength, fromBase64url, inboxKeyId, keyedHash, safeEqualHex, sha256Hex } from '../../src/lib/crypto.js';
 import type { InboxKeyringEntry, WaitlistDoc } from '../../src/lib/docs.js';
 import { applyInboxKey, currentKey, isKnownKey } from '../../src/lib/keyring.js';
@@ -51,6 +52,36 @@ describe('clientIpFrom (a forged header must not dodge a rate limit)', () => {
   it('falls back to the socket and then to "unknown"', () => {
     expect(clientIpFrom(undefined, '10.0.0.1', 1)).toBe('10.0.0.1');
     expect(clientIpFrom('', undefined, 1)).toBe('unknown');
+  });
+});
+
+describe('CORS allow-list (only our own Hosting sites, not every Firebase site)', () => {
+  const allowed = (origin: string): boolean => ALLOWED_ORIGINS.some((rule) => (typeof rule === 'string' ? rule === origin : rule.test(origin)));
+
+  it('accepts the product domain, its subdomains and the Hosting sites of our projects, previews included', () => {
+    for (const origin of [
+      'https://bellohub.app',
+      'https://www.bellohub.app',
+      'https://bello-hub.web.app',
+      'https://bellohub.web.app',
+      'https://bello-hub--pr-12-abc123.web.app',
+      'https://bellohub-staging.firebaseapp.com'
+    ]) {
+      expect(allowed(origin), origin).toBe(true);
+    }
+  });
+
+  it('refuses other sites, plain http and look-alike domains', () => {
+    for (const origin of [
+      'https://evil.web.app',
+      'https://notbellohub.web.app',
+      'https://anything.firebaseapp.com',
+      'http://bellohub.app',
+      'https://bellohub.app.attacker.com',
+      'https://xbellohub.app'
+    ]) {
+      expect(allowed(origin), origin).toBe(false);
+    }
   });
 });
 

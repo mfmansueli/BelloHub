@@ -17,7 +17,7 @@ import { submitSealed } from '../../src/public/submitSealed.js';
 import { holdSlot } from '../../src/public/holdSlot.js';
 import { requestReschedule } from '../../src/token/requestReschedule.js';
 import { ANA, asBooked, BIA, book, bookingDoc } from '../support/booking.js';
-import { createTestEnv, PEPPER, resetEmulators } from '../support/env.js';
+import { createTestEnv, envelopeBlobs, PEPPER, resetEmulators } from '../support/env.js';
 import { ownerContext, publishProfileWithIntake, seedProfessional, SERVICE } from '../support/seed.js';
 import type { Professional } from '../support/seed.js';
 
@@ -96,7 +96,7 @@ describe('deleteAccount (D30)', () => {
     for (const collection of ['accounts/', 'bookings/', 'holds/', 'inbox/', 'waitlist/', 'rescheduleRequests/', 'portal/', 'contacts/', 'devices/', 'availability/', 'publicProfiles/', 'slugs/', 'calendarLocks/', 'intakeForms/']) {
       expect(before.some((found) => found.path.startsWith(collection) && (found.text.includes(pro.uid) || found.path.includes(pro.uid) || found.path.includes('maria'))), collection).toBe(true);
     }
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${footprint.large}.json`)).not.toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, footprint.large)).toHaveLength(1);
 
     expect(await env.call(deleteAccount, { confirm: true }, ownerContext(pro.uid))).toEqual({ ok: true });
 
@@ -105,7 +105,7 @@ describe('deleteAccount (D30)', () => {
       (found) => found.path.includes(pro.uid) || found.text.includes(pro.uid) || found.path.includes('publicProfiles/maria') || found.path.includes('slugs/maria')
     );
     expect(stillHers).toEqual([]);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${footprint.large}.json`)).toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, footprint.large)).toHaveLength(0);
     const left = await env.deps.blobs.list(`inbox/${pro.uid}/`);
     expect(left.paths).toEqual([]);
     await expect(env.deps.auth.getUser(pro.uid)).rejects.toMatchObject({ code: 'auth/user-not-found' });
@@ -173,7 +173,7 @@ describe('deleteClientServerData', () => {
 
     expect(result.deleted).toMatchObject({ bookings: 1, mailboxItems: 2, requests: 1, contacts: 1, portals: 1 });
     expect((await refs(env.deps.db).booking(mine.aBooking).get()).exists).toBe(false);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${mine.large}.json`)).toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, mine.large)).toHaveLength(0);
     expect((await refs(env.deps.db).contact(pro.uid, ana.phoneHash).get()).exists).toBe(false);
     // The other client (Bia) and the account itself are untouched.
     expect((await refs(env.deps.db).bookings().where('phoneHash', '==', phoneHashOf(PEPPER, BIA.phone)).get()).size).toBe(1);

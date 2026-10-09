@@ -77,8 +77,9 @@ The project id **must** start with `demo-`: such an id can never reach the cloud
 (`functions/.env.<project>`); their defaults suit the emulator.
 
 ### CORS
-Allowed origins: `https://bellohub.app`, any `https://*.bellohub.app`, the project's `*.web.app` and `*.firebaseapp.com`
-Hosting domains. The emulator accepts any origin.
+Allowed origins: `https://bellohub.app`, any `https://*.bellohub.app`, and the Hosting domains of our own projects:
+`https://bellohub*.web.app`, `https://bello-hub*.web.app` (preview channels included) and the same on `firebaseapp.com`.
+A Hosting site whose id does not start with `bellohub` or `bello-hub` is refused. The emulator accepts any origin.
 
 ## 2. Access levels and App Check
 
@@ -294,7 +295,9 @@ res: { status: "confirmed" | "pendingApproval"; bookingId: string; manageToken: 
   action "approve new bookings" (D13). The response never says which. A new phone that books and is confirmed is
   registered at once (it counts toward the 10, and the app's later `reserveRegistration` for the same phone does not count twice).
 - `manageToken` is returned **once**; the server keeps only its SHA-256. The page stores it nowhere: the URL is the key.
-  Retrying with the same `idempotencyKey` and the same request returns the same booking with an **additional** token.
+  Retrying with the same `idempotencyKey` and the same request returns the same booking with an **additional** token,
+  provided the retry carries the same verification (the same email `proof`, or a fresh valid one for that address; a
+  phone ID token is checked on every call). An idempotency key alone opens nothing.
 - A confirmation email is sent when `client.email` is given and a provider is configured (`emailSent`).
 - Limits: 10/hour per IP, 5/hour per phone, 300/day per professional.
 Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `VERIFICATION_FAILED`, `CONFLICT` (idempotency key reused with a different request), `RATE_LIMITED`.
@@ -404,7 +407,8 @@ Caps on the decoded ciphertext: `intake` 256 KB + 1 KB, `checkin` 3 MB + 1 KB, `
 Storage. `keyId` must be one of the professional's keys (`KEY_MISMATCH` otherwise). Re-sending the same `itemId` with
 the same ciphertext is a success (retry); a different ciphertext is `CONFLICT`. The booking must exist and not be
 purged. The server stores ciphertext and metadata (`ownerUid`, `bookingId`, `kind`, `sizeBytes`, `createdAt`, `expiresAt` = +30 days) and
-**never** looks inside. Limits: 5/hour per booking, 20/hour per IP.
+**never** looks inside. Limits: 5/hour per booking, 20/hour per IP, and at most **20 items per booking** waiting in the
+mailbox (`RATE_LIMITED` with `details.maxItems`; the count drops when the app acknowledges them).
 
 ### 5.16 `getPortal`  (token)  -> Cl-2
 ```ts

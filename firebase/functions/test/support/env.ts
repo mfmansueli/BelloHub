@@ -104,3 +104,8 @@ export async function resetEmulators(env: TestEnv, options: { storage?: boolean;
     page = listed.next;
   } while (page);
 }
+
+/** The Storage objects of one sealed item (its name carries the ciphertext hash, so a test looks it up by prefix). */
+export async function envelopeBlobs(env: TestEnv, uid: string, itemId: string): Promise<string[]> {
+  return (await env.deps.blobs.list(`inbox/${uid}/${itemId}.`)).paths;
+}

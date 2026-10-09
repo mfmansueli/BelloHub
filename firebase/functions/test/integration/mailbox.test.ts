@@ -2,7 +2,7 @@ import { randomBytes, randomUUID } from 'node:crypto';
 
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { base64url } from '../../src/lib/crypto.js';
+import { base64url, sha256Hex } from '../../src/lib/crypto.js';
 import type { InboxItemDoc, PublicProfileDoc } from '../../src/lib/docs.js';
 import type { AppError } from '../../src/lib/errors.js';
 import { refs } from '../../src/lib/store.js';
@@ -14,7 +14,7 @@ import { getFormContext } from '../../src/public/getFormContext.js';
 import { submitSealed } from '../../src/public/submitSealed.js';
 import { handleInboxItemCreated } from '../../src/triggers/handleInboxItemCreated.js';
 import { asBooked, book, bookingDoc } from '../support/booking.js';
-import { createTestEnv, resetEmulators } from '../support/env.js';
+import { createTestEnv, envelopeBlobs, resetEmulators } from '../support/env.js';
 import { captureWorld, mariaProfile, newInboxKey, ownerContext, restoreWorld, seedProfessional } from '../support/seed.js';
 import type { Professional, World } from '../support/seed.js';
 
@@ -135,7 +135,7 @@ describe('submitSealed', () => {
     const largeItem = (await refs(env.deps.db).inboxItem(pro.uid, large.itemId).get()).data() as InboxItemDoc;
     expect(smallItem.envelope).toBeDefined();
     expect(largeItem.envelope).toBeUndefined();
-    expect(largeItem.storagePath).toBe(`inbox/${pro.uid}/${large.itemId}.json`);
+    expect(largeItem.storagePath).toBe(`inbox/${pro.uid}/${large.itemId}.${sha256Hex(large.ct).slice(0, 16)}.json`);
     expect(await env.deps.blobs.get(largeItem.storagePath ?? '')).not.toBeNull();
 
     const fetched = (await env.call(getMailboxItem, { itemId: large.itemId }, owner())) as { envelope: { ct: string }; kind: string };
@@ -181,7 +181,7 @@ describe('submitSealed', () => {
 
     expect(results).toEqual([{ ok: true }, { ok: true }]);
     expect((await refs(env.deps.db).inboxItems(pro.uid).get()).size).toBe(1);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${sealed.itemId}.json`)).not.toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, sealed.itemId)).toHaveLength(1);
   }, 60_000);
 
   it('limits one booking to five envelopes an hour and one address to twenty', async () => {

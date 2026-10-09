@@ -17,10 +17,10 @@ import { noShowState, writeContact, writeRegistration } from './contacts.js';
 import { sha256Hex } from './crypto.js';
 import type { BookingDoc, ContactDoc, IdempotencyDoc, WaitlistDoc } from './docs.js';
 import { ACTIVE_BOOKING_STATUSES } from './docs.js';
-import { emailHashOf, phoneHashOf, useEmailProof } from './emailProof.js';
+import { emailHashOf, peekEmailProof, phoneHashOf, proofHash, useEmailProof } from './emailProof.js';
 import { AppError } from './errors.js';
 import { findHoldsByKey, holdKeyHash } from './holds.js';
-import { consumeRates } from './rateLimit.js';
+import { consumeRate, consumeRates } from './rateLimit.js';
 import type { NoShowPolicy } from './rules.js';
 import { approvalReason, isPausedFor, isPlanActive, purgeAtFor } from './rules.js';
 import { dataOf, ms, msOpt, refs, ts, txReader } from './store.js';
@@ -81,14 +81,19 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
   if (!claim.exists) throw new AppError('NOT_FOUND');
   const ownerUid = (claim.data() as { ownerUid: string }).ownerUid;
 
+  const now = deps.now();
   const phoneHash = phoneHashOf(deps.pepper, request.client.phone);
+  // The caller's own address pays for every attempt; the phone and the professional only once the proof looks real,
+  // so a stranger with made-up proofs cannot use up a client's or a professional's allowance.
+  await consumeRate(deps, 'createBookingIp', request.ipHash, RATE.createBookingIp);
+  if (request.proof.kind === 'email') {
+    await peekEmailProof(deps.db, deps.pepper, request.proof.proof, request.client.email ?? '', now);
+  }
   await consumeRates(deps, [
-    { scope: 'createBookingIp', subject: request.ipHash, rate: RATE.createBookingIp },
     { scope: 'createBookingPhone', subject: phoneHash, rate: RATE.createBookingPhone },
     { scope: 'createBookingOwner', subject: ownerUid, rate: RATE.createBookingOwnerDay }
   ]);
 
-  const now = deps.now();
   const manageToken = deps.random.token();
   const idemKey = sha256Hex(`idem:${request.slug}:${request.idempotencyKey}`);
   const fingerprint = sha256Hex(
@@ -111,7 +116,7 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
     const idem = dataOf<IdempotencyDoc>(await reader.doc(r.idempotency(idemKey)));
     if (idem) {
       if (idem.fingerprint !== fingerprint) throw new AppError('CONFLICT');
-      return replay(deps, tx, idem, manageToken, calendar.profile.displayName);
+      return replay(deps, tx, idem, request, now, manageToken, calendar.profile.displayName);
     }
 
     const releaseProof =
@@ -210,6 +215,7 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       bookingId: bookingRef.id,
       ownerUid,
       fingerprint,
+      ...(request.proof.kind === 'email' ? { proofHash: proofHash(request.proof.proof) } : {}),
       expiresAt: booking.purgeAt
     } satisfies IdempotencyDoc);
 
@@ -269,11 +275,18 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
   };
 }
 
-/** The same request again (a lost response, a double tap): the same booking, with one more valid token. */
+/**
+ * The same request again (a lost response, a double tap): the same booking, with one more valid token. A replay hands
+ * out a manage token, so it must show the verification the booking was made with: a phone token was checked by the
+ * caller against the phone in the fingerprint; an email proof must be the one already spent on this booking, or a fresh
+ * valid one for the same address (spent here). An idempotency key alone opens nothing.
+ */
 async function replay(
   deps: Deps,
   tx: Transaction,
   idem: IdempotencyDoc,
+  request: CreateBookingRequest,
+  now: number,
   manageToken: string,
   professionalName: string
 ): Promise<TxResult> {
@@ -281,7 +294,12 @@ async function replay(
   const ref = r.booking(idem.bookingId);
   const booking = dataOf<BookingDoc>(await tx.get(ref));
   if (!booking || !ACTIVE_BOOKING_STATUSES.includes(booking.status)) throw new AppError('BOOKING_NOT_ACTIVE');
+  const releaseProof =
+    request.proof.kind === 'email' && proofHash(request.proof.proof) !== idem.proofHash
+      ? await useEmailProof(tx, deps.db, deps.pepper, request.proof.proof, request.client.email ?? '', now)
+      : undefined;
   const hashes = withNewTokenHash(booking.manageTokenHashes, tokenHash(manageToken));
   tx.update(ref, { manageTokenHashes: hashes, updatedAt: FieldValue.serverTimestamp() });
+  releaseProof?.();
   return { kind: 'created', booking: { ...booking, manageTokenHashes: hashes }, bookingId: ref.id, professionalName, replay: true };
 }

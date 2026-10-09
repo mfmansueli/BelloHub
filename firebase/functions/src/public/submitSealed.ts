@@ -1,5 +1,5 @@
 import { defineUseCase } from '../app/UseCase.js';
-import { RATE, SIZE } from '../config/limits.js';
+import { MAX_SEALED_PER_BOOKING, RATE, SIZE } from '../config/limits.js';
 import * as contract from '../contracts/public.js';
 import { findBookingByToken, tokenHash } from '../lib/bookingAccess.js';
 import { writeContact } from '../lib/contacts.js';
@@ -53,9 +53,15 @@ export const submitSealed = defineUseCase({
       if (existing.ctHash === ctHash) return { ok: true as const };
       throw new AppError('CONFLICT');
     }
+    // One link cannot fill her mailbox: past the cap the client waits for the app to collect (checked again in the
+    // transaction, before the Storage object is paid for here).
+    const unacknowledged = r.inboxItems(ownerUid).where('bookingId', '==', booking.id).select();
+    if ((await unacknowledged.get()).size >= MAX_SEALED_PER_BOOKING) throw new AppError('RATE_LIMITED', { maxItems: MAX_SEALED_PER_BOOKING });
 
     const inline = sizeBytes <= SIZE.inlineBytes;
-    const storagePath = `inbox/${ownerUid}/${envelope.itemId}.json`;
+    // The object name carries the ciphertext hash: two different envelopes racing under one item id get two objects,
+    // so the loser's clean-up can never remove the winner's bytes.
+    const storagePath = `inbox/${ownerUid}/${envelope.itemId}.${ctHash.slice(0, 16)}.json`;
     if (!inline) await deps.blobs.put(storagePath, Buffer.from(JSON.stringify(envelope), 'utf8'), 'application/json');
 
     const item: InboxItemDoc = {
@@ -74,6 +80,9 @@ export const submitSealed = defineUseCase({
         const reader = txReader(tx);
         const again = await reader.doc(itemRef);
         if (again.exists) throw new AppError('CONFLICT');
+        if ((await reader.query(unacknowledged)).size >= MAX_SEALED_PER_BOOKING) {
+          throw new AppError('RATE_LIMITED', { maxItems: MAX_SEALED_PER_BOOKING });
+        }
         const contact = dataOf<ContactDoc>(await reader.doc(r.contact(ownerUid, booking.data.phoneHash)));
         tx.create(itemRef, item);
         if (envelope.kind === 'intake') {

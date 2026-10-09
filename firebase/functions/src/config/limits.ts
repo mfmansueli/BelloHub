@@ -49,6 +49,8 @@ export const EMAIL_PROOF_TTL_SECONDS = 1800;
 export const PHONE_AUTH_MAX_AGE_SECONDS = 600;
 
 export const MAX_MANAGE_TOKENS_PER_BOOKING = 5;
+/** Sealed items one booking may leave in the mailbox before the app acknowledges them (a cap on what one link can cost). */
+export const MAX_SEALED_PER_BOOKING = 20;
 export const MAX_RANGE_DAYS = 42;
 export const MAX_ALTERNATIVES = 5;
 export const ALTERNATIVES_SEARCH_DAYS = 14;

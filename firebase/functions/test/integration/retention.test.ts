@@ -14,7 +14,7 @@ import { sendEmailCode } from '../../src/public/sendEmailCode.js';
 import { submitSealed } from '../../src/public/submitSealed.js';
 import { cancelBooking } from '../../src/token/cancelBooking.js';
 import { asBooked, book, bookingDoc } from '../support/booking.js';
-import { createTestEnv, resetEmulators } from '../support/env.js';
+import { createTestEnv, envelopeBlobs, resetEmulators } from '../support/env.js';
 import { captureWorld, newInboxKey, ownerContext, restoreWorld, seedProfessional, SERVICE } from '../support/seed.js';
 import type { Professional, World } from '../support/seed.js';
 
@@ -109,12 +109,12 @@ describe('sealed envelopes (30 days)', () => {
     const arrived = env.clock.now();
 
     expect((await runCleanup(env.deps, arrived + 30 * DAY - 1)).envelopes).toBe(0);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${large}.json`)).not.toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, large)).toHaveLength(1);
 
     const report = await runCleanup(env.deps, arrived + 30 * DAY);
     expect(report.envelopes).toBe(2);
     expect((await refs(env.deps.db).inboxItem(pro.uid, small).get()).exists).toBe(false);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${large}.json`)).toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, large)).toHaveLength(0);
   });
 
   it('deletes a Storage object whose document is already gone (the database TTL cannot reach Storage)', async () => {
@@ -124,7 +124,7 @@ describe('sealed envelopes (30 days)', () => {
     const report = await runCleanup(env.deps, env.clock.now() + DAY);
 
     expect(report.blobs).toBe(1);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${large}.json`)).toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, large)).toHaveLength(0);
   });
 
   it('keeps a Storage object whose document exists', async () => {
@@ -133,7 +133,7 @@ describe('sealed envelopes (30 days)', () => {
     const report = await runCleanup(env.deps, env.clock.now() + DAY);
 
     expect(report.blobs).toBe(0);
-    expect(await env.deps.blobs.get(`inbox/${pro.uid}/${large}.json`)).not.toBeNull();
+    expect(await envelopeBlobs(env, pro.uid, large)).toHaveLength(1);
   });
 });
 

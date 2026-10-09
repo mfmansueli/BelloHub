@@ -304,6 +304,8 @@ export interface IdempotencyDoc {
   bookingId: string;
   ownerUid: string;
   fingerprint: string;
+  /** Hash of the email proof the booking was made with: a replay must show the same proof (or a fresh one). */
+  proofHash?: string;
   expiresAt: Timestamp;
 }
 

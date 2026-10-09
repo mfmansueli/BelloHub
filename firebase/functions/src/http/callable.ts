@@ -12,11 +12,14 @@ import { ERROR_STATUS, isAppError } from '../lib/errors.js';
 import type { ErrorCode, ErrorDetails } from '../lib/errors.js';
 import { invokeUseCase } from './invoke.js';
 
-/** Hosting domains of the web app and the previews of the project; the emulator accepts any origin. */
+/**
+ * Hosting domains of the web app and the previews of OUR projects (site ids start with `bellohub` or `bello-hub`, preview
+ * channels append `--<channel>-<hash>`); not every Firebase site on earth. The emulator accepts any origin.
+ */
 export const ALLOWED_ORIGINS: (string | RegExp)[] = [
   /^https:\/\/([a-z0-9-]+\.)*bellohub\.app$/,
-  /^https:\/\/[a-z0-9-]+\.web\.app$/,
-  /^https:\/\/[a-z0-9-]+\.firebaseapp\.com$/
+  /^https:\/\/bello-?hub[a-z0-9-]*\.web\.app$/,
+  /^https:\/\/bello-?hub[a-z0-9-]*\.firebaseapp\.com$/
 ];
 
 export function toHttpsError(error: unknown): HttpsError {

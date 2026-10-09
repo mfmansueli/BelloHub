@@ -5,9 +5,9 @@ import * as contract from '../contracts/public.js';
 import { tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import type { BookingDoc, SlugDoc } from '../lib/docs.js';
 import { ACTIVE_BOOKING_STATUSES } from '../lib/docs.js';
-import { emailHashOf, phoneHashOf, useEmailProof } from '../lib/emailProof.js';
+import { emailHashOf, peekEmailProof, phoneHashOf, useEmailProof } from '../lib/emailProof.js';
 import { AppError } from '../lib/errors.js';
-import { consumeRates } from '../lib/rateLimit.js';
+import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, ms, refs, txReader } from '../lib/store.js';
 import { runTransaction } from '../lib/tx.js';
 
@@ -42,10 +42,12 @@ export const findBookings = defineUseCase({
       hash = emailHashOf(deps.pepper, input.email);
       proofEmail = input.email;
     }
-    await consumeRates(deps, [
-      { scope: 'findIp', subject: ctx.ipHash, rate: RATE.findBookingsIp },
-      { scope: 'findContact', subject: hash, rate: RATE.findBookingsPhone }
-    ]);
+    // The caller's address pays first; the contact's allowance only once the proof looks real (see peekEmailProof).
+    await consumeRate(deps, 'findIp', ctx.ipHash, RATE.findBookingsIp);
+    if (input.verification.method === 'email' && proofEmail) {
+      await peekEmailProof(deps.db, deps.pepper, input.verification.proof, proofEmail, now);
+    }
+    await consumeRate(deps, 'findContact', hash, RATE.findBookingsPhone);
 
     return runTransaction(deps.db, async (tx) => {
       const reader = txReader(tx);
