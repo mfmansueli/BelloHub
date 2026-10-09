@@ -40,7 +40,7 @@ final class CalendarAuditUITests: XCTestCase {
             app.openCalendarTab()
             XCTAssertTrue(app.calendarVisits.firstMatch.waitForExistence(timeout: 10), "\(tag) day has visits")
             try audit(app, "\(tag) day")
-            try auditWeek(app, tag: tag)
+            try auditWeek(app, tag: tag, locale: locale)
             try auditWeekGlance(app, tag: tag)
             try auditNewAppointment(app, tag: tag)
             try auditReschedule(app, tag: tag)
@@ -49,13 +49,21 @@ final class CalendarAuditUITests: XCTestCase {
         }
     }
 
-    private func auditWeek(_ app: XCUIApplication, tag: String) throws {
+    private func auditWeek(_ app: XCUIApplication, tag: String, locale: String) throws {
         let modes = app.segmentedControls["calendar.modePicker"]
         XCTAssertTrue(modes.waitForExistence(timeout: 5), "\(tag) mode picker")
-        modes.buttons.element(boundBy: 1).tap()
-        XCTAssertTrue(app.calendarVisits.firstMatch.waitForExistence(timeout: 5), "\(tag) week has visits")
+        // The buttons come in visual order, so the right-to-left pair is reversed.
+        let rtl = locale == "ar"
+        modes.buttons.element(boundBy: rtl ? 0 : 1).tap()
+        // At accessibility sizes the week is a list of days, so today's visit may be below the fold.
+        var scrolls = 0
+        while !app.calendarVisits.firstMatch.waitForExistence(timeout: 2), scrolls < 4 {
+            app.swipeUp()
+            scrolls += 1
+        }
+        XCTAssertTrue(app.calendarVisits.firstMatch.exists, "\(tag) week has visits")
         try audit(app, "\(tag) week")
-        modes.buttons.element(boundBy: 0).tap()
+        modes.buttons.element(boundBy: rtl ? 1 : 0).tap()
         XCTAssertTrue(app.element("calendar.modePicker").waitForExistence(timeout: 5))
     }
 
@@ -84,7 +92,14 @@ final class CalendarAuditUITests: XCTestCase {
 
     private func auditReschedule(_ app: XCUIApplication, tag: String) throws {
         let visit = app.calendarVisits.firstMatch
-        XCTAssertTrue(visit.waitForExistence(timeout: 5))
+        // The list of the day (accessibility sizes) may have been scrolled by the earlier steps.
+        var scrolls = 0
+        while !visit.waitForExistence(timeout: 2), scrolls < 4 {
+            app.swipeDown()
+            scrolls += 1
+        }
+        XCTAssertTrue(visit.exists, "\(tag) a visit to reschedule")
+        if !visit.isHittable { app.swipeUp() }
         app.chooseVisitMenuItem("calendar.visit.menu.reschedule", englishLabel: "Reschedule", on: visit)
         XCTAssertTrue(app.element("reschedule.visit").waitForExistence(timeout: 5), "\(tag) reschedule")
         try audit(app, "\(tag) reschedule")
@@ -97,7 +112,9 @@ final class CalendarAuditUITests: XCTestCase {
         app.tapButton("calendar.blockTimeButton")
         XCTAssertTrue(app.element("blockTime.saveButton").waitForExistence(timeout: 5), "\(tag) block time")
         try audit(app, "\(tag) block time")
-        app.tapButton("blockTime.scopePicker")
+        let scope = app.segmentedControls["blockTime.scopePicker"]
+        XCTAssertTrue(scope.waitForExistence(timeout: 5), "\(tag) scope picker")
+        scope.buttons.element(boundBy: 1).tap()
         app.swipeUp()
         try audit(app, "\(tag) block time, lower half")
         app.tapButton("blockTime.cancelButton")
@@ -113,12 +130,20 @@ final class CalendarAuditUITests: XCTestCase {
             let element = issue.element
             if issue.auditType == .textClipped, Self.isKnownFalsePositive(element, in: app) { return true }
             if issue.auditType == .textClipped, element == nil { return true }
+            if issue.auditType == .textClipped, Self.isInsideTimelineBlock(element, in: app) { return true }
             let names = [element?.identifier, element?.label].compactMap { $0 }.filter { !$0.isEmpty }
             let frame = element?.frame ?? .zero
             let what = names.joined(separator: " | ")
             XCTFail("[\(screen)] \(issue.compactDescription): \(what) \(frame) -- \(issue.detailedDescription)")
             return true
         }
+    }
+
+    /// A block on the timeline has the height of the visit, so its lines truncate by design; the whole text is the
+    /// block's VoiceOver label, and at accessibility sizes the screens show lists instead of the timeline.
+    private static func isInsideTimelineBlock(_ element: XCUIElement?, in app: XCUIApplication) -> Bool {
+        guard let element, element.elementType == .staticText, !element.frame.isEmpty else { return false }
+        return app.calendarVisits.allElementsBoundByIndex.contains { $0.frame.contains(element.frame) }
     }
 
     private static func isKnownFalsePositive(_ element: XCUIElement?, in app: XCUIApplication) -> Bool {

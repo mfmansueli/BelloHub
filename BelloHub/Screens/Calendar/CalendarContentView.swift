@@ -124,14 +124,26 @@ struct CalendarContentView: View {
                     .padding(.horizontal, Spacing.gutter)
                     .accessibilityIdentifier("calendar.day.empty")
             }
-            DayTimelineView(
-                layout: layout, appointments: visits, blocks: viewModel.blocks,
-                clientName: viewModel.clientName(of:), now: now, formatters: formatters, hourHeight: dayHourHeight,
-                onTapSlot: { agendaSheet = .newAppointment(clientID: nil, startsAt: $0) },
-                onReschedule: { agendaSheet = .reschedule(appointmentID: $0) },
-                onCancel: { agendaSheet = .cancel(appointmentID: $0) }, onRemoveBlock: { blockToRemove = $0 }
-            )
-            .padding(.top, Spacing.sm)
+            if typeSize.isAccessibilitySize {
+                DayAgendaList(
+                    layout: layout, appointments: visits, blocks: viewModel.blocks,
+                    clientName: viewModel.clientName(of:), formatters: formatters,
+                    onAdd: { agendaSheet = .newAppointment(clientID: nil, startsAt: addTime(on: day)) },
+                    onReschedule: { agendaSheet = .reschedule(appointmentID: $0) },
+                    onCancel: { agendaSheet = .cancel(appointmentID: $0) }, onRemoveBlock: { blockToRemove = $0 }
+                )
+                .padding(.top, Spacing.sm)
+            } else {
+                DayTimelineView(
+                    layout: layout, appointments: visits, blocks: viewModel.blocks,
+                    clientName: viewModel.clientName(of:), now: now, formatters: formatters,
+                    hourHeight: dayHourHeight,
+                    onTapSlot: { agendaSheet = .newAppointment(clientID: nil, startsAt: $0) },
+                    onReschedule: { agendaSheet = .reschedule(appointmentID: $0) },
+                    onCancel: { agendaSheet = .cancel(appointmentID: $0) }, onRemoveBlock: { blockToRemove = $0 }
+                )
+                .padding(.top, Spacing.sm)
+            }
         }
     }
 
