@@ -41,4 +41,6 @@ enum VaultKind: String, CaseIterable, Sendable {
     case quickReply
     /// A stretch she closed in the calendar (S6). The reason is sealed.
     case timeBlock
+    /// Records that a chat was opened with a message ready (S6). Owned by the client; holds no text.
+    case messageLog
 }

@@ -19,6 +19,7 @@ struct AppDependencies {
     let bookingSetup: BookingSetupService
     let appointments: AppointmentService
     let timeBlocks: TimeBlockService
+    let messages: MessageService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -43,6 +44,7 @@ struct AppDependencies {
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
+            messages: MessageService(vault: vault),
             defaults: defaults
         )
     }
@@ -71,6 +73,7 @@ struct AppDependencies {
             bookingSetup: BookingSetupService(vault: vault),
             appointments: AppointmentService(vault: vault),
             timeBlocks: TimeBlockService(vault: vault),
+            messages: MessageService(vault: vault, sender: UITestMessageSender()),
             defaults: defaults
         )
     }

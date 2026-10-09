@@ -70,4 +70,5 @@ struct MainView: View {
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
         .environment(AppointmentService(vault: VaultService(repository: nil)))
         .environment(TimeBlockService(vault: VaultService(repository: nil)))
+        .environment(MessageService(vault: VaultService(repository: nil)))
 }
