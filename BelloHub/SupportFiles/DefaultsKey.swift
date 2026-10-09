@@ -23,4 +23,13 @@ enum DefaultsKey {
     static let publishingOnlineUserID = "publishing.onlineUserID"
     /// `NotificationPrefs` as JSON: what reaches her and when (`DefaultsNotificationPrefsStore`).
     static let notificationPrefs = "notifications.prefs"
+    /// Prefix of the per-user queue of writes waiting for the server (`OutboundQueue`, JSON): `<prefix>.<userID>`.
+    static let outboundQueue = "inbox.outbound"
+    /// Prefix of the per-user `InboxSnapshot` (`BookingSyncService`, JSON): `<prefix>.<userID>`.
+    static let inboxSnapshot = "inbox.snapshot"
+    /// Prefix of the per-user list of sealed items the phone could not open (`MailboxService`, JSON, ids and times
+    /// only): `<prefix>.<userID>`.
+    static let mailboxUndecryptable = "mailbox.undecryptable"
+    /// Prefix of the per-user FCM token the server knows (`PushService`): `<prefix>.<userID>`.
+    static let pushRegisteredToken = "push.registeredToken"
 }

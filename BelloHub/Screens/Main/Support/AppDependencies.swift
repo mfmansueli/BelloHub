@@ -24,6 +24,10 @@ struct AppDependencies {
     let notifications: NotificationService
     let treatmentTools: TreatmentTools
     let publishing: PublishingService
+    let outbound: OutboundQueue
+    let bookingSync: BookingSyncService
+    let mailbox: MailboxService
+    let push: PushService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -38,12 +42,24 @@ struct AppDependencies {
         let keyManager = KeyManager()
         let vault = VaultService.live(keyManager: keyManager)
         let session = SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults)
-        let client = URLSessionCallableClient(tokens: SessionIDTokenProvider(session: session))
+        let tokens = SessionIDTokenProvider(session: session)
+        let client = URLSessionCallableClient(tokens: tokens)
         let server = RemoteBookingRepository(client: client)
+        let inbox = RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens))
         let profile = ProfileService(vault: vault)
         let permissions = PermissionService()
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
+        let outbound = OutboundQueue(repository: inbox, defaults: defaults)
+        let bookingSync = BookingSyncService(
+            repository: inbox, queue: outbound, appointments: appointments, vault: vault, defaults: defaults
+        )
+        let mailbox = MailboxService(
+            repository: inbox, keys: keyManager, vault: vault, queue: outbound, bookings: bookingSync,
+            defaults: defaults
+        )
+        let pushProvider = FirebaseMessagingManager()
+        PushBridge.shared.provider = pushProvider
         return AppDependencies(
             session: session,
             keyManager: keyManager,
@@ -64,6 +80,10 @@ struct AppDependencies {
             publishing: PublishingService(
                 repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
             ),
+            outbound: outbound,
+            bookingSync: bookingSync,
+            mailbox: mailbox,
+            push: PushService(provider: pushProvider, queue: outbound, bookings: bookingSync, mailbox: mailbox, defaults: defaults),
             defaults: defaults
         )
     }
@@ -86,6 +106,18 @@ struct AppDependencies {
         // No network in a UI test: either the in-memory fake server or none at all.
         let server: any BookingRepository = options.uiOnline == "fake"
             ? UITestBookingRepository() : OfflineBookingRepository()
+        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
+            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.inboxPrivateKey(generation: 1).publicKey })
+        } ?? OfflineInboxRepository()
+        let outbound = OutboundQueue(repository: inbox, defaults: defaults, retryDelays: [.seconds(2)])
+        let bookingSync = BookingSyncService(
+            repository: inbox, queue: outbound, appointments: appointments, vault: vault, defaults: defaults,
+            pollInterval: nil
+        )
+        let mailbox = MailboxService(
+            repository: inbox, keys: keyManager, vault: vault, queue: outbound, bookings: bookingSync,
+            notifier: UITestNotificationPoster(), defaults: defaults
+        )
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
             keyManager: keyManager,
@@ -109,6 +141,13 @@ struct AppDependencies {
             publishing: PublishingService(
                 repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
                 debounce: .milliseconds(300), retryDelays: [.seconds(2)]
+            ),
+            outbound: outbound,
+            bookingSync: bookingSync,
+            mailbox: mailbox,
+            push: PushService(
+                provider: NoPushTokenProvider(), queue: outbound, bookings: bookingSync, mailbox: mailbox,
+                defaults: defaults
             ),
             defaults: defaults
         )

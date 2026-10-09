@@ -26,6 +26,11 @@
 	<string>$(BELLO_FUNCTIONS_BASE_URL)</string>
 	<key>BelloWebBaseURL</key>
 	<string>$(BELLO_WEB_BASE_URL)</string>
+	<key>BelloFirebaseProjectID</key>
+	<string>$(BELLO_FIREBASE_PROJECT_ID)</string>
+	<!-- No method swizzling: AppDelegate hands the APNs token and the pushes to FCM itself. -->
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<!-- Silent pushes wake the app to fetch sealed mailbox items (docs/06-PRIVACY-SECURITY.md section 3.5). -->

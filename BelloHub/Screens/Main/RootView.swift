@@ -22,6 +22,9 @@ struct RootView: View {
     @State private var publishing: PublishingService
     @State private var agendaDigest: AgendaDigestService
     @State private var notifications: NotificationService
+    @State private var bookingSync: BookingSyncService
+    @State private var mailbox: MailboxService
+    @State private var push: PushService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -45,6 +48,9 @@ struct RootView: View {
         _publishing = State(initialValue: dependencies.publishing)
         _agendaDigest = State(initialValue: dependencies.agendaDigest)
         _notifications = State(initialValue: dependencies.notifications)
+        _bookingSync = State(initialValue: dependencies.bookingSync)
+        _mailbox = State(initialValue: dependencies.mailbox)
+        _push = State(initialValue: dependencies.push)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -70,6 +76,9 @@ struct RootView: View {
         .environment(messages)
         .environment(agendaDigest)
         .environment(notifications)
+        .environment(bookingSync)
+        .environment(mailbox)
+        .environment(push)
         .treatmentTools(dependencies.treatmentTools)
         .environment(publishing)
         .belloLocaleTypography()
@@ -92,17 +101,36 @@ struct RootView: View {
             // publishing only while the app is open and unlocked.
             if stage == .app, let userID = session.user?.id {
                 publishing.start(userID: userID)
+                // The inbox follows the unlocked session: bookings first (the mailbox matches forms to them).
+                bookingSync.startListening(userId: userID)
+                mailbox.startListening(userId: userID)
+                push.startListening(userId: userID)
             } else if stage != .app {
                 bookingSetup.clear()
                 publishing.clear()
                 agendaDigest.stopListening()
                 notifications.stopListening()
+                push.stopListening()
+                mailbox.stopListening()
+                bookingSync.stopListening()
             }
             // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
             if stage.isSignedOut { Task { await notifications.removeAll() } }
         }
         .onChange(of: session.user?.id) { previous, current in
-            if let previous, current == nil { publishing.clearForSignOut(userID: previous) }
+            if let previous, current == nil {
+                publishing.clearForSignOut(userID: previous)
+                push.clearForSignOut(userID: previous)
+                mailbox.clearForSignOut(userID: previous)
+                bookingSync.clearForSignOut(userID: previous)
+            }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // Coming back to the foreground: what arrived while the app was away.
+            if phase == .active, model.stage == .app {
+                bookingSync.syncNow()
+                mailbox.syncNow()
+            }
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
