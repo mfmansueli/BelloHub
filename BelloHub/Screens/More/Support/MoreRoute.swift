@@ -35,6 +35,8 @@ enum MoreRoute: Hashable, Sendable {
     case plan
     /// 7.4 NotificationSettings.
     case notifications
+    /// 7.5 AISettings.
+    case aiSettings
     /// 7.6 Integrations.
     case integrations
     /// 7.7 Privacy (7.8 ExportAll and 7.9 RecoveryKey open from it).
@@ -59,7 +61,7 @@ enum MoreRoute: Hashable, Sendable {
         case .services, .products, .bookingPage, .availability, .credentials, .team: .business
         case .tags, .recordTemplate, .formTemplates: .clients
         case .quickReplies: .messages
-        case .plan, .notifications, .integrations, .privacy, .exportAll, .recoveryKey, .help: .preferences
+        case .plan, .notifications, .aiSettings, .integrations, .privacy, .exportAll, .recoveryKey, .help: .preferences
         case .account, .languageRegion: .account
         }
     }

@@ -43,6 +43,7 @@ final class AccountAuditUITests: XCTestCase {
             try walkAccount(app, tag: tag)
             try walk(app, row: "more.planRow", first: app.buttons["plan.choice.yearly"], tag: "\(tag) plan")
             try walkNotificationsAndIntegrations(app, tag: tag)
+            try walk(app, row: "more.aiSettingsRow", first: app.element("aiSettings.screen"), tag: "\(tag) AI")
             try walkPrivacy(app, tag: tag)
             try walk(app, row: "more.helpRow", first: app.buttons["help.contactButton"], tag: "\(tag) help") {
                 app.element("help.topic.whereData").tap()

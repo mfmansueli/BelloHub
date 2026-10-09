@@ -62,6 +62,7 @@ struct MoreTab: View {
         switch route {
         case .plan: PlanView(mode: .plan)
         case .notifications: NotificationSettingsView()
+        case .aiSettings: AISettingsView()
         case .integrations: IntegrationsView()
         case .exportAll: ExportAllView()
         case .recoveryKey: RecoveryKeyView()

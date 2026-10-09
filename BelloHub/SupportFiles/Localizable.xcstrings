@@ -91,6 +91,276 @@
         }
       }
     },
+    "account.delete.apple.deleting" : {
+      "comment" : "Delete account: spoken label of the progress indicator that replaces the Apple button while the account is being deleted.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "جارٍ حذف حسابك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dein Konto wird gelöscht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deleting your account"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deleting your account"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminando tu cuenta"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminando tu cuenta"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminando tu cuenta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suppression de votre compte"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका खाता हटाया जा रहा है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Menghapus akunmu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eliminazione dell'account in corso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apagando sua conta"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A eliminar a sua conta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hesabın siliniyor"
+          }
+        }
+      }
+    },
+    "account.delete.apple.error" : {
+      "comment" : "Delete account: shown under the Apple button when Apple did not confirm (a failure, or no authorization code came back). Closing the Apple sheet shows nothing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لم تتمكن Apple من تأكيد أنكِ أنتِ. حاولي مرة أخرى."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple konnte nicht bestätigen, dass du es bist. Versuch es noch einmal."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple could not confirm it was you. Try again."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple could not confirm it was you. Try again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple no ha podido confirmar que eras tú. Inténtalo de nuevo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple no pudo confirmar que eras tú. Inténtalo de nuevo."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple no pudo confirmar que eras tú. Inténtalo de nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple n'a pas pu confirmer que c'était bien vous. Réessayez."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple पुष्टि नहीं कर सका कि यह आप ही हैं। फिर से कोशिश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple tidak dapat memastikan bahwa itu kamu. Coba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple non è riuscita a confermare che fossi tu. Riprova."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A Apple não conseguiu confirmar que era você. Tente de novo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A Apple não conseguiu confirmar que era você. Tente novamente."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple senin olduğunu doğrulayamadı. Tekrar dene."
+          }
+        }
+      }
+    },
+    "account.delete.apple.message" : {
+      "comment" : "Delete account, confirmation step for a professional who signed in with Apple: above the native Apple button that confirms the deletion.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سجّلتِ الدخول عبر Apple، لذا تطلب Apple تأكيدًا مرة أخرى. وبمجرد التأكيد يُحذف حسابك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Du hast dich mit Apple angemeldet, deshalb bittet Apple dich um eine weitere Bestätigung. Sobald sie da ist, wird dein Konto gelöscht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You signed in with Apple, so Apple asks you to confirm once more. The moment it does, your account is deleted."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "You signed in with Apple, so Apple asks you to confirm once more. The moment it does, your account is deleted."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Has iniciado sesión con Apple, así que Apple te pide confirmar una vez más. En cuanto lo hagas, tu cuenta se elimina."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciaste sesión con Apple, así que Apple te pide confirmar una vez más. En cuanto lo hagas, tu cuenta se elimina."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Iniciaste sesión con Apple, así que Apple te pide confirmar una vez más. En cuanto lo hagas, tu cuenta se elimina."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous vous êtes connectée avec Apple, alors Apple vous demande de confirmer encore une fois. Dès que c'est fait, votre compte est supprimé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपने Apple से साइन इन किया था, इसलिए Apple एक बार फिर पुष्टि मांगता है। पुष्टि होते ही आपका खाता हटा दिया जाता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kamu masuk dengan Apple, jadi Apple meminta konfirmasi sekali lagi. Begitu dikonfirmasi, akunmu dihapus."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hai effettuato l'accesso con Apple, quindi Apple ti chiede di confermare ancora una volta. Appena lo fai, il tuo account viene eliminato."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Você entrou com a Apple, então a Apple pede uma confirmação a mais. Assim que confirmar, sua conta é apagada."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Entrou com a Apple, por isso a Apple pede mais uma confirmação. Assim que confirmar, a sua conta é eliminada."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apple ile giriş yaptığın için Apple bir kez daha onay istiyor. Onayladığın anda hesabın silinir."
+          }
+        }
+      }
+    },
     "account.delete.confirm.action" : {
       "comment" : "Delete account sheet, final step: the destructive button.",
       "extractionState" : "manual",
@@ -100827,6 +101097,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Profil, dil, çıkış"
+          }
+        }
+      }
+    },
+    "more.row.aiSettings" : {
+      "comment" : "More: row that opens 7.5 AI assistant (voice, AI and review settings).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مساعد الذكاء الاصطناعي"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "KI-Assistent"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AI assistant"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "AI assistant"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Asistente de IA"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Asistente de IA"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Asistente de IA"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assistant IA"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "AI सहायक"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Asisten AI"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assistente IA"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assistente de IA"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Assistente de IA"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yapay zeka asistanı"
           }
         }
       }

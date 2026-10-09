@@ -67,7 +67,7 @@ struct MoreView: View {
         .accessibilityIdentifier("more.profileCard")
     }
 
-    /// Her plan, notifications, integrations, privacy and help (S10).
+    /// Her plan, notifications, the assistant (S7's 7.5), integrations, privacy and help (S10).
     private var preferencesSection: some View {
         VStack(alignment: .leading, spacing: 0) {
             sectionHeader(Text("more.section.preferences"))
@@ -80,6 +80,9 @@ struct MoreView: View {
                 }
                 link(.notifications, identifier: "more.notificationsRow") {
                     MoreRow(icon: .bell, tint: .peach, title: Text("more.row.notifications"), showsChevron: true)
+                }
+                link(.aiSettings, identifier: "more.aiSettingsRow") {
+                    MoreRow(icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"), showsChevron: true)
                 }
                 link(.integrations, identifier: "more.integrationsRow") {
                     MoreRow(icon: .link, tint: .sage, title: Text("more.row.integrations"), showsChevron: true)

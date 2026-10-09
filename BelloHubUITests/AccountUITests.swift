@@ -76,6 +76,38 @@ final class AccountUITests: XCTestCase {
         XCTAssertTrue(waitUntil { keyRow.label.contains("Saved on") }, keyRow.label)
     }
 
+    /// D44: an Apple account is deleted through the Apple button; the fresh authorization travels with the request
+    /// and the app returns to Welcome after the done screen. The phone flow keeps its plain confirmation.
+    func testDeletingAnAppleAccountConfirmsWithApple() {
+        let app = XCUIApplication.launchedForUITests()
+        app.createAccountWithApple()
+        app.completeSetup(name: "Helena Duarte")
+        XCTAssertTrue(app.staticTexts["onboarding.ready.title"].waitForExistence(timeout: 5))
+        app.tapButton("onboarding.ready.continueButton")
+        openMore(app)
+        app.tapButton("more.accountRow")
+        XCTAssertTrue(app.textFields["account.nameField"].waitForExistence(timeout: 5))
+        app.bringIntoView(app.buttons["account.deleteButton"])
+        app.tapButton("account.deleteButton")
+        XCTAssertTrue(app.buttons["deleteAccount.continueButton"].waitForExistence(timeout: 5))
+        app.tapButton("deleteAccount.continueButton")
+
+        XCTAssertTrue(app.element("deleteAccount.appleMessage").waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["deleteAccount.confirmButton"].exists, "an Apple account confirms with Apple")
+        app.tapButton("deleteAccount.appleButton")
+        XCTAssertTrue(app.element("deleteAccount.doneTitle").waitForExistence(timeout: 10))
+        app.tapButton("deleteAccount.doneButton")
+        XCTAssertTrue(app.buttons["welcome.phoneButton"].waitForExistence(timeout: 8))
+    }
+
+    func testMoreOpensTheAIAssistant() {
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded"])
+        openMore(app)
+        app.bringIntoView(app.buttons["more.aiSettingsRow"])
+        app.tapButton("more.aiSettingsRow")
+        XCTAssertTrue(app.element("aiSettings.screen").waitForExistence(timeout: 30))
+    }
+
     func testPlanScreenAndPaywall() {
         let app = XCUIApplication.launchedForUITests(
             arguments: ["-uiSeed", "onboarded", "-uiRegisteredClients", "10", "-uiPlan", "none"]
