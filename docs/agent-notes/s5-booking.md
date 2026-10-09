@@ -47,8 +47,8 @@ in English; strings in 14 localizations (`Config/Locale/strings/s5-booking.json`
 - Design system, additive: `AddRowLabel`, `LocalizedStringResource.resolved(in:)`.
 
 ## Tests
-- `scripts/test.sh fast`: **TEST_FAST_RESULT**
-- `scripts/test.sh smoke`: **TEST_SMOKE_RESULT**
+- `scripts/test.sh fast`: **`scripts/test.sh fast`: 1221 tests in 151 suites pass**
+- `scripts/test.sh smoke`: **`scripts/test.sh smoke`: 20 UI tests pass (after hardening two health UI helpers that flaked: scroll further to the agreement, dismiss the keyboard before chips). `scripts/check-warnings.sh`: zero warnings (simulator, device, Release, test targets). `scripts/check-strings.sh`: passes (860 keys)**
 - 233 new test functions (parameterized ones run once per case). Pure: `BookingSlug`, `BookingPause`, `BookingLink`,
   `PolicyRuleText` (exact English plus all 14 localizations: whole sentences, the number and the name present, no placeholder or
   key left, every language differs from English, derived locales follow their parents, plural forms), `QuickReplyRenderer`,
@@ -62,7 +62,7 @@ in English; strings in 14 localizations (`Config/Locale/strings/s5-booking.json`
   Contract on both vaults: `RepositoryBookingSetupContractTests`.
 - UI: `BookingSetupUITests` (two flows in UISmoke: hours with a break -> pause with a return date -> share link with its QR
   code; policies and a quick reply), `BookingSetupAuditUITests` (skipped by UISmoke, in the Full plan).
-- Audit: **AUDIT_RESULT**
+- Audit: **`BookingSetupAuditUITests` for `en,ar` at default size and AX5 (`TEST_RUNNER_AUDIT_LOCALES=en,ar`): passes. Not run: the other default locales and `scripts/test.sh full`**
 
 ## Assumptions (ASSUMPTION candidates)
 1. **A professional who never opened Availability still has hours.** Until something is saved the screen shows a starting week
