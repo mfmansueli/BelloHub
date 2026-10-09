@@ -1,0 +1,60 @@
+{
+  "fill": {
+    "solid": "extended-srgb:0.43137,0.50980,0.40000,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "B-Rose.svg",
+          "name": "Rose curved edges",
+          "hidden-specializations": [
+            {
+              "appearance": "tinted",
+              "value": true
+            }
+          ]
+        },
+        {
+          "image-name": "B-Ivory.svg",
+          "name": "Ivory b silhouette",
+          "glass-specializations": [
+            {
+              "appearance": "tinted",
+              "value": true
+            }
+          ],
+          "fill-specializations": [
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "extended-gray:1.00000,1.00000"
+              }
+            }
+          ]
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      },
+      "lighting": "combined",
+      "specular": false
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  },
+  "fill-specializations": [
+    {
+      "appearance": "dark",
+      "value": {
+        "solid": "extended-srgb:0.20392,0.29412,0.23529,1.00000"
+      }
+    }
+  ]
+}
