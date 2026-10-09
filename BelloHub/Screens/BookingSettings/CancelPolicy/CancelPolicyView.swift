@@ -34,6 +34,8 @@ struct CancelPolicyView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.section) {
                 Text("cancelPolicy.subtitle").font(Typography.body).foregroundStyle(Palette.ink2)
+                InlineNotice(style: .info, title: "policy.fromBooking.note")
+                    .accessibilityIdentifier("cancelPolicy.fromBookingNote")
                 if let message = viewModel.errorMessage {
                     ErrorNotice(message: message, actionTitle: "bookingSetup.dismiss", action: viewModel.dismissError)
                         .accessibilityIdentifier("cancelPolicy.saveError")

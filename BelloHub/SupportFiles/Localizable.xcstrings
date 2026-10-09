@@ -71923,6 +71923,96 @@
         }
       }
     },
+    "policy.fromBooking.note" : {
+      "comment" : "Notice at the top of the cancellation and no-show policy screens: a change applies only to bookings made afterwards; bookings already made keep the rules they were made under (D47).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تسري التغييرات على الحجوزات التي تتم من الآن فصاعدًا فقط. أما الحجوزات التي تمت بالفعل فتحتفظ بالقواعد التي حُجزت بموجبها."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Änderungen gelten nur für Buchungen, die ab jetzt gemacht werden. Bereits gemachte Buchungen behalten die Regeln, unter denen sie gebucht wurden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changes apply only to bookings made from now on. Bookings already made keep the rules they were made under."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Changes apply only to bookings made from now on. Bookings already made keep the rules they were made under."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los cambios se aplican solo a las reservas que se hagan a partir de ahora. Las reservas ya hechas conservan las reglas con las que se hicieron."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los cambios aplican solo a las reservas que se hagan a partir de ahora. Las reservas ya hechas conservan las reglas con las que se hicieron."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los cambios aplican solo a las reservas que se hagan a partir de ahora. Las reservas ya hechas conservan las reglas con las que se hicieron."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les modifications ne s’appliquent qu’aux réservations faites à partir de maintenant. Les réservations déjà faites gardent les règles en vigueur au moment où elles ont été faites."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "बदलाव सिर्फ़ अभी से की जाने वाली बुकिंग पर लागू होंगे। पहले से हुई बुकिंग उन्हीं नियमों पर रहेंगी जिन पर वे की गई थीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Perubahan hanya berlaku untuk pemesanan yang dibuat mulai sekarang. Pemesanan yang sudah dibuat tetap memakai aturan saat pemesanan itu dibuat."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le modifiche valgono solo per le prenotazioni fatte da ora in poi. Le prenotazioni già fatte mantengono le regole con cui sono state fatte."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As mudanças valem só para agendamentos feitos a partir de agora. Os agendamentos já feitos mantêm as regras com que foram feitos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As alterações aplicam-se apenas a marcações feitas a partir de agora. As marcações já feitas mantêm as regras com que foram feitas."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Değişiklikler yalnızca bundan sonra yapılan randevular için geçerlidir. Daha önce yapılmış randevular, yapıldıkları andaki kuralları korur."
+          }
+        }
+      }
+    },
     "policy.rule.cancelAllowed" : {
       "comment" : "Client-facing rule line: after the free window the client may still cancel. {professional} is the professional's first name; keep the placeholder exactly.",
       "extractionState" : "manual",

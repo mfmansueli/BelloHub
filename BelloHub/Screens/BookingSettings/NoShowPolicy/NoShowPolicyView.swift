@@ -38,6 +38,8 @@ struct NoShowPolicyView: View {
                     ErrorNotice(message: message, actionTitle: "bookingSetup.dismiss", action: viewModel.dismissError)
                         .accessibilityIdentifier("noShowPolicy.saveError")
                 }
+                InlineNotice(style: .info, title: "policy.fromBooking.note")
+                    .accessibilityIdentifier("noShowPolicy.fromBookingNote")
                 protection
                 if viewModel.policy.isOn {
                     limit

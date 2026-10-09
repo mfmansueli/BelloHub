@@ -1,0 +1,34 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "policy.fromBooking.note",
+   "Notice at the top of the cancellation and no-show policy screens: a change applies only to bookings made afterwards; bookings already made keep the rules they were made under (D47).",
+   "Changes apply only to bookings made from now on. Bookings already made keep the rules they were made under.",
+   "As mudanças valem só para agendamentos feitos a partir de agora. Os agendamentos já feitos mantêm as regras com que foram feitos.",
+   "As alterações aplicam-se apenas a marcações feitas a partir de agora. As marcações já feitas mantêm as regras com que foram feitas.",
+   "Los cambios aplican solo a las reservas que se hagan a partir de ahora. Las reservas ya hechas conservan las reglas con las que se hicieron.",
+   "Los cambios se aplican solo a las reservas que se hagan a partir de ahora. Las reservas ya hechas conservan las reglas con las que se hicieron.",
+   "Le modifiche valgono solo per le prenotazioni fatte da ora in poi. Le prenotazioni già fatte mantengono le regole con cui sono state fatte.",
+   "Les modifications ne s’appliquent qu’aux réservations faites à partir de maintenant. Les réservations déjà faites gardent les règles en vigueur au moment où elles ont été faites.",
+   "Änderungen gelten nur für Buchungen, die ab jetzt gemacht werden. Bereits gemachte Buchungen behalten die Regeln, unter denen sie gebucht wurden.",
+   "Değişiklikler yalnızca bundan sonra yapılan randevular için geçerlidir. Daha önce yapılmış randevular, yapıldıkları andaki kuralları korur.",
+   "Perubahan hanya berlaku untuk pemesanan yang dibuat mulai sekarang. Pemesanan yang sudah dibuat tetap memakai aturan saat pemesanan itu dibuat.",
+   "बदलाव सिर्फ़ अभी से की जाने वाली बुकिंग पर लागू होंगे। पहले से हुई बुकिंग उन्हीं नियमों पर रहेंगी जिन पर वे की गई थीं।",
+   "تسري التغييرات على الحجوزات التي تتم من الآن فصاعدًا فقط. أما الحجوزات التي تمت بالفعل فتحتفظ بالقواعد التي حُجزت بموجبها."
+  ]
+ ]
+}
