@@ -15,4 +15,19 @@ enum DefaultsKey {
     static let lockGraceSeconds = "lock.graceSeconds"
     /// The signed-in dummy user of `LocalDevAuthProvider`. Exists only in DEBUG builds.
     static let localDevUser = "session.localDevUser"
+    /// When she said she put her 12 words somewhere safe (a `Date`); absent until she does.
+    static let recoveryKeySavedAt = "recoveryKey.savedAt"
+    /// Her notification choices (`NotificationPrefs` as JSON).
+    static let notificationPrefs = "notifications.prefs"
+    /// Notifications say "A client" instead of a name on the lock screen. Default on.
+    static let hideNamesOnLockScreen = "notifications.hideNames"
+    /// Apple Calendar write-through switched on.
+    static let appleCalendarEnabled = "integrations.appleCalendar"
+
+    /// Everything that belongs to the account and goes with it when the account is deleted. Device-wide settings
+    /// (the lock) stay.
+    static let clearedOnAccountDeletion = [
+        setupCompletedUserID, localDevUser, recoveryKeySavedAt, notificationPrefs, hideNamesOnLockScreen,
+        appleCalendarEnabled
+    ]
 }

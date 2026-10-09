@@ -47,6 +47,17 @@ final class AppLockService {
 
     var biometryKind: BiometryKind { biometrics.kind }
 
+    /// Privacy and security (7.7) switches the lock off and on. Switching it on locks nothing now: the next return
+    /// from the background after the grace period does.
+    func setEnabled(_ value: Bool) {
+        defaults.set(value, forKey: DefaultsKey.lockEnabled)
+    }
+
+    /// One of `LockPolicy.graceOptions`; anything else becomes the default.
+    func setGraceSeconds(_ seconds: Int) {
+        defaults.set(LockPolicy.normalizedGrace(seconds), forKey: DefaultsKey.lockGraceSeconds)
+    }
+
     // MARK: - Lifecycle
 
     /// A cold launch of a workspace that is already set up: locked, whatever the grace period says. With the lock

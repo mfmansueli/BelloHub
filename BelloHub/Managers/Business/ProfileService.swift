@@ -61,6 +61,16 @@ final class ProfileService {
         tags = result.tags
     }
 
+    // MARK: - Profile
+
+    /// Stores an edited profile (Account 7.1, Language and region 7.2) and makes the stored copy current. Her name,
+    /// region, currency and languages are not clinical and live in the clear (ASSUMPTION-27).
+    func saveProfile(_ updated: ProfessionalProfile) async throws {
+        let repository = try requireRepository()
+        try await repository.save(updated)
+        profile = (try? await repository.profile()) ?? updated
+    }
+
     // MARK: - Tags
 
     /// Reads the tags again. A screen calls it when it appears, because another screen (a new client sheet) may have
