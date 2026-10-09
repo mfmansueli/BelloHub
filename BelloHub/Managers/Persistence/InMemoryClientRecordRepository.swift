@@ -10,29 +10,28 @@ import Foundation
 /// would be slow or shared. DEBUG only, so a Release build can never run without the real vault. It must behave
 /// exactly like `SwiftDataClientRecordRepository`: the contract tests run the same cases against both.
 actor InMemoryClientRecordRepository: ClientRecordRepository {
-    private var clientsByID: [UUID: Client] = [:]
-    private var appointmentsByID: [UUID: Appointment] = [:]
-    // Not private: the catalog part of the contract lives in `InMemoryClientRecordRepository+Catalog.swift`.
+    // None of the tables is private: the catalog, forms, booking-setup and wipe parts of the contract live in the
+    // `InMemoryClientRecordRepository+<Part>.swift` extensions.
+    var clientsByID: [UUID: Client] = [:]
+    var appointmentsByID: [UUID: Appointment] = [:]
     var servicesByID: [UUID: Service] = [:]
     var addOnsByID: [UUID: AddOn] = [:]
     var productsByID: [UUID: Product] = [:]
     var credentialsByID: [UUID: Credential] = [:]
-    private var recordsByID: [UUID: TreatmentRecord] = [:]
-    private var correctionsByID: [UUID: RecordCorrection] = [:]
-    private var incidentsByID: [UUID: Incident] = [:]
-    private var photosByID: [UUID: Photo] = [:]
-    private var photoDataByID: [UUID: PhotoData] = [:]
-    private var healthFormsByID: [UUID: HealthForm] = [:]
-    private var consentsByID: [UUID: Consent] = [:]
-    private var plansByID: [UUID: SessionPlan] = [:]
-    private var ledger: [UUID: RegistrationLedgerEntry] = [:]
-    private var storedProfile: ProfessionalProfile?
-    private var tagsByID: [UUID: Tag] = [:]
-    private var storedTemplate: RecordTemplate?
-    // Not private: the forms part of the contract lives in `InMemoryClientRecordRepository+Forms.swift`.
+    var recordsByID: [UUID: TreatmentRecord] = [:]
+    var correctionsByID: [UUID: RecordCorrection] = [:]
+    var incidentsByID: [UUID: Incident] = [:]
+    var photosByID: [UUID: Photo] = [:]
+    var photoDataByID: [UUID: PhotoData] = [:]
+    var healthFormsByID: [UUID: HealthForm] = [:]
+    var consentsByID: [UUID: Consent] = [:]
+    var plansByID: [UUID: SessionPlan] = [:]
+    var ledger: [UUID: RegistrationLedgerEntry] = [:]
+    var storedProfile: ProfessionalProfile?
+    var tagsByID: [UUID: Tag] = [:]
+    var storedTemplate: RecordTemplate?
     var healthFormTemplatesByVersion: [Int: HealthFormTemplate] = [:]
     var patchTestsByID: [UUID: PatchTest] = [:]
-    // Not private: the booking-setup contract lives in `InMemoryClientRecordRepository+BookingSetup.swift`.
     let clock: @Sendable () -> Date
     var bookingSetupMemory = BookingSetupMemory()
     // Not private: the time blocks live in `InMemoryClientRecordRepository+TimeBlocks.swift`.

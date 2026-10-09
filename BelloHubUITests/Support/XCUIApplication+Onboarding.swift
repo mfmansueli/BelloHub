@@ -18,11 +18,14 @@ extension XCUIApplication {
         field.typeText(text)
     }
 
-    /// Taps a button by its identifier once it exists.
+    /// Taps a button by its identifier once it exists and can be hit. A button that exists behind a sheet still
+    /// sliding away is not hittable for a moment, and tapping it then fails the test; the short wait absorbs that.
     @MainActor
     func tapButton(_ identifier: String, file: StaticString = #filePath, line: UInt = #line) {
         let button = buttons[identifier].firstMatch
         XCTAssertTrue(button.waitForExistence(timeout: 5), "no button \(identifier)", file: file, line: line)
+        let hittable = NSPredicate(format: "isHittable == true")
+        _ = XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: hittable, object: button)], timeout: 5)
         button.tap()
     }
 

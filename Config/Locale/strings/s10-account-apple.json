@@ -1,0 +1,82 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "account.delete.apple.message",
+   "Delete account, confirmation step for a professional who signed in with Apple: above the native Apple button that confirms the deletion.",
+   "You signed in with Apple, so Apple asks you to confirm once more. The moment it does, your account is deleted.",
+   "Você entrou com a Apple, então a Apple pede uma confirmação a mais. Assim que confirmar, sua conta é apagada.",
+   "Entrou com a Apple, por isso a Apple pede mais uma confirmação. Assim que confirmar, a sua conta é eliminada.",
+   "Iniciaste sesión con Apple, así que Apple te pide confirmar una vez más. En cuanto lo hagas, tu cuenta se elimina.",
+   "Has iniciado sesión con Apple, así que Apple te pide confirmar una vez más. En cuanto lo hagas, tu cuenta se elimina.",
+   "Hai effettuato l'accesso con Apple, quindi Apple ti chiede di confermare ancora una volta. Appena lo fai, il tuo account viene eliminato.",
+   "Vous vous êtes connectée avec Apple, alors Apple vous demande de confirmer encore une fois. Dès que c'est fait, votre compte est supprimé.",
+   "Du hast dich mit Apple angemeldet, deshalb bittet Apple dich um eine weitere Bestätigung. Sobald sie da ist, wird dein Konto gelöscht.",
+   "Apple ile giriş yaptığın için Apple bir kez daha onay istiyor. Onayladığın anda hesabın silinir.",
+   "Kamu masuk dengan Apple, jadi Apple meminta konfirmasi sekali lagi. Begitu dikonfirmasi, akunmu dihapus.",
+   "आपने Apple से साइन इन किया था, इसलिए Apple एक बार फिर पुष्टि मांगता है। पुष्टि होते ही आपका खाता हटा दिया जाता है।",
+   "سجّلتِ الدخول عبر Apple، لذا تطلب Apple تأكيدًا مرة أخرى. وبمجرد التأكيد يُحذف حسابك."
+  ],
+  [
+   "account.delete.apple.deleting",
+   "Delete account: spoken label of the progress indicator that replaces the Apple button while the account is being deleted.",
+   "Deleting your account",
+   "Apagando sua conta",
+   "A eliminar a sua conta",
+   "Eliminando tu cuenta",
+   "Eliminando tu cuenta",
+   "Eliminazione dell'account in corso",
+   "Suppression de votre compte",
+   "Dein Konto wird gelöscht",
+   "Hesabın siliniyor",
+   "Menghapus akunmu",
+   "आपका खाता हटाया जा रहा है",
+   "جارٍ حذف حسابك"
+  ],
+  [
+   "account.delete.apple.error",
+   "Delete account: shown under the Apple button when Apple did not confirm (a failure, or no authorization code came back). Closing the Apple sheet shows nothing.",
+   "Apple could not confirm it was you. Try again.",
+   "A Apple não conseguiu confirmar que era você. Tente de novo.",
+   "A Apple não conseguiu confirmar que era você. Tente novamente.",
+   "Apple no pudo confirmar que eras tú. Inténtalo de nuevo.",
+   "Apple no ha podido confirmar que eras tú. Inténtalo de nuevo.",
+   "Apple non è riuscita a confermare che fossi tu. Riprova.",
+   "Apple n'a pas pu confirmer que c'était bien vous. Réessayez.",
+   "Apple konnte nicht bestätigen, dass du es bist. Versuch es noch einmal.",
+   "Apple senin olduğunu doğrulayamadı. Tekrar dene.",
+   "Apple tidak dapat memastikan bahwa itu kamu. Coba lagi.",
+   "Apple पुष्टि नहीं कर सका कि यह आप ही हैं। फिर से कोशिश करें।",
+   "لم تتمكن Apple من تأكيد أنكِ أنتِ. حاولي مرة أخرى."
+  ],
+  [
+   "more.row.aiSettings",
+   "More: row that opens 7.5 AI assistant (voice, AI and review settings).",
+   "AI assistant",
+   "Assistente de IA",
+   "Assistente de IA",
+   "Asistente de IA",
+   "Asistente de IA",
+   "Assistente IA",
+   "Assistant IA",
+   "KI-Assistent",
+   "Yapay zeka asistanı",
+   "Asisten AI",
+   "AI सहायक",
+   "مساعد الذكاء الاصطناعي"
+  ]
+ ]
+}

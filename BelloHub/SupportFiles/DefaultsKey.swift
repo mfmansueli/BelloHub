@@ -21,6 +21,19 @@ enum DefaultsKey {
     /// signed-in
     /// user, changes to her page are published by themselves; stopping removes it.
     static let publishingOnlineUserID = "publishing.onlineUserID"
-    /// `NotificationPrefs` as JSON: what reaches her and when (`DefaultsNotificationPrefsStore`).
+    /// When she said she put her 12 words somewhere safe (a `Date`); absent until she does.
+    static let recoveryKeySavedAt = "recoveryKey.savedAt"
+    /// Her notification choices (`NotificationPrefs` as JSON).
     static let notificationPrefs = "notifications.prefs"
+    /// Notifications say "A client" instead of a name on the lock screen. Default on.
+    static let hideNamesOnLockScreen = "notifications.hideNames"
+    /// Apple Calendar write-through switched on.
+    static let appleCalendarEnabled = "integrations.appleCalendar"
+
+    /// Everything that belongs to the account and goes with it when the account is deleted. Device-wide settings
+    /// (the lock) stay.
+    static let clearedOnAccountDeletion = [
+        setupCompletedUserID, localDevUser, recoveryKeySavedAt, notificationPrefs, hideNamesOnLockScreen,
+        appleCalendarEnabled, aiPreferences, publishingOnlineUserID
+    ]
 }

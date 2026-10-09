@@ -36,9 +36,12 @@ final class LockUITests: XCTestCase {
         let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded"])
         XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 5))
 
+        // Sign out lives in Account (7.1) since S10.
         app.tab(4).tap()
-        app.tapButton("more.signOutButton")
-        app.tapButton("more.signOutConfirmButton")
+        app.tapButton("more.accountRow")
+        app.bringIntoView(app.buttons["account.signOutButton"])
+        app.tapButton("account.signOutButton")
+        app.tapButton("account.signOutConfirmButton")
 
         XCTAssertTrue(app.buttons["signIn.appleButton"].waitForExistence(timeout: 5))
     }

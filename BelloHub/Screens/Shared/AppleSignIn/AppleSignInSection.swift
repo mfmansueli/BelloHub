@@ -35,7 +35,7 @@ struct AppleSignInSection: View {
             .disabled(viewModel.isWorking)
             .accessibilityIdentifier(identifier)
             #if DEBUG
-            .modifier(UITestAppleOverlay(viewModel: viewModel, identifier: identifier))
+            .modifier(UITestAppleOverlay(identifier: identifier, action: viewModel.signInWithDevStub))
             #endif
     }
 
@@ -48,26 +48,3 @@ struct AppleSignInSection: View {
         }
     }
 }
-
-#if DEBUG
-/// In a UI-test launch the system sheet cannot be driven, so a transparent button over the real one signs the dev
-/// Apple user in. The real button stays drawn, so the audits still measure its layout.
-private struct UITestAppleOverlay: ViewModifier {
-    let viewModel: AppleSignInViewModel
-    let identifier: String
-
-    func body(content: Content) -> some View {
-        if LaunchOptions.current.isUITesting {
-            content
-                .accessibilityHidden(true)
-                .overlay {
-                    Button(action: viewModel.signInWithDevStub) { Color.clear }
-                        .accessibilityLabel(Text(verbatim: "Continue with Apple"))
-                        .accessibilityIdentifier(identifier)
-                }
-        } else {
-            content
-        }
-    }
-}
-#endif

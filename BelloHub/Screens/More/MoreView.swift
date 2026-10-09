@@ -5,19 +5,19 @@
 
 import SwiftUI
 
-/// 2.5 More. Her profile card, then her business (services, products, booking page, availability, credentials,
-/// team), the tags, record fields and forms of her clients, her messages and the account actions. The preferences
-/// sections join it as their screens are built (privacy, plan and help in S10). Rows that open a screen are
-/// `NavigationLink`s on the typed `MoreRoute`; the stack and its destinations belong to `MoreTab`.
+/// 2.5 More. Her profile card (which opens her account), then her business (services, products, booking page,
+/// availability, credentials, team), the tags, record fields and forms of her clients, her messages, her preferences
+/// (plan, notifications, integrations, privacy, help) and the lock. Sign out and delete account live in Account
+/// (7.1). Rows that open a screen are `NavigationLink`s on the typed `MoreRoute`; the stack and its destinations
+/// belong to `MoreTab`.
 struct MoreView: View {
-    let onSignOut: () -> Void
-
     @Environment(ProfileService.self) private var profile
     @Environment(AppLockService.self) private var lock
     @Environment(BookingSetupService.self) private var bookingSetup
+    @Environment(SubscriptionService.self) private var subscription: SubscriptionService?
+    @Environment(RecoveryKeyService.self) private var recoveryKey: RecoveryKeyService?
     @Environment(PublishingService.self) private var publishing
     @Environment(\.locale) private var locale
-    @State private var confirmsSignOut = false
 
     var body: some View {
         ScrollView {
@@ -26,6 +26,7 @@ struct MoreView: View {
                 businessSection
                 clientsSection
                 messagesSection
+                preferencesSection
                 accountSection
             }
             .padding(.horizontal, Spacing.gutter)
@@ -36,34 +37,67 @@ struct MoreView: View {
         .navigationTitle(Text("main.tab.more"))
         // Her booking page and hours show under their rows; a failed read leaves the rows without a subtitle.
         .task { try? await bookingSetup.load(timeZoneID: profile.profile?.timeZoneID ?? TimeZone.current.identifier) }
-        .confirmationDialog(
-            Text("more.signOut.confirmTitle"), isPresented: $confirmsSignOut, titleVisibility: .visible
-        ) {
-            Button(role: .destructive, action: onSignOut) { Text("more.signOut.confirm") }
-                .accessibilityIdentifier("more.signOutConfirmButton")
-            Button(role: .cancel) {} label: { Text("common.cancel") }
-        } message: {
-            Text("more.signOut.confirmMessage")
-        }
     }
 
     // MARK: - Sections
 
+    /// Opens her account (7.1).
     private var profileCard: some View {
-        HeroCard {
-            HStack(spacing: Spacing.md) {
-                Avatar(name: name, id: profile.profile?.id.uuidString ?? name, size: 64)
-                VStack(alignment: .leading, spacing: Spacing.xxs) {
-                    Text(verbatim: name).font(Typography.subtitle).foregroundStyle(HeroPalette.ink)
-                    if !subtitle.isEmpty {
-                        Text(verbatim: subtitle).font(Typography.meta).foregroundStyle(HeroPalette.ink2)
+        NavigationLink(value: MoreRoute.account) {
+            HeroCard {
+                HStack(spacing: Spacing.md) {
+                    Avatar(name: name, id: profile.profile?.id.uuidString ?? name, size: 64)
+                    VStack(alignment: .leading, spacing: Spacing.xxs) {
+                        Text(verbatim: name).font(Typography.subtitle).foregroundStyle(HeroPalette.ink)
+                        if !subtitle.isEmpty {
+                            Text(verbatim: subtitle).font(Typography.meta).foregroundStyle(HeroPalette.ink2)
+                        }
+                        Text("more.profileCard.open").font(Typography.metaStrong).foregroundStyle(HeroPalette.ink2)
                     }
+                    Spacer(minLength: 0)
+                    Image(icon: .forward)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(HeroPalette.ink2)
+                        .accessibilityHidden(true)
                 }
-                Spacer(minLength: 0)
             }
         }
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("more.profileCard")
+    }
+
+    /// Her plan, notifications, the assistant (S7's 7.5), integrations, privacy and help (S10).
+    private var preferencesSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            sectionHeader(Text("more.section.preferences"))
+            ListCard(dividerInset: 72) {
+                link(.plan, identifier: "more.planRow") {
+                    MoreRow(
+                        icon: .star, tint: .rose, title: Text("more.row.plan"), subtitle: planSubtitle,
+                        showsChevron: true
+                    )
+                }
+                link(.notifications, identifier: "more.notificationsRow") {
+                    MoreRow(icon: .bell, tint: .peach, title: Text("more.row.notifications"), showsChevron: true)
+                }
+                link(.aiSettings, identifier: "more.aiSettingsRow") {
+                    MoreRow(icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"), showsChevron: true)
+                }
+                link(.integrations, identifier: "more.integrationsRow") {
+                    MoreRow(icon: .link, tint: .sage, title: Text("more.row.integrations"), showsChevron: true)
+                }
+                link(.privacy, identifier: "more.privacyRow") {
+                    MoreRow(
+                        icon: .shield, tint: .sage, title: Text("more.row.privacy"), subtitle: privacySubtitle,
+                        showsChevron: true
+                    )
+                }
+                link(.help, identifier: "more.helpRow") {
+                    MoreRow(icon: .help, tint: .neutral, title: Text("more.row.help"), showsChevron: true)
+                }
+            }
+        }
     }
 
     /// Services, products, the booking page, availability, credentials and team, above the clients as in the
@@ -144,14 +178,16 @@ struct MoreView: View {
         VStack(alignment: .leading, spacing: 0) {
             sectionHeader(Text("more.section.account"))
             ListCard(dividerInset: 72) {
+                link(.account, identifier: "more.accountRow") {
+                    MoreRow(
+                        icon: .user, tint: .neutral, title: Text("more.row.account"),
+                        subtitle: Text("more.row.account.subtitle"), showsChevron: true
+                    )
+                }
                 Button { lock.lockNow() } label: {
                     MoreRow(icon: .lock, tint: .neutral, title: Text("more.lockNow"))
                 }
                 .accessibilityIdentifier("more.lockNowButton")
-                Button { confirmsSignOut = true } label: {
-                    MoreRow(icon: .logout, tint: .neutral, title: Text("more.signOut"))
-                }
-                .accessibilityIdentifier("more.signOutButton")
             }
         }
     }
@@ -174,6 +210,22 @@ struct MoreView: View {
         NavigationLink(value: route, label: label)
             .buttonStyle(.plain)
             .accessibilityIdentifier(identifier)
+    }
+
+    /// "Bello Hub Pro" or "No plan yet"; nothing until the store answered.
+    private var planSubtitle: Text? {
+        guard let state = subscription?.state else { return nil }
+        switch state {
+        case .unknown: return nil
+        case .none: return Text("more.row.plan.none")
+        case .active, .inGracePeriod: return Text("more.row.plan.active")
+        }
+    }
+
+    /// Reminds her to save the recovery key until she does.
+    private var privacySubtitle: Text? {
+        guard let recoveryKey, !recoveryKey.status.isSaved else { return nil }
+        return Text("more.row.privacy.keyNotSaved")
     }
 
     private var summary: MoreSummary {
@@ -235,9 +287,12 @@ struct MoreView: View {
 }
 
 #Preview {
-    NavigationStack { MoreView(onSignOut: {}) }
+    let keys = KeyManager()
+    NavigationStack { MoreView() }
         .environment(ProfileService(vault: VaultService(repository: nil)))
-        .environment(AppLockService(keyManager: KeyManager()))
+        .environment(AppLockService(keyManager: keys))
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
+        .environment(SubscriptionService())
+        .environment(RecoveryKeyService(keyManager: keys))
         .environment(PublishingService.preview)
 }

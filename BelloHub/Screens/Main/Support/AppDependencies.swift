@@ -24,6 +24,12 @@ struct AppDependencies {
     let notifications: NotificationService
     let treatmentTools: TreatmentTools
     let publishing: PublishingService
+    let subscription: SubscriptionService
+    let recoveryKey: RecoveryKeyService
+    let account: AccountService
+    let notificationSettings: NotificationSettingsService
+    let calendar: CalendarIntegrationService
+    let export: DataExportService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -35,7 +41,8 @@ struct AppDependencies {
 
     private static func makeLive() -> AppDependencies {
         let defaults = UserDefaults.standard
-        let keyManager = KeyManager()
+        let keyStore = KeychainKeyStore()
+        let keyManager = KeyManager(store: keyStore)
         let vault = VaultService.live(keyManager: keyManager)
         let session = SessionService(provider: AuthProviderFactory.make(defaults: defaults), defaults: defaults)
         let client = URLSessionCallableClient(tokens: SessionIDTokenProvider(session: session))
@@ -44,6 +51,7 @@ struct AppDependencies {
         let permissions = PermissionService()
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
+        let subscription = SubscriptionService()
         return AppDependencies(
             session: session,
             keyManager: keyManager,
@@ -51,19 +59,26 @@ struct AppDependencies {
             permissions: permissions,
             vault: vault,
             profile: profile,
-            registration: ClientRegistrationService(vault: vault),
+            registration: ClientRegistrationService(vault: vault, subscription: subscription),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: appointments,
             timeBlocks: timeBlocks,
             messages: MessageService(vault: vault),
             agendaDigest: AgendaDigestService(appointments: appointments, timeBlocks: timeBlocks, vault: vault),
             notifications: NotificationService(
-                appointments: appointments, vault: vault, permissions: permissions, profile: profile
+                appointments: appointments, vault: vault, permissions: permissions, profile: profile,
+                prefs: DefaultsNotificationPrefsStore(defaults: defaults)
             ),
             treatmentTools: TreatmentTools.make(),
             publishing: PublishingService(
                 repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults
             ),
+            subscription: subscription,
+            recoveryKey: RecoveryKeyService(keyManager: keyManager, defaults: defaults),
+            account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),
+            notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
+            calendar: CalendarIntegrationService(defaults: defaults),
+            export: DataExportService(vault: vault),
             defaults: defaults
         )
     }
@@ -76,26 +91,30 @@ struct AppDependencies {
     private static func makeForUITests(options: LaunchOptions) -> AppDependencies {
         let defaults = UserDefaults(suiteName: uiTestSuite) ?? .standard
         if !options.keepsState { defaults.removePersistentDomain(forName: uiTestSuite) }
-        let keyManager = KeyManager(store: InMemoryKeyStore(seed: uiTestSeed))
+        let keyStore = InMemoryKeyStore(seed: uiTestSeed)
+        let keyManager = KeyManager(store: keyStore)
         let vault = VaultService(repository: InMemoryClientRecordRepository())
         let profile = ProfileService(vault: vault)
         let permissions = PermissionService(provider: UITestPermissionProvider())
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
         let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
+        let biometrics = UITestBiometrics(mode: mode)
+        let subscription = SubscriptionService(
+            provider: UITestSubscriptionProvider(hasPlan: options.uiPlan == "active"),
+            verifier: OfflineSubscriptionVerifier()
+        )
         // No network in a UI test: either the in-memory fake server or none at all.
         let server: any BookingRepository = options.uiOnline == "fake"
             ? UITestBookingRepository() : OfflineBookingRepository()
         return AppDependencies(
             session: SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults),
             keyManager: keyManager,
-            appLock: AppLockService(
-                keyManager: keyManager, biometrics: UITestBiometrics(mode: mode), defaults: defaults
-            ),
+            appLock: AppLockService(keyManager: keyManager, biometrics: biometrics, defaults: defaults),
             permissions: permissions,
             vault: vault,
             profile: profile,
-            registration: ClientRegistrationService(vault: vault),
+            registration: ClientRegistrationService(vault: vault, subscription: subscription),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: appointments,
             timeBlocks: timeBlocks,
@@ -110,6 +129,12 @@ struct AppDependencies {
                 repository: server, source: VaultPublishingSource(vault: vault, keys: keyManager), defaults: defaults,
                 debounce: .milliseconds(300), retryDelays: [.seconds(2)]
             ),
+            subscription: subscription,
+            recoveryKey: RecoveryKeyService(keyManager: keyManager, biometrics: biometrics, defaults: defaults),
+            account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),
+            notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
+            calendar: CalendarIntegrationService(provider: UITestCalendarAccess(), defaults: defaults),
+            export: DataExportService(vault: vault),
             defaults: defaults
         )
     }

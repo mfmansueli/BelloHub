@@ -26,6 +26,10 @@ struct ProfessionalProfile: Identifiable, Hashable, Codable, Sendable {
     var appLocaleID: String
     /// Languages the public page offers; the business localization is always on.
     var bookingLocaleIDs: [String]
+    /// Her week start (1 = Sunday ... 7 = Saturday) when she overrode the region's default; nil follows the region.
+    var firstWeekday: Int?
+    /// Her clock when she overrode the region's default; nil follows the region (docs/07-LOCALIZATION.md section 3).
+    var use24Hour: Bool?
     var professions: [ProfessionID]
     var clientTerm: ClientTerm
     var vocabulary: [VocabularyTerm]
@@ -40,6 +44,8 @@ struct ProfessionalProfile: Identifiable, Hashable, Codable, Sendable {
         currencyCode: String,
         appLocaleID: String,
         bookingLocaleIDs: [String] = [],
+        firstWeekday: Int? = nil,
+        use24Hour: Bool? = nil,
         professions: [ProfessionID] = [],
         clientTerm: ClientTerm = .client,
         vocabulary: [VocabularyTerm] = [],
@@ -54,6 +60,8 @@ struct ProfessionalProfile: Identifiable, Hashable, Codable, Sendable {
         self.currencyCode = currencyCode
         self.appLocaleID = appLocaleID
         self.bookingLocaleIDs = bookingLocaleIDs
+        self.firstWeekday = firstWeekday
+        self.use24Hour = use24Hour
         self.professions = professions
         self.clientTerm = clientTerm
         self.vocabulary = vocabulary

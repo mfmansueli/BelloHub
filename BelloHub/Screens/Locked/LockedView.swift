@@ -9,8 +9,10 @@ import SwiftUI
 /// asks for Face ID by itself once, and again from the button. The passcode is the system's own fallback.
 struct LockedView: View {
     @Environment(AppLockService.self) private var lock
+    @Environment(RecoveryKeyService.self) private var recoveryKey: RecoveryKeyService?
     @Environment(\.scenePhase) private var scenePhase
     @State private var didAutoPrompt = false
+    @State private var showsRestore = false
 
     var body: some View {
         // A scroll view with a minimum height of the screen: the spacers still push the button to the bottom, and
@@ -22,6 +24,14 @@ struct LockedView: View {
             .scrollBounceBehavior(.basedOnSize)
         }
         .background { GlowBackdrop() }
+        .sheet(isPresented: $showsRestore) {
+            if let recoveryKey {
+                RestoreKeySheet(service: recoveryKey) {
+                    showsRestore = false
+                    Task { await lock.unlock() }
+                }
+            }
+        }
         .task(id: scenePhase) {
             // One automatic prompt per appearance, only while the app is in front: the system sheet cannot show
             // over an app that is going to the background.
@@ -45,6 +55,12 @@ struct LockedView: View {
             }
             biometryTile
             if let failure = lock.failure { failureNotice(failure) }
+            if lock.failure == .keyMissing, recoveryKey != nil {
+                // The restore flow of 7.9: a phone that lost its seed types the 12 words back (ASSUMPTION-29).
+                Button { showsRestore = true } label: { Text("locked.restoreKey") }
+                    .buttonStyle(.belloSecondary)
+                    .accessibilityIdentifier("locked.restoreKeyButton")
+            }
             Spacer(minLength: Spacing.xl)
             actions
         }
@@ -116,5 +132,7 @@ struct LockedView: View {
 
 #Preview {
     let keys = KeyManager()
-    LockedView().environment(AppLockService(keyManager: keys))
+    LockedView()
+        .environment(AppLockService(keyManager: keys))
+        .environment(RecoveryKeyService(keyManager: keys))
 }

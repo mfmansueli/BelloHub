@@ -17,6 +17,12 @@ struct RootView: View {
     @State private var registration: ClientRegistrationService
     @State private var bookingSetup: BookingSetupService
     @State private var appointments: AppointmentService
+    @State private var subscription: SubscriptionService
+    @State private var recoveryKey: RecoveryKeyService
+    @State private var account: AccountService
+    @State private var notificationSettings: NotificationSettingsService
+    @State private var calendar: CalendarIntegrationService
+    @State private var export: DataExportService
     @State private var timeBlocks: TimeBlockService
     @State private var messages: MessageService
     @State private var publishing: PublishingService
@@ -40,6 +46,12 @@ struct RootView: View {
         _registration = State(initialValue: dependencies.registration)
         _bookingSetup = State(initialValue: dependencies.bookingSetup)
         _appointments = State(initialValue: dependencies.appointments)
+        _subscription = State(initialValue: dependencies.subscription)
+        _recoveryKey = State(initialValue: dependencies.recoveryKey)
+        _account = State(initialValue: dependencies.account)
+        _notificationSettings = State(initialValue: dependencies.notificationSettings)
+        _calendar = State(initialValue: dependencies.calendar)
+        _export = State(initialValue: dependencies.export)
         _timeBlocks = State(initialValue: dependencies.timeBlocks)
         _messages = State(initialValue: dependencies.messages)
         _publishing = State(initialValue: dependencies.publishing)
@@ -72,6 +84,12 @@ struct RootView: View {
         .environment(notifications)
         .treatmentTools(dependencies.treatmentTools)
         .environment(publishing)
+        .environment(subscription)
+        .environment(recoveryKey)
+        .environment(account)
+        .environment(notificationSettings)
+        .environment(calendar)
+        .environment(export)
         .belloLocaleTypography()
         .disablesAnimationsForUITests()
         .task {
@@ -79,6 +97,7 @@ struct RootView: View {
             await UITestSeeding.seedIfRequested(dependencies, options: LaunchOptions.current)
             #endif
             await model.start()
+            await subscription.start()
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
