@@ -26,6 +26,12 @@ if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-health-forms.sh" > /dev/null
 fi
 
+# The server suites (firebase/functions) need Java and the Firebase emulators and take minutes, so they never run by
+# default and the iOS plans stay fast. Opt in with RUN_FIREBASE=1, or run scripts/test-firebase.sh directly.
+if [[ "${RUN_FIREBASE:-0}" == "1" ]]; then
+    "$ROOT/scripts/test-firebase.sh" all
+fi
+
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).
 destination="$(simulator_destination)"
 

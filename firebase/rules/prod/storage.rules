@@ -1,0 +1,12 @@
+rules_version = '2';
+// TODO(HUMAN-H4): the default bucket is not created yet; see docs/14-HUMAN-TASKS.md.
+
+// DENY ALL client access, permanently: large sealed items are read by Cloud Functions with the Admin SDK
+// (docs/11-BACKEND-FIREBASE.md section 5). This file is also the storage rules file of the dev target.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
