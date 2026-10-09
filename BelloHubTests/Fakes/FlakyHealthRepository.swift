@@ -53,6 +53,10 @@ actor FlakyHealthRepository: HealthRepository {
 
     func deleteClient(id: UUID) async throws { await vault.deleteClient(id: id) }
 
+    func mergeClient(keeping keptID: UUID, merging mergedID: UUID) async throws -> Client {
+        try await vault.mergeClient(keeping: keptID, merging: mergedID)
+    }
+
     func registrationLedger() async throws -> [RegistrationLedgerEntry] { await vault.registrationLedger() }
 
     func healthForms(for clientID: UUID) async throws -> [HealthForm] {

@@ -25,7 +25,7 @@ struct HealthContrastTests {
     /// The field border, the chevrons and the icons beside text, and the switch of the agreement.
     private static let partPairNames = [
         "fieldBorder on sunken (input fill)", "fieldBorder on surface", "ink3 icon on surface",
-        "sage (switch track, success) on surface"
+        "sage on surface"
     ]
 
     @Test("Every pair the screens use is in the palette tests")
