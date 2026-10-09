@@ -22,8 +22,10 @@ struct SheetHeader: View {
                     .font(Typography.title)
                     .foregroundStyle(Palette.ink)
                     .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("sheetHeader.title")
                 if let subtitle {
                     Text(subtitle).font(Typography.meta).foregroundStyle(Palette.ink2)
+                        .accessibilityIdentifier("sheetHeader.subtitle")
                 }
             }
             Spacer(minLength: 0)

@@ -100,6 +100,10 @@ extension XCUIApplication {
             field.tap()
             if field.value(forKey: "hasKeyboardFocus") as? Bool == true { break }
         }
+        if field.value(forKey: "hasKeyboardFocus") as? Bool != true {
+            XCTFail("\(identifier) has no focus: \(saveScreenshot(named: "focus-lost")) \(field.frame)", file: file, line: line)
+            return
+        }
         field.typeText(text)
     }
 
@@ -150,8 +154,9 @@ extension XCUIApplication {
             if frame.maxY <= limit && frame.minY >= screen.height * 0.1 { return }
             let move = max(-screen.height * 0.35, min(screen.height * 0.35, frame.midY - screen.height * 0.35))
             let fraction = move / screen.height
-            let start = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 + fraction / 2))
-            let end = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5 - fraction / 2))
+            // The drag starts above the bar (a drag that starts on it scrolls nothing), whatever the bar's height.
+            let start = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55))
+            let end = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55 - fraction))
             start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.4)
         }
     }
