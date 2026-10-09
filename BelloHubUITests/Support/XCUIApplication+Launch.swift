@@ -31,7 +31,17 @@ extension XCUIApplication {
         }
         app.launchArguments += arguments
         app.launch()
+        dismissSystemDialogs()
         return app
+    }
+
+    /// The simulator sometimes raises its own "Enable Dictation?" sheet over the app after a keyboard was used in
+    /// an earlier test; it belongs to Springboard and would hide every screen of the next launch. Seen on iOS 26.5.
+    @MainActor
+    private static func dismissSystemDialogs() {
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let notNow = springboard.buttons["Not Now"]
+        if notNow.waitForExistence(timeout: 1) { notNow.tap() }
     }
 
     /// `AppleLocale` for a localization id: the id itself with an underscore, or a typical region for a bare language.

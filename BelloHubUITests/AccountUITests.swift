@@ -94,9 +94,17 @@ final class AccountUITests: XCTestCase {
         app.tapButton("paywall.closeButton")
         XCTAssertTrue(waitUntil { !app.staticTexts["paywall.title"].exists })
         app.tapButton("newClient.cancelButton")
+        app.tapButton("newClient.discardButton")
 
-        // From More, the Plan screen buys through the test store and the status changes.
-        openMore(app, fromHome: false)
+        // From More, the Plan screen buys through the test store and the status changes. A fresh launch (the same
+        // seed): after a sheet on the Clients tab the tab bar does not take the next tap reliably on iOS 26.
+        app.terminate()
+        let again = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded", "-uiPlan", "none"])
+        openMore(again)
+        checkPlanScreen(again)
+    }
+
+    private func checkPlanScreen(_ app: XCUIApplication) {
         let planRow = app.buttons["more.planRow"]
         XCTAssertTrue(planRow.waitForExistence(timeout: 5))
         XCTAssertTrue(planRow.label.contains("No plan yet"), planRow.label)
@@ -113,9 +121,8 @@ final class AccountUITests: XCTestCase {
 
     // MARK: - Helpers
 
-    /// From the home screen (`fromHome`) or from any other tab.
-    private func openMore(_ app: XCUIApplication, fromHome: Bool = true) {
-        if fromHome { XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 8)) }
+    private func openMore(_ app: XCUIApplication) {
+        XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 8))
         app.tab(4).tap()
         XCTAssertTrue(app.buttons["more.accountRow"].waitForExistence(timeout: 5))
     }
