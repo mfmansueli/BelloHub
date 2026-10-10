@@ -63,8 +63,9 @@ struct PaletteContrastTests {
         text("fieldBorder on sunken (input fill)", Palette.fieldBorder, on: Palette.sunken, minimum: 3),
         text("sage (switch track, success) on bg", Palette.sage, on: Palette.bg, minimum: 3),
         text("sage on surface", Palette.sage, on: Palette.surface, minimum: 3),
-        text("action (check disc, radio, progress) on bg", Palette.action, on: Palette.bg, minimum: 3),
-        text("action on surface", Palette.action, on: Palette.surface, minimum: 3),
+        // On a card the dark action fill is 2.8:1, so there it only carries an ivory check (measured as text above) and
+        // never stands alone as a boundary; selected outlines use `selectionInk`.
+        text("action (filled progress) on bg", Palette.action, on: Palette.bg, minimum: 3),
         text("selectionInk ring on bg", Palette.selectionInk, on: Palette.bg, minimum: 3),
         text("selectionInk ring on surface", Palette.selectionInk, on: Palette.surface, minimum: 3),
         text("sage icon on sageBadge", Palette.sageText, on: Palette.sageBadge, minimum: 3),

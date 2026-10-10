@@ -45,7 +45,7 @@ struct ChoiceCard: View {
             .padding(.vertical, Spacing.row)
             .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
             .background(isSelected ? Palette.surface : Palette.sunken, in: shape)
-            .overlay { if isSelected { shape.strokeBorder(Palette.action, lineWidth: 1.5) } }
+            .overlay { if isSelected { shape.strokeBorder(Palette.selectionInk, lineWidth: 1.5) } }
             .contentShape(shape)
         }
         .buttonStyle(ChoicePressStyle())

@@ -109,7 +109,7 @@ struct TagEditorSheet: View {
             .padding(.horizontal, Spacing.md)
             .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
             .background(isSelected ? Palette.surface : Palette.sunken, in: shape)
-            .overlay { if isSelected { shape.strokeBorder(Palette.action, lineWidth: 1.5) } }
+            .overlay { if isSelected { shape.strokeBorder(Palette.selectionInk, lineWidth: 1.5) } }
             .contentShape(shape)
         }
         .buttonStyle(.plain)

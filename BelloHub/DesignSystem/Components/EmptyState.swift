@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-/// Two or three overlapping shapes in the brand illustration fills and one symbol, a title, one line saying what to do next and
-/// at most one primary action. Every list and every screen that loads data defines this state.
+/// Two or three overlapping shapes in the brand illustration fills and one symbol, a title, one line saying what to do
+/// next and at most one primary action. Every list and every screen that loads data defines this state.
 struct EmptyState: View {
     let icon: Icon
     let title: Text
