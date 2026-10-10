@@ -94,8 +94,14 @@ final class PerformanceUITests: XCTestCase {
         let options = XCTMeasureOptions()
         options.iterationCount = 3
         measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
-            for _ in 0..<12 { right.press(forDuration: 0.05, thenDragTo: left, withVelocity: .fast, thenHoldForDuration: 0) }
-            for _ in 0..<12 { left.press(forDuration: 0.05, thenDragTo: right, withVelocity: .fast, thenHoldForDuration: 0) }
+            for _ in 0..<12 { drag(from: right, to: left) }
+            for _ in 0..<12 { drag(from: left, to: right) }
         }
+    }
+
+    // MARK: - Helpers
+
+    private func drag(from start: XCUICoordinate, to end: XCUICoordinate) {
+        start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .fast, thenHoldForDuration: 0)
     }
 }
