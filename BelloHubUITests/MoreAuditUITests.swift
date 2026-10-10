@@ -83,6 +83,14 @@ final class MoreAuditUITests: XCTestCase {
         let addField = app.element("recordTemplate.addFieldButton")
         XCTAssertTrue(scrollTo(addField, in: app), "\(tag) add field row")
         try audit(app, "\(tag) record fields, scrolled")
+        // The audit re-lays the lazy list out at AX5 and the row can leave the tree (S12 Full run): find it again.
+        if !addField.waitForExistence(timeout: 2) {
+            let top = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+            for _ in 0..<8 where !addField.waitForExistence(timeout: 1) {
+                top.press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7)))
+            }
+            if !addField.exists { _ = scrollTo(addField, in: app) }
+        }
 
         addField.tap()
         XCTAssertTrue(app.textFields["fieldEditor.nameField"].waitForExistence(timeout: 5), "\(tag) field sheet")
