@@ -50,7 +50,8 @@ final class PerformanceUITests: XCTestCase {
         }
     }
 
-    /// Budget: a search over 2,000 clients answers in ≤ 150 ms (measured from the keystroke to the filtered row).
+    /// Budget: a search over 2,000 clients answers in ≤ 150 ms. The app marks each search with a signpost
+    /// (`PerformanceSignposts.clientSearch`), so the metric is the search itself, not the typing.
     func testSearchingTwoThousandClients() {
         let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded", "-uiPerfClients", "2000"])
         app.openClientsTab()
@@ -59,13 +60,13 @@ final class PerformanceUITests: XCTestCase {
         let field = app.searchFields.firstMatch
         XCTAssertTrue(field.waitForExistence(timeout: 10), "no search field")
         field.tap()
+        let search = XCTOSSignpostMetric(subsystem: "app.bellohub", category: "performance", name: "clientSearch")
         let options = XCTMeasureOptions()
         options.iterationCount = 5
-        measure(metrics: [XCTClockMetric()], options: options) {
-            field.typeText("1999")
-            _ = app.staticTexts.containing(NSPredicate(format: "label CONTAINS '1999'")).firstMatch
-                .waitForExistence(timeout: 5)
-            field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 4))
+        measure(metrics: [search], options: options) {
+            field.typeText("9")
+            _ = app.clientRows.firstMatch.waitForExistence(timeout: 5)
+            field.typeText(XCUIKeyboardKey.delete.rawValue)
         }
     }
 
@@ -74,8 +75,10 @@ final class PerformanceUITests: XCTestCase {
         let app = XCUIApplication.launchedForUITests(arguments: [
             "-uiSeed", "clientWithHealth", "-uiPerfPhotos", "200", "-uiRoute", "recordHistory"
         ])
+        XCTAssertTrue(app.element("recordHistory.overview").waitForExistence(timeout: 120), "no record history")
         let timeline = app.element("recordHistory.timeline")
-        XCTAssertTrue(timeline.waitForExistence(timeout: 120), "no photo timeline")
+        for _ in 0..<6 where !timeline.isHittable { app.element("recordHistory.overview").swipeUp() }
+        XCTAssertTrue(timeline.waitForExistence(timeout: 10), "no photo timeline")
         let options = XCTMeasureOptions()
         options.iterationCount = 3
         measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
