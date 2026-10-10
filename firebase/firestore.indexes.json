@@ -84,6 +84,15 @@
       ]
     },
     {
+      "collectionGroup": "trustedDevices",
+      "fieldPath": "expiresAt",
+      "ttl": true,
+      "indexes": [
+        { "order": "ASCENDING", "queryScope": "COLLECTION" },
+        { "order": "DESCENDING", "queryScope": "COLLECTION" }
+      ]
+    },
+    {
       "collectionGroup": "portal",
       "fieldPath": "expiresAt",
       "ttl": true,

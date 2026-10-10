@@ -2,11 +2,12 @@ import { defineUseCase } from '../app/UseCase.js';
 import { EMAIL_CODE_TTL_SECONDS, EMAIL_RESEND_SECONDS, RATE } from '../config/limits.js';
 import * as contract from '../contracts/public.js';
 import { keyedHash } from '../lib/crypto.js';
-import type { EmailCodeDoc, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
+import type { EmailCodeDoc, HoldDoc, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
 import { emailHashOf } from '../lib/emailProof.js';
 import { AppError } from '../lib/errors.js';
+import { findHoldsByKey } from '../lib/holds.js';
 import { consumeRates } from '../lib/rateLimit.js';
-import { dataOf, ms, refs, ts } from '../lib/store.js';
+import { dataOf, ms, refs, ts, txReader } from '../lib/store.js';
 import { runTransaction } from '../lib/tx.js';
 
 export function emailCodeHash(pepper: string, emailHash: string, code: string): string {
@@ -17,6 +18,9 @@ export function emailCodeHash(pepper: string, emailHash: string, code: string): 
  * Emails a 6-digit code (D31, D37): the always-available fallback when SMS fails or the country is not on the SMS
  * allow-list. The code is stored hashed, expires in 10 minutes, and a resend waits 30 seconds. The answer is the same
  * whether or not the address is known to anyone.
+ *
+ * A booking code also stretches the browser's soft hold (`holdKey`) so it lasts as long as the code: a client who waits
+ * for the e-mail must not lose her time to the 5 minute hold (D32). Only a live soft hold is extended, never revived.
  */
 export const sendEmailCode = defineUseCase({
   name: 'sendEmailCode',
@@ -53,6 +57,10 @@ export const sendEmailCode = defineUseCase({
       } satisfies EmailCodeDoc);
     });
 
+    if (input.purpose === 'booking' && input.holdKey) {
+      await extendSoftHold(deps.db, claim.ownerUid, input.holdKey, now + EMAIL_CODE_TTL_SECONDS * 1000, now);
+    }
+
     const profile = dataOf<PublicProfileDoc>(await r.profile(input.slug).get());
     try {
       await deps.messenger.sendEmail({
@@ -69,3 +77,21 @@ export const sendEmailCode = defineUseCase({
     return { resendAfterSeconds: 30 as const, expiresInSeconds: 600 as const };
   }
 });
+
+/** Moves the expiry of her live soft hold to `until` (never shortens it, never touches an offer hold). */
+async function extendSoftHold(
+  db: Parameters<typeof runTransaction>[0],
+  ownerUid: string,
+  holdKey: string,
+  until: number,
+  now: number
+): Promise<void> {
+  await runTransaction(db, async (tx) => {
+    const holds = await findHoldsByKey(txReader(tx), db, ownerUid, holdKey);
+    for (const hold of holds) {
+      const data: HoldDoc = hold.data;
+      if (data.kind !== 'soft' || ms(data.expiresAt) <= now || ms(data.expiresAt) >= until) continue;
+      tx.update(hold.snapshot.ref, { expiresAt: ts(until) });
+    }
+  });
+}

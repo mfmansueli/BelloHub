@@ -69,6 +69,7 @@
       { "source": "/api/getFormContext", "function": { "functionId": "getFormContext", "region": "europe-west1" } },
       { "source": "/api/submitSealed", "function": { "functionId": "submitSealed", "region": "europe-west1" } },
       { "source": "/api/getPortal", "function": { "functionId": "getPortal", "region": "europe-west1" } },
+      { "source": "/api/forgetDevice", "function": { "functionId": "forgetDevice", "region": "europe-west1" } },
       { "source": "/api/getBooking", "function": { "functionId": "getBooking", "region": "europe-west1" } },
       { "source": "/api/confirmPresence", "function": { "functionId": "confirmPresence", "region": "europe-west1" } },
       { "source": "/api/reportLate", "function": { "functionId": "reportLate", "region": "europe-west1" } },

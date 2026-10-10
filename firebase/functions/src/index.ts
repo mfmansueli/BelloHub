@@ -51,6 +51,7 @@ export const rebook = defineCallable(useCase('rebook'));
 export const getFormContext = defineCallable(useCase('getFormContext'));
 export const submitSealed = defineCallable(useCase('submitSealed'), { memory: '512MiB' });
 export const getPortal = defineCallable(useCase('getPortal'));
+export const forgetDevice = defineCallable(useCase('forgetDevice'));
 
 // MARK: - Owner functions (the iPhone app)
 

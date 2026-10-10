@@ -99,6 +99,22 @@ export const VerificationSchema = z.discriminatedUnion('method', [
 
 export type Verification = z.infer<typeof VerificationSchema>;
 
+/**
+ * What `createBooking` accepts on top of the two proofs above: `whatsapp` (the client could not receive the code and
+ * confirms with the professional on WhatsApp; the booking waits for her, unverified) and `device` (a trusted-device
+ * token from an earlier confirmed booking with the same e-mail on the same page). Never accepted by `findBookings`.
+ */
+export const BookingVerificationSchema = z.discriminatedUnion('method', [
+  ...VerificationSchema.options,
+  z.strictObject({ method: z.literal('whatsapp') }),
+  z.strictObject({ method: z.literal('device'), token: Token })
+]);
+
+export type BookingVerification = z.infer<typeof BookingVerificationSchema>;
+
+/** The short reference of an unverified request: 5 characters from an alphabet without look-alikes (0/O, 1/I/L). */
+export const ReferenceCode = z.string().regex(/^[2-9A-HJKMNP-Z]{5}$/);
+
 export const PlanSchema = z.strictObject({
   state: z.enum(['none', 'active', 'grace', 'expired', 'revoked']),
   expiresAt: Instant.optional()

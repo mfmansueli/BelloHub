@@ -6,7 +6,7 @@ import type { Transaction } from 'firebase-admin/firestore';
 import { FieldValue } from 'firebase-admin/firestore';
 
 import type { Deps } from '../app/Deps.js';
-import { RATE } from '../config/limits.js';
+import { MAX_PENDING_UNVERIFIED_PER_CONTACT, RATE } from '../config/limits.js';
 import type { LocaleId } from '../contracts/common.js';
 import { iso } from '../contracts/common.js';
 import { tokenHash, withNewTokenHash } from './bookingAccess.js';
@@ -21,6 +21,8 @@ import { emailHashOf, peekEmailProof, phoneHashOf, proofHash, useEmailProof } fr
 import { AppError } from './errors.js';
 import { findHoldsByKey, holdKeyHash } from './holds.js';
 import { consumeRate, consumeRates } from './rateLimit.js';
+import { newReference, requestExpiry } from './unverifiedRequests.js';
+import { issueTrustedDevice, peekTrustedDevice, useTrustedDevice } from './trustedDevices.js';
 import type { NoShowPolicy } from './rules.js';
 import { approvalReason, isPausedFor, isPlanActive, purgeAtFor } from './rules.js';
 import { dataOf, ms, msOpt, refs, ts, txReader } from './store.js';
@@ -39,7 +41,11 @@ export type Proof =
   /** An email proof from verifyEmailCode, checked and consumed inside the transaction. */
   | { kind: 'email'; proof: string }
   /** The caller holds a manage or portal token of a booking of this client (rebook). */
-  | { kind: 'token' };
+  | { kind: 'token' }
+  /** A trusted-device token for this page and `client.email` (returning client, verify-fallback item 2). */
+  | { kind: 'device'; token: string }
+  /** No proof: the client confirms with the professional on WhatsApp. Always a request, flagged unverified. */
+  | { kind: 'whatsapp' };
 
 export interface CreateBookingRequest {
   slug: string;
@@ -65,6 +71,10 @@ export type BookingOutcome =
       timeZoneID: string;
       serviceName: string;
       emailSent: boolean;
+      reference?: string;
+      requestExpiresAt?: string;
+      deviceToken?: string;
+      deviceTokenExpiresAt?: string;
     }
   | { status: 'slotTaken'; alternatives: string[] }
   | { status: 'paused'; pausedUntil?: string };
@@ -86,8 +96,20 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
   // The caller's own address pays for every attempt; the phone and the professional only once the proof looks real,
   // so a stranger with made-up proofs cannot use up a client's or a professional's allowance.
   await consumeRate(deps, 'createBookingIp', request.ipHash, RATE.createBookingIp);
-  if (request.proof.kind === 'email') {
-    await peekEmailProof(deps.db, deps.pepper, request.proof.proof, request.client.email ?? '', now);
+  const proof = request.proof;
+  const email = request.client.email ?? '';
+  if (proof.kind === 'email') {
+    await peekEmailProof(deps.db, deps.pepper, proof.proof, email, now);
+  } else if (proof.kind === 'device') {
+    await peekTrustedDevice(deps.db, deps.pepper, proof.token, request.slug, email, now);
+  } else if (proof.kind === 'whatsapp') {
+    // Nothing is proven, so every subject pays: the caller, the address, the phone and the professional's day.
+    await consumeRates(deps, [
+      { scope: 'unverifiedIp', subject: request.ipHash, rate: RATE.unverifiedIp },
+      { scope: 'unverifiedEmail', subject: emailHashOf(deps.pepper, email), rate: RATE.unverifiedEmail },
+      { scope: 'unverifiedPhone', subject: phoneHash, rate: RATE.unverifiedPhone },
+      { scope: 'unverifiedOwner', subject: ownerUid, rate: RATE.unverifiedOwnerDay }
+    ]);
   }
   await consumeRates(deps, [
     { scope: 'createBookingPhone', subject: phoneHash, rate: RATE.createBookingPhone },
@@ -106,6 +128,7 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
     ])
   );
   const holdHash = request.holdKey ? holdKeyHash(request.holdKey) : undefined;
+  const emailHash = request.client.email ? emailHashOf(deps.pepper, request.client.email) : undefined;
 
   const result = await runTransaction(deps.db, async (tx): Promise<TxResult> => {
     const reader = txReader(tx);
@@ -120,9 +143,14 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
     }
 
     const releaseProof =
-      request.proof.kind === 'email'
-        ? await useEmailProof(tx, deps.db, deps.pepper, request.proof.proof, request.client.email ?? '', now)
-        : undefined;
+      proof.kind === 'email'
+        ? await useEmailProof(tx, deps.db, deps.pepper, proof.proof, email, now)
+        : proof.kind === 'device'
+          ? await useTrustedDevice(tx, deps.db, deps.pepper, proof.token, request.slug, email, now)
+          : undefined;
+    if (proof.kind === 'whatsapp') {
+      await refusePendingUnverified(reader, deps, ownerUid, phoneHash, emailHash, now);
+    }
     const contact = dataOf<ContactDoc>(await reader.doc(r.contact(ownerUid, phoneHash)));
     await readCalendarLock(tx, deps.db, ownerUid);
     const ownHolds = request.holdKey ? await findHoldsByKey(reader, deps.db, ownerUid, request.holdKey) : [];
@@ -160,6 +188,11 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       return { kind: 'done', outcome: { status: 'slotTaken', alternatives: check.alternatives.map(iso) } };
     }
 
+    if (proof.kind === 'whatsapp' && !profile.whatsappE164) {
+      // The fallback exists only when she has a public WhatsApp number to confirm with.
+      throw new AppError('NOT_ALLOWED');
+    }
+
     // ---- the decision (D13, D15, D42) ----
     const isNewClient = !(contact?.registered ?? false);
     const reason = approvalReason({
@@ -173,7 +206,13 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       noShowAction,
       noShowLimitReached: noShow.limitReached
     });
-    const status = reason ? 'pendingApproval' : 'confirmed';
+    if (proof.kind === 'device' && (reason !== null || noShow.limitReached)) {
+      // A trusted device skips the code only for a booking confirmed at once; anything she must look at goes back to
+      // the code, so an approval is never decided on an old proof.
+      throw new AppError('VERIFICATION_REQUIRED');
+    }
+    const unverified = proof.kind === 'whatsapp';
+    const status = reason || unverified ? 'pendingApproval' : 'confirmed';
 
     // ---- writes ----
     const endsAt = request.startsAt + offer.durationMinutes * 60_000;
@@ -214,14 +253,21 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       rescheduleCount: 0,
       createdAt: ts(now),
       updatedAt: ts(now),
-      purgeAt: ts(purgeAtFor(endsAt))
+      purgeAt: ts(purgeAtFor(endsAt)),
+      ...(unverified
+        ? {
+            verification: 'whatsapp' as const,
+            reference: newReference(deps.random),
+            pendingExpiresAt: ts(requestExpiry(now, request.startsAt))
+          }
+        : {})
     };
     tx.create(bookingRef, booking);
     tx.create(r.idempotency(idemKey), {
       bookingId: bookingRef.id,
       ownerUid,
       fingerprint,
-      ...(request.proof.kind === 'email' ? { proofHash: proofHash(request.proof.proof) } : {}),
+      ...(proof.kind === 'email' ? { proofHash: proofHash(proof.proof) } : {}),
       expiresAt: booking.purgeAt
     } satisfies IdempotencyDoc);
 
@@ -259,15 +305,22 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
 
   if (result.kind === 'done') return result.outcome;
   const { booking, bookingId } = result;
-  // A replay was already emailed the first time.
-  const emailSent = result.replay
-    ? false
-    : await sendBookingEmail(deps, {
-        template: booking.status === 'confirmed' ? 'bookingConfirmed' : 'bookingPending',
-        booking,
-        professionalName: result.professionalName,
-        manageToken
-      });
+  // A replay was already emailed the first time. An unverified request is not emailed at all: the address is not
+  // proven, and the server must not mail a stranger on anyone's word. She gets the link when it is approved.
+  const emailSent =
+    result.replay || booking.verification === 'whatsapp'
+      ? false
+      : await sendBookingEmail(deps, {
+          template: booking.status === 'confirmed' ? 'bookingConfirmed' : 'bookingPending',
+          booking,
+          professionalName: result.professionalName,
+          manageToken
+        });
+  // Item 2: a confirmed booking with a fresh code makes this browser a trusted device for this page and address.
+  const device =
+    !result.replay && proof.kind === 'email' && booking.status === 'confirmed' && request.client.email
+      ? await issueTrustedDevice(deps, { ownerUid, slug: request.slug, email: request.client.email, phoneHash })
+      : undefined;
   deps.log.info('booking.created', { bookingId, ownerUid, status: booking.status, kind: request.origin });
   return {
     status: booking.status as 'confirmed' | 'pendingApproval',
@@ -277,7 +330,12 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
     endsAt: iso(ms(booking.endsAt)),
     timeZoneID: booking.timeZoneID,
     serviceName: booking.serviceName,
-    emailSent
+    emailSent,
+    ...(booking.reference ? { reference: booking.reference } : {}),
+    ...(booking.pendingExpiresAt && booking.status === 'pendingApproval'
+      ? { requestExpiresAt: iso(ms(booking.pendingExpiresAt)) }
+      : {}),
+    ...(device ? { deviceToken: device.token, deviceTokenExpiresAt: iso(device.expiresAt) } : {})
   };
 }
 
@@ -300,12 +358,52 @@ async function replay(
   const ref = r.booking(idem.bookingId);
   const booking = dataOf<BookingDoc>(await tx.get(ref));
   if (!booking || !ACTIVE_BOOKING_STATUSES.includes(booking.status)) throw new AppError('BOOKING_NOT_ACTIVE');
+  const proof = request.proof;
+  const email = request.client.email ?? '';
+  // An unverified request can only replay an unverified request: the same key never upgrades or downgrades a proof.
+  if ((proof.kind === 'whatsapp') !== (booking.verification === 'whatsapp')) throw new AppError('VERIFICATION_FAILED');
   const releaseProof =
-    request.proof.kind === 'email' && proofHash(request.proof.proof) !== idem.proofHash
-      ? await useEmailProof(tx, deps.db, deps.pepper, request.proof.proof, request.client.email ?? '', now)
-      : undefined;
+    proof.kind === 'email' && proofHash(proof.proof) !== idem.proofHash
+      ? await useEmailProof(tx, deps.db, deps.pepper, proof.proof, email, now)
+      : proof.kind === 'device'
+        ? await useTrustedDevice(tx, deps.db, deps.pepper, proof.token, request.slug, email, now)
+        : undefined;
   const hashes = withNewTokenHash(booking.manageTokenHashes, tokenHash(manageToken));
   tx.update(ref, { manageTokenHashes: hashes, updatedAt: FieldValue.serverTimestamp() });
   releaseProof?.();
   return { kind: 'created', booking: { ...booking, manageTokenHashes: hashes }, bookingId: ref.id, professionalName, replay: true };
+}
+
+/**
+ * Caps the unverified requests one contact may leave waiting with one professional (verify-fallback item 1): two at a
+ * time per phone and per address. Read inside the booking transaction, so two calls at once cannot both pass the cap.
+ */
+async function refusePendingUnverified(
+  reader: ReturnType<typeof txReader>,
+  deps: Deps,
+  ownerUid: string,
+  phoneHash: string,
+  emailHash: string | undefined,
+  now: number
+): Promise<void> {
+  const r = refs(deps.db);
+  const byPhone = await reader.query(r.bookings().where('ownerUid', '==', ownerUid).where('phoneHash', '==', phoneHash));
+  const byEmail = emailHash
+    ? await reader.query(r.bookings().where('ownerUid', '==', ownerUid).where('emailHash', '==', emailHash))
+    : undefined;
+  const waiting = (docs: readonly { data(): unknown }[]): BookingDoc[] =>
+    docs
+      .map((doc) => doc.data() as BookingDoc)
+      .filter(
+        (booking) =>
+          booking.status === 'pendingApproval' &&
+          booking.verification === 'whatsapp' &&
+          (msOpt(booking.pendingExpiresAt) ?? 0) > now
+      );
+  for (const found of [waiting(byPhone.docs), waiting(byEmail?.docs ?? [])]) {
+    if (found.length >= MAX_PENDING_UNVERIFIED_PER_CONTACT) {
+      const soonest = Math.min(...found.map((booking) => msOpt(booking.pendingExpiresAt) ?? now));
+      throw new AppError('RATE_LIMITED', { retryAfterSeconds: Math.max(1, Math.ceil((soonest - now) / 1000)) });
+    }
+  }
 }

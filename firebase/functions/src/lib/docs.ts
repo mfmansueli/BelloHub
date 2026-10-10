@@ -26,6 +26,7 @@ export const C = {
   calendarLocks: 'calendarLocks',
   emailCodes: 'emailCodes',
   emailProofs: 'emailProofs',
+  trustedDevices: 'trustedDevices',
   idempotency: 'idempotency',
   rate: 'rate',
   audit: 'audit',
@@ -211,6 +212,16 @@ export interface BookingDoc extends TimingFields {
   cancelReason?: string;
   intakeSubmittedAt?: Timestamp;
   reminderSentAt?: Timestamp;
+  /**
+   * `whatsapp`: the client could not receive the e-mail code and confirms with the professional on WhatsApp. The booking
+   * is a request (`pendingApproval`) whose contact details are NOT verified; `reference` is the code she quotes in her
+   * message and `pendingExpiresAt` is when the time is released if nobody answers. Absent: verified (code or device).
+   */
+  verification?: 'whatsapp';
+  reference?: string;
+  pendingExpiresAt?: Timestamp;
+  /** Set by the cleanup job when an unverified request was released unanswered (status becomes `declined`). */
+  expiredAt?: Timestamp;
   /** The last thing the CLIENT did (set only by client-initiated updates). The booking trigger pushes on a change of it. */
   lastClientAction?: { kind: 'rescheduled' | 'confirmed' | 'late' | 'cancelled'; at: Timestamp };
   createdAt: Timestamp;
@@ -327,6 +338,21 @@ export interface EmailProofDoc {
   emailHash: string;
   expiresAt: Timestamp;
   usedAt?: Timestamp;
+}
+
+/**
+ * A trusted-device token (returning clients skip the code): the document id is the SHA-256 of the token, which only the
+ * client's browser holds. Scoped to one page (`slug`) and one e-mail; never renewed. `phoneHash` lets a client delete
+ * remove it with the rest of her data.
+ */
+export interface TrustedDeviceDoc {
+  ownerUid: string;
+  slug: string;
+  emailHash: string;
+  phoneHash: string;
+  createdAt: Timestamp;
+  expiresAt: Timestamp;
+  lastUsedAt?: Timestamp;
 }
 
 export interface IdempotencyDoc {
