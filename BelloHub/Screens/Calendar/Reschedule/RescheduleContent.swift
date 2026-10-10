@@ -85,8 +85,8 @@ struct RescheduleContent: View {
                 SectionHeader(title: "reschedule.section.day")
                 SchedulingTimeSection(
                     idPrefix: "reschedule", formatters: formatters, day: viewModel.day, start: viewModel.start,
-                    slots: viewModel.slots, moreSlots: viewModel.moreSlots, offeredDays: viewModel.offeredDays.map(\.day),
-                    onSelectDay: viewModel.selectDay, onSelectStart: viewModel.selectStart,
+                    slots: viewModel.slots, moreSlots: viewModel.moreSlots,
+                    offeredDays: viewModel.offeredDays.map(\.day), onSelectDay: viewModel.selectDay, onSelectStart: viewModel.selectStart,
                     onSelectMinutes: viewModel.selectTime
                 )
                 warningsSection

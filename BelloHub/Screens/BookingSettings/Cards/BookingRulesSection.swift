@@ -6,9 +6,9 @@
 import SwiftUI
 
 /// "Booking rules" on the booking page settings: the door to her hours with their summary, the buffer, slot interval,
-/// minimum notice and booking window menus, the "Keep my day compact" switch (D56), and the doors to her cancellation rules and her no-show protection, each with its
-/// one-line summary. The three menus change her availability; the two doors push the policy screens, handing them the
-/// editor the settings screen shares with them.
+/// minimum notice and booking window menus, the "Keep my day compact" switch (D56), and the doors to her cancellation
+/// rules and her no-show protection, each with its one-line summary. The menus and the switch change her
+/// availability; the two doors push the policy screens, handing them the editor the settings screen shares with them.
 struct BookingRulesSection: View {
     let viewModel: BookingSettingsViewModel
 

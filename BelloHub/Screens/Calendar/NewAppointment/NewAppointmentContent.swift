@@ -176,8 +176,8 @@ struct NewAppointmentContent: View {
             SectionHeader(title: "newAppointment.section.time")
             SchedulingTimeSection(
                 idPrefix: "newAppointment", formatters: formatters, day: viewModel.day, start: viewModel.start,
-                slots: viewModel.slots, moreSlots: viewModel.moreSlots, onSelectDay: viewModel.selectDay, onSelectStart: viewModel.selectStart,
-                onSelectMinutes: viewModel.selectTime
+                slots: viewModel.slots, moreSlots: viewModel.moreSlots, onSelectDay: viewModel.selectDay,
+                onSelectStart: viewModel.selectStart, onSelectMinutes: viewModel.selectTime
             )
         }
     }
