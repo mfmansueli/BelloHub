@@ -21,6 +21,9 @@ struct LaunchOptions: Equatable {
     var catalogSection: String?
     /// Starts the Design Catalog in dark appearance.
     var catalogDark = false
+    /// `-uiDark` runs the whole app in dark appearance, for screenshots: the iOS 27 simulator's appearance switch
+    /// (`simctl ui appearance`, `XCUIDevice.appearance`) reached neither this app nor Settings when it was tried.
+    var uiDark = false
     /// A UI test launch starts from nothing (a fresh vault in memory, empty defaults) unless it asks to keep what
     /// the previous launch left, which is how a test relaunches the app.
     var keepsState = false
@@ -63,6 +66,7 @@ struct LaunchOptions: Equatable {
         catalogSection = Self.value(after: "-catalogSection", in: arguments)
         catalogTextSize = Self.value(after: "-catalogTextSize", in: arguments)
         catalogDark = arguments.contains("-catalogDark")
+        uiDark = arguments.contains("-uiDark")
         keepsState = arguments.contains("-uiKeepState")
         seed = Self.value(after: "-uiSeed", in: arguments)
         biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)

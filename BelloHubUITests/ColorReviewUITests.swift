@@ -23,14 +23,8 @@ final class ColorReviewUITests: XCTestCase {
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
     }
 
-    override func tearDown() async throws {
-        XCUIDevice.shared.appearance = .light
-    }
-
     func testScreensInLightAndDark() {
-        for appearance in [XCUIDevice.Appearance.light, .dark] {
-            XCUIDevice.shared.appearance = appearance
-            let mode = appearance == .dark ? "dark" : "light"
+        for mode in ["light", "dark"] {
             homeAndSheet(mode: mode)
             tabs(mode: mode)
             catalog(mode: mode)
@@ -40,7 +34,8 @@ final class ColorReviewUITests: XCTestCase {
     // MARK: - Helpers
 
     private func homeAndSheet(mode: String) {
-        let app = XCUIApplication.launchedOnHome()
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded", "-uiHome"] + dark(mode))
+        _ = app.staticTexts["home.greeting"].waitForExistence(timeout: 10)
         save(app, "home-\(mode)")
         app.swipeUp()
         save(app, "home-tiles-\(mode)")
@@ -56,7 +51,7 @@ final class ColorReviewUITests: XCTestCase {
 
     private func tabs(mode: String) {
         let app = XCUIApplication.launchedForUITests(
-            arguments: ["-uiSeed", "onboarded", "-uiHome", "-uiInbox", "fixtures"]
+            arguments: ["-uiSeed", "onboarded", "-uiHome", "-uiInbox", "fixtures"] + dark(mode)
         )
         app.openCalendarTab()
         save(app, "calendar-\(mode)")
@@ -88,6 +83,11 @@ final class ColorReviewUITests: XCTestCase {
     /// tool, not a check, so nothing is asserted on the wait.
     private func waitForPush() {
         _ = XCUIApplication().navigationBars.firstMatch.waitForExistence(timeout: 3)
+    }
+
+    /// The simulator's own appearance switch does not reach the app, so dark comes from the app's `-uiDark` hook.
+    private func dark(_ mode: String) -> [String] {
+        mode == "dark" ? ["-uiDark"] : []
     }
 
     private func save(_ app: XCUIApplication, _ name: String) {
