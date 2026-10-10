@@ -439,6 +439,27 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   server field for a client's choice).
 - **Motion**: colour fades of chips, buttons and options run only under `prefers-reduced-motion: no-preference`.
 
+### Smart slots (D56)
+
+- **6.2 ServiceEdit, "Time around the visit"** (`ServiceTimingSection`, right after the basics card): native menu rows
+  "Prep before" and "Clean-up after" (None, 5 to 60 min; `serviceEditor.prepMenu`, `serviceEditor.cleanupMenu`), a
+  "Processing time" switch with its hint ("You're free while it works…", `serviceEditor.processingToggle`) and, only
+  while it is on, "Processing lasts" and "Starts after" (`serviceEditor.processingMenu`,
+  `serviceEditor.processingStartMenu`; "Right away" for 0). The menus offer only processing that fits the visit, and
+  shortening the visit moves processing earlier, then shortens it, then turns it off (`ServiceRules.fittingProcessing`),
+  so the form can never hold a shape the server rejects. Footnote: clients never see this time in the length or price.
+- **Booking settings, "Booking rules"**: after the buffer, a "Start times" menu row (`bookingSettings.slotStepPicker`:
+  Every 10, 15, 20, 30, 60 min, "Match the service" last) and a "Keep my day compact" switch with its hint
+  (`bookingSettings.compactToggle`, on by default). Same `MenuPickerRow` and `ToggleRow` as the rows around them.
+- **New appointment and Reschedule** (`SchedulingTimeSection`): the chips are the suggested times (her slot interval,
+  the extra and processing time of each visit, the compact day); a "Show all times" text button
+  (`<prefix>.showAllTimesButton`, rose text, 44 pt tall, VoiceOver hint) reveals the other free times in place and
+  closes again on another day. "Another time" (any minute, with warnings) is unchanged.
+- **Web Bk-4, Cl-3 rebook and Cl-9 reschedule** (`SlotChoices`): the same "Show all times" link
+  (`data-testid="show-all-times"`, `link-button` style, 44 px tall) under the time list; a time already picked from
+  the hidden ones keeps the list open.
+- No new tokens.
+
 ## Empty, loading and error states
 
 Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
