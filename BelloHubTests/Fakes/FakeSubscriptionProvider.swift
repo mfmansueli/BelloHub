@@ -18,6 +18,8 @@ final class FakeSubscriptionProvider: SubscriptionProviding, Sendable {
         var purchaseError: Error?
         var restoreOutcome: PurchaseOutcome
         var purchases: [PlanPeriod] = []
+        var purchaseTokens: [UUID?] = []
+        var signedTransaction: String?
         var restoreCount = 0
         var manageCount = 0
     }
@@ -54,7 +56,15 @@ final class FakeSubscriptionProvider: SubscriptionProviding, Sendable {
         set { state.withLock { $0.purchaseError = newValue } }
     }
 
+    /// The JWS `currentSignedTransaction()` answers; nil = no entitlement to show the server.
+    var signedTransaction: String? {
+        get { state.withLock { $0.signedTransaction } }
+        set { state.withLock { $0.signedTransaction = newValue } }
+    }
+
     var purchases: [PlanPeriod] { state.withLock { $0.purchases } }
+    /// The account token each purchase carried, in order.
+    var purchaseTokens: [UUID?] { state.withLock { $0.purchaseTokens } }
     var restoreCount: Int { state.withLock { $0.restoreCount } }
     var manageCount: Int { state.withLock { $0.manageCount } }
 
@@ -71,9 +81,10 @@ final class FakeSubscriptionProvider: SubscriptionProviding, Sendable {
         }
     }
 
-    func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
+    func purchase(_ period: PlanPeriod, appAccountToken: UUID?) async throws -> PurchaseOutcome {
         try state.withLock { state in
             state.purchases.append(period)
+            state.purchaseTokens.append(appAccountToken)
             if let error = state.purchaseError { throw error }
             if state.purchaseOutcome == .purchased {
                 state.state = .active(period: period, expiresAt: nil, willRenew: true)
@@ -94,6 +105,10 @@ final class FakeSubscriptionProvider: SubscriptionProviding, Sendable {
 
     func currentState() async -> SubscriptionState {
         state.withLock { $0.state }
+    }
+
+    func currentSignedTransaction() async -> String? {
+        state.withLock { $0.signedTransaction }
     }
 
     func stateUpdates() -> AsyncStream<SubscriptionState> {

@@ -26,7 +26,9 @@ struct PaywallSheet: View {
     }
 }
 
+#if DEBUG
 #Preview {
     PaywallSheet()
-        .environment(SubscriptionService())
+        .environment(SubscriptionService.preview())
 }
+#endif

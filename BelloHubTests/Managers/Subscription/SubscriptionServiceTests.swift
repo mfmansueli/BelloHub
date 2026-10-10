@@ -60,6 +60,42 @@ struct SubscriptionServiceTests {
         #expect(try await gate.register(eleventh) == .registered)
     }
 
+    @Test("A purchase carries the server's account token into the store")
+    func purchaseCarriesToken() async throws {
+        let token = UUID()
+        let provider = FakeSubscriptionProvider()
+        let service = SubscriptionService(provider: provider, verifier: FakeSubscriptionVerifier(token: token))
+
+        #expect(try await service.purchase(.yearly) == .purchased)
+
+        #expect(provider.purchaseTokens == [token])
+    }
+
+    @Test("Without the account token the store is never asked")
+    func purchaseNeedsToken() async {
+        let provider = FakeSubscriptionProvider()
+        let service = SubscriptionService(
+            provider: provider, verifier: FakeSubscriptionVerifier(tokenError: SubscriptionError.accountUnavailable)
+        )
+
+        await #expect(throws: SubscriptionError.accountUnavailable) { try await service.purchase(.monthly) }
+
+        #expect(provider.purchases.isEmpty)
+        #expect(!service.hasActivePlan)
+    }
+
+    @Test("The store's signed transaction goes to the verifier with the state")
+    func signedTransactionTravels() async {
+        let provider = FakeSubscriptionProvider(state: .active(period: .monthly, expiresAt: nil, willRenew: true))
+        provider.signedTransaction = "header.payload.signature"
+        let verifier = FakeSubscriptionVerifier()
+        let service = SubscriptionService(provider: provider, verifier: verifier)
+
+        await service.refreshState()
+
+        #expect(verifier.signedTransactions == ["header.payload.signature"])
+    }
+
     @Test("Offers come from the store, monthly first; an empty or failing store gives a message")
     func offers() async {
         let provider = FakeSubscriptionProvider()

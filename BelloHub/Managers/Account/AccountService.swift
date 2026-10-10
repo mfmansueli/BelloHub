@@ -26,7 +26,7 @@ final class AccountService {
         vault: VaultService,
         keyManager: KeyManager,
         keyStore: any KeyStoring,
-        deleter: any AccountDeleting = OfflineAccountDeleter(),
+        deleter: any AccountDeleting,
         defaults: UserDefaults = .standard
     ) {
         self.vault = vault

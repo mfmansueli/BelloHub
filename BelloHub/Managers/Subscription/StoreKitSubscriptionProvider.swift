@@ -19,11 +19,12 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
         .sorted { $0.period == .monthly && $1.period == .yearly }
     }
 
-    func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
+    func purchase(_ period: PlanPeriod, appAccountToken: UUID?) async throws -> PurchaseOutcome {
         guard let product = try await StoreKit.Product.products(for: [period.product.rawValue]).first else {
             throw SubscriptionError.productUnavailable
         }
-        switch try await product.purchase() {
+        let options: Set<StoreKit.Product.PurchaseOption> = appAccountToken.map { [.appAccountToken($0)] } ?? []
+        switch try await product.purchase(options: options) {
         case .success(let verification):
             let transaction = try Self.verified(verification)
             await transaction.finish()
@@ -54,6 +55,15 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
             return .active(period: period, expiresAt: transaction.expirationDate, willRenew: willRenew)
         }
         return .none
+    }
+
+    func currentSignedTransaction() async -> String? {
+        for await result in Transaction.currentEntitlements {
+            guard let transaction = try? Self.verified(result),
+                  PlanPeriod(productID: transaction.productID) != nil else { continue }
+            return result.jwsRepresentation
+        }
+        return nil
     }
 
     func stateUpdates() -> AsyncStream<SubscriptionState> {

@@ -25,7 +25,9 @@ struct AccountView: View {
     let keys = KeyManager()
     NavigationStack { AccountView(onSignOut: {}) }
         .environment(ProfileService(vault: vault))
-        .environment(AccountService(vault: vault, keyManager: keys, keyStore: InMemoryKeyStore()))
+        .environment(AccountService(
+            vault: vault, keyManager: keys, keyStore: InMemoryKeyStore(), deleter: OfflineAccountDeleter()
+        ))
         .environment(SessionService(provider: LocalDevAuthProvider(defaults: .standard), defaults: .standard))
         .environment(DataExportService(vault: vault))
         .environment(BookingSetupService(vault: vault))

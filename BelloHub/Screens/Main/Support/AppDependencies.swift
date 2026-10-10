@@ -52,7 +52,7 @@ struct AppDependencies {
         let permissions = PermissionService()
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
-        let subscription = SubscriptionService()
+        let subscription = makeLiveSubscription(client: client, profile: profile)
         let inbox = InboxServices.make(
             repository: RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens)),
             keys: keyManager, vault: vault, appointments: appointments, pushProvider: makePushProvider()
@@ -81,13 +81,36 @@ struct AppDependencies {
             ),
             subscription: subscription,
             recoveryKey: RecoveryKeyService(keyManager: keyManager, defaults: defaults),
-            account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),
+            account: AccountService(
+                vault: vault, keyManager: keyManager, keyStore: keyStore, deleter: makeAccountDeleter(client: client),
+                defaults: defaults
+            ),
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
             calendar: CalendarIntegrationService(defaults: defaults),
             export: DataExportService(vault: vault),
             inbox: inbox,
             defaults: defaults
         )
+    }
+
+    /// StoreKit for the purchase, the server for the verdict (`ensureAccount` for the account token, `syncPlan` for the
+    /// plan); the profile gives the region and language of a server account created at the first purchase.
+    private static func makeLiveSubscription(
+        client: any CallableClient, profile: ProfileService
+    ) -> SubscriptionService {
+        let verifier = RemoteSubscriptionVerifier(
+            client: client, accounts: RemoteBookingRepository(client: client), profile: { await profile.profile }
+        )
+        return SubscriptionService(provider: StoreKitSubscriptionProvider(), verifier: verifier)
+    }
+
+    /// The server deletes her account. A `-devLogin` run (DEBUG) carries a fake token the server rightly refuses, so it
+    /// clears only the iPhone, as a UI test does.
+    private static func makeAccountDeleter(client: any CallableClient) -> any AccountDeleting {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-devLogin") { return OfflineAccountDeleter() }
+        #endif
+        return RemoteAccountDeleter(client: client)
     }
 
     /// The Firebase Messaging token source, also handed to `PushBridge` because the AppDelegate (outside the view
@@ -115,10 +138,7 @@ struct AppDependencies {
         let timeBlocks = TimeBlockService(vault: vault)
         let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
         let biometrics = UITestBiometrics(mode: mode)
-        let subscription = SubscriptionService(
-            provider: UITestSubscriptionProvider(hasPlan: options.uiPlan == "active"),
-            verifier: OfflineSubscriptionVerifier()
-        )
+        let subscription = SubscriptionService.preview(hasPlan: options.uiPlan == "active")
         let inbox = makeUITestInbox(
             options: options, keyManager: keyManager, vault: vault, appointments: appointments, defaults: defaults
         )
@@ -147,7 +167,10 @@ struct AppDependencies {
             ),
             subscription: subscription,
             recoveryKey: RecoveryKeyService(keyManager: keyManager, biometrics: biometrics, defaults: defaults),
-            account: AccountService(vault: vault, keyManager: keyManager, keyStore: keyStore, defaults: defaults),
+            account: AccountService(
+                vault: vault, keyManager: keyManager, keyStore: keyStore, deleter: OfflineAccountDeleter(),
+                defaults: defaults
+            ),
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
             calendar: CalendarIntegrationService(provider: UITestCalendarAccess(), defaults: defaults),
             export: DataExportService(vault: vault),

@@ -33,7 +33,7 @@ struct InboxPreviewHost<Content: View>: View {
             .environment(vault)
             .environment(sync)
             .environment(ProfileService(vault: vault))
-            .environment(SubscriptionService(provider: UITestSubscriptionProvider(hasPlan: false)))
+            .environment(SubscriptionService.preview())
             .task { sync.startListening(userId: "preview") }
     }
 }

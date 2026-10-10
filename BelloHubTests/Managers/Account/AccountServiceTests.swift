@@ -91,7 +91,7 @@ struct AccountServiceTests {
         #expect(world.defaults.string(forKey: DefaultsKey.setupCompletedUserID) == "dev-1")
     }
 
-    @Test("Offline (no server yet) the outcome says only this iPhone was cleared")
+    @Test("A DEBUG launch with no server (UI tests) says only this iPhone was cleared")
     func offlineDefault() async throws {
         let world = try await makeWorld(deleter: OfflineAccountDeleter())
         defer { world.defaults.removePersistentDomain(forName: world.suite) }
