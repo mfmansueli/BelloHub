@@ -26,6 +26,7 @@
         "HomeAuditUITests",
         "ImportAuditUITests",
         "InboxAuditUITests",
+        "LocalizationScreenshotUITests",
         "MoreAuditUITests",
         "OnboardingAuditUITests",
         "RecordAuditUITests",
