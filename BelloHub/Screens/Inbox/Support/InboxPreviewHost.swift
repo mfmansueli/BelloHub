@@ -34,6 +34,7 @@ struct InboxPreviewHost<Content: View>: View {
             .environment(sync)
             .environment(ProfileService(vault: vault))
             .environment(SubscriptionService.preview())
+            .environment(BookingSetupService(vault: vault))
             .task { sync.startListening(userId: "preview") }
     }
 }

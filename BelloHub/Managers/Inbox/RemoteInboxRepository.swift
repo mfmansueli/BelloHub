@@ -82,6 +82,16 @@ struct RemoteInboxRepository: InboxRepository {
         return .slotTaken
     }
 
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        let answer: SuggestAnswer = try await perform(
+            "suggestBookingTime", SuggestRequest(bookingId: bookingId, startsAt: startsAt)
+        )
+        if answer.status == "suggested", let holdKey = answer.holdKey, let expiresAt = answer.expiresAt {
+            return .suggested(holdKey: holdKey, expiresAt: expiresAt)
+        }
+        return .slotTaken
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         let _: Acknowledged = try await perform("removeWaitlistEntry", WaitlistIDRequest(waitlistId: id))
     }
@@ -179,6 +189,17 @@ struct RemoteInboxRepository: InboxRepository {
     }
 
     private struct WaitlistIDRequest: Encodable { let waitlistId: String }
+
+    private struct SuggestRequest: Encodable {
+        let bookingId: String
+        let startsAt: Date
+    }
+
+    private struct SuggestAnswer: Decodable {
+        let status: String
+        let holdKey: String?
+        let expiresAt: Date?
+    }
 
     private struct NoShowRequest: Encodable {
         let phone: String

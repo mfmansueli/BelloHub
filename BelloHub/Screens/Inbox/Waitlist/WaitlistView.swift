@@ -10,11 +10,12 @@ import SwiftUI
 struct WaitlistView: View {
     @Environment(BookingSyncService.self) private var sync
     @Environment(ProfileService.self) private var profile
+    @Environment(VaultService.self) private var vault
 
     var body: some View {
         let settings = CalendarSettings(profile: profile.profile)
         WaitlistContentView(
-            viewModel: WaitlistViewModel(sync: sync, timeZone: settings.timeZone), settings: settings
+            viewModel: WaitlistViewModel(sync: sync, timeZone: settings.timeZone, vault: vault), settings: settings
         )
     }
 }

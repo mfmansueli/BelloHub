@@ -11,7 +11,8 @@ import Foundation
 /// client's request is never left unanswered on the server. Oldest first. Pure.
 struct MailboxAlerts: Equatable, Sendable {
     enum Item: Identifiable, Equatable, Sendable {
-        case checkin(id: String, feeling: Feeling, note: String?, hasPhoto: Bool)
+        /// The photo is the JPEG the client attached, opened from the sealed envelope and held in memory only.
+        case checkin(id: String, feeling: Feeling, note: String?, photo: Data?)
         case dataRequest(id: String, isDeletion: Bool, name: String, phone: String, note: String?)
         /// It did not open or did not read: the client has to send it again.
         case unopened(id: String)
@@ -61,7 +62,7 @@ struct MailboxAlerts: Equatable, Sendable {
         case .checkin(let feeling, let note, let photo):
             .checkin(
                 id: message.id, feeling: Feeling(rawValue: feeling) ?? .okay, note: cleaned(note),
-                hasPhoto: photo != nil
+                photo: photo
             )
         case .dataRequest(let request, let name, let phone, let note):
             .dataRequest(

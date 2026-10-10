@@ -40,14 +40,18 @@ struct MailboxAlertCards: View {
     @ViewBuilder
     private func card(_ item: MailboxAlerts.Item) -> some View {
         switch item {
-        // A check-in photo is not shown yet (it is dropped with the message); see docs/agent-notes/s8-leftovers.md.
-        case .checkin(let id, let feeling, let note, _):
+        case .checkin(let id, let feeling, let note, let photo):
             AlertCard(
                 icon: .chat, tone: feeling == .reaction || feeling == .irritated ? .rose : .sage,
                 title: Text("alerts.mailbox.checkin.title"),
                 message: Text(verbatim: lines([feelingText(feeling), quoted(note)])),
                 identifier: "alerts.mailbox.\(id)"
-            ) { resolveButton(item, label: "alerts.mailbox.handled") }
+            ) {
+                VStack(alignment: .leading, spacing: Spacing.sm) {
+                    if let photo { checkinPhoto(photo, id: id) }
+                    resolveButton(item, label: "alerts.mailbox.handled")
+                }
+            }
         case .dataRequest(let id, let isDeletion, let name, let phone, let note):
             AlertCard(
                 icon: .shield, tone: .peach,
@@ -66,6 +70,20 @@ struct MailboxAlertCards: View {
                 message: Text("alerts.mailbox.unmatched.message"), identifier: "alerts.mailbox.\(id)"
             ) { resolveButton(item, label: "alerts.mailbox.dismiss") }
         }
+    }
+
+    /// Her photo, as the client sent it, inside the app only. It lives in memory with the message (the sealed envelope
+    /// was opened on this iPhone) and is gone when the card is handled; nothing is written to disk.
+    private func checkinPhoto(_ data: Data, id: String) -> some View {
+        Color.clear
+            .frame(maxWidth: .infinity)
+            .frame(height: 180)
+            .overlay { DataImage(data: data) }
+            .clipShape(RoundedRectangle(cornerRadius: Radius.control, style: .continuous))
+            .accessibilityElement()
+            .accessibilityLabel(Text("alerts.mailbox.checkin.photoLabel"))
+            .accessibilityAddTraits(.isImage)
+            .accessibilityIdentifier("alerts.mailbox.\(id).photo")
     }
 
     private func resolveButton(_ item: MailboxAlerts.Item, label: LocalizedStringKey) -> some View {

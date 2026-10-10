@@ -220,6 +220,14 @@ final class BookingSyncService {
         return outcome
     }
 
+    /// "Suggest another time": needs the server's answer at once (the held time and its key), so it is not queued.
+    /// The request reads as declined as soon as the server took the suggestion.
+    func suggest(bookingID: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        let outcome = try await repository.suggestBookingTime(bookingId: bookingID, startsAt: startsAt)
+        if case .suggested = outcome { update(booking: bookingID) { $0.status = .declined } }
+        return outcome
+    }
+
     func removeWaitlistEntry(id: String) {
         snapshot.waitlist.removeAll { $0.id == id }
         persist()
@@ -307,18 +315,4 @@ final class BookingSyncService {
     }
 
     private static func key(_ userID: String) -> String { DefaultsKey.inboxSnapshot + "." + userID }
-
-    /// One sentence per failure, for the inbox's error state.
-    static func text(for error: any Error) -> String {
-        switch error as? BookingRepositoryError {
-        case .unreachable:
-            String(localized: "inbox.error.offline", defaultValue: "No connection. What you see is from the last sync.")
-        case .busy:
-            String(localized: "inbox.error.busy", defaultValue: "The server is busy. Try again in a moment.")
-        case .unauthenticated:
-            String(localized: "inbox.error.signIn", defaultValue: "Sign in again to see your bookings.")
-        default:
-            String(localized: "inbox.error.generic", defaultValue: "Your bookings could not be read. Try again.")
-        }
-    }
 }

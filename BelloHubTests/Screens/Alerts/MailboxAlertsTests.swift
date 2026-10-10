@@ -55,7 +55,7 @@ struct MailboxAlertsTests {
         )
 
         #expect(alerts.items.map(\.id) == ["ck-old", "dr-1", "ck-new", "u-1", "u-2"])
-        #expect(alerts.items[0] == .checkin(id: "ck-old", feeling: .okay, note: "Red", hasPhoto: false))
+        #expect(alerts.items[0] == .checkin(id: "ck-old", feeling: .okay, note: "Red", photo: nil))
         #expect(alerts.items[1] == .dataRequest(
             id: "dr-1", isDeletion: true, name: "Ana Costa", phone: "+5511981234410", note: nil
         ))

@@ -21,6 +21,8 @@ protocol InboxRepository: Sendable {
     func respondBookingRequest(id: String, approve: Bool) async throws -> BookingRequestOutcome
     func respondRescheduleRequest(id: String, accept: Bool) async throws -> RescheduleOutcome
     func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome
+    /// "Suggest another time": declines the request and holds `startsAt` for the client (`suggestBookingTime`).
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome
     func removeWaitlistEntry(id: String) async throws
     /// `markNoShow` with `reset`: her count starts from zero and online booking opens again for her (2.10).
     func resetNoShowCount(phone: String) async throws

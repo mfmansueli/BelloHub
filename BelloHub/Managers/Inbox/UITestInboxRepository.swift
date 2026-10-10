@@ -107,6 +107,14 @@ actor UITestInboxRepository: InboxRepository {
         return .offered(holdKey: "offer-\(offer.waitlistId)", expiresAt: Date().addingTimeInterval(3 * 3_600))
     }
 
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        guard let index = bookings.firstIndex(where: { $0.id == bookingId }) else {
+            throw BookingRepositoryError.rejected
+        }
+        bookings[index].status = .declined
+        return .suggested(holdKey: "suggest-\(bookingId)", expiresAt: Date().addingTimeInterval(3 * 3_600))
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         waitlist.removeAll { $0.id == id }
     }

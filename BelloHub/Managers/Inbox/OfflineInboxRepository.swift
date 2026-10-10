@@ -20,6 +20,9 @@ struct OfflineInboxRepository: InboxRepository {
     func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome {
         throw BookingRepositoryError.notPublishedYet
     }
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        throw BookingRepositoryError.notPublishedYet
+    }
     func removeWaitlistEntry(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func resetNoShowCount(phone: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }

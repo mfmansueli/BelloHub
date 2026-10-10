@@ -125,6 +125,22 @@ actor FakeInboxRepository: InboxRepository {
         return offerOutcome
     }
 
+    /// What a suggestion answers; `.suggested` declines the request like the server does.
+    private var suggestionOutcome: BookingSuggestionOutcome = .suggested(holdKey: "held", expiresAt: TestClock.now)
+
+    func setSuggestionOutcome(_ outcome: BookingSuggestionOutcome) {
+        suggestionOutcome = outcome
+    }
+
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        try write("suggestBookingTime:\(bookingId):\(CallableJSON.instant(startsAt))")
+        guard let index = bookings.firstIndex(where: { $0.id == bookingId }) else {
+            throw BookingRepositoryError.rejected
+        }
+        if case .suggested = suggestionOutcome { bookings[index].status = .declined }
+        return suggestionOutcome
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         try write("removeWaitlistEntry:\(id)")
         waitlist.removeAll { $0.id == id }
