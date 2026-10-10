@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { LOCALES } from '../../src/contracts/common.js';
 import { buildIcs, escapeIcsText, foldLine } from '../../src/lib/ics.js';
 
 const base = {
@@ -76,5 +77,31 @@ describe('buildIcs', () => {
   it('is deterministic for the same booking, so a calendar app updates instead of duplicating', () => {
     expect(buildIcs(base)).toBe(buildIcs(base));
     expect(buildIcs({ ...base, startsAt: base.startsAt + 3_600_000 })).toContain('UID:booking-abc123@bellohub.app');
+  });
+});
+
+// S11: a calendar file per localization. The names are the kind each market writes (Turkish dotted capitals,
+// Devanagari, Arabic), long enough to be folded, and the file must stay valid RFC 5545 in every one.
+describe('buildIcs in every localization', () => {
+  const names: Record<string, { service: string; professional: string }> = {
+    tr: { service: 'İpek kirpik lifting ve bakım uygulaması', professional: 'İlknur Şahin' },
+    hi: { service: 'हाइड्राफ़ेशियल और गहरी सफ़ाई वाला फ़ेशियल', professional: 'प्रिया शर्मा' },
+    ar: { service: 'تنظيف البشرة العميق مع الترطيب المكثف', professional: 'نورة العتيبي' },
+    de: { service: 'Wimpernlifting mit Färbung und Pflegebehandlung', professional: 'Jürgen Weiß' }
+  };
+
+  it.each(LOCALES)('%s: CRLF lines of at most 75 octets, the service and the name intact, isolates only in Arabic', (locale) => {
+    const chosen = names[locale] ?? { service: 'Limpeza de pele profunda com hidratação intensiva', professional: 'Conceição Araújo' };
+    const ics = buildIcs({ ...base, locale, serviceName: chosen.service, professionalName: chosen.professional });
+    const encoder = new TextEncoder();
+
+    expect(ics.startsWith('BEGIN:VCALENDAR\r\n')).toBe(true);
+    expect(ics).not.toMatch(/[^\r]\n/);
+    for (const line of lines(ics)) expect(encoder.encode(line).length).toBeLessThanOrEqual(75);
+    const unfolded = ics.replace(/\r\n /g, '');
+    expect(unfolded).toContain(chosen.service);
+    expect(unfolded).toContain(chosen.professional);
+    expect(unfolded.includes('\u2068')).toBe(locale === 'ar');
+    expect(unfolded).toContain('DTSTART:20261003T130000Z');
   });
 });

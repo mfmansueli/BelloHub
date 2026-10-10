@@ -64,6 +64,25 @@ describe('email templates (D24: fourteen localizations)', () => {
   });
 });
 
+// S11: every template renders in every localization with real values, nothing left unfilled, the values isolated
+// only in Arabic and the date written in the reader's language.
+describe('email templates rendered in every localization', () => {
+  const when = Date.parse('2026-10-08T13:00:00.000Z');
+
+  it.each(LOCALES)('%s renders all templates completely', (locale) => {
+    const texts = emailTextsFor(locale);
+    const vars = { code: '123456', professional: 'Maria', service: 'Glow', when: formatWhen(when, 'Europe/Lisbon', locale), link: 'https://x/m/t' };
+    for (const id of EMAIL_TEMPLATE_IDS) {
+      const subject = fillTemplate(texts[id].subject, vars, locale);
+      const body = fillTemplate(texts[id].body, vars, locale);
+      expect(`${subject} ${body}`).not.toMatch(/\{\w+\}|\bundefined\b|\bnull\b/);
+      expect(body.includes('\u2068')).toBe(locale === 'ar' && /\{\w+\}/.test(texts[id].body));
+    }
+    expect(vars.when).not.toMatch(/2026-10/);
+    if (locale === 'ar' || locale === 'hi') expect(vars.when).toMatch(/[0-9]/);
+  });
+});
+
 describe('rendering', () => {
   it('fills placeholders and leaves nothing like "undefined"', () => {
     const text = fillTemplate('{service} with {professional}: {when} {link}{code}', { service: 'Facial', professional: 'Maria' }, 'en');

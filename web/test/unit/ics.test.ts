@@ -1,6 +1,10 @@
+import { readFileSync } from 'node:fs';
+
 import { describe, expect, it } from 'vitest';
 
+import { makeTranslate } from '../../src/i18n';
 import { buildIcs, calendarEvent, escapeIcsText, foldIcsLine, googleCalendarUrl, toIcsUtc, type CalendarEvent } from '../../src/lib/ics';
+import { LOCALE_IDS } from '../../src/lib/locales';
 
 const event: CalendarEvent = {
   uid: 'bk_7Hq2xkP9',
@@ -75,5 +79,32 @@ describe('what a calendar entry carries (D50)', () => {
     expect(url).toContain(encodeURIComponent('https://bellohub.app/maria'));
     expect(file).not.toContain('/m/');
     expect(url).not.toContain('%2Fm%2F');
+  });
+});
+
+// S11: the calendar entry in each of the fourteen localizations, built with the real locale files: the summary and
+// the page line are translated (no key left), the file stays valid RFC 5545, and names are isolated only in Arabic.
+describe('calendar entry in every localization', () => {
+  const booking = {
+    bookingId: 'bk_7Hq2xkP9',
+    startsAt: '2026-10-01T18:00:00.000Z',
+    endsAt: '2026-10-01T19:30:00.000Z',
+    serviceNames: ['Limpeza de pele profunda', 'Hidratação'],
+    professional: { displayName: 'Conceição Araújo', city: 'São Paulo' },
+  };
+
+  it.each(LOCALE_IDS)('%s', (id) => {
+    const catalog = JSON.parse(readFileSync(new URL(`../../src/i18n/${id}.json`, import.meta.url), 'utf8')) as Record<string, string>;
+    const t = makeTranslate(catalog, id);
+    const entry = calendarEvent(booking, 'https://bellohub.app/maria', t, id);
+    const file = buildIcs(entry, Date.parse('2026-10-08T12:00:00Z'));
+    const unfolded = file.replace(/\r\n /g, '');
+
+    expect(entry.summary).not.toMatch(/^ics\./);
+    expect(entry.description).not.toMatch(/^ics\./);
+    expect(entry.summary).toContain('Conceição Araújo');
+    expect(unfolded).toContain('https://bellohub.app/maria');
+    for (const line of file.split('\r\n')) expect(new TextEncoder().encode(line).length).toBeLessThanOrEqual(75);
+    expect(entry.summary.includes('⁨')).toBe(id === 'ar');
   });
 });
