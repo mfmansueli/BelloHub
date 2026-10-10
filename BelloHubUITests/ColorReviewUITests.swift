@@ -6,7 +6,8 @@
 import XCTest
 
 /// Not a check: a design-review tool that saves screenshots of the key screen families (welcome, Home with visits and
-/// empty, Calendar, Alerts, Clients, a client, a form sheet and the Design Catalog) in light and dark, for comparing a palette change with its reference.
+/// empty, Calendar, Alerts, Clients, a client, a form sheet and the Design Catalog) in light and dark, for comparing a
+/// palette change with its reference.
 /// It only runs when a folder is given, so every plan skips it:
 /// `TEST_RUNNER_SCREENSHOT_DIR=$PWD/build/screenshots ONLY_TESTING=BelloHubUITests/ColorReviewUITests \`
 /// `scripts/test.sh full`.
