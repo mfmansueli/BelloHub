@@ -190,6 +190,7 @@ struct LocalDevAuthProviderTests {
     }
 
     @Test("The phone path is offered only by a provider that can send codes; the Firebase provider cannot in v1")
+    @MainActor
     func phoneSignInCapability() {
         let (defaults, name) = makeDefaults()
         defer { defaults.removePersistentDomain(forName: name) }

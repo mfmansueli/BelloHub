@@ -492,10 +492,10 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 4.4 | ClientKnowledge | S4 | done | `ClientsAuditUITests` |
 | 4.5 | ClientHealth | S4 | done | `HealthUITests`, `HealthMinorUITests`, `HealthAuditUITests`; D55 consent records (`ConsentRecordViewModelTests`) |
 | 4.6 | ImportClients | S4 | done | `ImportClientsUITests`, `ImportAuditUITests` |
-| 4.7 | RecordHistory | S7 | todo |  |
+| 4.7 | RecordHistory | S7 | done | `Screens/Records/History/` (S7 record slice, `docs/agent-notes/s7-record.md`); `RecordUITests`; trail name follows the profile (S12) |
 | 4.8 | SessionPlan | S6 | done | `AppointmentAuditUITests` |
-| 4.9 | Incident | S7 | todo |  |
-| 4.10 | ExportRecord | S7 | todo |  |
+| 4.9 | Incident | S7 | done | `Screens/Records/Incident/`; `RecordUITests.testIncidentFromTheProfileIsSaved` |
+| 4.10 | ExportRecord | S7 | done | `Screens/Records/Export/`; from the profile and, since S12, from Edit ("Export data"); `RecordUITests.testExportBuildsAClientCopyWithoutPrivateNotes` |
 | 4.11 | NoShowHistory | S6 | done | `AppointmentAuditUITests` |
 | 5.1 | Tx-1-Register | S7 | done | `TreatmentFlowUITests` |
 | 5.2 | Tx-2-Listening | S7 | done | `TreatmentFlowUITests` |

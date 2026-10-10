@@ -9,14 +9,17 @@ import XCTest
 /// audit type on the key screens (onboarding, Home, New appointment, Alerts, More, Account, Plan, Privacy, Booking
 /// page, Services, Clients list and profile, Calendar day and week, Record history), in `en` and `pt-BR`, at the
 /// default size and at AX5, with Increase Contrast and Reduce Motion on (`-uiIncreaseContrast`, `-uiReduceMotion`).
-/// Slow, so it only runs when asked:
-/// `TEST_RUNNER_BELLO_A11Y=1 ONLY_TESTING=BelloHubUITests/AccessibilityAuditUITests scripts/test.sh full`
-/// (`TEST_RUNNER_AUDIT_LOCALES=en` narrows it while iterating). The manual VoiceOver pass that complements it is
+/// The Full plan runs it in `en` (`BELLO_A11Y=1`, `AUDIT_PLAN_LOCALES=en` in `Full.xctestplan`, S12: Increase Contrast
+/// and Reduce Motion in every Full run; the per-feature audits cover pt-BR, de, ar and hi). Both languages:
+/// `TEST_RUNNER_BELLO_A11Y=1 TEST_RUNNER_AUDIT_LOCALES=en,pt-BR ONLY_TESTING=BelloHubUITests/AccessibilityAuditUITests
+/// scripts/test.sh full` (`TEST_RUNNER_AUDIT_LOCALES` also narrows it while iterating). The manual VoiceOver pass that complements it is
 /// `docs/agent-notes/accessibility-audit.md`.
 @MainActor
 final class AccessibilityAuditUITests: XCTestCase {
     private static let locales: [String] = {
-        let chosen = ProcessInfo.processInfo.environment["AUDIT_LOCALES"]?.split(separator: ",").map(String.init)
+        let environment = ProcessInfo.processInfo.environment
+        let chosen = (environment["AUDIT_LOCALES"] ?? environment["AUDIT_PLAN_LOCALES"])?
+            .split(separator: ",").map(String.init)
         return chosen ?? ["en", "pt-BR"]
     }()
 
@@ -185,7 +188,13 @@ final class AccessibilityAuditUITests: XCTestCase {
     /// - "partially unsupported" Dynamic Type on the last row of each Services section (`services.addRow`,
     ///   `services.productsLink`): their text is `Typography.bodyStrong`/`meta` like every other row and the rows grow
     ///   with the text (56 pt at the default size, 62.7 pt at AX5 in the same run); the check flags only these two.
+    /// - "partially unsupported" Dynamic Type on the lower cards of an onboarding step (S12: Other, Barber, Massage on
+    ///   the profession step in en and pt-BR at the default size). The audit enlarges the text in place: the title
+    ///   grows and pushes the grid under the pinned Continue bar, so the audit cannot see those cards grow. They are
+    ///   `ChoiceCard`s like the ones above them, and the same step passes the AX5 run (one column) without exception.
+    ///   Only Dynamic Type issues within `pinnedBarReach` of a pinned Continue bar are skipped.
     private static let partialDynamicTypeExceptions = ["services.addRow", "services.productsLink"]
+    private static let pinnedBarReach: CGFloat = 260
     private static let auditTypes: XCUIAccessibilityAuditType = .all.subtracting(.contrast)
 
     private func audit(_ app: XCUIApplication, _ screen: String) throws {
@@ -200,12 +209,17 @@ final class AccessibilityAuditUITests: XCTestCase {
             let element = app.descendants(matching: .any).matching(identifier: identifier).firstMatch
             return element.exists ? element.frame.insetBy(dx: -2, dy: -2) : nil
         }
+        let continueBar = app.buttons.matching(NSPredicate(format: "identifier ENDSWITH '.continueButton'")).firstMatch
+        let pinnedBarTop = continueBar.exists ? continueBar.frame.minY : nil
         try app.performAccessibilityAudit(for: Self.auditTypes) { issue in
             guard let element = issue.element, !(element.label.isEmpty && element.frame == .zero) else { return true }
             let frame = element.frame
             if frame.minY < window.minY || frame.maxY > visibleBottom { return true }
             if !logoFrame.isEmpty, logoFrame.contains(frame) { return true }
             if issue.auditType == .dynamicType, exceptionFrames.contains(where: { $0.contains(frame) }) { return true }
+            if issue.auditType == .dynamicType, let pinnedBarTop, frame.maxY > pinnedBarTop - Self.pinnedBarReach {
+                return true
+            }
             if !bar.isEmpty, bar.contains(CGPoint(x: frame.midX, y: frame.midY)) { return true }
             let kind = element.elementType
             if issue.auditType == .textClipped, kind == .textField || kind == .searchField { return true }
