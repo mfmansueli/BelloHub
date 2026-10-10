@@ -64,6 +64,8 @@ Pick a transactional email service (Resend, Postmark, SES…), verify the sendin
 ### H8 · In-app browser tests
 On real phones, open a booking link **inside** WhatsApp, Instagram and Facebook on iOS and Android and walk through booking, management, health form and check-in using staging; do it also once in Arabic (right-to-left) and once with an Arabic-Indic digit keyboard. Record failures with screenshots in `docs/PROGRESS.md` (Claude Code fixes them).
 
+Checklist added in S9 (`docs/agent-notes/s9-web.md`, `web.md` section 8): the page renders in the right language; a booking runs to the confirmation with the e-mail code; the `.ics` and Google links work or the "open in browser" note appears; the personal link copies; the check-in photo can be taken and chosen (camera and library) and previews; sheets open, trap focus and close with the back gesture; no horizontal scroll at 320 px; Arabic mirrors; largest text sizes; Low Power Mode; private mode (storage blocked) still books; WhatsApp links open the app; whether Safari's console prints the WebKit `<select>` CSP line on the "you" step (cosmetic if so); **a waiting-list offer link sent from the app opens on her details with the kept time; after she goes online, the health form on the page shows her own questions in her language** (the app publishes it since S9).
+
 ### H9 · Google Calendar (optional)
 Create an OAuth client in Google Cloud for the app and complete Google's verification; until then the `Integrations` row says "coming soon". Not required for v1.
 

@@ -457,26 +457,26 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 7.11 | States | S6 | done | shared States |
 | 7.8 | ExportAll | S10 | done | `AccountAuditUITests` |
 | 7.9 | RecoveryKey | S10 | done | `AccountUITests` (reveal, confirm, restore) |
-| 8.1 | Bk-1-Page | S9 | todo |  |
-| 8.2 | Bk-2-Service | S9 | todo |  |
-| 8.3 | Bk-3-Professional | S9 | todo | Route exists and redirects (no team in v1) |
-| 8.4 | Bk-4-DateTime | S9 | todo |  |
-| 8.5 | Bk-5-Info | S9 | todo |  |
-| 8.6 | Bk-6-Verify | S9 | todo |  |
-| 8.7 | Bk-7-Questions | S9 | todo |  |
-| 8.8 | Bk-8-Confirmed | S9 | todo |  |
-| 8.9 | Bk-9-Appointment | S9 | todo |  |
-| 8.10 | Bk-10-Review | S9 | todo |  |
-| 8.11 | Bk-11-Find | S9 | todo |  |
-| 9.1 | Cl-1-Reminder | S9 | todo | Picture of a WhatsApp message (message templates), not a web page |
-| 9.2 | Cl-2-Portal | S9 | todo |  |
-| 9.3 | Cl-3-Rebook | S9 | todo |  |
-| 9.4 | Cl-4-Intake | S9 | todo |  |
-| 9.5 | Cl-5-CheckIn | S9 | todo |  |
-| 9.6 | Cl-6-Cancel | S9 | todo |  |
-| 9.7 | Cl-7-MyData | S9 | todo |  |
-| 9.8 | Cl-8-Reminder | S9 | todo | Picture of a WhatsApp message (message templates), not a web page |
-| 9.9 | Cl-9-Reschedule | S9 | todo |  |
+| 8.1 | Bk-1-Page | S9 | done | `booking.spec` (pause, approval notice), `languages`, `a11y`; S9 added the approval notice |
+| 8.2 | Bk-2-Service | S9 | done | `booking.spec` @core (add-on + guest count) |
+| 8.3 | Bk-3-Professional | S9 | done | Route exists and redirects (no team in v1) |
+| 8.4 | Bk-4-DateTime | S9 | done | `booking.spec` (taken, waitlist, **offer link `?offer=`**, S9), `interaction` |
+| 8.5 | Bk-5-Info | S9 | done | booking flows, `rtl` |
+| 8.6 | Bk-6-Verify | S9 | done | e-mail code only (D46); `booking.spec` |
+| 8.7 | Bk-7-Questions | S9 | done | optional note only (D45) |
+| 8.8 | Bk-8-Confirmed | S9 | done | `booking.spec` (ICS/Google D50, health card by `intakeRequired`, S9) |
+| 8.9 | Bk-9-Appointment | S9 | done | `manage.spec` |
+| 8.10 | Bk-10-Review | S9 | done | `booking.spec` (approval, no-show) |
+| 8.11 | Bk-11-Find | S9 | done | `booking.spec` (e-mail + code) |
+| 9.1 | Cl-1-Reminder | S9 | done | Picture of a WhatsApp message (message templates), not a web page; destinations exist |
+| 9.2 | Cl-2-Portal | S9 | done | `portal.spec` (D52: no form links) |
+| 9.3 | Cl-3-Rebook | S9 | done | `portal.spec` |
+| 9.4 | Cl-4-Intake | S9 | done | `sealed.spec`, vectors both ways; S9: the app now publishes her form (`PublishIntakePayloadTests`) |
+| 9.5 | Cl-5-CheckIn | S9 | done | `sealed.spec`; S9: the app reads the sent time (`PayloadInstant`) |
+| 9.6 | Cl-6-Cancel | S9 | done | `manage.spec`, e2e-local |
+| 9.7 | Cl-7-MyData | S9 | done | `sealed.spec`; label "Health form" (D55) |
+| 9.8 | Cl-8-Reminder | S9 | done | Picture of a WhatsApp message (message templates), not a web page; destination `/m/{token}` |
+| 9.9 | Cl-9-Reschedule | S9 | done | `manage.spec`, e2e-local |
 
 ## Pull request text for phase A (S0 to S2), to open into `main`
 `gh` is not logged in (H17), so open it at https://github.com/mfmansueli/BelloHub/pull/new/build/v1 with this body:
