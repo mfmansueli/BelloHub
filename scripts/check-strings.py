@@ -175,6 +175,32 @@ def check_final(catalog, errors):
     print("awaiting reviewers: " + ", ".join(f"{language} {len(keys)}" for language, keys in sorted(pending.items())))
 
 
+def check_docs_strings(errors):
+    """docs/strings: the glossary has a term in every localization, and the message templates have every kind in
+    every localization with the same placeholders as English (docs/07-LOCALIZATION.md sections 4 and 6)."""
+    import csv
+    import json
+    folder = os.path.join(lib.ROOT, "docs", "strings")
+    with open(os.path.join(folder, "glossary.csv"), encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            for language in lib.LOCALIZATIONS:
+                if not (row.get(language) or "").strip():
+                    errors.append(f"glossary: '{row['key']}' has no {language} term")
+    with open(os.path.join(folder, "message-templates.json"), encoding="utf-8") as handle:
+        locales = json.load(handle)["locales"]
+    english = locales.get(lib.SOURCE_LANGUAGE, {}).get("messages", {})
+    for language in lib.LOCALIZATIONS:
+        messages = locales.get(language, {}).get("messages")
+        if messages is None:
+            errors.append(f"message-templates: {language} is missing")
+            continue
+        for kind, text in english.items():
+            if kind not in messages:
+                errors.append(f"message-templates: {language} has no '{kind}'")
+            elif sorted(set(re.findall(r"\{\w+\}", messages[kind]))) != sorted(set(re.findall(r"\{\w+\}", text))):
+                errors.append(f"message-templates: {language} '{kind}' placeholders differ from English")
+
+
 def namespaces(keys):
     return {key.split(".")[0] for key in keys}
 
@@ -206,6 +232,7 @@ def main():
         check_catalog(lib.load_catalog(lib.INFOPLIST_CATALOG), "InfoPlist", errors)
     check_code(catalog, errors)
     check_style(catalog, errors)
+    check_docs_strings(errors)
     if os.path.exists(lib.INFOPLIST_CATALOG):
         check_style(lib.load_catalog(lib.INFOPLIST_CATALOG), errors)
     if "--final" in sys.argv:
