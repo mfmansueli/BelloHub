@@ -32,6 +32,20 @@ final class PerformanceUITests: XCTestCase {
         }
     }
 
+    /// The same launch with nothing to seed (first screen: Welcome), to separate the app's own start from the UI-test
+    /// seeding that `testColdStartToHome` includes.
+    func testColdStartToWelcome() {
+        let options = XCTMeasureOptions()
+        options.iterationCount = 5
+        measure(metrics: [XCTApplicationLaunchMetric(waitUntilResponsive: true)], options: options) {
+            let app = XCUIApplication()
+            app.launchArguments += ["-uiTesting"]
+            app.launch()
+            _ = app.buttons["welcome.phoneButton"].waitForExistence(timeout: 20)
+            app.terminate()
+        }
+    }
+
     /// Budget: the list of 2,000 clients scrolls with no hitch over 8 ms.
     func testScrollingTwoThousandClients() {
         let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded", "-uiPerfClients", "2000"])
