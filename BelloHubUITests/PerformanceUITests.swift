@@ -76,9 +76,13 @@ final class PerformanceUITests: XCTestCase {
             "-uiSeed", "clientWithHealth", "-uiPerfPhotos", "200", "-uiRoute", "recordHistory"
         ])
         XCTAssertTrue(app.element("recordHistory.overview").waitForExistence(timeout: 120), "no record history")
+        // The screen may load before the 200 photos are seeded: pull to refresh until the timeline is there.
         let timeline = app.element("recordHistory.timeline")
+        for _ in 0..<12 where !timeline.waitForExistence(timeout: 5) {
+            app.element("recordHistory.overview").swipeDown()
+        }
         for _ in 0..<6 where !timeline.isHittable { app.element("recordHistory.overview").swipeUp() }
-        XCTAssertTrue(timeline.waitForExistence(timeout: 10), "no photo timeline")
+        XCTAssertTrue(timeline.exists, "no photo timeline")
         let options = XCTMeasureOptions()
         options.iterationCount = 3
         measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
