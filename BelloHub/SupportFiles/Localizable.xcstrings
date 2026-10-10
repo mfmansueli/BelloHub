@@ -21452,7 +21452,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelar e invitar a reprogramar"
+            "value" : "Cancelar e invitar a pedir otra cita"
           }
         },
         "es-419" : {
@@ -22610,7 +22610,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was jede Kundschaft erhält"
+            "value" : "Was jede Person erhält"
           }
         },
         "en" : {
@@ -32588,7 +32588,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Niente in programma oggi. Tocca un'ora libera per aggiungere un appuntamento."
+            "value" : "Niente in programma in questo giorno. Tocca un'ora libera per aggiungere un appuntamento."
           }
         },
         "pt-BR" : {
@@ -34220,7 +34220,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Desmarcar marcação"
+            "value" : "Desmarcar"
           }
         },
         "tr" : {
@@ -141758,7 +141758,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mit %@ abgeglichen: keine Gegenanzeigen im Gesundheitsbogen."
+            "value" : "Mit %@ abgeglichen: keine Kontraindikationen im Gesundheitsfragebogen."
           }
         },
         "en" : {
@@ -141938,7 +141938,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ohne Gesundheitsbogen konnten die Gegenanzeigen von %@ nicht geprüft werden."
+            "value" : "Ohne Gesundheitsfragebogen konnten die Kontraindikationen von %@ nicht geprüft werden."
           }
         },
         "en" : {
@@ -142208,7 +142208,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch kein Gesundheitsbogen vorhanden."
+            "value" : "Noch kein Gesundheitsfragebogen vorhanden."
           }
         },
         "en" : {
@@ -159254,7 +159254,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elle a peut-être été supprimée. Revenez à la liste."
+            "value" : "Ce profil a peut-être été supprimé. Revenez à la liste."
           }
         },
         "hi" : {
@@ -166334,7 +166334,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundschaft informieren"
+            "value" : "Person informieren"
           }
         },
         "en" : {
@@ -172364,7 +172364,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ hat Gegenanzeigen, die zu prüfen sind."
+            "value" : "Für %@ sind Kontraindikationen zu prüfen."
           }
         },
         "en" : {
@@ -173300,7 +173300,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le dernier test d'allergie de %@ a montré une réaction."
+            "value" : "Le dernier test cutané de %@ a montré une réaction."
           }
         },
         "hi" : {
@@ -173318,7 +173318,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "L'ultimo test di sensibilità di %@ ha mostrato una reazione."
+            "value" : "L'ultimo patch test di %@ ha mostrato una reazione."
           }
         },
         "pt-BR" : {
@@ -173480,7 +173480,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aucun test d'allergie enregistré pour %@."
+            "value" : "Aucun test cutané enregistré pour %@."
           }
         },
         "hi" : {
@@ -173498,7 +173498,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nessun test di sensibilità registrato per %@."
+            "value" : "Nessun patch test registrato per %@."
           }
         },
         "pt-BR" : {
@@ -174980,7 +174980,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Du siehst eine Warnung, wenn der Gesundheitsbogen passt. Eine Buchung wird nie verhindert."
+            "value" : "Du siehst eine Warnung, wenn der Gesundheitsfragebogen passt. Eine Buchung wird nie verhindert."
           }
         },
         "en" : {
@@ -177536,7 +177536,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Demandez aux nouvelles personnes un test d'allergie au moins %@ à l'avance"
+            "value" : "Demandez aux nouvelles personnes un test cutané au moins %@ à l'avance"
           }
         },
         "hi" : {
@@ -177554,7 +177554,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Chiedi alle persone nuove un test di sensibilità con almeno %@ di anticipo"
+            "value" : "Chiedi alle persone nuove un patch test con almeno %@ di anticipo"
           }
         },
         "pt-BR" : {
