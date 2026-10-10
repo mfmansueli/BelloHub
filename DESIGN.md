@@ -215,7 +215,8 @@ the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX
 | 6.14 FormTemplates | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*` |
 | 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
 | 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
-| 2.4 Alerts (local part) | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` is pure) | `alerts.*` |
+| 2.4 Alerts | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` and `InboxAlerts` are pure) | `alerts.*`, `alerts.request.<bookingId>[.action]`, `alerts.reschedule.<requestId>[.action]`, `alerts.waitlist[.action]` |
+| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
 | 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
 | 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
 | 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
@@ -253,7 +254,7 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
     ├── Calendar  → CalendarView (day | week) → Appointment → SessionPlan · NoShowHistory; WeekGlance
     │                (sheets through `AgendaSheet`: NewAppointment, Reschedule, BlockTime, BeforeYouStart, Cancel,
     │                MessageClient, NoShowMark, RunningLate, ClientMessage)
-    ├── Alerts    → AlertsView
+    ├── Alerts    → AlertsView → BookingRequest (sheet: Paywall; → NoShowHistory) · RescheduleRequest · Waitlist
     └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
                      Clients (Record fields, Forms, Tags), Messages (Quick replies; S5),
                      Preferences (Plan, Notifications, Integrations, Privacy → Recovery key · Export all · Legal notice,
@@ -363,6 +364,30 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - Identifiers: `health.addConsentButton`, `health.consent.<uuid>`, `health.consent.empty`, `health.consent.footnote`,
   `consent.{closeButton,kind.<kind>,labelField,signedToggle,datePicker,noteField,addPhotoButton,addFileButton,
   removeDocumentButton,documentPreview,preparingDocument,deleteButton,deleteConfirmButton,error,saveButton}`.
+
+### Changes from the prototype (S8 inbox: 2.9, 2.10, 2.11)
+
+- **Entry**: the three screens are pushed from cards at the top of Alerts ("Waiting for your answer"): one card per
+  booking request (rose when the no-show limit holds it), one per reschedule request, and one Waitlist card ("A time
+  opened up" when a cancelled time can be offered, with the number of people waiting).
+- **2.10 BookingRequest**: the reason it waits is a notice per `PendingReason` (no-show limit: coral, with "See history"
+  when the phone matches one of her clients; free registrations used: amber; new client: sage). "Start the count from
+  zero" only for the no-show limit, sent before the approval. Approving when a plan is needed shows an amber notice
+  with "See plans" (the paywall sheet, D42); she approves again after buying. **"Suggest another time" is not built**:
+  the server has no counter-offer call; she can decline and message the client.
+- **2.11 RescheduleRequest**: "Now" (struck through while the request is open) and "Asks for"; the primary button
+  says "Move the visit" (not the weekday name, which needs grammar per language); the timing notice says how long
+  before the visit the client asked and her free-change rule, shown only when the request came inside the window;
+  a time taken in the meantime leaves Decline only. "Suggest another time" is not built (same reason).
+- **2.9 Waitlist**: the hero is the earliest future cancellation nobody re-booked ("Freed by", time, day and service,
+  length and end); "Waiting for this day" lists people whose days cover it, each with Offer (chip style) or "Offered
+  until"; "Also waiting" lists the rest; "Offer to everyone" (primary, bottom bar) offers in order and stops when
+  the time is taken. Remove is in the row's context menu and VoiceOver actions (no swipe inside a card). The
+  prototype's "Cancels often" chip is not built (no cancellation history on the server's waitlist entry).
+- **States**: requests show a skeleton until the first sync, an empty state when the request is gone, "Sending your
+  answer…" (or "Saved. It is sent as soon as you are online.") while queued, and an outcome notice after; the waitlist
+  has a skeleton, an empty state, an offer error (offers are never queued) and a taken-time notice.
+- No new tokens.
 
 ## Empty, loading and error states
 

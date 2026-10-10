@@ -47,9 +47,12 @@ struct AlertCard<Action: View>: View {
                     .frame(width: 36, height: 36)
                     .background(tone.wash, in: Circle())
                     .accessibilityHidden(true)
+                // Grows to fit every line: a long name and a long weekday (pt-BR, de) take three lines.
                 VStack(alignment: .leading, spacing: Spacing.xs) {
                     title.font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                        .fixedSize(horizontal: false, vertical: true)
                     message.font(Typography.meta).foregroundStyle(Palette.ink2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)
             }
