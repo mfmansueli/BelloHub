@@ -18,7 +18,7 @@ struct AvailabilityFreeSlotsTests {
     ) -> [String] {
         let request = FreeSlotsRequest(
             day: TestClock.date("\(day) 12:00", zone: zone), durationMinutes: minutes, now: now, settings: settings,
-            appointments: appointments, stepMinutes: 30
+            appointments: appointments.map { TimedInterval($0) }, stepMinutes: 30
         )
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")

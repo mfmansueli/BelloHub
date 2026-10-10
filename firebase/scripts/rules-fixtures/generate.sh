@@ -21,7 +21,13 @@ swiftc -O -module-name RulesFixtures -o "$WORK/generate" \
     "$HERE/main.swift" \
     "$MODELS/Common/PersistedEnum.swift" \
     "$MODELS/Agenda/FreeSlotsCalculator.swift" \
+    "$MODELS/Agenda/FreeSlotsCalculator+Day.swift" \
+    "$MODELS/Agenda/FreeSlotsCalculator+Segments.swift" \
+    "$MODELS/Agenda/FreeSlotsCalculator+Windows.swift" \
+    "$MODELS/Agenda/FreeSlotsPlan.swift" \
     "$MODELS/Agenda/FreeSlotsRequest.swift" \
+    "$MODELS/Agenda/TimedInterval.swift" \
+    "$MODELS/Agenda/VisitTiming.swift" \
     "$MODELS/Business/AvailabilitySettings.swift" \
     "$MODELS/Business/AvailabilityRule.swift" \
     "$MODELS/Business/BreakRule.swift" \

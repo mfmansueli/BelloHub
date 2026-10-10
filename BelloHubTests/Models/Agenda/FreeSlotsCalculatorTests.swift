@@ -19,7 +19,7 @@ struct FreeSlotsCalculatorTests {
     ) -> [Date] {
         FreeSlotsCalculator.slots(for: FreeSlotsRequest(
             day: day ?? thursday, durationMinutes: minutes, now: now, settings: settings,
-            appointments: appointments, blocks: blocks, stepMinutes: step
+            appointments: appointments.map { TimedInterval($0) }, blocks: blocks, stepMinutes: step
         ))
     }
 

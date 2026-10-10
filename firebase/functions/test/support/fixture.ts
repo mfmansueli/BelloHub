@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import type { AvailabilitySettings } from '../../src/lib/freeSlots.js';
+import type { AvailabilitySettings, VisitTiming } from '../../src/lib/freeSlots.js';
 import type { CancellationPolicy } from '../../src/lib/rules.js';
 
 /** One case of the shared rules fixture, produced by running the iOS Swift rule types (scripts/rules-fixtures). */
@@ -13,10 +13,17 @@ export interface FreeSlotsCase {
     durationMinutes: number;
     stepMinutes: number;
     settings: AvailabilitySettings;
-    appointments: [string, string][];
+    /** A third element is the visit's extra and processing time (D56). */
+    appointments: ([string, string] | [string, string, VisitTiming])[];
     blocks: [string, string][];
+    timing: VisitTiming;
+    compact: boolean;
+    shortestOfferMinutes: number;
   };
+  /** Every free start. */
   expected: string[];
+  /** The starts shown first (D56 compact day). */
+  recommended: string[];
 }
 
 export interface CancellationCase {

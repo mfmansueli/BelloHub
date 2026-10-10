@@ -31,7 +31,7 @@ enum OpenTimes {
         }
         return FreeSlotsCalculator.slots(for: FreeSlotsRequest(
             day: day, durationMinutes: max(request.durationMinutes, 1), now: request.now, settings: settings,
-            appointments: held.map(\.interval), blocks: request.blocks.map(\.interval),
+            appointments: held.map { TimedInterval($0.interval) }, blocks: request.blocks.map(\.interval),
             stepMinutes: request.stepMinutes
         ))
     }

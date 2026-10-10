@@ -6,44 +6,46 @@
 import Foundation
 
 /// The free start times of a day: availability minus visits, breaks, days off, blocks and the buffer, in the
-/// **business** time zone, correct on daylight-saving change days (docs/05-DATA-MODEL.md, "FreeSlots").
-/// The same table tests are run against the server's `functions/src/lib/rules.ts` so the two cannot drift.
+/// **business** time zone, correct on daylight-saving change days (docs/05-DATA-MODEL.md, "FreeSlots"), with the
+/// smart slots of D56: starts anchored against every visit, break, block and stretch edge, the extra and processing
+/// time of each visit, and the compact-day ranking.
+/// `functions/src/lib/freeSlots.ts` mirrors it line by line; the shared fixture generated from this code
+/// (firebase/scripts/rules-fixtures) fails a server test when the two drift.
 enum FreeSlotsCalculator {
+    /// Anchored starts are rounded inwards to this clock, so a client never sees 10:17.
+    static let anchorRoundingMinutes = 5
+
     static func slots(for request: FreeSlotsRequest) -> [Date] {
+        plan(for: request).all
+    }
+
+    static func plan(for request: FreeSlotsRequest) -> FreeSlotsPlan {
         let settings = request.settings
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = settings.timeZone
         let dayStart = calendar.startOfDay(for: request.day)
         guard let nextDayStart = calendar.date(byAdding: .day, value: 1, to: dayStart),
-              isBookableDay(dayStart, request: request, calendar: calendar) else { return [] }
+              isBookableDay(dayStart, request: request, calendar: calendar) else { return .empty }
 
         let weekday = calendar.component(.weekday, from: dayStart)
         let breaks = settings.breaks
             .filter { $0.weekday == nil || $0.weekday == weekday }
             .compactMap { interval(startMinutes: $0.startMinutes, endMinutes: $0.endMinutes, dayStart: dayStart,
                                    nextDayStart: nextDayStart, calendar: calendar) }
-        let buffer = TimeInterval(settings.bufferMinutes * 60)
-        let earliest = request.now.addingTimeInterval(TimeInterval(settings.minNoticeHours * 3600))
-        let duration = TimeInterval(request.durationMinutes * 60)
-        let step = TimeInterval(max(request.stepMinutes, 1) * 60)
+        let day = Day(request: request, breaks: breaks)
 
-        var starts: Set<Date> = []
+        var all: Set<Date> = []
+        var recommended: Set<Date> = []
         for rule in settings.weekly where rule.weekday == weekday {
             guard let window = interval(startMinutes: rule.startMinutes, endMinutes: rule.endMinutes,
                                         dayStart: dayStart, nextDayStart: nextDayStart, calendar: calendar) else {
                 continue
             }
-            var start = window.start
-            while start.addingTimeInterval(duration) <= window.end {
-                let candidate = DateInterval(start: start, duration: duration)
-                if start >= earliest, fits(candidate, breaks: breaks, appointments: request.appointments,
-                                           blocks: request.blocks, buffer: buffer) {
-                    starts.insert(start)
-                }
-                start = start.addingTimeInterval(step)
-            }
+            let placements = day.placements(in: window)
+            all.formUnion(placements.map(\.start))
+            recommended.formUnion(day.isRanked ? compactStarts(placements) : placements.map(\.start))
         }
-        return starts.sorted()
+        return FreeSlotsPlan(all: all.sorted(), recommended: recommended.sorted())
     }
 
     // MARK: - Private
@@ -71,17 +73,5 @@ enum FreeSlotsCalculator {
         if minutes >= 24 * 60 { return nextDayStart }
         return calendar.date(bySettingHour: minutes / 60, minute: minutes % 60, second: 0, of: dayStart,
                              matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .forward)
-    }
-
-    private static func fits(_ candidate: DateInterval, breaks: [DateInterval], appointments: [DateInterval],
-                             blocks: [DateInterval], buffer: TimeInterval) -> Bool {
-        let blocked = breaks + blocks
-        if blocked.contains(where: { overlaps(candidate, $0, margin: 0) }) { return false }
-        return !appointments.contains { overlaps(candidate, $0, margin: buffer) }
-    }
-
-    /// Two stretches overlap if the gap between them is smaller than `margin`.
-    private static func overlaps(_ first: DateInterval, _ second: DateInterval, margin: TimeInterval) -> Bool {
-        first.start < second.end.addingTimeInterval(margin) && first.end.addingTimeInterval(margin) > second.start
     }
 }

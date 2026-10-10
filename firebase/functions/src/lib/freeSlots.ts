@@ -173,7 +173,7 @@ export function planSlots(request: FreeSlotsRequest): SlotPlan {
       const own = segmentsOf(start, start + duration, timing);
       if (own.some((mine) => visits.some((other) => conflicts(mine, other, buffer)))) continue;
       all.add(start);
-      placements.push(placement(start, outer, window, Math.max(window.start, earliest), obstacles, buffer, shortest));
+      placements.push(placement(start, outer, window, obstacles, buffer, shortest));
     }
     for (const start of ranked ? compactStarts(placements) : placements.map((value) => value.start)) recommended.add(start);
   }
@@ -201,12 +201,12 @@ function placement(
   start: number,
   outer: Segment,
   window: Interval,
-  floor: number,
   obstacles: Segment[],
   buffer: number,
   shortest: number
 ): Placement {
-  let previous = floor;
+  // The minimum notice is not an edge: time that has passed is lost whichever start she gets, so it hides nothing.
+  let previous = window.start;
   let next = window.end;
   for (const segment of obstacles) {
     if (segment.end <= outer.start) previous = Math.max(previous, segment.end + (segment.bufferedEnd ? buffer : 0));

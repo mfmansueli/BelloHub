@@ -54,6 +54,11 @@ struct SlotCase {
     var horizon = 60
     var appointments: [DateInterval] = []
     var blocks: [DateInterval] = []
+    // D56
+    var appointmentTimings: [VisitTiming] = []
+    var timing = VisitTiming.noExtraTime
+    var compact = false
+    var shortest = 0
 }
 
 func mariasWeek(
@@ -79,12 +84,19 @@ func slotJSON(_ test: SlotCase) -> [String: Any] {
         bufferMinutes: test.buffer, minNoticeHours: test.notice, maxDaysAhead: test.horizon,
         timeZoneID: timeZone.identifier
     )
+    let timed = test.appointments.enumerated().map { index, value in
+        TimedInterval(value, timing: index < test.appointmentTimings.count ? test.appointmentTimings[index] : .noExtraTime)
+    }
     let request = FreeSlotsRequest(
         day: local("\(test.dayLocal) 12:00", test.zoneID), durationMinutes: test.minutes, now: test.now,
-        settings: settings, appointments: test.appointments, blocks: test.blocks, stepMinutes: test.step
+        settings: settings, appointments: timed, blocks: test.blocks, stepMinutes: test.step,
+        timing: test.timing, compact: test.compact, shortestOfferMinutes: test.shortest
     )
-    let slots = FreeSlotsCalculator.slots(for: request).map(iso)
+    let plan = FreeSlotsCalculator.plan(for: request)
     func interval(_ value: DateInterval) -> [String] { [iso(value.start), iso(value.end)] }
+    func visit(_ value: TimedInterval) -> [Any] {
+        value.timing.isPlain ? interval(value.interval) : interval(value.interval) + [timingJSON(value.timing)]
+    }
     return [
         "name": test.name,
         "input": [
@@ -106,11 +118,20 @@ func slotJSON(_ test: SlotCase) -> [String: Any] {
                 "maxDaysAhead": test.horizon,
                 "timeZoneID": test.zoneID
             ],
-            "appointments": test.appointments.map(interval),
-            "blocks": test.blocks.map(interval)
+            "appointments": timed.map(visit),
+            "blocks": test.blocks.map(interval),
+            "timing": timingJSON(test.timing),
+            "compact": test.compact,
+            "shortestOfferMinutes": test.shortest
         ],
-        "expected": slots
+        "expected": plan.all.map(iso),
+        "recommended": plan.recommended.map(iso)
     ]
+}
+
+func timingJSON(_ timing: VisitTiming) -> [String: Int] {
+    ["prepMinutes": timing.prepMinutes, "cleanupMinutes": timing.cleanupMinutes,
+     "processingStartMinutes": timing.processingStartMinutes, "processingMinutes": timing.processingMinutes]
 }
 
 var slotCases: [SlotCase] = []
@@ -250,6 +271,90 @@ slotCases.append(SlotCase(
     name: "Istanbul fixed UTC+3", zoneID: "Europe/Istanbul", now: local("2026-10-01 12:00", "Europe/Istanbul"),
     dayLocal: "2026-10-08", weekly: mariasWeek(), breaks: [lunch]
 ))
+
+// Every case above again with the day kept compact (D56), so the ranking is checked on DST days too.
+slotCases += slotCases.map { test in
+    var compact = test
+    compact.name += " (compact, shortest offer 30)"
+    compact.compact = true
+    compact.shortest = 30
+    return compact
+}
+
+// D56: the spec's morning 09:00 to 13:00, services of 30 and 75 minutes, buffer 10, with 0, 1 and 2 visits.
+let thursdayMorning = [AvailabilityRule(weekday: 5, startMinutes: 540, endMinutes: 780)]
+func at(_ clock: String, _ day: String = "2026-10-08", _ zoneID: String = saoPaulo) -> Date { local("\(day) \(clock)", zoneID) }
+func stretch(_ from: String, _ to: String, _ day: String = "2026-10-08", _ zoneID: String = saoPaulo) -> DateInterval {
+    DateInterval(start: at(from, day, zoneID), end: at(to, day, zoneID))
+}
+func morningCase(_ name: String, minutes: Int, step: Int = 15, visits: [DateInterval] = [],
+                 timings: [VisitTiming] = [], timing: VisitTiming = .noExtraTime, compact: Bool = true,
+                 shortest: Int = 30, blocks: [DateInterval] = []) -> SlotCase {
+    SlotCase(name: name, now: referenceNow, dayLocal: "2026-10-08", minutes: minutes, step: step,
+             weekly: thursdayMorning, buffer: 10, notice: 0, appointments: visits, blocks: blocks,
+             appointmentTimings: timings, timing: timing, compact: compact, shortest: shortest)
+}
+let oneVisit = [stretch("09:35", "10:05")]
+let twoVisits = [stretch("09:30", "10:00"), stretch("11:00", "12:15")]
+for minutes in [30, 75] {
+    for (label, visits) in [("no visit", [DateInterval]()), ("one visit", oneVisit), ("two visits", twoVisits)] {
+        for step in [15, 30, FreeSlotsRequest.matchServiceStep] {
+            slotCases.append(morningCase("D56 morning, \(minutes) min, \(label), step \(step)", minutes: minutes,
+                                         step: step, visits: visits))
+        }
+    }
+}
+slotCases.append(morningCase("D56 a 75 minute service anchored after a visit ending 10:05 on a 30 minute grid",
+                             minutes: 75, step: 30, visits: oneVisit))
+slotCases.append(morningCase("D56 every time in a gap leaves a dead fragment (honest fallback)", minutes: 30,
+                             visits: twoVisits))
+slotCases.append(morningCase("D56 a longer shortest offer makes more gaps dead", minutes: 30, visits: twoVisits,
+                             shortest: 45))
+slotCases.append(morningCase("D56 compact off shows every time", minutes: 30, visits: twoVisits, compact: false))
+slotCases.append(morningCase("D56 unknown shortest offer ranks nothing", minutes: 30, visits: twoVisits, shortest: 0))
+let colour = VisitTiming(processingStartMinutes: 30, processingMinutes: 45)
+slotCases.append(morningCase("D56 a visit inside another's processing time", minutes: 30,
+                             visits: [stretch("09:00", "10:30")], timings: [colour]))
+slotCases.append(morningCase("D56 an inner visit with prep inside processing time", minutes: 30,
+                             visits: [stretch("09:00", "10:30")], timings: [colour], timing: VisitTiming(prepMinutes: 5)))
+slotCases.append(morningCase("D56 a visit too long for the processing stretch", minutes: 50,
+                             visits: [stretch("09:00", "10:30")], timings: [colour]))
+slotCases.append(morningCase("D56 a new visit with processing wraps a short visit", minutes: 120,
+                             visits: [stretch("10:00", "10:20")], timing: VisitTiming(processingStartMinutes: 30,
+                                                                                         processingMinutes: 60)))
+slotCases.append(morningCase("D56 prep and clean-up of the new visit", minutes: 30,
+                             timing: VisitTiming(prepMinutes: 10, cleanupMinutes: 15)))
+slotCases.append(morningCase("D56 clean-up of a booked visit keeps the next one away", minutes: 30,
+                             visits: [stretch("09:00", "09:30")], timings: [VisitTiming(cleanupMinutes: 15)]))
+slotCases.append(morningCase("D56 match the service with prep and clean-up", minutes: 75,
+                             step: FreeSlotsRequest.matchServiceStep, timing: VisitTiming(prepMinutes: 5, cleanupMinutes: 5)))
+slotCases.append(morningCase("D56 anchors round to the 5 minute clock", minutes: 30, step: 60,
+                             visits: [stretch("09:00", "09:33")]))
+slotCases.append(morningCase("D56 anchors around a block (no buffer)", minutes: 45, step: 30,
+                             blocks: [stretch("10:10", "10:50")]))
+slotCases.append(morningCase("D56 a processing time that does not fit the visit is ignored", minutes: 30,
+                             visits: [stretch("09:00", "10:00")],
+                             timings: [VisitTiming(processingStartMinutes: 40, processingMinutes: 45)]))
+slotCases.append(SlotCase(
+    name: "D56 minimum notice hides nothing from the compact day", now: at("09:50"), dayLocal: "2026-10-08",
+    minutes: 30, step: 15, weekly: thursdayMorning, buffer: 10, notice: 0, compact: true, shortest: 30
+))
+slotCases.append(SlotCase(
+    name: "D56 two stretches with lunch between, compact", now: referenceNow, dayLocal: "2026-10-08", minutes: 75,
+    step: 15, weekly: mariasWeek(), breaks: [lunch], buffer: 10, notice: 0,
+    appointments: [stretch("10:05", "11:00"), stretch("15:00", "16:15")], compact: true, shortest: 30
+))
+// D56 on clock-change days: anchors are instants, so they land correctly across the gap and the repeated hour.
+for (zoneID, day) in [("Europe/Lisbon", "2026-03-29"), ("Europe/Lisbon", "2026-10-25"),
+                      ("America/New_York", "2026-03-08"), ("America/New_York", "2026-11-01")] {
+    slotCases.append(SlotCase(
+        name: "D56 a visit and processing on the change day \(zoneID) \(day)", zoneID: zoneID,
+        now: local("2026-02-01 12:00", zoneID), dayLocal: day, minutes: 45, step: 15,
+        weekly: [AvailabilityRule(weekday: 1, startMinutes: 0, endMinutes: 360)], buffer: 10, notice: 0, horizon: 365,
+        appointments: [stretch("00:20", "03:30", day, zoneID)], appointmentTimings: [colour], compact: true,
+        shortest: 30
+    ))
+}
 
 // MARK: - Cancellation
 
