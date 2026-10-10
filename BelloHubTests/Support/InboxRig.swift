@@ -34,10 +34,12 @@ struct InboxRig {
         )
     }
 
-    /// Starts the session and waits for the first sync.
+    /// Starts the session and waits for the first sync. The wait is longer than the default: it is a precondition, and
+    /// under the load of the whole Fast plan the first sync sometimes took more than 3 seconds, so a test went on with
+    /// an empty inbox (the WaitlistViewModel and RescheduleRequestViewModel flakes of 2026-10-10).
     func start() async {
         sync.startListening(userId: Self.userID)
-        await Wait.untilMain { !sync.isLoading && !sync.isSyncing }
+        await Wait.untilMain(timeout: .seconds(20)) { !sync.isLoading && !sync.isSyncing }
     }
 
     func cleanUp() {
