@@ -51,25 +51,29 @@ struct CameraStepView: View {
 
     // MARK: - Live
 
+    /// The preview and the note scroll above a pinned bar: at the largest text sizes in German the note and the button
+    /// need more height than the 3:4 preview leaves on a screen that does not scroll.
     private var live: some View {
-        VStack(spacing: Spacing.md) {
-            ZStack {
-                CameraPreview(camera: camera)
-                if showsGhost, let ghost = viewModel.ghostThumbnail(for: kind) {
-                    DataImage(data: ghost).opacity(0.35).allowsHitTesting(false).accessibilityHidden(true)
+        ScrollView {
+            VStack(spacing: Spacing.md) {
+                ZStack {
+                    CameraPreview(camera: camera)
+                    if showsGhost, let ghost = viewModel.ghostThumbnail(for: kind) {
+                        DataImage(data: ghost).opacity(0.35).allowsHitTesting(false).accessibilityHidden(true)
+                    }
                 }
+                .aspectRatio(3 / 4, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
+                .padding(.horizontal, Spacing.gutter)
+                .accessibilityLabel(Text("treatmentFlow.camera.preview"))
+                .accessibilityIdentifier("treatmentFlow.camera.preview")
+                Text("treatmentFlow.camera.private").font(Typography.meta).foregroundStyle(Palette.ink2)
+                    .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
             }
-            .aspectRatio(3 / 4, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
-            .padding(.horizontal, Spacing.gutter)
-            .accessibilityLabel(Text("treatmentFlow.camera.preview"))
-            .accessibilityIdentifier("treatmentFlow.camera.preview")
-            Text("treatmentFlow.camera.private").font(Typography.meta).foregroundStyle(Palette.ink2)
-                .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
-            Spacer(minLength: 0)
-            controls
+            .padding(.vertical, Spacing.md)
         }
-        .padding(.top, Spacing.md)
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaInset(edge: .bottom) { controls }
     }
 
     private var controls: some View {

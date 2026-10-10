@@ -18,11 +18,21 @@ Two gates in `scripts/test.sh` failed on `build/v1` before any simulator test ra
 
 ## Audit results (slice x locale)
 
-RESULTS_TABLE
+The slice agent stopped before filling this section; the runs were finished in S11 (2026-10-10, `build/v1`,
+see `docs/agent-notes/s11-localization.md` section 2). Every audit suite (Account, Appointment, BookingSetup,
+Calendar, Clients, Health, Home, Import, Inbox, More, Onboarding, Record, Services, TreatmentFlow) ran in its default
+localizations `en`, `pt-BR`, `de`, `ar`, `hi`, at the default size and at AX5, in one Full-plan run
+(`ONLY_TESTING` takes a comma-separated list now). 26 of 38 tests passed at once; the 12 that failed were fixed
+(below) and passed on the rerun.
 
 ## Fixes
 
-FIXES
+Product: recovery-key words in two columns (three cut "mountain"); readable accessibility label for the booking
+link (title + address); the treatment flow's bottom bar keeps its height (the German camera button was cut at AX5).
+German save button without the genitive placeholder ("Im Verlauf von %@ speichern"). Tests: a row taller than the
+screen (German at AX5) is flipped through its inner switch; a switch is scrolled above a pinned confirm button; the
+credentials preview button is brought clear of the floating tab bar; retries for the permissions Continue tap and the
+add-break search after a sheet; unlabeled zero-size elements are off screen in the booking-setup and health audits.
 
 ## New tests
 
@@ -34,8 +44,8 @@ visits) and 38 tests in seven suites: `AppointmentViewModelTests` (5), `BeforeYo
 
 ## Not done
 
-NOT_DONE
+Nothing from the audit scope.
 
 ## Exit checks
 
-EXIT_CHECKS
+See the S11 stage log in `docs/PROGRESS.md`.

@@ -474,6 +474,9 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   language's plural rules (`ClientTerm.countText`, Arabic six forms, German "Personen"), so the sentence needs no
   agreement.
 - **Chips** keep a one-line label on one line (`FlowLayout` places them at their natural size; "12 hr" wrapped before).
+- **5.8 Camera**: the preview and the "only saved in Bello" note scroll above the pinned bottom bar, and the bar
+  (`FlowBottomBar`) always keeps the height its buttons need; at AX5 in German the 3:4 preview squeezed the capture
+  button into one cut line. The booking link's accessibility label is the card title plus the address.
 - The client terms in the plural are tab titles, so they are short: generic plurals in pt, es, it, fr ("convidados",
   "alunos"), "Kundschaft", "Patienten" and "Schüler" in German; profession names are fields, not gendered job titles
   ("Kosmetik", "Cabelo", "Acconciatura", "Coiffure").

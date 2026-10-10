@@ -49,6 +49,14 @@ in es/pt/it; *check-in* stays as an anglicism in pt/it/fr/de (salons use it), no
   Devanagari, Arabic names; isolates only in Arabic; every email rendered); web `ics.test.ts` per locale file.
 - `scripts/import-strings.sh --self-test` (round trip on copies of the batches) in `test.sh fast`.
 
+- **The pt-BR, de and hi audit runs of S6 to S8, never finished, are done**, together with every other audit suite
+  (14 suites x `en`, `pt-BR`, `de`, `ar`, `hi` x default size and AX5; `docs/agent-notes/audits-s6-s8.md`). Real
+  problems found: recovery-key words cut in three columns, the booking link's bare address as accessibility label, the
+  German camera button squeezed into one line by the 3:4 preview at AX5; the rest were test-walk problems at AX5
+  (rows taller than the screen in German, a switch under a pinned confirm button, a button under the floating tab
+  bar).
+- The UI-test seed now gives the profile the `-uiLocale` language (More showed "Esthetician" in every localization).
+
 ## 3. Reviewer round trip
 
 Import used to write straight into `Localizable.xcstrings`, which the next merge overwrote, and `translated` could
