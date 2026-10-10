@@ -263,7 +263,7 @@
    "Aún sin %@",
    "Todavía sin %@",
    "Ancora senza %@",
-   "%@ : aucun pour l'instant",
+   "Pas encore de %@",
    "Noch keine %@",
    "Henüz %@ yok",
    "Belum ada %@",
@@ -981,27 +981,27 @@
     "other": "Every ~%lld weeks"
    },
    {
-    "one": "A cada ~%lld semana",
+    "one": "Mais ou menos toda semana",
     "other": "A cada ~%lld semanas"
    },
    {
-    "one": "A cada ~%lld semana",
+    "one": "Mais ou menos todas as semanas",
     "other": "A cada ~%lld semanas"
    },
    {
-    "one": "Cada ~%lld semana",
+    "one": "Más o menos cada semana",
     "other": "Cada ~%lld semanas"
    },
    {
-    "one": "Cada ~%lld semana",
+    "one": "Más o menos cada semana",
     "other": "Cada ~%lld semanas"
    },
    {
-    "one": "Ogni ~%lld settimana",
+    "one": "Più o meno ogni settimana",
     "other": "Ogni ~%lld settimane"
    },
    {
-    "one": "Chaque ~%lld semaine",
+    "one": "Environ chaque semaine",
     "other": "Toutes les ~%lld semaines"
    },
    {
@@ -1787,7 +1787,7 @@
    "Motivo (solo tú lo ves)",
    "Motivo (solo tú lo ves)",
    "Motivo (lo vedi solo tu)",
-   "Motif (visible par vous seul)",
+   "Motif (visible par vous uniquement)",
    "Grund (nur für dich sichtbar)",
    "Neden (yalnızca siz görürsünüz)",
    "Alasan (hanya kamu yang melihat)",
@@ -1820,9 +1820,9 @@
    "En tu página de reservas se lee: Escribe a %@ para reservar. Las citas existentes no se tocan.",
    "Nella tua pagina di prenotazione si legge: Scrivi a %@ per prenotare. Gli appuntamenti esistenti non vengono toccati.",
    "Sur votre page de réservation, le message est : Écrivez à %@ pour réserver. Les rendez-vous existants ne sont pas modifiés.",
-   "Auf Ihrer Buchungsseite steht: Bitte schreiben Sie %@, um zu buchen. Bestehende Termine bleiben unberührt.",
+   "Auf deiner Buchungsseite steht: Bitte schreiben Sie %@, um zu buchen. Bestehende Termine bleiben unberührt.",
    "Randevu sayfanızda şu yazar: Randevu için lütfen %@ ile mesajlaşın. Mevcut randevular değişmez.",
-   "Di halaman pemesanan Anda tertulis: Silakan kirim pesan ke %@ untuk memesan. Janji temu yang sudah ada tidak berubah.",
+   "Di halaman pemesananmu tertulis: Silakan kirim pesan ke %@ untuk memesan. Janji temu yang sudah ada tidak berubah.",
    "आपके बुकिंग पेज पर लिखा होता है: बुकिंग के लिए कृपया %@ को मैसेज करें। मौजूदा अपॉइंटमेंट में कोई बदलाव नहीं होता।",
    "تظهر في صفحة الحجز الرسالة: يرجى مراسلة %@ للحجز. المواعيد الحالية لا تتأثر."
   ],
@@ -2043,7 +2043,7 @@
    "Lo que quieres recordar sobre %@, con tus propias palabras. Solo tú lo ves.",
    "Lo que quieres recordar sobre %@, con tus propias palabras. Solo tú lo ves.",
    "Ciò che vuoi ricordare su %@, con le tue parole. Lo vedi solo tu.",
-   "Ce que vous voulez retenir de %@, avec vos propres mots. Vous seul le voyez.",
+   "Ce que vous voulez retenir de %@, avec vos propres mots. Visible par vous uniquement.",
    "Was du dir über %@ merken möchtest, in deinen eigenen Worten. Nur du siehst das.",
    "%@ hakkında hatırlamak istedikleriniz, kendi cümlelerinizle. Bunu yalnızca siz görürsünüz.",
    "Hal yang ingin kamu ingat tentang %@, dengan kata-kata kamu sendiri. Hanya kamu yang melihat ini.",

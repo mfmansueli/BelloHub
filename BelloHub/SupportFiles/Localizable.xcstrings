@@ -320,7 +320,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous vous êtes connectée avec Apple, alors Apple vous demande de confirmer encore une fois. Dès que c'est fait, votre compte est supprimé."
+            "value" : "Comme votre connexion passe par Apple, Apple vous demande de confirmer encore une fois. Dès que c’est fait, votre compte est supprimé."
           }
         },
         "hi" : {
@@ -482,25 +482,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu cuenta, tus clientas y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
+            "value" : "Tu cuenta, tus clientes y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu cuenta, tus clientas y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
+            "value" : "Tu cuenta, tus clientes y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu cuenta, tus clientas y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
+            "value" : "Tu cuenta, tus clientes y todas las fichas desaparecerán. Nada se elimina hasta que toques el botón de abajo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre compte, vos clientes et toutes les fiches disparaîtront. Rien n’est supprimé avant que vous touchiez le bouton ci-dessous."
+            "value" : "Votre compte, vos clients et toutes les fiches disparaîtront. Rien n’est supprimé avant que vous touchiez le bouton ci-dessous."
           }
         },
         "hi" : {
@@ -518,19 +518,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Il tuo account, le tue clienti e ogni scheda spariranno. Nulla viene rimosso finché non tocchi il pulsante qui sotto."
+            "value" : "Il tuo account, i tuoi clienti e ogni scheda spariranno. Nulla viene rimosso finché non tocchi il pulsante qui sotto."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sua conta, suas clientes e todas as fichas vão desaparecer. Nada é removido antes de você tocar no botão abaixo."
+            "value" : "Sua conta, seus clientes e todas as fichas vão desaparecer. Nada é removido antes de você tocar no botão abaixo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A sua conta, as suas clientes e todas as fichas vão desaparecer. Nada é removido antes de tocar no botão abaixo."
+            "value" : "A sua conta, os seus clientes e todas as fichas vão desaparecer. Nada é removido antes de tocar no botão abaixo."
           }
         },
         "tr" : {
@@ -932,25 +932,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas y fichas se han eliminado de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
+            "value" : "Tus clientes y fichas se han eliminado de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas y fichas se eliminaron de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
+            "value" : "Tus clientes y fichas se eliminaron de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas y fichas se eliminaron de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
+            "value" : "Tus clientes y fichas se eliminaron de este iPhone. Nuestro equipo cierra la parte de reservas de tu cuenta poco después."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos clientes et vos fiches ont été supprimées de cet iPhone. La partie réservation de votre compte est fermée par notre équipe peu après."
+            "value" : "Vos clients et vos fiches ont été supprimés de cet iPhone. La partie réservation de votre compte est fermée par notre équipe peu après."
           }
         },
         "hi" : {
@@ -968,19 +968,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le tue clienti e le schede sono state rimosse da questo iPhone. La parte prenotazioni del tuo account viene chiusa dal nostro team poco dopo."
+            "value" : "I tuoi clienti e le schede sono stati rimossi da questo iPhone. La parte prenotazioni del tuo account viene chiusa dal nostro team poco dopo."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Suas clientes e fichas foram removidas deste iPhone. A parte de agendamento da sua conta é encerrada pela nossa equipe logo depois."
+            "value" : "Seus clientes e fichas foram removidos deste iPhone. A parte de agendamento da sua conta é encerrada pela nossa equipe logo depois."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As suas clientes e fichas foram removidas deste iPhone. A parte de marcações da sua conta é encerrada pela nossa equipa pouco depois."
+            "value" : "Os seus clientes e fichas foram removidos deste iPhone. A parte de marcações da sua conta é encerrada pela nossa equipa pouco depois."
           }
         },
         "tr" : {
@@ -1022,25 +1022,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu espacio de trabajo, tus clientas y tus fichas se han eliminado de este iPhone, de tu iCloud y de Bello Hub."
+            "value" : "Tu espacio de trabajo, tus clientes y tus fichas se han eliminado de este iPhone, de tu iCloud y de Bello Hub."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu espacio de trabajo, tus clientas y tus fichas se eliminaron de este iPhone, de tu iCloud y de Bello Hub."
+            "value" : "Tu espacio de trabajo, tus clientes y tus fichas se eliminaron de este iPhone, de tu iCloud y de Bello Hub."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu espacio de trabajo, tus clientas y tus fichas se eliminaron de este iPhone, de tu iCloud y de Bello Hub."
+            "value" : "Tu espacio de trabajo, tus clientes y tus fichas se eliminaron de este iPhone, de tu iCloud y de Bello Hub."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre espace de travail, vos clientes et vos fiches ont été supprimés de cet iPhone, de votre iCloud et de Bello Hub."
+            "value" : "Votre espace de travail, vos clients et vos fiches ont été supprimés de cet iPhone, de votre iCloud et de Bello Hub."
           }
         },
         "hi" : {
@@ -1058,19 +1058,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Il tuo spazio di lavoro, le tue clienti e le tue schede sono stati rimossi da questo iPhone, dal tuo iCloud e da Bello Hub."
+            "value" : "Il tuo spazio di lavoro, i tuoi clienti e le tue schede sono stati rimossi da questo iPhone, dal tuo iCloud e da Bello Hub."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seu espaço de trabalho, suas clientes e suas fichas foram removidos deste iPhone, do seu iCloud e do Bello Hub."
+            "value" : "Seu espaço de trabalho, seus clientes e suas fichas foram removidos deste iPhone, do seu iCloud e do Bello Hub."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O seu espaço de trabalho, as suas clientes e as suas fichas foram removidos deste iPhone, do seu iCloud e do Bello Hub."
+            "value" : "O seu espaço de trabalho, os seus clientes e as suas fichas foram removidos deste iPhone, do seu iCloud e do Bello Hub."
           }
         },
         "tr" : {
@@ -1490,7 +1490,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cela supprime définitivement votre espace de travail, vos clientes, vos fiches et vos photos de cet iPhone, de votre iCloud et de Bello Hub. Exportez-les d’abord si vous avez besoin d’une copie."
+            "value" : "Cela supprime définitivement votre espace de travail, vos clients, vos fiches et vos photos de cet iPhone, de votre iCloud et de Bello Hub. Exportez-les d’abord si vous avez besoin d’une copie."
           }
         },
         "hi" : {
@@ -6260,7 +6260,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seulement si cet iPhone ne peut pas le faire seul. Demande d'abord à la cliente et ne garde rien."
+            "value" : "Seulement si cet iPhone ne peut pas le faire seul. Demande d’abord l’accord du client et ne garde rien."
           }
         },
         "hi" : {
@@ -23726,7 +23726,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous seul le voyez."
+            "value" : "Visible par vous uniquement."
           }
         },
         "hi" : {
@@ -29936,25 +29936,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas ven primero las horas que no dejan huecos demasiado cortos para reservar. Todas las horas libres siguen a un toque."
+            "value" : "Tus clientes ven primero las horas que no dejan huecos demasiado cortos para reservar. Todas las horas libres siguen a un toque."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas ven primero los horarios que no dejan huecos demasiado cortos para reservar. Todos los horarios libres siguen a un toque."
+            "value" : "Tus clientes ven primero los horarios que no dejan huecos demasiado cortos para reservar. Todos los horarios libres siguen a un toque."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas ven primero los horarios que no dejan huecos demasiado cortos para reservar. Todos los horarios libres siguen a un toque."
+            "value" : "Tus clientes ven primero los horarios que no dejan huecos demasiado cortos para reservar. Todos los horarios libres siguen a un toque."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos clientes voient d’abord les heures qui ne laissent aucun trou trop court pour réserver. Toutes les heures libres restent à portée de main."
+            "value" : "Vos clients voient d’abord les heures qui ne laissent aucun trou trop court pour réserver. Toutes les heures libres restent à portée de main."
           }
         },
         "hi" : {
@@ -29972,19 +29972,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le clienti vedono prima gli orari che non lasciano buchi troppo brevi da prenotare. Tutti gli orari liberi restano a un tocco."
+            "value" : "I clienti vedono prima gli orari che non lasciano buchi troppo brevi da prenotare. Tutti gli orari liberi restano a un tocco."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes veem primeiro os horários que não deixam buracos curtos demais para agendar. Todos os horários livres continuam a um toque."
+            "value" : "Os clientes veem primeiro os horários que não deixam buracos curtos demais para agendar. Todos os horários livres continuam a um toque."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes veem primeiro as horas que não deixam intervalos demasiado curtos para marcar. Todas as horas livres continuam a um toque."
+            "value" : "Os clientes veem primeiro as horas que não deixam intervalos demasiado curtos para marcar. Todas as horas livres continuam a um toque."
           }
         },
         "tr" : {
@@ -36626,7 +36626,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Enregistré comme annulation de la cliente, selon vos règles."
+            "value" : "Enregistré comme annulation du client, selon vos règles."
           }
         },
         "hi" : {
@@ -36806,7 +36806,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ne compte jamais contre la cliente."
+            "value" : "Ne compte jamais contre le client."
           }
         },
         "hi" : {
@@ -44252,7 +44252,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Auf Ihrer Buchungsseite steht: Bitte schreiben Sie %@, um zu buchen. Bestehende Termine bleiben unberührt."
+            "value" : "Auf deiner Buchungsseite steht: Bitte schreiben Sie %@, um zu buchen. Bestehende Termine bleiben unberührt."
           }
         },
         "en" : {
@@ -44300,7 +44300,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di halaman pemesanan Anda tertulis: Silakan kirim pesan ke %@ untuk memesan. Janji temu yang sudah ada tidak berubah."
+            "value" : "Di halaman pemesananmu tertulis: Silakan kirim pesan ke %@ untuk memesan. Janji temu yang sudah ada tidak berubah."
           }
         },
         "it" : {
@@ -44378,7 +44378,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Motif (visible par vous seul)"
+            "value" : "Motif (visible par vous uniquement)"
           }
         },
         "hi" : {
@@ -48338,7 +48338,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ce que vous voulez retenir de %@, avec vos propres mots. Vous seul le voyez."
+            "value" : "Ce que vous voulez retenir de %@, avec vos propres mots. Visible par vous uniquement."
           }
         },
         "hi" : {
@@ -51641,7 +51641,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Cada ~%lld semana"
+                  "value" : "Más o menos cada semana"
                 }
               },
               "other" : {
@@ -51659,7 +51659,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Cada ~%lld semana"
+                  "value" : "Más o menos cada semana"
                 }
               },
               "other" : {
@@ -51677,7 +51677,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Cada ~%lld semana"
+                  "value" : "Más o menos cada semana"
                 }
               },
               "other" : {
@@ -51695,7 +51695,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Chaque ~%lld semaine"
+                  "value" : "Environ chaque semaine"
                 }
               },
               "other" : {
@@ -51743,7 +51743,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Ogni ~%lld settimana"
+                  "value" : "Più o meno ogni settimana"
                 }
               },
               "other" : {
@@ -51761,7 +51761,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "A cada ~%lld semana"
+                  "value" : "Mais ou menos toda semana"
                 }
               },
               "other" : {
@@ -51779,7 +51779,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "A cada ~%lld semana"
+                  "value" : "Mais ou menos todas as semanas"
                 }
               },
               "other" : {
@@ -56000,7 +56000,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ : aucun pour l'instant"
+            "value" : "Pas encore de %@"
           }
         },
         "hi" : {
@@ -65972,25 +65972,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de tus clientas siguen siendo privados, solo tuyos."
+            "value" : "Los datos de tus clientes siguen siendo privados, solo tuyos."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de tus clientas siguen siendo privados, solo tuyos."
+            "value" : "Los datos de tus clientes siguen siendo privados, solo tuyos."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de tus clientas siguen siendo privados, solo tuyos."
+            "value" : "Los datos de tus clientes siguen siendo privados, solo tuyos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les données de vos clientes restent privées, à vous seule."
+            "value" : "Les données de vos clients restent privées, chez vous."
           }
         },
         "hi" : {
@@ -66008,19 +66008,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "I dati delle tue clienti restano privati, solo tuoi."
+            "value" : "I dati dei tuoi clienti restano privati, solo tuoi."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os dados das suas clientes continuam privados, só seus."
+            "value" : "Os dados dos seus clientes continuam privados, só com você."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os dados das suas clientes continuam privados, só seus."
+            "value" : "Os dados dos seus clientes continuam privados, só consigo."
           }
         },
         "tr" : {
@@ -66530,7 +66530,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Photos avant et après, dans des dossiers par cliente. Rend le fichier beaucoup plus lourd."
+            "value" : "Photos avant et après, dans des dossiers par client. Rend le fichier beaucoup plus lourd."
           }
         },
         "hi" : {
@@ -66872,25 +66872,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$lld clientas, %2$lld citas, %3$lld fichas"
+            "value" : "%1$lld clientes, %2$lld citas, %3$lld fichas"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$lld clientas, %2$lld citas, %3$lld fichas"
+            "value" : "%1$lld clientes, %2$lld citas, %3$lld fichas"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$lld clientas, %2$lld citas, %3$lld fichas"
+            "value" : "%1$lld clientes, %2$lld citas, %3$lld fichas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$lld clientes, %2$lld rendez-vous, %3$lld fiches"
+            "value" : "%1$lld clients, %2$lld rendez-vous, %3$lld fiches"
           }
         },
         "hi" : {
@@ -68240,7 +68240,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La cliente"
+            "value" : "Le client"
           }
         },
         "hi" : {
@@ -68330,7 +68330,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La copie de la cliente n'inclut jamais vos notes internes."
+            "value" : "La copie du client n’inclut jamais vos notes internes."
           }
         },
         "hi" : {
@@ -70220,7 +70220,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ · Dossier de la cliente"
+            "value" : "%@ · Dossier client"
           }
         },
         "hi" : {
@@ -70490,7 +70490,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Impossible d'ouvrir cette cliente. Réessayez."
+            "value" : "Impossible d’ouvrir ce profil. Réessayez."
           }
         },
         "hi" : {
@@ -70760,7 +70760,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ne partagez qu'avec la cliente ou un professionnel de santé qu'elle autorise."
+            "value" : "Ne partagez qu’avec le client ou un professionnel de santé qu’il autorise."
           }
         },
         "hi" : {
@@ -71120,7 +71120,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un PDF du dossier de la cliente à garder ou à partager."
+            "value" : "Un PDF du dossier client à garder ou à partager."
           }
         },
         "hi" : {
@@ -71300,7 +71300,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jamais dans la copie de la cliente"
+            "value" : "Jamais dans la copie du client"
           }
         },
         "hi" : {
@@ -71840,7 +71840,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Privées par défaut. La copie de la cliente ne contient que les photos partagées."
+            "value" : "Privées par défaut. La copie du client ne contient que les photos partagées."
           }
         },
         "hi" : {
@@ -84266,25 +84266,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comparte tu enlace de reservas o código QR desde Más, Página de reservas. Las clientas eligen un servicio y una hora; las nuevas aparecen en tu calendario."
+            "value" : "Comparte tu enlace de reserva o código QR desde Más, Página de reservas. Los clientes eligen un servicio y una hora; las nuevas citas aparecen en tu calendario."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comparte tu enlace de reservas o código QR desde Más, Página de reservas. Las clientas eligen un servicio y una hora; las nuevas aparecen en tu calendario."
+            "value" : "Comparte tu enlace de reserva o código QR desde Más, Página de reservas. Los clientes eligen un servicio y una hora; las nuevas citas aparecen en tu calendario."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comparte tu enlace de reservas o código QR desde Más, Página de reservas. Las clientas eligen un servicio y una hora; las nuevas aparecen en tu calendario."
+            "value" : "Comparte tu enlace de reserva o código QR desde Más, Página de reservas. Los clientes eligen un servicio y una hora; las nuevas citas aparecen en tu calendario."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partagez votre lien de réservation ou votre code QR depuis Plus, Page de réservation. Les clientes choisissent une prestation et un créneau ; les nouvelles apparaissent dans votre calendrier."
+            "value" : "Partagez votre lien de réservation ou votre code QR depuis Plus, Page de réservation. Vos clients choisissent une prestation et un créneau ; les nouveaux rendez-vous apparaissent dans votre calendrier."
           }
         },
         "hi" : {
@@ -84302,13 +84302,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Condividi il link per prenotare o il codice QR da Altro, Pagina di prenotazione. Le clienti scelgono un servizio e un orario; le nuove compaiono nel tuo calendario."
+            "value" : "Condividi il tuo link di prenotazione o il codice QR da Altro, Pagina di prenotazione. I clienti scelgono un servizio e un orario; i nuovi appuntamenti compaiono nella tua agenda."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compartilhe seu link de agendamento ou QR code em Mais, Página de agendamento. As clientes escolhem um serviço e um horário; as novas aparecem no seu calendário."
+            "value" : "Compartilhe seu link de agendamento ou QR code em Mais, Página de agendamento. Os clientes escolhem um serviço e um horário; os novos agendamentos aparecem na sua agenda."
           }
         },
         "pt-PT" : {
@@ -84356,25 +84356,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Cómo reservan conmigo mis clientas?"
+            "value" : "¿Cómo reservan conmigo mis clientes?"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Cómo reservan conmigo mis clientas?"
+            "value" : "¿Cómo reservan conmigo mis clientes?"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Cómo reservan conmigo mis clientas?"
+            "value" : "¿Cómo reservan conmigo mis clientes?"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comment mes clientes réservent-elles ?"
+            "value" : "Comment mes clients réservent-ils ?"
           }
         },
         "hi" : {
@@ -84392,19 +84392,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Come prenotano le clienti con me?"
+            "value" : "Come prenotano i clienti con me?"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Como as clientes agendam comigo?"
+            "value" : "Como os clientes agendam comigo?"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Como é que as clientes marcam comigo?"
+            "value" : "Como é que os clientes marcam comigo?"
           }
         },
         "tr" : {
@@ -84554,7 +84554,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Une cliente m’a demandé de supprimer ses données. Comment faire ?"
+            "value" : "Un client m’a demandé de supprimer ses données. Comment faire ?"
           }
         },
         "hi" : {
@@ -84806,25 +84806,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeras 10 clientas son gratis, sin importar cómo se añadan. Las clientas eliminadas siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
+            "value" : "Tus primeros 10 clientes son gratis, sin importar cómo se añadan. Los clientes eliminados siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeras 10 clientas son gratis, sin importar cómo se añadan. Las clientas eliminadas siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
+            "value" : "Tus primeros 10 clientes son gratis, sin importar cómo se añadan. Los clientes eliminados siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeras 10 clientas son gratis, sin importar cómo se añadan. Las clientas eliminadas siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
+            "value" : "Tus primeros 10 clientes son gratis, sin importar cómo se añadan. Los clientes eliminados siguen contando. Después, un plan elimina el límite; nada de lo que ya tienes se bloquea."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos 10 premières clientes sont gratuites, quelle que soit la façon de les ajouter. Les clientes supprimées comptent toujours. Ensuite, un forfait supprime la limite ; rien de ce que vous avez déjà n’est jamais bloqué."
+            "value" : "Vos 10 premiers clients sont gratuits, quelle que soit la façon de les ajouter. Les clients supprimés comptent toujours. Ensuite, un abonnement supprime la limite ; rien de ce que vous avez déjà n’est jamais bloqué."
           }
         },
         "hi" : {
@@ -84842,7 +84842,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le prime 10 clienti sono gratuite, comunque vengano aggiunte. Le clienti eliminate contano comunque. Dopo, un piano toglie il limite; niente di ciò che hai già viene bloccato."
+            "value" : "I primi 10 clienti sono gratuiti, comunque vengano aggiunti. I clienti eliminati contano comunque. Dopo, un piano toglie il limite; niente di ciò che hai già viene bloccato."
           }
         },
         "pt-BR" : {
@@ -84854,7 +84854,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As suas 10 primeiras clientes são gratuitas, independentemente de como forem adicionadas. As clientes eliminadas continuam a contar. Depois disso, um plano remove o limite; nada do que já tem é bloqueado."
+            "value" : "Os seus 10 primeiros clientes são gratuitos, independentemente de como forem adicionados. Os clientes eliminados continuam a contar. Depois disso, um plano remove o limite; nada do que já tem é bloqueado."
           }
         },
         "tr" : {
@@ -85184,7 +85184,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sur cet iPhone et dans votre iCloud privé, scellées pour que vous seule puissiez les lire. Les serveurs Bello Hub ne gardent que les réservations."
+            "value" : "Sur cet iPhone et dans votre iCloud privé, scellées pour n’être lisibles que par vous. Les serveurs Bello Hub ne gardent que les réservations."
           }
         },
         "hi" : {
@@ -85256,25 +85256,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Dónde se guardan las fichas de mis clientas?"
+            "value" : "¿Dónde se guardan las fichas de mis clientes?"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Dónde se guardan las fichas de mis clientas?"
+            "value" : "¿Dónde se guardan las fichas de mis clientes?"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¿Dónde se guardan las fichas de mis clientas?"
+            "value" : "¿Dónde se guardan las fichas de mis clientes?"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Où sont conservées les fiches de mes clientes ?"
+            "value" : "Où sont conservées les fiches de mes clients ?"
           }
         },
         "hi" : {
@@ -88160,7 +88160,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les autres nécessitent une offre. Vous pourrez en choisir une après cet import."
+            "value" : "Les autres nécessitent un abonnement. Vous pourrez le choisir après cet import."
           }
         },
         "hi" : {
@@ -91316,7 +91316,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%lld de plus nécessitent une offre"
+            "value" : "%lld de plus nécessitent un abonnement"
           }
         },
         "hi" : {
@@ -91406,7 +91406,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos fiches gratuites sont épuisées. Choisissez une offre pour ajouter les autres."
+            "value" : "Vos fiches gratuites sont épuisées. Choisissez un abonnement pour ajouter les autres."
           }
         },
         "hi" : {
@@ -92042,7 +92042,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Voir les offres"
+            "value" : "Voir les abonnements"
           }
         },
         "hi" : {
@@ -96278,7 +96278,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Impossible d'ouvrir cette cliente. Réessayez."
+            "value" : "Impossible d’ouvrir ce profil. Réessayez."
           }
         },
         "hi" : {
@@ -96458,7 +96458,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Faire un suivi avec la cliente"
+            "value" : "Reprendre contact avec le client"
           }
         },
         "hi" : {
@@ -96638,7 +96638,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rédigez une note claire et neutre de ce que la cliente a signalé ou de ce que vous avez vu."
+            "value" : "Rédigez une note claire et neutre de ce que le client a signalé ou de ce que vous avez constaté."
           }
         },
         "hi" : {
@@ -100400,25 +100400,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A tus clientas las llamas"
+            "value" : "A tus clientes los llamas"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A tus clientas las llamas"
+            "value" : "A tus clientes los llamas"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A tus clientas las llamas"
+            "value" : "A tus clientes los llamas"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos clientes s’appellent"
+            "value" : "Vos clients s’appellent"
           }
         },
         "hi" : {
@@ -100436,19 +100436,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le tue clienti si chiamano"
+            "value" : "I tuoi clienti si chiamano"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Suas clientes são chamadas de"
+            "value" : "Seus clientes são chamados de"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As suas clientes chamam-se"
+            "value" : "Os seus clientes chamam-se"
           }
         },
         "tr" : {
@@ -101480,25 +101480,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los precios solo se muestran. No se cobra nada en la app. Las clientas ven tu moneda escrita como su idioma escribe los números."
+            "value" : "Los precios solo se muestran. No se cobra nada en la app. Los clientes ven tu moneda escrita como su idioma escribe los números."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los precios solo se muestran. No se cobra nada en la app. Las clientas ven tu moneda escrita como su idioma escribe los números."
+            "value" : "Los precios solo se muestran. No se cobra nada en la app. Los clientes ven tu moneda escrita como su idioma escribe los números."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los precios solo se muestran. No se cobra nada en la app. Las clientas ven tu moneda escrita como su idioma escribe los números."
+            "value" : "Los precios solo se muestran. No se cobra nada en la app. Los clientes ven tu moneda escrita como su idioma escribe los números."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les tarifs sont seulement affichés. Rien n’est facturé dans l’app. Les clientes voient votre devise écrite comme leur langue écrit les nombres."
+            "value" : "Les tarifs sont seulement affichés. Rien n’est facturé dans l’app. Vos clients voient votre devise écrite comme leur langue écrit les nombres."
           }
         },
         "hi" : {
@@ -101516,19 +101516,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "I prezzi sono solo mostrati. Nulla viene addebitato nell’app. Le clienti vedono la tua valuta scritta come la loro lingua scrive i numeri."
+            "value" : "I prezzi sono solo mostrati. Nulla viene addebitato nell’app. I clienti vedono la tua valuta scritta come la loro lingua scrive i numeri."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os preços são só exibidos. Nada é cobrado no app. As clientes veem sua moeda escrita como o idioma delas escreve números."
+            "value" : "Os preços são só exibidos. Nada é cobrado no app. Os clientes veem sua moeda escrita como o idioma deles escreve números."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os preços são apenas apresentados. Nada é cobrado na app. As clientes veem a sua moeda escrita como o idioma delas escreve números."
+            "value" : "Os preços são apenas apresentados. Nada é cobrado na app. Os clientes veem a sua moeda escrita como o idioma deles escreve números."
           }
         },
         "tr" : {
@@ -101750,25 +101750,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensajes a tus clientas"
+            "value" : "Mensajes a tus clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensajes a tus clientas"
+            "value" : "Mensajes a tus clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensajes a tus clientas"
+            "value" : "Mensajes a tus clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Messages à vos clientes"
+            "value" : "Messages à vos clients"
           }
         },
         "hi" : {
@@ -101786,19 +101786,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Messaggi alle tue clienti"
+            "value" : "Messaggi ai tuoi clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensagens para suas clientes"
+            "value" : "Mensagens para seus clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensagens para as suas clientes"
+            "value" : "Mensagens para os seus clientes"
           }
         },
         "tr" : {
@@ -102020,25 +102020,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas eligen uno de estos en tu página. Tu idioma siempre está activo."
+            "value" : "Los clientes eligen uno de estos en tu página. Tu idioma siempre está activo."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas eligen uno de estos en tu página. Tu idioma siempre está activo."
+            "value" : "Los clientes eligen uno de estos en tu página. Tu idioma siempre está activo."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas eligen uno de estos en tu página. Tu idioma siempre está activo."
+            "value" : "Los clientes eligen uno de estos en tu página. Tu idioma siempre está activo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les clientes en choisissent une sur votre page. Votre langue est toujours active."
+            "value" : "Vos clients en choisissent une sur votre page. Votre langue est toujours active."
           }
         },
         "hi" : {
@@ -102056,19 +102056,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le clienti ne scelgono una sulla tua pagina. La tua lingua è sempre attiva."
+            "value" : "I clienti ne scelgono una sulla tua pagina. La tua lingua è sempre attiva."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes escolhem um destes na sua página. O seu idioma está sempre ativo."
+            "value" : "Os clientes escolhem um destes na sua página. O seu idioma está sempre ativo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes escolhem um destes na sua página. O seu idioma está sempre ativo."
+            "value" : "Os clientes escolhem um destes na sua página. O seu idioma está sempre ativo."
           }
         },
         "tr" : {
@@ -103190,25 +103190,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a las clientas."
+            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a los clientes."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a las clientas."
+            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a los clientes."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a las clientas."
+            "value" : "Cómo se leen la app, tu página de reservas y tus mensajes a los clientes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Comment se lisent l’app, votre page de réservation et vos messages aux clientes."
+            "value" : "Comment se lisent l’app, votre page de réservation et vos messages aux clients."
           }
         },
         "hi" : {
@@ -103226,19 +103226,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Come si leggono l’app, la tua pagina di prenotazione e i messaggi alle clienti."
+            "value" : "Come si leggono l’app, la tua pagina di prenotazione e i messaggi ai clienti."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Como o app, sua página de agendamento e suas mensagens às clientes aparecem."
+            "value" : "Como o app, sua página de agendamento e suas mensagens aos clientes aparecem."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Como a app, a sua página de marcações e as suas mensagens às clientes aparecem."
+            "value" : "Como a app, a sua página de marcações e as suas mensagens aos clientes aparecem."
           }
         },
         "tr" : {
@@ -104720,19 +104720,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Calendario"
+            "value" : "Agenda"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Calendario"
+            "value" : "Agenda"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Calendario"
+            "value" : "Agenda"
           }
         },
         "fr" : {
@@ -104756,7 +104756,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Calendario"
+            "value" : "Agenda"
           }
         },
         "pt-BR" : {
@@ -107348,7 +107348,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre forfait"
+            "value" : "Votre abonnement"
           }
         },
         "hi" : {
@@ -107528,7 +107528,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas encore de forfait"
+            "value" : "Pas encore d’abonnement"
           }
         },
         "hi" : {
@@ -113486,7 +113486,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous seule le voyez. Le client connaît votre règle sur votre page de réservation et peut vous demander de la revoir."
+            "value" : "Visible par vous uniquement. Le client connaît votre règle sur votre page de réservation et peut vous demander de la revoir."
           }
         },
         "hi" : {
@@ -120416,25 +120416,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cumpleaños de clientas"
+            "value" : "Cumpleaños de clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cumpleaños de clientas"
+            "value" : "Cumpleaños de clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cumpleaños de clientas"
+            "value" : "Cumpleaños de clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anniversaires des clientes"
+            "value" : "Anniversaires des clients"
           }
         },
         "hi" : {
@@ -120452,19 +120452,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compleanni delle clienti"
+            "value" : "Compleanni dei clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aniversários das clientes"
+            "value" : "Aniversários dos clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aniversários das clientes"
+            "value" : "Aniversários dos clientes"
           }
         },
         "tr" : {
@@ -120776,25 +120776,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins de clientas"
+            "value" : "Check-ins de clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins de clientas"
+            "value" : "Check-ins de clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins de clientas"
+            "value" : "Check-ins de clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins des clientes"
+            "value" : "Nouvelles des clients après la visite"
           }
         },
         "hi" : {
@@ -120812,19 +120812,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-in delle clienti"
+            "value" : "Check-in dei clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins das clientes"
+            "value" : "Check-ins dos clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins das clientes"
+            "value" : "Check-ins dos clientes"
           }
         },
         "tr" : {
@@ -120884,7 +120884,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quand une cliente dit comment elle se sent"
+            "value" : "Quand un client dit comment il se sent"
           }
         },
         "hi" : {
@@ -121856,25 +121856,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Actívalas en Ajustes para recibir avisos de reservas y clientas."
+            "value" : "Actívalas en Ajustes para recibir avisos de reservas y clientes."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Actívalas en Configuración para recibir avisos de reservas y clientas."
+            "value" : "Actívalas en Configuración para recibir avisos de reservas y clientes."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Actívalas en Configuración para recibir avisos de reservas y clientas."
+            "value" : "Actívalas en Configuración para recibir avisos de reservas y clientes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Activez-les dans Réglages pour recevoir les alertes de réservations et de clientes."
+            "value" : "Activez-les dans Réglages pour recevoir les alertes sur les réservations et vos clients."
           }
         },
         "hi" : {
@@ -122684,7 +122684,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les alertes urgentes passent quand même : une cliente en retard et les annulations du jour. Le reste attend le matin."
+            "value" : "Les alertes urgentes passent quand même : un client en retard et les annulations du jour. Le reste attend le matin."
           }
         },
         "hi" : {
@@ -122756,25 +122756,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Recordatorios enviados a clientas"
+            "value" : "Recordatorios enviados a clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Recordatorios enviados a clientas"
+            "value" : "Recordatorios enviados a clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Recordatorios enviados a clientas"
+            "value" : "Recordatorios enviados a clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rappels envoyés aux clientes"
+            "value" : "Rappels envoyés aux clients"
           }
         },
         "hi" : {
@@ -122792,19 +122792,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Promemoria inviati alle clienti"
+            "value" : "Promemoria inviati ai clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lembretes enviados às clientes"
+            "value" : "Lembretes enviados aos clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lembretes enviados às clientes"
+            "value" : "Lembretes enviados aos clientes"
           }
         },
         "tr" : {
@@ -123026,25 +123026,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Para tus clientas"
+            "value" : "Para tus clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Para tus clientas"
+            "value" : "Para tus clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Para tus clientas"
+            "value" : "Para tus clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pour vos clientes"
+            "value" : "Pour vos clients"
           }
         },
         "hi" : {
@@ -123062,19 +123062,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Per le tue clienti"
+            "value" : "Per i tuoi clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Para suas clientes"
+            "value" : "Para seus clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Para as suas clientes"
+            "value" : "Para os seus clientes"
           }
         },
         "tr" : {
@@ -123296,25 +123296,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige qué te llega a ti y qué les llega a tus clientas."
+            "value" : "Elige qué te llega a ti y qué les llega a tus clientes."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige qué te llega a ti y qué les llega a tus clientas."
+            "value" : "Elige qué te llega a ti y qué les llega a tus clientes."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige qué te llega a ti y qué les llega a tus clientas."
+            "value" : "Elige qué te llega a ti y qué les llega a tus clientes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Choisissez ce qui vous parvient, et ce qui parvient à vos clientes."
+            "value" : "Choisissez ce qui vous parvient, et ce qui parvient à vos clients."
           }
         },
         "hi" : {
@@ -123332,19 +123332,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scegli cosa arriva a te e cosa alle tue clienti."
+            "value" : "Scegli cosa arriva a te e cosa ai tuoi clienti."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Escolha o que chega até você e o que chega às suas clientes."
+            "value" : "Escolha o que chega até você e o que chega aos seus clientes."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Escolha o que chega até si e o que chega às suas clientes."
+            "value" : "Escolha o que chega até si e o que chega aos seus clientes."
           }
         },
         "tr" : {
@@ -135464,7 +135464,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Choisissez une offre pour continuer à ajouter de nouveaux clients."
+            "value" : "Choisissez un abonnement pour continuer à ajouter de nouveaux clients."
           }
         },
         "hi" : {
@@ -135824,7 +135824,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Choisissez un forfait"
+            "value" : "Choisissez une formule"
           }
         },
         "hi" : {
@@ -135914,7 +135914,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "L’App Store n’a pas pu afficher les forfaits. Vérifiez votre connexion et réessayez."
+            "value" : "L’App Store n’a pas pu afficher les formules. Vérifiez votre connexion et réessayez."
           }
         },
         "hi" : {
@@ -136904,7 +136904,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "En attente d’approbation. Votre forfait démarre dès qu’il est approuvé."
+            "value" : "En attente d’approbation. Votre abonnement démarre dès qu’il est approuvé."
           }
         },
         "hi" : {
@@ -137084,7 +137084,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre forfait est de retour sur cet iPhone."
+            "value" : "Votre abonnement est de retour sur cet iPhone."
           }
         },
         "hi" : {
@@ -137534,7 +137534,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les deux offres incluent tout. Seule la facturation change."
+            "value" : "Les deux formules incluent tout. Seule la facturation change."
           }
         },
         "hi" : {
@@ -137984,7 +137984,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vérification de votre forfait"
+            "value" : "Vérification de votre abonnement"
           }
         },
         "hi" : {
@@ -138344,7 +138344,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre forfait fonctionne encore. Mettez à jour votre moyen de paiement dans l’App Store pour le conserver."
+            "value" : "Votre abonnement fonctionne encore. Mettez à jour votre moyen de paiement dans l’App Store pour le conserver."
           }
         },
         "hi" : {
@@ -138434,7 +138434,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas encore de forfait"
+            "value" : "Pas encore d’abonnement"
           }
         },
         "hi" : {
@@ -138506,25 +138506,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeros 10 registros de clientas son gratis. Un plan elimina el límite."
+            "value" : "Tus primeros 10 registros de clientes son gratis. Un plan elimina el límite."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeros 10 registros de clientas son gratis. Un plan elimina el límite."
+            "value" : "Tus primeros 10 registros de clientes son gratis. Un plan elimina el límite."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus primeros 10 registros de clientas son gratis. Un plan elimina el límite."
+            "value" : "Tus primeros 10 registros de clientes son gratis. Un plan elimina el límite."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos 10 premières fiches clientes sont gratuites. Un forfait supprime la limite."
+            "value" : "Vos 10 premières fiches clients sont gratuites. Un abonnement supprime la limite."
           }
         },
         "hi" : {
@@ -138686,25 +138686,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientas."
+            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientes."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientas."
+            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientes."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientas."
+            "value" : "Esta es tu suscripción a Bello Hub. No tiene relación con lo que cobras a tus clientes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Voici votre abonnement Bello Hub. Il est indépendant de ce que vous facturez à vos clientes."
+            "value" : "Voici votre abonnement Bello Hub. Il est indépendant de ce que vous facturez à vos clients."
           }
         },
         "hi" : {
@@ -138722,19 +138722,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Questo è il tuo abbonamento a Bello Hub. È separato da ciò che fai pagare alle clienti."
+            "value" : "Questo è il tuo abbonamento a Bello Hub. È separato da ciò che fai pagare ai tuoi clienti."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta é a sua assinatura do Bello Hub. Ela não tem relação com o que você cobra das suas clientes."
+            "value" : "Esta é a sua assinatura do Bello Hub. Ela não tem relação com o que você cobra dos seus clientes."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta é a sua subscrição do Bello Hub. Não tem relação com o que cobra às suas clientes."
+            "value" : "Esta é a sua subscrição do Bello Hub. Não tem relação com o que cobra aos seus clientes."
           }
         },
         "tr" : {
@@ -138794,7 +138794,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre forfait"
+            "value" : "Votre abonnement"
           }
         },
         "hi" : {
@@ -142856,25 +142856,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
+            "value" : "Los clientes pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
+            "value" : "Los clientes pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las clientas pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
+            "value" : "Los clientes pueden pedir una copia o la eliminación de sus datos cuando quieran. Tú decides quién está en su ficha."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les clientes peuvent demander une copie ou la suppression de leurs données à tout moment. Vous décidez qui figure sur leur fiche."
+            "value" : "Vos clients peuvent demander une copie ou la suppression de leurs données à tout moment. Vous décidez qui figure dans vos fiches."
           }
         },
         "hi" : {
@@ -142892,13 +142892,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le clienti possono chiedere una copia o l’eliminazione dei loro dati in ogni momento. Decidi tu chi è nella loro scheda."
+            "value" : "I clienti possono chiedere una copia o l’eliminazione dei loro dati in ogni momento. Decidi tu chi è nelle tue schede."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes podem pedir uma cópia ou a exclusão dos seus dados a qualquer momento. Você decide quem está na ficha delas."
+            "value" : "Os clientes podem pedir uma cópia ou a exclusão dos seus dados a qualquer momento. Você decide quem está em cada ficha."
           }
         },
         "pt-PT" : {
@@ -143234,7 +143234,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les notifications disent « Une cliente » au lieu du nom"
+            "value" : "Les notifications disent « Un client » au lieu du nom"
           }
         },
         "hi" : {
@@ -144674,7 +144674,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Exporter ou supprimer les données d’une cliente"
+            "value" : "Exporter ou supprimer les données d’un client"
           }
         },
         "hi" : {
@@ -145394,7 +145394,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jusqu’à ce que vous ou la cliente demandiez la suppression"
+            "value" : "Jusqu’à ce que vous ou le client demandiez la suppression"
           }
         },
         "hi" : {
@@ -145466,25 +145466,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Datos de clientas"
+            "value" : "Datos de clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Datos de clientas"
+            "value" : "Datos de clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Datos de clientas"
+            "value" : "Datos de clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Données clientes"
+            "value" : "Données des clients"
           }
         },
         "hi" : {
@@ -145502,19 +145502,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dati delle clienti"
+            "value" : "Dati dei clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dados das clientes"
+            "value" : "Dados dos clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dados das clientes"
+            "value" : "Dados dos clientes"
           }
         },
         "tr" : {
@@ -145916,25 +145916,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de clientas son sensibles. Estos ajustes los mantienen tuyos."
+            "value" : "Los datos de clientes son sensibles. Estos ajustes los mantienen tuyos."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de clientas son sensibles. Estos ajustes los mantienen tuyos."
+            "value" : "Los datos de clientes son sensibles. Estos ajustes los mantienen tuyos."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los datos de clientas son sensibles. Estos ajustes los mantienen tuyos."
+            "value" : "Los datos de clientes son sensibles. Estos ajustes los mantienen tuyos."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les données clientes sont sensibles. Ces réglages les gardent à vous."
+            "value" : "Les données de vos clients sont sensibles. Ces réglages les gardent chez vous."
           }
         },
         "hi" : {
@@ -145952,7 +145952,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "I dati delle clienti sono sensibili. Queste impostazioni li tengono tuoi."
+            "value" : "I dati dei clienti sono sensibili. Queste impostazioni li tengono con te."
           }
         },
         "pt-BR" : {
@@ -145964,7 +145964,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os dados das clientes são sensíveis. Estas definições mantêm-nos seus."
+            "value" : "Os dados dos clientes são sensíveis. Estas definições mantêm-nos consigo."
           }
         },
         "tr" : {
@@ -146186,25 +146186,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ninguna herramienta de análisis ni de publicidad lee los datos de tus clientas"
+            "value" : "Ninguna herramienta de análisis ni de publicidad lee los datos de tus clientes"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ninguna herramienta de análisis ni de anuncios lee los datos de tus clientas"
+            "value" : "Ninguna herramienta de análisis ni de anuncios lee los datos de tus clientes"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ninguna herramienta de análisis ni de anuncios lee los datos de tus clientas"
+            "value" : "Ninguna herramienta de análisis ni de anuncios lee los datos de tus clientes"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aucun outil d’analyse ni publicité ne lit les données de vos clientes"
+            "value" : "Aucun outil d’analyse ni publicité ne lit les données de vos clients"
           }
         },
         "hi" : {
@@ -146222,19 +146222,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nessuno strumento di analisi o pubblicità legge i dati delle tue clienti"
+            "value" : "Nessuno strumento di analisi o pubblicità legge i dati dei tuoi clienti"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nenhuma ferramenta de análise ou anúncio lê os dados das suas clientes"
+            "value" : "Nenhuma ferramenta de análise ou anúncio lê os dados dos seus clientes"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nenhuma ferramenta de análise ou publicidade lê os dados das suas clientes"
+            "value" : "Nenhuma ferramenta de análise ou publicidade lê os dados dos seus clientes"
           }
         },
         "tr" : {
@@ -146384,7 +146384,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Une copie privée, scellée pour que vous seule puissiez la lire"
+            "value" : "Une copie privée, scellée pour n’être lisible que par vous"
           }
         },
         "hi" : {
@@ -147284,7 +147284,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous seule voyez ce produit. Touchez pour le partager avec les clients."
+            "value" : "Ce produit n’est visible que par vous. Touchez pour le partager avec vos clients."
           }
         },
         "hi" : {
@@ -157994,7 +157994,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les soins que vous enregistrez pour cette cliente apparaissent ici, avec leur historique de modifications."
+            "value" : "Les soins que vous enregistrez pour ce client apparaissent ici, avec leur historique de modifications."
           }
         },
         "hi" : {
@@ -159344,7 +159344,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cette cliente n'est plus là"
+            "value" : "Ce profil n’existe plus"
           }
         },
         "hi" : {
@@ -159704,7 +159704,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le partage exige le consentement photo signé par la cliente. D'ici là, les photos restent privées."
+            "value" : "Le partage exige un consentement photo signé. D’ici là, les photos restent privées."
           }
         },
         "hi" : {
@@ -160064,7 +160064,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les photos sont privées. Vous seule les voyez, sauf si la cliente a consenti au partage."
+            "value" : "Les photos sont privées. Elles ne sont visibles que par vous, sauf si le client a consenti au partage."
           }
         },
         "hi" : {
@@ -164744,7 +164744,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Un fichier texte que vous seule pouvez ouvrir"
+            "value" : "Un fichier texte que personne d’autre ne peut ouvrir"
           }
         },
         "hi" : {
@@ -164816,25 +164816,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las fichas de tus clientas están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
+            "value" : "Las fichas de tus clientes están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las fichas de tus clientas están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
+            "value" : "Las fichas de tus clientes están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Las fichas de tus clientas están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
+            "value" : "Las fichas de tus clientes están selladas para que solo tú las leas. Esta clave es el camino de vuelta si pierdes tu iPhone y tu Llavero de iCloud."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Les fiches de vos clientes sont scellées pour que vous seule puissiez les lire. Cette clé est le moyen de rentrer si vous perdez votre iPhone et votre trousseau iCloud."
+            "value" : "Les fiches de vos clients sont scellées pour n’être lisibles que par vous. Cette clé est le moyen de les retrouver si vous perdez votre iPhone et votre trousseau iCloud."
           }
         },
         "hi" : {
@@ -164852,13 +164852,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le schede delle tue clienti sono sigillate perché solo tu possa leggerle. Questa chiave è la via di ritorno se perdi l’iPhone e il Portachiavi iCloud."
+            "value" : "Le schede dei tuoi clienti sono sigillate perché solo tu possa leggerle. Questa chiave è la via di ritorno se perdi l’iPhone e il Portachiavi iCloud."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As fichas das suas clientes são seladas para que só você as leia. Esta chave é o caminho de volta se você perder o iPhone e as Chaves do iCloud."
+            "value" : "As fichas dos seus clientes são seladas para que só você as leia. Esta chave é o caminho de volta se você perder o iPhone e as Chaves do iCloud."
           }
         },
         "pt-PT" : {
@@ -179048,25 +179048,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
+            "value" : "Tus clientes nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
+            "value" : "Tus clientes nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tus clientas nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
+            "value" : "Tus clientes nunca ven este tiempo en la duración ni en el precio. Mantiene tu agenda realista."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vos clientes ne voient jamais ce temps dans la durée ni dans le prix. Il garde votre agenda réaliste."
+            "value" : "Vos clients ne voient jamais ce temps dans la durée ni dans le prix. Il garde votre agenda réaliste."
           }
         },
         "hi" : {
@@ -179084,19 +179084,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Le clienti non vedono mai questo tempo nella durata né nel prezzo. Rende la tua agenda realistica."
+            "value" : "I clienti non vedono mai questo tempo nella durata né nel prezzo. Rende la tua agenda realistica."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes nunca veem esse tempo na duração nem no preço. Ele deixa sua agenda realista."
+            "value" : "Os clientes nunca veem esse tempo na duração nem no preço. Ele deixa sua agenda realista."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes nunca veem este tempo na duração nem no preço. Mantém a sua agenda realista."
+            "value" : "Os clientes nunca veem este tempo na duração nem no preço. Mantém a sua agenda realista."
           }
         },
         "tr" : {
@@ -179426,7 +179426,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous êtes libre pendant la pose, comme une coloration. Une autre cliente peut être reçue pendant ce temps."
+            "value" : "Vous êtes libre pendant le temps de pose, comme pour une coloration. Vous pouvez recevoir un autre client pendant ce temps."
           }
         },
         "hi" : {
@@ -192332,7 +192332,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partager avec la cliente ou utiliser dans un portfolio demande son consentement aux photos, pas encore signé."
+            "value" : "Partager avec le client ou utiliser dans un portfolio demande son consentement aux photos, pas encore signé."
           }
         },
         "hi" : {
@@ -195572,7 +195572,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cette cliente a été supprimée ou fusionnée pendant l’ouverture de la fiche."
+            "value" : "Ce profil a été supprimé ou fusionné pendant l’ouverture de la fiche."
           }
         },
         "hi" : {
@@ -197372,7 +197372,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La cliente n’a pas signé de consentement aux photos : elles ne peuvent être ni partagées ni utilisées dans un portfolio."
+            "value" : "Aucun consentement aux photos n’est signé : elles ne peuvent être ni partagées ni utilisées dans un portfolio."
           }
         },
         "hi" : {
@@ -198002,7 +198002,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Privées par défaut. Les photos restent liées à la cliente, à la date et à cette visite, et ne servent jamais au marketing sauf si vous le décidez."
+            "value" : "Privées par défaut. Les photos restent liées au client, à la date et à cette visite, et ne servent jamais au marketing sauf si vous le décidez."
           }
         },
         "hi" : {
@@ -198722,7 +198722,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partagée avec la cliente"
+            "value" : "Partagée avec le client"
           }
         },
         "hi" : {
