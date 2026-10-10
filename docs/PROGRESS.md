@@ -113,6 +113,8 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-10 17:45: S12 started on `build/v1` (single agent).** Step 0 done: the `s8-leftovers` merge (`cf9d249`) is green (fast 2179 / 309 suites, check-warnings zero, firebase and web full green) and functions (`suggestBookingTime`) and Hosting are deployed to dev (stage log "S8 leftovers + S12 prep"). Next in S12: calendar past-hour tap, per-client export under Edit, "Created by " on the record-history route, missing `NSCalendarsFullAccessUsageDescription` and the Apple Calendar write-through (the switch promised it, nothing wrote events), audits, performance, security table, final regression, tags `stage-S12` and `v1.0.0-rc1`.
+
 **2026-10-10 17:30: S11 done on `build/v1`, tag `stage-S11`** (stage log "S11", notes `docs/agent-notes/s11-localization.md`, market readiness table above). Green on the head: fast 2095 tests in 295 suites, smoke 48 (47 + 1 skipped tool), screenshots in 14 localizations, all audit suites (S6 to S8 pt-BR/de/hi runs finished), check-warnings zero, web full. Hosting deployed to dev. **Next: S12.** Open from S11: per-client export/delete under Edit (Help and Privacy describe it), a past hour on today's day view did not open New appointment (notes section 5), native readers for every localization (H10/H11).
 
 **2026-10-10 07:45: D56 smart slots done on `build/v1`** (stage log "D56", notes `docs/agent-notes/smart-slots.md`, decision D56). Everything green on the head: iOS fast 2087 tests in 293 suites, smoke 48 (47 passed + 1 skipped tool), check-warnings zero; functions all suites (unit 906, emulator 66 + 286, transport 19); web full green; e2e-local 7 passed. **Functions and Hosting deployed to dev** (page 200, `/api/getSlots` answers). **Next: S11, S12**; S8 leftovers unchanged.
@@ -328,6 +330,26 @@ Measured: iOS fast 2095 tests in 295 suites (with `check-strings.sh --final`, th
 Deployed: Hosting to dev 2026-10-10 (web strings, legal texts, numeric legal version sort; page 200, `/api/getPublicPage` NOT_FOUND for an unknown slug). Functions not redeployed: only their tests changed.
 Open: on today's day view a tap on an hour already past did not open New appointment and the day jumped to Monday (smoke at 11:35 in São Paulo; the UI test now taps an hour ahead; S12); Help and Privacy describe a per-client export/delete under Edit that the Edit screen lacks (`help.topic.deleteClient.answer`, `privacy.perClient.subtitle`; S12); every non-English string stays `needs_review` (no native reader, D41); the clipped-text audit skips Arabic and Devanagari (read by eye in the screenshots); Arabic tab title is the indefinite عملاء because the same plural is used inside sentences.
 Human tasks: H10/H11 point at `docs/review/` and `legal/EUROPE.md`.
+
+### S8 leftovers + S12 prep · done 2026-10-10 · merged into build/v1 at cf9d249 (no tag)
+**2026-10-10: S8 leftovers, security-review gaps and S12 documentation, performance and accessibility done on
+`s8-leftovers`** (notes `docs/agent-notes/s8-leftovers.md`, reviews `docs/agent-notes/security-review.md` and
+`docs/agent-notes/accessibility-audit.md`). Server account deletion (resumable after a half-finished attempt) and
+server plan verification (`appAccountToken` + `syncPlan`); client data deletion reaches the server through the
+outbound queue ("Delete data" in 4.3); the registration count asks `reserveRegistrations` (ledger as cache, offline
+replay); the page's inbox key is checked against the derived one (`keyMismatch` stops publishing) and Privacy shows
+the form key; store protection set explicitly; recovery words hidden while recorded or shared; "From your clients"
+in Alerts (check-ins with their photo, data requests, unopened forms) acknowledges each item; "Suggest another time"
+on booking requests (new function `suggestBookingTime`, emulator tests; **needs a functions deploy**); "Cancels
+often" on waitlist and requests. Unit suites for `MailboxService`, `PushService`. S12: `PrivacyInfo.xcprivacy`
+(+ `check-privacy.sh` rule 7), App Privacy answers, App Store metadata in 13 localizations (`docs/store/`),
+`PerformanceUITests` (cold start 1.39 s to Welcome, search over 2,000 clients 12 ms, peak 97 MB with 200 photos;
+bounded full-size photo cache), `AccessibilityAuditUITests` (en and pt-BR, default and AX5, Increase Contrast and
+Reduce Motion: clean after fixes; VoiceOver pass list for a device), breach plan `docs/BREACH-PLAN.md` (H18).
+Fast 2179 tests in 309 suites, check-warnings zero, test-firebase green. Open: App Check (H5), hitch measurement and
+the VoiceOver pass on a device, H14 before the server lifts the 10-client limit for a sandbox purchase.
+
+Integration (S12 agent, 2026-10-10 17:10 to 17:45): merge `cf9d249` had no textual conflict; on the merged head `scripts/test.sh fast` 2179 tests in 309 suites passed, `scripts/check-warnings.sh` zero warnings (simulator, device, Release, test targets), `scripts/test-firebase.sh` green (unit 943, rules 66, use cases 289, transport 19), `scripts/test-web.sh full` green (i18n 401 keys, contrast 152/152, unit 248, Playwright 191 + 15 skipped, Lighthouse 0.99/1.00, initial JS 48.4 KB). The server contract changed on the helper's side only, so no regeneration was needed. **Deployed to dev:** all functions (new `suggestBookingTime` created) and Hosting; smoke: page 200, `/api/getSlots` answers (INVALID_ARGUMENT for a bad body), `/api/getPublicPage` NOT_FOUND for an unknown slug.
 
 ## Assumptions
 | # | Assumption | Reason | Stage |
