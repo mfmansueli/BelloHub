@@ -9,7 +9,8 @@ import { createHash } from 'node:crypto';
 
 import { encodeBase64Url } from '../../src/lib/base64url';
 import { framePlaintext, sealPayload } from '../../src/crypto/seal';
-import type { InboxKey, SealedEnvelope } from '../../src/api/types';
+import { buildIntakePayload, EMPTY_INTAKE, type IntakeState } from '../../src/routes/form/payload';
+import type { FormContext, FormQuestion, InboxKey, SealedEnvelope } from '../../src/api/types';
 
 interface Recipient {
   privateKey: string;
@@ -42,6 +43,53 @@ function itemIdFor(name: string): string {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
+/**
+ * Intakes built by the page's own form code (`buildIntakePayload`, schema 2, D55) with the question keys the iPhone
+ * publishes (its health form catalog), so the app's import is tested against exactly what the page sends. The
+ * other cases reuse the payloads of inbox-v1.json (schema 1 intakes, still accepted by the app, and the check-in
+ * and data-request payloads, which the page builds field by field).
+ */
+const PAGE_QUESTIONS: readonly FormQuestion[] = [
+  { key: 'allergies', kind: 'multiChoice', label: { en: 'Do you have any allergies?' }, options: [{ value: 'latex', label: { en: 'Latex' } }, { value: 'fragrance', label: { en: 'Fragrance' } }, { value: 'none', label: { en: 'None' } }] },
+  { key: 'medication', kind: 'yesNo', label: { en: 'Do you take any regular medication?' } },
+  { key: 'pregnancy', kind: 'yesNo', label: { en: 'Are you pregnant or breastfeeding?' }, audience: 'adult' },
+  { key: 'anythingElse', kind: 'text', label: { en: 'Anything else?' } },
+];
+
+const PAGE_CONTEXT: FormContext = {
+  professional: { slug: 'maria', displayName: 'Maria Souza', firstName: 'Maria', locales: [], defaultLocale: 'pt-BR', regionCode: 'BR', timeZoneID: 'America/Sao_Paulo', currencyCode: 'BRL' },
+  bookingId: 'bk_7Hq2xkP9',
+  client: { firstName: 'Helena' },
+  inboxKey: { keyId: '', alg: 'hpke-v1', pub: '' },
+  intake: { available: true, completedWithin12Months: false, formVersion: '3', questions: PAGE_QUESTIONS },
+  checkIn: { available: false },
+};
+
+const SUBMITTED = new Date('2026-10-08T14:03:21.000Z');
+
+const PAGE_INTAKES: readonly { name: string; localeId: string; state: IntakeState }[] = [
+  {
+    name: 'page-intake-schema2-adult',
+    localeId: 'pt-BR',
+    state: { ...EMPTY_INTAKE, answers: { allergies: ['latex', 'fragrance'], medication: true, pregnancy: false, anythingElse: '  Pele sensível; fiz um peeling há duas semanas.  ' } },
+  },
+  {
+    name: 'page-intake-schema2-minor',
+    localeId: 'ar',
+    state: { answers: { allergies: ['none'], medication: false, pregnancy: true, anythingElse: 'لا شيء 🌿' }, isForMinor: true, minorName: ' لينا الحارثي ' },
+  },
+];
+
+function sourceCases(): SourceCase[] {
+  const page = PAGE_INTAKES.map((item) => ({
+    name: item.name,
+    kind: 'intake' as const,
+    hasPhoto: false,
+    payload: buildIntakePayload(item.state, { context: PAGE_CONTEXT, localeId: item.localeId, now: SUBMITTED }),
+  }));
+  return [...source.positive, ...page];
+}
+
 export interface JsSealedFile {
   schema: 1;
   description: string;
@@ -56,7 +104,7 @@ export async function buildJsSealed(): Promise<JsSealedFile> {
   if (recipient === undefined) throw new Error('recipient r2 missing from inbox-v1.json');
   const inboxKey: InboxKey = { keyId: recipient.keyId, alg: 'hpke-v1', pub: recipient.publicKey };
   const cases: JsSealedFile['cases'] = [];
-  for (const item of source.positive) {
+  for (const item of sourceCases()) {
     const itemId = itemIdFor(item.name);
     const ikm = fixed(`bellohub/vectors/js-ikmE/${item.name}`);
     const request = { kind: item.kind, payload: item.payload, inboxKey, hasPhoto: item.hasPhoto, itemId };
@@ -78,7 +126,8 @@ export async function buildJsSealed(): Promise<JsSealedFile> {
     description:
       'Envelopes sealed by the page itself (hpke-js through src/crypto/seal.ts) with fixed ephemeral key material. ' +
       'Opening each `envelope` with the private key of `recipient` (inbox-v1.json) must give exactly `plaintext`. ' +
-      'Python opens them in test/vectors/generate/verify_js.py; Swift should open them too.',
+      'Python opens them in test/vectors/generate/verify_js.py; the iPhone opens them and reads the payloads in ' +
+      'BelloHubTests/Managers/Vault/InboxVectorsTests.swift. The page-* cases are built by the page\'s own form code.',
     generator: 'web/test/vectors/generate-js.ts',
     recipients: { [recipientId]: recipient },
     cases,

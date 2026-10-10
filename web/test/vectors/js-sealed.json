@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Envelopes sealed by the page itself (hpke-js through src/crypto/seal.ts) with fixed ephemeral key material. Opening each `envelope` with the private key of `recipient` (inbox-v1.json) must give exactly `plaintext`. Python opens them in test/vectors/generate/verify_js.py; Swift should open them too.",
+  "description": "Envelopes sealed by the page itself (hpke-js through src/crypto/seal.ts) with fixed ephemeral key material. Opening each `envelope` with the private key of `recipient` (inbox-v1.json) must give exactly `plaintext`. Python opens them in test/vectors/generate/verify_js.py; the iPhone opens them and reads the payloads in BelloHubTests/Managers/Vault/InboxVectorsTests.swift. The page-* cases are built by the page's own form code.",
   "generator": "web/test/vectors/generate-js.ts",
   "recipients": {
     "r2": {
@@ -316,6 +316,75 @@
         "itemId": "0d7decc9-e853-4a14-ba40-5c4924b4ac28",
         "enc": "77ZikIdlSwlxKwRGrtJRLhg_ROCmU-ScfgrLe8iqfQY",
         "ct": "8uapEcljC0cWG_qBaK6zJvHwiNOFp7ZxfPMkRfhcAD1VNeDr8PHBDV96_wMZ1vXoqXgjKcJfN3yIZLCya3NIe0Kb13mFfrqW-KVGRBxvmnufmRp38L2R7k2X2NOOFcS_fKJN7gjWVGtXwCXE_JdIid6nG9ZOjZZO2XhM9LobbUzJSxMlkbYspU3O3sbSk47w_AGMvNhtJRKI8iIHV9x5-C5p1XDiQUfkkKK6MPxtdSBnmsDcivbc8cxbndUTXvxQhVbtgRnJzQCXIc_9Awe7Ebwu8YwJj-XD8OBoEa6pWU0WnfQVGZ3S66lvfzb6dFhaD4euKikTC3VymV8gKEhrqVjvzKdxKsyNgqZ2NijKZ_szgu8KxQ-2zickw72PbecKa8fED4QkfPB6ysJ6A9uJwD8RWWx7ky2U7r_mjUNdVVKFfrH6QZSRlAYnWb4kCqxQjJDJ--sQaeGdFplPBJkQeHZKekUwEhYK_8Exa-2890tPL2JvNBqS4AstlM7YrGveFsfqTJr3_YvA3hILq8bX_o7X4um3hC1YKbFyVtTb_w3RXvUas85jS5hscfGRrMJ_Mjmi0TytggzMFVNqV7-aVQ3zS2A_xGvt3o4yZUNIZu84Tg2VShyXyDAK2iVmsIZVRXXEIeR2bcGAgVTGycVHPnR6lVdFpWeHbjJkxaFOHLuVZcWeF_FYfKE9PQ6bbkA-EWHhtiVz4NWv--dcM_q_MP31FjUF8kc9pCh--5OunhxVIbKQALa7lVRmAq2uf0ka7AoKMIaX-QzfKmwdRCH3NugENHSteouNgS_4Rf_UrLfMkUH546bifkL0DMX64TcZiginIICjtIVIvkpV7aJDI-IK6YV3wXRRRP8wAAAn6HIQtCEKEC_CKOe2npBLQfh7YFpnFg_5ZzGmLg582xch7Yq4pmRv_uDrRkpXhgGu8vv7LKkHJddYkKJwRcBpxDiXk_nRnK1bsSxEqJs9yfiANIYPVhZrqdEwcxIOANBJnVXAxnfj5-FmUdZwERsI4ru4OSbAoN8lwAHN61XhogottQCje6sBwDj_sQnhqGpKl7XbDZaTyUYfqZLWFQyr2gcnG7ucP1oQuoJxdaAXgv1GS0B-jfKXGuQLlBBkjkOPrcEwUd7Ast8LDyNWdqXG_u5MnO9oJXnLeMQBHB_jNsoaZXRLf3-stFrMZ6MD2Q8bnVJeyKoHJzqNemtv5ET8UpUPjsIDJbpJOEuqv4jAnjRXl1FZFKYBIifnB2asa0vl47iQMLcnajVnFlX81UeTj9KgmMLbl6_aDhw_Qi4DPQjTmfUdsnXONwjp2jI9mZXLbLtYDKiZnTseBIY5YHJWCPXVL6WIP8fZZ2Il7y56nh052enufxEIdFcPfP8wT7fjSUA"
+      }
+    },
+    {
+      "name": "page-intake-schema2-adult",
+      "recipient": "r2",
+      "kind": "intake",
+      "hasPhoto": false,
+      "itemId": "9de34dd5-5d44-4be1-ad41-c53b36abbe9a",
+      "ikmE": "uSuOXC34QlKwjuYDpybB85EG0_wxrvLeBgO8WWtGWfo",
+      "payload": {
+        "schema": 2,
+        "bookingId": "bk_7Hq2xkP9",
+        "localeId": "pt-BR",
+        "formVersion": "3",
+        "answers": {
+          "allergies": [
+            "latex",
+            "fragrance"
+          ],
+          "medication": true,
+          "pregnancy": false,
+          "anythingElse": "Pele sensível; fiz um peeling há duas semanas."
+        },
+        "isForMinor": false,
+        "submittedAt": "2026-10-08T14:03:21.000Z"
+      },
+      "plaintext": "{\"schema\":2,\"bookingId\":\"bk_7Hq2xkP9\",\"localeId\":\"pt-BR\",\"formVersion\":\"3\",\"answers\":{\"allergies\":[\"latex\",\"fragrance\"],\"medication\":true,\"pregnancy\":false,\"anythingElse\":\"Pele sensível; fiz um peeling há duas semanas.\"},\"isForMinor\":false,\"submittedAt\":\"2026-10-08T14:03:21.000Z\",\"_pad\":\"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\"}",
+      "envelope": {
+        "v": 1,
+        "suite": "hpke-x25519-hkdf-sha256-chacha20poly1305",
+        "keyId": "wDsjpevsIfQ",
+        "kind": "intake",
+        "itemId": "9de34dd5-5d44-4be1-ad41-c53b36abbe9a",
+        "enc": "9odl2pbulS52uttKoo4DCI_eUPYMSXOENb0JLFAgjzw",
+        "ct": "XeNrDKfFnNjMXw0n_4fNQt29hY9t7-u2K96aHdTgjUIctPB8hClJCp80bBJ0LgOfRIXqmpp6SW08B7C2oc0sFKrU8RZIjKcTxKiHb6w-67jT4wyNI3tM1j3RwaSLqrgeCTNCTLm7CVo02sHvZSA0-8sLBOCQsoeRKgyPthHmoTTFqEAk90qG-t_bxxK9t_lLIkyLnhyeAFoOmS12igYk1NfpKCBZgco9TDujwBtBv_b0kHWqvlA_TVfw6-X_k5L5Y1tHevevQ3IFM4rM73hrvK6kUJmVeBWKzvXQz_Y8V4M-Fd-d9Q1Wtnoylowyr6Y5Sb_M57Uz2qeV634DcSRmBSZsBRHE__PkNgaFWk5HNCH9xslru3Z_7jC9utMvqsJUqtT5VVTV9qmQ6wUOfk9Uo-njqbHPQIwZBsfWXNKitEAm2tSXQ3IFnhs7-QnBrgc1CHeyzUuKKVp4mZz7_OPpimTCGKuYc8TuowXi8JdqMnCJwWWirFuSjPOVaOCk-gkPTK4ITZYq3ReTko-ZXg7hRcP74ub-2H6S51MdM-4XZSBikpdgs9Z7_cFZXyeE4AJ-Aq9PS2MlMeqx25flGhfTXLFlB-q62sRbg1oZDIKOH701iRv_Z14QJ_RPrWgRb8k3aQVLgXo1ISoydXI0weqKBSldD5AxT-LdP_2Sj01f4SKFK9C8_by0r7jVIaaIApKK1ICJroRyfYaZ7M-bUtqdlQQChsyvzEQGClG7BitBE9QwXw5RZx4Nsl3dTSE31zaU5hMFumuXPpg__qN76MVffQlP3_9c029tRNKtd3yRKUbvIIZdyLMon_yvxX_gi0z48DCGWE1VeHUEG_NChu-RE427U30QuytAvw4GBny0gbrhF1MwAiL7RfXWf9ZIb1mJEJxX9LBfi0yf1zHtKwKBaoILWh5hJm505_V2t59QZACO_Reys4mnenZChM1ei8O4JSQ6yNaap1nFt7B8jXYtSPSyI06ONFwstBVPeG4NZCtOmx6f5xKSzHaPdy9xqqwUYfXlI_cBFFyGJyA46hqszYPcd3Oc63okenk3bcGRR-L3SkNaNrp2GKpNSfTPq78abzJjVHMVnbLgZyS3O49fg9Aj3inXK8qqo0Q_PMODOHz7akmPknCrc3eJ4fzuTAwU-Qe2Sh97cTYOa4R3OnnuCXUsBWIQl6eTsU1eq-QEebJDNhksFwRs2FBJukbbHfueGWg2NB1HNyKx4IxNZzzi7yL2HTO-BnCaa8rL293cUtD190_GFtEqStk95cUfmLCzolBLU8YEXoZebSUHEt1tgqHi_y7UJQRhdFduy_Y6yT0VM9fgXgjyPkwLj-Co9REdO4ivMUNMMWb8s8cKL5B40RcOKgrtDVTRpQMuNNdD82U"
+      }
+    },
+    {
+      "name": "page-intake-schema2-minor",
+      "recipient": "r2",
+      "kind": "intake",
+      "hasPhoto": false,
+      "itemId": "c583686d-cd9f-4235-a962-cc417c62af02",
+      "ikmE": "WOd8fEIsyR9uEcRuoLePNUty4QTq71-RRJ8Z1tgivn8",
+      "payload": {
+        "schema": 2,
+        "bookingId": "bk_7Hq2xkP9",
+        "localeId": "ar",
+        "formVersion": "3",
+        "answers": {
+          "allergies": [
+            "none"
+          ],
+          "medication": false,
+          "anythingElse": "لا شيء 🌿"
+        },
+        "isForMinor": true,
+        "minorName": "لينا الحارثي",
+        "submittedAt": "2026-10-08T14:03:21.000Z"
+      },
+      "plaintext": "{\"schema\":2,\"bookingId\":\"bk_7Hq2xkP9\",\"localeId\":\"ar\",\"formVersion\":\"3\",\"answers\":{\"allergies\":[\"none\"],\"medication\":false,\"anythingElse\":\"لا شيء 🌿\"},\"isForMinor\":true,\"minorName\":\"لينا الحارثي\",\"submittedAt\":\"2026-10-08T14:03:21.000Z\",\"_pad\":\"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\"}",
+      "envelope": {
+        "v": 1,
+        "suite": "hpke-x25519-hkdf-sha256-chacha20poly1305",
+        "keyId": "wDsjpevsIfQ",
+        "kind": "intake",
+        "itemId": "c583686d-cd9f-4235-a962-cc417c62af02",
+        "enc": "rpJ01YMx9yCYH_x_-odEdqBY8BwhcE1kOmOaTSr12Wg",
+        "ct": "frLTU5jHrLQ8z0bWEyJHwJSkABP65jtxBthbg4z7RvbAPLpc-_YlsT0rpwrSQqWxETLJkiQVLf51PyC9njXK_C6eMqLpHu1OA6C4YfMpoxjnjBLyr_Oedf74IAfjqRL74hzjNLnCqXzgrcYHqh_Ytr9c_H1Ae4MMU75A5ndOsHjIAFlt1wO3KVHAvgvluvOADD50ByfeJ7AuLw-AU-xsZxUdkVV5bnhg6lFxuWRHq4JDmZEqTU7bPUuq216Kr85EpB0Nv9Et1a5p3XeMDJYG5SRcQ_zR22muojLc4iklIp29yQ5hWJ6JQBoaNB_NeMBTPzopl0s805b_B5mjJ7gFI4OTBdpiQO7OKT1Rcrp6-7sxC2X-xERy13WoE4CTFZVn4VOKXCVIfBVo1afNML3O6tcKVjg2zFeNF1GSQw_k1yLwrJqXK_-3yy-YGZALuFD2mNAYrlBNCxju38HLSjPFukrHizfYPHUZGKxjr6za-rXJP10rXCYP6JdN--g5ynSD-Ajq9RpS-CWiweyAEzIkytEQ_h6w6_Ph0NzT-p-hqcFaXbW9FWne1oYXGvyftEmjQ0qEAcapG5kyJ6tMcIXaQx9WFdNB1p7WuO-QnIiKMIPuKqw1IE56sADoZJvXjtZTwseH66whdBKCv28R4xChocL-UP-cE6fn-gFe6mZJJXJfNLViiN5t2zabttmWFbB5YWCCTRms8K3z7Vron6UXg5KMWyL9CLmsy3iY7r09VNLusbQanMPPNsQ4U-98jpSFgZvvzZMJJn4yl4a7fgB94cIg6j5RQGGPyWKEt5JHC8Ua9R5EQ_3ewTMdOnea8QOwJWpKe5TUtA4cB7CMeOR1iFCA_P0CYWqT7YzZ3fY96OcsKEy7Fg2ABlVpWjC5ix3P3U1qNlxq6e_pPa5rpp2f2OqtfWcB4quWFPS0C3MpniTOQN0nv7IZfrK_yjhmkjtSBGFbgq6nWgXOktl36Cn2Q1CGZMZ3fJCV__1FFLMUFzkovbcs2l7W0JWRD1GzaLoU9cRJ5vETKR4xKrhjVAHJIacpAkkzsWsg95F7SfnzYkjiMJ9UtzgsogQ-luVhMUoHRVA0fjAvBuwGVRPy1WQBqgRtPGcDxpN9X0lQpe_qt2qFwI37GeRYaasICBHOzWuiYrLscI3-GIORvybOTMjv4WgbCmEomqXe2ktkvjWKe8S7L0QYOWNs7xDi7YRkTvcAUJY1M74hV7R9x373W_mJicOb4Q26C-72_bihlqidSpkQUKydwo7uXYR1bUZvXi4iqeCYbCnHXXMQFi6byj8z47qyJH_kjs9hJj33t4Gbp_ZXVGZkHCM6yiN1s2yi1jdFDHhlO_GSs1YADtESEyi6DtgWna97Ksh6uy3GSps_U5Y"
       }
     }
   ]

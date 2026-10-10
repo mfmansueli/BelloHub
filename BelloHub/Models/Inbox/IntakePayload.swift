@@ -50,16 +50,8 @@ struct IntakePayload: Equatable, Sendable {
             isForMinor: object["isForMinor"] as? Bool ?? false,
             minorName: (object["minorName"] as? String).flatMap { $0.isEmpty ? nil : $0 },
             clientName: (object["clientName"] as? String).flatMap { $0.isEmpty ? nil : $0 },
-            submittedAt: (object["submittedAt"] as? String).flatMap(Self.instant)
+            submittedAt: (object["submittedAt"] as? String).flatMap(PayloadInstant.parse)
         )
-    }
-
-    /// ISO-8601 with or without fractions (the browser writes `toISOString()`).
-    private static func instant(_ text: String) -> Date? {
-        if let date = try? Date(text, strategy: Date.ISO8601FormatStyle(includingFractionalSeconds: true)) {
-            return date
-        }
-        return try? Date(text, strategy: Date.ISO8601FormatStyle())
     }
 }
 

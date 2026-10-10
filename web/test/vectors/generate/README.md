@@ -10,7 +10,8 @@ someone else's implementation, and the other way round. They are also the file t
 |---|---|---|---|
 | `../inbox-v1.json` | `generate.py` here | **pyhpke 0.6.3** (HPKE) and **cryptography 46** (X25519, OpenSSL) | The independent reference. The page must reproduce every positive envelope byte for byte and open it; every negative case must fail |
 | `../rfc9180-vectors.json` | the IETF CFRG (RFC 9180, Appendix A.2), copied from the test suite of pyhpke 0.6.3 | none | A known answer for the exact suite: X25519, HKDF-SHA256, ChaCha20-Poly1305, base mode |
-| `../js-sealed.json` | `../generate-js.ts` | **hpke-js** through the page's own `sealPayload` | What the browser seals, written down so Python (and later Swift) can open it |
+| `../js-sealed.json` | `../generate-js.ts` | **hpke-js** through the page's own `sealPayload` (the `page-*` intakes also through the page's form code, schema 2) | What the browser seals: Python opens it (`verify_js.py`), the iPhone opens it and reads every payload (`BelloHubTests/Managers/Mailbox/EnvelopeOpenerTests.swift`, copied by `scripts/sync-server-contract.sh`) |
+| `../swift-sealed.json` | `generate-swift.swift` here | **Apple CryptoKit** `HPKE.Sender`, random ephemeral keys (a fixture, not reproducible) | What the iPhone's library seals: the page's suite and Python open it (`test/unit/crypto.cross-implementation.test.ts`) |
 
 The page itself uses **hpke-js** (`@hpke/core`, `@hpke/dhkem-x25519`, `@hpke/chacha20poly1305`). Nothing in
 `generate.py` or `sealed_common.py` shares code with it: the plaintext framing (padding, JSON, AAD) is written again
@@ -42,7 +43,8 @@ from the specification.
 Browser (already wired): `npm test` runs `test/unit/crypto.vectors.test.ts` and
 `test/unit/crypto.cross-implementation.test.ts`.
 
-iOS (later): for each positive case, derive the recipient key from `privateKey`, open `envelope` with
+iOS (wired): `InboxVectorsTests` opens `inbox-v1.json` and `EnvelopeOpenerTests` opens `js-sealed.json` through the
+app's `EnvelopeOpener` and payload readers; `swift-sealed.json` goes the other way. Originally planned: for each positive case, derive the recipient key from `privateKey`, open `envelope` with
 `HPKE.Recipient` and the AAD above and compare with `plaintext`; for `js-sealed.json` do the same; to test sealing in
 Swift, seal `plaintext` to `publicKey` and check that `generate.py`'s `open_envelope` (or the page's
 `test/support/open.ts`) opens it. Every negative case must fail to open.
@@ -56,7 +58,11 @@ python3 -m venv .venv
 .venv/bin/python generate.py          # rewrites ../inbox-v1.json (and checks it against RFC 9180)
 .venv/bin/python generate.py --check  # fails when the committed file is stale
 .venv/bin/python verify_js.py ../js-sealed.json    # opens what the page sealed
+# after any change to js-sealed.json (from the repository root):
+xcrun swift web/test/vectors/generate/generate-swift.swift web/test/vectors/js-sealed.json web/test/vectors/swift-sealed.json
+scripts/sync-server-contract.sh                       # copies js-sealed.json into the iOS test bundle
 ```
+`scripts/test-web.sh` makes its venv at `web/.venv`; the unit tests use it (or one here) to run `verify_js.py`.
 
 `generate.py` refuses to write a file unless pyhpke reproduces the RFC 9180 vector, round-trips every positive case
 and fails every negative case. Do not hand-edit the JSON files. A change to the suite, the AAD, the padding or the

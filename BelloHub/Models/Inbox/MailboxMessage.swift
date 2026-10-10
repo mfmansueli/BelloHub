@@ -27,7 +27,7 @@ struct MailboxMessage: Identifiable, Equatable, Sendable {
         _ data: Data, kind: MailboxKind, id: String, bookingId: String, receivedAt: Date
     ) -> MailboxMessage? {
         guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
-        let submitted = (object["submittedAt"] as? String).flatMap { try? Date($0, strategy: .iso8601) }
+        let submitted = (object["submittedAt"] as? String).flatMap(PayloadInstant.parse)
         switch kind {
         case .checkin:
             guard let feeling = object["feeling"] as? String else { return nil }

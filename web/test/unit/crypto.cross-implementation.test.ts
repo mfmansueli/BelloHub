@@ -9,16 +9,19 @@ import { describe, expect, it } from 'vitest';
 
 import { encodeBase64Url } from '../../src/lib/base64url';
 import { framePlaintext, sealPayload } from '../../src/crypto/seal';
-import { inboxKeyFromSeed } from '../support/open';
+import type { SealedEnvelope } from '../../src/api/types';
+import { decodeBase64Url } from '../../src/lib/base64url';
+import { inboxKeyFromSeed, openEnvelope } from '../support/open';
 import { buildJsSealed, serialize } from '../vectors/generate-js';
 
 const generateDirectory = new URL('../vectors/generate/', import.meta.url).pathname;
-const venvPython = join(generateDirectory, '.venv', 'bin', 'python');
+// scripts/test-web.sh makes the venv at web/.venv; a hand-made one may sit next to the generator.
+const venvPythons = [new URL('../../.venv/bin/python', import.meta.url).pathname, join(generateDirectory, '.venv', 'bin', 'python')];
 
 function pythonWithPyhpke(): string | null {
-  const candidates = [venvPython, 'python3'];
+  const candidates = [...venvPythons, 'python3'];
   for (const candidate of candidates) {
-    if (candidate === venvPython && !existsSync(candidate)) continue;
+    if (candidate !== 'python3' && !existsSync(candidate)) continue;
     try {
       execFileSync(candidate, ['-I', '-c', 'import pyhpke, cryptography'], { stdio: 'ignore' });
       return candidate;
@@ -44,7 +47,9 @@ describe('the browser seals, Python opens', () => {
 
   it.skipIf(python === null)('Python opens the committed js-sealed.json', () => {
     const output = verify(new URL('../vectors/js-sealed.json', import.meta.url).pathname);
-    expect(output).toContain('9/9 envelopes opened');
+    const cases = (JSON.parse(readFileSync(new URL('../vectors/js-sealed.json', import.meta.url), 'utf8')) as { cases: unknown[] }).cases.length;
+    expect(cases).toBe(11);
+    expect(output).toContain(`${String(cases)}/${String(cases)} envelopes opened`);
   });
 
   it.skipIf(python === null)('Python opens fresh envelopes sealed with a random key pair and random ephemeral keys', async () => {
@@ -85,5 +90,45 @@ describe('the browser seals, Python opens', () => {
     const b = await sealPayload(request);
     expect(a.enc).not.toBe(b.enc);
     expect(a.ct).not.toBe(b.ct);
+  });
+});
+
+// The other direction (docs/06 section 11 item 5, both ways): envelopes sealed by Apple's CryptoKit, the library the
+// iPhone uses (generate/generate-swift.swift), open with the page's suite and with Python. The iPhone's own test
+// (BelloHubTests InboxVectorsTests) opens js-sealed.json and reads every payload the page built.
+interface SwiftSealedFile {
+  recipients: Record<string, { privateKey: string; publicKey: string; keyId: string }>;
+  cases: { name: string; recipient: string; kind: string; plaintext: string; envelope: SealedEnvelope }[];
+}
+
+describe('CryptoKit seals, the page and Python open', () => {
+  const file = JSON.parse(readFileSync(new URL('../vectors/swift-sealed.json', import.meta.url), 'utf8')) as SwiftSealedFile;
+  const pageFile = JSON.parse(readFileSync(new URL('../vectors/js-sealed.json', import.meta.url), 'utf8')) as SwiftSealedFile;
+
+  it('covers every plaintext of js-sealed.json', () => {
+    expect(file.cases.map((item) => [item.name, item.plaintext])).toEqual(pageFile.cases.map((item) => [item.name, item.plaintext]));
+  });
+
+  it('hpke-js opens every CryptoKit envelope to the exact plaintext', async () => {
+    for (const item of file.cases) {
+      const recipient = file.recipients[item.recipient];
+      expect(recipient, item.name).toBeDefined();
+      const opened = await openEnvelope(item.envelope, decodeBase64Url(recipient?.privateKey ?? ''));
+      expect(opened, item.name).toBe(item.plaintext);
+    }
+  });
+
+  it('a CryptoKit envelope moved to another item or kind does not open', async () => {
+    const item = file.cases[0];
+    const recipient = item === undefined ? undefined : file.recipients[item.recipient];
+    if (item === undefined || recipient === undefined) throw new Error('empty swift-sealed.json');
+    const key = decodeBase64Url(recipient.privateKey);
+    await expect(openEnvelope({ ...item.envelope, itemId: 'another-item' }, key)).rejects.toThrow();
+    await expect(openEnvelope({ ...item.envelope, kind: item.envelope.kind === 'intake' ? 'checkin' : 'intake' }, key)).rejects.toThrow();
+  });
+
+  it.skipIf(python === null)('Python opens the CryptoKit envelopes', () => {
+    const output = verify(new URL('../vectors/swift-sealed.json', import.meta.url).pathname);
+    expect(output).toContain(`${String(file.cases.length)}/${String(file.cases.length)} envelopes opened`);
   });
 });
