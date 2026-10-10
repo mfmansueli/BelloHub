@@ -132,12 +132,17 @@ struct RootView: View {
                 publishing.clear()
                 agendaDigest.stopListening()
                 notifications.stopListening()
+                calendar.stopListening()
                 push.stopListening()
                 mailbox.stopListening()
                 bookingSync.stopListening()
             }
             // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
-            if stage.isSignedOut { Task { await notifications.removeAll() } }
+            if stage.isSignedOut {
+                Task { await notifications.removeAll() }
+                // Her visits leave the iPhone's calendar too; the switch is a device preference and stays.
+                Task { await calendar.removeMirror() }
+            }
         }
         .onChange(of: session.user?.id) { previous, current in
             if let previous, current == nil {

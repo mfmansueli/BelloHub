@@ -30,7 +30,13 @@ final class NotificationSettingsService {
         self.permissions = permissions
         self.defaults = defaults
         prefs = self.store.load()
-        hideNamesOnLockScreen = defaults.object(forKey: DefaultsKey.hideNamesOnLockScreen) as? Bool ?? true
+        hideNamesOnLockScreen = Self.hidesNames(in: defaults)
+    }
+
+    /// Whether names stay off the lock screen (on until she switches it off). The Apple Calendar write-through reads
+    /// the same choice, because the iPhone shows the next event on the lock screen too.
+    nonisolated static func hidesNames(in defaults: UserDefaults) -> Bool {
+        defaults.object(forKey: DefaultsKey.hideNamesOnLockScreen) as? Bool ?? true
     }
 
     // MARK: - Permission

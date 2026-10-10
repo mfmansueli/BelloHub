@@ -91,6 +91,96 @@
         }
       }
     },
+    "NSCalendarsFullAccessUsageDescription" : {
+      "comment" : "Calendar: why the app asks (Integrations, Apple Calendar switch). The app keeps a Bello Hub calendar with her visits.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لعرض المواعيد في تقويم Bello Hub على هذا الـ iPhone."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Damit deine Termine in einem Bello Hub-Kalender auf diesem iPhone erscheinen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To show your appointments in a Bello Hub calendar on this iPhone."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "To show your appointments in a Bello Hub calendar on this iPhone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para mostrar tus citas en un calendario Bello Hub en este iPhone."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para mostrar tus citas en un calendario Bello Hub en este iPhone."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para mostrar tus citas en un calendario Bello Hub en este iPhone."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pour afficher vos rendez-vous dans un calendrier Bello Hub sur cet iPhone."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस iPhone पर Bello Hub कैलेंडर में आपके अपॉइंटमेंट दिखाने के लिए।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Untuk menampilkan janji temumu di kalender Bello Hub di iPhone ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Per mostrare i tuoi appuntamenti in un calendario Bello Hub su questo iPhone."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para mostrar seus agendamentos em um calendário Bello Hub neste iPhone."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Para mostrar as suas marcações num calendário Bello Hub neste iPhone."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Randevularınızı bu iPhone’da bir Bello Hub takviminde göstermek için."
+          }
+        }
+      }
+    },
     "NSCameraUsageDescription" : {
       "comment" : "Camera: why the app asks.",
       "extractionState" : "manual",

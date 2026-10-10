@@ -85,7 +85,7 @@ struct AppDependencies {
                 defaults: defaults
             ),
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
-            calendar: CalendarIntegrationService(defaults: defaults),
+            calendar: CalendarIntegrationService(appointments: appointments, vault: vault, defaults: defaults),
             export: DataExportService(vault: vault),
             inbox: inbox,
             defaults: defaults
@@ -171,7 +171,10 @@ struct AppDependencies {
                 defaults: defaults
             ),
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
-            calendar: CalendarIntegrationService(provider: UITestCalendarAccess(), defaults: defaults),
+            calendar: CalendarIntegrationService(
+                provider: UITestCalendarAccess(), writer: UITestCalendarWriter(), appointments: appointments, vault: vault,
+                defaults: defaults
+            ),
             export: DataExportService(vault: vault),
             inbox: inbox,
             defaults: defaults

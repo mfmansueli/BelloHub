@@ -121,6 +121,9 @@ extension XCUIApplication {
             let from = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: tooHigh ? near : distant))
             let to = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: tooHigh ? distant : near))
             from.press(forDuration: 0.05, thenDragTo: to)
+            // The page cannot scroll further (a last row near the bottom of a short form): it is as visible as it
+            // gets, so stop instead of dragging for the remaining attempts (that cost ~40 s per call).
+            if element.frame == frame { return }
         }
     }
 }

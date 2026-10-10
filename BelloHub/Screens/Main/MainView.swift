@@ -13,6 +13,8 @@ struct MainView: View {
 
     @Environment(ProfileService.self) private var profile
     @Environment(NotificationService.self) private var notifications
+    @Environment(CalendarIntegrationService.self) private var calendar
+    @Environment(NotificationSettingsService.self) private var notificationSettings
     @Environment(\.locale) private var locale
     @Environment(\.scenePhase) private var scenePhase
     @State private var selection = MainTab.home
@@ -62,12 +64,21 @@ struct MainView: View {
         .tint(Palette.selectionInk)
         // The phone's pending notifications follow her calendar for as long as she is signed in and unlocked.
         .task { notifications.startListening() }
+        // Her "Bello Hub" calendar mirrors her visits the same way, when she switched Apple Calendar on (7.6).
+        .task { calendar.startListening() }
+        // Event titles carry names only while the lock screen may show them.
+        .onChange(of: notificationSettings.hideNamesOnLockScreen) { Task { await calendar.sync() } }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { Task { await notifications.permissionMayHaveChanged() } }
+            if phase == .active {
+                Task { await notifications.permissionMayHaveChanged() }
+                // Calendar access may have changed in Settings while the app was away.
+                Task { await calendar.sync() }
+            }
         }
     }
 }
 
+#if DEBUG
 #Preview {
     let vault = VaultService(repository: nil)
     MainView(onSignOut: {})
@@ -88,4 +99,7 @@ struct MainView: View {
             profile: ProfileService(vault: vault)
         ))
         .environment(PermissionService())
+        .environment(CalendarIntegrationService(provider: UITestCalendarAccess(), writer: UITestCalendarWriter()))
+        .environment(NotificationSettingsService(permissions: PermissionService()))
 }
+#endif
