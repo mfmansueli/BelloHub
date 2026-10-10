@@ -68,6 +68,8 @@ final class CalendarIntegrationService {
         isEnabled = true
         defaults.set(true, forKey: DefaultsKey.appleCalendarEnabled)
         await sync()
+        // Switching off stopped the watch (`removeMirror`); switching on again resumes it without a relaunch.
+        startListening()
         return true
     }
 

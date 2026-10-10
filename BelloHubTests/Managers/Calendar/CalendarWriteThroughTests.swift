@@ -93,6 +93,13 @@ struct CalendarWriteThroughTests {
         rig.service.disconnect()
         #expect(await Wait.untilMain { rig.writer.removals == 1 })
         #expect(!rig.service.isEnabled)
+
+        // On again: the watch resumes, so a new visit reaches the calendar without a relaunch.
+        #expect(await rig.service.connect())
+        try await rig.world.appointments.book(
+            makeVisit(clientID: rig.world.ana.id, start: TestClock.date("2026-10-03 10:00"))
+        )
+        #expect(await Wait.untilMain { rig.writer.events.count == 1 })
     }
 
     @Test("Switching on asks once, then writes the visits already in the calendar")
