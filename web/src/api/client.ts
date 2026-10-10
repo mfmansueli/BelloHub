@@ -14,6 +14,7 @@ import {
   parseConfirmed,
   parseFound,
   parseHold,
+  parseOfferedHold,
   parseLate,
   parseMoved,
   parseProof,
@@ -39,6 +40,7 @@ import type {
   HoldResponse,
   LateResponse,
   MovedResponse,
+  OfferedHold,
   PortalView,
   PublicProfile,
   RebookRequest,
@@ -60,6 +62,8 @@ export interface Api {
   getSlots(query: SlotQuery): Promise<SlotsResponse>;
   /** Throws `slotTaken` or `paused` when the hold is not granted. */
   holdSlot(request: HoldRequest): Promise<HoldResponse>;
+  /** The waiting-list offer behind `?offer=<holdKey>`; throws `notFound` or `expired` when it is gone. */
+  getHold(slug: string, holdKey: string): Promise<OfferedHold>;
   sendEmailCode(request: SendEmailCodeRequest): Promise<SendCodeResponse>;
   /** Returns the single-use proof for `verification: { method: 'email', proof }`. */
   verifyEmailCode(email: string, code: string): Promise<string>;
@@ -109,6 +113,7 @@ export function createApi(transport: Transport): Api {
     },
     getSlots: async (query) => parseSlots(await transport.call('getSlots', query)),
     holdSlot: async (request) => parseHold(await transport.call('holdSlot', request)),
+    getHold: async (slug, holdKey) => parseOfferedHold(await transport.call('getHold', { slug, holdKey })),
     sendEmailCode: async (request) => parseSendCode(await transport.call('sendEmailCode', request)),
     verifyEmailCode: async (email, code) => parseProof(await transport.call('verifyEmailCode', { email, code })),
     createBooking: async (request) => parseBookingOutcome(await transport.call('createBooking', request)),

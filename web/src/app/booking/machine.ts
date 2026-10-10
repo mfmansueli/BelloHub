@@ -3,7 +3,7 @@
 // The screens only dispatch events and render the state; the server's answer (confirmed, pendingApproval, paused,
 // slotTaken) decides the last step, because the page must never learn whether a phone number is already a client.
 
-import type { BookingResult, FirstVisitAnswers, VerificationProof } from '../../api/types';
+import type { BookingResult, FirstVisitAnswers, OfferedHold, VerificationProof } from '../../api/types';
 
 export type BookingPhase =
   | 'service'
@@ -53,6 +53,8 @@ export type BookingEvent =
   | { readonly type: 'setGuests'; readonly guests: number }
   | { readonly type: 'chooseSlot'; readonly startsAt: string; readonly holdExpiresAt: string | null }
   | { readonly type: 'slotTaken'; readonly alternatives: readonly string[] }
+  /** She opened a waiting-list offer: the professional already holds this time under `holdKey` (API.md 5.4). */
+  | { readonly type: 'acceptOffer'; readonly hold: OfferedHold; readonly holdKey: string }
   | {
       readonly type: 'setDetails';
       readonly name: string;
@@ -154,6 +156,24 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
         phase: 'you',
         slotTaken: null,
         draft: { ...draft, startsAt: event.startsAt, holdExpiresAt: event.holdExpiresAt },
+      };
+    case 'acceptOffer':
+      // The offer decides the service, add-ons, guests and time; booking with its key converts her hold (5.8).
+      return {
+        ...state,
+        phase: 'you',
+        slotTaken: null,
+        result: null,
+        draft: {
+          ...draft,
+          serviceId: event.hold.serviceId,
+          addOnIds: [...event.hold.addOnIds],
+          guests: event.hold.guests,
+          startsAt: event.hold.startsAt,
+          holdKey: event.holdKey,
+          holdExpiresAt: event.hold.expiresAt,
+          idempotencyKey: newIdempotencyKey(),
+        },
       };
     case 'slotTaken':
       return {

@@ -64,6 +64,12 @@ export function isValidToken(value: string): boolean {
   return TOKEN.test(value);
 }
 
+/** The key of a waiting-list offer link (`/{slug}/time?offer=<holdKey>`, API.md 5.4), or null. */
+export function offerKeyOf(search: string): string | null {
+  const key = new URLSearchParams(search).get('offer');
+  return key !== null && /^[A-Za-z0-9_-]{16,64}$/.test(key) ? key : null;
+}
+
 export function parseRoute(pathname: string): Route {
   const segments = pathname.split('/').filter((part) => part !== '');
   const [first, second, third] = segments;

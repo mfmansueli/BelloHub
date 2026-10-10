@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "İlk kez mi geliyorsunuz? {name} ilk randevunuzu kendisi onaylar, genellikle birkaç saat içinde.",
   "bk1.book": "Randevu al",
   "bk1.credentials": "Eğitim ve sertifikalar",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "{name} ile",
   "bk4.noTimesEnd": "Boş saat kalmadı. Randevu {date} tarihine kadar açık.",
   "bk4.noTimesMonth": "Bu ay boş saat yok. Sonraki aya bakın.",
+  "bk4.offer.gone.text": "{name} tarafından sizin için ayrılan saatin süresi doldu ya da başka biri aldı. Yine de başka bir boş saat seçebilirsiniz.",
+  "bk4.offer.gone.title": "Bu teklifin süresi doldu.",
+  "bk4.offer.otherTimes": "Boş saatleri gör",
+  "bk4.offer.title": "{name} bu saati sizin için ayırdı",
   "bk4.pickError": "Önce bir saat seçin.",
   "bk4.taken.none": "Şu anda başka boş saat yok. Başka bir gün seçin.",
   "bk4.taken.title": "Bu saat az önce doldu. İşte sonrakiler.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} haberdar edilir ve kayıtlarınızı ile fotoğraflarınızı siler. Geçmişinizi artık göremezsiniz.",
   "cl7.form.title.copy": "{name} kişisinden kopya istensin mi?",
   "cl7.form.title.delete": "{name} kişisinden verileriniz silinsin mi?",
-  "cl7.health": "Sağlık formu ve onam",
+  "cl7.health": "Sağlık formu",
   "cl7.healthSub": "Mühürlü, yalnızca {name} açabilir",
   "cl7.how": "Talepler nasıl işler",
   "cl7.keeps": "{name} neleri saklıyor",

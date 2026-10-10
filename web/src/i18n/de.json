@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "Zum ersten Mal hier? {name} bestätigt Ihren ersten Termin persönlich, meist innerhalb weniger Stunden.",
   "bk1.book": "Termin buchen",
   "bk1.credentials": "Ausbildung und Zertifikate",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "bei {name}",
   "bk4.noTimesEnd": "Es gibt keine freien Zeiten mehr. Buchungen sind bis {date} möglich.",
   "bk4.noTimesMonth": "In diesem Monat sind keine Zeiten frei. Sehen Sie im nächsten nach.",
+  "bk4.offer.gone.text": "Der Termin, den {name} für Sie freigehalten hat, ist abgelaufen oder wurde von jemand anderem gebucht. Sie können trotzdem eine andere freie Zeit wählen.",
+  "bk4.offer.gone.title": "Dieses Angebot ist abgelaufen.",
+  "bk4.offer.otherTimes": "Freie Zeiten ansehen",
+  "bk4.offer.title": "Der Termin, den {name} für Sie freihält",
   "bk4.pickError": "Wählen Sie zuerst eine Uhrzeit.",
   "bk4.taken.none": "Im Moment sind keine weiteren Zeiten frei. Wählen Sie einen anderen Tag.",
   "bk4.taken.title": "Diese Zeit wurde gerade vergeben. Hier die nächsten.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} erhält die Anfrage und entfernt Ihre Unterlagen und Fotos. Ihren Verlauf können Sie danach nicht mehr einsehen.",
   "cl7.form.title.copy": "Eine Kopie bei {name} anfordern?",
   "cl7.form.title.delete": "{name} bitten, Ihre Daten zu löschen?",
-  "cl7.health": "Gesundheitsbogen und Einwilligung",
+  "cl7.health": "Gesundheitsbogen",
   "cl7.healthSub": "Versiegelt, nur {name} kann ihn öffnen",
   "cl7.how": "So funktionieren Anfragen",
   "cl7.keeps": "Was {name} speichert",

@@ -103,6 +103,8 @@ interface Hold {
   endsAt: number;
   holdKey: string;
   expiresAt: number;
+  /** A waiting-list offer (API.md 6.x `offerWaitlistSlot`): what the professional kept, for `getHold`. */
+  offer?: { serviceId: string; addOnIds: string[]; guests: number };
 }
 
 interface Portal {
@@ -442,6 +444,37 @@ export class MockApi {
     const hold: Hold = { id: `h_${token()}`, slug, startsAt: start, endsAt: start + minutes * MINUTE, holdKey, expiresAt: now + 5 * MINUTE };
     this.holds.set(hold.id, hold);
     return { status: 'held', holdId: hold.id, expiresAt: iso(hold.expiresAt) };
+  }
+
+  /** 5.4: what a waiting-list offer link holds. Ordinary soft holds are not offers and stay unknown. */
+  getHold(input: Json, now = Date.now()): Json {
+    this.maybeFail('getHold');
+    const slug = str(input['slug'], 'slug');
+    this.profile(slug);
+    const holdKey = str(input['holdKey'], 'holdKey');
+    const hold = [...this.holds.values()].find((candidate) => candidate.slug === slug && candidate.holdKey === holdKey && candidate.offer !== undefined);
+    if (hold?.offer === undefined) throw new MockError('NOT_FOUND');
+    if (hold.expiresAt <= now) throw new MockError('TOKEN_EXPIRED');
+    return { serviceId: hold.offer.serviceId, addOnIds: hold.offer.addOnIds, guests: hold.offer.guests, startsAt: iso(hold.startsAt), endsAt: iso(hold.endsAt), expiresAt: iso(hold.expiresAt) };
+  }
+
+  /**
+   * Test control standing in for the owner's `offerWaitlistSlot`: holds `startsAt` (or the first free time from
+   * tomorrow) for the first service and returns the link's key. `expired: true` makes an offer that already ended.
+   */
+  seedOffer(slug: string, options: { expired?: boolean } = {}, now = Date.now()): Json {
+    const profile = this.profile(slug);
+    const service = profile.services[0];
+    if (service === undefined) throw new MockError('NOT_FOUND');
+    const minutes = this.duration(profile, service.id, [], 0);
+    const from = now + 24 * 60 * MINUTE;
+    const start = this.alternatives(slug, from, minutes, now, {})[0];
+    if (start === undefined) throw new MockError('NOT_FOUND');
+    const startsAt = Date.parse(start);
+    const holdKey = token();
+    const hold: Hold = { id: `h_${token()}`, slug, startsAt, endsAt: startsAt + minutes * MINUTE, holdKey, expiresAt: options.expired === true ? now - MINUTE : now + 180 * MINUTE, offer: { serviceId: service.id, addOnIds: [], guests: 0 } };
+    this.holds.set(hold.id, hold);
+    return { holdKey, startsAt: iso(startsAt), serviceId: service.id };
   }
 
   sendEmailCode(input: Json): Json {

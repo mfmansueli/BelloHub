@@ -12,6 +12,7 @@ import {
   type BookingState,
 } from '../../src/app/booking/machine';
 import { parseDraft, serializeDraft } from '../../src/app/booking/store';
+import { offerKeyOf } from '../../src/app/router';
 import { selectedAddOns, servicePrice, totals } from '../../src/app/booking/summary';
 
 const KEY = 'fixed-key';
@@ -212,5 +213,32 @@ describe('time and price of a booking (D19)', () => {
 
   it('selects add-ons in the order she offers them and ignores ids that vanished', () => {
     expect(selectedAddOns([brow, led, mask], ['mask', 'brow', 'gone']).map((a) => a.id)).toEqual(['brow', 'mask']);
+  });
+});
+
+describe('the waiting-list offer link (API.md 5.4)', () => {
+  const hold = { serviceId: 'glow', addOnIds: ['brow'], guests: 1, startsAt: '2026-10-02T13:00:00Z', endsAt: '2026-10-02T15:30:00Z', expiresAt: '2026-10-01T15:00:00Z' } as const;
+  const offerKey = 'offer_key_from_the_professional_1234';
+
+  it('fills the draft with what she kept, takes her key, and goes to "you"', () => {
+    const before = run([{ type: 'chooseService', serviceId: 'other', addOnIds: [] }, slot]);
+    const state = run([{ type: 'acceptOffer', hold, holdKey: offerKey }], before);
+    expect(state.phase).toBe('you');
+    expect(state.draft).toMatchObject({ serviceId: 'glow', addOnIds: ['brow'], guests: 1, startsAt: hold.startsAt, holdKey: offerKey, holdExpiresAt: hold.expiresAt });
+    expect(state.draft.idempotencyKey).not.toBe(before.draft.idempotencyKey);
+    expect(allowedStep('you', state)).toBe('you');
+  });
+
+  it('the stored draft keeps the offer key, so a refresh still converts her hold', () => {
+    const state = run([{ type: 'acceptOffer', hold, holdKey: offerKey }]);
+    expect(parseDraft(serializeDraft(state.draft), 'maria', 'BR').holdKey).toBe(offerKey);
+  });
+
+  it('reads the key only from a well-formed ?offer=', () => {
+    expect(offerKeyOf(`?offer=${offerKey}`)).toBe(offerKey);
+    expect(offerKeyOf('?offer=short')).toBeNull();
+    expect(offerKeyOf('?offer=has spaces in it but long enough')).toBeNull();
+    expect(offerKeyOf('?other=1')).toBeNull();
+    expect(offerKeyOf('')).toBeNull();
   });
 });

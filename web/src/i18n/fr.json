@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "Première visite ? {name} confirme en personne votre premier rendez-vous, en général en quelques heures.",
   "bk1.book": "Prendre rendez-vous",
   "bk1.credentials": "Formation et certificats",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "avec {name}",
   "bk4.noTimesEnd": "Il n'y a plus de créneaux libres. La réservation est ouverte jusqu'au {date}.",
   "bk4.noTimesMonth": "Aucun créneau libre ce mois-ci. Regardez le mois suivant.",
+  "bk4.offer.gone.text": "Le créneau que {name} vous avait gardé a expiré ou a été réservé par quelqu'un d'autre. Vous pouvez encore choisir un autre créneau libre.",
+  "bk4.offer.gone.title": "Cette offre a pris fin.",
+  "bk4.offer.otherTimes": "Voir les créneaux libres",
+  "bk4.offer.title": "Le créneau que {name} vous a gardé",
   "bk4.pickError": "Choisissez d'abord un créneau.",
   "bk4.taken.none": "Il n'y a pas d'autre créneau libre pour le moment. Choisissez un autre jour.",
   "bk4.taken.title": "Ce créneau vient d'être pris. Voici les suivants.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} reçoit l'avis et supprime vos dossiers et vos photos. Vous ne pourrez plus voir votre historique.",
   "cl7.form.title.copy": "Demander une copie à {name} ?",
   "cl7.form.title.delete": "Demander à {name} de supprimer vos données ?",
-  "cl7.health": "Fiche de santé et consentement",
+  "cl7.health": "Fiche de santé",
   "cl7.healthSub": "Scellée, seul {name} peut l'ouvrir",
   "cl7.how": "Comment fonctionnent les demandes",
   "cl7.keeps": "Ce que conserve {name}",

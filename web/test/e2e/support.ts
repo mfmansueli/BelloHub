@@ -84,6 +84,11 @@ export class Mock {
     return (await this.post<{ portalToken: string }>('/__test/seed-portal', { slug, name, phone, mode })).portalToken;
   }
 
+  /** A waiting-list offer the professional sent (`/{slug}/time?offer=<holdKey>`, API.md 5.4). */
+  seedOffer(slug: string, expired = false): Promise<{ holdKey: string; startsAt: string; serviceId: string }> {
+    return this.post('/__test/seed-offer', { slug, expired });
+  }
+
   async seedExpired(slug: string): Promise<string> {
     return (await this.post<{ token: string }>('/__test/seed-expired', { slug })).token;
   }

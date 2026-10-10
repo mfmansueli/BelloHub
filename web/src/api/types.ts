@@ -400,6 +400,16 @@ export interface HoldResponse {
   readonly expiresAt: string;
 }
 
+/** 5.4 `getHold`: the time the professional kept for a person on her waiting list (`/{slug}/time?offer=<holdKey>`). */
+export interface OfferedHold {
+  readonly serviceId: string;
+  readonly addOnIds: readonly string[];
+  readonly guests: number;
+  readonly startsAt: string;
+  readonly endsAt: string;
+  readonly expiresAt: string;
+}
+
 /**
  * What Bk-7 collects. D45: only an optional preference note; "how did you hear" and "been before" are asked in person
  * by the professional, never on the page.

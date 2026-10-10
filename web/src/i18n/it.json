@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "Prima volta? {name} conferma di persona la tua prima prenotazione, di solito entro poche ore.",
   "bk1.book": "Prenota appuntamento",
   "bk1.credentials": "Formazione e certificati",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "con {name}",
   "bk4.noTimesEnd": "Non ci sono più orari liberi. Si può prenotare fino al {date}.",
   "bk4.noTimesMonth": "Nessun orario libero questo mese. Prova il prossimo.",
+  "bk4.offer.gone.text": "L'orario che {name} aveva tenuto per te è scaduto o è stato prenotato da un'altra persona. Puoi ancora scegliere un altro orario libero.",
+  "bk4.offer.gone.title": "Questa offerta è terminata.",
+  "bk4.offer.otherTimes": "Vedi gli orari liberi",
+  "bk4.offer.title": "L'orario che {name} ha tenuto per te",
   "bk4.pickError": "Scegli prima un orario.",
   "bk4.taken.none": "Al momento non ci sono altri orari liberi. Scegli un altro giorno.",
   "bk4.taken.title": "Quell'orario è appena stato occupato. Ecco i prossimi.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} viene avvisato ed elimina i tuoi registri e le tue foto. Non potrai più vedere il tuo storico.",
   "cl7.form.title.copy": "Chiedere una copia a {name}?",
   "cl7.form.title.delete": "Chiedere a {name} di cancellare i tuoi dati?",
-  "cl7.health": "Scheda sanitaria e consenso",
+  "cl7.health": "Scheda sanitaria",
   "cl7.healthSub": "Sigillata, solo {name} può aprirla",
   "cl7.how": "Come funzionano le richieste",
   "cl7.keeps": "Cosa conserva {name}",

@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "New here? {name} confirms your first booking personally, usually within a few hours.",
   "bk1.book": "Book appointment",
   "bk1.credentials": "Training and credentials",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "with {name}",
   "bk4.noTimesEnd": "No free times left. Bookings are open until {date}.",
   "bk4.noTimesMonth": "No free times this month. Try the next one.",
+  "bk4.offer.gone.text": "The time {name} kept for you has expired or was booked by someone else. You can still choose another free time.",
+  "bk4.offer.gone.title": "This offer has ended.",
+  "bk4.offer.otherTimes": "See free times",
+  "bk4.offer.title": "The time {name} kept for you",
   "bk4.pickError": "Choose a time first.",
   "bk4.taken.none": "No other times are free right now. Pick another day.",
   "bk4.taken.title": "That time was just taken. Here are the next ones.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} is notified and removes your records and photos. You will no longer be able to see your history.",
   "cl7.form.title.copy": "Ask {name} for a copy?",
   "cl7.form.title.delete": "Ask {name} to delete your data?",
-  "cl7.health": "Health form and consent",
+  "cl7.health": "Health form",
   "cl7.healthSub": "Sealed, only {name} can open it",
   "cl7.how": "How requests work",
   "cl7.keeps": "What {name} keeps",

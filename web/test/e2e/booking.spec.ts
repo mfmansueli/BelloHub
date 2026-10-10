@@ -48,6 +48,17 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await expect(page.getByTestId('actions')).toBeVisible();
   });
 
+  test('the health-form card shows for a first visit and not when a form was sent within 12 months', async ({ page, slugFor }) => {
+    await bookEverything(page, slugFor('maria'));
+    await expect(page.getByTestId('booking-rules')).toBeVisible();
+    await expect(page.getByTestId('health-form')).toBeVisible();
+
+    await bookEverything(page, slugFor('maria-done'));
+    // The card waits for the booking's own flag (read back with the rules), then stays away.
+    await expect(page.getByTestId('booking-rules')).toBeVisible();
+    await expect(page.getByTestId('health-form')).toHaveCount(0);
+  });
+
   test('verifies by e-mail code only and sends no phone verification (D46)', async ({ page, mock, slugFor, guard }) => {
     const slug = slugFor('maria');
     await chooseService(page, slug);
@@ -106,7 +117,56 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
   });
 });
 
+test.describe('the waiting-list offer link (docs/10 section 3, API.md 5.4)', () => {
+  test('opens on her details with the kept time, and booking with it converts the hold', async ({ page, mock, slugFor, guard }) => {
+    const slug = slugFor('maria');
+    const offer = await mock.seedOffer(slug);
+    await open(page, `/${slug}/time?offer=${offer.holdKey}`);
+    await expect(page.getByTestId('name')).toBeVisible();
+    // The key leaves the address bar once read: a refresh or a shared screenshot does not carry it.
+    expect(new URL(page.url()).pathname).toBe(`/${slug}/you`);
+    expect(new URL(page.url()).search).toBe('');
+    await fillYou(page);
+    await verify(page);
+    await confirmFirstVisit(page);
+    await expect(page.getByTestId('booking-card')).toBeVisible();
+
+    const [booking] = await mock.bookings(slug);
+    expect(booking).toMatchObject({ status: 'confirmed', serviceId: offer.serviceId });
+    expect(new Date(booking?.startsAt ?? '').toISOString()).toBe(offer.startsAt);
+    const create = guard.requests.filter((request) => request.url.endsWith('/api/createBooking'));
+    expect(create).toHaveLength(1);
+    expect(JSON.parse(create[0]?.body ?? '{}')).toMatchObject({ data: { holdKey: offer.holdKey, startsAt: offer.startsAt } });
+    // The page asked for the offer, never for an ordinary hold of its own.
+    expect(guard.requests.filter((request) => request.url.endsWith('/api/holdSlot'))).toHaveLength(0);
+  });
+
+  test('an offer that ended says so and leads to the free times', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria');
+    const offer = await mock.seedOffer(slug, true);
+    await open(page, `/${slug}/time?offer=${offer.holdKey}`);
+    await expect(page.getByTestId('offer-gone')).toBeVisible();
+    await expect(page.getByTestId('offer-gone')).toContainText('This offer has ended.');
+    await page.getByTestId('offer-gone').getByRole('button').click();
+    await expect(page.locator('[data-testid^="service-"]').first()).toBeVisible();
+  });
+
+  test('a key that was never an offer looks the same as one that ended', async ({ page, slugFor }) => {
+    const slug = slugFor('maria');
+    await open(page, `/${slug}/time?offer=${'x'.repeat(32)}`);
+    await expect(page.getByTestId('offer-gone')).toBeVisible();
+  });
+});
+
 test.describe('approval, no-show protection and pause (Bk-10)', () => {
+  test('her page says up front that she confirms a first booking herself, only when she does', async ({ page, slugFor }) => {
+    await open(page, `/${slugFor('maria-approval')}`);
+    await expect(page.getByTestId('approval')).toContainText('confirms your first booking personally');
+    await open(page, `/${slugFor('maria')}`);
+    await expect(page.locator('[data-testid^="service-"]').first()).toBeVisible();
+    await expect(page.getByTestId('approval')).toHaveCount(0);
+  });
+
   test('a new client of a professional who confirms new clients is told it is waiting for approval, and nothing more', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria-approval');
     await bookUntilResult(page, slug);

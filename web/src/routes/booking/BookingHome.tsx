@@ -75,6 +75,12 @@ export function BookingHome({ profile }: { profile: PublicProfile }): JSX.Elemen
         </Notice>
       )}
 
+      {accepting && profile.booking.requiresApproval ? (
+        <Notice kind="info" icon="info" testId="approval">
+          {t('bk1.approval', { name: profile.firstName })}
+        </Notice>
+      ) : null}
+
       {credentials.length === 0 ? null : (
         <button type="button" class="card list-row" onClick={() => { setCredentialsOpen(true); }} aria-haspopup="dialog" data-testid="credentials-open">
           <span class="grow">

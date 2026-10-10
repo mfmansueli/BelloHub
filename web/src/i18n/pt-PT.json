@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "Primeira vez por cá? {name} confirma pessoalmente a primeira marcação, normalmente em poucas horas.",
   "bk1.book": "Marcar",
   "bk1.credentials": "Formação e certificados",
   "bk1.credentialsCount": {
@@ -57,6 +58,10 @@
   "bk2.with": "com {name}",
   "bk4.noTimesEnd": "Já não há horários livres. As marcações estão abertas até {date}.",
   "bk4.noTimesMonth": "Sem horários livres neste mês. Veja o seguinte.",
+  "bk4.offer.gone.text": "O horário que {name} reservou para si expirou ou já foi marcado por outra pessoa. Ainda pode escolher outro horário livre.",
+  "bk4.offer.gone.title": "Esta oferta terminou.",
+  "bk4.offer.otherTimes": "Ver horários livres",
+  "bk4.offer.title": "O horário que {name} reservou para si",
   "bk4.pickError": "Escolha primeiro um horário.",
   "bk4.taken.none": "Não há outros horários livres neste momento. Escolha outro dia.",
   "bk4.taken.title": "Esse horário acabou de ser ocupado. Aqui ficam os seguintes.",
@@ -317,7 +322,7 @@
   "cl7.form.text.delete": "{name} recebe o aviso e remove os seus registos e fotografias. Deixará de poder ver o seu histórico.",
   "cl7.form.title.copy": "Pedir uma cópia a {name}?",
   "cl7.form.title.delete": "Pedir a {name} que apague os seus dados?",
-  "cl7.health": "Ficha de saúde e consentimento",
+  "cl7.health": "Ficha de saúde",
   "cl7.healthSub": "Selada, só {name} a consegue abrir",
   "cl7.how": "Como funcionam os pedidos",
   "cl7.keeps": "O que {name} guarda",

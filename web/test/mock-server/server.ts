@@ -91,6 +91,8 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return api.getPublicPage(data);
       case 'getSlots':
         return api.getSlots(data);
+      case 'getHold':
+        return api.getHold(data);
       case 'holdSlot':
         return api.holdSlot(data);
       case 'sendEmailCode':
@@ -138,6 +140,8 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return send(response, 200, api.seedBooking(body as never));
       case '/__test/seed-portal':
         return send(response, 200, { portalToken: api.seedPortal(String(body['slug']), String(body['name'] ?? 'Ana'), String(body['phone'] ?? '+5511987654321'), (body['mode'] as 'direct' | 'approval' | 'paused' | undefined) ?? 'direct') });
+      case '/__test/seed-offer':
+        return send(response, 200, api.seedOffer(String(body['slug']), { expired: body['expired'] === true }));
       case '/__test/seed-expired':
         return send(response, 200, { token: api.seedExpired(String(body['slug'])) });
       case '/__test/config':

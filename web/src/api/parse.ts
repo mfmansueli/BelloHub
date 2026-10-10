@@ -14,6 +14,7 @@ import type {
   HoldResponse,
   LateResponse,
   MovedResponse,
+  OfferedHold,
   PortalView,
   ProfessionalLite,
   PublicProfile,
@@ -152,6 +153,19 @@ export function parseHold(raw: unknown): HoldResponse {
     default:
       return bad();
   }
+}
+
+export function parseOfferedHold(raw: unknown): OfferedHold {
+  const value = record(raw);
+  const guests = whole(value['guests']);
+  return {
+    serviceId: text(value['serviceId']),
+    addOnIds: list(value['addOnIds']).map(text),
+    guests: Math.min(guests, 2),
+    startsAt: text(value['startsAt']),
+    endsAt: text(value['endsAt']),
+    expiresAt: text(value['expiresAt']),
+  };
 }
 
 export function parseSendCode(raw: unknown): SendCodeResponse {

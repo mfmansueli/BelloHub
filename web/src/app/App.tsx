@@ -24,12 +24,13 @@ import { FindPage } from '../routes/booking/FindPage';
 import { FirstVisitStep } from '../routes/booking/FirstVisitStep';
 import { ReviewStep } from '../routes/booking/ReviewStep';
 import { ServiceStep } from '../routes/booking/ServiceStep';
+import { OfferStep } from '../routes/booking/OfferStep';
 import { TimeStep } from '../routes/booking/TimeStep';
 import { VerifyStep } from '../routes/booking/VerifyStep';
 import { YouStep } from '../routes/booking/YouStep';
 import { languageStore, useI18n, useT } from '../i18n';
 import { LanguageChooser } from '../components/LanguageSheet';
-import { navigate, slugRoute, useRoute, type Route, type SlugStep } from './router';
+import { navigate, offerKeyOf, slugRoute, useRoute, type Route, type SlugStep } from './router';
 import { SlugLayout } from './pageData';
 import { TokenLayout } from './TokenLayout';
 
@@ -42,8 +43,10 @@ function SlugStepView({ profile, step }: { profile: PublicProfile; step: SlugSte
     case 'professional':
       // One professional in v1 (D5): the screen exists in the design and sends her on.
       return <Redirect to={slugRoute(profile.slug, 'service')} />;
-    case 'time':
-      return <TimeStep profile={profile} />;
+    case 'time': {
+      const offer = offerKeyOf(window.location.search);
+      return offer === null ? <TimeStep profile={profile} /> : <OfferStep profile={profile} holdKey={offer} />;
+    }
     case 'you':
       return <YouStep profile={profile} />;
     case 'verify':

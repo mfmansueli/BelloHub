@@ -34,13 +34,18 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
   // D47: the rules shown here are the booking's own policy snapshot, read back from the server; until it arrives (or if
   // it cannot be read) nothing is claimed.
   const [snapshot, setSnapshot] = useState<PolicyValues | null>(null);
+  // docs/10 section 3: the health-form card is for a first visit or after 12 months; the server's `intakeRequired`
+  // says which (a flag, no content). Until the booking is read back the card is not shown rather than guessed.
+  const [intakeRequired, setIntakeRequired] = useState(false);
   const bookedToken = state.result?.status === 'confirmed' ? state.result.manageToken : null;
   useEffect(() => {
     if (bookedToken === null) return;
     let current = true;
     api.getBooking(bookedToken).then(
       (booking) => {
-        if (current) setSnapshot(booking.policy);
+        if (!current) return;
+        setSnapshot(booking.policy);
+        setIntakeRequired(booking.intakeRequired);
       },
       () => {
         if (current) setSnapshot(null);
@@ -125,7 +130,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </Button>
       </div>
 
-      {profile.intakeAvailable ? (
+      {profile.intakeAvailable && intakeRequired ? (
         <Link to={manageRoute(manageToken, 'form')} class="card list-row" testId="health-form">
           <span class="grow">
             <b class="strong">{t('bk8.form.title')}</b>

@@ -1,4 +1,5 @@
 {
+  "bk1.approval": "Baru pertama kali? {name} mengonfirmasi sendiri janji pertama Anda, biasanya dalam beberapa jam.",
   "bk1.book": "Buat janji",
   "bk1.credentials": "Pendidikan dan sertifikat",
   "bk1.credentialsCount": {
@@ -54,6 +55,10 @@
   "bk2.with": "bersama {name}",
   "bk4.noTimesEnd": "Tidak ada lagi jam kosong. Pemesanan dibuka sampai {date}.",
   "bk4.noTimesMonth": "Tidak ada jam kosong bulan ini. Lihat bulan berikutnya.",
+  "bk4.offer.gone.text": "Waktu yang disimpan {name} untuk Anda sudah habis atau sudah dipesan orang lain. Anda masih bisa memilih waktu kosong lainnya.",
+  "bk4.offer.gone.title": "Penawaran ini sudah berakhir.",
+  "bk4.offer.otherTimes": "Lihat waktu kosong",
+  "bk4.offer.title": "Waktu yang disimpan {name} untuk Anda",
   "bk4.pickError": "Pilih jam terlebih dahulu.",
   "bk4.taken.none": "Saat ini tidak ada jam kosong lain. Pilih hari lain.",
   "bk4.taken.title": "Jam itu baru saja terisi. Ini jam berikutnya.",
@@ -310,7 +315,7 @@
   "cl7.form.text.delete": "{name} diberi tahu dan menghapus catatan serta foto Anda. Anda tidak akan bisa melihat riwayat lagi.",
   "cl7.form.title.copy": "Minta salinan dari {name}?",
   "cl7.form.title.delete": "Minta {name} menghapus data Anda?",
-  "cl7.health": "Formulir kesehatan dan persetujuan",
+  "cl7.health": "Formulir kesehatan",
   "cl7.healthSub": "Disegel, hanya {name} yang bisa membukanya",
   "cl7.how": "Cara kerja permintaan",
   "cl7.keeps": "Apa yang disimpan {name}",
