@@ -171,6 +171,17 @@ export async function chooseDayAhead(page: Page, zone: string, minDays: number, 
     }
     if ((await day.count()) === 0 || (await day.getAttribute('aria-disabled')) === 'true') continue;
     await day.click();
+    // The time list of the day shown before the click stays on screen until the page re-renders, so a caller that
+    // read `slots.first()` right away sometimes booked the previous day (the flake of S8). Wait until the chosen day
+    // is the selected cell and every listed time falls on it in the business zone.
+    await expect(page.locator(`[role="gridcell"][aria-selected="true"] [data-testid="day-${key}"]`)).toBeVisible();
+    const slots = page.locator('[data-testid^="slot-"]');
+    await expect
+      .poll(async () => {
+        const ids = await slots.evaluateAll((elements) => elements.map((element) => element.getAttribute('data-testid') ?? ''));
+        return ids.length > 0 && ids.every((id) => dateKeyIn(zone, Date.parse(id.replace('slot-', ''))) === key);
+      }, { message: `the free times of ${key}` })
+      .toBe(true);
     return key;
   }
   throw new Error(`no bookable day between ${minDays} and ${maxDays} days ahead`);
