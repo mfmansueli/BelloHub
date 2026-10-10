@@ -20,6 +20,11 @@ struct BookingLinkCard<Destination: View>: View {
 
     @Environment(\.locale) private var locale
 
+    /// "Your booking link", for the address's accessibility label (Text concatenation is deprecated in iOS 26).
+    private var linkTitle: String {
+        String(localized: LocalizedStringResource("bookingSettings.link.title").localized(in: locale))
+    }
+
     var body: some View {
         HeroCard {
             VStack(alignment: .leading, spacing: Spacing.row) {
@@ -32,7 +37,7 @@ struct BookingLinkCard<Destination: View>: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         // A bare address ("bello-hub.web.app/maria-silva") is not a readable label for VoiceOver or
                         // the accessibility audit; the card's title says what it is.
-                        .accessibilityLabel(Text("bookingSettings.link.title") + Text(verbatim: ", \(link.display)"))
+                        .accessibilityLabel(Text(verbatim: "\(linkTitle), \(link.display)"))
                         .accessibilityIdentifier("bookingSettings.linkText")
                 } else {
                     Text("bookingSettings.link.noAddress")

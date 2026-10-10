@@ -26,6 +26,11 @@ struct ShareLinkView: View {
         ))
     }
 
+    /// "Your booking link", for the address's accessibility label (Text concatenation is deprecated in iOS 26).
+    private var linkTitle: String {
+        String(localized: LocalizedStringResource("bookingSettings.link.title").localized(in: locale))
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.section) {
@@ -168,7 +173,7 @@ struct ShareLinkView: View {
             Text(verbatim: link.display).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 .environment(\.layoutDirection, .leftToRight)
                 // A bare address is not a readable label on its own (accessibility audit); say what it is.
-                .accessibilityLabel(Text("bookingSettings.link.title") + Text(verbatim: ", \(link.display)"))
+                .accessibilityLabel(Text(verbatim: "\(linkTitle), \(link.display)"))
                 .accessibilityIdentifier("shareLink.linkText")
             Text(verbatim: texts.qrCaption).font(Typography.meta).foregroundStyle(Palette.ink2)
                 .multilineTextAlignment(.center)
