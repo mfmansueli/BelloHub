@@ -22,7 +22,7 @@ import { runTransaction } from '../lib/tx.js';
  * booking stays pending, and the app shows the paywall. Declining frees the time.
  *
  * An unverified request (verify-fallback, `verification: 'whatsapp'`) was never e-mailed when it was made, so approving
- * it mints a new manage token and e-mails her the personal link itself (the address she typed; she confirmed the
+ * it mints a new manage token and e-mails her the full confirmation with the personal link (the address she typed; she confirmed the
  * request with the professional on WhatsApp).
  */
 export const respondBookingRequest = defineUseCase({
@@ -98,7 +98,13 @@ export const respondBookingRequest = defineUseCase({
 
     if (outcome.status !== 'needsSubscription') {
       await sendBookingEmail(deps, {
-        template: outcome.status === 'confirmed' ? 'bookingApproved' : 'bookingDeclined',
+        // An approved unverified request gets the full confirmation (it carries the personal link): she never had one.
+        template:
+          outcome.status === 'confirmed'
+            ? 'manageToken' in outcome && outcome.manageToken
+              ? 'bookingConfirmed'
+              : 'bookingApproved'
+            : 'bookingDeclined',
         booking: outcome.booking,
         professionalName: outcome.profile?.displayName ?? '',
         ...('manageToken' in outcome && outcome.manageToken ? { manageToken: outcome.manageToken } : { linkToPage: true })
