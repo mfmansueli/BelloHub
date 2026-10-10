@@ -53,7 +53,8 @@ struct WinBackContentView: View {
     @ViewBuilder
     private func rows(_ list: WinBackList) -> some View {
         let counted = BidiIsolate.wrap(profile.clientTerm.countText(list.rows.count, in: locale))
-        Text(LocalizedStringResource("winBack.summary.due", defaultValue: "To reconnect: \(counted)").localized(in: locale))
+        Text(LocalizedStringResource("winBack.summary.due", defaultValue: "To reconnect: \(counted)")
+            .localized(in: locale))
             .font(Typography.section).foregroundStyle(Palette.ink)
             .accessibilityAddTraits(.isHeader)
             .accessibilityIdentifier("winBack.summary")
