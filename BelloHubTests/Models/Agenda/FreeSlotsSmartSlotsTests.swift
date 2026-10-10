@@ -29,8 +29,8 @@ struct FreeSlotsSmartSlotsTests {
     }
 
     private func visit(_ from: String, _ to: String, timing: VisitTiming = .noExtraTime) -> TimedInterval {
-        TimedInterval(DateInterval(start: TestClock.date("2026-10-08 \(from)"), end: TestClock.date("2026-10-08 \(to)")),
-                      timing: timing)
+        let stretch = DateInterval(start: TestClock.date("2026-10-08 \(from)"), end: TestClock.date("2026-10-08 \(to)"))
+        return TimedInterval(stretch, timing: timing)
     }
 
     private func clock(_ dates: [Date]) -> [String] {

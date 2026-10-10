@@ -54,7 +54,9 @@ struct FreeSlotsCalculatorTests {
         #expect(!result.contains("16:30"), "starts at the visit's end, no buffer")
         #expect(!result.contains("16:00"))
         #expect(result.contains("17:00"), "starts 30 minutes after the visit ends")
-        #expect(result.count == 10)
+        #expect(result.contains("13:45"), "D56: anchored to end exactly a buffer before the visit")
+        #expect(result.contains("16:45"), "D56: anchored a buffer after the visit")
+        #expect(result.count == 12)
     }
 
     @Test("A block closes the time without adding a buffer around it")

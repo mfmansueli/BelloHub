@@ -25,10 +25,13 @@ struct OpenTimesTests {
 
     @Test("A free day offers every start the duration fits in, around the lunch break")
     func freeDay() {
-        // 09:00 to 19:00, lunch 12:30 to 13:30, one-hour visits on the hour.
+        // 09:00 to 19:00, lunch 12:30 to 13:30, one-hour visits on the hour, plus the starts anchored against lunch
+        // (D56): one that ends as lunch begins and one that starts as it ends.
         let slots = OpenTimes.slots(on: friday, request(settings: makeAvailability(bufferMinutes: 0)))
-        let labels = slots.map { TestClock.calendar().component(.hour, from: $0) }
-        #expect(labels == [9, 10, 11, 14, 15, 16, 17, 18])
+        let labels = slots.map {
+            TestClock.calendar().component(.hour, from: $0) * 60 + TestClock.calendar().component(.minute, from: $0)
+        }
+        #expect(labels == [540, 600, 660, 690, 810, 840, 900, 960, 1_020, 1_080])
     }
 
     @Test("A booked visit and its buffer take the time away; her own visit does not when she moves it")
