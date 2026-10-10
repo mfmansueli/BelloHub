@@ -350,7 +350,7 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **Home and Alerts**: the digest is rebuilt every minute; "Reminders ready" (D31) is a queue she opens one chat at a
   time, the row then says "Opened"; nothing is sent by the app (D14). Local notifications are generic (counts only, no
   client or service name, tested in all 14 localizations).
-- **Calendar**: time blocks are a vault record; the Apple Calendar write-through is one way.
+- **Calendar**: time blocks are a vault record; the Apple Calendar write-through is one way (built in S12, see "Release hardening").
 - **Treatment flow (5.x)**: voice and AI structuring are stubs that say they are unavailable (D53); the manual form is
   fully real. No AI sensitivity card, no photo slider or timeline, no reminder parts in 5.9.
 - **Record (4.7, 4.9, 4.10)**: history with a lock notice and a correction sheet; the export is a PDF shared through the
@@ -510,6 +510,17 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - The client terms in the plural are tab titles, so they are short: generic plurals in pt, es, it, fr ("convidados",
   "alunos"), "Kundschaft", "Patienten" and "Schüler" in German; profession names are fields, not gendered job titles
   ("Kosmetik", "Cabelo", "Acconciatura", "Coiffure").
+
+### Release hardening (S12)
+- **4.3 ClientEdit, "Export data"**: a peach `ActionRow` (share icon) right above "Delete data", opening 4.10
+  ExportRecord as a sheet; the two answers to a data-subject request sit together, export first. Help ("A client asked
+  me to delete her data") and Privacy ("From her profile, under Edit") now describe this screen.
+- **7.6 Apple Calendar write-through**: switched on with full access, the app keeps a calendar named "Bello Hub" in her
+  default calendar account, one event per visit (booked, confirmed, completed; cancelled and no-shows leave), from
+  yesterday to 90 days ahead, no alarm, no notes. Titles are "Ana Costa · Glow Facial" only when Privacy lets names
+  reach the lock screen; otherwise "Bello Hub appointment". Switching off or signing out removes the calendar.
+- **1.1 Welcome**: "Continue with phone" shows only when the build can send a code (`supportsPhoneSignIn`); the v1
+  Firebase provider cannot, so Release shows Sign in with Apple alone.
 
 ## Empty, loading and error states
 

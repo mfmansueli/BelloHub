@@ -84,3 +84,31 @@ Legend: **OK** = in the code and tested; **PARTIAL** = in the code, with a hole 
 | 7. Capture hiding, file protection | **Closed** | `hiddenWhileCaptured()` on the recovery words (recording, mirroring, sharing; screenshots cannot be refused with a public API; the app switcher is `PrivacyCover`); `VaultFileProtection` sets `completeUntilFirstUserAuthentication` on the store, its `-wal`/`-shm` and folder, read back in `VaultFileProtectionTests` |
 | 8. Phone sign-in in docs | **Open (decision)** | v1 is Apple only (D44); docs/06 section 5 still describes phone |
 | Account deletion after a half-finished attempt | **Closed** | `AccountService` keeps the server's confirmation (`DefaultsKey.accountDeletionConfirmed`, `AccountDeletionConfirmation`) until the wipe succeeds, so a retry never asks a server (and an Auth user) that no longer exist. The server side was already idempotent (`deletion.test.ts`: "is safe to call again"), so no function changed |
+
+## 6. S12 re-check on the merged `build/v1` (2026-10-10, after `cf9d249`)
+
+Each closed item re-read in the merged code (S11 + `s8-leftovers`), not in the branch notes.
+
+| Gap (section 4) | Status on `build/v1` | Evidence in the merged tree |
+|---|---|---|
+| 1. Mailbox messages and undecryptable items | **Closed** | `Screens/Alerts/MailboxAlertCards`, pure `MailboxAlerts`, `MailboxAlertsTests`, `MailboxAlertsUITests`; check-in photos now shown (third batch) |
+| 2. Client deletion reaches the server | **Closed** | `ClientDataDeletionService` -> `OutboundQueue` `deleteClientServerData` (Remote/Offline/UITest repositories); 4.3 "Delete data", and since S12 "Export data" next to it (Help and Privacy describe the screen as it is) |
+| 3. App Check | **Open (owner, H5)** | No App Check provider in the app (`URLSessionCallableClient` sends none); enforcement stays off by rule. Wire App Attest, exempt the web functions, then enforce |
+| 4. Registration gate on the server | **Closed** | `ClientRegistrationService` asks `reserveRegistrations`; offline claims replay; until H14 the server's plan is `none` |
+| 5. Key integrity and fingerprint | **Closed** | `Managers/Booking/InboxKeyVerifier`, `InboxKeyMismatchError`, `PublishingService`; Privacy "Form key" row |
+| 6. Breach plan | **Closed (document); owner duties open (H18)** | `docs/BREACH-PLAN.md` exists; who is on call and the incident log are H18 |
+| 7. Capture hiding, file protection | **Closed** | `DesignSystem/Components/HiddenWhileCaptured.swift` on the recovery words (`RecoveryKeyContentView`); `VaultFileProtection.apply` in `VaultContainerFactory` |
+| 8. Phone sign-in in docs | **Closed (S12)** | docs/06 section 5 now says Apple first (D44); `AuthProvider.supportsPhoneSignIn` hides "Continue with phone" where the provider cannot send a code (the v1 Firebase provider), which removes a dead end from Release builds |
+
+Found in S12 and fixed (not in the original list):
+- **Missing `NSCalendarsFullAccessUsageDescription`**: the Integrations switch asked EventKit for full access with no
+  usage text, which ends the app on iOS 17 and later. Added in `Config/App.xcconfig` and the InfoPlist batch (14
+  localizations); `InfoPlistUsageTests` checks every permission the code asks for, in the built plist and in every
+  localization.
+- **Apple Calendar events and names**: the new write-through (7.6) puts a client's name and service in an event title
+  only when the Privacy switch lets names reach the lock screen (default off: a generic "Bello Hub appointment"); the
+  event's address carries the visit's random id only; the calendar is removed when the switch goes off or she signs
+  out. The events live in her own calendar account (iCloud when she uses it), like the vault; no server sees them.
+
+Unchanged and still OK: sections 1 to 3 of this file (rules deny by default, zod, rate limits, generic errors, no
+PII in logs, `check-privacy.sh` rules 1 to 7, HPKE vectors both ways, notifications without names).
