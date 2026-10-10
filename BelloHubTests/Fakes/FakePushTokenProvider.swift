@@ -7,9 +7,9 @@
 import Foundation
 import os
 
-/// FCM in a test: tokens are fed by hand with `send(_:)` (a first token, then refreshes), and the calls the app makes to
-/// the system are counted. Like the real provider, every `tokens()` stream starts with the current token, so a listener
-/// that subscribes late (a relaunch) still learns it.
+/// FCM in a test: tokens are fed by hand with `send(_:)` (a first token, then refreshes), and the calls the app makes
+/// to the system are counted. Like the real provider, every `tokens()` stream starts with the current token, so a
+/// listener that subscribes late (a relaunch) still learns it.
 final class FakePushTokenProvider: PushTokenProviding, Sendable {
     private struct State {
         var registerCount = 0
