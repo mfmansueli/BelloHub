@@ -77,6 +77,14 @@ final class BookingSetupAuditUITests: XCTestCase {
         }
     }
 
+    /// Scrolls down to a row of the availability list, and from the top when the list came back scrolled past it.
+    private func findRow(_ row: XCUIElement, in app: XCUIApplication) {
+        if !app.scrollUntilExists(row) {
+            app.scrollToTop(limit: 16)
+            _ = app.scrollUntilExists(row, limit: 40)
+        }
+    }
+
     private func walkAvailability(_ app: XCUIApplication, tag: String) throws {
         app.tapButton("more.availabilityRow")
         XCTAssertTrue(app.element("availability.starterNotice").waitForExistence(timeout: 8), "\(tag) hours")
@@ -93,12 +101,12 @@ final class BookingSetupAuditUITests: XCTestCase {
         // At the largest size the list once came back from the sheet scrolled to its end with the rows not yet
         // rebuilt, so the downward search found nothing; from the top it does.
         let addBreak = app.buttons["availability.addBreakButton"]
-        if !app.scrollUntilExists(addBreak) {
-            app.scrollToTop(limit: 16)
-            _ = app.scrollUntilExists(addBreak, limit: 40)
-        }
+        findRow(addBreak, in: app)
         XCTAssertTrue(addBreak.exists, "\(tag) add break row")
         try audit(app, "\(tag) availability, scrolled")
+        // The audit re-lays the lazy list out at AX5 and the row can leave the tree (S12 Full run, fourth language):
+        // find it again before the tap.
+        if !addBreak.waitForExistence(timeout: 2) { findRow(addBreak, in: app) }
         app.tapButton("availability.addBreakButton")
         XCTAssertTrue(app.textFields["availability.breakSheet.nameField"].waitForExistence(timeout: 5), "\(tag) break")
         try audit(app, "\(tag) break sheet")
