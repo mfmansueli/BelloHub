@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-"""Exports a localization (or all) as build/strings-<id>.csv: key, en, <localization>, comment, state.
-Plural entries are exported one row per category as `key|one`, `key|other`, ..."""
+"""Exports a localization (or all) for human reviewers (docs/review/README.md):
+- build/strings-<id>.csv, the app (Localizable and InfoPlist catalogs): key, en, <localization>, comment, state;
+- build/web-strings-<id>.csv, the booking pages (web/src/i18n): key, en, <localization>, comment, state.
+Plural entries are exported one row per category as `key|one`, `key|other`, ... Read back with import-strings.sh."""
 import csv
 import os
 import sys
@@ -21,6 +23,21 @@ def rows_for(catalog, language):
                    entry.get("comment", ""), state]
 
 
+def web_rows(language):
+    import json
+    folder = os.path.join(lib.ROOT, "web", "src", "i18n")
+    english = json.load(open(os.path.join(folder, "en.json"), encoding="utf-8"))
+    target = json.load(open(os.path.join(folder, language + ".json"), encoding="utf-8"))
+    for key, value in english.items():
+        mine = target.get(key)
+        if isinstance(mine, dict):
+            for category, text in mine.items():
+                source = value.get(category) or value.get("other", "") if isinstance(value, dict) else value
+                yield [f"{key}|{category}", source, text, "", "needs_review"]
+        elif mine is not None:
+            yield [key, value if isinstance(value, str) else "", mine, "", "needs_review"]
+
+
 def main():
     wanted = sys.argv[1] if len(sys.argv) > 1 else "all"
     languages = lib.LOCALIZATIONS if wanted == "all" else [wanted]
@@ -35,7 +52,14 @@ def main():
             writer = csv.writer(handle)
             writer.writerow(["key", "en", language, "comment", "state"])
             writer.writerows(rows_for(catalog, language))
-        print(f"Wrote build/strings-{language}.csv")
+            if os.path.exists(lib.INFOPLIST_CATALOG):
+                writer.writerows(rows_for(lib.load_catalog(lib.INFOPLIST_CATALOG), language))
+        web = os.path.join(lib.ROOT, "build", f"web-strings-{language}.csv")
+        with open(web, "w", encoding="utf-8", newline="") as handle:
+            writer = csv.writer(handle)
+            writer.writerow(["key", "en", language, "comment", "state"])
+            writer.writerows(web_rows(language))
+        print(f"Wrote build/strings-{language}.csv and build/web-strings-{language}.csv")
 
 
 if __name__ == "__main__":

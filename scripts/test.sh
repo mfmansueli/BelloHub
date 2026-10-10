@@ -19,6 +19,7 @@ esac
 # before the simulator does (docs/13-TESTING-QUALITY.md).
 if [[ "$plan" != "UISmoke" ]]; then
     "$ROOT/scripts/check-strings.sh" --final > /dev/null
+    "$ROOT/scripts/import-strings.sh" --self-test > /dev/null
     "$ROOT/scripts/check-privacy.sh" > /dev/null
     "$ROOT/scripts/check-legal-status.sh" > /dev/null
     "$ROOT/scripts/check-legal-resources.sh" > /dev/null

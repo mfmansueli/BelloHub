@@ -14,8 +14,9 @@ or a {"one": ..., "other": ...} object for a plural ({"*": text} repeats one tex
 from their parents plus Config/Locale/overrides/<id>.json (scripts/derive-locales.py).
 The permission texts and the display name are authored the same way in Config/Locale/infoplist/*.json and merged
 into BelloHub/SupportFiles/InfoPlist.xcstrings, so neither catalog is ever edited by hand.
-Every authored value is stored as `needs_review` except the English source (`translated`): no native has
-read it, and Claude Code never promotes a string to reviewed (docs/07-LOCALIZATION.md section 1).
+Every authored value is stored as `needs_review` except the English source (`translated`) and the strings a human
+approved with scripts/import-strings.sh --reviewed (Config/Locale/reviewed/<id>.json), which stay `translated` while
+their text is unchanged. Claude Code never promotes a string to reviewed (docs/07-LOCALIZATION.md section 1).
 """
 import glob
 import json
@@ -27,6 +28,8 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import stringslib as lib  # noqa: E402
 
+# Approvals recorded by scripts/import-strings.sh --reviewed, read once per language.
+REVIEWED = {}
 IDENTIFIER = re.compile(r'accessibilityIdentifier\(\s*"[^"]*"')
 
 
@@ -49,7 +52,8 @@ def merge(batch_path, catalog):
         if comment:
             entry["comment"] = comment
         for language, value in zip(languages, values):
-            state = "translated" if language == lib.SOURCE_LANGUAGE else "needs_review"
+            approved = REVIEWED.setdefault(language, lib.load_reviewed(language)).get(key) == lib.fingerprint(value)
+            state = "translated" if language == lib.SOURCE_LANGUAGE or approved else "needs_review"
             if isinstance(value, dict) and "*" in value:
                 # {"*": text}: the same text for every plural category the language needs.
                 value = {category: value["*"] for category in sorted(lib.plural_required(language))}

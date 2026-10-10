@@ -14,6 +14,8 @@ OVERRIDES_DIR = os.path.join(ROOT, "Config", "Locale", "overrides")
 BATCH_DIR = os.path.join(ROOT, "Config", "Locale", "strings")
 # The permission texts and display name (InfoPlist.xcstrings) are authored the same way, in their own folder.
 INFOPLIST_BATCH_DIR = os.path.join(ROOT, "Config", "Locale", "infoplist")
+# Strings a native reader approved (scripts/import-strings.sh --reviewed): key -> fingerprint of the approved text.
+REVIEWED_DIR = os.path.join(ROOT, "Config", "Locale", "reviewed")
 
 SOURCE_LANGUAGE = "en"
 # The fourteen localizations (docs/07-LOCALIZATION.md section 1).
@@ -84,6 +86,21 @@ def entry_state(localization):
 
 def placeholders(text):
     return sorted(PLACEHOLDER.findall(text))
+
+
+def fingerprint(value):
+    """A short, stable fingerprint of an authored value (a string or a plural dict)."""
+    import hashlib
+    text = json.dumps(value, ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def load_reviewed(language):
+    path = os.path.join(REVIEWED_DIR, language + ".json")
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as handle:
+        return json.load(handle)
 
 
 def load_overrides(language):
