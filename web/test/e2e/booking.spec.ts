@@ -148,7 +148,8 @@ test.describe('the waiting-list offer link (docs/10 section 3, API.md 5.4)', () 
     await expect(page.getByTestId('offer-gone')).toBeVisible();
     await expect(page.getByTestId('offer-gone')).toContainText('This offer has ended.');
     await page.getByTestId('offer-gone').getByRole('button').click();
-    await expect(page.locator('[data-testid^="service-"]').first()).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`/${slug}/service$`));
+    await expect(page.getByRole('radio').first()).toBeVisible();
   });
 
   test('a key that was never an offer looks the same as one that ended', async ({ page, slugFor }) => {

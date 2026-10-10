@@ -423,6 +423,22 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   has a skeleton, an empty state, an offer error (offers are never queued) and a taken-time notice.
 - No new tokens.
 
+### Client web app (S9, `web/`)
+
+The web pages use the same tokens (generated into CSS variables by `web/scripts/gen-tokens.ts`); the screen inventory
+of Bk-1 to Bk-11 and Cl-1 to Cl-9 and the per-screen gaps are in `docs/agent-notes/s9-web.md`. Changes from the
+prototype that are not owner decisions (D45 to D52, D55 are listed there):
+- **Waiting-list offer link** (`/{slug}/time?offer=<key>`): no screen of its own in the prototype. It opens on Bk-5
+  with the kept service and time already chosen; while it loads, the page skeleton; an offer that ended (or a key
+  that never existed, which looks the same) is a full-page state "This offer has ended." with "See free times".
+- **Bk-1**: when she confirms new clients herself, an info notice says so up front ("New here? … confirms your first
+  booking personally"); never a word about money or limits (D42).
+- **Bk-8**: the "Complete your health form" card shows only when the booking's `intakeRequired` says so (first visit,
+  or no form in 12 months); until the booking is read back it is not shown.
+- **Cl-7**: the row is "Health form" (no "and consent", D55); the portfolio-photos row stays a read-only status (no
+  server field for a client's choice).
+- **Motion**: colour fades of chips, buttons and options run only under `prefers-reduced-motion: no-preference`.
+
 ## Empty, loading and error states
 
 Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
