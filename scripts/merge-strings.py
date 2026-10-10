@@ -73,6 +73,18 @@ def authored_keys(paths):
     return keys
 
 
+def duplicate_keys(paths):
+    """Keys that two batches both author; one key has exactly one owner (CLAUDE.md section 3)."""
+    seen, duplicates = set(), []
+    for path in paths:
+        with open(path, encoding="utf-8") as handle:
+            for row in json.load(handle)["strings"]:
+                if row[0] in seen:
+                    duplicates.append(row[0])
+                seen.add(row[0])
+    return sorted(duplicates)
+
+
 def source_text():
     """Every Swift file of the app target, joined, to see whether a key is still named in code."""
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "BelloHub")
@@ -106,6 +118,9 @@ def main():
     if prune and paths:
         sys.exit("--prune only makes sense when every batch is merged (pass no batch paths)")
     paths = paths or sorted(glob.glob(os.path.join(lib.BATCH_DIR, "*.json")))
+    duplicates = duplicate_keys(paths)
+    if duplicates:
+        sys.exit("keys authored by more than one batch (the later file would silently win): " + ", ".join(duplicates))
     catalog = lib.load_catalog()
     catalog["sourceLanguage"] = lib.SOURCE_LANGUAGE
     pruned = prune_auto_extracted(catalog)

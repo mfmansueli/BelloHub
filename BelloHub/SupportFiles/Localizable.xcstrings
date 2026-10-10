@@ -464,7 +464,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Konto, deine Kundinnen und alle Akten werden gelöscht. Erst mit dem Tippen auf die Taste unten wird etwas entfernt."
+            "value" : "Dein Konto, deine Kundschaft und alle Akten werden gelöscht. Erst wenn du auf die Taste unten tippst, wird etwas entfernt."
           }
         },
         "en" : {
@@ -914,7 +914,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine Kundinnen und Akten wurden von diesem iPhone entfernt. Den Buchungsteil deines Kontos schließt unser Team kurz darauf."
+            "value" : "Deine Kundschaft und deine Akten wurden von diesem iPhone entfernt. Den Buchungsteil deines Kontos schließt unser Team kurz darauf."
           }
         },
         "en" : {
@@ -1004,7 +1004,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Arbeitsbereich, deine Kundinnen und deine Akten wurden von diesem iPhone, aus deiner iCloud und aus Bello Hub entfernt."
+            "value" : "Dein Arbeitsbereich, deine Kundschaft und deine Akten wurden von diesem iPhone, aus deiner iCloud und aus Bello Hub entfernt."
           }
         },
         "en" : {
@@ -1454,7 +1454,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Damit werden dein Arbeitsbereich, deine Kundinnen, Akten und Fotos dauerhaft von diesem iPhone, aus deiner iCloud und aus Bello Hub entfernt. Exportiere sie vorher, wenn du eine Kopie brauchst."
+            "value" : "Damit werden dein Arbeitsbereich, deine Kundschaft, Akten und Fotos dauerhaft von diesem iPhone, aus deiner iCloud und aus Bello Hub entfernt. Exportiere sie vorher, wenn du eine Kopie brauchst."
           }
         },
         "en" : {
@@ -1634,7 +1634,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Entfernt deinen Arbeitsbereich und alle Kundendaten"
+            "value" : "Entfernt deinen Arbeitsbereich und alle Daten deiner Kundschaft"
           }
         },
         "en" : {
@@ -4424,7 +4424,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nennen Sie sie, wie Sie möchten. Sie erscheint bei jeder Leistung."
+            "value" : "Nenn sie, wie du möchtest. Sie erscheint bei jeder Leistung."
           }
         },
         "en" : {
@@ -4694,7 +4694,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie Extras wie Augenbrauenfärbung oder Handmassage hinzu. Die Kundschaft kann sie beim Buchen auswählen."
+            "value" : "Füge Extras wie Augenbrauenfärbung oder Handmassage hinzu. Deine Kundschaft kann sie beim Buchen auswählen."
           }
         },
         "en" : {
@@ -4874,7 +4874,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Zusatzleistungen nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Zusatzleistungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -4964,7 +4964,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben bereits eine Zusatzleistung mit diesem Namen."
+            "value" : "Du hast bereits eine Zusatzleistung mit diesem Namen."
           }
         },
         "en" : {
@@ -5054,7 +5054,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -5144,7 +5144,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Preise folgen Ihren Einstellungen zur Preisanzeige. In der App wird nichts abgerechnet."
+            "value" : "Die Preise folgen deinen Einstellungen zur Preisanzeige. In der App wird nichts abgerechnet."
           }
         },
         "en" : {
@@ -6224,7 +6224,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nur wenn dieses iPhone es nicht selbst kann. Fragt zuerst die Kundin und speichert nichts."
+            "value" : "Nur wenn dieses iPhone es nicht selbst kann. Fragt vorher die betreute Person und speichert nichts."
           }
         },
         "en" : {
@@ -13160,7 +13160,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Änderung konnte nicht gespeichert werden. Versuchen Sie es noch einmal."
+            "value" : "Die Änderung konnte nicht gespeichert werden. Versuch es noch einmal."
           }
         },
         "en" : {
@@ -14600,7 +14600,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachrichten ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei Ihnen."
+            "value" : "Nachrichten ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei dir."
           }
         },
         "en" : {
@@ -14690,7 +14690,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "WhatsApp ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei Ihnen."
+            "value" : "WhatsApp ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei dir."
           }
         },
         "en" : {
@@ -15320,7 +15320,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie können die Nachricht trotzdem anders senden."
+            "value" : "Du kannst die Nachricht trotzdem anders senden."
           }
         },
         "en" : {
@@ -17300,7 +17300,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine Pausen. Ihre Kundschaft kann jederzeit innerhalb Ihrer Arbeitszeiten buchen."
+            "value" : "Keine Pausen. Deine Kundschaft kann jederzeit innerhalb deiner Arbeitszeiten buchen."
           }
         },
         "en" : {
@@ -17570,7 +17570,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zeit, um den Raum herzurichten und Ihre Notizen zu schreiben, bevor die nächste Person kommt."
+            "value" : "Zeit, um den Raum herzurichten und deine Notizen zu schreiben, bevor die nächste Person kommt."
           }
         },
         "en" : {
@@ -18740,7 +18740,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bereits gebuchte Termine an diesen Tagen werden nicht verschoben. Ihre Kundschaft kann keine neuen buchen."
+            "value" : "Bereits gebuchte Termine an diesen Tagen werden nicht verschoben. Neue kann niemand buchen."
           }
         },
         "en" : {
@@ -19100,7 +19100,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Verfügbarkeit nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Verfügbarkeit nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -19190,7 +19190,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Termine bleiben privat. Ihre Buchungsseite erfährt nur, welche Zeiten frei sind."
+            "value" : "Deine Termine bleiben privat. Deine Buchungsseite erfährt nur, welche Zeiten frei sind."
           }
         },
         "en" : {
@@ -19820,7 +19820,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Zeiten sind ein Vorschlag. Sobald Sie etwas ändern, werden sie gespeichert."
+            "value" : "Diese Zeiten sind ein Vorschlag. Sobald du etwas änderst, werden sie gespeichert."
           }
         },
         "en" : {
@@ -20630,7 +20630,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wann Ihre Kundschaft bei Ihnen buchen kann. Änderungen gelten sofort für Ihre Buchungsseite."
+            "value" : "Wann deine Kundschaft bei dir buchen kann. Änderungen gelten sofort für deine Buchungsseite."
           }
         },
         "en" : {
@@ -21260,7 +21260,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wissen über die Kundschaft · von Ihnen notiert"
+            "value" : "Was du dir merkst · von dir notiert"
           }
         },
         "en" : {
@@ -21530,7 +21530,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Von Ihnen abgesagt, zählt also nie gegen die Kundschaft."
+            "value" : "Von dir abgesagt, zählt also nie gegen die Person."
           }
         },
         "en" : {
@@ -21710,7 +21710,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Termine bleiben gebucht. Sie entscheiden später."
+            "value" : "Die Termine bleiben gebucht. Du entscheidest später."
           }
         },
         "en" : {
@@ -22256,7 +22256,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Zeit ist gesperrt. Öffnen Sie diese Termine, um sie einzeln abzusagen."
+            "value" : "Die Zeit ist gesperrt. Öffne diese Termine, um sie einzeln abzusagen."
           }
         },
         "en" : {
@@ -22436,7 +22436,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie bleiben in Ihrem Kalender innerhalb der gesperrten Zeit."
+            "value" : "Sie bleiben in deinem Kalender innerhalb der gesperrten Zeit."
           }
         },
         "en" : {
@@ -22706,7 +22706,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Öffnen Sie für jede Kundschaft eine Nachricht. Sie lesen sie zuerst und senden selbst."
+            "value" : "Öffne für jede Person eine Nachricht. Du liest sie zuerst und sendest selbst."
           }
         },
         "en" : {
@@ -23066,7 +23066,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Kalender konnte nicht gelesen werden. Prüfen Sie, ob das iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Dein Kalender konnte nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -23156,7 +23156,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Zeit konnte nicht gesperrt werden. Es wurde nichts geändert. Versuchen Sie es erneut."
+            "value" : "Die Zeit konnte nicht gesperrt werden. Es wurde nichts geändert. Versuche es erneut."
           }
         },
         "en" : {
@@ -23336,7 +23336,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sperren Sie Ihren Kalender, wenn Sie nicht arbeiten können. Ihre Buchungsseite bietet diese Zeiten dann nicht mehr an."
+            "value" : "Sperr deinen Kalender, wenn du nicht arbeiten kannst. Deine Buchungsseite bietet diese Zeiten dann nicht mehr an."
           }
         },
         "en" : {
@@ -23876,7 +23876,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nur Sie sehen das."
+            "value" : "Nur du siehst das."
           }
         },
         "en" : {
@@ -26582,7 +26582,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pausiert. Ihre Kundschaft sieht einen Hinweis und kann Ihnen schreiben."
+            "value" : "Pausiert. Deine Kundschaft sieht einen Hinweis und kann dir schreiben."
           }
         },
         "en" : {
@@ -26672,7 +26672,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft kann online buchen."
+            "value" : "Deine Kundschaft kann online buchen."
           }
         },
         "en" : {
@@ -27212,7 +27212,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie bestätigen jede Erstbuchung. Bestehende Kundschaft bucht frei."
+            "value" : "Du bestätigst jede Erstbuchung. Bestehende Kundschaft bucht frei."
           }
         },
         "en" : {
@@ -27758,7 +27758,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft kann eine Begleitung aus dem Freundes- oder Familienkreis mitbringen. Die Termine folgen direkt aufeinander, die Zeit addiert sich."
+            "value" : "Wer bucht, kann eine Begleitung aus dem Freundes- oder Familienkreis mitbringen. Die Termine folgen direkt aufeinander, die Zeit addiert sich."
           }
         },
         "en" : {
@@ -28118,7 +28118,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "QR-Code und wo Sie ihn platzieren"
+            "value" : "QR-Code und wo du ihn platzierst"
           }
         },
         "en" : {
@@ -28208,7 +28208,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie Ihre Adresse"
+            "value" : "Wähle deine Adresse"
           }
         },
         "en" : {
@@ -28478,7 +28478,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft bucht im Browser. Ohne App, ohne Passwort."
+            "value" : "Deine Kundschaft bucht im Browser. Ohne App, ohne Passwort."
           }
         },
         "en" : {
@@ -28568,7 +28568,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Buchungslink"
+            "value" : "Dein Buchungslink"
           }
         },
         "en" : {
@@ -29384,7 +29384,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft sieht, dass Sie keine Buchungen annehmen, und kann Ihnen schreiben. Bereits gebuchte Termine bleiben, wie sie sind."
+            "value" : "Deine Kundschaft sieht, dass du keine Buchungen annimmst, und kann dir schreiben. Bereits gebuchte Termine bleiben, wie sie sind."
           }
         },
         "en" : {
@@ -29564,7 +29564,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft sieht das auf Ihrer Seite und kann Ihnen schreiben. Bereits gebuchte Termine bleiben unverändert."
+            "value" : "Deine Kundschaft sieht das auf deiner Seite und kann dir schreiben. Bereits gebuchte Termine bleiben unverändert."
           }
         },
         "en" : {
@@ -30104,7 +30104,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen sehen zuerst die Zeiten, die keine zu kurzen Lücken hinterlassen. Alle freien Zeiten bleiben einen Tipp entfernt."
+            "value" : "Deine Kundschaft sieht zuerst die Zeiten, die keine zu kurzen Lücken hinterlassen. Alle freien Zeiten bleiben einen Tipp entfernt."
           }
         },
         "en" : {
@@ -31370,7 +31370,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Buchungseinstellungen nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Buchungseinstellungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -31460,7 +31460,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob auf Ihrem iPhone genug Speicherplatz frei ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -32090,7 +32090,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Sperre konnte nicht aufgehoben werden. Versuchen Sie es erneut."
+            "value" : "Die Sperre konnte nicht aufgehoben werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -32450,7 +32450,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie können bei Bedarf trotzdem einen Termin hinzufügen."
+            "value" : "Du kannst bei Bedarf trotzdem einen Termin hinzufügen."
           }
         },
         "en" : {
@@ -32540,7 +32540,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "An diesem Tag arbeiten Sie nicht"
+            "value" : "An diesem Tag arbeitest du nicht"
           }
         },
         "en" : {
@@ -32720,7 +32720,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "An diesem Tag ist nichts gebucht. Tippen Sie auf eine freie Stunde, um einen Termin hinzuzufügen."
+            "value" : "An diesem Tag ist nichts gebucht. Tippe auf eine freie Stunde, um einen Termin hinzuzufügen."
           }
         },
         "en" : {
@@ -32810,7 +32810,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Termine, die Sie anlegen oder die Ihre Kundschaft bucht, erscheinen hier."
+            "value" : "Termine, die du anlegst oder die deine Kundschaft bucht, erscheinen hier."
           }
         },
         "en" : {
@@ -32990,7 +32990,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Kalender ist nicht verfügbar. Prüfen Sie, ob das iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Dein Kalender ist nicht verfügbar. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -35150,7 +35150,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lieber größer? Öffnen Sie die Tagesansicht."
+            "value" : "Lieber größer? Öffne die Tagesansicht."
           }
         },
         "en" : {
@@ -35876,7 +35876,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Termin wurde nicht abgesagt. Versuchen Sie es noch einmal."
+            "value" : "Der Termin wurde nicht abgesagt. Versuch es noch einmal."
           }
         },
         "en" : {
@@ -36056,7 +36056,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Öffnet WhatsApp mit einer Nachricht, die neue Termine anbietet. Das Senden liegt bei Ihnen."
+            "value" : "Öffnet WhatsApp mit einer Nachricht, die neue Termine anbietet. Das Senden liegt bei dir."
           }
         },
         "en" : {
@@ -36236,7 +36236,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das liegt innerhalb der kostenlosen Frist (%1$@). Es wird als späte Absage gespeichert, und Ihre Regel zählt sie nicht auf das Limit von %2$@ an."
+            "value" : "Das liegt innerhalb der kostenlosen Frist (%1$@). Es wird als späte Absage gespeichert, und deine Regel rechnet sie nicht auf das Limit von %2$@ an."
           }
         },
         "en" : {
@@ -36416,7 +36416,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Von Ihnen abgesagt, zählt also nicht gegen %@."
+            "value" : "Von dir abgesagt, zählt also nicht gegen %@."
           }
         },
         "en" : {
@@ -36776,7 +36776,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wird als Absage der Kundschaft gespeichert, nach Ihren Regeln."
+            "value" : "Wird als Absage durch die Person gespeichert, nach deinen Regeln."
           }
         },
         "en" : {
@@ -37046,7 +37046,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die letzten Stunden sind die heikelsten. Legen Sie fest, was Ihre Kundschaft selbst tun darf."
+            "value" : "Die letzten Stunden sind die heikelsten. Leg fest, was deine Kundschaft selbst tun darf."
           }
         },
         "en" : {
@@ -37226,7 +37226,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie erhalten sofort einen Hinweis und der Termin geht an Ihre Warteliste."
+            "value" : "Du erhältst sofort einen Hinweis und die Zeit geht an deine Warteliste."
           }
         },
         "en" : {
@@ -37586,7 +37586,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "In den letzten Stunden kann Ihre Kundschaft nicht selbst absagen."
+            "value" : "In den letzten Stunden kann deine Kundschaft nicht selbst absagen."
           }
         },
         "en" : {
@@ -37676,7 +37676,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Absagen zählen zu Ihrem Limit für nicht erschienene Termine."
+            "value" : "Diese Absagen zählen zu deinem Limit für nicht wahrgenommene Termine."
           }
         },
         "en" : {
@@ -37766,7 +37766,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Absagen zählen nicht zu Ihrem Limit für nicht erschienene Termine."
+            "value" : "Diese Absagen zählen nicht zu deinem Limit für nicht wahrgenommene Termine."
           }
         },
         "en" : {
@@ -38036,7 +38036,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft sagt Termine selbst ab oder verschiebt sie, bis zu dieser Zeit vor dem Termin."
+            "value" : "Deine Kundschaft sagt Termine selbst ab oder verschiebt sie, bis zu dieser Zeit vor dem Termin."
           }
         },
         "en" : {
@@ -38216,7 +38216,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wie lange Sie den Termin freihalten, wenn jemand sich verspätet. Die Kundschaft kann Ihnen das über die eigene Seite mitteilen."
+            "value" : "Wie lange du den Termin freihältst, wenn sich jemand verspätet. Das lässt sich dir über die eigene Seite mitteilen."
           }
         },
         "en" : {
@@ -38576,7 +38576,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der bisherige Termin bleibt gebucht, bis Sie zusagen."
+            "value" : "Der bisherige Termin bleibt gebucht, bis du zusagst."
           }
         },
         "en" : {
@@ -38936,7 +38936,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Ihre Kundschaft liest"
+            "value" : "Was deine Kundschaft liest"
           }
         },
         "en" : {
@@ -39116,7 +39116,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aus. Ihre Kundschaft erhält nur die Bestätigung."
+            "value" : "Aus. Deine Kundschaft erhält nur die Bestätigung."
           }
         },
         "en" : {
@@ -39206,7 +39206,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Erinnerung bittet Ihre Kundschaft, ihr Kommen zu bestätigen."
+            "value" : "Die Erinnerung bittet deine Kundschaft, ihr Kommen zu bestätigen."
           }
         },
         "en" : {
@@ -39746,7 +39746,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aus: Sie schreiben Ihnen, um einen Termin zu verschieben."
+            "value" : "Aus: Wer verschieben möchte, schreibt dir."
           }
         },
         "en" : {
@@ -39836,7 +39836,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Legen Sie die Regeln einmal fest. Ihre Kundschaft liest sie, bevor sie bucht."
+            "value" : "Leg die Regeln einmal fest. Deine Kundschaft liest sie, bevor sie bucht."
           }
         },
         "en" : {
@@ -43448,7 +43448,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ verschwindet aus Ihren Listen und den Buchungsvorschlägen. Die Akte bleibt erhalten und Sie können sie jederzeit wiederherstellen."
+            "value" : "%@ verschwindet aus deinen Listen und den Buchungsvorschlägen. Die Akte bleibt erhalten und du kannst sie jederzeit wiederherstellen."
           }
         },
         "en" : {
@@ -44258,7 +44258,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wieder in Ihre Listen aufnehmen"
+            "value" : "Wieder in deine Listen aufnehmen"
           }
         },
         "en" : {
@@ -44528,7 +44528,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Grund (nur für Sie sichtbar)"
+            "value" : "Grund (nur für dich sichtbar)"
           }
         },
         "en" : {
@@ -44708,7 +44708,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Buchung über Ihren Link ist aus. Termine können Sie weiterhin selbst eintragen."
+            "value" : "Die Buchung über deinen Link ist aus. Termine kannst du weiterhin selbst eintragen."
           }
         },
         "en" : {
@@ -45248,7 +45248,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie Tag und Monat."
+            "value" : "Wähle Tag und Monat."
           }
         },
         "en" : {
@@ -45428,7 +45428,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie das Jahr."
+            "value" : "Prüfe das Jahr."
           }
         },
         "en" : {
@@ -46328,7 +46328,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie die E-Mail-Adresse."
+            "value" : "Prüfe die E-Mail-Adresse."
           }
         },
         "en" : {
@@ -46508,7 +46508,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieses Profil konnte nicht geladen werden. Versuchen Sie es erneut."
+            "value" : "Dieses Profil konnte nicht geladen werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -46598,7 +46598,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es wurde nichts gespeichert. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Es wurde nichts gespeichert. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -47048,7 +47048,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie einen Namen ein."
+            "value" : "Gib einen Namen ein."
           }
         },
         "en" : {
@@ -47408,7 +47408,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bleibt privat. Erscheint oben bei „Bevor Sie beginnen“."
+            "value" : "Bleibt privat. Erscheint oben bei „Vor dem Start“."
           }
         },
         "en" : {
@@ -47498,7 +47498,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Empfindlichkeiten, Vorlieben, alles, was Sie nie vergessen wollen"
+            "value" : "Empfindlichkeiten, Vorlieben, alles, was du nie vergessen willst"
           }
         },
         "en" : {
@@ -48218,7 +48218,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieses Profil konnte nicht geladen werden. Versuchen Sie es erneut."
+            "value" : "Dieses Profil konnte nicht geladen werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -48308,7 +48308,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es wurde nichts gespeichert. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Es wurde nichts gespeichert. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -48398,7 +48398,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wird Ihnen vor jedem Termin angezeigt. Wird nie mit %@ geteilt."
+            "value" : "Wird dir vor jedem Termin angezeigt. Wird nie mit %@ geteilt."
           }
         },
         "en" : {
@@ -48488,7 +48488,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie sich über %@ merken möchten, in Ihren eigenen Worten. Nur Sie sehen das."
+            "value" : "Was du dir über %@ merken möchtest, in deinen eigenen Worten. Nur du siehst das."
           }
         },
         "en" : {
@@ -48848,7 +48848,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie sich merken"
+            "value" : "Was du dir merkst"
           }
         },
         "en" : {
@@ -49478,7 +49478,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Profile konnten nicht geladen werden. Versuchen Sie es erneut."
+            "value" : "Die Profile konnten nicht geladen werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -49658,7 +49658,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie das Profil, das mit %1$@ zusammengeführt wird. Akten, Fotos und Notizen gehen an %2$@."
+            "value" : "Wähle das Profil, das mit %1$@ zusammengeführt wird. Akten, Fotos und Notizen gehen an %2$@."
           }
         },
         "en" : {
@@ -51284,7 +51284,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Daten konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal."
+            "value" : "Deine Daten konnten nicht gelesen werden. Versuche es gleich noch einmal."
           }
         },
         "en" : {
@@ -52370,7 +52370,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nur Sie"
+            "value" : "Nur du"
           }
         },
         "en" : {
@@ -53270,7 +53270,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch nichts notiert. Halten Sie fest, was Sie sich merken möchten."
+            "value" : "Noch nichts notiert. Halte fest, was du dir merken möchtest."
           }
         },
         "en" : {
@@ -53360,7 +53360,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie sich merken"
+            "value" : "Was du dir merkst"
           }
         },
         "en" : {
@@ -55430,7 +55430,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Von Ihnen hinzugefügt"
+            "value" : "Von dir hinzugefügt"
           }
         },
         "en" : {
@@ -56150,7 +56150,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alle Personen, die Sie hinzufügen oder die online buchen, erscheinen hier."
+            "value" : "Alle, die du hinzufügst oder die online buchen, erscheinen hier."
           }
         },
         "en" : {
@@ -56330,7 +56330,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Daten konnten nicht gelesen werden. Versuchen Sie es gleich noch einmal."
+            "value" : "Deine Daten konnten nicht gelesen werden. Versuche es gleich noch einmal."
           }
         },
         "en" : {
@@ -59036,7 +59036,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieses Foto oder diese Datei konnte nicht verwendet werden. Versuchen Sie ein anderes."
+            "value" : "Dieses Foto oder diese Datei konnte nicht verwendet werden. Versuche es mit einer anderen."
           }
         },
         "en" : {
@@ -59756,7 +59756,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Optional, in Ihren Worten"
+            "value" : "Optional, in deinen Worten"
           }
         },
         "en" : {
@@ -60116,7 +60116,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie hat das Papier bei Ihnen unterschrieben"
+            "value" : "Das Papier wurde bei dir unterschrieben"
           }
         },
         "en" : {
@@ -60206,7 +60206,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Für Ihre eigene Übersicht. Das unterschriebene Papier bleibt bei Ihnen; was Sie hier vermerken, verlässt dieses iPhone nie."
+            "value" : "Für deine eigene Übersicht. Das unterschriebene Papier bleibt bei dir; was du hier vermerkst, verlässt dieses iPhone nie."
           }
         },
         "en" : {
@@ -60746,7 +60746,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es verschwindet auch von Ihrer Buchungsseite."
+            "value" : "Es verschwindet auch von deiner Buchungsseite."
           }
         },
         "en" : {
@@ -61646,7 +61646,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie ein vierstelliges Jahr ein, etwa 2024."
+            "value" : "Gib ein vierstelliges Jahr ein, etwa 2024."
           }
         },
         "en" : {
@@ -61826,7 +61826,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Zertifikate nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Zertifikate nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -61916,7 +61916,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -62186,7 +62186,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch nichts anzuzeigen. Fügen Sie ein Zertifikat oder Ihre Registrierung hinzu."
+            "value" : "Noch nichts anzuzeigen. Füge ein Zertifikat oder deine Registrierung hinzu."
           }
         },
         "en" : {
@@ -62276,7 +62276,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Zertifikate sind auf der Buchungsseite ausgeblendet. Schalten Sie die Option ein, um sie anzuzeigen."
+            "value" : "Deine Zertifikate sind auf der Buchungsseite ausgeblendet. Schalte die Option ein, um sie anzuzeigen."
           }
         },
         "en" : {
@@ -62546,7 +62546,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie Ihre hinzu"
+            "value" : "Deine hinzufügen"
           }
         },
         "en" : {
@@ -63086,7 +63086,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Zertifikate"
+            "value" : "Deine Zertifikate"
           }
         },
         "en" : {
@@ -63176,7 +63176,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Auf Ihrer Seite ausgeblendet"
+            "value" : "Auf deiner Seite ausgeblendet"
           }
         },
         "en" : {
@@ -63266,7 +63266,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundschaft sieht das auf Ihrer Seite"
+            "value" : "Deine Kundschaft sieht das auf deiner Seite"
           }
         },
         "en" : {
@@ -63446,7 +63446,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schaffen Sie Vertrauen, bevor jemand bucht. Wird auf Ihrer Buchungsseite angezeigt, wenn Sie möchten."
+            "value" : "Schaffe Vertrauen, bevor jemand bucht. Wird auf deiner Buchungsseite angezeigt, wenn du möchtest."
           }
         },
         "en" : {
@@ -63986,7 +63986,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundin"
+            "value" : "Person"
           }
         },
         "en" : {
@@ -66416,7 +66416,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Daten deiner Kundinnen bleiben privat, nur bei dir."
+            "value" : "Die Daten deiner Kundschaft bleiben privat, nur bei dir."
           }
         },
         "en" : {
@@ -66686,7 +66686,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen"
+            "value" : "Kundschaft"
           }
         },
         "en" : {
@@ -66956,7 +66956,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vorher-Nachher-Fotos in Ordnern pro Kundin. Macht die Datei viel größer."
+            "value" : "Vorher-nachher-Fotos in Ordnern pro Person. Macht die Datei viel größer."
           }
         },
         "en" : {
@@ -67316,7 +67316,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$lld Kundinnen, %2$lld Termine, %3$lld Akten"
+            "value" : "Personen: %1$lld · Termine: %2$lld · Akten: %3$lld"
           }
         },
         "en" : {
@@ -68666,7 +68666,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundin"
+            "value" : "Die Person selbst"
           }
         },
         "en" : {
@@ -68756,7 +68756,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kopie für die Kundin enthält nie deine internen Notizen."
+            "value" : "Die Kopie für die Person enthält nie deine internen Notizen."
           }
         },
         "en" : {
@@ -70646,7 +70646,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ · Kundenakte"
+            "value" : "%@ · Akte"
           }
         },
         "en" : {
@@ -70916,7 +70916,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Kundin ließ sich nicht öffnen. Versuche es noch einmal."
+            "value" : "Dieses Profil ließ sich nicht öffnen. Versuche es noch einmal."
           }
         },
         "en" : {
@@ -71186,7 +71186,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Teile nur mit der Kundin oder einer Fachperson, die sie autorisiert."
+            "value" : "Teile sie nur mit der Person selbst oder mit einer Gesundheitsfachkraft, die sie dazu ermächtigt."
           }
         },
         "en" : {
@@ -71546,7 +71546,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein PDF der Kundenakte zum Aufbewahren oder Teilen."
+            "value" : "Ein PDF der Akte zum Aufbewahren oder Teilen."
           }
         },
         "en" : {
@@ -71726,7 +71726,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nie in der Kopie für die Kundin"
+            "value" : "Nie in der Kopie für die Person"
           }
         },
         "en" : {
@@ -72266,7 +72266,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Standardmäßig privat. Die Kopie für die Kundin enthält nur geteilte Fotos."
+            "value" : "Standardmäßig privat. Die Kopie für die Person enthält nur geteilte Fotos."
           }
         },
         "en" : {
@@ -73796,7 +73796,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es wird nicht mehr abgefragt. Bereits gespeicherte Einträge behalten, was Sie geschrieben haben. Zum Pausieren schalten Sie es stattdessen aus."
+            "value" : "Es wird nicht mehr abgefragt. Bereits gespeicherte Einträge behalten, was du geschrieben hast. Zum Pausieren schalte es stattdessen aus."
           }
         },
         "en" : {
@@ -74066,7 +74066,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben bereits ein Feld mit diesem Namen."
+            "value" : "Du hast bereits ein Feld mit diesem Namen."
           }
         },
         "en" : {
@@ -74426,7 +74426,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie mindestens zwei verschiedene Optionen hinzu."
+            "value" : "Füge mindestens zwei verschiedene Optionen hinzu."
           }
         },
         "en" : {
@@ -74696,7 +74696,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wie füllen Sie es aus?"
+            "value" : "Wie füllst du es aus?"
           }
         },
         "en" : {
@@ -74786,7 +74786,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Feld behält seine Art der Eingabe. Um sie zu ändern, fügen Sie ein neues Feld hinzu."
+            "value" : "Ein Feld behält seine Art der Eingabe. Um sie zu ändern, füge ein neues Feld hinzu."
           }
         },
         "en" : {
@@ -76496,7 +76496,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Formulare konnten nicht geladen werden. Versuchen Sie es erneut."
+            "value" : "Die Formulare konnten nicht geladen werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -76862,7 +76862,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lassen Sie mindestens eine Frage aktiviert."
+            "value" : "Lass mindestens eine Frage aktiviert."
           }
         },
         "en" : {
@@ -76952,7 +76952,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hier bearbeiten Sie den Gesundheitsfragebogen und den Einwilligungstext."
+            "value" : "Hier bearbeitest du deinen Gesundheitsfragebogen."
           }
         },
         "en" : {
@@ -77492,7 +77492,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie vor dem ersten Besuch abfragen und wie oft Sie erneut fragen."
+            "value" : "Was du vor dem ersten Besuch abfragst und wie oft du erneut fragst."
           }
         },
         "en" : {
@@ -77762,7 +77762,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wenn Sie die Fragen ändern, entsteht eine neue Version. Bereits unterschriebene Fragebögen bleiben unverändert."
+            "value" : "Wenn du die Fragen änderst, entsteht eine neue Version. Bereits ausgefüllte Fragebögen bleiben unverändert."
           }
         },
         "en" : {
@@ -78578,7 +78578,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch keine Einwilligung vermerkt. Halten Sie hier fest, was sie bei Ihnen unterschrieben hat; das Papier bleibt bei Ihnen."
+            "value" : "Noch keine Einwilligung vermerkt. Halte hier fest, was bei dir unterschrieben wurde; das Papier bleibt bei dir."
           }
         },
         "en" : {
@@ -78668,7 +78668,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre eigene Übersicht: was sie bei Ihnen auf Papier unterschrieben hat. Die App hat keinen Einwilligungstext und verlangt keine Unterschrift."
+            "value" : "Deine eigene Übersicht: was bei dir auf Papier unterschrieben wurde. Die App hat keinen Einwilligungstext und verlangt keine Unterschrift."
           }
         },
         "en" : {
@@ -79838,7 +79838,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Füllen Sie ihn gemeinsam beim Termin aus. Die Antworten werden versiegelt und bleiben auf Ihrem iPhone."
+            "value" : "Füllt ihn beim Termin gemeinsam aus. Die Antworten werden versiegelt und bleiben auf deinem iPhone."
           }
         },
         "en" : {
@@ -80018,7 +80018,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Gesundheitseintrag konnte nicht geladen werden. Versuchen Sie es erneut."
+            "value" : "Der Gesundheitseintrag konnte nicht geladen werden. Versuche es erneut."
           }
         },
         "en" : {
@@ -80108,7 +80108,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Speichern nicht möglich. Es ging nichts verloren, versuchen Sie es erneut."
+            "value" : "Speichern nicht möglich. Es ging nichts verloren, versuche es erneut."
           }
         },
         "en" : {
@@ -80378,7 +80378,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Elternteil oder Erziehungsberechtigter hat geantwortet. Vermerken Sie die Einwilligung in der Liste der Einwilligungen."
+            "value" : "Ein Elternteil oder eine erziehungsberechtigte Person hat geantwortet. Vermerke die Einwilligung in der Liste der Einwilligungen."
           }
         },
         "en" : {
@@ -81554,7 +81554,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Privat. Nur Sie können das sehen."
+            "value" : "Privat. Nur du kannst das sehen."
           }
         },
         "en" : {
@@ -81824,7 +81824,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Von Ihnen ausgefüllt · %@"
+            "value" : "Von dir ausgefüllt · %@"
           }
         },
         "en" : {
@@ -81914,7 +81914,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Von Ihnen ausgefüllt"
+            "value" : "Von dir ausgefüllt"
           }
         },
         "en" : {
@@ -83270,7 +83270,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beantworten Sie alle Fragen, um zu speichern. Die Notiz ist optional."
+            "value" : "Beantworte alle Fragen, um zu speichern. Die Notiz ist optional."
           }
         },
         "en" : {
@@ -83360,7 +83360,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tragen Sie den Namen der minderjährigen Person ein. Ein Elternteil oder Erziehungsberechtigter antwortet für sie; die Einwilligung holen Sie persönlich ein."
+            "value" : "Trag den Namen der minderjährigen Person ein. Ein Elternteil oder eine erziehungsberechtigte Person antwortet für sie; die Einwilligung holst du persönlich ein."
           }
         },
         "en" : {
@@ -83720,7 +83720,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Stellen Sie die Fragen und speichern Sie die Antworten. Einwilligungen werden bei Ihnen unterschrieben, außerhalb der App."
+            "value" : "Stell die Fragen und speichere die Antworten. Einwilligungen werden bei dir unterschrieben, außerhalb der App."
           }
         },
         "en" : {
@@ -84710,7 +84710,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Teile deinen Buchungslink oder QR-Code unter Mehr, Buchungsseite. Kundinnen wählen eine Leistung und eine Zeit; neue erscheinen in deinem Kalender."
+            "value" : "Teile deinen Buchungslink oder QR-Code unter Mehr, Buchungsseite. Deine Kundschaft wählt eine Leistung und eine Zeit; neue Buchungen erscheinen in deinem Kalender."
           }
         },
         "en" : {
@@ -84800,7 +84800,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wie buchen Kundinnen bei mir?"
+            "value" : "Wie bucht meine Kundschaft bei mir?"
           }
         },
         "en" : {
@@ -84980,7 +84980,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eine Kundin bat mich, ihre Daten zu löschen. Wie geht das?"
+            "value" : "Jemand bittet mich, die eigenen Daten zu löschen. Wie geht das?"
           }
         },
         "en" : {
@@ -85250,7 +85250,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine ersten 10 Kundinnen sind kostenlos, egal wie sie hinzukommen. Gelöschte Kundinnen zählen weiter. Danach hebt ein Tarif die Grenze auf; nichts, was du schon hast, wird je gesperrt."
+            "value" : "Deine ersten 10 Registrierungen sind kostenlos, egal wie die Personen hinzukommen. Gelöschte zählen weiter. Danach hebt ein Abo die Grenze auf; nichts, was du schon hast, wird je gesperrt."
           }
         },
         "en" : {
@@ -85700,7 +85700,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wo werden die Akten meiner Kundinnen aufbewahrt?"
+            "value" : "Wo werden die Akten meiner Kundschaft aufbewahrt?"
           }
         },
         "en" : {
@@ -85970,7 +85970,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Tag ist frei"
+            "value" : "Dein Tag ist frei"
           }
         },
         "en" : {
@@ -88232,7 +88232,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie mindestens eine Person"
+            "value" : "Wähle mindestens eine Person"
           }
         },
         "en" : {
@@ -88502,7 +88502,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gehen Sie zurück und wählen Sie eine andere Datei oder andere Kontakte."
+            "value" : "Geh zurück und wähle eine andere Datei oder andere Kontakte."
           }
         },
         "en" : {
@@ -88682,7 +88682,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben %2$lld ausgewählt, Ihre kostenlosen Registrierungen reichen aber nur für %1$lld."
+            "value" : "Du hast %2$lld ausgewählt, deine kostenlosen Registrierungen reichen aber nur für %1$lld."
           }
         },
         "en" : {
@@ -88772,7 +88772,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Für die übrigen ist ein Plan nötig. Sie können nach diesem Import einen wählen."
+            "value" : "Für die übrigen brauchst du ein Abo. Du kannst es nach diesem Import wählen."
           }
         },
         "en" : {
@@ -90212,7 +90212,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie die Spalte mit den Namen."
+            "value" : "Wähle die Spalte mit den Namen."
           }
         },
         "en" : {
@@ -90668,7 +90668,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie, ob jede Spalte stimmt. Zeilen mit Problemen werden übersprungen."
+            "value" : "Prüfe, ob jede Spalte stimmt. Zeilen mit Problemen werden übersprungen."
           }
         },
         "en" : {
@@ -91028,7 +91028,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Eine Einschränkung auf diesem iPhone sperrt die Kontakte für alle Apps. Importieren Sie stattdessen eine Tabelle oder ändern Sie die Einschränkung in den Einstellungen."
+            "value" : "Eine Einschränkung auf diesem iPhone sperrt die Kontakte für alle Apps. Importiere stattdessen eine Tabelle oder ändere die Einschränkung in den Einstellungen."
           }
         },
         "en" : {
@@ -91208,7 +91208,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie, ob die Daten unter der ersten Zeile beginnen, und wählen Sie die Datei erneut aus."
+            "value" : "Prüfe, ob die Daten unter der ersten Zeile beginnen, und wähle die Datei erneut aus."
           }
         },
         "en" : {
@@ -91388,7 +91388,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie, ob es eine CSV-Datei unter 20 MB ist, und wählen Sie sie erneut aus. In Excel oder Numbers: Exportieren als CSV."
+            "value" : "Prüfe, ob es eine CSV-Datei unter 20 MB ist, und wähle sie erneut aus. In Excel oder Numbers: Exportieren als CSV."
           }
         },
         "en" : {
@@ -91568,7 +91568,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie, ob auf dem iPhone Speicher frei ist, und versuchen Sie es erneut. Bereits Gespeichertes bleibt in Ihrer Liste."
+            "value" : "Prüfe, ob auf dem iPhone Speicher frei ist, und versuche es erneut. Bereits Gespeichertes bleibt in deiner Liste."
           }
         },
         "en" : {
@@ -91748,7 +91748,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schließen Sie die App und öffnen Sie sie erneut. Wenn das weiter passiert, kontaktieren Sie den Support."
+            "value" : "Schließe die App und öffne sie erneut. Passiert es weiterhin, kontaktiere den Support."
           }
         },
         "en" : {
@@ -92018,7 +92018,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre kostenlosen Registrierungen sind aufgebraucht. Wählen Sie einen Plan, um die übrigen hinzuzufügen."
+            "value" : "Deine kostenlosen Registrierungen sind aufgebraucht. Wähle ein Abo, um die übrigen hinzuzufügen."
           }
         },
         "en" : {
@@ -92108,7 +92108,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%lld bereits in Ihrer Liste"
+            "value" : "%lld bereits in deiner Liste"
           }
         },
         "en" : {
@@ -92198,7 +92198,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieselbe Telefonnummer wie bei jemandem, den Sie schon haben, oder doppelt in der Datei."
+            "value" : "Dieselbe Telefonnummer wie bei jemandem, den du schon hast, oder doppelt in der Datei."
           }
         },
         "en" : {
@@ -92744,7 +92744,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Liste „%@“ ist auf dem neuesten Stand. Fügen Sie Tags und Notizen hinzu, wann immer Sie möchten."
+            "value" : "Deine Liste „%@“ ist auf dem neuesten Stand. Füge Markierungen und Notizen hinzu, wann immer du möchtest."
           }
         },
         "en" : {
@@ -93380,7 +93380,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Korrigieren Sie diese in Ihrer Datei oder Ihren Kontakten und importieren Sie erneut."
+            "value" : "Korrigiere diese in deiner Datei oder deinen Kontakten und importiere erneut."
           }
         },
         "en" : {
@@ -93740,7 +93740,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie aus, wen Sie übernehmen"
+            "value" : "Wähle aus, wen du übernimmst"
           }
         },
         "en" : {
@@ -94280,7 +94280,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es werden nur die Kontakte gelesen, die Sie auswählen. Gespeichert wird nur, was Sie importieren."
+            "value" : "Es werden nur die Kontakte gelesen, die du auswählst. Gespeichert wird nur, was du importierst."
           }
         },
         "en" : {
@@ -94370,7 +94370,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Liegen Ihre Daten in Excel oder Numbers? Exportieren Sie die Datei als CSV und wählen Sie sie hier aus."
+            "value" : "Deine Daten liegen in Excel oder Numbers? Exportiere die Datei als CSV und wähle sie hier aus."
           }
         },
         "en" : {
@@ -94460,7 +94460,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beginnen Sie mit Namen und Telefonnummern. Der Verlauf wächst ab dem nächsten Besuch."
+            "value" : "Beginne mit Namen und Telefonnummern. Der Verlauf wächst ab dem nächsten Besuch."
           }
         },
         "en" : {
@@ -94550,7 +94550,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bringen Sie Ihre %@ mit."
+            "value" : "Bring deine %@ mit."
           }
         },
         "en" : {
@@ -95900,7 +95900,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundin beraten"
+            "value" : "Person beraten"
           }
         },
         "en" : {
@@ -96710,7 +96710,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundin"
+            "value" : "Person"
           }
         },
         "en" : {
@@ -96890,7 +96890,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Kundin ließ sich nicht öffnen. Versuche es noch einmal."
+            "value" : "Dieses Profil ließ sich nicht öffnen. Versuche es noch einmal."
           }
         },
         "en" : {
@@ -97070,7 +97070,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bei der Kundin nachfragen"
+            "value" : "Später nachfragen"
           }
         },
         "en" : {
@@ -97250,7 +97250,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Halte klar und neutral fest, was die Kundin berichtet oder du gesehen hast."
+            "value" : "Halte klar und neutral fest, was berichtet wurde oder was du gesehen hast."
           }
         },
         "en" : {
@@ -100310,7 +100310,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen"
+            "value" : "Kundschaft"
           }
         },
         "en" : {
@@ -101030,7 +101030,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine Kundinnen heißen"
+            "value" : "Deine Kundschaft heißt"
           }
         },
         "en" : {
@@ -102110,7 +102110,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preise werden nur angezeigt. In der App wird nichts abgebucht. Kundinnen sehen deine Währung so geschrieben, wie ihre Sprache Zahlen schreibt."
+            "value" : "Preise werden nur angezeigt. In der App wird nichts abgebucht. Deine Kundschaft sieht die Währung so geschrieben, wie ihre Sprache Zahlen schreibt."
           }
         },
         "en" : {
@@ -102380,7 +102380,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachrichten an deine Kundinnen"
+            "value" : "Nachrichten an deine Kundschaft"
           }
         },
         "en" : {
@@ -102650,7 +102650,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen wählen eine davon auf deiner Seite. Deine eigene Sprache ist immer an."
+            "value" : "Deine Kundschaft wählt eine davon auf deiner Seite. Deine eigene Sprache ist immer an."
           }
         },
         "en" : {
@@ -103820,7 +103820,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "So lesen sich die App, deine Buchungsseite und deine Nachrichten an Kundinnen."
+            "value" : "So lesen sich die App, deine Buchungsseite und deine Nachrichten an die Kundschaft."
           }
         },
         "en" : {
@@ -104090,7 +104090,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieses iPhone hat den Schlüssel zu Ihren Daten nicht. Stellen Sie ihn mit Ihrer Wiederherstellungsphrase wieder her."
+            "value" : "Dieses iPhone hat den Schlüssel zu deinen Daten nicht. Stelle ihn mit deiner Wiederherstellungsphrase wieder her."
           }
         },
         "en" : {
@@ -104270,7 +104270,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Versuchen Sie es erneut oder nutzen Sie Ihren Code."
+            "value" : "Versuche es erneut oder nutze deinen Code."
           }
         },
         "en" : {
@@ -104450,7 +104450,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft und Unterlagen öffnen."
+            "value" : "Deine Kundschaft und Akten öffnen."
           }
         },
         "en" : {
@@ -104630,7 +104630,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Daten Ihrer Kundschaft sind geschützt."
+            "value" : "Die Daten deiner Kundschaft sind geschützt."
           }
         },
         "en" : {
@@ -106160,7 +106160,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie eine Nachricht, prüfen Sie sie und öffnen Sie WhatsApp."
+            "value" : "Wähle eine Nachricht, prüfe sie und öffne WhatsApp."
           }
         },
         "en" : {
@@ -106250,7 +106250,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Für diese Kundschaft ist keine Nummer gespeichert. Wählen Sie eine Nachricht, prüfen Sie sie und teilen Sie sie anders."
+            "value" : "Für diese Person ist keine Nummer gespeichert. Wähle eine Nachricht, prüfe sie und teile sie auf anderem Weg."
           }
         },
         "en" : {
@@ -110042,7 +110042,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Daten bleiben auf diesem iPhone und in Ihrer iCloud."
+            "value" : "Deine Daten bleiben auf diesem iPhone und in deiner iCloud."
           }
         },
         "en" : {
@@ -110582,7 +110582,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch keine Kundschaft. Fügen Sie die erste hinzu."
+            "value" : "Noch keine Kundschaft. Füge die erste Person hinzu."
           }
         },
         "en" : {
@@ -111032,7 +111032,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundschaft und Leistungen konnten nicht gelesen werden. Prüfen Sie, ob das iPhone entsperrt ist."
+            "value" : "Kundschaft und Leistungen konnten nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist."
           }
         },
         "en" : {
@@ -111122,7 +111122,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Termin konnte nicht gespeichert werden. Es wurde nichts geändert. Versuchen Sie es erneut."
+            "value" : "Der Termin konnte nicht gespeichert werden. Es wurde nichts geändert. Versuche es erneut."
           }
         },
         "en" : {
@@ -112292,7 +112292,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine aktive Leistung. Aktivieren Sie eine unter Leistungen."
+            "value" : "Keine aktive Leistung. Aktiviere eine unter Leistungen."
           }
         },
         "en" : {
@@ -112832,7 +112832,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bis zu Ihrem Limit: noch %lld."
+            "value" : "Bis zu deinem Limit: noch %lld."
           }
         },
         "en" : {
@@ -113288,7 +113288,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ hat Ihr Limit erreicht. Ab jetzt brauchen die Online-Buchungen Ihre Bestätigung."
+            "value" : "%@ hat dein Limit erreicht. Ab jetzt brauchen die Online-Buchungen deine Bestätigung."
           }
         },
         "en" : {
@@ -113378,7 +113378,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ hat Ihr Limit erreicht. Ab jetzt ist die Online-Buchung pausiert."
+            "value" : "%@ hat dein Limit erreicht. Ab jetzt ist die Online-Buchung pausiert."
           }
         },
         "en" : {
@@ -113468,7 +113468,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ hat Ihr Limit erreicht."
+            "value" : "%@ hat dein Limit erreicht."
           }
         },
         "en" : {
@@ -114008,7 +114008,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Änderung wurde nicht gespeichert. Versuchen Sie es noch einmal."
+            "value" : "Die Änderung wurde nicht gespeichert. Versuch es noch einmal."
           }
         },
         "en" : {
@@ -114098,7 +114098,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nur Sie sehen das. Die Kundschaft kennt Ihre Regel von Ihrer Buchungsseite und kann Sie bitten, sie zu überprüfen."
+            "value" : "Nur du siehst das. Die Person kennt deine Regel von deiner Buchungsseite und kann dich bitten, sie zu überprüfen."
           }
         },
         "en" : {
@@ -115448,7 +115448,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zählt nach Ihrer Regel nicht"
+            "value" : "Zählt nach deiner Regel nicht"
           }
         },
         "en" : {
@@ -115988,7 +115988,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es wurde nicht gespeichert. Versuchen Sie es noch einmal."
+            "value" : "Es wurde nicht gespeichert. Versuch es noch einmal."
           }
         },
         "en" : {
@@ -116168,7 +116168,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zählt auf das Limit Ihrer Regel."
+            "value" : "Zählt auf das Limit deiner Regel."
           }
         },
         "en" : {
@@ -116528,7 +116528,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "In WhatsApp, nach dem Speichern. Sie lesen sie vorher."
+            "value" : "In WhatsApp, nach dem Speichern. Du liest sie vorher."
           }
         },
         "en" : {
@@ -117068,7 +117068,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft kann einen Termin anfragen. Sie bestätigen oder lehnen ab."
+            "value" : "Die Person kann einen Termin anfragen. Du bestätigst oder lehnst ab."
           }
         },
         "en" : {
@@ -117248,7 +117248,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Person sieht eine freundliche Nachricht und meldet sich bei Ihnen. Sie können weiterhin selbst für sie buchen."
+            "value" : "Die Person sieht eine freundliche Nachricht und meldet sich bei dir. Du kannst weiterhin selbst für sie buchen."
           }
         },
         "en" : {
@@ -117518,7 +117518,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie erhalten einen Hinweis. Die Online-Buchung bleibt offen."
+            "value" : "Du erhältst einen Hinweis. Die Online-Buchung bleibt offen."
           }
         },
         "en" : {
@@ -118328,7 +118328,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Änderungen werden automatisch gespeichert. Die Zähler bleiben auf Ihrem iPhone und in Ihrer iCloud. Es wird nur Ihre eigene Kundschaft gezählt: Nichts wird mit anderen Fachkräften geteilt."
+            "value" : "Änderungen werden automatisch gespeichert. Die Zähler bleiben auf deinem iPhone und in deiner iCloud. Es wird nur deine eigene Kundschaft gezählt: Nichts wird mit anderen Fachkräften geteilt."
           }
         },
         "en" : {
@@ -118508,7 +118508,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Kundschaft erreicht das Limit mit dieser Anzahl."
+            "value" : "Ab dieser Anzahl ist das Limit erreicht."
           }
         },
         "en" : {
@@ -118688,7 +118688,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zählt nicht wahrgenommene Termine und reagiert, wenn jemand Ihr Limit erreicht."
+            "value" : "Zählt nicht wahrgenommene Termine und reagiert, wenn jemand dein Limit erreicht."
           }
         },
         "en" : {
@@ -118868,7 +118868,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bearbeiten Sie die Nachrichten, die Sie senden"
+            "value" : "Bearbeite die Nachrichten, die du sendest"
           }
         },
         "en" : {
@@ -119048,7 +119048,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Schutz ist aus. Alle können online buchen. Nicht wahrgenommene Termine werden weiterhin im Profil jeder Person festgehalten, sodass Sie ihn später einschalten und die Vergangenheit sehen können."
+            "value" : "Der Schutz ist aus. Alle können online buchen. Nicht wahrgenommene Termine werden weiterhin im Profil jeder Person festgehalten, sodass du ihn später einschalten und die Vergangenheit sehen kannst."
           }
         },
         "en" : {
@@ -119594,7 +119594,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wird auf Ihrer Buchungsseite unter den Regeln für Absagen angezeigt."
+            "value" : "Wird auf deiner Buchungsseite unter den Regeln für Absagen angezeigt."
           }
         },
         "en" : {
@@ -119684,7 +119684,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Ihre Kundschaft liest"
+            "value" : "Was deine Kundschaft liest"
           }
         },
         "en" : {
@@ -119774,7 +119774,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Helfen Sie Ihrer Kundschaft, zu erscheinen oder rechtzeitig Bescheid zu geben."
+            "value" : "Hilf deiner Kundschaft, zu erscheinen oder rechtzeitig Bescheid zu geben."
           }
         },
         "en" : {
@@ -121046,7 +121046,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geburtstage von Kundinnen"
+            "value" : "Geburtstage deiner Kundschaft"
           }
         },
         "en" : {
@@ -121406,7 +121406,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins von Kundinnen"
+            "value" : "Rückmeldungen nach dem Termin"
           }
         },
         "en" : {
@@ -121496,7 +121496,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wenn eine Kundin antwortet, wie es ihr geht"
+            "value" : "Wenn jemand antwortet, wie es nach dem Termin geht"
           }
         },
         "en" : {
@@ -121946,7 +121946,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen, die von dir hören möchten"
+            "value" : "Wer bereit ist, wieder von dir zu hören"
           }
         },
         "en" : {
@@ -122486,7 +122486,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schalte sie in den Einstellungen ein, um Hinweise zu Buchungen und Kundinnen zu erhalten."
+            "value" : "Schalte sie in den Einstellungen ein, um Hinweise zu Buchungen und zu deiner Kundschaft zu erhalten."
           }
         },
         "en" : {
@@ -123296,7 +123296,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dringende Hinweise kommen trotzdem durch: eine Kundin, die sich verspätet, und Absagen am selben Tag. Alles andere wartet bis zum Morgen."
+            "value" : "Dringende Hinweise kommen trotzdem durch: Verspätungen und Absagen am selben Tag. Alles andere wartet bis zum Morgen."
           }
         },
         "en" : {
@@ -123386,7 +123386,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Erinnerungen an Kundinnen"
+            "value" : "Erinnerungen an deine Kundschaft"
           }
         },
         "en" : {
@@ -123656,7 +123656,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Für deine Kundinnen"
+            "value" : "Für deine Kundschaft"
           }
         },
         "en" : {
@@ -123926,7 +123926,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wähle, was dich erreicht und was deine Kundinnen erreicht."
+            "value" : "Wähle, was dich erreicht und was deine Kundschaft erreicht."
           }
         },
         "en" : {
@@ -124286,7 +124286,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Name"
+            "value" : "Dein Name"
           }
         },
         "en" : {
@@ -124376,7 +124376,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie mindestens zwei Buchstaben ein."
+            "value" : "Gib mindestens zwei Buchstaben ein."
           }
         },
         "en" : {
@@ -124556,7 +124556,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wo arbeiten Sie?"
+            "value" : "Wo arbeitest du?"
           }
         },
         "en" : {
@@ -124646,7 +124646,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das legt Ihre Währung und Ihre Zeitzone fest. Sie können es später ändern."
+            "value" : "Das legt deine Währung und Zeitzone fest. Du kannst es später ändern."
           }
         },
         "en" : {
@@ -124736,7 +124736,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "So erscheint Ihr Name in der App und auf Ihrer Buchungsseite."
+            "value" : "So erscheint dein Name in der App und auf deiner Buchungsseite."
           }
         },
         "en" : {
@@ -124826,7 +124826,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wie sollen wir Sie nennen?"
+            "value" : "Wie sollen wir dich nennen?"
           }
         },
         "en" : {
@@ -125366,7 +125366,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Machen Sie Vorher-nachher-Fotos direkt in Bello Hub. Sie werden nie in Ihrer Fotomediathek gespeichert."
+            "value" : "Mach Vorher-nachher-Fotos direkt in Bello Hub. Sie landen nie in deiner Fotomediathek."
           }
         },
         "en" : {
@@ -125636,7 +125636,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie Kontakte zum Importieren. Wir lesen nur die, die Sie auswählen."
+            "value" : "Wähle Kontakte zum Importieren. Wir lesen nur die, die du auswählst."
           }
         },
         "en" : {
@@ -125726,7 +125726,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bringen Sie Ihre Kundschaft mit."
+            "value" : "Bring deine Kundschaft mit."
           }
         },
         "en" : {
@@ -125816,7 +125816,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie können das alles später unter Datenschutz und Sicherheit ändern."
+            "value" : "Du kannst das alles später unter Datenschutz und Sicherheit ändern."
           }
         },
         "en" : {
@@ -126086,7 +126086,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub hört nur zu, während Sie eine Behandlung aufnehmen, und ordnet dann, was Sie gesagt haben. Sie prüfen alles, bevor es gespeichert wird."
+            "value" : "Bello Hub hört nur zu, während du eine Behandlung aufnimmst, und ordnet dann, was du gesagt hast. Du prüfst alles, bevor es gespeichert wird."
           }
         },
         "en" : {
@@ -126176,7 +126176,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sprechen Sie, und die Akte schreibt sich selbst."
+            "value" : "Sprich, und die Akte schreibt sich selbst."
           }
         },
         "en" : {
@@ -126446,7 +126446,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Neue Buchungen, Absagen und Rückmeldungen Ihrer Kundschaft. Namen bleiben auf dem Sperrbildschirm auf Wunsch verborgen."
+            "value" : "Neue Buchungen, Absagen und Rückmeldungen deiner Kundschaft. Namen bleiben auf dem Sperrbildschirm auf Wunsch verborgen."
           }
         },
         "en" : {
@@ -126536,7 +126536,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Erfahren Sie, wenn etwas Ihre Aufmerksamkeit braucht."
+            "value" : "Erfahre, wenn etwas dich braucht."
           }
         },
         "en" : {
@@ -126626,7 +126626,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie alles Zutreffende. Bello Hub passt sich Ihrer Arbeitsweise an."
+            "value" : "Wähle alles, was zutrifft. Bello Hub passt sich deiner Arbeitsweise an."
           }
         },
         "en" : {
@@ -126716,7 +126716,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was machen Sie beruflich?"
+            "value" : "Was machst du beruflich?"
           }
         },
         "en" : {
@@ -127076,7 +127076,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Buchungslink"
+            "value" : "Dein Buchungslink"
           }
         },
         "en" : {
@@ -127166,7 +127166,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bereit, sobald Sie online sind"
+            "value" : "Bereit, sobald du online bist"
           }
         },
         "en" : {
@@ -127256,7 +127256,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Arbeitsbereich konnte nicht gespeichert werden. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Dein Arbeitsbereich konnte nicht gespeichert werden. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -127346,7 +127346,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@, Ihr Arbeitsbereich ist für %2$@ eingerichtet. Er füllt sich, sobald gebucht wird."
+            "value" : "%1$@, dein Arbeitsbereich ist für %2$@ eingerichtet. Er füllt sich, sobald gebucht wird."
           }
         },
         "en" : {
@@ -127436,7 +127436,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihr Bello Hub ist bereit."
+            "value" : "Dein Bello Hub ist bereit."
           }
         },
         "en" : {
@@ -127706,7 +127706,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Felder sehen Sie nur, wenn Sie eine Behandlung erfassen. Sprachnotizen füllen sie für Sie aus."
+            "value" : "Diese Felder siehst du nur, wenn du eine Behandlung erfasst. Sprachnotizen füllen sie für dich aus."
           }
         },
         "en" : {
@@ -127976,7 +127976,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Als unterschrieben oder nicht vermerkt; das Papier wird bei Ihnen unterschrieben"
+            "value" : "Als unterschrieben oder nicht vermerkt; das Papier wird bei dir unterschrieben"
           }
         },
         "en" : {
@@ -128426,7 +128426,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Akte ist auf Ihr Handwerk zugeschnitten. Schalten Sie nur ein, was Sie nutzen."
+            "value" : "Deine Akte ist auf dein Handwerk zugeschnitten. Schalte nur ein, was du nutzt."
           }
         },
         "en" : {
@@ -128516,7 +128516,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was möchten Sie pro %@ festhalten?"
+            "value" : "Was möchtest du pro %@ festhalten?"
           }
         },
         "en" : {
@@ -130046,7 +130046,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was bieten Sie an?"
+            "value" : "Was bietest du an?"
           }
         },
         "en" : {
@@ -130136,7 +130136,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Leistung"
+            "value" : "Deine Leistung"
           }
         },
         "en" : {
@@ -130406,7 +130406,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie den Code ein, um fortzufahren."
+            "value" : "Gib den Code ein, um fortzufahren."
           }
         },
         "en" : {
@@ -130496,7 +130496,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schauen Sie auf Ihr Telefon."
+            "value" : "Schau auf dein Telefon."
           }
         },
         "en" : {
@@ -130766,7 +130766,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir nutzen Ihre Telefonnummer, um Ihr Konto zu schützen. Die Daten Ihrer Kundschaft bleiben auf Ihrem iPhone."
+            "value" : "Wir nutzen deine Telefonnummer, um dein Konto zu schützen. Die Daten deiner Kundschaft bleiben auf deinem iPhone."
           }
         },
         "en" : {
@@ -130856,7 +130856,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Erstellen Sie Ihren Arbeitsbereich."
+            "value" : "Erstelle deinen Arbeitsbereich."
           }
         },
         "en" : {
@@ -131036,7 +131036,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieser Code hat nicht funktioniert. Prüfen Sie ihn und versuchen Sie es erneut."
+            "value" : "Dieser Code hat nicht funktioniert. Prüfe ihn und versuche es erneut."
           }
         },
         "en" : {
@@ -131126,7 +131126,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine Verbindung. Prüfen Sie Ihr Internet und versuchen Sie es erneut."
+            "value" : "Keine Verbindung. Prüfe deine Internetverbindung und versuche es erneut."
           }
         },
         "en" : {
@@ -131216,7 +131216,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie die Telefonnummer und versuchen Sie es erneut."
+            "value" : "Prüfe die Telefonnummer und versuche es erneut."
           }
         },
         "en" : {
@@ -131396,7 +131396,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zu viele Versuche. Warten Sie ein paar Minuten und versuchen Sie es erneut."
+            "value" : "Zu viele Versuche. Warte ein paar Minuten und versuche es erneut."
           }
         },
         "en" : {
@@ -131576,7 +131576,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir senden Ihnen einen 6-stelligen Code per SMS. Es können Gebühren Ihres Anbieters anfallen."
+            "value" : "Wir senden dir einen 6-stelligen Code per SMS. Dein Anbieter kann dafür Gebühren berechnen."
           }
         },
         "en" : {
@@ -132116,7 +132116,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Melden Sie sich an, um Ihren Tag und Ihre Kundschaft zu sehen."
+            "value" : "Melde dich an, um deinen Tag und deine Kundschaft zu sehen."
           }
         },
         "en" : {
@@ -132476,7 +132476,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Markierungen sind privat. Ihre Kundschaft sieht sie nie."
+            "value" : "Markierungen sind privat. Deine Kundschaft sieht sie nie."
           }
         },
         "en" : {
@@ -132926,7 +132926,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Markierungen helfen, Ihre Kundschaft zu finden, und erinnern Sie an Wichtiges. Wählen Sie einige und fügen Sie jederzeit eigene hinzu."
+            "value" : "Markierungen helfen dir, deine Kundschaft zu finden, und erinnern dich an Wichtiges. Wähle einige aus und füge jederzeit eigene hinzu."
           }
         },
         "en" : {
@@ -133016,7 +133016,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Markieren Sie, wie Sie denken."
+            "value" : "Markiere so, wie du denkst."
           }
         },
         "en" : {
@@ -133106,7 +133106,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Einen Namen hinzufügen, den Sie verwenden"
+            "value" : "Eigenen Namen hinzufügen"
           }
         },
         "en" : {
@@ -133826,7 +133826,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub lernt die Namen, die Sie für Ihre Leistungen und Protokolle verwenden, damit Sprachnotizen und Akten nach Ihnen klingen."
+            "value" : "Bello Hub lernt die Namen, die du für deine Leistungen und Protokolle verwendest, damit Sprachnotizen und Akten nach dir klingen."
           }
         },
         "en" : {
@@ -133916,7 +133916,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Benennen Sie Ihre Leistungen und Protokolle so, wie Sie sie sagen. Überall erscheinen sie genau so."
+            "value" : "Benenne deine Leistungen und Protokolle so, wie du sie aussprichst. Überall erscheinen sie genau so."
           }
         },
         "en" : {
@@ -134006,7 +134006,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wie nennen Sie die Menschen, die Sie betreuen?"
+            "value" : "Wie nennst du die Menschen, die du betreust?"
           }
         },
         "en" : {
@@ -134096,7 +134096,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verwenden Sie Ihre eigene Sprache."
+            "value" : "Sprich deine eigene Sprache."
           }
         },
         "en" : {
@@ -134276,7 +134276,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben schon ein Konto?"
+            "value" : "Du hast schon ein Konto?"
           }
         },
         "en" : {
@@ -134366,7 +134366,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gemerkt, damit Sie es nicht müssen"
+            "value" : "Gemerkt, damit du es nicht musst"
           }
         },
         "en" : {
@@ -134996,7 +134996,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alles, was Sie brauchen, um Ihr Beauty-Geschäft zu führen und sich an Ihre gesamte Kundschaft zu erinnern."
+            "value" : "Alles, was du brauchst, um dein Beauty-Geschäft zu führen und dir jede Person deiner Kundschaft zu merken."
           }
         },
         "en" : {
@@ -136976,7 +136976,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Unbegrenzt Kundinnen und Termine"
+            "value" : "Unbegrenzt Kundschaft und Termine"
           }
         },
         "en" : {
@@ -139136,7 +139136,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine ersten 10 Kundinnen-Registrierungen sind kostenlos. Ein Tarif hebt die Grenze auf."
+            "value" : "Deine ersten 10 Registrierungen sind kostenlos. Ein Abo hebt die Grenze auf."
           }
         },
         "en" : {
@@ -139316,7 +139316,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das ist dein Bello-Hub-Abo. Es hat nichts mit dem zu tun, was du deinen Kundinnen berechnest."
+            "value" : "Das ist dein Bello-Hub-Abo. Es hat nichts mit dem zu tun, was du deiner Kundschaft berechnest."
           }
         },
         "en" : {
@@ -139496,7 +139496,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Unbegrenzte Kundenregistrierungen"
+            "value" : "Unbegrenzte Registrierungen"
           }
         },
         "en" : {
@@ -142676,7 +142676,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ ist als ungeeignet markiert bei: %2$@. Prüfen Sie zuerst den Gesundheitsbogen. Das blockiert nichts."
+            "value" : "%1$@ ist als ungeeignet markiert bei: %2$@. Prüfe zuerst den Gesundheitsfragebogen. Das blockiert nichts."
           }
         },
         "en" : {
@@ -143396,7 +143396,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Patch-Test vom %@: Die Haut hat reagiert. Prüfen Sie das vor dem Start."
+            "value" : "Allergietest vom %@: Die Haut hat reagiert. Sieh es dir vor dem Start an."
           }
         },
         "en" : {
@@ -143486,7 +143486,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen können jederzeit eine Kopie oder die Löschung ihrer Daten verlangen. Du entscheidest, wer in ihrer Akte steht."
+            "value" : "Deine Kundschaft kann jederzeit eine Kopie oder die Löschung der eigenen Daten verlangen. Du entscheidest, wer in einer Akte steht."
           }
         },
         "en" : {
@@ -143846,7 +143846,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mitteilungen sagen „Eine Kundin“ statt des Namens"
+            "value" : "Mitteilungen zeigen „Eine Person“ statt des Namens"
           }
         },
         "en" : {
@@ -145286,7 +145286,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Daten einer Kundin exportieren oder löschen"
+            "value" : "Daten einer Person exportieren oder löschen"
           }
         },
         "en" : {
@@ -146006,7 +146006,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bis du oder die Kundin die Löschung verlangt"
+            "value" : "Bis du oder die Person die Löschung verlangt"
           }
         },
         "en" : {
@@ -146096,7 +146096,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundendaten"
+            "value" : "Daten deiner Kundschaft"
           }
         },
         "en" : {
@@ -146546,7 +146546,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundendaten sind sensibel. Diese Einstellungen halten sie bei dir."
+            "value" : "Die Daten deiner Kundschaft sind sensibel. Diese Einstellungen halten sie bei dir."
           }
         },
         "en" : {
@@ -146816,7 +146816,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine Analyse- oder Werbe-Tools lesen die Daten deiner Kundinnen"
+            "value" : "Keine Analyse- oder Werbe-Tools lesen die Daten deiner Kundschaft"
           }
         },
         "en" : {
@@ -147896,7 +147896,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nur Sie sehen dieses Produkt. Tippen, um es mit der Kundschaft zu teilen."
+            "value" : "Nur du siehst dieses Produkt. Tippen, um es mit der Kundschaft zu teilen."
           }
         },
         "en" : {
@@ -149786,7 +149786,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie hinzu, was Sie verwenden und empfehlen. Jedes bleibt privat, bis Sie es teilen."
+            "value" : "Füge hinzu, was du verwendest und empfiehlst. Jedes bleibt privat, bis du es teilst."
           }
         },
         "en" : {
@@ -149966,7 +149966,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Produkte nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Produkte nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -150056,7 +150056,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben dieses Produkt derselben Marke bereits."
+            "value" : "Du hast dieses Produkt derselben Marke bereits."
           }
         },
         "en" : {
@@ -150146,7 +150146,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -150236,7 +150236,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geteilte Produkte erscheinen in der eigenen Ansicht der Person. Private erscheinen nur in Ihren Unterlagen."
+            "value" : "Geteilte Produkte erscheinen in der eigenen Ansicht der Person. Private erscheinen nur in deinen Unterlagen."
           }
         },
         "en" : {
@@ -150596,7 +150596,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie verwenden und empfehlen. Legen Sie fest, welche die Kundschaft sehen kann."
+            "value" : "Was du verwendest und empfiehlst. Leg fest, welche deine Kundschaft sehen kann."
           }
         },
         "en" : {
@@ -152576,7 +152576,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Kunde hat einen Gesundheitsfragebogen geschickt."
+            "value" : "Ein Gesundheitsfragebogen ist eingegangen."
           }
         },
         "en" : {
@@ -154016,7 +154016,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie können sie jederzeit neu schreiben."
+            "value" : "Du kannst sie jederzeit neu schreiben."
           }
         },
         "en" : {
@@ -154286,7 +154286,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schreiben Sie zuerst eine Nachricht."
+            "value" : "Schreib zuerst eine Nachricht."
           }
         },
         "en" : {
@@ -154376,7 +154376,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie der Antwort einen Namen."
+            "value" : "Gib der Antwort einen Namen."
           }
         },
         "en" : {
@@ -155546,7 +155546,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Schnellantworten nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Schnellantworten nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -156086,7 +156086,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fertige Nachrichten für WhatsApp. Sie prüfen sie immer vor dem Senden."
+            "value" : "Fertige Nachrichten für WhatsApp. Du prüfst sie immer vor dem Senden."
           }
         },
         "en" : {
@@ -158606,7 +158606,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungen, die du für diese Kundin erfasst, erscheinen hier mit ihrem Änderungsverlauf."
+            "value" : "Behandlungen, die du für diese Person erfasst, erscheinen hier mit ihrem Änderungsverlauf."
           }
         },
         "en" : {
@@ -159956,7 +159956,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Kundin ist nicht mehr da"
+            "value" : "Dieses Profil gibt es nicht mehr"
           }
         },
         "en" : {
@@ -160316,7 +160316,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zum Teilen ist die unterschriebene Foto-Einwilligung der Kundin nötig. Bis dahin bleiben Fotos privat."
+            "value" : "Zum Teilen ist eine unterschriebene Foto-Einwilligung nötig. Bis dahin bleiben Fotos privat."
           }
         },
         "en" : {
@@ -160676,7 +160676,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos sind privat. Nur du siehst sie, es sei denn, die Kundin hat dem Teilen zugestimmt."
+            "value" : "Fotos sind privat. Nur du siehst sie, außer es liegt eine Einwilligung zum Teilen vor."
           }
         },
         "en" : {
@@ -162206,7 +162206,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Felder Ihrer Akte erscheinen hier, sobald Ihr Arbeitsbereich bereit ist."
+            "value" : "Die Felder deiner Akte erscheinen hier, sobald dein Arbeitsbereich bereit ist."
           }
         },
         "en" : {
@@ -162386,7 +162386,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten die Felder Ihrer Akte nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten die Felder deiner Akte nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -162476,7 +162476,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -163196,7 +163196,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben die Höchstzahl eigener Felder für diesen Beruf erreicht."
+            "value" : "Du hast die Höchstzahl eigener Felder für diesen Beruf erreicht."
           }
         },
         "en" : {
@@ -163286,7 +163286,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein ausgeschaltetes Feld wird nur nicht mehr abgefragt. Was Sie bereits gespeichert haben, bleibt erhalten."
+            "value" : "Ein ausgeschaltetes Feld wird nur nicht mehr abgefragt. Was du bereits gespeichert hast, bleibt erhalten."
           }
         },
         "en" : {
@@ -163376,7 +163376,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Felder"
+            "value" : "Deine Felder"
           }
         },
         "en" : {
@@ -163466,7 +163466,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie pro %@ festhalten möchten. Der Sprachassistent füllt diese Felder für Sie aus."
+            "value" : "Was du pro %@ festhalten möchtest. Der Sprachassistent füllt diese Felder für dich aus."
           }
         },
         "en" : {
@@ -165446,7 +165446,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Akten deiner Kundinnen sind versiegelt, sodass nur du sie lesen kannst. Dieser Schlüssel ist der Weg zurück, falls du dein iPhone und deinen iCloud-Schlüsselbund verlierst."
+            "value" : "Die Akten deiner Kundschaft sind versiegelt, sodass nur du sie lesen kannst. Dieser Schlüssel ist der Weg zurück, falls du dein iPhone und deinen iCloud-Schlüsselbund verlierst."
           }
         },
         "en" : {
@@ -166166,7 +166166,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine ersten 10 Kundenregistrierungen sind kostenlos. Gelöschte Einträge zählen weiterhin zu diesem Limit."
+            "value" : "Deine ersten 10 Registrierungen sind kostenlos. Gelöschte Einträge zählen weiterhin zu diesem Limit."
           }
         },
         "en" : {
@@ -167162,7 +167162,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Termin konnte nicht gelesen werden. Prüfen Sie, ob das iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Der Termin konnte nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -167252,7 +167252,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Termin konnte nicht verschoben werden. Es wurde nichts geändert. Versuchen Sie es erneut."
+            "value" : "Der Termin konnte nicht verschoben werden. Es wurde nichts geändert. Versuche es erneut."
           }
         },
         "en" : {
@@ -169952,7 +169952,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "WhatsApp öffnet sich mit der fertigen Nachricht. Das Senden liegt bei Ihnen."
+            "value" : "WhatsApp öffnet sich mit der fertigen Nachricht. Das Senden liegt bei dir."
           }
         },
         "en" : {
@@ -170132,7 +170132,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das ist eine lange Wartezeit. Bieten Sie eine Verschiebung an, falls jemand nicht bleiben kann."
+            "value" : "Das ist eine lange Wartezeit. Biete eine Verschiebung an, falls jemand nicht bleiben kann."
           }
         },
         "en" : {
@@ -170312,7 +170312,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sagen Sie den nächsten Kunden Bescheid, bevor sie ankommen. Ihr Kalender bleibt unverändert."
+            "value" : "Sag den nächsten Terminen Bescheid, bevor sie ankommen. Dein Kalender bleibt unverändert."
           }
         },
         "en" : {
@@ -171032,7 +171032,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine freie Zeit an diesem Tag. Wählen Sie einen anderen Tag oder eine andere Zeit."
+            "value" : "Keine freie Zeit an diesem Tag. Wähle einen anderen Tag oder eine andere Zeit."
           }
         },
         "en" : {
@@ -171482,7 +171482,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben ihn in Ihrem Kalender gesperrt."
+            "value" : "Du hast diese Zeit in deinem Kalender gesperrt."
           }
         },
         "en" : {
@@ -171662,7 +171662,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Zeit ist eine Ihrer Pausen."
+            "value" : "Diese Zeit ist eine deiner Pausen."
           }
         },
         "en" : {
@@ -171842,7 +171842,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie mögen %@ zwischen den Terminen."
+            "value" : "Du planst %@ zwischen den Terminen ein."
           }
         },
         "en" : {
@@ -172202,7 +172202,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es liegt außerhalb Ihrer Wochenzeiten."
+            "value" : "Es liegt außerhalb deiner Wochenzeiten."
           }
         },
         "en" : {
@@ -172292,7 +172292,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "An diesem Tag arbeiten Sie nicht."
+            "value" : "An diesem Tag arbeitest du nicht."
           }
         },
         "en" : {
@@ -172562,7 +172562,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie zuerst den Gesundheitsfragebogen."
+            "value" : "Prüfe zuerst den Gesundheitsfragebogen."
           }
         },
         "en" : {
@@ -172652,7 +172652,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es ist einer Ihrer freien Tage."
+            "value" : "Es ist einer deiner freien Tage."
           }
         },
         "en" : {
@@ -172832,7 +172832,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie können ihn trotzdem buchen, zum Beispiel einen vergangenen Termin."
+            "value" : "Du kannst ihn trotzdem eintragen, zum Beispiel einen vergangenen Termin."
           }
         },
         "en" : {
@@ -173192,7 +173192,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Endet nach Ihren Arbeitszeiten."
+            "value" : "Endet nach deinen Arbeitszeiten."
           }
         },
         "en" : {
@@ -173282,7 +173282,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beginnt vor Ihren Arbeitszeiten."
+            "value" : "Beginnt vor deinen Arbeitszeiten."
           }
         },
         "en" : {
@@ -173372,7 +173372,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Liegt zwischen Ihren Arbeitsblöcken."
+            "value" : "Liegt zwischen deinen Arbeitsblöcken."
           }
         },
         "en" : {
@@ -173462,7 +173462,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es liegt außerhalb Ihrer Arbeitszeiten."
+            "value" : "Es liegt außerhalb deiner Arbeitszeiten."
           }
         },
         "en" : {
@@ -173822,7 +173822,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prüfen Sie es vor der Behandlung."
+            "value" : "Sieh es dir vor der Behandlung an."
           }
         },
         "en" : {
@@ -174272,7 +174272,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schreiben Sie, was Sie nach dem Termin teilen"
+            "value" : "Schreib, was du nach dem Termin weitergibst"
           }
         },
         "en" : {
@@ -175628,7 +175628,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie sehen eine Warnung, wenn der Gesundheitsbogen passt. Eine Buchung wird nie verhindert."
+            "value" : "Du siehst eine Warnung, wenn der Gesundheitsbogen passt. Eine Buchung wird nie verhindert."
           }
         },
         "en" : {
@@ -175808,7 +175808,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wählen Sie alles aus, wovor Sie beim Buchen dieser Leistung gewarnt werden möchten."
+            "value" : "Wähle alles aus, wovor du beim Buchen dieser Leistung gewarnt werden möchtest."
           }
         },
         "en" : {
@@ -176168,7 +176168,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Termine, die sie genutzt haben, behalten ihren Namen. In keiner Akte ändert sich etwas. Wenn Sie sie nur nicht mehr anbieten wollen, schalten Sie sie stattdessen aus."
+            "value" : "Termine mit dieser Leistung behalten ihren Namen. In keiner Akte ändert sich etwas. Wenn du sie nur nicht mehr anbieten willst, schalte sie stattdessen aus."
           }
         },
         "en" : {
@@ -176708,7 +176708,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nennen Sie sie, wie Sie möchten"
+            "value" : "Nenn sie, wie du möchtest"
           }
         },
         "en" : {
@@ -176978,7 +176978,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geben Sie den Preis als Zahl ein."
+            "value" : "Gib den Preis als Zahl ein."
           }
         },
         "en" : {
@@ -177068,7 +177068,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preis auf Ihrer Buchungsseite"
+            "value" : "Preis auf deiner Buchungsseite"
           }
         },
         "en" : {
@@ -177248,7 +177248,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie hinzu, was Sie anbieten, mit Dauer, Preis und Folgetermin. Sie können es jederzeit ändern."
+            "value" : "Füge hinzu, was du anbietest, mit Dauer, Preis und Folgetermin. Du kannst es jederzeit ändern."
           }
         },
         "en" : {
@@ -177428,7 +177428,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Leistungen nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Leistungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -177518,7 +177518,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben bereits eine Leistung mit diesem Namen."
+            "value" : "Du hast bereits eine Leistung mit diesem Namen."
           }
         },
         "en" : {
@@ -177698,7 +177698,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -178058,7 +178058,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie verwenden und empfehlen"
+            "value" : "Was du verwendest und empfiehlst"
           }
         },
         "en" : {
@@ -179228,7 +179228,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Leistungen"
+            "value" : "Deine Leistungen"
           }
         },
         "en" : {
@@ -179318,7 +179318,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "So benannt, wie Sie es sagen. Jede hat ihren eigenen Folgetermin-Rhythmus."
+            "value" : "So benannt, wie du es sagst. Jede hat ihren eigenen Folgetermin-Rhythmus."
           }
         },
         "en" : {
@@ -179678,7 +179678,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundinnen sehen diese Zeit nie in der Dauer oder im Preis. So bleibt dein Kalender ehrlich."
+            "value" : "Deine Kundschaft sieht diese Zeit nie in der Dauer oder im Preis. So bleibt dein Kalender ehrlich."
           }
         },
         "en" : {
@@ -180038,7 +180038,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Du bist frei, während es einwirkt, etwa eine Farbe. In der Zeit kannst du eine andere Kundin bedienen."
+            "value" : "Du bist frei, während etwas einwirkt, etwa eine Farbe. In der Zeit kannst du jemand anderen bedienen."
           }
         },
         "en" : {
@@ -180668,7 +180668,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Plan wurde nicht gespeichert. Versuchen Sie es noch einmal."
+            "value" : "Der Plan wurde nicht gespeichert. Versuch es noch einmal."
           }
         },
         "en" : {
@@ -182558,7 +182558,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verwenden Sie nur Buchstaben, Ziffern und Bindestriche."
+            "value" : "Verwende nur Buchstaben, Ziffern und Bindestriche."
           }
         },
         "en" : {
@@ -182648,7 +182648,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verwenden Sie jeweils nur einen Bindestrich."
+            "value" : "Verwende jeweils nur einen Bindestrich."
           }
         },
         "en" : {
@@ -182738,7 +182738,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beginnen und enden Sie mit einem Buchstaben oder einer Ziffer."
+            "value" : "Beginne und ende mit einem Buchstaben oder einer Ziffer."
           }
         },
         "en" : {
@@ -182918,7 +182918,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verwenden Sie höchstens 30 Zeichen."
+            "value" : "Verwende höchstens 30 Zeichen."
           }
         },
         "en" : {
@@ -183008,7 +183008,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verwenden Sie mindestens 3 Zeichen."
+            "value" : "Verwende mindestens 3 Zeichen."
           }
         },
         "en" : {
@@ -183728,7 +183728,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Adresse"
+            "value" : "Deine Adresse"
           }
         },
         "en" : {
@@ -184718,7 +184718,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Seite ist für Ihre Kundschaft erreichbar, sobald Sie online sind. Bis dahin funktioniert der Link nicht."
+            "value" : "Deine Seite ist für deine Kundschaft erreichbar, sobald du online bist. Bis dahin funktioniert der Link nicht."
           }
         },
         "en" : {
@@ -185258,7 +185258,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wo Sie ihn platzieren"
+            "value" : "Wo du ihn platzierst"
           }
         },
         "en" : {
@@ -185438,7 +185438,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ein Link für Instagram, WhatsApp und Ihren Tisch."
+            "value" : "Ein Link für Instagram, WhatsApp und deinen Empfangstisch."
           }
         },
         "en" : {
@@ -185528,7 +185528,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihren Link teilen"
+            "value" : "Deinen Link teilen"
           }
         },
         "en" : {
@@ -185618,7 +185618,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Für neue Chats. Fügen Sie es als automatische Antwort ein oder senden Sie es von Hand."
+            "value" : "Für neue Chats. Füge es als automatische Antwort ein oder sende es von Hand."
           }
         },
         "en" : {
@@ -185888,7 +185888,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Es wurde nichts gelöscht. Schließen Sie die App und öffnen Sie sie erneut. Falls es weiter auftritt, starten Sie das iPhone neu."
+            "value" : "Es wurde nichts gelöscht. Schließe die App und öffne sie erneut. Passiert es weiterhin, starte dein iPhone neu."
           }
         },
         "en" : {
@@ -185978,7 +185978,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Daten konnten nicht geöffnet werden"
+            "value" : "Deine Daten konnten nicht geöffnet werden"
           }
         },
         "en" : {
@@ -186557,13 +186557,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld Person verliert diese Markierung. Ihre Liste bleibt unverändert."
+                  "value" : "%lld Person verliert diese Markierung. Deine Liste bleibt unverändert."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld Personen verlieren diese Markierung. Ihre Liste bleibt unverändert."
+                  "value" : "%lld Personen verlieren diese Markierung. Deine Liste bleibt unverändert."
                 }
               }
             }
@@ -186794,7 +186794,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Niemand hat diese Markierung. Ihre Liste bleibt unverändert."
+            "value" : "Niemand hat diese Markierung. Deine Liste bleibt unverändert."
           }
         },
         "en" : {
@@ -186884,7 +186884,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wer diese Markierung hat, verliert sie. Ihre Liste bleibt unverändert."
+            "value" : "Wer diese Markierung hat, verliert sie. Deine Liste bleibt unverändert."
           }
         },
         "en" : {
@@ -187874,7 +187874,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Legen Sie ein paar Markierungen an, etwa VIP oder Empfindliche Haut, um Personen schneller zu finden."
+            "value" : "Leg ein paar Markierungen an, etwa VIP oder Empfindliche Haut, um Personen schneller zu finden."
           }
         },
         "en" : {
@@ -188054,7 +188054,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie haben bereits eine Markierung mit diesem Namen."
+            "value" : "Du hast bereits eine Markierung mit diesem Namen."
           }
         },
         "en" : {
@@ -188144,7 +188144,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten Ihre Markierungen nicht lesen. Prüfen Sie, ob Ihr iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Wir konnten deine Markierungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -188234,7 +188234,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wir konnten diese Änderung nicht speichern. Prüfen Sie, ob Ihr iPhone Speicherplatz hat, und versuchen Sie es erneut."
+            "value" : "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut."
           }
         },
         "en" : {
@@ -188960,7 +188960,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Markierungen"
+            "value" : "Deine Markierungen"
           }
         },
         "en" : {
@@ -189050,7 +189050,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kurze Markierungen, damit Sie wissen, wer wer ist."
+            "value" : "Kurze Markierungen, damit du weißt, wer wer ist."
           }
         },
         "en" : {
@@ -189230,7 +189230,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sie sind die Inhaberin und sehen immer alles. Jede Fachkraft hat einen eigenen Kalender und eigene Buchungszeiten."
+            "value" : "Du bist Inhaberin und siehst immer alles. Jede Fachkraft hat einen eigenen Kalender und eigene Buchungszeiten."
           }
         },
         "en" : {
@@ -189500,7 +189500,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügt Ihrer Buchungsseite einen Schritt hinzu"
+            "value" : "Fügt deiner Buchungsseite einen Schritt hinzu"
           }
         },
         "en" : {
@@ -190220,7 +190220,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was Sie festlegen können werden"
+            "value" : "Was du festlegen können wirst"
           }
         },
         "en" : {
@@ -190310,7 +190310,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fügen Sie Fachkräfte hinzu und legen Sie fest, was sie sehen dürfen."
+            "value" : "Füge Fachkräfte hinzu und leg fest, was sie sehen dürfen."
           }
         },
         "en" : {
@@ -190580,7 +190580,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kunde/Kundin"
+            "value" : "Person"
           }
         },
         "en" : {
@@ -190850,7 +190850,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Patient/innen"
+            "value" : "Patientinnen und Patienten"
           }
         },
         "en" : {
@@ -190940,7 +190940,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Patient/in"
+            "value" : "Person"
           }
         },
         "en" : {
@@ -191030,7 +191030,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schüler/innen"
+            "value" : "Schülerinnen und Schüler"
           }
         },
         "en" : {
@@ -191120,7 +191120,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schüler/in"
+            "value" : "Person"
           }
         },
         "en" : {
@@ -191840,7 +191840,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Das Teilen mit der Kundin oder die Nutzung im Portfolio setzt ihre Foto-Einwilligung voraus, die noch nicht unterschrieben ist."
+            "value" : "Das Teilen mit der Person oder die Nutzung im Portfolio setzt eine Foto-Einwilligung voraus, die noch nicht unterschrieben ist."
           }
         },
         "en" : {
@@ -195080,7 +195080,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Kundin wurde entfernt oder zusammengeführt, während der Eintrag geöffnet wurde."
+            "value" : "Dieses Profil wurde entfernt oder zusammengeführt, während der Eintrag geöffnet wurde."
           }
         },
         "en" : {
@@ -195170,7 +195170,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundin nicht gefunden"
+            "value" : "Profil nicht gefunden"
           }
         },
         "en" : {
@@ -196880,7 +196880,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundin hat keine Foto-Einwilligung unterschrieben, daher können Fotos weder geteilt noch im Portfolio verwendet werden."
+            "value" : "Es liegt keine unterschriebene Foto-Einwilligung vor, daher können Fotos weder geteilt noch im Portfolio verwendet werden."
           }
         },
         "en" : {
@@ -197510,7 +197510,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Standardmäßig privat. Fotos bleiben mit der Kundin, dem Datum und diesem Besuch verknüpft und werden nie für Werbung genutzt, es sei denn, du entscheidest es."
+            "value" : "Standardmäßig privat. Fotos bleiben mit der Person, dem Datum und diesem Besuch verknüpft und werden nie für Werbung genutzt, es sei denn, du entscheidest es."
           }
         },
         "en" : {
@@ -198230,7 +198230,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mit der Kundin geteilt"
+            "value" : "Mit der Person geteilt"
           }
         },
         "en" : {
@@ -203990,7 +203990,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wenn ein Tag voll ist, können Kundinnen und Kunden um Bescheid bitten. Sie erscheinen hier."
+            "value" : "Wenn ein Tag voll ist, kann deine Kundschaft darum bitten, Bescheid zu bekommen, falls eine Zeit frei wird. Sie erscheinen hier."
           }
         },
         "en" : {
@@ -205610,7 +205610,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ihre Woche konnte nicht gelesen werden. Prüfen Sie, ob das iPhone entsperrt ist, und versuchen Sie es erneut."
+            "value" : "Deine Woche konnte nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut."
           }
         },
         "en" : {
@@ -205700,7 +205700,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Freie Zeiten folgen Ihrer Verfügbarkeit und der Pause zwischen den Terminen."
+            "value" : "Freie Zeiten folgen deiner Verfügbarkeit und der Pause zwischen den Terminen."
           }
         },
         "en" : {
