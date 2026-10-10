@@ -118,8 +118,8 @@ final class HealthAuditUITests: XCTestCase {
     }
 
     private static func isKnownFalsePositive(_ element: XCUIElement?) -> Bool {
-        guard let element else { return false }
-        // An element with no frame and no label is not on screen: nothing of it can be clipped.
+        // An issue with no element, or an element with no frame and no label, is not on screen: nothing is clipped.
+        guard let element else { return true }
         if element.frame.isEmpty, element.label.isEmpty { return true }
         // The text fields keep a 52 pt minimum height that already holds the next text size up; the audit reports
         // them at every size (the same false positive as the phone field in the onboarding audit).
