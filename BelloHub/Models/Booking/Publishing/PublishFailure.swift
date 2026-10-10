@@ -22,11 +22,14 @@ enum PublishFailure: Equatable, Sendable {
     case locked
     /// The server refused what the app sent, or answered something unreadable. Not fixed by waiting.
     case rejected
+    /// The page serves an inbox key this iPhone did not derive, even after publishing again (docs/06 section 3.2):
+    /// publishing stops until she retries, and she is told to contact support.
+    case keyMismatch
 
     var isRetryable: Bool {
         switch self {
         case .offline, .busy, .locked: true
-        case .needsAddress, .needsService, .addressTaken, .signedOut, .rejected: false
+        case .needsAddress, .needsService, .addressTaken, .signedOut, .rejected, .keyMismatch: false
         }
     }
 }

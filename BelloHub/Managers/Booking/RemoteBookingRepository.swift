@@ -53,6 +53,18 @@ struct RemoteBookingRepository: BookingRepository {
         )
     }
 
+    func servedInboxKey(slug: String) async throws -> InboxPublicKey? {
+        do {
+            let page: PublicPage = try await client.call("getPublicPage", SlugRequest(slug: slug))
+            return page.profile.inboxKey
+        } catch ServerError.notFound {
+            // No page at that address yet.
+            return nil
+        } catch let error as ServerError {
+            throw Self.map(error)
+        }
+    }
+
     // MARK: - Mapping
 
     private func perform<Request: Encodable, Response: Decodable>(
@@ -111,6 +123,10 @@ struct RemoteBookingRepository: BookingRepository {
     private struct KeyringEntry: Decodable {
         let keyId: String
     }
+
+    /// Only the key of the public page; every other field is ignored.
+    private struct PublicPage: Decodable { let profile: PublicPageProfile }
+    private struct PublicPageProfile: Decodable { let inboxKey: InboxPublicKey? }
 
     private struct Keyring: Decodable {
         let keyring: [KeyringEntry]

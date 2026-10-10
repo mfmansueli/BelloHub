@@ -59,6 +59,10 @@ struct AlertsContentView: View {
     @ViewBuilder
     private func sections(_ list: AlertsList, inbox: InboxAlerts, now: Date) -> some View {
         if !inbox.isEmpty { inboxSection(inbox) }
+        let mailbox = viewModel.mailboxAlerts
+        if !mailbox.isEmpty {
+            MailboxAlertCards(alerts: mailbox, onResolve: viewModel.resolve, onImportsSeen: viewModel.markImportsSeen)
+        }
         if !list.remindersReady.isEmpty {
             SectionHeader(title: "alerts.section.reminders")
             RemindersReadyCard(items: list.remindersReady, formatters: formatters) { item in

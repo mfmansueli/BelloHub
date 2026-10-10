@@ -139,6 +139,41 @@ actor FakeInboxRepository: InboxRepository {
         mailbox.removeAll { $0.id == id }
     }
 
+    /// The server's registration counter (D42): counts each new id once, up to `freeLimit` unless `hasPlan`.
+    private(set) var registered: [UUID] = []
+    private var serverHasPlan = false
+
+    func setServerHasPlan(_ value: Bool) {
+        serverHasPlan = value
+    }
+
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        try write("reserveRegistrations:\(claims.count)")
+        var allowed = Set<UUID>()
+        var refused = Set<UUID>()
+        for claim in claims {
+            if registered.contains(claim.clientID) {
+                allowed.insert(claim.clientID)
+            } else if serverHasPlan || registered.count < RegistrationQuota.freeLimit {
+                registered.append(claim.clientID)
+                allowed.insert(claim.clientID)
+            } else {
+                refused.insert(claim.clientID)
+            }
+        }
+        return RegistrationReservation(allowed: allowed, refused: refused, count: registered.count)
+    }
+
+    /// Clients the server counted before this phone knew them (bookings from the link, another device).
+    func preRegister(_ ids: [UUID]) {
+        registered.append(contentsOf: ids)
+    }
+
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        try write("deleteClientServerData:\(phone ?? "-"):\(bookingIds.joined(separator: ","))")
+        bookings.removeAll { bookingIds.contains($0.id) || $0.client.phone == phone }
+    }
+
     func registerDevice(fcmToken: String, locale: String?) async throws {
         try write("registerDevice:\(fcmToken)")
     }

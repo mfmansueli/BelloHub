@@ -166,6 +166,10 @@ final class OutboundQueue {
             try await repository.registerDevice(fcmToken: fcmToken, locale: locale)
         case .unregisterDevice(let fcmToken):
             try await repository.unregisterDevice(fcmToken: fcmToken)
+        case .deleteClientServerData(let phone, let bookingIds):
+            try await repository.deleteClientServerData(phone: phone, bookingIds: bookingIds)
+        case .reserveRegistrations(let claims):
+            return .registrations(try await repository.reserveRegistrations(claims))
         }
         return .done
     }

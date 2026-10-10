@@ -68,7 +68,7 @@ struct PublishStatusTextTests {
 
     @Test("Try again is offered unless she has to change something first")
     func retryOffer() {
-        let offered: Set<PublishFailure> = [.offline, .busy, .locked, .rejected]
+        let offered: Set<PublishFailure> = [.offline, .busy, .locked, .rejected, .keyMismatch]
         for failure in PublishFailure.allCasesForTests {
             #expect(PublishStatusText.offersRetry(failure) == offered.contains(failure))
         }

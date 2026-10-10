@@ -31,6 +31,7 @@ struct RootView: View {
     @State private var bookingSync: BookingSyncService
     @State private var mailbox: MailboxService
     @State private var push: PushService
+    @State private var clientDeletion: ClientDataDeletionService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -63,6 +64,7 @@ struct RootView: View {
         _bookingSync = State(initialValue: dependencies.inbox.bookings)
         _mailbox = State(initialValue: dependencies.inbox.mailbox)
         _push = State(initialValue: dependencies.inbox.push)
+        _clientDeletion = State(initialValue: dependencies.inbox.clientDeletion)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -91,6 +93,7 @@ struct RootView: View {
         .environment(bookingSync)
         .environment(mailbox)
         .environment(push)
+        .environment(clientDeletion)
         .treatmentTools(dependencies.treatmentTools)
         .environment(publishing)
         .environment(subscription)

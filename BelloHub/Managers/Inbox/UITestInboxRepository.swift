@@ -113,6 +113,15 @@ actor UITestInboxRepository: InboxRepository {
 
     func resetNoShowCount(phone: String) async throws {}
 
+    /// Everything is allowed: UI tests drive the free limit through the vault's own count (`-uiPlan`).
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        RegistrationReservation(allowed: Set(claims.map(\.clientID)), refused: [], count: claims.count)
+    }
+
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        bookings.removeAll { booking in bookingIds.contains(booking.id) || booking.client.phone == phone }
+    }
+
     func acknowledgeMailboxItem(id: String) async throws {
         acknowledged.append(id)
         items.removeAll { $0.id == id }

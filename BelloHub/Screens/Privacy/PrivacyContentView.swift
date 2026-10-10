@@ -9,13 +9,17 @@ import SwiftUI
 /// and its timing, photos, lock-screen names, the export, retention, the legal texts and the no-analytics promise.
 struct PrivacyContentView: View {
     @State private var viewModel: PrivacyViewModel
+    /// The key id of her booking-form key (docs/06 section 3.2): the page shows the same code in its footer, so she
+    /// can check that her clients seal their forms to this iPhone's key. Nil while the vault is locked.
+    private let inboxKeyID: String?
 
     @Environment(\.locale) private var locale
 
     init(
         lock: AppLockService, recoveryKey: RecoveryKeyService, notifications: NotificationSettingsService,
-        localization: AppLocalization
+        localization: AppLocalization, inboxKeyID: String? = nil
     ) {
+        self.inboxKeyID = inboxKeyID
         _viewModel = State(initialValue: PrivacyViewModel(
             lock: lock, recoveryKey: recoveryKey, notifications: notifications, localization: localization
         ))
@@ -63,8 +67,23 @@ struct PrivacyContentView: View {
                         subtitle: Text("privacy.where.servers.subtitle"))
                 MoreRow(icon: .shield, tint: .sage, title: Text("privacy.where.analytics"),
                         subtitle: Text("privacy.where.analytics.subtitle"))
+                if let inboxKeyID {
+                    MoreRow(icon: .lock, tint: .neutral, title: Text("privacy.inboxKey.title"),
+                            subtitle: Text(inboxKeyLine(inboxKeyID)))
+                        .accessibilityIdentifier("privacy.inboxKeyRow")
+                }
             }
         }
+    }
+
+    /// "Form key Qx9fT2mA7Hk. Your booking form shows the same code at the bottom."
+    private func inboxKeyLine(_ keyID: String) -> LocalizedStringResource {
+        LocalizedStringResource(
+            "privacy.inboxKey.subtitle",
+            defaultValue: """
+            Form key \(BidiIsolate.wrapLeftToRight(keyID)). Your booking form shows the same code at the bottom.
+            """
+        ).localized(in: locale)
     }
 
     private var recoveryKey: some View {

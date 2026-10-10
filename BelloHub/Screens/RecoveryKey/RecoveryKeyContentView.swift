@@ -105,6 +105,7 @@ struct RecoveryKeyContentView: View {
         }
         .privacySensitive()
         .environment(\.layoutDirection, .leftToRight)
+        .hiddenWhileCaptured()
     }
 
     private var exportRows: some View {

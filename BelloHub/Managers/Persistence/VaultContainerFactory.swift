@@ -29,10 +29,15 @@ enum VaultContainerFactory {
         case .standard:
             configuration = ModelConfiguration(cloudKitDatabase: cloudKit)
         }
-        return try ModelContainer(
+        let container = try ModelContainer(
             for: Schema(versionedSchema: CurrentVaultSchema.self),
             migrationPlan: VaultMigrationPlan.self,
             configurations: configuration
         )
+        if storage != .inMemory {
+            // docs/06 section 4.4: the protection class is chosen here, not left to the default.
+            VaultFileProtection.apply(to: configuration.url)
+        }
+        return container
     }
 }

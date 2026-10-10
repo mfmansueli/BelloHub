@@ -47,5 +47,9 @@ actor UITestBookingRepository: BookingRepository {
     func setOnlineBookingStopped(phone: String, stopped: Bool) async throws {}
 
     func updateInboxKey(_ key: InboxPublicKey, compromised: Bool) async throws {}
+
+    func servedInboxKey(slug: String) async throws -> InboxPublicKey? {
+        publishedProfile?.profile.inboxKey
+    }
 }
 #endif

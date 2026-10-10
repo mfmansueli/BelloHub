@@ -53,10 +53,9 @@ struct AppDependencies {
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
         let subscription = makeLiveSubscription(client: client, profile: profile)
-        let inbox = InboxServices.make(
-            repository: RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens)),
-            keys: keyManager, vault: vault, appointments: appointments, pushProvider: makePushProvider()
-        )
+        let server = RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens))
+        let inbox = InboxServices.make(repository: server, keys: keyManager, vault: vault, appointments: appointments,
+                                       pushProvider: makePushProvider())
         return AppDependencies(
             session: session,
             keyManager: keyManager,
@@ -64,7 +63,7 @@ struct AppDependencies {
             permissions: permissions,
             vault: vault,
             profile: profile,
-            registration: ClientRegistrationService(vault: vault, subscription: subscription),
+            registration: .init(vault: vault, subscription: subscription, server: server, queue: inbox.queue),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: appointments,
             timeBlocks: timeBlocks,

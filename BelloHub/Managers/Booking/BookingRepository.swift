@@ -28,4 +28,7 @@ protocol BookingRepository: Sendable {
     func setOnlineBookingStopped(phone: String, stopped: Bool) async throws
     /// Registers a new current inbox key (rotation) or the same one again (no change).
     func updateInboxKey(_ key: InboxPublicKey, compromised: Bool) async throws
+    /// The inbox key her public page serves now (`getPublicPage`), nil when the page does not exist yet. What the
+    /// clients' browsers seal to; `InboxKeyVerifier` compares it with the derived key.
+    func servedInboxKey(slug: String) async throws -> InboxPublicKey?
 }

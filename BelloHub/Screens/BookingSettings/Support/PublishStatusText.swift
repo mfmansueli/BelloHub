@@ -66,6 +66,14 @@ enum PublishStatusText {
             )
         case .offline:
             offline(wasOnline: wasOnline)
+        case .keyMismatch:
+            LocalizedStringResource(
+                "publish.error.keyMismatch",
+                defaultValue: """
+                Your booking page shows a form key that is not the one on this iPhone, so publishing is stopped. \
+                Try again; if this message comes back, contact support.
+                """
+            )
         case .rejected:
             LocalizedStringResource(
                 "publish.error.rejected",
@@ -95,7 +103,7 @@ enum PublishStatusText {
     static func offersRetry(_ failure: PublishFailure) -> Bool {
         switch failure {
         case .needsAddress, .needsService, .addressTaken, .signedOut: false
-        case .offline, .busy, .locked, .rejected: true
+        case .offline, .busy, .locked, .rejected, .keyMismatch: true
         }
     }
 }

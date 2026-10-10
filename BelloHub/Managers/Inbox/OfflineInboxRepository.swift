@@ -25,6 +25,12 @@ struct OfflineInboxRepository: InboxRepository {
     func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }
     func mailboxItem(id: String) async throws -> MailboxItem { throw BookingRepositoryError.notPublishedYet }
     func acknowledgeMailboxItem(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        throw BookingRepositoryError.notPublishedYet
+    }
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        throw BookingRepositoryError.notPublishedYet
+    }
     func registerDevice(fcmToken: String, locale: String?) async throws { throw BookingRepositoryError.notPublishedYet }
     func unregisterDevice(fcmToken: String) async throws { throw BookingRepositoryError.notPublishedYet }
 }
