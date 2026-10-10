@@ -167,6 +167,8 @@ struct ShareLinkView: View {
             }
             Text(verbatim: link.display).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 .environment(\.layoutDirection, .leftToRight)
+                // A bare address is not a readable label on its own (accessibility audit); say what it is.
+                .accessibilityLabel(Text("bookingSettings.link.title") + Text(verbatim: ", \(link.display)"))
                 .accessibilityIdentifier("shareLink.linkText")
             Text(verbatim: texts.qrCaption).font(Typography.meta).foregroundStyle(Palette.ink2)
                 .multilineTextAlignment(.center)

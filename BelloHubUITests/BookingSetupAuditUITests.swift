@@ -112,7 +112,10 @@ final class BookingSetupAuditUITests: XCTestCase {
         XCTAssertTrue(app.scrollUntilExists(app.switches["bookingSettings.acceptingSwitch"]), "\(tag) switch")
         app.flipSwitch("bookingSettings.acceptingSwitch", opens: app.switches["bookingSettings.pauseSheet.dateSwitch"])
         XCTAssertTrue(app.scrollUntilExists(app.switches["bookingSettings.pauseSheet.dateSwitch"]), "\(tag) pause")
-        app.flipSwitch("bookingSettings.pauseSheet.dateSwitch")
+        // At the largest size in pt-BR and de the message pushes the switch under the pinned confirm button.
+        app.flipSwitch(
+            "bookingSettings.pauseSheet.dateSwitch", clearOf: app.buttons["bookingSettings.pauseSheet.confirmButton"]
+        )
         try audit(app, "\(tag) pause sheet")
         app.tapButton("bookingSettings.pauseSheet.confirmButton")
         XCTAssertTrue(app.element("bookingSettings.returnDatePicker").waitForExistence(timeout: 5), "\(tag) paused")

@@ -26,14 +26,16 @@ extension XCUIApplication {
     /// Taps the switch with this identifier. A switch in a card row reports the whole row as its frame and its center
     /// is the label, so the tap goes to the edge where the control is: the trailing one, which is the right in a
     /// left-to-right language and the left in Arabic, so both are tried. A switch that only opens a sheet keeps its
-    /// value, so `opens` names what appears when the tap worked.
+    /// value, so `opens` names what appears when the tap worked. `clearOf` is a bar pinned to the bottom of a sheet
+    /// (a confirm button): the switch is scrolled above it first, or a tap meant for the switch confirms the sheet.
     @MainActor
     func flipSwitch(
-        _ identifier: String, opens target: XCUIElement? = nil, file: StaticString = #filePath, line: UInt = #line
+        _ identifier: String, opens target: XCUIElement? = nil, clearOf bottomBar: XCUIElement? = nil,
+        file: StaticString = #filePath, line: UInt = #line
     ) {
         let toggle = switches[identifier]
         XCTAssertTrue(toggle.waitForExistence(timeout: 5), "no switch \(identifier)", file: file, line: line)
-        bringIntoView(toggle)
+        bringIntoView(toggle, clearOf: bottomBar)
         let before = toggle.value as? String ?? ""
         // Where the control is: at the middle of the trailing or leading edge, or lower when a large text size stacks
         // the label above it.
@@ -74,14 +76,15 @@ extension XCUIApplication {
 
     /// Scrolls until the element sits clear of the navigation bar and the tab bar, so a tap at a point of its frame
     /// lands on it and not on what the bars float over. At the largest text size a row can be half under the bar when
-    /// it first exists.
+    /// it first exists. `clearOf` raises the bottom limit to the top of a bar pinned over the content.
     @MainActor
-    func bringIntoView(_ element: XCUIElement, attempts: Int = 24) {
+    func bringIntoView(_ element: XCUIElement, clearOf bottomBar: XCUIElement? = nil, attempts: Int = 24) {
         let screen = windows.firstMatch.frame
         for _ in 0..<attempts {
             let frame = element.frame
+            let bottomLimit = min(screen.maxY - 150, bottomBar.map { $0.frame.minY - 8 } ?? .greatestFiniteMagnitude)
             let tooHigh = frame.minY < 150
-            let tooLow = frame.maxY > screen.maxY - 150
+            let tooLow = frame.maxY > bottomLimit
             guard tooHigh || tooLow else { return }
             // A long drag when it is far away (a very long page at the largest size), a short one when it is close.
             let far = frame.minY < -200 || frame.maxY > screen.maxY + 200

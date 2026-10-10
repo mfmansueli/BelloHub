@@ -29,7 +29,7 @@ final class PublishUITests: XCTestCase {
         XCTAssertTrue(waitUntilEnabled(save))
         save.tap()
         XCTAssertTrue(app.element("shareLink.notOnline").waitForExistence(timeout: 5))
-        XCTAssertEqual(app.element("shareLink.linkText").label, "bello-hub.web.app/maria-silva")
+        XCTAssertTrue(app.element("shareLink.linkText").label.hasSuffix("bello-hub.web.app/maria-silva"))
 
         // Go online: the fake server accepts the page and the screen says the link works.
         app.tapButton("shareLink.goOnlineButton")
