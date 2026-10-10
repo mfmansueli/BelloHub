@@ -3,7 +3,7 @@
 // The screens only dispatch events and render the state; the server's answer (confirmed, pendingApproval, paused,
 // slotTaken) decides the last step, because the page must never learn whether a phone number is already a client.
 
-import type { BookingResult, FirstVisitAnswers, OfferedHold, VerificationProof } from '../../api/types';
+import type { BookingProof, BookingResult, FirstVisitAnswers, OfferedHold } from '../../api/types';
 
 export type BookingPhase =
   | 'service'
@@ -36,8 +36,8 @@ export interface Draft {
 export interface BookingState {
   readonly phase: BookingPhase;
   readonly draft: Draft;
-  /** Held in memory only: a code is never stored. */
-  readonly proof: VerificationProof | null;
+  /** Held in memory only: a code is never stored. A `device` proof is the trusted-device token (lib/trustedDevice.ts). */
+  readonly proof: BookingProof | null;
   readonly proofFor: string | null;
   readonly firstVisit: FirstVisitAnswers;
   readonly result: BookingResult | null;
@@ -62,7 +62,9 @@ export type BookingEvent =
       readonly phoneInput: string;
       readonly email: string;
     }
-  | { readonly type: 'verified'; readonly proof: VerificationProof; readonly target: string }
+  | { readonly type: 'verified'; readonly proof: BookingProof; readonly target: string }
+  /** The server would not take the trusted device this time (API.md 5.8): back to the e-mail code. */
+  | { readonly type: 'needsCode' }
   | { readonly type: 'setFirstVisit'; readonly answers: FirstVisitAnswers }
   | { readonly type: 'result'; readonly result: BookingResult }
   | { readonly type: 'back' }
@@ -195,6 +197,8 @@ export function reduce(state: BookingState, event: BookingEvent): BookingState {
     }
     case 'verified':
       return { ...state, phase: 'questions', proof: event.proof, proofFor: event.target };
+    case 'needsCode':
+      return { ...state, phase: 'verify', proof: null, proofFor: null };
     case 'setFirstVisit':
       return { ...state, firstVisit: event.answers };
     case 'result': {

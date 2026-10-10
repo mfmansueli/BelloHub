@@ -5,14 +5,21 @@
 //
 // The server says "paused" without saying for whom (deliberate: a pause for one client is not announced). The page
 // reads her public page again: if it no longer accepts bookings the pause is for everyone, otherwise it is about her.
+//
+// Two ways past the e-mail code (API.md 5.8): a trusted device (a returning client; when the server will not take it
+// this time the page goes back to the code), and "Confirm on WhatsApp" when the code never arrived (always a request,
+// unverified; Bk-10 then prefills her WhatsApp message with the reference).
 
 import { api } from '../../api/client';
-import type { BookingResult, CreateBookingRequest, FirstVisitAnswers, PublicProfile } from '../../api/types';
+import { ApiError } from '../../api/errors';
+import type { BookingOutcome, BookingProof, BookingResult, CreateBookingRequest, FirstVisitAnswers, PublicProfile } from '../../api/types';
 import { forgetPublicPage, loadPublicPage } from '../../app/pageData';
 import { navigate, slugRoute } from '../../app/router';
 import type { BookingEvent, BookingState } from '../../app/booking/machine';
 import type { LocaleId } from '../../lib/locales';
 import { normalizePhone, phoneRegion } from '../../lib/phone';
+import { forgetDeviceLocally, rememberDevice } from '../../lib/trustedDevice';
+import { EMPTY_FIRST_VISIT } from '../../app/booking/machine';
 
 /** The server keeps `note` only (<= 300 chars). */
 export const NOTE_MAX_LENGTH = 300;
@@ -23,8 +30,9 @@ export function buildCreateRequest(
   state: BookingState,
   locale: LocaleId,
   answers: FirstVisitAnswers,
+  proof: BookingProof | null = state.proof,
 ): CreateBookingRequest | null {
-  const { draft, proof } = state;
+  const { draft } = state;
   if (draft.serviceId === null || draft.startsAt === null || proof === null) return null;
   const phone = normalizePhone(draft.phoneInput, phoneRegion(draft.phoneCountry));
   if (!phone.ok) return null;
@@ -64,13 +72,49 @@ export async function submitBooking(
   answers: FirstVisitAnswers,
   dispatch: (event: BookingEvent) => void,
 ): Promise<void> {
-  const request = buildCreateRequest(profile, state, locale, answers);
+  await send(profile, buildCreateRequest(profile, state, locale, answers), dispatch);
+}
+
+/**
+ * "I didn't get the code" -> "Confirm with <her> on WhatsApp": the booking is made without a proof and waits for her.
+ * Only what the page already collected travels (no first-visit note: she has not reached that screen).
+ */
+export async function submitUnverified(
+  profile: PublicProfile,
+  state: BookingState,
+  locale: LocaleId,
+  dispatch: (event: BookingEvent) => void,
+): Promise<void> {
+  await send(profile, buildCreateRequest(profile, state, locale, EMPTY_FIRST_VISIT, { method: 'whatsapp' }), dispatch);
+}
+
+async function send(
+  profile: PublicProfile,
+  request: CreateBookingRequest | null,
+  dispatch: (event: BookingEvent) => void,
+): Promise<void> {
   if (request === null) {
     navigate(slugRoute(profile.slug, 'you'), true);
     return;
   }
-  const outcome = await api.createBooking(request);
+  let outcome: BookingOutcome;
+  try {
+    outcome = await api.createBooking(request);
+  } catch (error) {
+    if (request.verification.method === 'device' && error instanceof ApiError && (error.code === 'verificationRequired' || error.code === 'codeExpired')) {
+      // A token the server no longer knows (forgotten, expired) is dropped; one it knows stays for next time. Either
+      // way this booking goes through the code.
+      if (error.code === 'codeExpired') forgetDeviceLocally(profile.slug);
+      dispatch({ type: 'needsCode' });
+      navigate(slugRoute(profile.slug, 'verify'), true);
+      return;
+    }
+    throw error;
+  }
   const result: BookingResult = outcome.status === 'paused' ? { ...outcome, scope: await pauseScope(profile.slug) } : outcome;
+  if (result.status === 'confirmed' && result.deviceToken !== undefined && result.deviceTokenExpiresAt !== undefined && request.client.email !== undefined) {
+    rememberDevice(profile.slug, request.client.email, result.deviceToken, result.deviceTokenExpiresAt);
+  }
   dispatch({ type: 'result', result });
   switch (result.status) {
     case 'confirmed':

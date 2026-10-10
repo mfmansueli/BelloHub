@@ -94,6 +94,10 @@ function base(slug: string, inboxKey: InboxKey, overrides: Partial<WireProfile> 
   };
 }
 
+function withoutWhatsApp(profile: WireProfile): WireProfile {
+  return Object.fromEntries(Object.entries(profile).filter(([key]) => key !== 'whatsappE164')) as unknown as WireProfile;
+}
+
 export function scenarios(): Scenario[] {
   const known = ['+5511900000099'];
   return [
@@ -154,6 +158,13 @@ export function scenarios(): Scenario[] {
           locales: ['ar', 'en'],
           whatsappE164: '+966512345678',
         }),
+      knownClients: known,
+      noShow: {},
+    },
+    {
+      // No public WhatsApp number: "I didn't get the code" offers no WhatsApp way (API.md 5.8 `whatsapp`).
+      slug: 'maria-nowa',
+      profile: (key) => withoutWhatsApp(base('maria-nowa', key)),
       knownClients: known,
       noShow: {},
     },

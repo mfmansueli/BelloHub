@@ -68,6 +68,8 @@ export interface Api {
   /** Returns the single-use proof for `verification: { method: 'email', proof }`. */
   verifyEmailCode(email: string, code: string): Promise<string>;
   createBooking(request: CreateBookingRequest): Promise<BookingOutcome>;
+  /** "Forget this device": the server deletes the trusted-device token (5.18); the same answer for an unknown one. */
+  forgetDevice(token: string): Promise<void>;
   joinWaitlist(request: WaitlistRequest): Promise<void>;
   findBookings(request: FindBookingsRequest): Promise<FoundBooking[]>;
   getBooking(token: string): Promise<BookingView>;
@@ -117,6 +119,9 @@ export function createApi(transport: Transport): Api {
     sendEmailCode: async (request) => parseSendCode(await transport.call('sendEmailCode', request)),
     verifyEmailCode: async (email, code) => parseProof(await transport.call('verifyEmailCode', { email, code })),
     createBooking: async (request) => parseBookingOutcome(await transport.call('createBooking', request)),
+    forgetDevice: async (token) => {
+      await transport.call('forgetDevice', { token });
+    },
 
     joinWaitlist: async (request) => {
       await transport.call('joinWaitlist', request);

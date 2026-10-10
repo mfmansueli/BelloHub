@@ -2,6 +2,11 @@
 // says why (API.md 5.8: a new client, the free registrations, or missed appointments all look the same), so the
 // page says only that she confirms it herself, and nothing about money or limits (D42). And the other case: online booking is
 // paused for this client only, with a way to message her.
+//
+// A request made with "Confirm on WhatsApp" (the code never arrived, API.md 5.8 `whatsapp`) has its own version: the
+// reference code, the message to send her (prefilled in the page language with the first name, service, time and
+// reference so she can match it), and when the time is released if she does not confirm. Opening WhatsApp is the
+// client's own tap: an automatic jump after the network call is blocked by in-app browsers and would lose this page.
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -76,6 +81,65 @@ export function ReviewStep({ profile }: { profile: PublicProfile }): JSX.Element
 
   const draft = state.draft;
   const service = profile.services.find((candidate) => candidate.id === draft.serviceId);
+  if (result.status === 'pendingApproval' && result.reference !== undefined) {
+    const firstName = draft.name.trim().split(/\s+/)[0] ?? '';
+    const message = whatsAppUrl(
+      profile.whatsappE164,
+      t('wa.unverified', {
+        name: profile.firstName,
+        client: firstName,
+        service: result.serviceName,
+        date: format.longDate(result.startsAt),
+        time: format.time(result.startsAt),
+        reference: result.reference,
+      }),
+    );
+    return (
+      <Screen
+        top={<header class="topbar"><ProHeader professional={profile} /></header>}
+        bar={
+          message === null ? undefined : (
+            <ExternalLink href={message} variant="primary" testId="send-whatsapp">
+              {t('bk10.wa.send', { name: profile.firstName })}
+            </ExternalLink>
+          )
+        }
+      >
+        <div class="stack">
+          <Seal tone="amber" />
+          <Title>{t('bk10.wa.title', { name: profile.firstName })}</Title>
+          <p class="lead" data-testid="unverified-text">
+            {t('bk10.wa.text', { name: profile.firstName })}
+          </p>
+        </div>
+
+        <section class="card stack-sm" aria-labelledby="reference-title" data-testid="reference-card">
+          <h2 id="reference-title" class="meta">
+            {t('bk10.wa.reference')}
+          </h2>
+          <p class="moment tn" dir="ltr" data-testid="reference">
+            {result.reference}
+          </p>
+          <hr class="rule" />
+          <b class="strong">
+            <bdi>{result.serviceName}</bdi>
+          </b>
+          <p class="meta tn">{`${format.longDate(result.startsAt)} · ${format.time(result.startsAt)}`}</p>
+        </section>
+
+        {result.requestExpiresAt === undefined ? null : (
+          <Notice kind="quiet" icon="clock" testId="request-expires">
+            {t('bk10.wa.expires', { name: profile.firstName, date: format.longDate(result.requestExpiresAt), time: format.time(result.requestExpiresAt) })}
+          </Notice>
+        )}
+
+        <Button variant="tertiary" onClick={backToPage} testId="back-to-page">
+          {t('bk10.back', { name: profile.displayName })}
+        </Button>
+        <Footer />
+      </Screen>
+    );
+  }
   return (
     <Screen top={<header class="topbar"><ProHeader professional={profile} /></header>}>
       <div class="stack">

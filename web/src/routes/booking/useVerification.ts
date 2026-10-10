@@ -17,6 +17,8 @@ export interface VerificationControls {
   readonly seconds: number;
   readonly error: ApiError | null;
   readonly confirming: boolean;
+  /** How many times she asked for a new code (the first e-mail goes out on its own). */
+  readonly resends: number;
   readonly send: () => void;
   readonly confirm: (code: string) => Promise<VerificationProof | null>;
 }
@@ -26,23 +28,26 @@ interface Options {
   readonly slug: string;
   readonly locale: LocaleId;
   readonly purpose: 'booking' | 'find';
+  /** Booking only: the server stretches the hold under this key to the code's life (API.md 5.5). */
+  readonly holdKey?: string;
 }
 
 /** Restarts (and sends again) whenever `email` changes. */
-export function useVerification({ email, slug, locale, purpose }: Options): VerificationControls {
+export function useVerification({ email, slug, locale, purpose, holdKey }: Options): VerificationControls {
   const [status, setStatus] = useState<VerificationStatus>('sending');
   const [seconds, setSeconds] = useState(0);
   const [error, setError] = useState<ApiError | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const [resends, setResends] = useState(0);
   const attempt = useRef<symbol | null>(null);
 
-  const send = useCallback((): void => {
+  const deliver = useCallback((): void => {
     if (email === '') return;
     setStatus('sending');
     setError(null);
     const next = Symbol('attempt');
     attempt.current = next;
-    api.sendEmailCode({ slug, email, locale, purpose }).then(
+    api.sendEmailCode({ slug, email, locale, purpose, ...(holdKey === undefined ? {} : { holdKey }) }).then(
       (response) => {
         if (attempt.current !== next) return;
         setStatus('sent');
@@ -55,11 +60,18 @@ export function useVerification({ email, slug, locale, purpose }: Options): Veri
         if (failure instanceof ApiError && failure.retryAfterSeconds !== undefined) setSeconds(failure.retryAfterSeconds);
       },
     );
-  }, [email, slug, locale, purpose]);
+  }, [email, slug, locale, purpose, holdKey]);
 
+  // A new address starts over: the first code goes out by itself and the resend count is reset.
   useEffect(() => {
-    send();
-  }, [send]);
+    setResends(0);
+    deliver();
+  }, [deliver]);
+
+  const send = useCallback((): void => {
+    setResends((value) => value + 1);
+    deliver();
+  }, [deliver]);
 
   useEffect(() => {
     if (seconds <= 0) return;
@@ -84,5 +96,5 @@ export function useVerification({ email, slug, locale, purpose }: Options): Veri
     }
   }, [email]);
 
-  return { status, seconds, error, confirming, send, confirm };
+  return { status, seconds, error, confirming, resends, send, confirm };
 }

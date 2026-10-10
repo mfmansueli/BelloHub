@@ -1,5 +1,6 @@
 // Bk-5: who is coming. Name, phone (the identity), e-mail (the page verifies it), and "Good to
-// know" (the professional's rules, as published). No account and no password: a code confirms it is her next.
+// know" (the professional's rules, as published). No account and no password: a code confirms it is her next,
+// unless this browser is a trusted device for this page and this address (API.md 5.8): then it goes straight on.
 
 import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
@@ -7,7 +8,7 @@ import { useEffect, useState } from 'preact/hooks';
 import type { PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute } from '../../app/router';
-import { allowedStep, FLOW_STEPS } from '../../app/booking/machine';
+import { allowedStep, FLOW_STEPS, proofTarget } from '../../app/booking/machine';
 import { useBooking } from '../../app/booking/store';
 import { selectedAddOns, totals } from '../../app/booking/summary';
 import { Button } from '../../components/Button';
@@ -21,6 +22,7 @@ import { useI18n } from '../../i18n';
 import { isEmail } from '../../lib/email';
 import { ltr } from '../../lib/bidi';
 import { normalizePhone, phoneRegion } from '../../lib/phone';
+import { trustedDeviceFor } from '../../lib/trustedDevice';
 import { useRules } from '../../components/RuleList';
 
 interface Errors {
@@ -67,7 +69,16 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
       }, 0);
       return;
     }
-    dispatch({ type: 'setDetails', name: name.trim(), phoneCountry: country, phoneInput: phone.trim(), email: email.trim() });
+    const details = { name: name.trim(), phoneCountry: country, phoneInput: phone.trim(), email: email.trim() };
+    dispatch({ type: 'setDetails', ...details });
+    const device = trustedDeviceFor(profile.slug, details.email);
+    if (device !== null) {
+      // A returning client: the server decides whether the device may stand in for the code (it never does when the
+      // booking would wait for her); if not, the page comes back to the code.
+      dispatch({ type: 'verified', proof: { method: 'device', token: device }, target: proofTarget({ ...draft, ...details }) });
+      navigate(slugRoute(profile.slug, 'firstVisit'));
+      return;
+    }
     navigate(slugRoute(profile.slug, 'verify'));
   };
 

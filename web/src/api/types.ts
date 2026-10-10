@@ -139,11 +139,20 @@ export interface VerificationProof {
   readonly proof: string;
 }
 
+/**
+ * What `createBooking` accepts (API.md 5.8): an e-mail proof, a trusted-device token (a returning client on the same
+ * page with the same address), or nothing at all when she confirms with the professional on WhatsApp ("I didn't get
+ * the code"): that booking is always a request, flagged unverified in her app.
+ */
+export type BookingProof = VerificationProof | { readonly method: 'device'; readonly token: string } | { readonly method: 'whatsapp' };
+
 export interface SendEmailCodeRequest {
   readonly slug: string;
   readonly email: string;
   readonly locale: LocaleId;
   readonly purpose: 'booking' | 'find';
+  /** Booking codes: the hold under this key is stretched to the code's 10 minutes. */
+  readonly holdKey?: string;
 }
 
 export interface SendCodeResponse {
@@ -165,7 +174,7 @@ export interface CreateBookingRequest {
     readonly locale: LocaleId;
   };
   readonly note?: string;
-  readonly verification: VerificationProof;
+  readonly verification: BookingProof;
   /** New for each attempt the user starts; reused only to retry the SAME request. */
   readonly idempotencyKey: string;
   /** Converts your hold. */
@@ -181,6 +190,12 @@ export interface BookedResult {
   readonly timeZoneID: string;
   readonly serviceName: string;
   readonly emailSent: boolean;
+  /** `whatsapp` only: the code she quotes in her message, and when the request is released unanswered. */
+  readonly reference?: string;
+  readonly requestExpiresAt?: string;
+  /** A confirmed, code-verified booking: the trusted-device token for this page and address. */
+  readonly deviceToken?: string;
+  readonly deviceTokenExpiresAt?: string;
 }
 
 /** What `createBooking` and `rebook` answer. The page never learns why a booking waits for approval (D42). */
@@ -481,6 +496,8 @@ export type ApiErrorCode =
   | 'paused'
   | 'codeInvalid'
   | 'codeExpired'
+  /** A trusted device cannot stand in for the code this time (the booking would wait for her): ask for the code. */
+  | 'verificationRequired'
   | 'tooManyAttempts'
   | 'notAllowed'
   | 'tooLarge'
