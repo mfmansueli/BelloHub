@@ -21,7 +21,7 @@ struct SuggestTimeSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     Text("bookingRequest.suggest.message").font(Typography.body).foregroundStyle(Palette.ink2)
-                    if viewModel.suggestionURL == nil { picker } else { sent }
+                    if viewModel.isSuggested { sent } else { picker }
                     if let message = viewModel.suggestionErrorMessage {
                         ErrorNotice(message: message).accessibilityIdentifier("bookingRequest.suggest.error")
                     }
@@ -38,7 +38,7 @@ struct SuggestTimeSheet: View {
                 }
             }
             .safeAreaInset(edge: .bottom) {
-                if viewModel.suggestionURL == nil {
+                if !viewModel.isSuggested {
                     Button(action: viewModel.suggest) { Text("bookingRequest.suggest.send") }
                         .buttonStyle(.belloPrimary)
                         .disabled(viewModel.isSuggesting)

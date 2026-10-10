@@ -88,6 +88,11 @@ final class BookingRequestViewModel {
 
     // MARK: - Suggest another time
 
+    /// The server held the suggested time (the request is declined).
+    var isSuggested: Bool {
+        if case .suggested? = suggestion { true } else { false }
+    }
+
     /// The link the client opens for the suggested time; nil until the server held it.
     var suggestionURL: URL? {
         guard case .suggested(let holdKey, _)? = suggestion, let link else { return nil }
