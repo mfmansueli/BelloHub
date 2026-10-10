@@ -36,6 +36,18 @@ extension XCUIApplication {
         return element.exists && element.isHittable
     }
 
+    /// Drags the content down in short steps until the element can be tapped, and no further: inside a sheet, a drag
+    /// past the top of the content moves the sheet itself.
+    @MainActor
+    func scrollUpUntilVisible(_ element: XCUIElement, limit: Int = 12) -> Bool {
+        var drags = 0
+        while !(element.exists && element.isHittable), drags < limit {
+            drag(from: 0.35, to: 0.55)
+            drags += 1
+        }
+        return element.exists && element.isHittable
+    }
+
     /// Drags down until the top of the screen is showing again.
     @MainActor
     func scrollToTop(limit: Int = 8) {
