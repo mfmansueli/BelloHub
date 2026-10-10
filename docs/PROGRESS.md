@@ -56,6 +56,26 @@ Nothing here blocks the build; each item has a safe default in use.
 
 Under D40 and D41 the first two columns are not gates: the owner opens markets by his own judgement (H15). They stay `no` because it is true.
 
+### Market readiness by localization (S11, 2026-10-10)
+Strings: all 2,232 app keys + 5 permission texts + 401 booking-page keys present, style-checked and `needs_review` (no native reader, D41). Templates: 16 message kinds (`docs/strings/message-templates.json`) and 7 emails. Professions: 9 per catalog, `check-professions.sh` green. Legal: `2026-10-2` drafts of terms+DPA, privacy policy, client notice, data requests (`draft`, not reviewed). Screenshots: `LocalizationScreenshotUITests` (key screens, no clipped text, titles measured by `NavigationTitleFitTests`).
+
+| Localization | Wave | Strings | Templates | Professions | Legal set | Review doc | Screenshots |
+|---|---|---|---|---|---|---|---|
+| `pt-BR` | 1 | complete, needs native read | 16 + 7 emails | 9 | LGPD set | `docs/review/pt-BR.md` | @@SHOT@@ |
+| `pt-PT` | 1 | complete, needs native read | 16 + 7 | 9 | GDPR core + PT annex | `docs/review/pt-PT.md` | @@SHOT@@ |
+| `es` | 1 | complete, needs native read | 16 + 7 | 9 | GDPR core + ES annex | `docs/review/es.md` | @@SHOT@@ |
+| `it` | 1 | complete, needs native read | 16 + 7 | 9 | GDPR core + IT annex | `docs/review/it.md` | @@SHOT@@ |
+| `fr` | 1 | complete, needs native read | 16 + 7 | 9 | GDPR core + FR annex | `docs/review/fr.md` | @@SHOT@@ |
+| `de` | 1 | complete, needs native read | 16 + 7 | 9 | GDPR core + DE annex (AT, CH notes) | `docs/review/de.md` | @@SHOT@@ |
+| `en-GB` | 1 | derived from en + 34 overrides | 16 + 7 | 9 | GDPR core + UK annex (IE, AU, NZ, ZA notes) | `docs/review/en-GB.md` | @@SHOT@@ |
+| `en` | 1/2 | source language | 16 + 7 | 9 | US set | `docs/review/en.md` | @@SHOT@@ |
+| `es-MX` | 2 | complete, needs native read | 16 + 7 | 9 | LFPDPPP set | not yet (wave 2) | @@SHOT@@ |
+| `es-419` | 2 | derived from es-MX + overrides | 16 + 7 | 9 | Latin America set | not yet | @@SHOT@@ |
+| `tr` | 3 | complete, needs native read | 16 + 7 | 9 | KVKK set | not yet | @@SHOT@@ |
+| `id` | 3 | complete, needs native read | 16 + 7 | 9 | PDP set | not yet | @@SHOT@@ |
+| `hi` | 3 | complete, needs native read | 16 + 7 | 9 | DPDP set | not yet | @@SHOT@@ |
+| `ar` | 4 | complete (six plural forms), needs native read | 16 + 7 | 9 | PDPL set | not yet | @@SHOT@@ + mirroring |
+
 ## Strings awaiting reviewers
 Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is allowed only in a localization listed here. Under D41 no native reviewer is planned, so every non-English localization stays listed until a human reads it and imports the corrections with `scripts/import-strings.sh <id> <file.csv> --reviewed` (how: `docs/review/README.md`).
 

@@ -150794,7 +150794,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas de connexion. Votre page n'est pas encore en ligne. Réessayez une fois connectée."
+            "value" : "Pas de connexion. Votre page n'est pas encore en ligne. Réessayez une fois la connexion rétablie."
           }
         },
         "hi" : {
@@ -150812,7 +150812,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nessuna connessione. La pagina non è ancora online. Riprova quando sarai connessa."
+            "value" : "Nessuna connessione. La pagina non è ancora online. Riprova quando torna la connessione."
           }
         },
         "pt-BR" : {
@@ -150884,7 +150884,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pas de connexion. Votre page est en ligne, mais vos dernières modifications n'y sont pas encore. Nous les enverrons dès que vous serez connectée."
+            "value" : "Pas de connexion. Votre page est en ligne, mais vos dernières modifications n'y sont pas encore. Nous les enverrons dès que la connexion sera rétablie."
           }
         },
         "hi" : {
@@ -150902,7 +150902,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nessuna connessione. La pagina è online, ma le tue ultime modifiche non ci sono ancora. Le invieremo appena sarai connessa."
+            "value" : "Nessuna connessione. La pagina è online, ma le tue ultime modifiche non ci sono ancora. Le invieremo appena torna la connessione."
           }
         },
         "pt-BR" : {
