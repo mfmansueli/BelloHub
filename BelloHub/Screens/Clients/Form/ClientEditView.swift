@@ -7,7 +7,8 @@ import SwiftUI
 
 /// 4.3 ClientEdit. Name, WhatsApp, email, birthday and tags; stopping online booking with a private reason; turning
 /// reminders off; archiving (the client leaves the lists, the record stays, and she can be restored) and merging a
-/// duplicate profile into this one; deleting her data when she asks (`ClientDeleteDataRow`, D30).
+/// duplicate profile into this one; exporting her record (4.10) and deleting her data when she asks
+/// (`ClientDeleteDataRow`, D30): the two answers to a data-subject request sit together, export first.
 ///
 /// It is pushed on the Clients stack, so the back button is replaced by Cancel: leaving with unsaved changes asks
 /// first.
@@ -23,6 +24,7 @@ struct ClientEditView: View {
     @State private var confirmsArchive = false
     @State private var confirmsDiscard = false
     @State private var showsMerge = false
+    @State private var recordSheet: RecordSheet?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
     @Environment(ProfileService.self) private var profile
@@ -72,6 +74,7 @@ struct ClientEditView: View {
                     onMerged()
                 })
             }
+            .recordSheet(item: $recordSheet)
             .confirmationDialog(archiveTitle, isPresented: $confirmsArchive, titleVisibility: .visible) {
                 Button { viewModel.setArchived(true) } label: { Text("clientEdit.archive.confirm") }
                     .accessibilityIdentifier("clientEdit.archiveConfirmButton")
@@ -171,6 +174,11 @@ struct ClientEditView: View {
             ActionRow(
                 icon: .clients, title: "clientEdit.merge.title", subtitle: Text("clientEdit.merge.subtitle"),
                 tone: .rose, identifier: "clientEdit.mergeRow", action: { showsMerge = true }
+            )
+            ActionRow(
+                icon: .share, title: "clientEdit.exportData.title", subtitle: Text("clientEdit.exportData.subtitle"),
+                tone: .peach, identifier: "clientEdit.exportDataRow",
+                action: { recordSheet = .exportRecord(clientID: clientID) }
             )
             ClientDeleteDataRow(clientID: clientID, firstName: viewModel.firstName, onDeleted: onDeleted)
         }

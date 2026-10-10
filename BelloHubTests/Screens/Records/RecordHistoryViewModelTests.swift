@@ -48,6 +48,23 @@ struct RecordHistoryViewModelTests {
 
     // MARK: - Loading
 
+    @Test("The edit trail names her even when the profile arrives after the screen opened")
+    func nameFollowsTheProfile() async throws {
+        let repository: any ClientRecordRepository = InMemoryClientRecordRepository(clock: { TestClock.now })
+        let vault = VaultService(repository: repository)
+        let profile = ProfileService(vault: vault)
+        let client = makeClient(name: "Ana Costa")
+        _ = try await repository.save(client)
+        let model = RecordHistoryViewModel(clientID: client.id, vault: vault, profile: profile, now: { TestClock.now })
+        await model.loadAsync()
+        #expect(model.professionalName.isEmpty)
+
+        try await repository.save(makeHealthProfile(name: "Maria Silva"))
+        await profile.load()
+
+        #expect(model.professionalName == "Maria")
+    }
+
     @Test("The history opens with her records newest first and their lock state")
     func loads() async throws {
         let world = try await makeWorld()

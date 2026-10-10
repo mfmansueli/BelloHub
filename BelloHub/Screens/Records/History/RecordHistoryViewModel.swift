@@ -48,6 +48,10 @@ final class RecordHistoryViewModel {
 
     // MARK: - Derived
 
+    /// Her first name for the edit trail ("Created by Ana"). Read from the profile each time, not from the business
+    /// snapshot taken at load: the profile may arrive after the screen (a launch straight into the history).
+    var professionalName: String { profile.profile?.firstName ?? business.professionalFirstName }
+
     var pairs: [BeforeAfterPair] { PhotoComparisonRules.pairs(photos) }
     var timeline: [Photo] { PhotoComparisonRules.timeline(photos) }
 

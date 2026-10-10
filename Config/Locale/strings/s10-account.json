@@ -5201,18 +5201,18 @@
   [
    "help.topic.deleteClient.answer",
    "Help: the answer to the question above.",
-   "Open her profile, tap Edit, then Export her data if she wants a copy, and Delete her data. Her record, photos and notes go; her booking history stays as a count only.",
-   "Abra o perfil dela, toque em Editar, depois Exportar os dados dela se ela quiser uma cópia, e Excluir os dados dela. A ficha, as fotos e as notas vão embora; o histórico de agendamentos fica só como contagem.",
-   "Abra o perfil dela, toque em Editar, depois Exportar os dados dela se quiser uma cópia, e Eliminar os dados dela. A ficha, as fotos e as notas desaparecem; o histórico de marcações fica apenas como contagem.",
-   "Abre su perfil, toca Editar, luego Exportar sus datos si quiere una copia, y Eliminar sus datos. Su ficha, fotos y notas desaparecen; su historial de reservas queda solo como un número.",
-   "Abre su perfil, toca Editar, luego Exportar sus datos si quiere una copia, y Eliminar sus datos. Su ficha, fotos y notas desaparecen; su historial de reservas queda solo como un número.",
-   "Apri il suo profilo, tocca Modifica, poi Esporta i suoi dati se vuole una copia, e Elimina i suoi dati. Scheda, foto e note spariscono; lo storico prenotazioni resta solo come conteggio.",
-   "Ouvrez sa fiche, touchez Modifier, puis Exporter ses données si elle veut une copie, et Supprimer ses données. Sa fiche, ses photos et ses notes disparaissent ; son historique de réservations ne reste qu’en nombre.",
-   "Öffne ihr Profil, tippe auf Bearbeiten, dann „Ihre Daten exportieren“, falls sie eine Kopie möchte, und „Ihre Daten löschen“. Akte, Fotos und Notizen verschwinden; ihre Buchungshistorie bleibt nur als Zahl.",
-   "Profilini açın, Düzenle’ye, sonra bir kopya istiyorsa Verilerini dışa aktar’a ve Verilerini sil’e dokunun. Kaydı, fotoğrafları ve notları silinir; randevu geçmişi yalnızca sayı olarak kalır.",
-   "Buka profilnya, ketuk Edit, lalu Ekspor datanya jika ia ingin salinan, dan Hapus datanya. Catatan, foto, dan catatannya hilang; riwayat pemesanannya hanya tersisa sebagai hitungan.",
-   "उसकी प्रोफ़ाइल खोलें, संपादित करें दबाएँ, फिर अगर वह कॉपी चाहे तो उसका डेटा एक्सपोर्ट करें, और उसका डेटा हटाएँ। उसका रिकॉर्ड, फ़ोटो और नोट चले जाते हैं; बुकिंग इतिहास सिर्फ़ गिनती के रूप में रहता है।",
-   "افتحي ملفها الشخصي، واضغطي «تعديل»، ثم «تصدير بياناتها» إذا أرادت نسخة، ثم «حذف بياناتها». يُحذف سجلها وصورها وملاحظاتها؛ ويبقى سجل حجوزاتها كعدد فقط."
+   "Open her profile, tap Edit, then Export data if she wants a copy, and Delete data. Her visits, record, photos, health forms and notes leave this iPhone, and the booking server forgets her too.",
+   "Abra o perfil dela, toque em Editar, depois em Exportar dados se ela quiser uma cópia, e em Excluir dados. Atendimentos, prontuário, fotos, fichas de saúde e anotações saem deste iPhone, e o servidor de agendamento também a esquece.",
+   "Abra o perfil dela, toque em Editar, depois em Exportar dados se ela quiser uma cópia, e em Eliminar dados. Visitas, ficha, fotografias, fichas de saúde e notas saem deste iPhone, e o servidor de marcações também a esquece.",
+   "Abre su perfil, toca Editar, luego Exportar datos si quiere una copia, y Eliminar datos. Sus visitas, expediente, fotos, fichas de salud y notas salen de este iPhone, y el servidor de reservas también la olvida.",
+   "Abre su perfil, toca Editar, luego Exportar datos si quiere una copia, y Eliminar datos. Sus visitas, expediente, fotos, fichas de salud y notas salen de este iPhone, y el servidor de reservas también la olvida.",
+   "Apri il suo profilo, tocca Modifica, poi Esporta i dati se vuole una copia, e Elimina i dati. Visite, scheda, foto, schede sanitarie e note escono da questo iPhone, e anche il server delle prenotazioni dimentica questa persona.",
+   "Ouvrez sa fiche, touchez Modifier, puis Exporter les données si une copie est demandée, et Supprimer les données. Visites, dossier, photos, fiches santé et notes quittent cet iPhone, et le serveur de réservation oublie aussi cette personne.",
+   "Öffne das Profil, tippe auf Bearbeiten, dann auf „Daten exportieren“, wenn eine Kopie gewünscht wird, und auf „Daten löschen“. Besuche, Akte, Fotos, Gesundheitsfragebögen und Notizen verschwinden von diesem iPhone, und auch der Buchungsserver vergisst diese Person.",
+   "Profilini açın, Düzenle’ye, kopya istiyorsa Verileri dışa aktar’a, sonra Verileri sil’e dokunun. Ziyaretleri, dosyası, fotoğrafları, sağlık formları ve notları bu iPhone’dan silinir; randevu sunucusu da bu kişiyi unutur.",
+   "Buka profilnya, ketuk Edit, lalu Ekspor data jika ia ingin salinan, dan Hapus data. Kunjungan, rekam, foto, formulir kesehatan, dan catatannya dihapus dari iPhone ini, dan server pemesanan juga melupakannya.",
+   "उसकी प्रोफ़ाइल खोलें, संपादित करें दबाएँ, फिर अगर वह कॉपी चाहे तो डेटा एक्सपोर्ट करें, और डेटा हटाएँ। विज़िट, रिकॉर्ड, फ़ोटो, स्वास्थ्य फ़ॉर्म और नोट्स इस iPhone से हट जाते हैं, और बुकिंग सर्वर भी उसे भूल जाता है।",
+   "من ملفها الشخصي، يكفي الضغط على «تعديل»، ثم «تصدير البيانات» إذا طلبت نسخة، ثم «حذف البيانات». تُحذف الزيارات والسجل والصور والاستمارات الصحية والملاحظات من هذا الـ iPhone، وينسى خادم الحجز هذا الشخص أيضًا."
   ]
  ]
 }

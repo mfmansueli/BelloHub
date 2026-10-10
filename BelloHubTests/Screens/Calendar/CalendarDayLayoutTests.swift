@@ -140,6 +140,20 @@ struct CalendarDayLayoutTests {
         #expect(result.time(atFraction: -4) == friday("08:00"))
     }
 
+    @Test("A tap anywhere in an hour row gives that hour, whether the hour is past or ahead")
+    func tapInEveryHourRow() {
+        // DayTimelineView turns a tap at `y` inside row `index` into `(index * rowHeight + y) / totalHeight`. The rule
+        // knows no "now": a past hour opens New appointment on that hour, and the warnings say it already passed
+        // (the 2026-10-10 "past hour jumps to Monday" failure was a UI-test tap under the pinned week strip).
+        let result = layout()
+        let rows = result.hourMarks.count
+        for (index, mark) in result.hourMarks.enumerated() {
+            let top = Double(index) / Double(rows)
+            #expect(result.time(atFraction: top + 0.1 / Double(rows)) == mark)
+            #expect(result.time(atFraction: top + 0.6 / Double(rows)) == mark.addingTimeInterval(1_800))
+        }
+    }
+
     // MARK: - Visible hours
 
     @Test("The visible hours span her week and widen for a visit outside it")

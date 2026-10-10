@@ -5,7 +5,8 @@
 
 import XCTest
 
-/// A client asks to be forgotten (D30): from her edit screen, "Delete data", confirm, and she is gone from the list.
+/// A client asks to be forgotten (D30): from her edit screen, "Export data" first (the copy she may ask for), then
+/// "Delete data", confirm, and she is gone from the list.
 /// The server half is queued; the unit tests cover it (`ClientDataDeletionServiceTests`).
 @MainActor
 final class ClientDataDeletionUITests: XCTestCase {
@@ -23,6 +24,13 @@ final class ClientDataDeletionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5))
 
         app.tapButton("clientProfile.editButton")
+        let export = app.buttons["clientEdit.exportDataRow"]
+        XCTAssertTrue(export.waitForExistence(timeout: 5), "no export row")
+        app.bringIntoView(export)
+        export.tap()
+        XCTAssertTrue(app.element("exportRecord.form").waitForExistence(timeout: 5), "the export did not open")
+        app.tapButton("exportRecord.closeButton")
+
         let row = app.buttons["clientEdit.deleteDataRow"]
         XCTAssertTrue(row.waitForExistence(timeout: 5), "no delete-data row")
         app.bringIntoView(row)

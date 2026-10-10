@@ -1,0 +1,9 @@
+{
+ "languages": ["en", "pt-BR", "pt-PT", "es-MX", "es", "it", "fr", "de", "tr", "id", "hi", "ar"],
+ "strings": [
+  ["clientEdit.exportData.title", "Edit client: row that opens the export of a client's record (a PDF), next to Delete data.",
+   "Export data", "Exportar dados", "Exportar dados", "Exportar datos", "Exportar datos", "Esporta i dati", "Exporter les données", "Daten exportieren", "Verileri dışa aktar", "Ekspor data", "डेटा एक्सपोर्ट करें", "تصدير البيانات"],
+  ["clientEdit.exportData.subtitle", "Edit client: under the export row, when to use it.",
+   "A PDF of the record when a copy is asked for", "Um PDF do prontuário quando pedem uma cópia", "Um PDF da ficha quando é pedida uma cópia", "Un PDF del expediente cuando piden una copia", "Un PDF del expediente cuando se pide una copia", "Un PDF della scheda quando viene chiesta una copia", "Un PDF du dossier quand une copie est demandée", "Ein PDF der Akte, wenn eine Kopie gewünscht wird", "Kopya istendiğinde dosyanın PDF'i", "PDF rekam saat salinan diminta", "कॉपी माँगे जाने पर रिकॉर्ड का PDF", "ملف PDF للسجل عند طلب نسخة"]
+ ]
+}

@@ -43,27 +43,38 @@ extension XCUIApplication {
         return calendar.component(.hour, from: Date())
     }
 
-    /// The first free hour that can be tapped now, scrolling the day when none shows.
+    /// The first free hour that can be tapped now, scrolling the day when none shows. An hour already past is
+    /// preferred (booking it only warns), so the flow covers the case a professional logs a visit after the fact.
+    ///
+    /// Only a slot whose whole row lies between the pinned header and the floating tab bar counts: a row under the
+    /// header reports `isHittable`, but the tap lands on the header's week strip and selects another day (that was the
+    /// "past hour jumps to Monday" failure of 2026-10-10, docs/agent-notes/s12-release.md); a row under the tab bar
+    /// lands on the bar (found after 18:30, when the day opens on the last hours).
     @MainActor
     func firstTappableSlot(file: StaticString = #filePath, line: UInt = #line) -> XCUIElement? {
         for attempt in 0..<4 {
             XCTAssertTrue(calendarSlots.firstMatch.waitForExistence(timeout: 5), "no free hour", file: file, line: line)
-            // Only a slot in the middle of the screen: one under the floating tab bar or the navigation bar reports
-            // `isHittable` but a tap on it lands on the bar (found after 18:30, when the day opens on the last hours).
             let window = self.windows.firstMatch.frame
-            let band = (window.minY + window.height * 0.25)...(window.minY + window.height * 0.7)
+            let band = calendarHeaderBottom...(window.minY + window.height * 0.75)
             let candidates = calendarSlots.allElementsBoundByIndex.filter {
-                $0.exists && $0.isHittable && band.contains($0.frame.midY)
+                $0.exists && $0.isHittable && band.contains($0.frame.minY) && band.contains($0.frame.maxY)
             }
-            // An hour still ahead today first: a tap on an hour that already passed did not open New appointment on
-            // 2026-10-10 (the day jumped to Monday instead; open in docs/agent-notes/s11-localization.md).
-            if let slot = candidates.first(where: { Self.slotHour($0).map { $0 > Self.currentHour } ?? false })
+            if let slot = candidates.first(where: { Self.slotHour($0).map { $0 < Self.currentHour } ?? false })
                 ?? candidates.first {
                 return slot
             }
-            if attempt.isMultiple(of: 2) { swipeUp() } else { swipeDown() }
+            if attempt.isMultiple(of: 2) { swipeDown() } else { swipeUp() }
         }
         return nil
+    }
+
+    /// The bottom of the pinned calendar header: the week strip in the day mode, else the Day/Week control.
+    @MainActor
+    private var calendarHeaderBottom: CGFloat {
+        let strip = descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier BEGINSWITH 'calendar.stripDay.'")).allElementsBoundByIndex
+        let bottoms = strip.map(\.frame.maxY) + [element("calendar.modePicker").frame.maxY]
+        return bottoms.max() ?? 0
     }
 
     /// Opens the menu of a visit with a long press and chooses an item by its identifier, or by its English label when

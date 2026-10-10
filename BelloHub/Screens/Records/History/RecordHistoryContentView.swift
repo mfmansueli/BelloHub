@@ -63,7 +63,7 @@ struct RecordHistoryContentView: View {
 
     private var overview: some View {
         let formatters = viewModel.business.formatters(displayLocale: locale)
-        let name = viewModel.business.professionalFirstName
+        let name = viewModel.professionalName
         return ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 if viewModel.items.contains(where: \.isLocked) {
