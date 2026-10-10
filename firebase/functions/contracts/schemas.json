@@ -4336,6 +4336,77 @@
       "additionalProperties": false
     }
   },
+  "suggestBookingTime": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "holdMinutes": {
+          "type": "integer",
+          "minimum": 15,
+          "maximum": 1440
+        }
+      },
+      "required": [
+        "bookingId",
+        "startsAt"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "suggested"
+            },
+            "holdKey": {
+              "type": "string"
+            },
+            "holdId": {
+              "type": "string"
+            },
+            "expiresAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "required": [
+            "status",
+            "holdKey",
+            "holdId",
+            "expiresAt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "slotTaken"
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
   "syncPlan": {
     "access": "owner",
     "input": {

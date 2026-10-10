@@ -584,6 +584,16 @@ The waitlist entry becomes `offered`; the slot is held for that long for whoever
 marks the entry `booked`.
 
 ```ts
+suggestBookingTime: req { bookingId: string; startsAt: Instant; holdMinutes?: number /* 15...1440, default 180 */ }
+                    res { status: "suggested"; holdKey: string; holdId: string; expiresAt: Instant }   // link: <web>/<slug>/time?offer=<holdKey>
+                      | { status: "slotTaken" }
+```
+"Suggest another time" on a request (2.10): the `pendingApproval` booking becomes `declined` and the proposed time is held
+like a waitlist offer, with the request's service, add-ons and guests (`BOOKING_NOT_ACTIVE` when it is no longer pending).
+The app sends the link on WhatsApp; no email is sent. Booking through the link follows her usual rules and keeps the
+`bookingLink` origin (only an offer tied to a waitlist entry makes a `waitlist` booking).
+
+```ts
 markNoShow: req { phone: E164; action: "mark" | "forgive" | "reset"; markId?: Uuid; markedAt?: Instant; bookingId?: string }
             res { counted: number }
 setOnlineBookingStopped: req { phone: E164; stopped: boolean }   res { ok: true }
@@ -715,7 +725,7 @@ Public / token: `getPublicPage` `getSlots` `holdSlot` `getHold` `sendEmailCode` 
 
 Owner: `ensureAccount` `reserveRegistration` `reserveRegistrations` `syncPlan` `isSlugAvailable` `claimSlug`
 `publishProfile` `publishAvailability` `updateInboxKey` `respondBookingRequest` `respondRescheduleRequest`
-`cancelBookingByOwner` `moveBookingByOwner` `offerWaitlistSlot` `removeWaitlistEntry` `markNoShow`
+`cancelBookingByOwner` `moveBookingByOwner` `suggestBookingTime` `offerWaitlistSlot` `removeWaitlistEntry` `markNoShow`
 `setOnlineBookingStopped` `publishPortal` `getMailboxItem` `acknowledgeMailboxItem` `registerDevice` `unregisterDevice`
 `deleteClientServerData` `deleteAccount`
 

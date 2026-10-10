@@ -133,6 +133,18 @@ export const moveBookingByOwner = {
   output: z.strictObject({ startsAt: Instant, endsAt: Instant })
 };
 
+export const suggestBookingTime = {
+  input: z.strictObject({
+    bookingId: DocId,
+    startsAt: Instant,
+    holdMinutes: z.number().int().min(15).max(1440).optional()
+  }),
+  output: z.discriminatedUnion('status', [
+    z.strictObject({ status: z.literal('suggested'), holdKey: z.string(), holdId: z.string(), expiresAt: Instant }),
+    z.strictObject({ status: z.literal('slotTaken') })
+  ])
+};
+
 export const offerWaitlistSlot = {
   input: z.strictObject({
     waitlistId: DocId,

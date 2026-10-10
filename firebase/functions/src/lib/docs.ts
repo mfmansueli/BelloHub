@@ -231,6 +231,8 @@ export interface HoldDoc extends TimingFields {
   holdKeyHash: string;
   kind: 'soft' | 'offer';
   waitlistId?: string;
+  /** An offer made with "Suggest another time" on this (now declined) booking request. */
+  suggestedForBookingId?: string;
 }
 
 export interface InboxItemDoc {

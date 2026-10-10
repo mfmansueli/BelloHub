@@ -67,6 +67,7 @@ export const respondBookingRequest = defineCallable(useCase('respondBookingReque
 export const respondRescheduleRequest = defineCallable(useCase('respondRescheduleRequest'));
 export const cancelBookingByOwner = defineCallable(useCase('cancelBookingByOwner'));
 export const moveBookingByOwner = defineCallable(useCase('moveBookingByOwner'));
+export const suggestBookingTime = defineCallable(useCase('suggestBookingTime'));
 export const offerWaitlistSlot = defineCallable(useCase('offerWaitlistSlot'));
 export const removeWaitlistEntry = defineCallable(useCase('removeWaitlistEntry'));
 export const markNoShow = defineCallable(useCase('markNoShow'));
