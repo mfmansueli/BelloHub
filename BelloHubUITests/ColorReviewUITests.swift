@@ -29,8 +29,10 @@ final class ColorReviewUITests: XCTestCase {
             homeAndSheet(mode: mode)
             entryAndEmptyHome(mode: mode)
             tabs(mode: mode)
-            catalog(mode: mode)
         }
+        // Light only: the catalog's `-catalogDark` applied its appearance on some launches and not others in this tool,
+        // and the app screens above already cover dark through `-uiDark`.
+        catalog()
     }
 
     // MARK: - Helpers
@@ -82,16 +84,11 @@ final class ColorReviewUITests: XCTestCase {
         app.terminate()
     }
 
-    private func catalog(mode: String) {
+    private func catalog() {
         for section in ["buttons", "components", "colors"] {
-            var arguments = ["-designCatalog", "-catalogSection", section]
-            if mode == "dark" { arguments.append("-catalogDark") }
-            let app = XCUIApplication.launchedForUITests(arguments: arguments)
+            let app = XCUIApplication.launchedForUITests(arguments: ["-designCatalog", "-catalogSection", section])
             _ = app.element("catalog.section.\(section)").waitForExistence(timeout: 10)
-            // The catalog applies its appearance a moment after the first frame, which no element reflects; a short
-            // wait on an element that never appears lets it settle (a screenshot tool, nothing is asserted).
-            _ = app.element("colorReview.never").waitForExistence(timeout: 1.5)
-            save(app, "catalog-\(section)-\(mode)")
+            save(app, "catalog-\(section)-light")
             app.terminate()
         }
     }
