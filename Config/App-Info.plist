@@ -31,6 +31,13 @@
 	<!-- No method swizzling: AppDelegate hands the APNs token and the pushes to FCM itself. -->
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<!-- The launch screen is the app's page colour (Palette.bg, light and dark), so the first frame does not flash
+	     system white or black before the warm background. The colour set mirrors the token; LaunchScreenTests checks. -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<!-- Silent pushes wake the app to fetch sealed mailbox items (docs/06-PRIVACY-SECURITY.md section 3.5). -->
