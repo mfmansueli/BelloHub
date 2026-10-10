@@ -9,8 +9,8 @@ import UIKit
 
 /// Data for the performance budgets of docs/13-TESTING-QUALITY.md section 6, measured by `PerformanceUITests`:
 /// `-uiPerfClients 2000` adds that many clients (names, phones, a few tags), `-uiPerfPhotos 200` adds that many photos
-/// to the seeded client of `-uiSeed clientWithHealth`, each a distinct 1200 x 1600 JPEG with its thumbnail, as the camera
-/// pipeline would store them. DEBUG only; runs after `UITestSeeding` created the professional.
+/// to the seeded client of `-uiSeed clientWithHealth`, each a distinct 1200 x 1600 JPEG with its thumbnail, as the
+/// camera pipeline would store them. DEBUG only; runs after `UITestSeeding` created the professional.
 enum PerformanceUITestSeeding {
     static let clientsArgument = "-uiPerfClients"
     static let photosArgument = "-uiPerfPhotos"
@@ -22,8 +22,10 @@ enum PerformanceUITestSeeding {
         guard let repository = dependencies.vault.repository else { return }
         if let count = value(after: clientsArgument, in: arguments) {
             for index in 0..<count {
+                let first = firstNames[index % firstNames.count]
+                let last = lastNames[(index / 7) % lastNames.count]
                 let client = Client(
-                    name: "\(firstNames[index % firstNames.count]) \(lastNames[(index / 7) % lastNames.count]) \(index)",
+                    name: "\(first) \(last) \(index)",
                     phoneE164: String(format: "+55119%08d", index), createdAt: Date().addingTimeInterval(-86_400)
                 )
                 _ = try? await repository.save(client)
@@ -74,7 +76,9 @@ enum PerformanceUITestSeeding {
         }
     }
 
-    private static let firstNames = ["Ana", "Bea", "Carla", "Dani", "Eva", "Fernanda", "Gabi", "Helena", "Iris", "Julia"]
+    private static let firstNames = [
+        "Ana", "Bea", "Carla", "Dani", "Eva", "Fernanda", "Gabi", "Helena", "Iris", "Julia"
+    ]
     private static let lastNames = ["Costa", "Lima", "Souza", "Rocha", "Alves", "Nunes", "Duarte", "Mendes"]
 }
 #endif
