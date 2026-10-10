@@ -73,7 +73,9 @@ struct RegisterStepView: View {
             Button { viewModel.startListening() } label: {
                 Image(icon: .mic)
                     .font(.system(size: 44, weight: .regular))
-                    .foregroundStyle(Palette.ink)
+                    // The glyph uses the primary label color: the orange disc is light in both appearances, so
+                    // ink (near-white in dark) would sink into it.
+                    .foregroundStyle(Palette.onAction)
                     .frame(width: 128, height: 128)
                     .background(Palette.rose, in: Circle())
                     .padding(Spacing.lg)
