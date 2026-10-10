@@ -13604,7 +13604,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kundschaft verspätet sich"
+            "value" : "Verspätet sich"
           }
         },
         "en" : {
@@ -14774,7 +14774,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundschaft hat diesen Termin bestätigt."
+            "value" : "Die Person hat diesen Termin bestätigt."
           }
         },
         "en" : {
@@ -36770,7 +36770,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zählt nie gegen die Kundschaft."
+            "value" : "Zählt nie gegen die Person."
           }
         },
         "en" : {
@@ -116150,7 +116150,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundschaft ist nicht gekommen und hat nicht Bescheid gegeben."
+            "value" : "Die Person ist nicht gekommen und hat nicht Bescheid gegeben."
           }
         },
         "en" : {
@@ -141776,19 +141776,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Revisado con %@: sin contraindicaciones en su formulario de salud."
+            "value" : "Revisado con %@: sin contraindicaciones en su ficha de salud."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Revisado con %@: sin contraindicaciones en su formulario de salud."
+            "value" : "Revisado con %@: sin contraindicaciones en su ficha de salud."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Revisado con %@: sin contraindicaciones en su formulario de salud."
+            "value" : "Revisado con %@: sin contraindicaciones en su ficha de salud."
           }
         },
         "fr" : {
@@ -141812,7 +141812,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Controllato con %@: nessuna controindicazione nella scheda di salute."
+            "value" : "Controllato con %@: nessuna controindicazione nella scheda sanitaria."
           }
         },
         "pt-BR" : {
@@ -141866,19 +141866,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario rellenado para un menor"
+            "value" : "Ficha rellenada para un menor"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario llenado para un menor"
+            "value" : "Ficha llenada para un menor"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario llenado para un menor"
+            "value" : "Ficha llenada para un menor"
           }
         },
         "fr" : {
@@ -141956,19 +141956,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sin formulario de salud, no se han podido revisar las contraindicaciones de %@."
+            "value" : "Sin ficha de salud, no se han podido revisar las contraindicaciones de %@."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sin formulario de salud, no se pudieron revisar las contraindicaciones de %@."
+            "value" : "Sin ficha de salud, no se pudieron revisar las contraindicaciones de %@."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sin formulario de salud, no se pudieron revisar las contraindicaciones de %@."
+            "value" : "Sin ficha de salud, no se pudieron revisar las contraindicaciones de %@."
           }
         },
         "fr" : {
@@ -141992,7 +141992,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Senza scheda di salute non è stato possibile controllare le controindicazioni di %@."
+            "value" : "Senza scheda sanitaria non è stato possibile controllare le controindicazioni di %@."
           }
         },
         "pt-BR" : {
@@ -142046,19 +142046,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero el formulario de salud. Esto no bloquea nada."
+            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero la ficha de salud. Esto no bloquea nada."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero el formulario de salud. Esto no bloquea nada."
+            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero la ficha de salud. Esto no bloquea nada."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero el formulario de salud. Esto no bloquea nada."
+            "value" : "%1$@ está marcado como no apto para: %2$@. Revisa primero la ficha de salud. Esto no bloquea nada."
           }
         },
         "fr" : {
@@ -142082,7 +142082,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ è segnato come non adatto a: %2$@. Controlla prima la scheda di salute. Questo non blocca nulla."
+            "value" : "%1$@ è segnato come non adatto a: %2$@. Controlla prima la scheda sanitaria. Questo non blocca nulla."
           }
         },
         "pt-BR" : {
@@ -142226,19 +142226,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todavía no hay formulario de salud."
+            "value" : "Todavía no hay ficha de salud."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aún no hay formulario de salud."
+            "value" : "Aún no hay ficha de salud."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aún no hay formulario de salud."
+            "value" : "Aún no hay ficha de salud."
           }
         },
         "fr" : {
@@ -142262,7 +142262,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ancora nessuna scheda di salute."
+            "value" : "Ancora nessuna scheda sanitaria."
           }
         },
         "pt-BR" : {
@@ -175034,7 +175034,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vedi un avviso quando la scheda di salute coincide. Non blocca mai una prenotazione."
+            "value" : "Vedi un avviso quando la scheda sanitaria coincide. Non blocca mai una prenotazione."
           }
         },
         "pt-BR" : {
