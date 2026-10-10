@@ -136,14 +136,16 @@ describe('extra and processing time on bookings (D56)', () => {
   it('snapshots the service\'s extra time on the booking and keeps the next visit away from it', async () => {
     await shapeService(SERVICE.deepCleansing, { prepMinutes: 10, cleanupMinutes: 15 });
 
-    const booked = asBooked(await book(env, pro, { serviceId: SERVICE.deepCleansing, startsAt: FRIDAY_10 }));
+    const booked = asBooked(await book(env, pro, { serviceId: SERVICE.deepCleansing, startsAt: friday('15:00') }));
     const doc = await bookingDoc(env, booked.bookingId);
     const free = freeOf(await dayOf(SERVICE.glowFacial));
 
     expect(doc).toMatchObject({ durationMinutes: 75, prepMinutes: 10, cleanupMinutes: 15 });
-    expect(booked.endsAt).toBe(friday('11:15')); // the visible end: extra time is not part of the visit
-    expect(free).toContain(friday('11:45')); // 11:15 + 15 clean-up + 15 buffer
-    expect(free).not.toContain(friday('11:30'));
+    expect(booked.endsAt).toBe(friday('16:15')); // the visible end: extra time is not part of the visit
+    expect(free).toContain(friday('16:45')); // 16:15 + 15 clean-up + 15 buffer
+    expect(free).not.toContain(friday('16:30'));
+    expect(free).not.toContain(friday('13:45')); // ends 14:45, inside the 10 minute prep plus the buffer before 15:00
+    expect(free).toContain(friday('13:30'));
   });
 
   it('books a visit inside another visit\'s processing time, and refuses one that does not fit in it', async () => {
@@ -191,7 +193,7 @@ describe('waitlist with smart slots (D56)', () => {
     await env.call(joinWaitlist, { ...join, name: 'Paula', phone: '+5511955550000', serviceId: SERVICE.brazilianGlow });
     await env.call(joinWaitlist, { ...join, name: 'Bia', phone: BIA.phone, serviceId: SERVICE.glowFacial });
 
-    await env.call(cancelBooking, { token: booked.manageToken });
+    await env.call(cancelBooking, { token: booked.manageToken, acceptLateWarning: true });
     const matches = await waitlistMatchesFor(env.deps, await bookingDoc(env, booked.bookingId));
 
     expect(matches.map((entry: WaitlistDoc) => entry.name)).toEqual(['Bia']);
