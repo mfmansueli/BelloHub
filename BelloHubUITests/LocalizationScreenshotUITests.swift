@@ -141,7 +141,7 @@ final class LocalizationScreenshotUITests: XCTestCase {
         XCTAssertTrue(app.buttons["more.accountRow"].waitForExistence(timeout: 8), "\(locale) more")
         try check(app, locale, "more")
         let cancelRow = app.buttons["bookingSettings.cancelRow"]
-        try open(app, row: "more.bookingPageRow", first: cancelRow, locale, "booking-page") {
+        try open(app, row: "more.bookingPageRow", first: cancelRow, screen: (locale, "booking-page")) {
             app.bringIntoView(app.buttons["bookingSettings.cancelRow"])
             app.tapButton("bookingSettings.cancelRow")
             XCTAssertTrue(app.scrollUntilExists(app.element("cancelPolicy.ruleText")), "\(locale) cancellations")
@@ -150,13 +150,15 @@ final class LocalizationScreenshotUITests: XCTestCase {
             try self.check(app, locale, "cancel-policy")
             app.goBack()
         }
-        try open(app, row: "more.accountRow", first: app.buttons["account.languageRegionRow"], locale, "account") {
+        let regionRow = app.buttons["account.languageRegionRow"]
+        try open(app, row: "more.accountRow", first: regionRow, screen: (locale, "account")) {
             app.tapButton("account.languageRegionRow")
             XCTAssertTrue(app.element("languageRegion.sets.currency").waitForExistence(timeout: 8), "\(locale) region")
             try self.check(app, locale, "language-region")
             app.goBack()
         }
-        try open(app, row: "more.privacyRow", first: app.buttons["privacy.recoveryKeyRow"], locale, "privacy") {
+        let keyRow = app.buttons["privacy.recoveryKeyRow"]
+        try open(app, row: "more.privacyRow", first: keyRow, screen: (locale, "privacy")) {
             app.tapButton("privacy.recoveryKeyRow")
             XCTAssertTrue(app.buttons["recoveryKey.revealButton"].waitForExistence(timeout: 8), "\(locale) key")
             try self.check(app, locale, "recovery-key")
@@ -166,9 +168,10 @@ final class LocalizationScreenshotUITests: XCTestCase {
 
     /// Opens a More row, checks the screen it pushes, runs `then`, and comes back to More.
     private func open(
-        _ app: XCUIApplication, row: String, first: XCUIElement, _ locale: String, _ name: String,
+        _ app: XCUIApplication, row: String, first: XCUIElement, screen: (locale: String, name: String),
         then: () throws -> Void
     ) throws {
+        let (locale, name) = screen
         app.bringIntoView(app.buttons[row])
         app.tapButton(row)
         XCTAssertTrue(first.waitForExistence(timeout: 8), "\(locale) \(name)")

@@ -44,8 +44,14 @@ struct FlowLayout: Layout {
 
     // MARK: - Rows
 
+    private struct Item {
+        let index: Int
+        let size: CGSize
+        let proposal: ProposedViewSize
+    }
+
     private struct Row {
-        var items: [(index: Int, size: CGSize, proposal: ProposedViewSize)] = []
+        var items: [Item] = []
         var width: CGFloat = 0
         var height: CGFloat = 0
     }
@@ -68,7 +74,8 @@ struct FlowLayout: Layout {
             }
             current.width = current.items.isEmpty ? size.width : current.width + spacing + size.width
             current.height = max(current.height, size.height)
-            current.items.append((index, size, wraps ? ProposedViewSize(size) : .unspecified))
+            let placement = wraps ? ProposedViewSize(size) : .unspecified
+            current.items.append(Item(index: index, size: size, proposal: placement))
         }
         if !current.items.isEmpty { rows.append(current) }
         return rows
