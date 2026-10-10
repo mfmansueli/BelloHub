@@ -260,7 +260,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A Apple não conseguiu confirmar que era você. Tente novamente."
+            "value" : "A Apple não conseguiu confirmar a sua identidade. Tente novamente."
           }
         },
         "tr" : {
@@ -4700,7 +4700,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add extras like a brow tint or a hand massage. Clients can tick them when they book."
+            "value" : "Add extras like a brow tint or a hand massage. Clients can select them when they book."
           }
         },
         "en-GB" : {
@@ -5420,7 +5420,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On the service step they tick the extras they want. The booking page adds the time and shows the new total before they pick a day."
+            "value" : "On the service step they select the extras they want. The booking page adds the time and shows the new total before they pick a day."
           }
         },
         "en-GB" : {
@@ -6146,7 +6146,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Organize with the assistant"
+            "value" : "Organise with the assistant"
           }
         },
         "es" : {
@@ -6596,7 +6596,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Delete recordings after organizing"
+            "value" : "Delete recordings after organising"
           }
         },
         "es" : {
@@ -6686,7 +6686,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Your voice and notes are organized on the device. Nothing is sent to a server."
+            "value" : "Your voice and notes are organised on the device. Nothing is sent to a server."
           }
         },
         "es" : {
@@ -6866,7 +6866,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Organizes what you said into your record fields"
+            "value" : "Organises what you said into your record fields"
           }
         },
         "es" : {
@@ -8846,7 +8846,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "It turns your voice into an organized record. You stay in charge."
+            "value" : "It turns your voice into an organised record. You stay in charge."
           }
         },
         "es" : {
@@ -11732,7 +11732,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Open waitlist"
+            "value" : "Open waiting list"
           }
         },
         "es" : {
@@ -12002,7 +12002,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Waitlist"
+            "value" : "Waiting list"
           }
         },
         "es" : {
@@ -12416,7 +12416,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelar marcação"
+            "value" : "Desmarcar"
           }
         },
         "tr" : {
@@ -14036,7 +14036,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Olá, {name}! Peço desculpa, tenho de cancelar o seu {service} de {date} às {time}. Diga-me que novo horário lhe convém."
+            "value" : "Olá, {name}! Peço desculpa, mas tenho de desmarcar o seu {service} de {date} às {time}. Diga-me que novo horário lhe dá jeito."
           }
         },
         "tr" : {
@@ -15656,7 +15656,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelada"
+            "value" : "Desmarcada"
           }
         },
         "tr" : {
@@ -18122,7 +18122,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vacation"
+            "value" : "Holiday"
           }
         },
         "es" : {
@@ -19652,7 +19652,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Days off and vacation"
+            "value" : "Days off and holidays"
           }
         },
         "es" : {
@@ -21596,7 +21596,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelado por si, por isso nunca conta contra o cliente."
+            "value" : "Desmarcada por si, por isso nunca conta contra o cliente."
           }
         },
         "tr" : {
@@ -23942,7 +23942,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Só você vê isto."
+            "value" : "Só é visível para si."
           }
         },
         "tr" : {
@@ -34676,7 +34676,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Desmarcado"
+            "value" : "Desmarcada"
           }
         },
         "tr" : {
@@ -35582,7 +35582,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Esta marcação já não pode ser cancelada."
+            "value" : "Esta marcação já não pode ser desmarcada."
           }
         },
         "tr" : {
@@ -35672,7 +35672,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelar marcação"
+            "value" : "Desmarcar"
           }
         },
         "tr" : {
@@ -35762,7 +35762,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Marcação cancelada."
+            "value" : "Marcação desmarcada."
           }
         },
         "tr" : {
@@ -35942,7 +35942,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A marcação não foi cancelada. Tente novamente."
+            "value" : "A marcação não foi desmarcada. Tente novamente."
           }
         },
         "tr" : {
@@ -36212,7 +36212,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ está a cancelar a tempo (grátis até %2$@ antes). Nada é registado."
+            "value" : "%1$@ está a desmarcar a tempo (sem encargos até %2$@ antes). Nada fica registado."
           }
         },
         "tr" : {
@@ -36248,7 +36248,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This is inside the free window (%1$@). It is saved as a late cancellation, and your rule does not count it toward %2$@'s limit."
+            "value" : "This is inside the free window (%1$@). It is saved as a late cancellation, and your rule does not count it towards %2$@'s limit."
           }
         },
         "es" : {
@@ -36302,7 +36302,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isto está dentro do prazo gratuito (%1$@). Fica guardado como cancelamento tardio, e a sua regra não o conta no limite de %2$@."
+            "value" : "Isto está dentro do prazo sem encargos (%1$@). Fica guardado como desmarcação tardia, e a sua regra não a conta no limite de %2$@."
           }
         },
         "tr" : {
@@ -36338,7 +36338,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This is inside the free window (%1$@). It is saved as a late cancellation and counts toward %2$@'s limit."
+            "value" : "This is inside the free window (%1$@). It is saved as a late cancellation and counts towards %2$@'s limit."
           }
         },
         "es" : {
@@ -36392,7 +36392,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isto está dentro do prazo gratuito (%1$@). Fica guardado como cancelamento tardio e conta no limite de %2$@."
+            "value" : "Isto está dentro do prazo sem encargos (%1$@). Fica guardado como desmarcação tardia e conta no limite de %2$@."
           }
         },
         "tr" : {
@@ -36482,7 +36482,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelada por si, por isso não conta contra %@."
+            "value" : "Desmarcada por si, por isso não conta contra %@."
           }
         },
         "tr" : {
@@ -36572,7 +36572,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelar marcação"
+            "value" : "Desmarcar"
           }
         },
         "tr" : {
@@ -36662,7 +36662,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quem está a cancelar?"
+            "value" : "Quem está a desmarcar?"
           }
         },
         "tr" : {
@@ -36752,7 +36752,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ está a cancelar"
+            "value" : "%@ está a desmarcar"
           }
         },
         "tr" : {
@@ -36842,7 +36842,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Guardado como cancelamento do cliente, segundo as suas regras."
+            "value" : "Guardado como desmarcação do cliente, segundo as suas regras."
           }
         },
         "tr" : {
@@ -36932,7 +36932,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Estou a cancelar"
+            "value" : "Sou eu a desmarcar"
           }
         },
         "tr" : {
@@ -37238,7 +37238,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "You get an alert right away and the time goes to your waitlist."
+            "value" : "You get an alert right away and the time goes to your waiting list."
           }
         },
         "es" : {
@@ -37688,7 +37688,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "These count toward your no-show limit."
+            "value" : "These count towards your no-show limit."
           }
         },
         "es" : {
@@ -37778,7 +37778,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "These do not count toward your no-show limit."
+            "value" : "These do not count towards your no-show limit."
           }
         },
         "es" : {
@@ -43100,7 +43100,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "On the waitlist"
+            "value" : "On the waiting list"
           }
         },
         "es" : {
@@ -44594,7 +44594,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Motivo (só você vê)"
+            "value" : "Motivo (só visível para si)"
           }
         },
         "tr" : {
@@ -48554,7 +48554,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O que quer recordar sobre %@, pelas suas palavras. Só você vê isto."
+            "value" : "O que quer recordar sobre %@, pelas suas palavras. Só é visível para si."
           }
         },
         "tr" : {
@@ -50894,7 +50894,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancela com frequência"
+            "value" : "Desmarca com frequência"
           }
         },
         "tr" : {
@@ -55946,7 +55946,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancela com frequência"
+            "value" : "Desmarca com frequência"
           }
         },
         "tr" : {
@@ -56936,7 +56936,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancela com frequência"
+            "value" : "Desmarca com frequência"
           }
         },
         "tr" : {
@@ -68942,7 +68942,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "For a health professional she authorises. Choose carefully what to include."
+            "value" : "For a health professional she authorizes. Choose carefully what to include."
           }
         },
         "en-GB" : {
@@ -71192,7 +71192,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Share only with the client or a health professional she authorises."
+            "value" : "Share only with the client or a health professional she authorizes."
           }
         },
         "en-GB" : {
@@ -85676,7 +85676,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Neste iPhone e no seu iCloud privado, seladas para que só você as leia. Os servidores do Bello Hub guardam apenas marcações."
+            "value" : "Neste iPhone e no seu iCloud privado, seladas para que só possam ser lidas por si. Os servidores do Bello Hub guardam apenas marcações."
           }
         },
         "tr" : {
@@ -95336,7 +95336,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foi respondido ou cancelado. Puxe para baixo para atualizar."
+            "value" : "Foi respondido ou retirado. Puxe para baixo para atualizar."
           }
         },
         "tr" : {
@@ -95876,7 +95876,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O cliente cancelou este pedido."
+            "value" : "O cliente retirou este pedido."
           }
         },
         "tr" : {
@@ -113804,7 +113804,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As faltas e os cancelamentos tardios aparecem aqui."
+            "value" : "As faltas e as desmarcações tardias aparecem aqui."
           }
         },
         "tr" : {
@@ -114164,7 +114164,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Só você vê isto. O cliente conhece a sua regra na sua página de marcação e pode pedir-lhe que a reveja."
+            "value" : "Só é visível para si. O cliente conhece a sua regra pela página de marcações e pode pedir-lhe que a reveja."
           }
         },
         "tr" : {
@@ -114434,7 +114434,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelamento tardio"
+            "value" : "Desmarcação tardia"
           }
         },
         "tr" : {
@@ -116180,7 +116180,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Counts toward the limit of your rule."
+            "value" : "Counts towards the limit of your rule."
           }
         },
         "es" : {
@@ -117134,7 +117134,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os clientes podem pedir um horário. Você confirma ou recusa."
+            "value" : "Os clientes podem pedir um horário. Confirma ou recusa."
           }
         },
         "tr" : {
@@ -117800,7 +117800,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Also counts toward the limit."
+            "value" : "Also counts towards the limit."
           }
         },
         "es" : {
@@ -121292,7 +121292,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cancelamentos"
+            "value" : "Desmarcações"
           }
         },
         "tr" : {
@@ -121328,7 +121328,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "And a freed time for the waitlist"
+            "value" : "And a freed time for the waiting list"
           }
         },
         "es" : {
@@ -123362,7 +123362,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alertas urgentes continuam a passar: cliente atrasada e cancelamentos no próprio dia. O resto espera até de manhã."
+            "value" : "Os alertas urgentes continuam a passar: um cliente atrasado e desmarcações no próprio dia. O resto espera até de manhã."
           }
         },
         "tr" : {
@@ -126098,7 +126098,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub listens only while you record a treatment, then organizes what you said. You review everything before it is saved."
+            "value" : "Bello Hub listens only while you record a treatment, then organises what you said. You review everything before it is saved."
           }
         },
         "es" : {
@@ -126512,7 +126512,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Novas marcações, cancelamentos e check-ins de clientes. Os nomes ficam ocultos no ecrã de bloqueio, se preferir."
+            "value" : "Novas marcações, desmarcações e check-ins de clientes. Os nomes ficam ocultos no ecrã de bloqueio, se preferir."
           }
         },
         "tr" : {
@@ -133892,7 +133892,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O Bello Hub aprende os nomes que utiliza para os seus serviços e protocolos, para que as notas de voz e os registos soem como você."
+            "value" : "O Bello Hub aprende os nomes que utiliza para os seus serviços e protocolos, para que as notas de voz e os registos soem à sua maneira de falar."
           }
         },
         "tr" : {
@@ -136718,7 +136718,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Follow-ups, waitlist and check-ins"
+            "value" : "Follow-ups, waiting list and check-ins"
           }
         },
         "es" : {
@@ -143552,7 +143552,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As clientes podem pedir uma cópia ou a eliminação dos seus dados a qualquer momento. Você decide quem está na ficha delas."
+            "value" : "Os clientes podem pedir uma cópia ou a eliminação dos seus dados a qualquer momento. Decide quem consta em cada ficha."
           }
         },
         "tr" : {
@@ -146072,7 +146072,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Até você ou a cliente pedir para eliminar"
+            "value" : "Até pedir a eliminação, ou até o cliente a pedir"
           }
         },
         "tr" : {
@@ -147062,7 +147062,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Uma cópia privada, selada para que só você a leia"
+            "value" : "Uma cópia privada, selada para que só possa ser lida por si"
           }
         },
         "tr" : {
@@ -147962,7 +147962,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Só você vê este produto. Toque para o partilhar com os clientes."
+            "value" : "Este produto só é visível para si. Toque para o partilhar com os clientes."
           }
         },
         "tr" : {
@@ -160742,7 +160742,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As fotografias são privadas. Só você as vê, a menos que a cliente tenha consentido a partilha."
+            "value" : "As fotografias são privadas. Só são visíveis para si, a menos que o cliente tenha consentido a partilha."
           }
         },
         "tr" : {
@@ -164378,7 +164378,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Not recognized"
+            "value" : "Not recognised"
           }
         },
         "es" : {
@@ -165422,7 +165422,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um ficheiro de texto que só você abre"
+            "value" : "Um ficheiro de texto que só pode ser aberto por si"
           }
         },
         "tr" : {
@@ -165512,7 +165512,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "As fichas das suas clientes são seladas para que só você as leia. Esta chave é o caminho de volta se perder o iPhone e o Porta-chaves iCloud."
+            "value" : "As fichas dos seus clientes estão seladas para que só possam ser lidas por si. Esta chave é o caminho de volta se perder o iPhone e o Porta-chaves iCloud."
           }
         },
         "tr" : {
@@ -166178,7 +166178,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Your first 10 client registrations are free. Deleted clients still count toward this limit."
+            "value" : "Your first 10 client registrations are free. Deleted clients still count towards this limit."
           }
         },
         "es" : {
@@ -175814,7 +175814,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tick everything that should warn you when you book this service."
+            "value" : "Select everything that should warn you when you book this service."
           }
         },
         "en-GB" : {
@@ -180044,7 +180044,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You’re free while it works, like colour developing. Another client can be seen then."
+            "value" : "You’re free while it works, like color developing. Another client can be seen then."
           }
         },
         "en-GB" : {
@@ -181940,7 +181940,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A series of sessions toward one goal. No prices, just the rhythm."
+            "value" : "A series of sessions towards one goal. No prices, just the rhythm."
           }
         },
         "es" : {
@@ -187346,7 +187346,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Color"
+            "value" : "Colour"
           }
         },
         "es" : {
@@ -193112,7 +193112,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Your words could not be organized. They are kept as notes you can edit."
+            "value" : "Your words could not be organised. They are kept as notes you can edit."
           }
         },
         "es" : {
@@ -196352,7 +196352,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Organizing your record"
+            "value" : "Organising your record"
           }
         },
         "es" : {
@@ -198836,7 +198836,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pode tentar novamente ou escrever você mesma."
+            "value" : "Pode tentar novamente ou escrever por si."
           }
         },
         "tr" : {
@@ -200402,7 +200402,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Organized by AI, on this iPhone"
+            "value" : "Organised by AI, on this iPhone"
           }
         },
         "es" : {
@@ -201176,7 +201176,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Descartou tudo. Pode preencher o registo você mesma ou voltar."
+            "value" : "Descartou tudo. Pode preencher o registo por si ou voltar atrás."
           }
         },
         "tr" : {
@@ -205352,7 +205352,7 @@
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Waitlist"
+            "value" : "Waiting list"
           }
         },
         "es" : {

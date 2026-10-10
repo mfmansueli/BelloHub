@@ -225,7 +225,7 @@
   [
    "addOns.empty.message",
    "Empty state message of the Add-ons screen.",
-   "Add extras like a brow tint or a hand massage. Clients can tick them when they book.",
+   "Add extras like a brow tint or a hand massage. Clients can select them when they book.",
    "Adicione extras como coloração de sobrancelha ou massagem nas mãos. Os clientes marcam ao agendar.",
    "Adicione extras como coloração de sobrancelhas ou massagem às mãos. Os clientes assinalam ao marcar.",
    "Agrega extras como tinte de cejas o masaje de manos. Los clientes los marcan al reservar.",
@@ -353,7 +353,7 @@
   [
    "addOns.preview.message",
    "Text of the card that shows the client's side of the add-ons.",
-   "On the service step they tick the extras they want. The booking page adds the time and shows the new total before they pick a day.",
+   "On the service step they select the extras they want. The booking page adds the time and shows the new total before they pick a day.",
    "Na etapa do serviço, eles marcam os extras que querem. A página de agendamento soma o tempo e mostra o novo total antes de escolherem o dia.",
    "No passo do serviço, marcam os extras que querem. A página de marcações soma o tempo e mostra o novo total antes de escolherem o dia.",
    "En el paso del servicio, marcan los extras que quieren. La página de reservas suma el tiempo y muestra el nuevo total antes de elegir el día.",
@@ -1107,7 +1107,7 @@
    "VoiceOver hint of the Private chip.",
    "Only you see this product. Tap to share it with clients.",
    "Só você vê este produto. Toque para compartilhá-lo com os clientes.",
-   "Só você vê este produto. Toque para o partilhar com os clientes.",
+   "Este produto só é visível para si. Toque para o partilhar com os clientes.",
    "Solo tú ves este producto. Toca para compartirlo con los clientes.",
    "Solo tú ves este producto. Toca para compartirlo con los clientes.",
    "Solo tu vedi questo prodotto. Tocca per condividerlo con i clienti.",
@@ -1912,7 +1912,7 @@
   [
    "services.contra.pickerHint",
    "Line at the top of the contraindication picker.",
-   "Tick everything that should warn you when you book this service.",
+   "Select everything that should warn you when you book this service.",
    "Marque tudo o que deve avisar você ao agendar este serviço.",
    "Assinale tudo o que deve avisá-la ao marcar este serviço.",
    "Marca todo lo que deba avisarte al reservar este servicio.",

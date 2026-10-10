@@ -1539,7 +1539,7 @@
    "4.7 photos footer",
    "Photos are private. Only you see them unless the client consented to sharing.",
    "As fotos são privadas. Só você as vê, a menos que a cliente tenha consentido em compartilhar.",
-   "As fotografias são privadas. Só você as vê, a menos que a cliente tenha consentido a partilha.",
+   "As fotografias são privadas. Só são visíveis para si, a menos que o cliente tenha consentido a partilha.",
    "Las fotos son privadas. Solo tú las ves, salvo que la clienta haya consentido compartirlas.",
    "Las fotos son privadas. Solo tú las ves, salvo que la clienta haya consentido compartirlas.",
    "Le foto sono private. Le vedi solo tu, a meno che la cliente non abbia acconsentito alla condivisione.",
@@ -2449,7 +2449,7 @@
   [
    "exportRecord.audience.doctorHint",
    "4.10 hint",
-   "For a health professional she authorises. Choose carefully what to include.",
+   "For a health professional she authorizes. Choose carefully what to include.",
    "Para um profissional de saúde que ela autorizar. Escolha com cuidado o que incluir.",
    "Para um profissional de saúde que ela autorize. Escolha com cuidado o que incluir.",
    "Para un profesional de salud que ella autorice. Elige con cuidado qué incluir.",
@@ -2753,7 +2753,7 @@
   [
    "exportRecord.footer",
    "4.10 footer and the PDF's last line",
-   "Share only with the client or a health professional she authorises.",
+   "Share only with the client or a health professional she authorizes.",
    "Compartilhe só com a cliente ou com um profissional de saúde que ela autorizar.",
    "Partilhe só com a cliente ou com um profissional de saúde que ela autorize.",
    "Comparte solo con la clienta o con un profesional de salud que ella autorice.",

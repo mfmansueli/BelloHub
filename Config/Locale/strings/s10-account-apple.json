@@ -51,7 +51,7 @@
    "Delete account: shown under the Apple button when Apple did not confirm (a failure, or no authorization code came back). Closing the Apple sheet shows nothing.",
    "Apple could not confirm it was you. Try again.",
    "A Apple não conseguiu confirmar que era você. Tente de novo.",
-   "A Apple não conseguiu confirmar que era você. Tente novamente.",
+   "A Apple não conseguiu confirmar a sua identidade. Tente novamente.",
    "Apple no pudo confirmar que eras tú. Inténtalo de nuevo.",
    "Apple no ha podido confirmar que eras tú. Inténtalo de nuevo.",
    "Apple non è riuscita a confermare che fossi tu. Riprova.",
