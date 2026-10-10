@@ -148,8 +148,8 @@ bdi {
   z-index: 100;
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-control);
-  background: var(--ink);
-  color: var(--ink-on-fill);
+  background: var(--action);
+  color: var(--on-action);
   font-weight: 600;
 }
 .skip:focus {

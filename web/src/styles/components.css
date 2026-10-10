@@ -25,11 +25,11 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 .back-text { gap: 4px; padding-inline: 10px 12px; color: var(--rose-text); font-weight: 600; font-size: var(--fs-callout); }
 .progress { flex: 1; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; }
 .progress i { display: block; block-size: 4px; border-radius: 2px; background: var(--hairline); }
-.progress i.on { background: var(--ink); }
+.progress i.on { background: var(--action); }
 
 /* Buttons: one primary action per screen */
 .btn { display: flex; align-items: center; justify-content: center; gap: 8px; inline-size: 100%; min-block-size: 56px; padding: 12px 20px; border-radius: var(--radius-button); font-size: var(--fs-body); font-weight: 600; text-align: center; line-height: 1.25; }
-.btn-primary { background: var(--ink); color: var(--ink-on-fill); box-shadow: 0 10px 20px -10px rgba(36, 35, 33, 0.5); }
+.btn-primary { background: var(--action); color: var(--on-action); box-shadow: 0 10px 20px -10px rgba(46, 51, 41, 0.22); }
 .btn-secondary { background: var(--surface); color: var(--ink); border: 1.5px solid var(--field-border); }
 .btn-tertiary { background: transparent; color: var(--rose-text); min-block-size: var(--space-touch-target); }
 .btn-hero { background: var(--hero-ink); color: var(--hero-gradient-end); }
@@ -44,7 +44,8 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 /* Chips (toggle buttons) */
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
 .chip { display: inline-flex; align-items: center; justify-content: center; min-block-size: 44px; padding-inline: 16px; border-radius: 22px; background: var(--surface); color: var(--ink); border: 1.5px solid var(--field-border); font-size: var(--fs-meta); font-weight: 600; }
-.chip[aria-pressed='true'], .chip[aria-checked='true'] { background: var(--ink); color: var(--ink-on-fill); border-color: var(--ink); }
+/* Selected: the selection fill is 1.4:1 on the page in light, so the ring in the selection ink carries the state. */
+.chip[aria-pressed='true'], .chip[aria-checked='true'] { background: var(--selection-fill); color: var(--selection-ink); border-color: var(--selection-ink); }
 .pill { display: inline-flex; align-items: center; min-block-size: 30px; padding-inline: 12px; border-radius: 15px; background: var(--sunken); color: var(--neutral-text); font-size: var(--fs-footnote); font-weight: 600; }
 
 /* Status chips: always a word, never color alone */
@@ -83,7 +84,7 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 .notice-quiet { background: var(--sunken); color: var(--ink-2); }
 
 /* Brand and avatar */
-.avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; inline-size: 44px; block-size: 44px; border-radius: 50%; background: var(--ink); color: var(--ink-on-fill); font-weight: 600; font-size: var(--fs-meta); letter-spacing: -0.02em; overflow: hidden; }
+.avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; inline-size: 44px; block-size: 44px; border-radius: 50%; background: var(--action); color: var(--on-action); font-weight: 600; font-size: var(--fs-meta); letter-spacing: -0.02em; overflow: hidden; }
 .avatar img { inline-size: 100%; block-size: 100%; object-fit: cover; }
 .avatar-lg { inline-size: 96px; block-size: 96px; font-size: 2rem; }
 .avatar-sm { inline-size: 32px; block-size: 32px; font-size: var(--fs-footnote); }
@@ -96,8 +97,8 @@ summary { min-block-size: 44px; padding-block: 11px; box-sizing: border-box; cur
 .hero-head .lead { max-inline-size: 310px; }
 .by { display: flex; align-items: center; justify-content: center; gap: 8px; margin-block-start: 28px; color: var(--ink-2); font-size: var(--fs-footnote); }
 .by svg { inline-size: 18px; block-size: 18px; }
-.bm-bg { fill: var(--ink); }
-.bm-fg { stroke: var(--ink-on-fill); }
+.bm-bg { fill: var(--brand-mark); }
+.bm-fg { stroke: var(--ivory); }
 .bm-dot { fill: var(--rose); }
 
 /* Form fields */
@@ -119,13 +120,13 @@ fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 /* Options: a card that is a radio or a checkbox (native input inside, so the keyboard and screen readers just work) */
 .option { position: relative; display: flex; align-items: center; gap: var(--space-row); min-block-size: 68px; padding: 14px 16px; background: var(--surface); border: 1.5px solid var(--hairline); border-radius: var(--radius-card); cursor: pointer; }
 .option + .option { margin-block-start: 10px; }
-.option:has(input:checked) { border-color: var(--ink); }
+.option:has(input:checked) { border-color: var(--selection-ink); }
 .option:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
 .option input { position: absolute; opacity: 0; inline-size: 100%; block-size: 100%; inset: 0; margin: 0; cursor: pointer; }
 .option .mark { flex: none; inline-size: 24px; block-size: 24px; border: 2px solid var(--field-border); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
 .option input[type='checkbox'] ~ .mark { border-radius: 7px; }
-.option input:checked ~ .mark { border-color: var(--ink); background: var(--ink); color: var(--ink-on-fill); }
-.option input[type='radio']:checked ~ .mark { background: var(--surface); box-shadow: inset 0 0 0 5px var(--ink); }
+.option input:checked ~ .mark { border-color: var(--action); background: var(--action); color: var(--on-action); }
+.option input[type='radio']:checked ~ .mark { border-color: var(--selection-ink); background: var(--surface); box-shadow: inset 0 0 0 5px var(--selection-ink); }
 .option .mark .icon { inline-size: 14px; block-size: 14px; stroke-width: 3; opacity: 0; }
 .option input[type='checkbox']:checked ~ .mark .icon { opacity: 1; }
 .option .body { flex: 1; min-inline-size: 0; }
@@ -138,7 +139,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 .segmented label { position: relative; display: flex; }
 .segmented input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .segmented span { display: flex; flex: 1; align-items: center; justify-content: center; min-block-size: 44px; border-radius: var(--radius-control); font-weight: 600; text-align: center; padding-inline: 8px; }
-.segmented input:checked + span { background: var(--surface); box-shadow: 0 1px 3px rgba(36, 35, 33, 0.18); }
+.segmented input:checked + span { background: var(--surface); box-shadow: 0 1px 3px rgba(46, 51, 41, 0.18); }
 .segmented input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
 .question { background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-card); padding: 18px; box-shadow: var(--e1); }
 .question > .label, .question > legend { font-weight: 600; font-size: var(--fs-body); }
@@ -150,7 +151,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 /* Tabs (portal) */
 .tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px; background: var(--sunken); border-radius: var(--radius-tile); }
 .tab { min-block-size: 44px; padding-inline: 8px; border-radius: var(--radius-control); text-align: center; font-weight: 600; font-size: var(--fs-meta); }
-.tab[aria-selected='true'] { background: var(--surface); box-shadow: 0 1px 3px rgba(36, 35, 33, 0.18); }
+.tab[aria-selected='true'] { background: var(--surface); box-shadow: 0 1px 3px rgba(46, 51, 41, 0.18); }
 
 /* Calendar and slots */
 .calendar { padding: 16px 12px 12px; }
@@ -163,24 +164,24 @@ fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .cal-dow { text-align: center; font-size: var(--fs-footnote); font-weight: 600; color: var(--ink-2); padding-block: 8px; }
 .cal-day { display: flex; align-items: center; justify-content: center; margin: 2px auto; inline-size: min(44px, 100%); block-size: 44px; border-radius: 50%; font-weight: 600; font-variant-numeric: tabular-nums; }
-[role='gridcell'][aria-selected='true'] > .cal-day { background: var(--ink); color: var(--ink-on-fill); }
+[role='gridcell'][aria-selected='true'] > .cal-day { background: var(--selection-fill); color: var(--selection-ink); box-shadow: inset 0 0 0 1.5px var(--selection-ink); }
 .cal-day[aria-disabled='true'] { opacity: 0.5; font-weight: 400; cursor: default; }
 .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--field-border); }
 .slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; }
 .slot { display: flex; align-items: center; justify-content: center; min-block-size: 48px; border-radius: var(--radius-tile); background: var(--surface); border: 1.5px solid var(--field-border); font-weight: 600; font-variant-numeric: tabular-nums; }
-.slot[aria-pressed='true'] { background: var(--ink); color: var(--ink-on-fill); border-color: var(--ink); }
+.slot[aria-pressed='true'] { background: var(--selection-fill); color: var(--selection-ink); border-color: var(--selection-ink); }
 .slot[aria-disabled='true'] { opacity: 0.5; text-decoration: line-through; cursor: not-allowed; }
 .days { display: flex; gap: 10px; overflow-x: auto; padding-block: 4px; scrollbar-width: none; }
 .days::-webkit-scrollbar { display: none; }
 .day { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; inline-size: 64px; min-block-size: 76px; gap: 2px; border-radius: var(--radius-tile); background: var(--surface); border: 1.5px solid var(--field-border); }
-.day[aria-pressed='true'] { background: var(--ink); color: var(--ink-on-fill); border-color: var(--ink); }
+.day[aria-pressed='true'] { background: var(--selection-fill); color: var(--selection-ink); border-color: var(--selection-ink); }
 .day small { font-size: var(--fs-caption); font-weight: 600; }
 .day .best { color: var(--rose-text); }
-.day[aria-pressed='true'] .best { color: var(--ink-on-fill); }
+.day[aria-pressed='true'] .best { color: var(--selection-ink); }
 
 /* Sheet: the native dialog, so focus is trapped, Escape closes and the page behind is inert */
 dialog.sheet { inline-size: min(100%, var(--column)); max-inline-size: var(--column); margin: auto auto 0; padding: 10px var(--space-gutter) max(34px, env(safe-area-inset-bottom)); border: 0; border-radius: 30px 30px 0 0; background: var(--surface); color: var(--ink); box-shadow: var(--sheet); max-block-size: 88dvh; overflow-y: auto; }
-dialog.sheet::backdrop { background: rgba(36, 35, 33, 0.38); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+dialog.sheet::backdrop { background: rgba(46, 51, 41, 0.38); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 .sheet-handle { inline-size: 36px; block-size: 5px; border-radius: 3px; background: var(--field-border); margin: 0 auto 14px; }
 .sheet h2 { font-size: var(--fs-section); font-weight: 600; }
 .sheet-list { margin-block-start: 12px; border: 1px solid var(--hairline); border-radius: var(--radius-tile-small); overflow: hidden; }

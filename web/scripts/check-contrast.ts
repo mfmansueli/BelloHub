@@ -49,7 +49,8 @@ const PAIRS: readonly Pair[] = [
   { role: 'text', foreground: 'ink2', background: 'bg', why: 'secondary text on the page' },
   { role: 'text', foreground: 'ink2', background: 'surface', why: 'secondary text in cards' },
   { role: 'text', foreground: 'ink2', background: 'sunken', why: 'secondary text in wells' },
-  { role: 'text', foreground: 'inkOnFill', background: 'ink', why: 'primary button and selected chips' },
+  { role: 'text', foreground: 'onAction', background: 'action', why: 'primary button, checked checkbox, skip link, avatar' },
+  { role: 'text', foreground: 'selectionInk', background: 'selectionFill', why: 'selected chip, day, slot and date' },
   { role: 'text', foreground: 'roseText', background: 'bg', why: 'links and action text on the page' },
   { role: 'text', foreground: 'roseText', background: 'surface', why: 'links in cards' },
   { role: 'text', foreground: 'roseDeepText', background: 'roseWash', why: '"next up" chip' },
@@ -68,7 +69,9 @@ const PAIRS: readonly Pair[] = [
   { role: 'ui', foreground: 'ink3', background: 'bg', why: 'informative icons on the page' },
   { role: 'ui', foreground: 'roseText', background: 'bg', why: 'focus ring (3 px roseText)' },
   { role: 'ui', foreground: 'sage', background: 'surface', why: 'success graphics' },
-  { role: 'ui', foreground: 'ink', background: 'surface', why: 'selected radio and checkbox' },
+  { role: 'ui', foreground: 'selectionInk', background: 'surface', why: 'selected radio, option outline, chip and slot ring' },
+  { role: 'ui', foreground: 'selectionInk', background: 'bg', why: 'selected day ring on the page' },
+  { role: 'ui', foreground: 'action', background: 'bg', why: 'filled progress segments' },
 ];
 
 interface Result {
