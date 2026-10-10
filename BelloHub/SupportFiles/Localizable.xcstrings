@@ -2102,19 +2102,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Enlace de reservas"
+            "value" : "Enlace de reserva"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Enlace de reservas"
+            "value" : "Enlace de reserva"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Enlace de reservas"
+            "value" : "Enlace de reserva"
           }
         },
         "fr" : {
@@ -136142,85 +136142,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "صور خاصة ونماذج موافقة"
+            "value" : "صور خاصة وسجلات الموافقات"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Private Fotos und Einwilligungsformulare"
+            "value" : "Private Fotos und Einwilligungsvermerke"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Private photos and consent forms"
+            "value" : "Private photos and consent records"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Private photos and consent forms"
+            "value" : "Private photos and consent records"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos privadas y formularios de consentimiento"
+            "value" : "Fotos privadas y registros de consentimiento"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos privadas y formularios de consentimiento"
+            "value" : "Fotos privadas y registros de consentimiento"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos privadas y formularios de consentimiento"
+            "value" : "Fotos privadas y registros de consentimiento"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Photos privées et formulaires de consentement"
+            "value" : "Photos privées et suivi des consentements"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "निजी फ़ोटो और सहमति फ़ॉर्म"
+            "value" : "निजी फ़ोटो और सहमति के रिकॉर्ड"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foto pribadi dan formulir persetujuan"
+            "value" : "Foto pribadi dan catatan persetujuan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foto private e moduli di consenso"
+            "value" : "Foto private e registro dei consensi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos privadas e termos de consentimento"
+            "value" : "Fotos privadas e registros de consentimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos privadas e formulários de consentimento"
+            "value" : "Fotografias privadas e registos de consentimento"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Özel fotoğraflar ve onam formları"
+            "value" : "Özel fotoğraflar ve onam kayıtları"
           }
         }
       }
@@ -136322,7 +136322,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "عميلات ومواعيد بلا حدود"
+            "value" : "عملاء ومواعيد بلا حدود"
           }
         },
         "de" : {
@@ -136346,25 +136346,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clientas y citas ilimitadas"
+            "value" : "Clientes y citas ilimitados"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clientas y citas ilimitadas"
+            "value" : "Clientes y citas ilimitados"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clientas y citas ilimitadas"
+            "value" : "Clientes y citas ilimitados"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Clientes et rendez-vous illimités"
+            "value" : "Clients et rendez-vous illimités"
           }
         },
         "hi" : {
@@ -179444,7 +179444,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sei libera mentre agisce, come il colore in posa. In quel tempo puoi seguire un’altra cliente."
+            "value" : "Hai tempo libero mentre agisce, come il colore in posa. In quel tempo puoi seguire un’altra persona."
           }
         },
         "pt-BR" : {
