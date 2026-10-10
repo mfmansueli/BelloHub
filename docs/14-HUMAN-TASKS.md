@@ -68,6 +68,14 @@ Register **`bellohub.app`** (recommended: HTTPS-only top-level domain, short, no
 
 Pick a transactional email service (Resend, Postmark, SES…), verify the sending domain (SPF, DKIM, DMARC), create an API key, store it as a Functions secret. Sign the provider's DPA. **Expected:** `EmailProvider` implementation selected in `firebase/functions/src/messaging/` (Claude Code writes the adapter for the one you choose; tell it which).
 
+> **SPF, DKIM and DMARC are not optional.** Most "I didn't get the code" cases are the code sitting in the spam or junk
+> folder, and mailbox providers (Gmail, Outlook, iCloud) send unauthenticated mail there. On the sending domain: an SPF
+> record that includes the provider, the provider's DKIM keys (CNAME/TXT records it gives you), and a DMARC record
+> (start with `v=DMARC1; p=none; rua=mailto:<you>` and move to `p=quarantine` once reports are clean). Check with the
+> provider's domain page and by sending a code to a Gmail and an Outlook address: it must land in the inbox. The page
+> now offers "I didn't get the code" (spam advice, a new code, a corrected address, and "Confirm on WhatsApp" when the
+> professional has a public number; `docs/agent-notes/verify-fallback.md`), but that is the fallback, not the fix.
+
 ### H8 · In-app browser tests
 On real phones, open a booking link **inside** WhatsApp, Instagram and Facebook on iOS and Android and walk through booking, management, health form and check-in using staging; do it also once in Arabic (right-to-left) and once with an Arabic-Indic digit keyboard. Record failures with screenshots in `docs/PROGRESS.md` (Claude Code fixes them).
 

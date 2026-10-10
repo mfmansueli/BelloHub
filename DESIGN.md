@@ -250,7 +250,7 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
 | 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
 | 2.4 Alerts | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` and `InboxAlerts` are pure) | `alerts.*`, `alerts.request.<bookingId>[.action]`, `alerts.reschedule.<requestId>[.action]`, `alerts.waitlist[.action]` |
-| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
+| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.unverified`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
 | 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
 | 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
 | 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
@@ -439,6 +439,14 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   `bookingRequest.suggest.*`.
 - **"Cancels often" on 2.9 and 2.10** (`CancelsOftenBadge`): the client list's coral dot and words, under the person's
   details on the waitlist and inside the request's summary card.
+- **2.10 BookingRequest, "Not verified"** (verify-fallback): a request the client made with "Confirm on WhatsApp"
+  (the e-mail code never arrived) shows a coral `InlineNotice` (safety style) above the reason: title "Not verified",
+  message "The client could not receive the code. Check that the WhatsApp message came from <phone> and quotes the
+  reference <K7M2P>." (phone and reference isolated left-to-right), then a meta line "If you do not answer, the time
+  opens up again on <date, time>." No "new client" notice is guessed when the server gave no reason; a server reason
+  (no-show limit, free registrations, her switch) still shows below it. Approve and Decline are unchanged; the badge
+  goes with the answer. Rule: `UnverifiedRequestBadge` (`Screens/Inbox/BookingRequest/Support/`). Identifiers
+  `bookingRequest.unverified`, `bookingRequest.unverified.releases`.
 - **Accessibility (S12)**: `StepProgressBar` speaks through a 44 pt overlay; `BrandLockup` reads as one image; `MoreRow`
   title and subtitle wrap to every line.
 - **4.3 ClientEdit, "Delete data"** (`ClientDeleteDataRow`): a coral `ActionRow` under Merge, a destructive
@@ -468,6 +476,25 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - **Cl-7**: the row is "Health form" (no "and consent", D55); the portfolio-photos row stays a read-only status (no
   server field for a client's choice).
 - **Motion**: colour fades of chips, buttons and options run only under `prefers-reduced-motion: no-preference`.
+- **Bk-6, the code does not come** (verify-fallback): under the lead line a tertiary "Change email" opens an inline
+  e-mail field with "Send the code to this email" (primary, inline) and "Cancel" (tertiary); the code field hides while
+  it is open. After the first 30 s wait (or after a resend) a quiet link-button "I didn't get the code" appears under
+  the resend row and opens a `Sheet` "No code yet?": the spam-folder sentence with the address, the resend control,
+  a secondary "Change email", and, only when the professional has a public WhatsApp number, a `well` section "Still
+  nothing?" with one primary "Confirm with <Name> on WhatsApp" (busy while it sends; errors as `ErrorNotice`).
+  Identifiers `change-email`, `new-email`, `save-email`, `cancel-email`, `no-code`, `no-code-sheet`, `help-spam`,
+  `help-resend`, `help-timer`, `help-change-email`, `help-whatsapp`, `confirm-whatsapp`.
+- **Bk-10, unverified version**: amber seal, title "Now message <Name> on WhatsApp", the line "Your request is saved,
+  but nothing is booked yet…", a card "Your reference" with the code in the `moment` style (left-to-right in every
+  language) and the service and time under it, a quiet notice with the release time, and the bottom bar's primary
+  link "Send the message on WhatsApp" (`wa.me` with the prefilled message). WhatsApp opens on the client's tap only:
+  an automatic jump after the network call is blocked by in-app browsers and would lose the page. Identifiers
+  `reference-card`, `reference`, `request-expires`, `send-whatsapp`.
+- **Bk-5 for a returning client**: with a trusted device for the same address the "Send verification code" button
+  goes straight to Bk-7 (no visual change); when the server wants the code after all, Bk-6 opens as usual.
+- **Bk-9, "Forget this device"**: only when this browser keeps a trusted-device token for the page, a centred meta
+  line ("This browser remembers your email…") with a link-button under "My data"; after the tap a quiet notice
+  "Done. Next time this browser will ask for a code." Identifiers `forget-device`, `device-forgotten`.
 
 ### Smart slots (D56)
 
