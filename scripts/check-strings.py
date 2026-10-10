@@ -175,6 +175,33 @@ def check_final(catalog, errors):
     print("awaiting reviewers: " + ", ".join(f"{language} {len(keys)}" for language, keys in sorted(pending.items())))
 
 
+def check_web_style(errors):
+    """The booking pages (web/src/i18n) follow the same rules; every web string is read by a client, so the client
+    address applies (de Sie, id Anda, tr siz, pt-PT without você, fr vous)."""
+    import json
+    folder = os.path.join(lib.ROOT, "web", "src", "i18n")
+    client_address = [("de", r"\b(du|dich|dir|dein\w*)\b"), ("id", r"\bkamu\b"), ("tr", r"\b(sen|senin|sana|seni)\b")]
+    rules = [(language, pattern, why) for language, scope, pattern, why in STYLE_RULES if scope != "app"]
+    rules += [(language, pattern, "client texts use the polite address") for language, pattern in client_address]
+    for code in lib.LOCALIZATIONS:
+        path = os.path.join(folder, code + ".json")
+        if not os.path.exists(path):
+            continue
+        with open(path, encoding="utf-8") as handle:
+            values = json.load(handle)
+        texts = []
+        for key, value in values.items():
+            texts += [(key, text) for text in (value.values() if isinstance(value, dict) else [value])
+                      if isinstance(text, str)]
+        for language, pattern, why in rules:
+            if language not in ("*", code):
+                continue
+            for key, text in texts:
+                match = re.search(pattern, text)
+                if match:
+                    errors.append(f"web style: {key} [{code}] \"{match.group(0)}\": {why}")
+
+
 def check_docs_strings(errors):
     """docs/strings: the glossary has a term in every localization, and the message templates have every kind in
     every localization with the same placeholders as English (docs/07-LOCALIZATION.md sections 4 and 6)."""
@@ -259,6 +286,7 @@ def main():
     check_code(catalog, errors)
     check_style(catalog, errors)
     check_docs_strings(errors)
+    check_web_style(errors)
     check_navigation_titles(errors)
     if os.path.exists(lib.INFOPLIST_CATALOG):
         check_style(lib.load_catalog(lib.INFOPLIST_CATALOG), errors)
