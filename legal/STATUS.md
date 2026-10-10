@@ -19,6 +19,13 @@ The legal pass (plan item L in `docs/PROGRESS.md`) wrote the 98 drafts below (7 
 [README.md](README.md). `scripts/check-legal-status.sh` fails the build if a file is missing, a header field is absent,
 a placeholder is unknown or a text makes a forbidden claim ("GDPR compliant", "unhackable" and similar).
 
+**S11 (2026-10-10): version `2026-10-2` of the four documents in use, in all fourteen localizations.** It carries the
+facts of D44 to D55 (Sign in with Apple, the client's email verified by code, sealed check-ins and requests, no consent
+text and no signature). For Europe the terms and the privacy policy are a **common GDPR core (Part A) plus a national
+annex (Part B)** for PT, ES, IT, FR, DE (with AT and CH notes) and the UK (with IE, AU, NZ and ZA notes); the map for the
+lawyer is [EUROPE.md](EUROPE.md). Brazil (`pt-BR`) is written for the LGPD on its own. The 2026-10 files stay as
+history; the app and the page pick the newest version by number.
+
 ## Open points for the lawyer (if the product gets traction)
 
 These are things the drafts cannot settle without knowing the operator or without local advice. They are listed so the
@@ -59,48 +66,48 @@ reviewer starts from the right places and nobody mistakes a draft for a finished
 <!-- table:start -->
 | Document | Localization | Region set | Version | Status | Framework |
 |---|---|---|---|---|---|
-| terms-dpa | pt-BR | Brazil | 2026-10 | draft | LGPD (Lei 13.709/2018) |
-| terms-dpa | pt-PT | Portugal | 2026-10 | draft | RGPD + Lei 58/2019 |
-| terms-dpa | es-MX | Mexico | 2026-10 | draft | LFPDPPP |
-| terms-dpa | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
-| terms-dpa | es | Spain | 2026-10 | draft | RGPD + LOPDGDD |
-| terms-dpa | en | United States | 2026-10 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
-| terms-dpa | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
-| terms-dpa | it | Italy | 2026-10 | draft | GDPR + Codice Privacy |
-| terms-dpa | fr | France | 2026-10 | draft | RGPD + Loi Informatique et Libertés |
-| terms-dpa | de | Germany, Austria, Switzerland | 2026-10 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
-| terms-dpa | tr | Turkey | 2026-10 | draft | KVKK (Law 6698) |
-| terms-dpa | id | Indonesia | 2026-10 | draft | PDP Law (Law 27/2022) |
-| terms-dpa | hi | India | 2026-10 | draft | DPDP Act 2023 |
-| terms-dpa | ar | Saudi Arabia, United Arab Emirates | 2026-10 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
-| privacy-policy | pt-BR | Brazil | 2026-10 | draft | LGPD (Lei 13.709/2018) |
-| privacy-policy | pt-PT | Portugal | 2026-10 | draft | RGPD + Lei 58/2019 |
-| privacy-policy | es-MX | Mexico | 2026-10 | draft | LFPDPPP |
-| privacy-policy | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
-| privacy-policy | es | Spain | 2026-10 | draft | RGPD + LOPDGDD |
-| privacy-policy | en | United States | 2026-10 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
-| privacy-policy | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
-| privacy-policy | it | Italy | 2026-10 | draft | GDPR + Codice Privacy |
-| privacy-policy | fr | France | 2026-10 | draft | RGPD + Loi Informatique et Libertés |
-| privacy-policy | de | Germany, Austria, Switzerland | 2026-10 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
-| privacy-policy | tr | Turkey | 2026-10 | draft | KVKK (Law 6698) |
-| privacy-policy | id | Indonesia | 2026-10 | draft | PDP Law (Law 27/2022) |
-| privacy-policy | hi | India | 2026-10 | draft | DPDP Act 2023 |
-| privacy-policy | ar | Saudi Arabia, United Arab Emirates | 2026-10 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
-| client-notice | pt-BR | Brazil | 2026-10 | draft | LGPD (Lei 13.709/2018) |
-| client-notice | pt-PT | Portugal | 2026-10 | draft | RGPD + Lei 58/2019 |
-| client-notice | es-MX | Mexico | 2026-10 | draft | LFPDPPP |
-| client-notice | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
-| client-notice | es | Spain | 2026-10 | draft | RGPD + LOPDGDD |
-| client-notice | en | United States | 2026-10 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
-| client-notice | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
-| client-notice | it | Italy | 2026-10 | draft | GDPR + Codice Privacy |
-| client-notice | fr | France | 2026-10 | draft | RGPD + Loi Informatique et Libertés |
-| client-notice | de | Germany, Austria, Switzerland | 2026-10 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
-| client-notice | tr | Turkey | 2026-10 | draft | KVKK (Law 6698) |
-| client-notice | id | Indonesia | 2026-10 | draft | PDP Law (Law 27/2022) |
-| client-notice | hi | India | 2026-10 | draft | DPDP Act 2023 |
-| client-notice | ar | Saudi Arabia, United Arab Emirates | 2026-10 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
+| terms-dpa | pt-BR | Brazil | 2026-10-2 | draft | LGPD (Lei 13.709/2018) |
+| terms-dpa | pt-PT | Portugal | 2026-10-2 | draft | RGPD + Lei 58/2019 |
+| terms-dpa | es-MX | Mexico | 2026-10-2 | draft | LFPDPPP |
+| terms-dpa | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10-2 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
+| terms-dpa | es | Spain | 2026-10-2 | draft | RGPD + LOPDGDD |
+| terms-dpa | en | United States | 2026-10-2 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
+| terms-dpa | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10-2 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
+| terms-dpa | it | Italy | 2026-10-2 | draft | GDPR + Codice Privacy |
+| terms-dpa | fr | France | 2026-10-2 | draft | RGPD + Loi Informatique et Libertés |
+| terms-dpa | de | Germany, Austria, Switzerland | 2026-10-2 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
+| terms-dpa | tr | Turkey | 2026-10-2 | draft | KVKK (Law 6698) |
+| terms-dpa | id | Indonesia | 2026-10-2 | draft | PDP Law (Law 27/2022) |
+| terms-dpa | hi | India | 2026-10-2 | draft | DPDP Act 2023 |
+| terms-dpa | ar | Saudi Arabia, United Arab Emirates | 2026-10-2 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
+| privacy-policy | pt-BR | Brazil | 2026-10-2 | draft | LGPD (Lei 13.709/2018) |
+| privacy-policy | pt-PT | Portugal | 2026-10-2 | draft | RGPD + Lei 58/2019 |
+| privacy-policy | es-MX | Mexico | 2026-10-2 | draft | LFPDPPP |
+| privacy-policy | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10-2 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
+| privacy-policy | es | Spain | 2026-10-2 | draft | RGPD + LOPDGDD |
+| privacy-policy | en | United States | 2026-10-2 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
+| privacy-policy | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10-2 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
+| privacy-policy | it | Italy | 2026-10-2 | draft | GDPR + Codice Privacy |
+| privacy-policy | fr | France | 2026-10-2 | draft | RGPD + Loi Informatique et Libertés |
+| privacy-policy | de | Germany, Austria, Switzerland | 2026-10-2 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
+| privacy-policy | tr | Turkey | 2026-10-2 | draft | KVKK (Law 6698) |
+| privacy-policy | id | Indonesia | 2026-10-2 | draft | PDP Law (Law 27/2022) |
+| privacy-policy | hi | India | 2026-10-2 | draft | DPDP Act 2023 |
+| privacy-policy | ar | Saudi Arabia, United Arab Emirates | 2026-10-2 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
+| client-notice | pt-BR | Brazil | 2026-10-2 | draft | LGPD (Lei 13.709/2018) |
+| client-notice | pt-PT | Portugal | 2026-10-2 | draft | RGPD + Lei 58/2019 |
+| client-notice | es-MX | Mexico | 2026-10-2 | draft | LFPDPPP |
+| client-notice | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10-2 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
+| client-notice | es | Spain | 2026-10-2 | draft | RGPD + LOPDGDD |
+| client-notice | en | United States | 2026-10-2 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
+| client-notice | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10-2 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
+| client-notice | it | Italy | 2026-10-2 | draft | GDPR + Codice Privacy |
+| client-notice | fr | France | 2026-10-2 | draft | RGPD + Loi Informatique et Libertés |
+| client-notice | de | Germany, Austria, Switzerland | 2026-10-2 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
+| client-notice | tr | Turkey | 2026-10-2 | draft | KVKK (Law 6698) |
+| client-notice | id | Indonesia | 2026-10-2 | draft | PDP Law (Law 27/2022) |
+| client-notice | hi | India | 2026-10-2 | draft | DPDP Act 2023 |
+| client-notice | ar | Saudi Arabia, United Arab Emirates | 2026-10-2 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
 | consent-health | pt-BR | Brazil | 2026-10 | draft | LGPD (Lei 13.709/2018) |
 | consent-health | pt-PT | Portugal | 2026-10 | draft | RGPD + Lei 58/2019 |
 | consent-health | es-MX | Mexico | 2026-10 | draft | LFPDPPP |
@@ -143,18 +150,18 @@ reviewer starts from the right places and nobody mistakes a draft for a finished
 | consent-guardian | id | Indonesia | 2026-10 | draft | PDP Law (Law 27/2022) |
 | consent-guardian | hi | India | 2026-10 | draft | DPDP Act 2023 |
 | consent-guardian | ar | Saudi Arabia, United Arab Emirates | 2026-10 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
-| data-requests | pt-BR | Brazil | 2026-10 | draft | LGPD (Lei 13.709/2018) |
-| data-requests | pt-PT | Portugal | 2026-10 | draft | RGPD + Lei 58/2019 |
-| data-requests | es-MX | Mexico | 2026-10 | draft | LFPDPPP |
-| data-requests | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
-| data-requests | es | Spain | 2026-10 | draft | RGPD + LOPDGDD |
-| data-requests | en | United States | 2026-10 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
-| data-requests | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
-| data-requests | it | Italy | 2026-10 | draft | GDPR + Codice Privacy |
-| data-requests | fr | France | 2026-10 | draft | RGPD + Loi Informatique et Libertés |
-| data-requests | de | Germany, Austria, Switzerland | 2026-10 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
-| data-requests | tr | Turkey | 2026-10 | draft | KVKK (Law 6698) |
-| data-requests | id | Indonesia | 2026-10 | draft | PDP Law (Law 27/2022) |
-| data-requests | hi | India | 2026-10 | draft | DPDP Act 2023 |
-| data-requests | ar | Saudi Arabia, United Arab Emirates | 2026-10 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
+| data-requests | pt-BR | Brazil | 2026-10-2 | draft | LGPD (Lei 13.709/2018) |
+| data-requests | pt-PT | Portugal | 2026-10-2 | draft | RGPD + Lei 58/2019 |
+| data-requests | es-MX | Mexico | 2026-10-2 | draft | LFPDPPP |
+| data-requests | es-419 | Latin America (AR, CO, CL, PE and others) | 2026-10-2 | draft | National data protection laws (Ley 25.326 AR, Ley 1581 CO, Ley 21.719 CL, Ley 29.733 PE) |
+| data-requests | es | Spain | 2026-10-2 | draft | RGPD + LOPDGDD |
+| data-requests | en | United States | 2026-10-2 | draft | State privacy laws (CCPA/CPRA, Washington My Health My Data Act and others) |
+| data-requests | en-GB | United Kingdom, Ireland, Australia, New Zealand, South Africa | 2026-10-2 | draft | UK GDPR + DPA 2018; GDPR (IE); Privacy Act 1988 (AU); Privacy Act 2020 (NZ); POPIA (ZA) |
+| data-requests | it | Italy | 2026-10-2 | draft | GDPR + Codice Privacy |
+| data-requests | fr | France | 2026-10-2 | draft | RGPD + Loi Informatique et Libertés |
+| data-requests | de | Germany, Austria, Switzerland | 2026-10-2 | draft | DSGVO + BDSG (DE); DSG (AT); revDSG (CH) |
+| data-requests | tr | Turkey | 2026-10-2 | draft | KVKK (Law 6698) |
+| data-requests | id | Indonesia | 2026-10-2 | draft | PDP Law (Law 27/2022) |
+| data-requests | hi | India | 2026-10-2 | draft | DPDP Act 2023 |
+| data-requests | ar | Saudi Arabia, United Arab Emirates | 2026-10-2 | draft | PDPL (SA); Federal Decree-Law 45/2021 (AE) |
 <!-- table:end -->
