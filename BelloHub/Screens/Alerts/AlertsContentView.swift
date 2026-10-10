@@ -135,9 +135,11 @@ struct AlertsContentView: View {
         }
     }
 
-    /// "Thursday, October 15, 10:00" in the business time zone.
+    /// "Thursday, October 15, 10:00" in the business time zone. The time is not wrapped in a left-to-right isolate:
+    /// digits and the colon already stay together in right-to-left text, and the invisible marks made the
+    /// accessibility audit measure the line as clipped (pt-BR).
     private func whenText(_ date: Date) -> String {
-        "\(formatters.weekdayDayMonth(date)), \(BidiIsolate.wrapLeftToRight(formatters.time(date)))"
+        "\(formatters.weekdayDayMonth(date)), \(formatters.time(date))"
     }
 
     private func upcomingCard(_ visit: AgendaDigest.Visit) -> some View {
