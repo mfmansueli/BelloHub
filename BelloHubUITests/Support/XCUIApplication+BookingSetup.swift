@@ -74,6 +74,19 @@ extension XCUIApplication {
         return element.exists
     }
 
+    /// Scrolls down until the element can be tapped: an element of a long list below the screen exists but has no
+    /// frame, so `bringIntoView` cannot measure it yet.
+    @MainActor
+    func scrollUntilHittable(_ element: XCUIElement, limit: Int = 24) {
+        let start = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+        let end = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4))
+        var drags = 0
+        while !(element.exists && element.isHittable), drags < limit {
+            start.press(forDuration: 0.05, thenDragTo: end)
+            drags += 1
+        }
+    }
+
     /// Scrolls until the element sits clear of the navigation bar and the tab bar, so a tap at a point of its frame
     /// lands on it and not on what the bars float over. At the largest text size a row can be half under the bar when
     /// it first exists. `clearOf` raises the bottom limit to the top of a bar pinned over the content.

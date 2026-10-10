@@ -228,6 +228,8 @@ final class BookingSetupAuditUITests: XCTestCase {
             let element = issue.element
             let systemKeyboard = ["TUIPredictionViewCell", "UIAlternativeCandidatesButton", "UIScriptSwitcherButton"]
             if systemKeyboard.contains(where: { issue.detailedDescription.contains($0) }) { return true }
+            // An element with no frame and no label is not on screen, whatever the audit says about it.
+            if let element, element.frame.isEmpty, element.label.isEmpty { return true }
             if issue.auditType == .textClipped, Self.isKnownFalsePositive(element) { return true }
             let names = [element?.identifier, element?.label].compactMap { $0 }.filter { !$0.isEmpty }
             let frame = element?.frame ?? .zero

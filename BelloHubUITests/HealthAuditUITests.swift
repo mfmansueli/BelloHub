@@ -74,6 +74,8 @@ final class HealthAuditUITests: XCTestCase {
             try audit(app, "\(tag) consent edit")
             app.tapButton("consent.closeButton")
 
+            // At the largest size the consents push the patch-test button below the screen, where it has no frame.
+            app.scrollUntilHittable(app.buttons["health.recordPatchTestButton"])
             app.tapButton("health.recordPatchTestButton")
             XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15), "\(tag) patch sheet")
             try audit(app, "\(tag) patch test")
@@ -117,6 +119,8 @@ final class HealthAuditUITests: XCTestCase {
 
     private static func isKnownFalsePositive(_ element: XCUIElement?) -> Bool {
         guard let element else { return false }
+        // An element with no frame and no label is not on screen: nothing of it can be clipped.
+        if element.frame.isEmpty, element.label.isEmpty { return true }
         // The text fields keep a 52 pt minimum height that already holds the next text size up; the audit reports
         // them at every size (the same false positive as the phone field in the onboarding audit).
         if element.elementType == .textField || element.elementType == .textView { return true }
