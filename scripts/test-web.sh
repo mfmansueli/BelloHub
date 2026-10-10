@@ -111,6 +111,9 @@ if [[ "$mode" == "full" && "$status" == 0 ]]; then
     fi
 fi
 
+# The measured numbers, so a passing run still says how far it is from the budgets (docs/10 section 1, S9 exit).
+grep -E '^(ok|FAIL) +initial JavaScript|^lighthouse /' "$LOG" | sed 's/^/  /' || true
+
 if [[ "$status" == 0 ]]; then
     echo "** WEB TESTS SUCCEEDED ($mode) **"
 else

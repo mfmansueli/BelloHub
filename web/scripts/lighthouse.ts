@@ -12,7 +12,7 @@
 // section 6). The pinned version below is fetched by npx into the npm cache on first use (network needed once).
 
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createServer } from 'node:net';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -97,4 +97,29 @@ const status = await new Promise<number>((done) => {
   });
 });
 await mock.close();
+printSummary();
 process.exit(status);
+
+/** One line per page: the median of the runs, so the log and the stage notes carry the numbers (the token is cut). */
+function printSummary(): void {
+  try {
+    const manifest = JSON.parse(readFileSync(resolve(web, '.lighthouseci', 'reports', 'manifest.json'), 'utf8')) as {
+      url: string;
+      summary: Record<string, number>;
+    }[];
+    const byPage = new Map<string, Record<string, number>[]>();
+    for (const run of manifest) {
+      const page = new URL(run.url).pathname.replace(/^\/m\/[^/]+/, '/m/<token>');
+      byPage.set(page, [...(byPage.get(page) ?? []), run.summary]);
+    }
+    for (const [page, runs] of byPage) {
+      const median = (key: string): string => {
+        const values = runs.map((run) => run[key] ?? 0).sort((a, b) => a - b);
+        return (values[Math.floor(values.length / 2)] ?? 0).toFixed(2);
+      };
+      process.stdout.write(`lighthouse ${page}: performance ${median('performance')}, accessibility ${median('accessibility')}, best practices ${median('best-practices')} (median of ${String(runs.length)})\n`);
+    }
+  } catch {
+    process.stdout.write('lighthouse: no manifest to summarise\n');
+  }
+}
