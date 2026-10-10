@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "Boş saatleri gör",
   "bk4.offer.title": "{name} bu saati sizin için ayırdı",
   "bk4.pickError": "Önce bir saat seçin.",
+  "bk4.showAll": "Tüm saatleri göster",
   "bk4.taken.none": "Şu anda başka boş saat yok. Başka bir gün seçin.",
   "bk4.taken.title": "Bu saat az önce doldu. İşte sonrakiler.",
   "bk4.timesFor": "{date} saatleri",

@@ -15,7 +15,8 @@ import { groupByDay } from '../../app/booking/slotDays';
 import { useBooking } from '../../app/booking/store';
 import { selectedAddOns, totals } from '../../app/booking/summary';
 import { Button } from '../../components/Button';
-import { Calendar, SlotList } from '../../components/Calendar';
+import { Calendar } from '../../components/Calendar';
+import { SlotChoices } from '../../components/SlotChoices';
 import { ErrorNotice, Notice } from '../../components/Feedback';
 import { Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { WaitlistSheet } from './WaitlistSheet';
@@ -34,7 +35,8 @@ import {
   type DateKey,
 } from '../../lib/datetime';
 
-type Load = { status: 'loading' } | { status: 'ready'; byDay: ReadonlyMap<DateKey, readonly string[]> } | { status: 'error'; error: unknown };
+type ByDay = ReadonlyMap<DateKey, readonly string[]>;
+type Load = { status: 'loading' } | { status: 'ready'; byDay: ByDay; moreByDay: ByDay } | { status: 'error'; error: unknown };
 
 const NEXT_SLOTS_SHOWN = 4;
 
@@ -83,7 +85,7 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
     const from = zonedDateKey(Math.max(bounds.start, Date.now()), zone);
     const to = zonedDateKey(Math.min(bounds.end - 1, instantFromZoned(horizonEnd, 12, 0, zone)), zone);
     if (compareDateKeys(from, to) > 0) {
-      setLoad({ status: 'ready', byDay: new Map() });
+      setLoad({ status: 'ready', byDay: new Map(), moreByDay: new Map() });
       return;
     }
     api
@@ -98,7 +100,7 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
       })
       .then(
         (response) => {
-          if (current) setLoad({ status: 'ready', byDay: groupByDay(response.slots, zone) });
+          if (current) setLoad({ status: 'ready', byDay: groupByDay(response.slots, zone), moreByDay: groupByDay(response.more, zone) });
         },
         (error: unknown) => {
           if (current) setLoad({ status: 'error', error });
@@ -131,6 +133,7 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
   }, [load]);
 
   const slots = day === null ? [] : (byDay.get(day) ?? []);
+  const moreSlots = day === null || load.status !== 'ready' ? [] : (load.moreByDay.get(day) ?? []);
   const suggestions = state.slotTaken?.alternatives ?? [];
   const pickedInstant = pick === null ? null : Date.parse(pick);
   const showDeviceWarning = deviceClockDiffers(pickedInstant ?? Date.now(), zone, deviceZone);
@@ -248,7 +251,7 @@ export function TimeStep({ profile }: { profile: PublicProfile }): JSX.Element |
         ) : day === null ? null : (
           <div class="stack-sm">
             <h2 class="section">{format.longDateOf(day)}</h2>
-            <SlotList slots={slots} selected={pick} formatter={format} onSelect={selectSlot} label={t('bk4.timesFor', { date: format.longDateOf(day) })} />
+            <SlotChoices key={day} slots={slots} more={moreSlots} selected={pick} formatter={format} onSelect={selectSlot} label={t('bk4.timesFor', { date: format.longDateOf(day) })} />
           </div>
         )}
       </div>

@@ -16,7 +16,8 @@ import { loadPublicPage } from '../../app/pageData';
 import { manageRoute, routePath, type Route } from '../../app/router';
 import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
-import { DayStrip, SlotList } from '../../components/Calendar';
+import { DayStrip } from '../../components/Calendar';
+import { SlotChoices } from '../../components/SlotChoices';
 import { ErrorNotice, Seal } from '../../components/Feedback';
 import { Avatar, Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
@@ -75,7 +76,8 @@ export function RebookPage({ token, kind }: { token: string; kind: 'manage' | 'p
   );
 }
 
-type Load = { status: 'loading' } | { status: 'ready'; byDay: ReadonlyMap<DateKey, readonly string[]> } | { status: 'error'; error: unknown };
+type ByDay = ReadonlyMap<DateKey, readonly string[]>;
+type Load = { status: 'loading' } | { status: 'ready'; byDay: ByDay; moreByDay: ByDay } | { status: 'error'; error: unknown };
 
 function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Element {
   const { t } = useI18n();
@@ -103,7 +105,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
         (response) => {
           if (!current) return;
           const byDay = groupByDay(response.slots, pro.timeZoneID);
-          setLoad({ status: 'ready', byDay });
+          setLoad({ status: 'ready', byDay, moreByDay: groupByDay(response.more, pro.timeZoneID) });
           const preferred = info.recommendedDate === undefined ? undefined : zonedDateKey(Date.parse(info.recommendedDate), pro.timeZoneID);
           const first = [...byDay.keys()].sort()[0];
           setDay((existing) => existing ?? (preferred !== undefined && byDay.has(preferred) ? preferred : (first ?? null)));
@@ -121,6 +123,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   const best = info.recommendedDate === undefined ? undefined : zonedDateKey(Date.parse(info.recommendedDate), pro.timeZoneID);
   const days = useMemo(() => [...byDay.keys()].sort().slice(0, DAY_CHOICES).map((key) => ({ key, best: key === best })), [byDay, best]);
   const slots = day === null ? [] : (byDay.get(day) ?? []);
+  const moreSlots = day === null || load.status !== 'ready' ? [] : (load.moreByDay.get(day) ?? []);
   const message = whatsAppUrl(pro.whatsappE164, t('wa.book', { name: pro.firstName }));
 
   const submit = async (): Promise<void> => {
@@ -228,7 +231,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
           </div>
           <div class="stack-sm">
             <h2 class="section">{t('cl3.time')}</h2>
-            <SlotList slots={slots} selected={pick} formatter={format} onSelect={setPick} label={t('cl3.time')} />
+            <SlotChoices key={day ?? ''} slots={slots} more={moreSlots} selected={pick} formatter={format} onSelect={setPick} label={t('cl3.time')} />
           </div>
         </>
       )}

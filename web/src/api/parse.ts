@@ -137,7 +137,14 @@ export function parseSlots(raw: unknown): SlotsResponse {
   const value = record(raw) as unknown as WireSlotsResponse;
   const days = list(value.days);
   const slots = days.flatMap((day) => list(record(day)['slots']).map(text)).sort();
-  return { slots, durationMinutes: whole(value.durationMinutes), timeZoneID: text(value.timeZoneID), paused: value.paused };
+  // `more` is absent when nothing is hidden (and from a server older than D56).
+  const more = days
+    .flatMap((day) => {
+      const extra = record(day)['more'];
+      return extra === undefined ? [] : list(extra).map(text);
+    })
+    .sort();
+  return { slots, more, durationMinutes: whole(value.durationMinutes), timeZoneID: text(value.timeZoneID), paused: value.paused };
 }
 
 /** A hold that was not granted is an error for the page: it already knows how to show "that time was just taken". */

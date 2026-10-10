@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "Freie Zeiten ansehen",
   "bk4.offer.title": "Der Termin, den {name} für Sie freihält",
   "bk4.pickError": "Wählen Sie zuerst eine Uhrzeit.",
+  "bk4.showAll": "Alle Zeiten anzeigen",
   "bk4.taken.none": "Im Moment sind keine weiteren Zeiten frei. Wählen Sie einen anderen Tag.",
   "bk4.taken.title": "Diese Zeit wurde gerade vergeben. Hier die nächsten.",
   "bk4.timesFor": "Zeiten am {date}",

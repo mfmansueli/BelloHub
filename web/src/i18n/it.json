@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "Vedi gli orari liberi",
   "bk4.offer.title": "L'orario che {name} ha tenuto per te",
   "bk4.pickError": "Scegli prima un orario.",
+  "bk4.showAll": "Mostra tutti gli orari",
   "bk4.taken.none": "Al momento non ci sono altri orari liberi. Scegli un altro giorno.",
   "bk4.taken.title": "Quell'orario è appena stato occupato. Ecco i prossimi.",
   "bk4.timesFor": "Orari del {date}",

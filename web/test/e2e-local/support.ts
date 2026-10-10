@@ -69,6 +69,22 @@ export class Store {
   async outbox(): Promise<Json[]> {
     return (await this.list('emulatorOutbox')).map((document) => document.data);
   }
+
+  /**
+   * Replaces the busy stretches of her published availability, as the app's next `publishAvailability` would: visits
+   * of her own agenda (no names) the page must work around.
+   */
+  async setBusy(uid: string, busy: readonly { start: string; end: string; kind: 'appointment' | 'block' }[]): Promise<void> {
+    const values = busy.map((entry) => ({
+      mapValue: { fields: { start: { timestampValue: entry.start }, end: { timestampValue: entry.end }, kind: { stringValue: entry.kind } } },
+    }));
+    const response = await fetch(`http://${FIRESTORE_HOST}/v1/projects/${PROJECT}/databases/(default)/documents/availability/${uid}?updateMask.fieldPaths=busy`, {
+      method: 'PATCH',
+      headers: { Authorization: 'Bearer owner', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields: { busy: { arrayValue: { values } } } }),
+    });
+    expect(response.ok, `firestore emulator availability/${uid} -> ${response.status}`).toBe(true);
+  }
 }
 
 export interface SeenRequest {

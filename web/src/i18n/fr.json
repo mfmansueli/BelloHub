@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "Voir les créneaux libres",
   "bk4.offer.title": "Le créneau que {name} vous a gardé",
   "bk4.pickError": "Choisissez d'abord un créneau.",
+  "bk4.showAll": "Voir toutes les heures",
   "bk4.taken.none": "Il n'y a pas d'autre créneau libre pour le moment. Choisissez un autre jour.",
   "bk4.taken.title": "Ce créneau vient d'être pris. Voici les suivants.",
   "bk4.timesFor": "Créneaux du {date}",

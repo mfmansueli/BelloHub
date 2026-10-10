@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "See free times",
   "bk4.offer.title": "The time {name} kept for you",
   "bk4.pickError": "Choose a time first.",
+  "bk4.showAll": "Show all times",
   "bk4.taken.none": "No other times are free right now. Pick another day.",
   "bk4.taken.title": "That time was just taken. Here are the next ones.",
   "bk4.timesFor": "Times for {date}",

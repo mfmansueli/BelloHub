@@ -12,7 +12,8 @@ import { useFormatter } from '../../app/context';
 import { manageRoute, navigate } from '../../app/router';
 import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
-import { SlotList, DayStrip } from '../../components/Calendar';
+import { DayStrip } from '../../components/Calendar';
+import { SlotChoices } from '../../components/SlotChoices';
 import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { TextField } from '../../components/Field';
 import { Icon } from '../../components/Icon';
@@ -25,7 +26,8 @@ import { whatsAppUrl } from '../../lib/whatsapp';
 const DAYS_AHEAD = 28;
 const DAY_CHOICES = 10;
 
-type Load = { status: 'loading' } | { status: 'ready'; byDay: ReadonlyMap<DateKey, readonly string[]> } | { status: 'error'; error: unknown };
+type ByDay = ReadonlyMap<DateKey, readonly string[]>;
+type Load = { status: 'loading' } | { status: 'ready'; byDay: ByDay; moreByDay: ByDay } | { status: 'error'; error: unknown };
 
 export function ReschedulePage({ token, booking }: { token: string; booking: BookingView }): JSX.Element | null {
   const { t } = useI18n();
@@ -62,7 +64,7 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
         (response) => {
           if (!current) return;
           const byDay = groupByDay(response.slots, pro.timeZoneID);
-          setLoad({ status: 'ready', byDay });
+          setLoad({ status: 'ready', byDay, moreByDay: groupByDay(response.more, pro.timeZoneID) });
           const first = [...byDay.keys()].sort()[0];
           setDay((existing) => (existing !== null && byDay.has(existing) ? existing : (first ?? null)));
         },
@@ -78,6 +80,7 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
   const byDay = load.status === 'ready' ? load.byDay : new Map<DateKey, readonly string[]>();
   const days = useMemo(() => [...byDay.keys()].sort().slice(0, DAY_CHOICES).map((key) => ({ key })), [byDay]);
   const slots = day === null ? [] : (byDay.get(day) ?? []);
+  const moreSlots = day === null || load.status !== 'ready' ? [] : (load.moreByDay.get(day) ?? []);
 
   if (!editable) return null;
 
@@ -190,7 +193,7 @@ export function ReschedulePage({ token, booking }: { token: string; booking: Boo
           </div>
           <div class="stack-sm">
             <h2 class="section">{t('cl9.time')}</h2>
-            <SlotList slots={slots} selected={pick} formatter={format} onSelect={setPick} label={t('cl9.time')} />
+            <SlotChoices key={day ?? ''} slots={slots} more={moreSlots} selected={pick} formatter={format} onSelect={setPick} label={t('cl9.time')} />
           </div>
         </>
       )}

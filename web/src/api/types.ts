@@ -111,7 +111,8 @@ export interface WireSlotsResponse {
   readonly timeZoneID: string;
   readonly durationMinutes: number;
   readonly paused: boolean;
-  readonly days: readonly { readonly date: string; readonly slots: readonly string[] }[];
+  /** `slots` first; `more` holds the other free starts behind "Show all times" (D56). */
+  readonly days: readonly { readonly date: string; readonly slots: readonly string[]; readonly more?: readonly string[] }[];
 }
 
 /** 5.3 `holdSlot`. `holdKey` is 16 to 64 random characters made by the browser; a new hold replaces the previous one. */
@@ -389,6 +390,8 @@ export interface PublicProfile extends ProfessionalLite {
 export interface SlotsResponse {
   /** Free start times, UTC ISO strings, ascending (the days of the wire response, flattened). */
   readonly slots: readonly string[];
+  /** D56: the other free start times (bookable too), revealed by "Show all times". */
+  readonly more: readonly string[];
   readonly durationMinutes: number;
   readonly timeZoneID: string;
   /** The page does not accept bookings now. */

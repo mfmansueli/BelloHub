@@ -109,6 +109,21 @@ describe('parsers (API.md sections 4 and 5)', () => {
     const slots = parseSlots({ timeZoneID: 'UTC', durationMinutes: 60, paused: false, days: [{ date: '2026-10-02', slots: ['2026-10-02T13:00:00.000Z'] }, { date: '2026-10-01', slots: ['2026-10-01T12:00:00.000Z', '2026-10-01T13:00:00.000Z'] }] });
     expect(slots.slots).toEqual(['2026-10-01T12:00:00.000Z', '2026-10-01T13:00:00.000Z', '2026-10-02T13:00:00.000Z']);
     expect(slots.durationMinutes).toBe(60);
+    expect(slots.more).toEqual([]);
+  });
+
+  it('keeps the times behind "Show all times" apart (D56), and accepts a day without them', () => {
+    const slots = parseSlots({
+      timeZoneID: 'UTC',
+      durationMinutes: 75,
+      paused: false,
+      days: [
+        { date: '2026-10-02', slots: ['2026-10-02T13:20:00.000Z'], more: ['2026-10-02T13:45:00.000Z', '2026-10-02T13:30:00.000Z'] },
+        { date: '2026-10-03', slots: ['2026-10-03T12:00:00.000Z'] },
+      ],
+    });
+    expect(slots.slots).toEqual(['2026-10-02T13:20:00.000Z', '2026-10-03T12:00:00.000Z']);
+    expect(slots.more).toEqual(['2026-10-02T13:30:00.000Z', '2026-10-02T13:45:00.000Z']);
   });
 
   it('a hold that is not granted is the error the time screen already handles', () => {

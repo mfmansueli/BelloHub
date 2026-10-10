@@ -63,6 +63,7 @@
   "bk4.offer.otherTimes": "खाली समय देखें",
   "bk4.offer.title": "{name} ने आपके लिए यह समय रखा है",
   "bk4.pickError": "पहले एक समय चुनें।",
+  "bk4.showAll": "सभी समय दिखाएँ",
   "bk4.taken.none": "अभी कोई और खाली समय नहीं है। कोई दूसरा दिन चुनें।",
   "bk4.taken.title": "वह समय अभी भर गया। ये अगले समय हैं।",
   "bk4.timesFor": "{date} के समय",

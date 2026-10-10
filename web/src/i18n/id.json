@@ -60,6 +60,7 @@
   "bk4.offer.otherTimes": "Lihat waktu kosong",
   "bk4.offer.title": "Waktu yang disimpan {name} untuk Anda",
   "bk4.pickError": "Pilih jam terlebih dahulu.",
+  "bk4.showAll": "Tampilkan semua waktu",
   "bk4.taken.none": "Saat ini tidak ada jam kosong lain. Pilih hari lain.",
   "bk4.taken.title": "Jam itu baru saja terisi. Ini jam berikutnya.",
   "bk4.timesFor": "Jam untuk {date}",
