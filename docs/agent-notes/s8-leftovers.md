@@ -121,9 +121,8 @@ Not measured: battery of the voice flow (voice capture is unavailable in v1).
 
 ## 3. Measured (end of the second batch)
 
-- `scripts/test.sh fast` (iPhone 17 Pro Max): see the final report (2172+ tests in 307+ suites at the last green run
-  before the final one).
-- `scripts/check-warnings.sh`: zero warnings (see final report).
+- `scripts/test.sh fast` (iPhone 17 Pro Max): **2172 tests in 307 suites passed** (2140 / 300 after the first batch).
+- `scripts/check-warnings.sh`: **zero warnings** on simulator, device, Release and the test targets.
 - UI: `ClientDataDeletionUITests`, `MailboxAlertsUITests`, `ClientsUITests`, `InboxUITests`, `AccountUITests`,
   `PublishUITests`, `MoreUITests` pass. `RecordUITests.testHistoryCorrectsALockedRecordOnlyWithAReason` fails on the
   Pro Max simulator ("no keyboard focus" typing the reason) **with and without this branch's change** to
@@ -159,6 +158,6 @@ Not touched: `docs/PROGRESS.md`, `docs/review`, `docs/strings`, `legal/`, `fireb
 > is recorded or shared; "From your clients" in Alerts acknowledges check-ins, data requests and unopened forms. Unit
 > suites for `MailboxService` and `PushService`. S12: `PrivacyInfo.xcprivacy` (+ `check-privacy.sh` rule 7), App
 > Privacy answers, App Store metadata drafts in 13 localizations (`docs/store/`), opt-in `PerformanceUITests`
-> (cold start 1.39 s to Welcome on the simulator, search over 2,000 clients 12 ms, peak memory 97 MB with 200 photos;
+> Fast 2172 tests in 307 suites, check-warnings zero (cold start 1.39 s to Welcome on the simulator, search over 2,000 clients 12 ms, peak memory 97 MB with 200 photos;
 > the history's full-size photo cache is now bounded). Open: App Check (H5), breach plan, check-in photos in Alerts,
 > hitch measurement on a device; H14 needed before the server lifts the 10-client limit for a sandbox purchase.
