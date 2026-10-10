@@ -54668,7 +54668,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registri"
+            "value" : "Schede"
           }
         },
         "pt-BR" : {
@@ -66584,7 +66584,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungsakten"
+            "value" : "Behandlungseinträge"
           }
         },
         "en" : {
@@ -66602,19 +66602,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento"
+            "value" : "Registros de tratamiento"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento"
+            "value" : "Registros de atención"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento"
+            "value" : "Registros de atención"
           }
         },
         "fr" : {
@@ -66644,13 +66644,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de atendimento"
+            "value" : "Registros de atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamento"
+            "value" : "Registos de atendimento"
           }
         },
         "tr" : {
@@ -126968,7 +126968,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungsakte"
+            "value" : "Behandlungseintrag"
           }
         },
         "en" : {
@@ -126986,19 +126986,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registro del tratamiento"
+            "value" : "Registro de tratamiento"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registro del tratamiento"
+            "value" : "Registro de atención"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registro del tratamiento"
+            "value" : "Registro de atención"
           }
         },
         "fr" : {
@@ -136238,7 +136238,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungsakten mit Spracheingabe"
+            "value" : "Behandlungseinträge mit Spracheingabe"
           }
         },
         "en" : {
@@ -136256,19 +136256,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento con entrada por voz"
+            "value" : "Registros de tratamiento con entrada por voz"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento con entrada por voz"
+            "value" : "Registros de atención con entrada por voz"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamiento con entrada por voz"
+            "value" : "Registros de atención con entrada por voz"
           }
         },
         "fr" : {
@@ -136298,13 +136298,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de atendimento com entrada por voz"
+            "value" : "Registros de atendimento com entrada por voz"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fichas de tratamento com entrada por voz"
+            "value" : "Registos de atendimento com entrada por voz"
           }
         },
         "tr" : {
@@ -147788,7 +147788,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungsdokumentationen, die es erwähnen, behalten ihren eigenen Wortlaut."
+            "value" : "Behandlungseinträge, die es erwähnen, behalten ihren eigenen Wortlaut."
           }
         },
         "en" : {
@@ -147806,19 +147806,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los registros de atención que lo mencionan conservan sus propias palabras."
+            "value" : "Los registros de tratamiento que lo mencionan conservan su propio texto."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los registros de atención que lo mencionan conservan sus propias palabras."
+            "value" : "Los registros de atención que lo mencionan conservan su propio texto."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Los registros de atención que lo mencionan conservan sus propias palabras."
+            "value" : "Los registros de atención que lo mencionan conservan su propio texto."
           }
         },
         "fr" : {
@@ -174386,7 +174386,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Test d'allergie"
+            "value" : "Test cutané"
           }
         },
         "hi" : {
@@ -174404,7 +174404,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Test di sensibilità"
+            "value" : "Patch test"
           }
         },
         "pt-BR" : {
@@ -177716,7 +177716,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Test d'allergie avant la première visite"
+            "value" : "Test cutané avant la première visite"
           }
         },
         "hi" : {
@@ -177734,7 +177734,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Test di sensibilità prima della prima visita"
+            "value" : "Patch test prima della prima visita"
           }
         },
         "pt-BR" : {
