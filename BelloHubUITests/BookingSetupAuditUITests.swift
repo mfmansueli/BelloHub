@@ -90,7 +90,14 @@ final class BookingSetupAuditUITests: XCTestCase {
         try audit(app, "\(tag) hours sheet with two stretches")
         app.tapButton("availability.hoursSheet.cancelButton")
 
-        XCTAssertTrue(app.scrollUntilExists(app.buttons["availability.addBreakButton"]), "\(tag) add break row")
+        // At the largest size the list once came back from the sheet scrolled to its end with the rows not yet
+        // rebuilt, so the downward search found nothing; from the top it does.
+        let addBreak = app.buttons["availability.addBreakButton"]
+        if !app.scrollUntilExists(addBreak) {
+            app.scrollToTop(limit: 16)
+            _ = app.scrollUntilExists(addBreak, limit: 40)
+        }
+        XCTAssertTrue(addBreak.exists, "\(tag) add break row")
         try audit(app, "\(tag) availability, scrolled")
         app.tapButton("availability.addBreakButton")
         XCTAssertTrue(app.textFields["availability.breakSheet.nameField"].waitForExistence(timeout: 5), "\(tag) break")

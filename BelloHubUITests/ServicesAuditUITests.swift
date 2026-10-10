@@ -118,6 +118,8 @@ final class ServicesAuditUITests: XCTestCase {
         try audit(app, "\(tag) credentials, scrolled")
         // The audit may leave the list elsewhere, and a list builds only the rows near the screen.
         XCTAssertTrue(app.scrollUntilVisible(preview, limit: 40), "\(tag) credentials, preview button again")
+        // "Hittable" includes the part under the floating tab bar; at the largest size in German the tap landed there.
+        app.bringIntoView(preview)
         preview.tap()
         XCTAssertTrue(app.element("credentialsPreview.card").waitForExistence(timeout: 5), "\(tag) preview")
         try audit(app, "\(tag) credentials preview")

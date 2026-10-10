@@ -41,7 +41,12 @@ final class ImportAuditUITests: XCTestCase {
             let tag = "\(locale)\(largestText ? " AX5" : "")"
             app.createAccount()
             app.completeSetup()
-            XCTAssertTrue(app.staticTexts["onboarding.ready.title"].waitForExistence(timeout: 5), "\(tag) ready")
+            // At the largest size in Arabic the Continue tap once landed while the last permission prompt was still
+            // closing and the step stayed; tap it again if the ready screen does not come.
+            let ready = app.staticTexts["onboarding.ready.title"]
+            let continueButton = app.buttons["onboarding.permissions.continueButton"]
+            if !ready.waitForExistence(timeout: 8), continueButton.exists { continueButton.tap() }
+            XCTAssertTrue(ready.waitForExistence(timeout: 10), "\(tag) ready")
             try audit(app, "\(tag) ready")
 
             app.tapButton("onboarding.ready.importButton")

@@ -202376,7 +202376,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "In %@s Verlauf sichern"
+            "value" : "Im Verlauf von %@ speichern"
           }
         },
         "en" : {

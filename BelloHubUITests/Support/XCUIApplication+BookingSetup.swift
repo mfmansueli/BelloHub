@@ -35,6 +35,21 @@ extension XCUIApplication {
     ) {
         let toggle = switches[identifier]
         XCTAssertTrue(toggle.waitForExistence(timeout: 5), "no switch \(identifier)", file: file, line: line)
+        // At the largest size in German a row can be taller than the screen, so it never fits between the bars; the
+        // control drawn inside the row is then the thing to bring into view and tap.
+        let control = toggle.switches.firstMatch
+        if control.exists {
+            bringIntoView(control, clearOf: bottomBar)
+            let controlBefore = control.value as? String ?? ""
+            control.tap()
+            if let target, target.waitForExistence(timeout: 2) { return }
+            if target == nil {
+                let changed = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "value != %@", controlBefore), object: control
+                )
+                if XCTWaiter().wait(for: [changed], timeout: 2) == .completed { return }
+            }
+        }
         bringIntoView(toggle, clearOf: bottomBar)
         let before = toggle.value as? String ?? ""
         // Where the control is: at the middle of the trailing or leading edge, or lower when a large text size stacks
