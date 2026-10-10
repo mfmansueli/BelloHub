@@ -103,6 +103,11 @@ test.describe('the health form (Cl-4)', () => {
     expect(Object.keys(envelope).sort()).toEqual(['ct', 'enc', 'itemId', 'keyId', 'kind', 'suite', 'v']);
     expect(envelope).toMatchObject({ v: 1, suite: 'hpke-x25519-hkdf-sha256-chacha20poly1305', kind: 'intake' });
     expectNoClearText(guard, [SECRET, 'latex']);
+    // Not even the shape of the answers travels: no question key, no answer field, no payload field name, and the
+    // one call that carries the form holds the token and the envelope, nothing else.
+    expectNoClearText(guard, ['allergies', 'medication', 'pregnant', 'skinCondition', 'isotretinoin', 'anythingElse', '"answers"', 'isForMinor', 'formVersion']);
+    const submit = guard.requests.filter((request) => request.url.endsWith('/api/submitSealed'));
+    expect(Object.keys((JSON.parse(submit[0]?.body ?? '{}') as { data: object }).data).sort()).toEqual(['envelope', 'token']);
 
     // What the professional's phone opens: exactly what was typed, and nothing signed (D55).
     const item = onlyItem(await mock.inbox(slug));

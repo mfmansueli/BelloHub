@@ -5,7 +5,8 @@
 
 import { createHash } from 'node:crypto';
 
-import { expect, open, test } from './support';
+import { bookEverything } from './flows';
+import { expect, open, tap, test } from './support';
 
 test.describe('response headers', () => {
   test('the pages carry the strict policy, no cookie, and the right cache rules', async ({ request, mock, slugFor }) => {
@@ -156,10 +157,25 @@ test.describe('professional-supplied text is data, never markup', () => {
 test.describe('nothing leaves the allowed origins', () => {
   test('a full booking, a sealed form and a data request talk to the page origin only @core', async ({ page, mock, guard, slugFor }) => {
     const slug = slugFor('maria');
+    await bookEverything(page, slug);
+    await expect(page.getByTestId('booking-card')).toBeVisible();
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * 60 });
     await open(page, `/m/${token}/form`);
     await expect(page.getByTestId('submit-intake')).toBeVisible();
+    await page.getByTestId('answer-allergies-latex').click();
+    await tap(page, 'answer-pregnant-no');
+    await tap(page, 'answer-medication-no');
+    await tap(page, 'answer-skinCondition-no');
+    await tap(page, 'answer-isotretinoin-no');
+    await page.getByTestId('submit-intake').click();
+    await expect(page.getByTestId('sealed-message')).toBeVisible();
     await open(page, `/m/${token}/data`);
+    await page.getByTestId('ask-copy').click();
+    await page.getByTestId('request-name').fill('Helena Duarte');
+    await page.getByTestId('request-phone').fill('11 98765 4321');
+    await page.getByTestId('send-request').click();
+    await expect(page.getByTestId('ask-copy')).toBeDisabled();
+    expect((await mock.inbox(slug)).map((item) => item.kind).sort()).toEqual(['datarequest', 'intake']);
     await open(page, `/${slug}`);
     const origins = new Set(guard.requests.filter((request) => /^https?:/.test(request.url)).map((request) => new URL(request.url).origin));
     expect([...origins]).toEqual([new URL(page.url()).origin]);
