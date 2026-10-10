@@ -19,8 +19,11 @@ interface SlotsResponse {
   timeZoneID: string;
   durationMinutes: number;
   paused: boolean;
-  days: { date: string; slots: string[] }[];
+  days: { date: string; slots: string[]; more?: string[] }[];
 }
+
+/** Every free start of the first day: the ones shown first and the ones behind "Show all times" (D56). */
+const freeOf = (response: SlotsResponse): string[] => [...(response.days[0]?.slots ?? []), ...(response.days[0]?.more ?? [])].sort();
 
 const slotsFor = async (input: Record<string, unknown>): Promise<SlotsResponse> =>
   (await env.call(getSlots, { slug: pro.slug, serviceId: SERVICE.glowFacial, from: '2026-10-02', to: '2026-10-02', ...input })) as SlotsResponse;
@@ -103,8 +106,8 @@ describe('getSlots', () => {
       busy: [{ startsAt: '2026-10-02T20:00:00.000Z', endsAt: '2026-10-02T21:00:00.000Z', kind: 'block' }]
     }), ownerContext(pro.uid));
 
-    const others = (await slotsFor({})).days[0]?.slots ?? [];
-    const mine = (await slotsFor({ holdKey })).days[0]?.slots ?? [];
+    const others = freeOf(await slotsFor({}));
+    const mine = freeOf(await slotsFor({ holdKey }));
 
     expect(others).not.toContain(FRIDAY_10);
     expect(others).not.toContain('2026-10-02T13:30:00.000Z'); // inside the 15 minute buffer after the booking
@@ -120,7 +123,7 @@ describe('getSlots', () => {
       busy: [{ startsAt: '2026-10-02T13:00:00.000Z', endsAt: '2026-10-02T14:00:00.000Z', kind: 'appointment' }]
     }), ownerContext(pro.uid));
 
-    const slots = (await slotsFor({})).days[0]?.slots ?? [];
+    const slots = freeOf(await slotsFor({}));
 
     expect(slots).not.toContain('2026-10-02T14:00:00.000Z');
     expect(slots).toContain('2026-10-02T14:15:00.000Z');
@@ -138,8 +141,8 @@ describe('getSlots', () => {
   it('computes the slots of a booking being moved without its own time blocking it', async () => {
     const booked = asBooked(await book(env, pro, { startsAt: FRIDAY_10 }));
 
-    const without = (await slotsFor({})).days[0]?.slots ?? [];
-    const moving = (await slotsFor({ rescheduleToken: booked.manageToken })).days[0]?.slots ?? [];
+    const without = freeOf(await slotsFor({}));
+    const moving = freeOf(await slotsFor({ rescheduleToken: booked.manageToken }));
 
     expect(without).not.toContain(FRIDAY_10);
     expect(moving).toContain(FRIDAY_10);
