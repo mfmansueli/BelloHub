@@ -45,7 +45,9 @@ struct NewAppointmentClientCard: View {
     private var searchField: some View {
         HStack(spacing: Spacing.row) {
             Image(icon: .search).foregroundStyle(Palette.ink2).accessibilityHidden(true)
-            TextField(text: $searchText) { Text("newAppointment.client.search") }
+            TextField(text: $searchText, prompt: Text.prompt("newAppointment.client.search")) {
+                Text("newAppointment.client.search")
+            }
                 .font(Typography.body)
                 .foregroundStyle(Palette.ink)
                 .autocorrectionDisabled()
