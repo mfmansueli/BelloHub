@@ -74,7 +74,18 @@ export interface SlugDoc {
   claimedAt: Timestamp;
 }
 
-export interface ProfileService {
+/**
+ * D56: the shape of a visit, all optional (absent is 0). On a service it is what she set; on a booking, a hold or a
+ * busy appointment it is a snapshot taken when it was made, so a later edit of the service never moves a booked visit.
+ */
+export interface TimingFields {
+  prepMinutes?: number;
+  cleanupMinutes?: number;
+  processingStartMinutes?: number;
+  processingMinutes?: number;
+}
+
+export interface ProfileService extends TimingFields {
   id: string;
   name: string;
   category?: string;
@@ -132,7 +143,7 @@ export interface IntakeFormDoc {
   updatedAt: Timestamp;
 }
 
-export interface BusyEntry {
+export interface BusyEntry extends TimingFields {
   start: Timestamp;
   end: Timestamp;
   kind: 'appointment' | 'block';
@@ -148,6 +159,10 @@ export interface AvailabilityDoc {
   bufferMinutes: number;
   minNoticeHours: number;
   maxDaysAhead: number;
+  /** D56: the grid of start times; 0 is "match the service". Absent means 15. */
+  slotStepMinutes?: number;
+  /** D56: "Keep my day compact". Absent means on. */
+  compactDay?: boolean;
   busy: BusyEntry[];
   noShow: NoShowPolicy;
   reminderHourLocal: number;
@@ -159,7 +174,7 @@ export type BookingStatus = 'confirmed' | 'pendingApproval' | 'cancelledByClient
 /** Statuses that occupy time on the calendar. */
 export const ACTIVE_BOOKING_STATUSES: readonly BookingStatus[] = ['confirmed', 'pendingApproval'];
 
-export interface BookingDoc {
+export interface BookingDoc extends TimingFields {
   schemaVersion: 1;
   ownerUid: string;
   slug: string;
@@ -204,7 +219,7 @@ export interface BookingDoc {
   purgeAt: Timestamp;
 }
 
-export interface HoldDoc {
+export interface HoldDoc extends TimingFields {
   ownerUid: string;
   slug: string;
   serviceId: string;

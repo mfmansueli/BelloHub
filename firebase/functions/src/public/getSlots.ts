@@ -2,7 +2,8 @@ import { defineUseCase } from '../app/UseCase.js';
 import { MAX_RANGE_DAYS, RATE } from '../config/limits.js';
 import * as contract from '../contracts/public.js';
 import { findBookingByToken } from '../lib/bookingAccess.js';
-import { freeStartsOn, loadCalendar, loadOccupied, resolveOffer, slotSettings } from '../lib/calendar.js';
+import type { SlotOffer } from '../lib/calendar.js';
+import { bookingOffer, loadCalendar, loadOccupied, planOn, resolveOffer, slotSettings } from '../lib/calendar.js';
 import { AppError } from '../lib/errors.js';
 import { holdKeyHash } from '../lib/holds.js';
 import { consumeRate } from '../lib/rateLimit.js';
@@ -26,20 +27,21 @@ export const getSlots = defineUseCase({
 
     // Moving an existing booking: its own time does not block it, and its own duration is used. A page pause does
     // not stop a client from moving a visit she already has ("Their booked visits are not touched", D15).
-    let durationMinutes: number;
+    let offer: SlotOffer;
     let excludeBookingId: string | undefined;
     let pausedPage = false;
     if (input.rescheduleToken) {
       const booking = await findBookingByToken(plainReader, deps.db, input.rescheduleToken, now);
       if (booking.data.ownerUid !== calendar.ownerUid) throw new AppError('NOT_FOUND');
-      durationMinutes = booking.data.durationMinutes;
+      offer = bookingOffer(booking.data);
       excludeBookingId = booking.id;
     } else {
-      durationMinutes = resolveOffer(calendar.profile, input).durationMinutes;
+      offer = resolveOffer(calendar.profile, input);
       const pausedUntil = calendar.profile.booking.pausedUntil;
       pausedPage = !calendar.profile.booking.acceptingBookings || (pausedUntil !== undefined && ms(pausedUntil) > now);
     }
 
+    const { durationMinutes } = offer;
     const settings = slotSettings(calendar);
     const dates: string[] = [];
     for (let date = input.from; date <= input.to; date = addDays(date, 1)) dates.push(date);
@@ -67,10 +69,21 @@ export const getSlots = defineUseCase({
       timeZoneID: settings.timeZoneID,
       durationMinutes,
       paused: false,
-      days: dates.map((date) => ({
-        date,
-        slots: freeStartsOn(calendar, date, durationMinutes, now, occupied).map((start) => new Date(start).toISOString())
-      }))
+      // D56: `slots` are shown first; `more` (the other free starts) sits behind "Show all times".
+      days: dates.map((date) => {
+        const plan = planOn(calendar, date, offer, now, occupied);
+        const shown = new Set(plan.recommended);
+        const more = plan.all.filter((start) => !shown.has(start));
+        return {
+          date,
+          slots: plan.recommended.map(isoOf),
+          ...(more.length > 0 ? { more: more.map(isoOf) } : {})
+        };
+      })
     };
   }
 });
+
+function isoOf(start: number): string {
+  return new Date(start).toISOString();
+}

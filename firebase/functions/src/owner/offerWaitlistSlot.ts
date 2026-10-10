@@ -3,7 +3,7 @@ import { OFFER_DEFAULT_MINUTES, RATE } from '../config/limits.js';
 import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
 import { ensureAccountExists } from '../lib/account.js';
-import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer } from '../lib/calendar.js';
+import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer, timingFields } from '../lib/calendar.js';
 import type { HoldDoc, WaitlistDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { holdKeyHash } from '../lib/holds.js';
@@ -41,7 +41,7 @@ export const offerWaitlistSlot = defineUseCase({
       if (!calendar) throw new AppError('NOT_FOUND');
       const offer = resolveOffer(calendar.profile, input);
       await readCalendarLock(tx, deps.db, uid);
-      const check = await checkSlot(reader, deps.db, calendar, startsAt, offer.durationMinutes, now);
+      const check = await checkSlot(reader, deps.db, calendar, startsAt, offer, now);
       if (!check.free) return { status: 'slotTaken' as const };
 
       const expiresAt = now + minutes * 60_000;
@@ -54,6 +54,7 @@ export const offerWaitlistSlot = defineUseCase({
         guests: offer.guests,
         startsAt: ts(startsAt),
         endsAt: ts(startsAt + offer.durationMinutes * 60_000),
+        ...timingFields(offer.timing),
         expiresAt: ts(expiresAt),
         holdKeyHash: holdKeyHash(holdKey),
         kind: 'offer',

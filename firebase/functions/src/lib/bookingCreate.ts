@@ -12,7 +12,7 @@ import { iso } from '../contracts/common.js';
 import { tokenHash, withNewTokenHash } from './bookingAccess.js';
 import { sendBookingEmail } from './bookingEmails.js';
 import type { OfferInput } from './calendar.js';
-import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer } from './calendar.js';
+import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer, timingFields } from './calendar.js';
 import { noShowState, writeContact, writeRegistration } from './contacts.js';
 import { sha256Hex } from './crypto.js';
 import type { BookingDoc, ContactDoc, IdempotencyDoc, WaitlistDoc } from './docs.js';
@@ -153,7 +153,7 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
     }
 
     // ---- the slot ----
-    const check = await checkSlot(reader, deps.db, calendar, request.startsAt, offer.durationMinutes, now, {
+    const check = await checkSlot(reader, deps.db, calendar, request.startsAt, offer, now, {
       ownHoldKeyHash: holdHash
     });
     if (!check.free) {
@@ -187,6 +187,8 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       serviceId: offer.serviceId,
       serviceName: offer.serviceName,
       durationMinutes: offer.durationMinutes,
+      // D56: the shape of the visit is kept with it, so editing the service later never moves what is booked.
+      ...timingFields(offer.timing),
       addOns: offer.addOns,
       guestCount: offer.guests,
       startsAt: ts(request.startsAt),

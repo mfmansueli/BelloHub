@@ -36,7 +36,7 @@ struct WaitlistMatcherTests {
     func firstComeFirstServed() {
         let waiting = [entry("Beatriz", createdDaysAgo: 1), entry("Paula", createdDaysAgo: 9),
                        entry("Marina", createdDaysAgo: 4)]
-        let result = WaitlistMatcher.matches(for: freed, entries: waiting, serviceMinutes: [:], calendar: calendar)
+        let result = WaitlistMatcher.matches(for: freed, entries: waiting, serviceFits: [:], calendar: calendar)
 
         #expect(names(waiting, result) == ["Paula", "Marina", "Beatriz"])
     }
@@ -51,34 +51,38 @@ struct WaitlistMatcherTests {
             entry("On the day", from: "2026-10-15", to: "2026-10-15", createdDaysAgo: 5),
             entry("Open", createdDaysAgo: 5)
         ]
-        let result = WaitlistMatcher.matches(for: freed, entries: waiting, serviceMinutes: [:], calendar: calendar)
+        let result = WaitlistMatcher.matches(for: freed, entries: waiting, serviceFits: [:], calendar: calendar)
 
         #expect(Set(names(waiting, result)) == ["On the day", "Open"])
     }
 
-    @Test("A service that does not fit in the freed time is left out; one that fits, or that is not specified, stays")
+    @Test("A service with no free start in the freed time is left out; one that has, or that is not given, stays")
     func serviceFits() {
         let waiting = [
             entry("Fits", service: glow.id, createdDaysAgo: 3),
-            entry("Exactly fits", service: brazilian.id, createdDaysAgo: 2),
+            entry("Too long", service: brazilian.id, createdDaysAgo: 2),
             entry("Anything", createdDaysAgo: 1),
-            entry("Too long", service: UUID(), createdDaysAgo: 4)
+            entry("Removed service", service: UUID(), createdDaysAgo: 4)
         ]
-        let minutes = [glow.id: glow.durationMinutes, brazilian.id: brazilian.durationMinutes]
-        let shortSlot = DateInterval(start: TestClock.date("2026-10-15 15:00"), end: TestClock.date("2026-10-15 16:00"))
+        let fits = [glow.id: true, brazilian.id: false]
+        let result = WaitlistMatcher.matches(for: freed, entries: waiting, serviceFits: fits, calendar: calendar)
 
-        func matches(_ slot: DateInterval) -> [WaitlistEntry] {
-            WaitlistMatcher.matches(for: slot, entries: waiting, serviceMinutes: minutes, calendar: calendar)
-        }
-        let longSlot = matches(freed)
-        let short = matches(shortSlot)
+        #expect(Set(names(waiting, result)) == ["Fits", "Anything", "Removed service"])
+    }
 
-        #expect(Set(names(waiting, longSlot)) == ["Fits", "Exactly fits", "Anything", "Too long"])
-        #expect(Set(names(waiting, short)) == ["Fits", "Anything", "Too long"])
+    @Test("A free start uses the freed time when its blocked stretch, extra time included, overlaps it")
+    func usesFreedTime() {
+        let before = TestClock.date("2026-10-15 13:45")
+        let after = TestClock.date("2026-10-15 16:30")
+        #expect(!WaitlistMatcher.usesFreedTime(freed, starts: [before], minutes: 60, timing: .noExtraTime))
+        #expect(WaitlistMatcher.usesFreedTime(freed, starts: [before], minutes: 60,
+                                              timing: VisitTiming(cleanupMinutes: 20)))
+        #expect(!WaitlistMatcher.usesFreedTime(freed, starts: [after], minutes: 60, timing: .noExtraTime))
+        #expect(WaitlistMatcher.usesFreedTime(freed, starts: [after], minutes: 60, timing: VisitTiming(prepMinutes: 5)))
     }
 
     @Test("Nobody waiting means no match")
     func empty() {
-        #expect(WaitlistMatcher.matches(for: freed, entries: [], serviceMinutes: [:], calendar: calendar).isEmpty)
+        #expect(WaitlistMatcher.matches(for: freed, entries: [], serviceFits: [:], calendar: calendar).isEmpty)
     }
 }

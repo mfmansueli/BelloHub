@@ -223,7 +223,8 @@ describe('waitlist matching (mirrors the iOS WaitlistMatcher)', () => {
     id, ownerUid: 'o', slug: 's', name: 'N', phone: '+1', phoneHash: 'h', locale: 'en', dayFrom: '2026-10-01', dayTo: '2026-10-07',
     status: 'waiting', createdAt: Timestamp.fromMillis(1000), expiresAt: Timestamp.fromMillis(9e12), ...over
   });
-  const minutes = new Map([['facial', 60], ['long', 120]]);
+  // D56: whether each service has a free start that uses the freed time, worked out by the smart-slot rule.
+  const fits = new Map([['facial', true], ['long', false]]);
 
   it('takes people still waiting whose days include the freed day, first come first served', () => {
     const matches = matchesWaitlist(
@@ -233,7 +234,7 @@ describe('waitlist matching (mirrors the iOS WaitlistMatcher)', () => {
         entry('offered', { status: 'offered' }),
         entry('elsewhere', { dayFrom: '2026-10-09', dayTo: '2026-10-10' })
       ],
-      '2026-10-03', 90, minutes
+      '2026-10-03', fits
     );
 
     expect(matches.map((m) => m.id)).toEqual(['early', 'late']);
@@ -242,16 +243,16 @@ describe('waitlist matching (mirrors the iOS WaitlistMatcher)', () => {
   it('skips a service that does not fit in the freed time and keeps one that does or has no service', () => {
     const matches = matchesWaitlist(
       [entry('fits', { serviceId: 'facial' }), entry('too-long', { serviceId: 'long' }), entry('any', {}), entry('unknown', { serviceId: 'gone' })],
-      '2026-10-03', 60, minutes
+      '2026-10-03', fits
     );
 
     expect(matches.map((m) => m.id).sort()).toEqual(['any', 'fits', 'unknown']);
   });
 
   it('includes both ends of the range', () => {
-    expect(matchesWaitlist([entry('a', {})], '2026-10-01', 60, minutes)).toHaveLength(1);
-    expect(matchesWaitlist([entry('a', {})], '2026-10-07', 60, minutes)).toHaveLength(1);
-    expect(matchesWaitlist([entry('a', {})], '2026-10-08', 60, minutes)).toHaveLength(0);
+    expect(matchesWaitlist([entry('a', {})], '2026-10-01', fits)).toHaveLength(1);
+    expect(matchesWaitlist([entry('a', {})], '2026-10-07', fits)).toHaveLength(1);
+    expect(matchesWaitlist([entry('a', {})], '2026-10-08', fits)).toHaveLength(0);
   });
 });
 

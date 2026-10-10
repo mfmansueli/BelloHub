@@ -3,6 +3,7 @@ import { RATE } from '../config/limits.js';
 import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
 import { ensureAccountExists } from '../lib/account.js';
+import { timingFields, timingOf } from '../lib/calendar.js';
 import type { AvailabilityDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { consumeRate } from '../lib/rateLimit.js';
@@ -33,10 +34,16 @@ export const publishAvailability = defineUseCase({
     }
 
     // The past cannot block anything, so it is dropped to keep the document small.
+    // An appointment keeps its extra and processing time (D56); a block is only closed time.
     const busy = input.busy
-      .map((entry) => ({ start: instantMs(entry.startsAt), end: instantMs(entry.endsAt), kind: entry.kind }))
+      .map((entry) => ({ start: instantMs(entry.startsAt), end: instantMs(entry.endsAt), kind: entry.kind, timing: timingOf(entry) }))
       .filter((entry) => entry.end > entry.start && entry.end > now - DAY_MS)
-      .map((entry) => ({ start: ts(entry.start), end: ts(entry.end), kind: entry.kind }));
+      .map((entry) => ({
+        start: ts(entry.start),
+        end: ts(entry.end),
+        kind: entry.kind,
+        ...(entry.kind === 'appointment' ? timingFields(entry.timing) : {})
+      }));
 
     const doc: AvailabilityDoc = {
       ownerUid: uid,
@@ -51,6 +58,8 @@ export const publishAvailability = defineUseCase({
       bufferMinutes: input.bufferMinutes,
       minNoticeHours: input.minNoticeHours,
       maxDaysAhead: input.maxDaysAhead,
+      ...(input.slotStepMinutes !== undefined ? { slotStepMinutes: input.slotStepMinutes } : {}),
+      ...(input.compactDay !== undefined ? { compactDay: input.compactDay } : {}),
       busy,
       noShow: input.noShow,
       reminderHourLocal: input.reminderHourLocal ?? DEFAULT_REMINDER_HOUR,

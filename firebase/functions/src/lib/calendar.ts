@@ -13,10 +13,10 @@ import type { Reader } from './store.js';
 import { dataOf, ms, refs, ts, txReader } from './store.js';
 import { ALTERNATIVES_SEARCH_DAYS, MAX_ALTERNATIVES } from '../config/limits.js';
 import { AppError } from './errors.js';
-import type { AccountDoc, AvailabilityDoc, BookingDoc, HoldDoc, PublicProfileDoc, SlugDoc } from './docs.js';
+import type { AccountDoc, AvailabilityDoc, BookingDoc, HoldDoc, PublicProfileDoc, SlugDoc, TimingFields } from './docs.js';
 import { ACTIVE_BOOKING_STATUSES } from './docs.js';
-import type { AvailabilitySettings, Interval } from './freeSlots.js';
-import { SLOT_STEP_MINUTES, freeSlots } from './freeSlots.js';
+import type { AvailabilitySettings, Interval, SlotPlan, TimedInterval, VisitTiming } from './freeSlots.js';
+import { SLOT_STEP_MINUTES, planSlots } from './freeSlots.js';
 import { MAX_TOTAL_MINUTES, totalMinutes } from './rules.js';
 import { addDays, localDateOf } from './time.js';
 
@@ -63,6 +63,63 @@ export function slotSettings(calendar: Calendar): AvailabilitySettings | undefin
   };
 }
 
+/** D56: how her day is offered: the grid, the compact-day ranking and the shortest offer it measures gaps with. */
+export interface SlotPolicy {
+  stepMinutes: number;
+  compact: boolean;
+  shortestOfferMinutes: number;
+}
+
+export function slotPolicy(calendar: Calendar): SlotPolicy {
+  return {
+    stepMinutes: calendar.availability?.slotStepMinutes ?? SLOT_STEP_MINUTES,
+    compact: calendar.availability?.compactDay ?? true,
+    shortestOfferMinutes: shortestOfferMinutes(calendar.profile)
+  };
+}
+
+/** Her shortest published service with its extra time (D56); 0 when she publishes none. */
+export function shortestOfferMinutes(profile: PublicProfileDoc): number {
+  const lengths = profile.services.map((service) => {
+    const timing = timingOf(service);
+    return timing.prepMinutes + service.durationMinutes + timing.cleanupMinutes;
+  });
+  return lengths.length === 0 ? 0 : Math.min(...lengths);
+}
+
+/** The shape of a visit from its stored fields (absent is 0). */
+export function timingOf(fields: TimingFields): VisitTiming {
+  return {
+    prepMinutes: fields.prepMinutes ?? 0,
+    cleanupMinutes: fields.cleanupMinutes ?? 0,
+    processingStartMinutes: fields.processingStartMinutes ?? 0,
+    processingMinutes: fields.processingMinutes ?? 0
+  };
+}
+
+/** The fields to snapshot on a booking or a hold: only the ones that are not 0, so plain visits stay as before. */
+export function timingFields(timing: VisitTiming): TimingFields {
+  const fields: TimingFields = {};
+  if (timing.prepMinutes > 0) fields.prepMinutes = timing.prepMinutes;
+  if (timing.cleanupMinutes > 0) fields.cleanupMinutes = timing.cleanupMinutes;
+  if (timing.processingMinutes > 0) {
+    fields.processingStartMinutes = timing.processingStartMinutes;
+    fields.processingMinutes = timing.processingMinutes;
+  }
+  return fields;
+}
+
+/** What a time is checked for: the visible length and the shape of the visit. */
+export interface SlotOffer {
+  durationMinutes: number;
+  timing: VisitTiming;
+}
+
+/** A booked visit as an offer: its own length and its snapshot of extra and processing time (moving keeps its shape). */
+export function bookingOffer(booking: BookingDoc): SlotOffer {
+  return { durationMinutes: booking.durationMinutes, timing: timingOf(booking) };
+}
+
 // MARK: - What is offered
 
 export interface OfferInput {
@@ -78,6 +135,8 @@ export interface ResolvedOffer {
   guests: number;
   /** Service + add-ons + guests back to back (D19). */
   durationMinutes: number;
+  /** The service's extra and processing time (D56); it wraps the whole visit. */
+  timing: VisitTiming;
 }
 
 /** The service and add-ons the professional published, and the total time they take. Never trusts a client duration. */
@@ -95,14 +154,14 @@ export function resolveOffer(profile: PublicProfileDoc, input: OfferInput): Reso
   if (guests > profile.booking.maxGuests) throw new AppError('INVALID_ARGUMENT', { fields: ['guests'] });
   const durationMinutes = totalMinutes(service.durationMinutes, addOns.map((addOn) => addOn.minutes), guests);
   if (durationMinutes > MAX_TOTAL_MINUTES) throw new AppError('INVALID_ARGUMENT', { fields: ['addOnIds'] });
-  return { serviceId: service.id, serviceName: service.name, addOns, guests, durationMinutes };
+  return { serviceId: service.id, serviceName: service.name, addOns, guests, durationMinutes, timing: timingOf(service) };
 }
 
 // MARK: - What occupies time
 
 export interface Occupied {
-  /** Bookings and holds: a buffer is kept around them. */
-  appointments: Interval[];
+  /** Bookings and holds, with their shape: a buffer is kept around them. */
+  appointments: TimedInterval[];
   /** Blocks she closed in her own agenda: no buffer. */
   blocks: Interval[];
 }
@@ -135,66 +194,65 @@ export async function loadOccupied(
     reader.query(r.holds().where('ownerUid', '==', calendar.ownerUid))
   ]);
 
-  const appointments: Interval[] = [];
+  const appointments: TimedInterval[] = [];
   const blocks: Interval[] = [];
   for (const snap of bookingSnaps.docs) {
     const booking = snap.data() as BookingDoc;
     if (snap.id === options.excludeBookingId || !ACTIVE_BOOKING_STATUSES.includes(booking.status)) continue;
-    appointments.push({ start: ms(booking.startsAt), end: ms(booking.endsAt) });
+    appointments.push({ start: ms(booking.startsAt), end: ms(booking.endsAt), timing: timingOf(booking) });
   }
   for (const snap of holdSnaps.docs) {
     const hold = snap.data() as HoldDoc;
     if (ms(hold.expiresAt) <= now || hold.holdKeyHash === options.ownHoldKeyHash) continue;
-    appointments.push({ start: ms(hold.startsAt), end: ms(hold.endsAt) });
+    appointments.push({ start: ms(hold.startsAt), end: ms(hold.endsAt), timing: timingOf(hold) });
   }
   for (const entry of calendar.availability?.busy ?? []) {
     const interval = { start: ms(entry.start), end: ms(entry.end) };
-    (entry.kind === 'appointment' ? appointments : blocks).push(interval);
+    if (entry.kind === 'appointment') appointments.push({ ...interval, timing: timingOf(entry) });
+    else blocks.push(interval);
   }
   return { appointments, blocks };
 }
 
 // MARK: - Free starts
 
-export function freeStartsOn(
-  calendar: Calendar,
-  day: string,
-  durationMinutes: number,
-  now: number,
-  occupied: Occupied
-): number[] {
+/** Every free start of a local day and the ones to show first (D56). */
+export function planOn(calendar: Calendar, day: string, offer: SlotOffer, now: number, occupied: Occupied): SlotPlan {
   const settings = slotSettings(calendar);
-  if (!settings) return [];
-  return freeSlots({
+  if (!settings) return { all: [], recommended: [] };
+  const policy = slotPolicy(calendar);
+  return planSlots({
     day,
-    durationMinutes,
+    durationMinutes: offer.durationMinutes,
     now,
     settings,
     appointments: occupied.appointments,
     blocks: occupied.blocks,
-    stepMinutes: SLOT_STEP_MINUTES
+    stepMinutes: policy.stepMinutes,
+    timing: offer.timing,
+    compact: policy.compact,
+    shortestOfferMinutes: policy.shortestOfferMinutes
   });
 }
 
+/** Every free start of a local day: any of them can be held and booked, recommended or not. */
+export function freeStartsOn(calendar: Calendar, day: string, offer: SlotOffer, now: number, occupied: Occupied): number[] {
+  return planOn(calendar, day, offer, now, occupied).all;
+}
+
 /** Is `startsAt` one of the offered starts of its local day? */
-export function isStartFree(
-  calendar: Calendar,
-  startsAt: number,
-  durationMinutes: number,
-  now: number,
-  occupied: Occupied
-): boolean {
+export function isStartFree(calendar: Calendar, startsAt: number, offer: SlotOffer, now: number, occupied: Occupied): boolean {
   const settings = slotSettings(calendar);
   if (!settings) return false;
   const day = localDateOf(startsAt, settings.timeZoneID);
-  return freeStartsOn(calendar, day, durationMinutes, now, occupied).includes(startsAt);
+  return freeStartsOn(calendar, day, offer, now, occupied).includes(startsAt);
 }
 
-/** The next free starts at or after `from`, for "That time was just taken. Here are the next ones". */
+/** The next recommended starts at or after `from`, for "That time was just taken. Here are the next ones". */
 export function nextFreeStarts(
   calendar: Calendar,
   from: number,
-  durationMinutes: number,
+  offer: SlotOffer,
   now: number,
   occupied: Occupied,
   limit = MAX_ALTERNATIVES
@@ -204,7 +262,7 @@ export function nextFreeStarts(
   const found: number[] = [];
   let day = localDateOf(from, settings.timeZoneID);
   for (let offset = 0; offset <= ALTERNATIVES_SEARCH_DAYS && found.length < limit; offset += 1) {
-    for (const start of freeStartsOn(calendar, day, durationMinutes, now, occupied)) {
+    for (const start of planOn(calendar, day, offer, now, occupied).recommended) {
       if (start >= from && found.length < limit) found.push(start);
     }
     day = addDays(day, 1);
@@ -223,15 +281,15 @@ export async function checkSlot(
   db: Firestore,
   calendar: Calendar,
   startsAt: number,
-  durationMinutes: number,
+  offer: SlotOffer,
   now: number,
   options: OccupiedOptions = {}
 ): Promise<{ free: true } | { free: false; alternatives: number[] }> {
-  const end = startsAt + durationMinutes * MINUTE_MS;
+  const end = startsAt + offer.durationMinutes * MINUTE_MS;
   const near = await loadOccupied(reader, db, calendar, { start: startsAt - DAY_MS, end: end + DAY_MS }, now, options);
-  if (isStartFree(calendar, startsAt, durationMinutes, now, near)) return { free: true };
+  if (isStartFree(calendar, startsAt, offer, now, near)) return { free: true };
   const wide = await loadOccupied(reader, db, calendar, alternativesRange(startsAt), now, options);
-  return { free: false, alternatives: nextFreeStarts(calendar, startsAt, durationMinutes, now, wide) };
+  return { free: false, alternatives: nextFreeStarts(calendar, startsAt, offer, now, wide) };
 }
 
 // MARK: - The serialization point

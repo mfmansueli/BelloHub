@@ -4,7 +4,7 @@ import { defineUseCase, ownerUid } from '../app/UseCase.js';
 import { RATE } from '../config/limits.js';
 import * as contract from '../contracts/owner.js';
 import { sendBookingEmail } from '../lib/bookingEmails.js';
-import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock } from '../lib/calendar.js';
+import { bookingOffer, bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock } from '../lib/calendar.js';
 import type { BookingDoc, PublicProfileDoc, RescheduleRequestDoc } from '../lib/docs.js';
 import { ACTIVE_BOOKING_STATUSES } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
@@ -49,7 +49,7 @@ export const respondRescheduleRequest = defineUseCase({
       const profile = dataOf<PublicProfileDoc>(await reader.doc(r.profile(booking.data.slug)));
       await readCalendarLock(tx, deps.db, uid);
       const startsAt = ms(request.requestedStart);
-      const check = await checkSlot(reader, deps.db, calendar, startsAt, booking.data.durationMinutes, now, {
+      const check = await checkSlot(reader, deps.db, calendar, startsAt, bookingOffer(booking.data), now, {
         excludeBookingId: booking.id
       });
       if (!check.free) return { status: 'slotTaken' as const };

@@ -2,7 +2,7 @@ import { defineUseCase } from '../app/UseCase.js';
 import { RATE } from '../config/limits.js';
 import * as contract from '../contracts/public.js';
 import { instantMs, iso } from '../contracts/common.js';
-import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer } from '../lib/calendar.js';
+import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock, resolveOffer, timingFields } from '../lib/calendar.js';
 import type { HoldDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { findHoldsByKey, holdKeyHash } from '../lib/holds.js';
@@ -34,7 +34,7 @@ export const holdSlot = defineUseCase({
 
       await readCalendarLock(tx, deps.db, calendar.ownerUid);
       const previous = await findHoldsByKey(reader, deps.db, calendar.ownerUid, input.holdKey);
-      const check = await checkSlot(reader, deps.db, calendar, startsAt, offer.durationMinutes, now, {
+      const check = await checkSlot(reader, deps.db, calendar, startsAt, offer, now, {
         ownHoldKeyHash: holdKeyHash(input.holdKey)
       });
       if (!check.free) {
@@ -52,6 +52,7 @@ export const holdSlot = defineUseCase({
         guests: offer.guests,
         startsAt: ts(startsAt),
         endsAt: ts(startsAt + offer.durationMinutes * 60_000),
+        ...timingFields(offer.timing),
         expiresAt: ts(expiresAt),
         holdKeyHash: holdKeyHash(input.holdKey),
         kind: 'soft'

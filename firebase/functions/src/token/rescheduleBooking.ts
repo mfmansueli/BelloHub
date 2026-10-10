@@ -5,7 +5,7 @@ import { RATE } from '../config/limits.js';
 import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/public.js';
 import { findBookingByToken, tokenHash } from '../lib/bookingAccess.js';
-import { bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock } from '../lib/calendar.js';
+import { bookingOffer, bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock } from '../lib/calendar.js';
 import { ACTIVE_BOOKING_STATUSES } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { consumeRates } from '../lib/rateLimit.js';
@@ -40,7 +40,7 @@ export const rescheduleBooking = defineUseCase({
       const calendar = await loadCalendar(reader, deps.db, booking.data.slug);
       if (!calendar) throw new AppError('NOT_FOUND');
       await readCalendarLock(tx, deps.db, booking.data.ownerUid);
-      const check = await checkSlot(reader, deps.db, calendar, startsAt, booking.data.durationMinutes, now, {
+      const check = await checkSlot(reader, deps.db, calendar, startsAt, bookingOffer(booking.data), now, {
         excludeBookingId: booking.id
       });
       if (!check.free) return { status: 'slotTaken' as const, alternatives: check.alternatives.map(iso) };
