@@ -55,7 +55,8 @@ export const getSlots = {
     timeZoneID: TimeZoneId,
     durationMinutes: z.number().int(),
     paused: z.boolean(),
-    days: z.array(z.strictObject({ date: LocalDateSchema, slots: z.array(Instant) }))
+    // D56: `slots` is what the page shows first; `more` holds the other free starts ("Show all times").
+    days: z.array(z.strictObject({ date: LocalDateSchema, slots: z.array(Instant), more: z.array(Instant).optional() }))
   })
 };
 

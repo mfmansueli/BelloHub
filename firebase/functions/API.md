@@ -149,7 +149,11 @@ type Slug      = string;  // /^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$/, 3 to 30 chars,
 - Strings are NFC-normalized and stripped of control characters; lengths are caps (extra is rejected, not cut).
 - Times are instants. Calendar days (`LocalDate`) are in the professional's `timeZoneID`. Slots are returned as instants;
   show them in the **business** time zone.
-- The slot grid is **15 minutes** from the start of each working stretch (`slotStepMinutes`).
+- Start times (D56): the slot grid (`slotStepMinutes` of the availability: 10, **15 by default**, 20, 30, 60, or 0 = match
+  the service) from the start of each working stretch, plus starts anchored right after and right before every visit,
+  break and block and at both edges of each stretch (rounded inwards to the 5-minute clock). A service's
+  `prepMinutes`/`cleanupMinutes` are blocked around the visit and its `processingMinutes` (from `processingStartMinutes`)
+  leave her free inside it; none of them change the visible duration or the price.
 - **Total duration of a booking** = service minutes + sum of chosen add-on minutes + guests x service minutes
   (guests are the same service, back to back, D19). The server computes it; the client never sends durations.
 - **Policy snapshot (D47).** `policy`, `rulesText` and the no-show setting that concerns the client (`lateCancelCounts`)
@@ -187,7 +191,11 @@ type PublicProfile = {
   locales: LocaleId[];                // booking page languages, first is the default (1...6)
   whatsappE164?: E164;                // shown as "Message <Name>"
   credentials: { title: string; institution?: string; year?: number; registrationNumber?: string }[];   // <= 20, only those she chose to show
-  services: { id: Uuid; name: string; category?: string; durationMinutes: number; price?: Money }[];  // active services only, <= 60
+  services: {
+    id: Uuid; name: string; category?: string; durationMinutes: number; price?: Money;
+    prepMinutes?: number; cleanupMinutes?: number;                 // 0...60, D56: blocked before / after, not shown
+    processingStartMinutes?: number; processingMinutes?: number;   // D56: she is free inside the visit; start + length <= durationMinutes
+  }[];                                                              // active services only, <= 60
   addOns: { id: Uuid; name: string; minutes: number; priceText?: string }[];                          // offered add-ons, <= 30
   booking: { acceptingBookings: boolean; pausedUntil?: Instant; requiresApproval: boolean; maxGuests: 0 | 1 | 2; maxDaysAhead: number };
   policy: CancellationPolicy;
@@ -231,12 +239,20 @@ res: {
   timeZoneID: string;
   durationMinutes: number;            // total duration used to compute the slots
   paused: boolean;                    // the page does not accept bookings now: `days` is empty
-  days: { date: LocalDate; slots: Instant[] }[];   // one entry per day of the range, `slots: []` when none
+  days: {
+    date: LocalDate;
+    slots: Instant[];                 // shown by default: with compactDay on, the starts that leave no dead gap (D56)
+    more?: Instant[];                 // the other free starts, behind "Show all times"; absent when there are none
+  }[];                                // one entry per day of the range, `slots: []` when none
 }
 ```
 Semantics mirror the iOS `FreeSlotsCalculator`: weekly hours, breaks, days off, buffer (around bookings and holds,
 none around blocks), minimum notice, booking window, business time zone, daylight saving (a time that does not
-exist moves to the first valid time, a time that happens twice means its first occurrence). Confirmed and
+exist moves to the first valid time, a time that happens twice means its first occurrence), and D56: anchored starts,
+the extra and processing time of the service and of every booking and hold (snapshotted when they are made), and the
+compact-day ranking (a gap shorter than her shortest published offer plus the buffer is dead; per gap the starts that
+leave none come first, or the least dead time when none can). `holdSlot`, `createBooking` and the reschedule calls accept
+any start of `slots` or `more`. Confirmed and
 pending-approval bookings and unexpired holds occupy time. Errors: `NOT_FOUND` (slug, service, token). Limits: 60/min per IP.
 
 ### 5.3 `holdSlot`  (public)
@@ -516,7 +532,10 @@ publishAvailability: req {
   breaks: { weekday?: 1...7; startMinutes: number; endMinutes: number }[];                                                        // <= 28
   daysOff: { startDate: LocalDate; endDate: LocalDate }[];                                                                        // inclusive, <= 100
   bufferMinutes: number; minNoticeHours: number; maxDaysAhead: number;
-  busy: { startsAt: Instant; endsAt: Instant; kind: "appointment" | "block" }[];   // her own agenda minus link bookings; "appointment" gets the buffer, "block" does not; no names, no reasons; <= 600; the past is dropped
+  slotStepMinutes?: 0 | 10 | 15 | 20 | 30 | 60;   // D56: default 15; 0 = match the service (its footprint plus the buffer)
+  compactDay?: boolean;                           // D56: "Keep my day compact", default true
+  busy: { startsAt: Instant; endsAt: Instant; kind: "appointment" | "block";
+          prepMinutes?: number; cleanupMinutes?: number; processingStartMinutes?: number; processingMinutes?: number /* appointments only, D56 */ }[];   // her own agenda minus link bookings; "appointment" gets the buffer, "block" does not; no names, no reasons; <= 600; the past is dropped
   noShow: { isOn: boolean; limit: 1...5; action: "tell" | "approveNewBookings" | "pauseOnline"; lateCancelCounts: boolean; countingMonths: 3 | 6 | 12 };
   reminderHourLocal?: number;          // 0...23, default 18, used only when WhatsApp automation is on
 }

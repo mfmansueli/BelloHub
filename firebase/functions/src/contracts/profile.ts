@@ -24,6 +24,17 @@ import {
   text
 } from './common.js';
 
+/** D56: prep and clean-up time of a service or a busy visit, 0 to 60 minutes. */
+const ExtraMinutes = z.number().int().min(0).max(60);
+
+/** D56: the processing stretch starts after the visit starts and ends by its visible end. */
+function processingInsideVisit(value: { durationMinutes?: number; processingStartMinutes?: number | undefined; processingMinutes?: number | undefined }): boolean {
+  const length = value.processingMinutes ?? 0;
+  if (length === 0) return true;
+  const start = value.processingStartMinutes ?? 0;
+  return value.durationMinutes === undefined || start + length <= value.durationMinutes;
+}
+
 const RulesText = z.partialRecord(LocaleSchema, looseText(2000, true));
 
 export const ServicePublishSchema = z.strictObject({
@@ -31,8 +42,13 @@ export const ServicePublishSchema = z.strictObject({
   name: text(80),
   category: text(60).optional(),
   durationMinutes: z.number().int().min(5).max(12 * 60),
-  price: MoneySchema.optional()
-});
+  price: MoneySchema.optional(),
+  // D56: the visit's shape. Extra time is blocked around it and never shown; processing leaves her free inside it.
+  prepMinutes: ExtraMinutes.optional(),
+  cleanupMinutes: ExtraMinutes.optional(),
+  processingStartMinutes: z.number().int().min(0).max(12 * 60).optional(),
+  processingMinutes: z.number().int().min(0).max(12 * 60).optional()
+}).refine(processingInsideVisit, { message: 'processing must lie inside the visit', path: ['processingMinutes'] });
 
 export const AddOnPublishSchema = z.strictObject({
   id: Uuid,
@@ -126,8 +142,21 @@ export const AvailabilityInputSchema = z.strictObject({
   bufferMinutes: z.number().int().min(0).max(120),
   minNoticeHours: z.number().int().min(0).max(24 * 14),
   maxDaysAhead: z.number().int().min(1).max(365),
+  // D56: 0 is "match the service"; absent means 15. compactDay absent means on.
+  slotStepMinutes: z.union([z.literal(0), z.literal(10), z.literal(15), z.literal(20), z.literal(30), z.literal(60)]).optional(),
+  compactDay: z.boolean().optional(),
   busy: z
-    .array(z.strictObject({ startsAt: Instant, endsAt: Instant, kind: z.enum(['appointment', 'block']) }))
+    .array(
+      z.strictObject({
+        startsAt: Instant,
+        endsAt: Instant,
+        kind: z.enum(['appointment', 'block']),
+        prepMinutes: ExtraMinutes.optional(),
+        cleanupMinutes: ExtraMinutes.optional(),
+        processingStartMinutes: z.number().int().min(0).max(24 * 60).optional(),
+        processingMinutes: z.number().int().min(0).max(24 * 60).optional()
+      })
+    )
     .max(600),
   noShow: NoShowPolicySchema,
   reminderHourLocal: z.number().int().min(0).max(23).optional()
