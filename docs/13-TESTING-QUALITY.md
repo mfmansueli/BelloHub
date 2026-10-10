@@ -62,34 +62,38 @@ Use `XCTMetric`/`measure` tests (opt-in plan `Perf`, not in `Fast`) and Instrume
 
 ## 8. v1 acceptance (the project is ready for TestFlight when all are true)
 
+Checked by the S12 agent on 2026-10-10 against `build/v1` at tag `v1.0.0-rc1` (evidence after each item; "device" parts
+are human tasks with their H-number in `docs/14-HUMAN-TASKS.md`). Final regression numbers: `docs/PROGRESS.md`, stage
+log "S12".
+
 **Product and screens**
-- [ ] All 97 screens are implemented, mapped in the traceability table, each matching its screenshot within design-system tolerances, and each has its states (empty, loading, error, offline) defined.
-- [ ] Every "Design addition" is listed in `PROGRESS.md` with a screenshot for the designer.
-- [ ] No financial feature exists anywhere (code search for payment/invoice/charge terms; only the StoreKit subscription).
+- [x] All 97 screens are implemented, mapped in the traceability table, each matching its screenshot within design-system tolerances, and each has its states (empty, loading, error, offline) defined. *Evidence: traceability table 97/97 `done` (4.7, 4.9, 4.10 corrected in S12); states in DESIGN.md "Empty, loading and error states"; one UI flow per screen group in UISmoke; `LocalizationScreenshotUITests` renders the key screens in 14 localizations. Pixel comparison with the prototype is the designer's review (design additions below).*
+- [x] Every "Design addition" is listed in `PROGRESS.md` with a screenshot for the designer. *Evidence: `PROGRESS.md` "Design additions" plus the DESIGN.md "Changes from the prototype" sections (S3 to S12); screenshots are generated, not committed: `LocalizationScreenshotUITests` and `ColorReviewUITests` write them to `build/screenshots/` (commands in `docs/review/README.md` and H10).*
+- [x] No financial feature exists anywhere (code search for payment/invoice/charge terms; only the StoreKit subscription). *Evidence: S12 search of `BelloHub/`, `web/src`, `firebase/functions/src` for invoice, payment, charge, deposit, commission, revenue, checkout, Stripe, PayPal: the only hits are BIP-39 recovery words.*
 
 **Data and privacy**
-- [ ] The record, photos and health data exist only in the vault; the on-disk sentinel test passes.
-- [ ] The server holds no clinical data; the sealed-mailbox flow works end to end (browser seals, iPhone opens, server deletes) with cross-implementation vectors green.
-- [ ] Recovery key flow works including restore into an empty store.
-- [ ] Notifications contain no client names; no logs/analytics contain client text.
-- [ ] Delete client / delete account cascade to device and emulator server.
-- [ ] Export all (device-generated ZIP with CSV + PDF) works.
+- [x] The record, photos and health data exist only in the vault; the on-disk sentinel test passes. *Evidence: `VaultEncryptionTests`, `FormsEncryptionTests`, `Repository*ContractTests` (Fast, green); `VaultFileProtectionTests`.*
+- [x] The server holds no clinical data; the sealed-mailbox flow works end to end (browser seals, iPhone opens, server deletes) with cross-implementation vectors green. *Evidence: `EnvelopeOpenerTests` (js-sealed and swift-sealed vectors), web `crypto.cross-implementation.test.ts`, `MailboxServiceTests`; `scripts/e2e-local.sh` 7 passed (sealed intake story); functions use cases 289.*
+- [x] Recovery key flow works including restore into an empty store. *Evidence: `RecoveryKeyServiceTests` (BIP-39 vectors, `restoreFromWords`), `RecoveryPhraseTests`, `AccountUITests.testRevealingAndConfirmingTheRecoveryKey`; two-iPhone restore is H3/H19.*
+- [x] Notifications contain no client names; no logs/analytics contain client text. *Evidence: `NotificationPlannerTests` (every localization), `MailboxServiceTests`, `check-privacy.sh` rules 3, 6 (no print/NSLog, no body logging) and the analytics-SDK ban; Apple Calendar events follow the same name switch (`CalendarEventPlannerTests`, S12).*
+- [x] Delete client / delete account cascade to device and emulator server. *Evidence: `ClientDataDeletionServiceTests`, `ClientDataDeletionUITests` (Export data then Delete data, S12), `AccountServiceTests`, `RemoteAccountDeleterTests`, functions `deletion.test.ts`.*
+- [x] Export all (device-generated ZIP with CSV + PDF) works. *Evidence: `DataExportServiceTests` ("Prepare writes a ZIP with the spreadsheets and the PDF…"), `PDFRecordExporterTests`, `RecordUITests.testExportBuildsAClientCopyWithoutPrivateNotes`.*
 
 **Behavior**
-- [ ] Policies (cancel, no-show, pause, approval) change the app and the web page consistently, in all fourteen localizations (rule text equality test).
-- [ ] The 24-hour lock and corrections work; AI path always passes through review; manual path complete; the grounding check is tested.
-- [ ] Offline: every professional flow works without network; the outbound queue replays; conflict detection works.
-- [ ] Booking race condition test passes (two clients, same slot, one wins).
-- [ ] WhatsApp opening, reminders-ready queue, running late and birthday messages work with fallbacks when WhatsApp is absent.
+- [x] Policies (cancel, no-show, pause, approval) change the app and the web page consistently, in all fourteen localizations (rule text equality test). *Evidence: one shared rule table both sides (`CancellationEvaluator` tests and web `policy.test.ts`, docs/11 section 4), `PolicyRuleTextTests`, D47 snapshots (`policySnapshot.test.ts`, web `bookingRules.test.ts`, `manage.spec.ts`), web i18n 401 keys in 14 localizations with 0 problems.*
+- [x] The 24-hour lock and corrections work; AI path always passes through review; manual path complete; the grounding check is tested. *Evidence: `RecordLockPolicyTests`, `RecordEditRulesTests`, `RecordUITests.testHistoryCorrectsALockedRecordOnlyWithAReason`; manual form complete (`TreatmentFlowUITests`). Voice and AI ship as "not available yet" in v1 (D53, `VoiceFlowRulesTests`), so there is no AI draft and no grounding check to run; review stays locked on (`RecordUITests.testAISettingsKeepCloudHelpOffAndReviewLocked`).*
+- [x] Offline: every professional flow works without network; the outbound queue replays; conflict detection works. *Evidence: the vault is local (every screen reads it); queue replay after offline and relaunch (`MailboxServiceTests`, `ClientDataDeletionServiceTests`, `ClientRegistrationServerTests`, `InboxRig` tests); `BookingImporterTests` (conflict with a manual visit, S12).*
+- [x] Booking race condition test passes (two clients, same slot, one wins). *Evidence: functions `createBooking.test.ts` "lets exactly one of two simultaneous requests for the same slot win" and the ten-caller variant (use cases 289 green).*
+- [x] WhatsApp opening, reminders-ready queue, running late and birthday messages work with fallbacks when WhatsApp is absent. *Evidence: `MessageDispatchPlanTests` (WhatsApp, then Messages, share sheet always last; no number = share sheet), `MessageLinksTests`, `MessageServiceTests`, `NotificationServiceTests` (reminders ready), `AppointmentUITests`.*
 
 **Localization, accessibility, motion**
-- [ ] `check-strings.sh` clean for all fourteen localizations (reviewer-pending strings listed, none missing); formatter, `PhoneNormalizer`, `DigitNormalizer` and `BidiIsolate` tests pass; locale-resolution tests pass; pseudolanguage and right-to-left screenshots show no truncated primary actions and correct mirroring in `ar`.
-- [ ] `legal/STATUS.md` exists and `check-legal-status.sh` runs; the wave 1 sets (Brazil `pt-BR`; Europe `pt-PT`, `es`, `it`, `fr`, `de`, `en-GB`, with a common GDPR core) are complete and marked ready for legal review; `docs/store/` has metadata drafts for the ten languages.
-- [ ] Voice capability matrix (`VoiceCapability`) tested for every language, including `none` and `transcribeOnly`.
-- [ ] Accessibility audit clean at AX5 and in dark mode; contrast tests green including Increase Contrast; Reduce Motion verified.
-- [ ] Motion kit used everywhere; no per-screen keyframes; hitch budget met; Reduce Motion and Low Power behaviors verified.
+- [x] `check-strings.sh` clean for all fourteen localizations (reviewer-pending strings listed, none missing); formatter, `PhoneNormalizer`, `DigitNormalizer` and `BidiIsolate` tests pass; locale-resolution tests pass; pseudolanguage and right-to-left screenshots show no truncated primary actions and correct mirroring in `ar`. *Evidence: `check-strings.sh --final` (2,273 keys + 6 InfoPlist keys) in every `test.sh` run; `FormattersTests`, `PhoneNormalizerTests`, `DigitNormalizerTests`, `BidiIsolateTests`, `AppLocalizationTests`; `LocalizationScreenshotUITests` (14 localizations, Arabic mirroring, double-length pseudolanguage) in the final Full run; `InfoPlistUsageTests` (every permission text in 14 localizations, S12).*
+- [x] `legal/STATUS.md` exists and `check-legal-status.sh` runs; the wave 1 sets (Brazil `pt-BR`; Europe `pt-PT`, `es`, `it`, `fr`, `de`, `en-GB`, with a common GDPR core) are complete and marked ready for legal review; `docs/store/` has metadata drafts for the ten languages. *Evidence: `check-legal-status.sh` and `check-legal-resources.sh` in every `test.sh` run (98 documents, 56 bundled texts); `legal/EUROPE.md`; `docs/store/` 13 storefront localizations, lengths re-checked in S12 (all within limits). Legal review itself is H11 (after sales, D40).*
+- [x] Voice capability matrix (`VoiceCapability`) tested for every language, including `none` and `transcribeOnly`. *Evidence: v1 ships voice as unavailable (D53): `VoiceAvailability` (`available`, `notAvailableYet`, `permissionDenied`, `languageUnsupported`) is tested in `VoiceFlowRulesTests` and `TreatmentFlowViewModelTests`; the per-language matrix belongs to the voice release and needs a device (H3, `docs/spikes/VOICE-LANGUAGE-MATRIX.md`).*
+- [x] Accessibility audit clean at AX5 and in dark mode; contrast tests green including Increase Contrast; Reduce Motion verified. *Evidence: `AccessibilityAuditUITests` clean in en and pt-BR at the default size and AX5 with Increase Contrast and Reduce Motion (S12, 16 min; in every Full run in en since S12), 14 per-feature audit suites (en, pt-BR, de, ar, hi; default and AX5), `PaletteContrastTests` and the per-screen contrast tests (light, dark, Increase Contrast), web contrast 152/152; dark mode through `-uiDark` (`ColorReviewUITests`). The manual VoiceOver pass is H19.*
+- [x] Motion kit used everywhere; no per-screen keyframes; hitch budget met; Reduce Motion and Low Power behaviors verified. *Evidence: `MotionTests` (policy for Reduce Motion and Low Power), every animation through `Motion`/`motionPolicy`; simulator scroll metrics in `PerformanceUITests` (no hitch ratio on the simulator); the device hitch measurement is H19.*
 
 **Engineering**
-- [ ] `scripts/build.sh`, `test.sh full`, `check-warnings.sh`, `check-project-settings.sh` clean; zero warnings; SwiftLint clean without new disables.
-- [ ] Server and web suites green; Lighthouse and bundle budgets met; CSP in place; `npm audit` clean at high severity.
-- [ ] `DESIGN.md`, `README.md` (how to build, run emulators, run e2e) and `docs/PROGRESS.md` are current; `docs/14-HUMAN-TASKS.md` lists only human items.
+- [x] `scripts/build.sh`, `test.sh full`, `check-warnings.sh`, `check-project-settings.sh` clean; zero warnings; SwiftLint clean without new disables. *Evidence: final regression in `PROGRESS.md` stage log "S12".*
+- [x] Server and web suites green; Lighthouse and bundle budgets met; CSP in place; `npm audit` clean at high severity. *Evidence: `test-firebase.sh` (lint, types, build, audit; unit 943, rules 66, use cases 289, transport 19), `test-web.sh full` (unit 248, Playwright 191 + 15 skipped, Lighthouse 0.99/1.00 on both pages, initial JS 48.4 KB gzip of 80), CSP headers in `firebase/firebase.json` checked by `security.spec.ts`.*
+- [x] `DESIGN.md`, `README.md` (how to build, run emulators, run e2e) and `docs/PROGRESS.md` are current; `docs/14-HUMAN-TASKS.md` lists only human items. *Evidence: DESIGN.md "Release hardening (S12)"; PROGRESS "v1 complete" block; H1 to H20 are accounts, devices, legal, store and owner decisions only.*
