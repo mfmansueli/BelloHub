@@ -33,9 +33,13 @@ enum UITestSeeding {
         defaults.set(try? JSONEncoder().encode(user), forKey: DefaultsKey.localDevUser)
         defaults.set(userID, forKey: DefaultsKey.setupCompletedUserID)
 
+        // The profile's language is the one the test launched in (`-uiLocale`), as after a real onboarding, so screens
+        // that read it (profession name, record fields, quick replies) speak that language. The services stay the
+        // English catalog's: tests in every localization look for "Glow Facial".
+        let localization = options.uiLocaleID.flatMap(AppLocalization.init(rawValue:)) ?? .en
         guard let catalog = try? ProfessionCatalog.loadBundled(localization: .en),
               let preset = try? RegionCatalog.loadBundled().preset(for: "BR") else { return }
-        var draft = OnboardingDraft(preset: preset, timeZoneID: "America/Sao_Paulo", localization: .en)
+        var draft = OnboardingDraft(preset: preset, timeZoneID: "America/Sao_Paulo", localization: localization)
         draft.displayName = "Maria Silva"
         draft.professions = [.esthetician]
         draft.selectedServiceKeys = Set(OnboardingSuggestions.services(for: draft.professions, in: catalog)
