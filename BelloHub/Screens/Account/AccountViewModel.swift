@@ -24,6 +24,8 @@ final class AccountViewModel {
     private(set) var deletion = AccountDeletionFlow.idle
     /// Apple did not confirm her (a failure, or an authorization without a code). A cancelled sheet leaves nothing.
     private(set) var appleErrorMessage: String?
+    /// The booking link was just copied (long press on its row); the row says so for a moment.
+    private(set) var copiedLink = false
 
     let phoneE164: String?
     let userID: String?
@@ -32,6 +34,9 @@ final class AccountViewModel {
     private let profile: ProfileService
     private let account: AccountService
     private let credentials: any AppleCredentialProviding
+    private let clipboard: any ClipboardWriting
+    private let copiedDuration: Duration
+    private var copiedTask: Task<Void, Never>?
     private let signOut: () -> Void
 
     init(
@@ -39,17 +44,35 @@ final class AccountViewModel {
         account: AccountService,
         session: SessionService,
         credentials: any AppleCredentialProviding = SystemAppleCredentialProvider(),
+        clipboard: any ClipboardWriting = SystemClipboard(),
+        copiedDuration: Duration = .seconds(2),
         signOut: @escaping () -> Void
     ) {
         self.profile = profile
         self.account = account
         self.credentials = credentials
+        self.clipboard = clipboard
+        self.copiedDuration = copiedDuration
         self.signOut = signOut
         displayName = profile.profile?.displayName ?? ""
         businessName = profile.profile?.businessName ?? ""
         phoneE164 = session.user?.phoneE164
         userID = session.user?.id
         signInMethod = session.user?.method
+    }
+
+    // MARK: - Booking link
+
+    /// Puts her booking link on the clipboard, the full address a client can open, and says "Copied" for a moment.
+    func copyBookingLink(_ link: BookingLink) {
+        clipboard.write(link.url.absoluteString)
+        copiedLink = true
+        copiedTask?.cancel()
+        copiedTask = Task { [copiedDuration] in
+            try? await Task.sleep(for: copiedDuration)
+            guard !Task.isCancelled else { return }
+            copiedLink = false
+        }
     }
 
     // MARK: - Reading

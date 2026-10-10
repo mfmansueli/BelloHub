@@ -107,7 +107,7 @@ struct AccountContentView: View {
             ListCard(dividerInset: Spacing.md) {
                 factRow("account.field.phone", value: phoneText, identifier: "account.phoneRow")
                 factRow("account.field.profession", value: professionText, identifier: "account.professionRow")
-                factRow("account.field.bookingLink", value: bookingLinkText, identifier: "account.bookingLinkRow")
+                bookingLinkRow
             }
         }
     }
@@ -160,6 +160,33 @@ struct AccountContentView: View {
         .padding(.vertical, Spacing.sm)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier(identifier)
+    }
+
+    /// Her booking link. Pressing and holding it offers Copy, the iOS way to copy a line of text; the row says
+    /// "Copied" for a moment and the haptic confirms it.
+    private var bookingLinkRow: some View {
+        let link = bookingSetup.setup.slug.map { BookingLink(slug: $0) }
+        return factRow(
+            "account.field.bookingLink", value: viewModel.copiedLink ? copiedText : bookingLinkText,
+            identifier: "account.bookingLinkRow"
+        )
+        .contentShape(.rect)
+        .contextMenu {
+            if let link {
+                Button { viewModel.copyBookingLink(link) } label: {
+                    Label { Text("bookingSettings.link.copy") } icon: { Image(icon: .link) }
+                }
+                .accessibilityIdentifier("account.bookingLinkCopyButton")
+            }
+        }
+        .sensoryFeedback(.success, trigger: viewModel.copiedLink) { _, copied in copied }
+        .accessibilityAction(named: Text("bookingSettings.link.copy")) {
+            if let link { viewModel.copyBookingLink(link) }
+        }
+    }
+
+    private var copiedText: String {
+        String(localized: LocalizedStringResource("bookingSettings.link.copied").localized(in: locale))
     }
 
     private func nameError(_ issue: AccountRules.NameIssue?) -> LocalizedStringKey? {

@@ -16,6 +16,7 @@ struct AccountViewModelTests {
         let deleter: FakeAccountDeleter
         let credentials: FakeAppleCredentialProvider
         let viewModel: AccountViewModel
+        let clipboard: FakeClipboard
         let defaults: UserDefaults
         let suite: String
         let signOuts: SignOutCounter
@@ -28,7 +29,8 @@ struct AccountViewModelTests {
     private func makeWorld(
         deleter: FakeAccountDeleter = FakeAccountDeleter(),
         method: SignInMethod = .phone,
-        credentials: FakeAppleCredentialProvider = FakeAppleCredentialProvider()
+        credentials: FakeAppleCredentialProvider = FakeAppleCredentialProvider(),
+        clipboard: FakeClipboard = FakeClipboard()
     ) async throws -> World {
         let suite = "account-vm-\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite) ?? .standard
@@ -54,14 +56,27 @@ struct AccountViewModelTests {
         await session.restore()
         let counter = SignOutCounter()
         let viewModel = AccountViewModel(
-            profile: profile, account: account, session: session, credentials: credentials
+            profile: profile, account: account, session: session, credentials: credentials,
+            clipboard: clipboard, copiedDuration: .milliseconds(50)
         ) {
             counter.count += 1
         }
         return World(
             repository: repository, keyStore: keyStore, deleter: deleter, credentials: credentials,
-            viewModel: viewModel, defaults: defaults, suite: suite, signOuts: counter
+            viewModel: viewModel, clipboard: clipboard, defaults: defaults, suite: suite, signOuts: counter
         )
+    }
+
+    @Test("Copying the booking link puts the full address on the clipboard and says so for a moment")
+    func copyBookingLink() async throws {
+        let world = try await makeWorld()
+        defer { world.defaults.removePersistentDomain(forName: world.suite) }
+
+        world.viewModel.copyBookingLink(BookingLink(slug: "maria-silva"))
+        #expect(world.clipboard.written == ["https://bello-hub.web.app/maria-silva"])
+        #expect(world.viewModel.copiedLink)
+        await Wait.untilMain { !world.viewModel.copiedLink }
+        #expect(!world.viewModel.copiedLink)
     }
 
     @Test("The form starts from the stored profile and saves only a valid change")
