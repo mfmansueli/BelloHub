@@ -6,8 +6,9 @@ is actually built and what was decided while building it.
 
 ## Identity
 
-Quiet richness. A warm ivory page, graphite as the strong color, dusty rose and soft sage as accents, peach for
-warmth. Depth comes from tonal surfaces, two-layer warm shadows and one memorable "hero" card per key screen,
+Quiet richness. A warm ivory page (a deep green-graphite one in dark), sage as the strong color of the one primary
+action, dusty rose and sage as accents, peach for warmth; medium intensity since the 2026-10-10 refinement (warmer and
+more alive than the first pastel proposal, calmer than the saturated one). Depth comes from tonal surfaces, two-layer warm shadows and one memorable "hero" card per key screen,
 not from decoration. Fraunces gives the headlines and big numerals a human, editorial voice; DM Sans keeps the
 interface clear. No theme, no mascot, no illustrations beyond small composed shapes in empty states.
 Sentence case everywhere, no all-caps eyebrows. Warm, direct microcopy (docs/01-PRODUCT.md, "Voice").
@@ -35,47 +36,72 @@ without Increase Contrast), and `HeroContrastTests` measures text on the hero at
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `bg` | `#F8F6F2` | `#161412` | Screen background |
-| `surface` | `#FFFCF8` | `#1F1C1A` | Cards, list cards, sheets |
-| `sunken` | `#EFEBE4` | `#272320` | Wells, input fill, quiet chips |
-| `hairline` | `#ECE7DF` | `#34302C` | Card borders, dividers (decorative) |
-| `ink` | `#242321` | `#F5F1EA` | Primary text, primary button fill (inverts in dark) |
-| `inkOnFill` | `#FFFCF8` | `#161412` | Text on the primary button |
-| `ink2` | `#65625D` | `#B5AEA5` | Secondary text |
-| `ink3` | `#8C8984` | `#8C857D` | Tertiary icons only, never text |
-| `fieldBorder` | `#86817A` | `#7A736B` | Input and secondary-button borders |
-| `rose` | `#C98F9F` | `#C98F9F` | Dots, ring accents, glow; never behind small text |
-| `roseText` (= `accent`) | `#9A5A6C` | `#E3A8B7` | Links and action text on `bg`/`surface` |
-| `roseWash` / `roseDeepWash` | `#F7ECEE` / `#F0DCE1` | `#3A2A2F` / `#4A343A` | Soft backgrounds |
-| `roseDeepText` | `#7E4757` | `#F2C4D0` | Small text on rose washes |
-| `sage` | `#6E8266` | `#8FA585` | Switch on-track, success graphics |
-| `sageText` | `#56684F` | `#B9CBAE` | Confirmed and success text |
-| `sageWash` / `sageDeepWash` | `#EEF2EA` / `#DFE6D9` | `#263023` / `#30402C` | Chips, tiles |
-| `peach` | `#E8B49E` | `#E8B49E` | Decoration |
-| `peachText` / `peachWash` | `#8A5238` / `#FBEFE7` | `#EBBFA9` / `#36281F` | Warm tiles and chips |
-| `amberText` / `amberBg` | `#7A5C16` / `#F6ECD6` | `#E8CD85` / `#3B3118` | Pending |
-| `coralText` / `coralBg` | `#9A4535` / `#F8E1DC` | `#F2A99B` / `#40231F` | Needs attention, allergies, reactions |
-| `neutralText` / `neutralWash` | `#4A4036` / `#EADFD2` | `#E2D6C8` / `#2F2923` | Quiet chips |
+| `bg` | `#FAF7F1` | `#191D19` | App background |
+| `surface` | `#FFFFFF` | `#252B25` | Neutral surface: cards, list cards, sheets |
+| `sunken` | `#F3EFE7` | `#30382F` | Elevated neutral surface: wells, input fill, quiet round buttons |
+| `hairline` | `#D5D8CF` | `#566151` | Neutral separator and card border (decorative) |
+| `ink` | `#272522` | `#F7F2E8` | Primary text (no longer a fill) |
+| `ink2` | `#625F59` | `#C6C4B9` | Secondary text, placeholders |
+| `ink3` | `#888781` | `#8D9787` | Tertiary icons only, never text |
+| `fieldBorder` | `#7E8078` | `#82907C` | Input and secondary-button borders (3:1) |
+| `action` / `onAction` | `#4F6B4D` / `#FAF5EB` | `#57744E` / `#FAF5EB` | The one primary action; check discs, radios, filled progress |
+| `selectionFill` / `selectionInk` | `#CADAC2` / `#3C5638` | `#435C3C` / `#F7F2E8` | Selected chip, day, option (always with a `selectionInk` ring or a check); `selectionInk` is the tab bar tint |
+| `sageFill` / `peachFill` / `roseFill` | `#BDD0B3` / `#F0C5A6` / `#E3B5C7` | `#3B5540` / `#704B37` / `#684353` | Solid brand card and illustration fills (insight tiles, empty-state shapes, avatar gradient ends) |
+| `onBrandCard` | `#252823` | `#F7F2E8` | Text on a brand card fill |
+| `sageBadge` / `peachBadge` / `roseBadge` | `#FAF5EB` (ivory) | `#2C4231` / `#573626` / `#52323F` | Icon discs on a brand card; the icon is the family accent |
+| `sageText` | `#4F6B4D` | `#BDDAAA` | Sage icon/accent: confirmed, success, info |
+| `peachText` | `#8F5235` | `#FFD1AF` | Peach icon/accent |
+| `roseText` (= `accent`) | `#8D4761` | `#F2B8CE` | Rose icon/accent: links, action text, focus ring |
+| `roseDeepText` | `#7A3B53` | `#F8CBDB` | Small text on deep rose washes, the "left" count |
+| `sageWash` / `sageDeepWash` | `#E8EFE2` / `#D9E5D0` | `#2A372A` / `#34472F` | Quiet tinted surfaces: chips, notices, icon squares |
+| `roseWash` / `roseDeepWash` | `#F7E8EE` / `#EFD6E0` | `#3B2A31` / `#4A3440` | Quiet tinted surfaces |
+| `peachWash` | `#FBECE1` | `#3D2C22` | Win-back strip, warm icon squares |
+| `rose`, `sage`, `ivory`, `brandMark` | `#C98F9F`, `#6E8266`, `#FAF5EB`, `#6E8266` | `#C98F9F`, `#8FA585`, `#FAF5EB`, `#344B3C` | Brand identity (logo swatches): dots, glows, switch track, the mark |
+| `peach` | `#E8B49E` | `#E8B49E` | Tag dot |
+| `amberText` / `amberBg` | `#7A5C16` / `#F6ECD6` | `#E8CD85` / `#3B3118` | Pending, warnings (status only) |
+| `coralText` / `coralBg` | `#9A4535` / `#F8E1DC` | `#F2A99B` / `#40231F` | Needs attention, allergies, contraindications, destructive (status only) |
+| `neutralText` / `neutralWash` | `#4A4036` / `#EADFD2` | `#E2D6C8` / `#3A3630` | Completed, quiet chips |
+
+Every text token also has an Increase Contrast value (darker in light, lighter in dark); `onAction` turns white in
+dark with Increase Contrast and the light `action` fill deepens to `#435A41`.
 
 Area namespaces: `StatusPalette` (`confirmed`, `pending`, `nextUp`, `completed`, `attention`; foreground,
-background and dot), `AvatarPalette` (four gradient pairs chosen by a stable FNV-1a hash of the id),
-`HeroPalette` (the graphite surface, dark in both appearances).
+background and dot), `AvatarPalette` (four gradient pairs chosen by a stable FNV-1a hash of the id; the ends are the
+brand card fills, initials the deep family accent), `HeroPalette` (the hero surface, a green-graphite `#2F362E` to
+`#232823` in both appearances, ivory `#FAF5EB` text, `#DAD8CE` secondary, `#48524A` raised), `Elevation.tint`
+(`#2E3329`, a neutral green-graphite shadow).
 
-Decisions that differ from the prototype, with the reason:
+Roles are kept apart: brand identity, neutral surfaces and foregrounds, the primary action, selection, the brand
+families (fill, badge, accent) and the semantic statuses. Amber and coral never become decorative, and peach or rose
+never carry a safety warning.
 
-- **`fieldBorder` is darker** (`#86817A` / `#7A736B`, 3.6:1 and 3.9:1 on `bg`). The prototype's soft border is
-  1.4:1, below the 3:1 that WCAG 1.4.11 and CLAUDE.md section 5 require of a field boundary.
-- **Avatar initials for sage and peach are darker** (`#46573F`, `#74432C`): the prototype's were 4.0:1 on the end of
-  the gradient. All eight pairs, both gradient ends, are tested at 4.5:1.
-- **`roseText` on `roseWash` is 4.49:1 in light**, so small text on a rose wash uses `roseDeepText` (a test pins the quirk).
-- **Secondary text on the hero is a solid `#E0D9D4`** (5.9:1 at the lightest glow point), not cream at 68 % opacity: no
-  `.opacity` is ever applied to text.
+Decisions, with the reason:
 
-Contrast, measured (text/background), light then dark: `ink`/`bg` 14.6 / 16.3, `ink2`/`bg` 5.6 / 8.4,
-`roseText`/`surface` 5.1 / 8.5, `sageText`/`sageWash` 5.3 / 8.0, `peachText`/`peachWash` 5.6 / 8.5,
-`amberText`/`amberBg` 5.3 / 8.2, `coralText`/`coralBg` 5.1 / 7.4, `roseDeepText`/`roseDeepWash` 5.5 / 7.4,
-`fieldBorder`/`bg` 3.6 / 3.9, `ink3`/`bg` 3.2 / 5.1. Hero: cream 8.1:1, secondary 5.9:1 at the rose glow peak.
-With Increase Contrast every text pair is at least as high (a test asserts it never gets lower).
+- **2026-10-10 color refinement**: the approved medium-intensity sage, rose and peach (task
+  `docs/tasks/color-refinement.md`, mapping in `docs/agent-notes/color-refinement.md`). Implemented from the hex
+  specification; the reference mockup was not in the repository. The primary action moved from `ink` to `action`
+  (sage); `inkOnFill` is gone.
+- **The selection fill never carries the state alone**: `#CADAC2` is 1.4:1 on the page, so a selected chip, day or
+  option also gets a 1.5 pt `selectionInk` ring (7.6:1 on the page) or a check. The native glass tab bar draws its own
+  selection pill; only its tint is `selectionInk`.
+- **The dark `action` fill is 2.8:1 on a dark card**: on a card it only carries an ivory glyph (check disc, radio), and
+  selected outlines use `selectionInk`. As filled progress on the page it is 3.3:1.
+- **`fieldBorder` is darker than the separator** (3.7:1 / 5.1:1 on `bg`, 3.5:1 / 3.6:1 on the input fill): the
+  separator `#D5D8CF` is decorative, a field boundary needs 3:1 (WCAG 1.4.11).
+- **The hero's next-up dot is the logo rose**: the hero is dark in both appearances, so a light-mode text token there
+  vanished (4.7:1 now).
+- **The mark matches the app icon**: a sage tile (darker sage in dark), an ivory "b" and a rose dot.
+- **Secondary text on the hero is a solid `#DAD8CE`** (5.3:1 at the lightest glow point), not cream at 68 % opacity:
+  no `.opacity` is ever applied to text.
+
+Contrast, measured (text/background), light then dark: `ink`/`bg` 14.3 / 15.3, `ink2`/`bg` 6.0 / 9.8,
+`onAction`/`action` 5.45 / 4.82, `selectionInk`/`selectionFill` 5.6 / 6.6, `onBrandCard` on sage/peach/rose fills
+9.13 / 9.42 / 8.32 and 7.35 / 6.84 / 7.48, badge icons on badges 5.5 / 5.6 / 6.0 and 7.1 / 7.7 / 6.6,
+`roseText`/`surface` 6.6 / 8.6, `roseText`/`roseWash` 5.5 / 8.0, `sageText`/`sageWash` 5.1 / 8.2,
+`peachText`/`peachWash` 5.3 / 9.5, `amberText`/`amberBg` 5.3 / 8.2, `coralText`/`coralBg` 5.1 / 7.4,
+`roseDeepText`/`roseDeepWash` 6.0 / 7.8, `fieldBorder`/`bg` 3.7 / 5.1, `ink3`/`bg` 3.4 / 5.6. Hero: ivory 7.0:1,
+secondary 5.3:1 at the rose glow peak. With Increase Contrast every pair is at least as high (a test asserts it never
+gets lower).
 
 ### Typography (`Typography`)
 
@@ -137,22 +163,22 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 
 | Component | Notes |
 |---|---|
-| `BelloButtonStyle` (+ `.belloPrimary`, `.belloSecondary`, `.belloTertiary`, `.belloOnHero`, `.belloDestructive`, `.belloChip(selected:)`) | The one button style. 56 pt high, radius 18; chips 44 pt capsules. Disabled is 40 % opacity |
+| `BelloButtonStyle` (+ `.belloPrimary`, `.belloSecondary`, `.belloTertiary`, `.belloOnHero`, `.belloDestructive`, `.belloChip(selected:)`) | The one button style. 56 pt high, radius 18; chips 44 pt capsules. Primary is `action` with an ivory label and a soft `Elevation.tint` lift; a selected chip is `selectionFill`, `selectionInk` label and a 1.5 pt `selectionInk` ring. Disabled is 40 % opacity |
 | `Avatar` + `Initials` | Gradient pair by id hash, initials in locale casing (Turkish `İ`), decorative |
 | `StatusChip` | 26 pt capsule, dot and a word |
 | `SectionHeader` | 20/600 title (heading trait), optional trailing action, 44 pt target |
 | `ListCard` + `belloCard()` | Surface, hairline, `e1`, radius 24; inset dividers start at the text edge (72 pt) |
-| `InsightTile` | Wash, icon disc, Fraunces numeral (capped before AX3), one accessibility element; put tiles in an `HStack` with `.fixedSize(horizontal: false, vertical: true)` so heights match |
-| `HeroCard` + `HeroSurface` | Graphite, radius 30, glow, `e2`; one per key screen |
-| `EmptyState` | Composed shapes, title, next action, optional primary button |
+| `InsightTile` | Solid brand fill (`sageFill`, `peachFill`, `roseFill`), a family badge with the family accent icon, `onBrandCard` numeral and label, Fraunces numeral (capped before AX3), one accessibility element; put tiles in an `HStack` with `.fixedSize(horizontal: false, vertical: true)` so heights match |
+| `HeroCard` + `HeroSurface` | Green-graphite, radius 30, glow, `e2`; one per key screen |
+| `EmptyState` | Composed shapes in the illustration fills (`roseFill`, `sageFill`, `peachFill`), title, next action, optional primary button |
 | `SheetHeader` | Title, subtitle, close button (optional `closeIdentifier`), for native sheets |
 | `BelloTextField` | 52 pt, radius 14, `sunken`, 1.5 pt `fieldBorder`, 3 pt `roseText` focus ring, error text; `isSensitive` turns off autocorrection; `identifier` goes on the text field itself |
 | `InlineNotice` | `.safety` (coral), `.info` (sage), `.warning` (amber) |
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
-| `BrandMark`, `BrandLockup` | The graphite "b" with a rose dot, drawn (not an image), and the two-line wordmark. The wordmark is the brand name, never localized, and always left-to-right |
-| `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `ink` outline and a check, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
+| `BrandMark`, `BrandLockup` | The ivory "b" on the sage `brandMark` tile with a rose dot (as the app icon), drawn (not an image), and the two-line wordmark. The wordmark is the brand name, never localized, and always left-to-right |
+| `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `selectionInk` outline and an `action` check disc, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
 | `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
-| `StepProgressBar` | One 4 pt segment per step, filled up to the current one; spoken as "Step n of m" |
+| `StepProgressBar` | One 4 pt segment per step, filled in `action` up to the current one (`hairline` after it); spoken as "Step n of m" |
 | `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
 | `BelloNoteField` | Multi-line field with the same look as `BelloTextField` (S4) |
 | `TagDot` + `TagColor` | The tag color as a pastel fill inside a ring in the family's text tone; four tokens `rose`, `sage`, `peach`, `sand` (wash, text, dot, outline each), unknown tokens read as `sand`; the ring is 3:1 or more on `surface`, `bg` and `sunken` (`TagColorContrastTests`) |
@@ -172,6 +198,14 @@ Arabic and Hindi), text size (small to AX5) and appearance. Launch arguments: `-
 `-catalogSection colors|typography|buttons|components|motion`, `-catalogTextSize small|standard|large|accessibility3|accessibility5`,
 `-catalogDark`. `DesignCatalogAuditUITests` runs the accessibility audit (clipped text, element description) on
 the catalog in `en`, `pt-BR`, `de`, `ar` and `hi`, at the default size and at AX5.
+
+Review screenshots of the app in light and dark (Home, Calendar, Alerts, Clients, a client, the new-appointment sheet,
+the catalog): `TEST_RUNNER_SCREENSHOT_DIR=$PWD/build/screenshots ONLY_TESTING=BelloHubUITests/ColorReviewUITests
+scripts/test.sh full` (skipped in every plan otherwise). `-uiDark` runs the whole app in dark, because the iOS 27
+simulator's appearance switch does not reach apps.
+
+Home's "New appointment" quick action is the screen's primary (`action`) while the day has visits; on a clear day the
+empty state's own "New appointment" is the primary and the quick action is secondary.
 
 ## Screen inventory
 
