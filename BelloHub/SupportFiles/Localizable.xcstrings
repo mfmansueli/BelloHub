@@ -28903,6 +28903,366 @@
         }
       }
     },
+    "bookingRequest.unverified.message" : {
+      "comment" : "Booking request (2.10): unverified badge text. %1$@ is the client's phone number, %2$@ the 5-character reference the client quotes in the WhatsApp message.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لم يصل الرمز إلى صاحب الطلب. تحقّق من أن رسالة واتساب واردة من %1$@ وتذكر الرقم المرجعي %2$@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Code ist bei der anfragenden Person nicht angekommen. Prüfe, ob die WhatsApp-Nachricht von %1$@ kommt und die Referenz %2$@ nennt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The client could not receive the code. Check that the WhatsApp message came from %1$@ and quotes the reference %2$@."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The client could not receive the code. Check that the WhatsApp message came from %1$@ and quotes the reference %2$@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Comprueba que el mensaje de WhatsApp venga de %1$@ y mencione la referencia %2$@."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Revisa que el mensaje de WhatsApp venga de %1$@ y mencione la referencia %2$@."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Revisa que el mensaje de WhatsApp venga de %1$@ y mencione la referencia %2$@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le code n'est pas parvenu à la personne qui a fait la demande. Vérifiez que le message WhatsApp vient du %1$@ et cite la référence %2$@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अनुरोध करने वाले व्यक्ति तक कोड नहीं पहुँचा। जाँच लें कि WhatsApp संदेश %1$@ से आया है और उसमें रेफ़रेंस %2$@ लिखा है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kode tidak sampai ke orang yang membuat permintaan. Pastikan pesan WhatsApp datang dari %1$@ dan menyebut referensi %2$@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il codice non è arrivato a chi ha fatto la richiesta. Controlla che il messaggio WhatsApp arrivi da %1$@ e citi il riferimento %2$@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O código não chegou a quem fez o pedido. Confira se a mensagem no WhatsApp veio de %1$@ e cita a referência %2$@."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O código não chegou a quem fez o pedido. Confirme que a mensagem no WhatsApp veio de %1$@ e indica a referência %2$@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kod, talebi yapan kişiye ulaşmadı. WhatsApp mesajının %1$@ numarasından geldiğini ve %2$@ referansını içerdiğini kontrol edin."
+          }
+        }
+      }
+    },
+    "bookingRequest.unverified.messageNoReference" : {
+      "comment" : "Booking request (2.10): unverified badge text when the request has no reference. %@ is the client's phone number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لم يصل الرمز إلى صاحب الطلب. تحقّق من أن رسالة واتساب واردة من %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Code ist bei der anfragenden Person nicht angekommen. Prüfe, ob die WhatsApp-Nachricht von %@ kommt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The client could not receive the code. Check that the WhatsApp message came from %@."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The client could not receive the code. Check that the WhatsApp message came from %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Comprueba que el mensaje de WhatsApp venga de %@."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Revisa que el mensaje de WhatsApp venga de %@."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El código no le llegó a quien hizo la solicitud. Revisa que el mensaje de WhatsApp venga de %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le code n'est pas parvenu à la personne qui a fait la demande. Vérifiez que le message WhatsApp vient du %@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अनुरोध करने वाले व्यक्ति तक कोड नहीं पहुँचा। जाँच लें कि WhatsApp संदेश %@ से आया है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kode tidak sampai ke orang yang membuat permintaan. Pastikan pesan WhatsApp datang dari %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il codice non è arrivato a chi ha fatto la richiesta. Controlla che il messaggio WhatsApp arrivi da %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O código não chegou a quem fez o pedido. Confira se a mensagem no WhatsApp veio de %@."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O código não chegou a quem fez o pedido. Confirme que a mensagem no WhatsApp veio de %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kod, talebi yapan kişiye ulaşmadı. WhatsApp mesajının %@ numarasından geldiğini kontrol edin."
+          }
+        }
+      }
+    },
+    "bookingRequest.unverified.releases" : {
+      "comment" : "Booking request (2.10): under the unverified badge. %@ is a date and time.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إذا لم تردّ، يصبح الموعد متاحًا من جديد في %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wenn du nicht antwortest, wird die Zeit am %@ wieder frei."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you do not answer, the time opens up again on %@."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "If you do not answer, the time opens up again on %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si no respondes, la hora vuelve a quedar libre el %@."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si no respondes, el horario vuelve a quedar libre el %@."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Si no respondes, el horario vuelve a quedar libre el %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sans réponse de votre part, l'horaire redevient libre le %@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अगर आप जवाब नहीं देते, तो यह समय %@ को फिर से खाली हो जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kalau kamu tidak menjawab, waktunya kembali kosong pada %@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se non rispondi, l'orario torna libero il %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se você não responder, o horário fica livre de novo em %@."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se não responder, o horário volta a ficar livre em %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yanıt vermezseniz bu saat %@ tarihinde yeniden boşa çıkar."
+          }
+        }
+      }
+    },
+    "bookingRequest.unverified.title" : {
+      "comment" : "Booking request (2.10): badge title on a request made without the e-mail code (the client confirmed on WhatsApp).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "غير موثَّق"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nicht verifiziert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not verified"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not verified"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin verificar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin verificar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin verificar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non vérifié"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सत्यापित नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum terverifikasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non verificato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não verificado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não verificado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Doğrulanmadı"
+          }
+        }
+      }
+    },
     "bookingSettings.accepting.pausedSubtitle" : {
       "comment" : "Switch subtitle while bookings are paused.",
       "extractionState" : "manual",

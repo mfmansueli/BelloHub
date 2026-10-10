@@ -53,6 +53,13 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
     var isLateCancellation: Bool?
     var cancelReason: String?
     var intakeSubmittedAt: Date?
+    /// `whatsapp`: the client could not receive the e-mail code and confirms with her on WhatsApp, so the contact
+    /// details are NOT verified (API.md 5.8). nil: verified. Set by the server only, like everything here.
+    var verification: String?
+    /// The short code the client quotes in that WhatsApp message.
+    var reference: String?
+    /// When the server releases the unverified request if she has not answered.
+    var pendingExpiresAt: Date?
     var createdAt: Date
     var updatedAt: Date
 
@@ -81,6 +88,9 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         isLateCancellation: Bool? = nil,
         cancelReason: String? = nil,
         intakeSubmittedAt: Date? = nil,
+        verification: String? = nil,
+        reference: String? = nil,
+        pendingExpiresAt: Date? = nil,
         createdAt: Date,
         updatedAt: Date? = nil
     ) {
@@ -108,6 +118,9 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         self.isLateCancellation = isLateCancellation
         self.cancelReason = cancelReason
         self.intakeSubmittedAt = intakeSubmittedAt
+        self.verification = verification
+        self.reference = reference
+        self.pendingExpiresAt = pendingExpiresAt
         self.createdAt = createdAt
         self.updatedAt = updatedAt ?? createdAt
     }
@@ -149,6 +162,9 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         isLateCancellation = try container.decodeIfPresent(Bool.self, forKey: .isLateCancellation)
         cancelReason = try container.decodeIfPresent(String.self, forKey: .cancelReason)
         intakeSubmittedAt = try container.decodeIfPresent(Date.self, forKey: .intakeSubmittedAt)
+        verification = try container.decodeIfPresent(String.self, forKey: .verification)
+        reference = try container.decodeIfPresent(String.self, forKey: .reference)
+        pendingExpiresAt = try container.decodeIfPresent(Date.self, forKey: .pendingExpiresAt)
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? startsAt
         updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? createdAt
     }

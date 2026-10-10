@@ -115,4 +115,26 @@ struct BookingRequestViewModelTests {
         await model.loadAsync()
         #expect(model.historyClientID == client.id)
     }
+
+    @Test("An unverified request shows the badge instead of a guessed reason, and approving works as usual")
+    func unverifiedRequest() async {
+        var booking = makeIncomingBooking(reason: nil)
+        booking.verification = "whatsapp"
+        booking.reference = "K7M2P"
+        let (model, rig) = await makeModel(booking)
+        defer { rig.cleanUp() }
+        #expect(model.unverifiedBadge?.reference == "K7M2P")
+        #expect(!model.showsReason)
+        model.approve()
+        #expect(await Wait.untilMain { model.phase == .accepted })
+        #expect(await rig.repository.writes == ["respondBookingRequest:bk-1:true"])
+    }
+
+    @Test("A verified request has no badge and keeps its reason")
+    func verifiedRequest() async {
+        let (model, rig) = await makeModel()
+        defer { rig.cleanUp() }
+        #expect(model.unverifiedBadge == nil)
+        #expect(model.showsReason)
+    }
 }
