@@ -46,6 +46,9 @@ export interface StoredBookingView {
   readonly durationMinutes: number;
   readonly client: { name: string; phone: string; email?: string; locale: string };
   readonly note: string | null;
+  /** "Confirm on WhatsApp": `whatsapp` and the reference; null for a verified booking. */
+  readonly verification: string | null;
+  readonly reference: string | null;
   readonly rescheduleCount: number;
   readonly clientConfirmedAt: string | null;
   readonly lateByMinutes: number | null;
@@ -87,6 +90,16 @@ export class Mock {
   /** A waiting-list offer the professional sent (`/{slug}/time?offer=<holdKey>`, API.md 5.4). */
   seedOffer(slug: string, expired = false): Promise<{ holdKey: string; startsAt: string; serviceId: string }> {
     return this.post('/__test/seed-offer', { slug, expired });
+  }
+
+  /** A trusted device for `email` on `slug` (API.md 5.8 `device`), as an earlier code-verified booking leaves it. */
+  seedDevice(slug: string, email: string): Promise<{ token: string; expiresAt: string }> {
+    return this.post('/__test/seed-device', { slug, email });
+  }
+
+  /** The hold keys booking codes were sent with (API.md 5.5: the hold is stretched to the code's life). */
+  async codeHolds(): Promise<string[]> {
+    return (await this.get<{ items: string[] }>('/__test/code-holds')).items;
   }
 
   async seedExpired(slug: string): Promise<string> {
@@ -187,7 +200,8 @@ export const test = base.extend<Fixtures & Options>({
       const requests: SeenRequest[] = [];
       const problems: string[] = [];
       let quirks = 0;
-      const storageAllowed: RegExp[] = [/^bh\.lang$/, /^bh\.draft\./];
+      // The language, the booking draft (session) and a trusted-device token per page (API.md 5.8 `device`).
+      const storageAllowed: RegExp[] = [/^bh\.lang$/, /^bh\.draft\./, /^bh\.device\./];
       const origin = new URL(baseURL ?? 'http://127.0.0.1:4010').origin;
 
       // Every violation of every page and navigation reaches the test at once (a page that navigated away keeps nothing).

@@ -111,15 +111,16 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
     }
   };
 
-  const resendControl = verification.seconds > 0 ? (
-    <p class="meta grow" role="timer" data-testid="resend-timer">
-      {t('bk6.resendIn', { time: ltr(format.countdown(verification.seconds)) })}
-    </p>
-  ) : (
-    <Button variant="tertiary" inline onClick={verification.send} testId="resend">
-      {t('bk6.resend')}
-    </Button>
-  );
+  const resendControl = (timerId: string, buttonId: string): JSX.Element =>
+    verification.seconds > 0 ? (
+      <p class="meta grow" role="timer" data-testid={timerId}>
+        {t('bk6.resendIn', { time: ltr(format.countdown(verification.seconds)) })}
+      </p>
+    ) : (
+      <Button variant="tertiary" inline onClick={verification.send} testId={buttonId}>
+        {t('bk6.resend')}
+      </Button>
+    );
 
   return (
     <Screen
@@ -175,7 +176,7 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
       )}
 
       <div class="stack-sm">
-        <div class="row-flex">{resendControl}</div>
+        <div class="row-flex">{resendControl('resend-timer', 'resend')}</div>
         {offersHelp ? (
           <p>
             <button type="button" class="link-button" onClick={() => { setHelpOpen(true); }} data-testid="no-code">
@@ -193,7 +194,7 @@ export function VerifyStep({ profile }: { profile: PublicProfile }): JSX.Element
         <div class="stack">
           <p data-testid="help-spam">{t('bk6.help.spam', { email: ltr(email) })}</p>
           <div class="stack-sm">
-            <div class="row-flex">{resendControl}</div>
+            <div class="row-flex">{resendControl('help-timer', 'help-resend')}</div>
             <Button variant="secondary" onClick={startEditing} testId="help-change-email">
               {t('bk6.changeEmail')}
             </Button>

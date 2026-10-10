@@ -134,7 +134,7 @@ export const test = base.extend<Fixtures>({
         if (page.isClosed() || !page.url().startsWith('http')) continue;
         try {
           const state = await page.evaluate(() => ({ keys: [...Object.keys(window.localStorage), ...Object.keys(window.sessionStorage)], cookie: document.cookie }));
-          for (const key of state.keys) if (!/^bh\.(lang|draft\.)/.test(key)) problems.push(`browser storage holds ${key}`);
+          for (const key of state.keys) if (!/^bh\.(lang|draft\.|device\.)/.test(key)) problems.push(`browser storage holds ${key}`);
           if (state.cookie !== '') problems.push('document.cookie is not empty');
         } catch {
           // A page that is navigating or crashed has nothing left to inspect.

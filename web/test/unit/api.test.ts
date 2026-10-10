@@ -68,6 +68,7 @@ describe('callable transport (API.md section 1)', () => {
       ['RATE_LIMITED', 429, 'rateLimited'],
       ['INVALID_CODE', 400, 'codeInvalid'],
       ['VERIFICATION_FAILED', 403, 'codeExpired'],
+      ['VERIFICATION_REQUIRED', 400, 'verificationRequired'],
       ['NOT_ALLOWED', 400, 'notAllowed'],
       ['CONFIRMATION_REQUIRED', 400, 'notAllowed'],
       ['BOOKING_NOT_ACTIVE', 400, 'notAllowed'],
