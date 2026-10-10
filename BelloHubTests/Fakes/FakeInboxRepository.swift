@@ -21,6 +21,13 @@ actor FakeInboxRepository: InboxRepository {
     /// Every write, as `name:argument`, in order.
     private(set) var writes: [String] = []
     private(set) var offers: [WaitlistOffer] = []
+    /// The sealed mailbox: what `mailboxItems` lists, and the envelopes kept "in Storage" for `mailboxItem(id:)`.
+    private(set) var mailbox: [MailboxItem] = []
+    private var storedEnvelopes: [String: SealedEnvelope] = [:]
+    /// Every read, as `name` (or `name:id`), in order.
+    private(set) var reads: [String] = []
+    /// Every read fails with this until set back to nil (offline).
+    private var readFailure: BookingRepositoryError?
 
     init(
         bookings: [IncomingBooking] = [], requests: [RescheduleRequest] = [], waitlist: [WaitlistRequest] = []
@@ -48,13 +55,38 @@ actor FakeInboxRepository: InboxRepository {
         offerOutcome = outcome
     }
 
+    func setReadFailure(_ error: BookingRepositoryError?) {
+        readFailure = error
+    }
+
+    /// The items the mailbox lists. An item listed without its envelope is served by `mailboxItem(id:)` with the
+    /// envelope from `stored` (a large envelope kept in Storage).
+    func setMailbox(_ items: [MailboxItem], stored: [String: SealedEnvelope] = [:]) {
+        mailbox = items
+        storedEnvelopes = stored
+    }
+
     // MARK: - Reads
 
-    func bookings(uid: String, since: Date) async throws -> [IncomingBooking] { bookings }
+    func bookings(uid: String, since: Date) async throws -> [IncomingBooking] {
+        try read("bookings")
+        return bookings
+    }
+
     func rescheduleRequests(uid: String) async throws -> [RescheduleRequest] { requests }
     func waitlist(uid: String) async throws -> [WaitlistRequest] { waitlist }
-    func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }
-    func mailboxItem(id: String) async throws -> MailboxItem { throw BookingRepositoryError.rejected }
+
+    func mailboxItems(uid: String) async throws -> [MailboxItem] {
+        try read("mailboxItems")
+        return mailbox
+    }
+
+    func mailboxItem(id: String) async throws -> MailboxItem {
+        try read("mailboxItem:\(id)")
+        guard var item = mailbox.first(where: { $0.id == id }) else { throw BookingRepositoryError.rejected }
+        item.envelope = item.envelope ?? storedEnvelopes[id]
+        return item
+    }
 
     // MARK: - Writes
 
@@ -104,6 +136,7 @@ actor FakeInboxRepository: InboxRepository {
 
     func acknowledgeMailboxItem(id: String) async throws {
         try write("acknowledgeMailboxItem:\(id)")
+        mailbox.removeAll { $0.id == id }
     }
 
     func registerDevice(fcmToken: String, locale: String?) async throws {
@@ -112,6 +145,11 @@ actor FakeInboxRepository: InboxRepository {
 
     func unregisterDevice(fcmToken: String) async throws {
         try write("unregisterDevice:\(fcmToken)")
+    }
+
+    private func read(_ call: String) throws {
+        reads.append(call)
+        if let readFailure { throw readFailure }
     }
 
     private func write(_ call: String) throws {

@@ -95,7 +95,7 @@ struct RemoteAccountDeleterTests {
     func serviceKeepsDeviceOnFailure() async throws {
         let client = FakeCallableClient()
         client.fail("deleteAccount", with: .network)
-        let repository = InMemoryClientRecordRepository()
+        let repository: any ClientRecordRepository = InMemoryClientRecordRepository()
         _ = try await repository.save(makeClient())
         let keyStore = InMemoryKeyStore()
         let keyManager = KeyManager(store: keyStore)
