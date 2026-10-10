@@ -57,6 +57,30 @@ if [[ -d "$ROOT/firebase/functions/src" ]]; then
     [[ -z "$hits" ]] || fail "request body logged in a function" "$hits"
 fi
 
+# 7. Privacy manifest (docs/store/app-privacy.md): it exists, it says no tracking, and every required-reason API
+#    category the app's code uses is declared in it. A new use means a new NSPrivacyAccessedAPITypes entry, not a
+#    silent submission rejection.
+MANIFEST="$APP/SupportFiles/PrivacyInfo.xcprivacy"
+if [[ ! -f "$MANIFEST" ]]; then
+    fail "privacy manifest missing" "$MANIFEST"
+else
+    grep -A1 '<key>NSPrivacyTracking</key>' "$MANIFEST" | grep -q '<false/>' \
+        || fail "privacy manifest must declare NSPrivacyTracking false" "$MANIFEST"
+    # category|pattern of the APIs Apple lists for it (code only; comments may name them)
+    while IFS='|' read -r category pattern; do
+        hits="$(grep -rEn "$pattern" "$APP" --include='*.swift' | grep -vE '^[^:]+:[0-9]+:[[:space:]]*(//|\*|/\*)' || true)"
+        if [[ -n "$hits" ]] && ! grep -q "$category" "$MANIFEST"; then
+            fail "required-reason API used but $category is not in PrivacyInfo.xcprivacy" "$hits"
+        fi
+    done <<'EOF'
+NSPrivacyAccessedAPICategoryUserDefaults|UserDefaults|@AppStorage
+NSPrivacyAccessedAPICategoryFileTimestamp|creationDate|modificationDate|ModificationDate|attributesOfItem|getattrlist|fstat\(|lstat\(|[^a-z]stat\(
+NSPrivacyAccessedAPICategoryDiskSpace|volumeAvailableCapacity|volumeTotalCapacity|systemFreeSize|systemSize|statfs|statvfs
+NSPrivacyAccessedAPICategorySystemBootTime|systemUptime|mach_absolute_time
+NSPrivacyAccessedAPICategoryActiveKeyboards|activeInputModes
+EOF
+fi
+
 if [[ "$failed" == 0 ]]; then
     echo "Privacy checks passed"
 fi
