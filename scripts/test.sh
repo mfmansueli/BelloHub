@@ -37,9 +37,13 @@ fi
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).
 destination="$(simulator_destination)"
 
-# ONLY_TESTING=BelloHubUITests/OnboardingAuditUITests runs one suite (or one test) of the plan, to iterate on a failure.
+# ONLY_TESTING=BelloHubUITests/OnboardingAuditUITests runs one suite (or one test) of the plan, to iterate on a failure;
+# a comma-separated list runs several in one xcodebuild (one build, one simulator boot).
 only_testing=()
-if [[ -n "${ONLY_TESTING:-}" ]]; then only_testing=(-only-testing:"$ONLY_TESTING"); fi
+if [[ -n "${ONLY_TESTING:-}" ]]; then
+    IFS=',' read -r -a only_list <<< "$ONLY_TESTING"
+    for item in "${only_list[@]}"; do only_testing+=(-only-testing:"$item"); done
+fi
 
 run_xcodebuild "test-$plan" test \
     -scheme BelloHub \
