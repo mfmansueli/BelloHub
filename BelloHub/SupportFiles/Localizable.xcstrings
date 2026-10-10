@@ -21701,37 +21701,37 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld محجوز"
+                  "value" : "المحجوز: %lld"
                 }
               }
             }
@@ -21797,7 +21797,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld reservadas"
+                  "value" : "%lld reservada"
                 }
               },
               "other" : {
@@ -21815,7 +21815,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld agendadas"
+                  "value" : "%lld agendada"
                 }
               },
               "other" : {
@@ -21833,7 +21833,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld agendadas"
+                  "value" : "%lld agendada"
                 }
               },
               "other" : {
@@ -21899,7 +21899,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld fissati"
+                  "value" : "%lld fissato"
                 }
               },
               "other" : {
@@ -21917,13 +21917,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld marcados"
+                  "value" : "%lld agendado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld marcados"
+                  "value" : "%lld agendados"
                 }
               }
             }
@@ -21935,7 +21935,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld marcadas"
+                  "value" : "%lld marcada"
                 }
               },
               "other" : {
@@ -27215,7 +27215,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld مرافق"
+                  "value" : "مرافق واحد"
                 }
               },
               "other" : {
@@ -27227,13 +27227,13 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld مرافقان"
+                  "value" : "مرافقان"
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld مرافق"
+                  "value" : "بلا مرافقين"
                 }
               }
             }
@@ -28661,7 +28661,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld ساعة"
+                  "value" : "ساعة واحدة"
                 }
               },
               "other" : {
@@ -28673,7 +28673,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld ساعتان"
+                  "value" : "ساعتان"
                 }
               },
               "zero" : {
@@ -30827,7 +30827,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld يوم مقدمًا"
+                  "value" : "يوم واحد مقدمًا"
                 }
               },
               "other" : {
@@ -30839,7 +30839,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld يومان مقدمًا"
+                  "value" : "يومان مقدمًا"
                 }
               },
               "zero" : {
@@ -51605,7 +51605,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Every ~%lld week"
+                  "value" : "About every week"
                 }
               },
               "other" : {
@@ -51623,7 +51623,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Every ~%lld week"
+                  "value" : "About every week"
                 }
               },
               "other" : {
@@ -112373,7 +112373,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "تُحتسب آخر %lld شهر."
+                  "value" : "يُحتسب الشهر الأخير."
                 }
               },
               "other" : {
@@ -112385,7 +112385,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "تُحتسب آخر %lld شهرين."
+                  "value" : "يُحتسب آخر شهرين."
                 }
               },
               "zero" : {
@@ -112403,7 +112403,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Gezählt werden die letzten %lld Monate."
+                  "value" : "Gezählt wird der letzte Monat."
                 }
               },
               "other" : {
@@ -112421,7 +112421,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Counted over the last %lld months."
+                  "value" : "Counted over the last month."
                 }
               },
               "other" : {
@@ -112439,7 +112439,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Counted over the last %lld months."
+                  "value" : "Counted over the last month."
                 }
               },
               "other" : {
@@ -112457,7 +112457,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Se cuentan los últimos %lld meses."
+                  "value" : "Se cuenta el último mes."
                 }
               },
               "other" : {
@@ -112475,7 +112475,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Se cuentan los últimos %lld meses."
+                  "value" : "Se cuenta el último mes."
                 }
               },
               "other" : {
@@ -112493,7 +112493,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Se cuentan los últimos %lld meses."
+                  "value" : "Se cuenta el último mes."
                 }
               },
               "other" : {
@@ -112511,13 +112511,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Comptées sur les %lld derniers mois."
+                  "value" : "Comptés sur le dernier mois."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Comptées sur les %lld derniers mois."
+                  "value" : "Comptés sur les %lld derniers mois."
                 }
               }
             }
@@ -112559,7 +112559,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Conteggiati negli ultimi %lld mesi."
+                  "value" : "Conteggiati nell'ultimo mese."
                 }
               },
               "other" : {
@@ -112577,7 +112577,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Contadas nos últimos %lld meses."
+                  "value" : "Contadas no último mês."
                 }
               },
               "other" : {
@@ -112595,7 +112595,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Contadas nos últimos %lld meses."
+                  "value" : "Contadas no último mês."
                 }
               },
               "other" : {
@@ -139397,7 +139397,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "التغيير مجاني حتى %lld ساعة قبل الموعد."
+                  "value" : "التغيير مجاني حتى ساعة واحدة قبل الموعد."
                 }
               },
               "other" : {
@@ -139409,7 +139409,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "التغيير مجاني حتى %lld ساعتين قبل الموعد."
+                  "value" : "التغيير مجاني حتى ساعتين قبل الموعد."
                 }
               },
               "zero" : {
@@ -139673,7 +139673,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "إذا تأخرت، يبقى موعدك محفوظًا لدى {professional} لمدة %lld دقيقة. أبلغ بذلك من هذه الصفحة."
+                  "value" : "إذا تأخرت، يبقى موعدك محفوظًا لدى {professional} لمدة دقيقة واحدة. أبلغ بذلك من هذه الصفحة."
                 }
               },
               "other" : {
@@ -139685,7 +139685,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "إذا تأخرت، يبقى موعدك محفوظًا لدى {professional} لمدة %lld دقيقتين. أبلغ بذلك من هذه الصفحة."
+                  "value" : "إذا تأخرت، يبقى موعدك محفوظًا لدى {professional} لمدة دقيقتين. أبلغ بذلك من هذه الصفحة."
                 }
               },
               "zero" : {
@@ -139949,7 +139949,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعد فائت دون رسالة، تخضع حجوزاتك الجديدة لتأكيد شخصي من {professional}."
+                  "value" : "بعد موعد واحد فائت دون رسالة، تخضع حجوزاتك الجديدة لتأكيد شخصي من {professional}."
                 }
               },
               "other" : {
@@ -139961,7 +139961,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعدين فائتين دون رسالة، تخضع حجوزاتك الجديدة لتأكيد شخصي من {professional}."
+                  "value" : "بعد موعدين فائتين دون رسالة، تخضع حجوزاتك الجديدة لتأكيد شخصي من {professional}."
                 }
               },
               "zero" : {
@@ -140213,37 +140213,37 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld مواعيد فائتة دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد %lld مواعيد فائتة دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعدًا فائتًا دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد %lld موعدًا فائتًا دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد موعد واحد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد %lld موعد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               },
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعدين فائتين دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد موعدين فائتين دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               },
               "zero" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "بعد %lld موعد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتم التواصل معك من قِبل {professional}."
+                  "value" : "بعد %lld موعد فائت دون رسالة، يتوقف الحجز عبر الإنترنت ويتواصل معك {professional}."
                 }
               }
             }
@@ -141311,7 +141311,7 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "يمكنك إعادة الجدولة حتى %lld مرة."
+                  "value" : "يمكنك إعادة الجدولة مرة واحدة."
                 }
               },
               "other" : {
@@ -141323,7 +141323,7 @@
               "two" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "يمكنك إعادة الجدولة حتى %lld مرتين."
+                  "value" : "يمكنك إعادة الجدولة حتى مرتين."
                 }
               },
               "zero" : {

@@ -977,7 +977,7 @@
    "clientProfile.habits.everyWeeks",
    "Habits value: the usual number of weeks between visits. %lld is the count.",
    {
-    "one": "Every ~%lld week",
+    "one": "About every week",
     "other": "Every ~%lld weeks"
    },
    {

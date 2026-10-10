@@ -421,19 +421,24 @@
     "*": "%lld booked"
    },
    {
-    "*": "%lld marcados"
+    "one": "%lld agendado",
+    "other": "%lld agendados"
    },
    {
-    "*": "%lld marcadas"
+    "one": "%lld marcada",
+    "other": "%lld marcadas"
    },
    {
-    "*": "%lld agendadas"
+    "one": "%lld agendada",
+    "other": "%lld agendadas"
    },
    {
-    "*": "%lld reservadas"
+    "one": "%lld reservada",
+    "other": "%lld reservadas"
    },
    {
-    "*": "%lld fissati"
+    "one": "%lld fissato",
+    "other": "%lld fissati"
    },
    {
     "*": "%lld pris"
@@ -451,7 +456,12 @@
     "*": "%lld बुक"
    },
    {
-    "*": "%lld محجوز"
+    "zero": "المحجوز: %lld",
+    "one": "المحجوز: %lld",
+    "two": "المحجوز: %lld",
+    "few": "المحجوز: %lld",
+    "many": "المحجوز: %lld",
+    "other": "المحجوز: %lld"
    }
   ],
   [

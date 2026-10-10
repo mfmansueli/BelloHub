@@ -1474,28 +1474,36 @@
    "noShowCount.period",
    "How far back the count looks. %lld is 3, 6 or 12.",
    {
-    "*": "Counted over the last %lld months."
+    "one": "Counted over the last month.",
+    "other": "Counted over the last %lld months."
    },
    {
-    "*": "Contadas nos últimos %lld meses."
+    "one": "Contadas no último mês.",
+    "other": "Contadas nos últimos %lld meses."
    },
    {
-    "*": "Contadas nos últimos %lld meses."
+    "one": "Contadas no último mês.",
+    "other": "Contadas nos últimos %lld meses."
    },
    {
-    "*": "Se cuentan los últimos %lld meses."
+    "one": "Se cuenta el último mes.",
+    "other": "Se cuentan los últimos %lld meses."
    },
    {
-    "*": "Se cuentan los últimos %lld meses."
+    "one": "Se cuenta el último mes.",
+    "other": "Se cuentan los últimos %lld meses."
    },
    {
-    "*": "Conteggiati negli ultimi %lld mesi."
+    "one": "Conteggiati nell'ultimo mese.",
+    "other": "Conteggiati negli ultimi %lld mesi."
    },
    {
-    "*": "Comptées sur les %lld derniers mois."
+    "one": "Comptés sur le dernier mois.",
+    "other": "Comptés sur les %lld derniers mois."
    },
    {
-    "*": "Gezählt werden die letzten %lld Monate."
+    "one": "Gezählt wird der letzte Monat.",
+    "other": "Gezählt werden die letzten %lld Monate."
    },
    {
     "*": "Son %lld ay sayılır."
@@ -1508,8 +1516,8 @@
    },
    {
     "zero": "تُحتسب آخر %lld شهر.",
-    "one": "تُحتسب آخر %lld شهر.",
-    "two": "تُحتسب آخر %lld شهرين.",
+    "one": "يُحتسب الشهر الأخير.",
+    "two": "يُحتسب آخر شهرين.",
     "few": "تُحتسب آخر %lld أشهر.",
     "many": "تُحتسب آخر %lld شهرًا.",
     "other": "تُحتسب آخر %lld شهر."
