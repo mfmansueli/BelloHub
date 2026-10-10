@@ -2138,7 +2138,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Link per prenotare"
+            "value" : "Link di prenotazione"
           }
         },
         "pt-BR" : {
@@ -2150,7 +2150,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ligação de marcação"
+            "value" : "Link de marcação"
           }
         },
         "tr" : {
@@ -7088,7 +7088,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prepara un follow-up quando lo chiedi"
+            "value" : "Prepara un messaggio di richiamo quando lo chiedi"
           }
         },
         "pt-BR" : {
@@ -7100,7 +7100,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Redige um acompanhamento quando pede"
+            "value" : "Redige uma mensagem de seguimento quando pede"
           }
         },
         "tr" : {
@@ -9734,7 +9734,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachfassen fällig: %@"
+            "value" : "Folgetermin fällig: %@"
           }
         },
         "en" : {
@@ -9824,7 +9824,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fällige Nachfass-Termine"
+            "value" : "Fällige Folgetermine"
           }
         },
         "en" : {
@@ -28178,7 +28178,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Só uma pré-visualização. A ligação funciona quando ficar online."
+            "value" : "Só uma pré-visualização. O link funciona quando ficar online."
           }
         },
         "tr" : {
@@ -28418,7 +28418,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Votre lien de prise de rendez-vous"
+            "value" : "Votre lien de réservation"
           }
         },
         "hi" : {
@@ -40664,7 +40664,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compartir enlace de citas"
+            "value" : "Compartir enlace de reserva"
           }
         },
         "es-419" : {
@@ -40682,7 +40682,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partager le lien de prise de rendez-vous"
+            "value" : "Partager le lien de réservation"
           }
         },
         "hi" : {
@@ -40712,7 +40712,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partilhar ligação de marcação"
+            "value" : "Partilhar link de marcação"
           }
         },
         "tr" : {
@@ -55100,7 +55100,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lien de prise de rendez-vous"
+            "value" : "Lien de réservation"
           }
         },
         "hi" : {
@@ -75404,7 +75404,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Keine fälligen Nachfass-Termine"
+            "value" : "Keine fälligen Folgetermine"
           }
         },
         "en" : {
@@ -75854,7 +75854,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachfassen"
+            "value" : "Folgetermine"
           }
         },
         "en" : {
@@ -84314,7 +84314,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Partilhe a sua ligação de marcação ou código QR em Mais, Página de marcações. As clientes escolhem um serviço e um horário; as novas aparecem no seu calendário."
+            "value" : "Partilhe o seu link de marcação ou o código QR em Mais, Página de marcações. Os clientes escolhem um serviço e um horário; as novas marcações aparecem na sua agenda."
           }
         },
         "tr" : {
@@ -85688,7 +85688,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachfassen"
+            "value" : "Folgetermine"
           }
         },
         "en" : {
@@ -85778,7 +85778,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachfass-Liste ansehen"
+            "value" : "Folgetermine ansehen"
           }
         },
         "en" : {
@@ -91280,7 +91280,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%lld weitere benötigen einen Plan"
+            "value" : "%lld weitere brauchen ein Abo"
           }
         },
         "en" : {
@@ -92006,7 +92006,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pläne ansehen"
+            "value" : "Abos ansehen"
           }
         },
         "en" : {
@@ -96476,7 +96476,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fai un follow-up con la cliente"
+            "value" : "Ricontattare la cliente"
           }
         },
         "pt-BR" : {
@@ -99536,7 +99536,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aggiungi il link per prenotare"
+            "value" : "Aggiungi il tuo link di prenotazione"
           }
         },
         "pt-BR" : {
@@ -99548,7 +99548,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Adicione a sua ligação de marcação"
+            "value" : "Adicione o seu link de marcação"
           }
         },
         "tr" : {
@@ -99818,7 +99818,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mensagens e ligações"
+            "value" : "Mensagens e links"
           }
         },
         "tr" : {
@@ -107312,7 +107312,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Tarif"
+            "value" : "Dein Abo"
           }
         },
         "en" : {
@@ -107492,7 +107492,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch kein Tarif"
+            "value" : "Noch kein Abo"
           }
         },
         "en" : {
@@ -121208,7 +121208,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fällige Nachfassaktionen"
+            "value" : "Fällige Folgetermine"
           }
         },
         "en" : {
@@ -121262,7 +121262,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Follow-up in scadenza"
+            "value" : "Richiami in scadenza"
           }
         },
         "pt-BR" : {
@@ -121274,7 +121274,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Acompanhamentos pendentes"
+            "value" : "Seguimentos pendentes"
           }
         },
         "tr" : {
@@ -123836,19 +123836,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Maria Silva"
+            "value" : "Lucía Martín"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Maria Silva"
+            "value" : "María López"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Maria Silva"
+            "value" : "María López"
           }
         },
         "fr" : {
@@ -124244,7 +124244,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Como devemos tratá-la?"
+            "value" : "Como quer que lhe chamemos?"
           }
         },
         "tr" : {
@@ -125474,7 +125474,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub n'écoute que pendant l'enregistrement d'un soin, puis organise ce que vous avez dit. Vous relisez tout avant l'enregistrement."
+            "value" : "Bello Hub n'écoute que pendant que vous enregistrez un soin, puis organise ce que vous avez dit. Vous relisez tout avant que rien ne soit enregistré."
           }
         },
         "hi" : {
@@ -126248,7 +126248,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachkontrollen"
+            "value" : "Folgetermine"
           }
         },
         "en" : {
@@ -126302,7 +126302,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Controlli"
+            "value" : "Richiami"
           }
         },
         "pt-BR" : {
@@ -126446,7 +126446,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tu enlace de reservas"
+            "value" : "Tu enlace de reserva"
           }
         },
         "es-419" : {
@@ -126494,7 +126494,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A sua ligação de marcação"
+            "value" : "O seu link de marcação"
           }
         },
         "tr" : {
@@ -126584,7 +126584,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fica pronta quando estiver online"
+            "value" : "Fica pronto quando estiver online"
           }
         },
         "tr" : {
@@ -128408,7 +128408,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Empfohlene Nachkontrolle"
+            "value" : "Empfohlener Folgetermin"
           }
         },
         "en" : {
@@ -128462,7 +128462,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Controllo consigliato"
+            "value" : "Richiamo consigliato"
           }
         },
         "pt-BR" : {
@@ -128498,7 +128498,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die Kundschaft wird nach dieser Zeit zur Nachkontrolle fällig."
+            "value" : "Nach dieser Zeit wird ein Folgetermin fällig."
           }
         },
         "en" : {
@@ -128552,7 +128552,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "I clienti risultano da ricontattare dopo questo tempo."
+            "value" : "Dopo questo tempo il cliente risulta da richiamare."
           }
         },
         "pt-BR" : {
@@ -131612,7 +131612,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bentornato/a."
+            "value" : "Ciao di nuovo."
           }
         },
         "pt-BR" : {
@@ -131624,7 +131624,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bem-vindo(a) de volta."
+            "value" : "Olá de novo."
           }
         },
         "tr" : {
@@ -134474,7 +134474,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Gestion."
+            "value" : "Agenda. Clients. Gestion."
           }
         },
         "hi" : {
@@ -135428,7 +135428,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wähle einen Plan, um weiter neue Kundschaft hinzuzufügen."
+            "value" : "Wähle ein Abo, um weiter neue Kundschaft hinzuzufügen."
           }
         },
         "en" : {
@@ -135518,7 +135518,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Deine bisherigen Termine, Einträge und Unterlagen bleiben verfügbar und bearbeitbar."
+            "value" : "Deine bisherige Kundschaft, deine Termine und Akten bleiben verfügbar und bearbeitbar."
           }
         },
         "en" : {
@@ -135788,7 +135788,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tarif wählen"
+            "value" : "Abo wählen"
           }
         },
         "en" : {
@@ -135878,7 +135878,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der App Store konnte die Tarife gerade nicht anzeigen. Prüfe deine Verbindung und versuche es erneut."
+            "value" : "Der App Store konnte die Abos gerade nicht anzeigen. Prüfe deine Verbindung und versuche es erneut."
           }
         },
         "en" : {
@@ -136058,7 +136058,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nachfassen, Warteliste und Check-ins"
+            "value" : "Folgetermine, Warteliste und Check-ins"
           }
         },
         "en" : {
@@ -136112,7 +136112,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Follow-up, lista d’attesa e check-in"
+            "value" : "Richiami, lista d’attesa e check-in"
           }
         },
         "pt-BR" : {
@@ -136124,7 +136124,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Acompanhamentos, lista de espera e check-ins"
+            "value" : "Seguimentos, lista de espera e check-ins"
           }
         },
         "tr" : {
@@ -136868,7 +136868,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Warten auf Genehmigung. Dein Tarif startet, sobald sie erteilt ist."
+            "value" : "Warten auf Genehmigung. Dein Abo startet, sobald sie erteilt ist."
           }
         },
         "en" : {
@@ -137048,7 +137048,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Tarif ist wieder auf diesem iPhone."
+            "value" : "Dein Abo ist wieder auf diesem iPhone."
           }
         },
         "en" : {
@@ -137498,7 +137498,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beide Pläne enthalten alles. Nur die Abrechnung unterscheidet sich."
+            "value" : "Beide Varianten enthalten alles. Nur die Abrechnung unterscheidet sich."
           }
         },
         "en" : {
@@ -137948,7 +137948,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tarif wird geprüft"
+            "value" : "Abo wird geprüft"
           }
         },
         "en" : {
@@ -138308,7 +138308,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Tarif funktioniert noch. Aktualisiere deine Zahlungsmethode im App Store, um ihn zu behalten."
+            "value" : "Dein Abo läuft noch. Aktualisiere deine Zahlungsmethode im App Store, um es zu behalten."
           }
         },
         "en" : {
@@ -138398,7 +138398,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Noch kein Tarif"
+            "value" : "Noch kein Abo"
           }
         },
         "en" : {
@@ -138758,7 +138758,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dein Tarif"
+            "value" : "Dein Abo"
           }
         },
         "en" : {
@@ -142388,7 +142388,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Patch-Test vom %@: keine Reaktion."
+            "value" : "Allergietest vom %@: keine Reaktion."
           }
         },
         "en" : {
@@ -142478,7 +142478,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kein Patch-Test vermerkt. %@ verlangt einen."
+            "value" : "Kein Allergietest vermerkt. %@ verlangt einen."
           }
         },
         "en" : {
@@ -142568,7 +142568,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ verlangt keinen Patch-Test."
+            "value" : "%@ verlangt keinen Allergietest."
           }
         },
         "en" : {
@@ -142658,7 +142658,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Der Patch-Test wird noch bis %@ beobachtet."
+            "value" : "Der Allergietest wird noch bis %@ beobachtet."
           }
         },
         "en" : {
@@ -151364,7 +151364,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Online. Os clientes podem marcar consigo com esta ligação."
+            "value" : "Online. Os clientes podem marcar consigo através deste link."
           }
         },
         "tr" : {
@@ -151814,7 +151814,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Quem abrir a sua ligação verá que não está a aceitar marcações. As marcações já feitas ficam como estão."
+            "value" : "Quem abrir o seu link verá que não está a aceitar marcações. As marcações já feitas ficam como estão."
           }
         },
         "tr" : {
@@ -184316,7 +184316,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Os clientes podem abrir esta ligação e marcar consigo."
+            "value" : "Os clientes podem abrir este link e marcar consigo."
           }
         },
         "tr" : {
