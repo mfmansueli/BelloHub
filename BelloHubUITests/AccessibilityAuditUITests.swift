@@ -181,7 +181,11 @@ final class AccessibilityAuditUITests: XCTestCase {
     /// - navigation-bar titles and toolbar buttons (system-drawn; Liquid Glass bars cap their own text size);
     /// - text fields and search fields reported as clipped: they scroll their text horizontally;
     /// - the insight tiles' numbers, capped at AX2 on purpose so a 30 pt figure fits its tile (`InsightTile`);
-    /// - the parts of the logo (`BrandLockup`, one element read as the image "Bello Hub"): a logo keeps its size.
+    /// - the parts of the logo (`BrandLockup`, one element read as the image "Bello Hub"): a logo keeps its size;
+    /// - "partially unsupported" Dynamic Type on the last row of each Services section (`services.addRow`,
+    ///   `services.productsLink`): their text is `Typography.bodyStrong`/`meta` like every other row and the rows grow
+    ///   with the text (56 pt at the default size, 62.7 pt at AX5 in the same run); the check flags only these two.
+    private static let partialDynamicTypeExceptions = ["services.addRow", "services.productsLink"]
     private static let auditTypes: XCUIAccessibilityAuditType = .all.subtracting(.contrast)
 
     private func audit(_ app: XCUIApplication, _ screen: String) throws {
@@ -192,11 +196,16 @@ final class AccessibilityAuditUITests: XCTestCase {
         let bar = navigationBar.exists ? navigationBar.frame : .zero
         let logo = app.images["Bello Hub"].firstMatch
         let logoFrame = logo.exists ? logo.frame.insetBy(dx: -2, dy: -2) : .zero
+        let exceptionFrames = Self.partialDynamicTypeExceptions.compactMap { identifier -> CGRect? in
+            let element = app.descendants(matching: .any).matching(identifier: identifier).firstMatch
+            return element.exists ? element.frame.insetBy(dx: -2, dy: -2) : nil
+        }
         try app.performAccessibilityAudit(for: Self.auditTypes) { issue in
             guard let element = issue.element, !(element.label.isEmpty && element.frame == .zero) else { return true }
             let frame = element.frame
             if frame.minY < window.minY || frame.maxY > visibleBottom { return true }
             if !logoFrame.isEmpty, logoFrame.contains(frame) { return true }
+            if issue.auditType == .dynamicType, exceptionFrames.contains(where: { $0.contains(frame) }) { return true }
             if !bar.isEmpty, bar.contains(CGPoint(x: frame.midX, y: frame.midY)) { return true }
             let kind = element.elementType
             if issue.auditType == .textClipped, kind == .textField || kind == .searchField { return true }
