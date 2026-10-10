@@ -11,8 +11,9 @@ import XCTest
 /// default size and at AX5, with Increase Contrast and Reduce Motion on (`-uiIncreaseContrast`, `-uiReduceMotion`).
 /// The Full plan runs it in `en` (`BELLO_A11Y=1`, `AUDIT_PLAN_LOCALES=en` in `Full.xctestplan`, S12: Increase Contrast
 /// and Reduce Motion in every Full run; the per-feature audits cover pt-BR, de, ar and hi). Both languages:
-/// `TEST_RUNNER_BELLO_A11Y=1 TEST_RUNNER_AUDIT_LOCALES=en,pt-BR ONLY_TESTING=BelloHubUITests/AccessibilityAuditUITests
-/// scripts/test.sh full` (`TEST_RUNNER_AUDIT_LOCALES` also narrows it while iterating). The manual VoiceOver pass that complements it is
+/// `TEST_RUNNER_BELLO_A11Y=1 TEST_RUNNER_AUDIT_LOCALES=en,pt-BR
+/// ONLY_TESTING=BelloHubUITests/AccessibilityAuditUITests scripts/test.sh full`
+/// (`TEST_RUNNER_AUDIT_LOCALES` also narrows it while iterating). The manual VoiceOver pass that complements it is
 /// `docs/agent-notes/accessibility-audit.md`.
 @MainActor
 final class AccessibilityAuditUITests: XCTestCase {
@@ -126,6 +127,9 @@ final class AccessibilityAuditUITests: XCTestCase {
         app.openClientsTab()
         XCTAssertTrue(app.clientRows.firstMatch.waitForExistence(timeout: 15), "\(tag) client list")
         try audit(app, "\(tag) clients")
+        // In pt-BR at AX5 the win-back card fills the screen and the list (a lazy collection) drops the rows below
+        // it from the tree while the audit runs: scroll until one is there again.
+        for _ in 0..<4 where !app.clientRows.firstMatch.exists { app.swipeUp() }
         app.clientRows.firstMatch.tap()
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5), "\(tag) profile")
         try audit(app, "\(tag) client profile")
