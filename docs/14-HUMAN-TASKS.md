@@ -18,7 +18,7 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H10 | Native reading of the languages (`pt-BR` first, read by Iago). **Not planned (D41); optional, any time** | Iago; native readers | optional |
 | H11 | Legal review per market. **After sales appear (D40)**, not before launch | data-protection lawyer | when the owner decides |
 | H12 | Fonts if the build environment has no network | Iago / Mateus | S1 |
-| H13 | WhatsApp Business (Meta) onboarding (optional) | Iago | optional |
+| H13 | WhatsApp Business (Meta) onboarding (optional, **post-v1**: v1 stays manual, wa.me links) | Iago | after v1 |
 | H14 | App Store Connect, subscriptions, privacy labels, TestFlight | Iago / Mateus | S12 |
 | H15 | Open markets in App Store Connect: **every market the owner can (D40)** | Iago | at the owner's discretion |
 | H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
@@ -91,8 +91,19 @@ Read `legal/EUROPE.md` first: since S11 the European terms and privacy policy (`
 ### H12 · Fonts
 If `scripts/fetch-fonts.sh` cannot download Fraunces and DM Sans (network blocked), download the variable `.ttf` files from the official Google Fonts repositories (SIL OFL) into `BelloHub/DesignSystem/Fonts/` and `web/public/fonts/` with their license files. (Arabic and Devanagari use system fonts; nothing to download.)
 
-### H13 · WhatsApp Business (optional)
-Create a Meta Business account, verify it, create a WhatsApp Business app and phone number, submit message templates **per language** (confirmation, reminder, code; utility category), obtain the Cloud API token, store it as a secret and set Remote Config `whatsAppAutomation = true` for the cohort you choose. Note per-message costs, which differ by country. **Expected:** the `WhatsAppCloudProvider` goes live without code changes; the web and app copy switches to the automated wording.
+### H13 · WhatsApp Business (optional, post-v1)
+> **Owner decision (2026-10-10): v1 stays in manual WhatsApp mode** (the professional opens a `wa.me` link with the
+> prepared text and taps send). Nothing here is needed for v1.
+
+State of the code: `WhatsAppCloudProvider` (`firebase/functions/src/messaging/`) is built and tested with mocks, but it
+is **not wired**: `createDeps.ts` always builds `DisabledWhatsAppProvider`, so automation after v1 needs a small code
+change as well as the onboarding (a `WHATSAPP_PHONE_NUMBER_ID` parameter and a `WHATSAPP_ACCESS_TOKEN` secret,
+`createMessenger` building the Cloud provider only when both are set, like the Resend email provider). Steps when the
+owner wants it: Meta Business account and business verification; a WhatsApp Business app and phone number; message
+templates submitted **per language** (confirmation, reminder, code; utility category) and approved; the phone number id
+and a permanent access token handed to Claude Code (the token as a Secret Manager secret); Claude Code wires the
+provider and its tests; then Remote Config `whatsAppAutomation = true` for the cohort you choose. Note per-message
+costs, which differ by country. **Expected:** the web and app copy switch to the automated wording only after that.
 
 ### H14 · App Store Connect
 Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`) **with no free trial and no introductory offer** (D33, D42), set the prices per storefront (EUR 14.99 and 149.99 for the euro-zone storefronts, USD 14.99 and 149.99 for the United States, BRL 39.90 and 399.90 for Brazil; other storefronts take Apple's equalized price unless you set them), fill in **App Privacy** answers from `06-PRIVACY-SECURITY.md` §1–§2, add the privacy policy URL, add the metadata and screenshots per language from `docs/store/`, create the TestFlight group (internal first). **Expected:** the StoreKit product ids match D33; `PrivacyInfo.xcprivacy` matches the answers.
