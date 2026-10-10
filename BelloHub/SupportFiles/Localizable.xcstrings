@@ -52628,85 +52628,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "تم التوقيع في %@"
+            "value" : "عُبّئت في %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Unterschrieben am %@"
+            "value" : "Ausgefüllt am %@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Signed %@"
+            "value" : "Filled in %@"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signed %@"
+            "value" : "Filled in %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado el %@"
+            "value" : "Rellenada el %@"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado el %@"
+            "value" : "Llenada el %@"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmado el %@"
+            "value" : "Llenada el %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Signé le %@"
+            "value" : "Remplie le %@"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ को हस्ताक्षर किए"
+            "value" : "%@ को भरा गया"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditandatangani %@"
+            "value" : "Diisi %@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Firmato il %@"
+            "value" : "Compilata il %@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado em %@"
+            "value" : "Preenchida em %@"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Assinado em %@"
+            "value" : "Preenchida em %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ tarihinde imzalandı"
+            "value" : "%@ tarihinde dolduruldu"
           }
         }
       }
@@ -75242,7 +75242,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agendar"
+            "value" : "Reservar"
           }
         },
         "es-419" : {
@@ -76484,85 +76484,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ستُعدَّل هنا الاستمارة الصحية ونص الموافقة."
+            "value" : "ستُعدَّل أسئلة استمارتك الصحية هنا."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hier bearbeitest du deinen Gesundheitsfragebogen."
+            "value" : "Hier bearbeitest du die Fragen deines Gesundheitsfragebogens."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your health form and consent text will be edited here."
+            "value" : "Your health form questions will be edited here."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Your health form and consent text will be edited here."
+            "value" : "Your health form questions will be edited here."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aquí se editarán la ficha de salud y el texto de consentimiento."
+            "value" : "Aquí se editarán las preguntas de tu ficha de salud."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aquí se editarán la ficha de salud y el texto de consentimiento."
+            "value" : "Aquí se editarán las preguntas de tu ficha de salud."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aquí se editarán la ficha de salud y el texto de consentimiento."
+            "value" : "Aquí se editarán las preguntas de tu ficha de salud."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous modifierez ici la fiche santé et le texte de consentement."
+            "value" : "Vous modifierez ici les questions de votre fiche santé."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य फ़ॉर्म और सहमति का पाठ यहीं संपादित होगा।"
+            "value" : "आपके स्वास्थ्य फ़ॉर्म के सवाल यहाँ बदले जाएँगे।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulir kesehatan dan teks persetujuan akan diubah di sini."
+            "value" : "Pertanyaan formulir kesehatanmu akan diedit di sini."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Qui modificherai la scheda sanitaria e il testo del consenso."
+            "value" : "Qui modificherai le domande della tua scheda sanitaria."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O formulário de saúde e o texto de consentimento serão editados aqui."
+            "value" : "As perguntas da sua ficha de saúde serão editadas aqui."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O formulário de saúde e o texto de consentimento serão editados aqui."
+            "value" : "As perguntas da sua ficha de saúde serão editadas aqui."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık formu ve onam metni burada düzenlenecek."
+            "value" : "Sağlık formunuzun soruları burada düzenlenecek."
           }
         }
       }
@@ -77294,7 +77294,7 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "تغيير الأسئلة ينشئ إصدارًا جديدًا. تبقى الاستمارات الموقّعة سابقًا كما كانت."
+            "value" : "تغيير الأسئلة ينشئ إصدارًا جديدًا. تبقى الاستمارات المعبأة سابقًا كما كانت."
           }
         },
         "de" : {
@@ -77306,73 +77306,73 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Changing the questions starts a new version. Forms already signed stay as they were."
+            "value" : "Changing the questions starts a new version. Forms already filled in stay as they were."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Changing the questions starts a new version. Forms already signed stay as they were."
+            "value" : "Changing the questions starts a new version. Forms already filled in stay as they were."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya firmadas quedan como estaban."
+            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya rellenadas quedan como estaban."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya firmadas se quedan como estaban."
+            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya llenadas se quedan como estaban."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya firmadas se quedan como estaban."
+            "value" : "Cambiar las preguntas crea una versión nueva. Las fichas ya llenadas se quedan como estaban."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Modifier les questions crée une nouvelle version. Les fiches déjà signées restent telles quelles."
+            "value" : "Modifier les questions crée une nouvelle version. Les fiches déjà remplies restent telles quelles."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "सवाल बदलने पर नया वर्ज़न बनता है। पहले से हस्ताक्षरित फ़ॉर्म जैसे थे वैसे ही रहते हैं।"
+            "value" : "सवाल बदलने पर नया वर्ज़न बनता है। पहले से भरे गए फ़ॉर्म जैसे थे वैसे ही रहते हैं।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mengubah pertanyaan membuat versi baru. Formulir yang sudah ditandatangani tetap seperti semula."
+            "value" : "Mengubah pertanyaan membuat versi baru. Formulir yang sudah diisi tetap seperti semula."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cambiare le domande crea una nuova versione. Le schede già firmate restano com'erano."
+            "value" : "Cambiare le domande crea una nuova versione. Le schede già compilate restano com'erano."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mudar as perguntas cria uma nova versão. As fichas já assinadas continuam como estavam."
+            "value" : "Mudar as perguntas cria uma nova versão. As fichas já preenchidas continuam como estavam."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alterar as perguntas cria uma nova versão. As fichas já assinadas mantêm-se como estavam."
+            "value" : "Alterar as perguntas cria uma nova versão. As fichas já preenchidas mantêm-se como estavam."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soruları değiştirmek yeni bir sürüm oluşturur. Daha önce imzalanmış formlar olduğu gibi kalır."
+            "value" : "Soruları değiştirmek yeni bir sürüm oluşturur. Daha önce doldurulmuş formlar olduğu gibi kalır."
           }
         }
       }
@@ -81158,7 +81158,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Privado. Só consegue ver isto."
+            "value" : "Privado. Só é visível para si."
           }
         },
         "tr" : {
@@ -92150,13 +92150,13 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La tua lista di %@ è aggiornata. Aggiungi tag e note quando vuoi."
+            "value" : "La tua lista di %@ è aggiornata. Aggiungi etichette e note quando vuoi."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sua lista de %@ foi atualizada. Adicione tags e notas quando quiser."
+            "value" : "Sua lista de %@ foi atualizada. Adicione etiquetas e notas quando quiser."
           }
         },
         "pt-PT" : {
@@ -103436,85 +103436,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "لا يملك هذا iPhone مفتاح سجلاتك. استعده بعبارة الاسترداد."
+            "value" : "لا يملك هذا iPhone مفتاح سجلاتك. استعده بمفتاح الاسترداد."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dieses iPhone hat den Schlüssel zu deinen Daten nicht. Stelle ihn mit deiner Wiederherstellungsphrase wieder her."
+            "value" : "Dieses iPhone hat den Schlüssel zu deinen Daten nicht. Stelle ihn mit deinem Wiederherstellungsschlüssel wieder her."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This iPhone does not have the key to your records. Restore it with your recovery phrase."
+            "value" : "This iPhone does not have the key to your records. Restore it with your recovery key."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "This iPhone does not have the key to your records. Restore it with your recovery phrase."
+            "value" : "This iPhone does not have the key to your records. Restore it with your recovery key."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Este iPhone no tiene la clave de tus fichas. Restáurala con tu frase de recuperación."
+            "value" : "Este iPhone no tiene la clave de tus fichas. Restáurala con tu clave de recuperación."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Este iPhone no tiene la llave de tus registros. Restáurala con tu frase de recuperación."
+            "value" : "Este iPhone no tiene la llave de tus registros. Restáurala con tu clave de recuperación."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Este iPhone no tiene la llave de tus registros. Restáurala con tu frase de recuperación."
+            "value" : "Este iPhone no tiene la llave de tus registros. Restáurala con tu clave de recuperación."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cet iPhone n'a pas la clé de vos données. Restaurez-la avec votre phrase de récupération."
+            "value" : "Cet iPhone n'a pas la clé de vos données. Restaurez-la avec votre clé de récupération."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "इस iPhone में आपके रिकॉर्ड की कुंजी नहीं है। अपने रिकवरी फ़्रेज़ से उसे वापस लाएँ।"
+            "value" : "इस iPhone में आपके रिकॉर्ड की कुंजी नहीं है। अपनी रिकवरी की से उसे वापस लाएँ।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iPhone ini tidak memiliki kunci catatan kamu. Pulihkan dengan frasa pemulihan kamu."
+            "value" : "iPhone ini tidak memiliki kunci catatanmu. Pulihkan dengan kunci pemulihanmu."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Questo iPhone non ha la chiave dei tuoi dati. Ripristinala con la frase di recupero."
+            "value" : "Questo iPhone non ha la chiave dei tuoi dati. Ripristinala con la chiave di recupero."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Este iPhone não tem a chave dos seus registros. Restaure com a sua frase de recuperação."
+            "value" : "Este iPhone não tem a chave dos seus registros. Restaure com a sua chave de recuperação."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Este iPhone não tem a chave dos seus registos. Restaure-a com a sua frase de recuperação."
+            "value" : "Este iPhone não tem a chave dos seus registos. Restaure-a com a sua chave de recuperação."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu iPhone'da kayıtlarınızın anahtarı yok. Kurtarma ifadenizle geri yükleyin."
+            "value" : "Bu iPhone’da kayıtlarınızın anahtarı yok. Kurtarma anahtarınızla geri yükleyin."
           }
         }
       }
@@ -106946,85 +106946,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "استمارة صحية وموافقة"
+            "value" : "أسئلة الاستمارة الصحية"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gesundheitsfragebogen und Einwilligung"
+            "value" : "Fragen des Gesundheitsfragebogens"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health form and consent"
+            "value" : "Health form questions"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Health form and consent"
+            "value" : "Health form questions"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de salud y consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de salud y consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de salud y consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiche santé et consentement"
+            "value" : "Questions de la fiche santé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य फ़ॉर्म और सहमति"
+            "value" : "स्वास्थ्य फ़ॉर्म के सवाल"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulir kesehatan dan persetujuan"
+            "value" : "Pertanyaan formulir kesehatan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scheda sanitaria e consenso"
+            "value" : "Domande della scheda sanitaria"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde e consentimento"
+            "value" : "Perguntas da ficha de saúde"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde e consentimento"
+            "value" : "Perguntas da ficha de saúde"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık formu ve onam"
+            "value" : "Sağlık formu soruları"
           }
         }
       }
@@ -139481,13 +139481,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Cambios gratuitos hasta %lld hora antes."
+                  "value" : "Cambios sin coste hasta %lld hora antes."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Cambios gratuitos hasta %lld horas antes."
+                  "value" : "Cambios sin coste hasta %lld horas antes."
                 }
               }
             }
@@ -139601,13 +139601,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Alterações gratuitas até %lld hora antes."
+                  "value" : "Alterações sem custo até %lld hora antes."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Alterações gratuitas até %lld horas antes."
+                  "value" : "Alterações sem custo até %lld horas antes."
                 }
               }
             }
@@ -139619,13 +139619,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Alterações gratuitas até %lld hora antes."
+                  "value" : "Alterações sem encargos até %lld hora antes."
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "Alterações gratuitas até %lld horas antes."
+                  "value" : "Alterações sem encargos até %lld horas antes."
                 }
               }
             }
@@ -140846,85 +140846,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "بعد الحجز تحصل على رابط شخصي في صفحة التأكيد، وعلى بريدك الإلكتروني إذا شاركته. استخدمه في أي وقت لإلغاء الموعد أو إعادة جدولته. دون تطبيق أو كلمة مرور."
+            "value" : "بعد الحجز تحصل على رابط شخصي في صفحة التأكيد وعلى بريدك الإلكتروني. استخدمه في أي وقت لإلغاء الموعد أو إعادة جدولته. دون تطبيق أو كلمة مرور."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nach der Buchung erhalten Sie auf der Bestätigungsseite einen persönlichen Link, bei Angabe einer E-Mail-Adresse auch per E-Mail. Damit können Sie jederzeit absagen oder verschieben. Ohne App und ohne Passwort."
+            "value" : "Nach der Buchung erhalten Sie auf der Bestätigungsseite und per E-Mail einen persönlichen Link. Damit können Sie jederzeit absagen oder verschieben. Ohne App und ohne Passwort."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "After you book, you get a personal link on the confirmation page, and by email if you share one. Use it any time to cancel or reschedule. No app or password."
+            "value" : "After you book, you get a personal link on the confirmation page and by email. Use it any time to cancel or reschedule. No app or password."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "After you book, you get a personal link on the confirmation page, and by email if you share one. Use it any time to cancel or reschedule. No app or password."
+            "value" : "After you book, you get a personal link on the confirmation page and by email. Use it any time to cancel or reschedule. No app or password."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Al reservar, recibes un enlace personal en la página de confirmación, y por correo si compartes uno. Úsalo cuando quieras para cancelar o cambiar tu cita. Sin app ni contraseña."
+            "value" : "Al reservar, recibes un enlace personal en la página de confirmación y por correo. Úsalo cuando quieras para cancelar o cambiar tu cita. Sin app ni contraseña."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Al reservar, recibes un enlace personal en la página de confirmación, y por correo si compartes uno. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña."
+            "value" : "Al reservar, recibes un enlace personal en la página de confirmación y por correo. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Al reservar, recibes un enlace personal en la página de confirmación, y por correo si compartes uno. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña."
+            "value" : "Al reservar, recibes un enlace personal en la página de confirmación y por correo. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Après votre réservation, vous recevez un lien personnel sur la page de confirmation, et par e-mail si vous en indiquez un. Utilisez-le à tout moment pour annuler ou déplacer votre rendez-vous. Sans appli ni mot de passe."
+            "value" : "Après votre réservation, vous recevez un lien personnel sur la page de confirmation et par e-mail. Utilisez-le à tout moment pour annuler ou déplacer votre rendez-vous. Sans appli ni mot de passe."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "बुकिंग के बाद आपको कन्फ़र्मेशन पेज पर एक निजी लिंक मिलता है, और ईमेल देने पर ईमेल से भी। रद्द करने या समय बदलने के लिए इसे कभी भी इस्तेमाल करें। न ऐप चाहिए, न पासवर्ड।"
+            "value" : "बुकिंग के बाद आपको कन्फ़र्मेशन पेज पर और ईमेल से एक निजी लिंक मिलता है। रद्द करने या समय बदलने के लिए इसे कभी भी इस्तेमाल करें। न ऐप चाहिए, न पासवर्ड।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Setelah memesan, Anda mendapat tautan pribadi di halaman konfirmasi, dan lewat email jika Anda membagikannya. Gunakan kapan saja untuk membatalkan atau menjadwalkan ulang. Tanpa aplikasi atau kata sandi."
+            "value" : "Setelah memesan, Anda mendapat tautan pribadi di halaman konfirmasi dan lewat email. Gunakan kapan saja untuk membatalkan atau menjadwalkan ulang. Tanpa aplikasi atau kata sandi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dopo la prenotazione ricevi un link personale nella pagina di conferma, e via e-mail se ne indichi una. Usalo quando vuoi per annullare o spostare l'appuntamento. Nessuna app né password."
+            "value" : "Dopo la prenotazione ricevi un link personale nella pagina di conferma e via e-mail. Usalo quando vuoi per annullare o spostare l'appuntamento. Nessuna app né password."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Depois de agendar, você recebe um link pessoal na página de confirmação e também por e-mail, se informar um. Use-o quando quiser para cancelar ou remarcar. Sem app nem senha."
+            "value" : "Depois de agendar, você recebe um link pessoal na página de confirmação e por e-mail. Use-o quando quiser para cancelar ou remarcar. Sem app nem senha."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Depois de fazer a marcação, recebe um link pessoal na página de confirmação e também por e-mail, se indicar um. Use-o quando quiser para desmarcar ou remarcar. Sem aplicação nem palavra-passe."
+            "value" : "Depois de fazer a marcação, recebe um link pessoal na página de confirmação e por e-mail. Use-o quando quiser para desmarcar ou remarcar. Sem aplicação nem palavra-passe."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevunuzu aldıktan sonra onay sayfasında kişisel bir bağlantı alırsınız; e-posta paylaşırsanız bağlantı e-postayla da gelir. İptal etmek veya ertelemek için istediğiniz zaman kullanın. Uygulama ya da şifre gerekmez."
+            "value" : "Randevunuzu aldıktan sonra onay sayfasında ve e-postayla kişisel bir bağlantı alırsınız. İptal etmek veya ertelemek için istediğiniz zaman kullanın. Uygulama ya da şifre gerekmez."
           }
         }
       }
@@ -142112,85 +142112,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "وُقّع النموذج الصحي في %@. حان وقت طلب مراجعته."
+            "value" : "عُبّئت الاستمارة الصحية في %@. حان وقت طلب مراجعتها."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gesundheitsbogen am %@ unterschrieben. Es ist Zeit, um eine Überprüfung zu bitten."
+            "value" : "Gesundheitsfragebogen am %@ ausgefüllt. Zeit für eine Überprüfung."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health form signed %@. It is time to ask for a review."
+            "value" : "Health form filled in %@. It is time to ask for a review."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Health form signed %@. It is time to ask for a review."
+            "value" : "Health form filled in %@. It is time to ask for a review."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@. Es hora de pedir una revisión."
+            "value" : "Ficha de salud rellenada el %@. Es hora de pedir una revisión."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@. Es hora de pedir una revisión."
+            "value" : "Ficha de salud llenada el %@. Es momento de pedir una revisión."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@. Es hora de pedir una revisión."
+            "value" : "Ficha de salud llenada el %@. Es momento de pedir una revisión."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiche santé signée le %@. Il est temps de demander une mise à jour."
+            "value" : "Fiche santé remplie le %@. Il est temps de demander une mise à jour."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य फ़ॉर्म %@ को हस्ताक्षरित। समीक्षा माँगने का समय आ गया है।"
+            "value" : "स्वास्थ्य फ़ॉर्म %@ को भरा गया। समीक्षा माँगने का समय आ गया है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulir kesehatan ditandatangani %@. Saatnya meminta peninjauan."
+            "value" : "Formulir kesehatan diisi %@. Saatnya meminta peninjauan."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scheda di salute firmata il %@. È ora di chiedere una revisione."
+            "value" : "Scheda sanitaria compilata il %@. È ora di chiedere una revisione."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde assinada em %@. Está na hora de pedir uma revisão."
+            "value" : "Ficha de saúde preenchida em %@. Está na hora de pedir uma revisão."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde assinada em %@. Está na hora de pedir uma revisão."
+            "value" : "Ficha de saúde preenchida em %@. Está na hora de pedir uma revisão."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık formu %@ tarihinde imzalandı. Gözden geçirme isteme zamanı geldi."
+            "value" : "Sağlık formu %@ tarihinde dolduruldu. Gözden geçirme isteme zamanı geldi."
           }
         }
       }
@@ -142292,85 +142292,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "وُقّع النموذج الصحي في %@."
+            "value" : "عُبّئت الاستمارة الصحية في %@."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gesundheitsbogen am %@ unterschrieben."
+            "value" : "Gesundheitsfragebogen am %@ ausgefüllt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health form signed %@."
+            "value" : "Health form filled in %@."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Health form signed %@."
+            "value" : "Health form filled in %@."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@."
+            "value" : "Ficha de salud rellenada el %@."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@."
+            "value" : "Ficha de salud llenada el %@."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulario de salud firmado el %@."
+            "value" : "Ficha de salud llenada el %@."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiche santé signée le %@."
+            "value" : "Fiche santé remplie le %@."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य फ़ॉर्म %@ को हस्ताक्षरित।"
+            "value" : "स्वास्थ्य फ़ॉर्म %@ को भरा गया।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formulir kesehatan ditandatangani %@."
+            "value" : "Formulir kesehatan diisi %@."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scheda di salute firmata il %@."
+            "value" : "Scheda sanitaria compilata il %@."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde assinada em %@."
+            "value" : "Ficha de saúde preenchida em %@."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ficha de saúde assinada em %@."
+            "value" : "Ficha de saúde preenchida em %@."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık formu %@ tarihinde imzalandı."
+            "value" : "Sağlık formu %@ tarihinde dolduruldu."
           }
         }
       }
@@ -161912,85 +161912,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الأسئلة ونص الموافقة"
+            "value" : "أسئلة الاستمارة الصحية"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fragen und Einwilligungstext"
+            "value" : "Fragen des Gesundheitsfragebogens"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Questions and consent text"
+            "value" : "Health form questions"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Questions and consent text"
+            "value" : "Health form questions"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preguntas y texto de consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preguntas y texto de consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preguntas y texto de consentimiento"
+            "value" : "Preguntas de la ficha de salud"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Questions et texte de consentement"
+            "value" : "Questions de la fiche santé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "प्रश्न और सहमति का पाठ"
+            "value" : "स्वास्थ्य फ़ॉर्म के सवाल"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pertanyaan dan teks persetujuan"
+            "value" : "Pertanyaan formulir kesehatan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Domande e testo del consenso"
+            "value" : "Domande della scheda sanitaria"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perguntas e texto de consentimento"
+            "value" : "Perguntas da ficha de saúde"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perguntas e texto de consentimento"
+            "value" : "Perguntas da ficha de saúde"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sorular ve onam metni"
+            "value" : "Sağlık formu soruları"
           }
         }
       }
@@ -162674,7 +162674,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Désactiver un champ ne fait que cesser de le demander. Ce que vous avez déjà enregistré reste."
+            "value" : "Désactiver un champ empêche seulement qu'il soit demandé. Ce que vous avez déjà enregistré reste."
           }
         },
         "hi" : {
@@ -162692,7 +162692,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Disattivare un campo smette solo di chiederlo. Ciò che hai già salvato resta."
+            "value" : "Se disattivi un campo, smette solo di essere chiesto. Ciò che hai già salvato resta."
           }
         },
         "pt-BR" : {

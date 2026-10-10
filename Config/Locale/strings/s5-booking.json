@@ -17,18 +17,18 @@
   [
    "policy.rule.personalLink",
    "Client-facing rule line (booking page, confirmation, personal page). The client gets a personal link on the confirmation page, and by email if she gave one (D31: no automatic WhatsApp).",
-   "After you book, you get a personal link on the confirmation page, and by email if you share one. Use it any time to cancel or reschedule. No app or password.",
-   "Depois de agendar, você recebe um link pessoal na página de confirmação e também por e-mail, se informar um. Use-o quando quiser para cancelar ou remarcar. Sem app nem senha.",
-   "Depois de fazer a marcação, recebe um link pessoal na página de confirmação e também por e-mail, se indicar um. Use-o quando quiser para desmarcar ou remarcar. Sem aplicação nem palavra-passe.",
-   "Al reservar, recibes un enlace personal en la página de confirmación, y por correo si compartes uno. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña.",
-   "Al reservar, recibes un enlace personal en la página de confirmación, y por correo si compartes uno. Úsalo cuando quieras para cancelar o cambiar tu cita. Sin app ni contraseña.",
-   "Dopo la prenotazione ricevi un link personale nella pagina di conferma, e via e-mail se ne indichi una. Usalo quando vuoi per annullare o spostare l'appuntamento. Nessuna app né password.",
-   "Après votre réservation, vous recevez un lien personnel sur la page de confirmation, et par e-mail si vous en indiquez un. Utilisez-le à tout moment pour annuler ou déplacer votre rendez-vous. Sans appli ni mot de passe.",
-   "Nach der Buchung erhalten Sie auf der Bestätigungsseite einen persönlichen Link, bei Angabe einer E-Mail-Adresse auch per E-Mail. Damit können Sie jederzeit absagen oder verschieben. Ohne App und ohne Passwort.",
-   "Randevunuzu aldıktan sonra onay sayfasında kişisel bir bağlantı alırsınız; e-posta paylaşırsanız bağlantı e-postayla da gelir. İptal etmek veya ertelemek için istediğiniz zaman kullanın. Uygulama ya da şifre gerekmez.",
-   "Setelah memesan, Anda mendapat tautan pribadi di halaman konfirmasi, dan lewat email jika Anda membagikannya. Gunakan kapan saja untuk membatalkan atau menjadwalkan ulang. Tanpa aplikasi atau kata sandi.",
-   "बुकिंग के बाद आपको कन्फ़र्मेशन पेज पर एक निजी लिंक मिलता है, और ईमेल देने पर ईमेल से भी। रद्द करने या समय बदलने के लिए इसे कभी भी इस्तेमाल करें। न ऐप चाहिए, न पासवर्ड।",
-   "بعد الحجز تحصل على رابط شخصي في صفحة التأكيد، وعلى بريدك الإلكتروني إذا شاركته. استخدمه في أي وقت لإلغاء الموعد أو إعادة جدولته. دون تطبيق أو كلمة مرور."
+   "After you book, you get a personal link on the confirmation page and by email. Use it any time to cancel or reschedule. No app or password.",
+   "Depois de agendar, você recebe um link pessoal na página de confirmação e por e-mail. Use-o quando quiser para cancelar ou remarcar. Sem app nem senha.",
+   "Depois de fazer a marcação, recebe um link pessoal na página de confirmação e por e-mail. Use-o quando quiser para desmarcar ou remarcar. Sem aplicação nem palavra-passe.",
+   "Al reservar, recibes un enlace personal en la página de confirmación y por correo. Úsalo cuando quieras para cancelar o reprogramar tu cita. Sin app ni contraseña.",
+   "Al reservar, recibes un enlace personal en la página de confirmación y por correo. Úsalo cuando quieras para cancelar o cambiar tu cita. Sin app ni contraseña.",
+   "Dopo la prenotazione ricevi un link personale nella pagina di conferma e via e-mail. Usalo quando vuoi per annullare o spostare l'appuntamento. Nessuna app né password.",
+   "Après votre réservation, vous recevez un lien personnel sur la page de confirmation et par e-mail. Utilisez-le à tout moment pour annuler ou déplacer votre rendez-vous. Sans appli ni mot de passe.",
+   "Nach der Buchung erhalten Sie auf der Bestätigungsseite und per E-Mail einen persönlichen Link. Damit können Sie jederzeit absagen oder verschieben. Ohne App und ohne Passwort.",
+   "Randevunuzu aldıktan sonra onay sayfasında ve e-postayla kişisel bir bağlantı alırsınız. İptal etmek veya ertelemek için istediğiniz zaman kullanın. Uygulama ya da şifre gerekmez.",
+   "Setelah memesan, Anda mendapat tautan pribadi di halaman konfirmasi dan lewat email. Gunakan kapan saja untuk membatalkan atau menjadwalkan ulang. Tanpa aplikasi atau kata sandi.",
+   "बुकिंग के बाद आपको कन्फ़र्मेशन पेज पर और ईमेल से एक निजी लिंक मिलता है। रद्द करने या समय बदलने के लिए इसे कभी भी इस्तेमाल करें। न ऐप चाहिए, न पासवर्ड।",
+   "بعد الحجز تحصل على رابط شخصي في صفحة التأكيد وعلى بريدك الإلكتروني. استخدمه في أي وقت لإلغاء الموعد أو إعادة جدولته. دون تطبيق أو كلمة مرور."
   ],
   [
    "policy.rule.free",
@@ -38,20 +38,20 @@
     "other": "Free changes up to %lld hours before."
    },
    {
-    "one": "Alterações gratuitas até %lld hora antes.",
-    "other": "Alterações gratuitas até %lld horas antes."
+    "one": "Alterações sem custo até %lld hora antes.",
+    "other": "Alterações sem custo até %lld horas antes."
    },
    {
-    "one": "Alterações gratuitas até %lld hora antes.",
-    "other": "Alterações gratuitas até %lld horas antes."
+    "one": "Alterações sem encargos até %lld hora antes.",
+    "other": "Alterações sem encargos até %lld horas antes."
    },
    {
     "one": "Cambios sin costo hasta %lld hora antes.",
     "other": "Cambios sin costo hasta %lld horas antes."
    },
    {
-    "one": "Cambios gratuitos hasta %lld hora antes.",
-    "other": "Cambios gratuitos hasta %lld horas antes."
+    "one": "Cambios sin coste hasta %lld hora antes.",
+    "other": "Cambios sin coste hasta %lld horas antes."
    },
    {
     "one": "Modifiche gratuite fino a %lld ora prima.",

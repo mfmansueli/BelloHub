@@ -49,7 +49,7 @@ struct PolicyRuleTextTests {
         let lines = text(.en).lines(cancellation: .standard, noShow: .standard)
         #expect(lines.count == 5)
         #expect(lines[0] == """
-            After you book, you get a personal link on the confirmation page, and by email if you share one. \
+            After you book, you get a personal link on the confirmation page and by email. \
             Use it any time to cancel or reschedule. No app or password.
             """)
         #expect(lines[1]
