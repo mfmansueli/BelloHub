@@ -176,6 +176,17 @@ struct BookingSettingsViewModelTests {
         #expect(rig.service.availability == stored && !rig.service.isStarterAvailability)
     }
 
+    @Test("The slot interval and Keep my day compact are saved into her availability (D56)")
+    func smartSlots() async throws {
+        let rig = try await make()
+        #expect(rig.model.availability.effectiveSlotStep == 15 && rig.model.availability.keepsDayCompact)
+        await rig.model.setSlotStep(FreeSlotsRequest.matchServiceStep)
+        await rig.model.setCompactDay(false)
+        let stored = try #require(try await rig.repository.availability())
+        #expect(stored.slotStepMinutes == 0 && stored.compactDay == false)
+        #expect(rig.model.availability == stored)
+    }
+
     @Test("A failed save of a rule puts it back")
     func ruleFailure() async throws {
         let rig = try await make()
