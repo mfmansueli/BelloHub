@@ -31,7 +31,8 @@ struct NewAppointmentGuestsSection: View {
                 text: Binding(
                     get: { names.indices.contains(index) ? names[index] : "" },
                     set: { onRename($0, index) }
-                )
+                ),
+                prompt: Text.prompt("newAppointment.guests.name")
             ) { Text("newAppointment.guests.name") }
                 .font(Typography.body).foregroundStyle(Palette.ink)
                 .padding(.horizontal, Spacing.md)
