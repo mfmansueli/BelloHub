@@ -40,7 +40,7 @@ struct CredentialsContentView: View {
         .scrollContentBackground(.hidden)
         .background(Palette.bg)
         .navigationTitle(Text("credentials.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .refreshable { await viewModel.loadAsync() }
         .task { await viewModel.loadAsync() }
         .onChange(of: isRegistrationFocused) { _, isFocused in

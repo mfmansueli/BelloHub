@@ -35,7 +35,7 @@ struct FlowLayout: Layout {
             for item in row.items {
                 let size = item.size
                 let originX = isRightToLeft ? cursor - size.width : cursor
-                subviews[item.index].place(at: CGPoint(x: originX, y: rowTop), proposal: ProposedViewSize(size))
+                subviews[item.index].place(at: CGPoint(x: originX, y: rowTop), proposal: item.proposal)
                 cursor += isRightToLeft ? -(size.width + spacing) : size.width + spacing
             }
             rowTop += row.height + lineSpacing
@@ -45,7 +45,7 @@ struct FlowLayout: Layout {
     // MARK: - Rows
 
     private struct Row {
-        var items: [(index: Int, size: CGSize)] = []
+        var items: [(index: Int, size: CGSize, proposal: ProposedViewSize)] = []
         var width: CGFloat = 0
         var height: CGFloat = 0
     }
@@ -54,8 +54,13 @@ struct FlowLayout: Layout {
         var rows: [Row] = []
         var current = Row()
         for (index, subview) in subviews.enumerated() {
-            let proposal = wrapsLongChildren ? ProposedViewSize(width: width, height: nil) : .unspecified
-            let size = subview.sizeThatFits(proposal)
+            // A child that fits on one line is placed with no proposal, so it keeps its natural size: placing it with
+            // its own measured width made "12 hr" wrap onto two lines in a chip (the localization screenshots found it,
+            // S11), because text laid out in exactly its measured width can round past it.
+            let natural = subview.sizeThatFits(.unspecified)
+            let wraps = wrapsLongChildren && natural.width > width
+            let proposal = wraps ? ProposedViewSize(width: width, height: nil) : .unspecified
+            let size = wraps ? subview.sizeThatFits(proposal) : natural
             let needed = current.items.isEmpty ? size.width : current.width + spacing + size.width
             if needed > width, !current.items.isEmpty {
                 rows.append(current)
@@ -63,7 +68,7 @@ struct FlowLayout: Layout {
             }
             current.width = current.items.isEmpty ? size.width : current.width + spacing + size.width
             current.height = max(current.height, size.height)
-            current.items.append((index, size))
+            current.items.append((index, size, wraps ? ProposedViewSize(size) : .unspecified))
         }
         if !current.items.isEmpty { rows.append(current) }
         return rows

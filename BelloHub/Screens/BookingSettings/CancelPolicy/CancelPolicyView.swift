@@ -55,7 +55,7 @@ struct CancelPolicyView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("cancelPolicy.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.appear() }
     }
 

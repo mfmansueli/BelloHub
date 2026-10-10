@@ -33,6 +33,7 @@ struct ClientHealthContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("health.title"))
+        .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
         .sheet(item: $model.fillSheet, onDismiss: viewModel.reload) { sheet in

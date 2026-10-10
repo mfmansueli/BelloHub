@@ -212,24 +212,24 @@
     "other": "%lld students"
    },
    {
-    "one": "%lld aluna ou aluno",
-    "other": "%lld alunas e alunos"
+    "one": "%lld aluno",
+    "other": "%lld alunos"
    },
    {
-    "one": "%lld aluna ou aluno",
-    "other": "%lld alunas e alunos"
+    "one": "%lld aluno",
+    "other": "%lld alunos"
    },
    {
-    "one": "%lld alumna o alumno",
-    "other": "%lld alumnas y alumnos"
+    "one": "%lld alumno",
+    "other": "%lld alumnos"
    },
    {
-    "one": "%lld alumna o alumno",
-    "other": "%lld alumnas y alumnos"
+    "one": "%lld alumno",
+    "other": "%lld alumnos"
    },
    {
-    "one": "%lld allieva o allievo",
-    "other": "%lld allieve e allievi"
+    "one": "%lld allievo",
+    "other": "%lld allievi"
    },
    {
     "one": "%lld élève",
@@ -267,28 +267,28 @@
     "other": "%lld guests"
    },
    {
-    "one": "%lld convidada ou convidado",
-    "other": "%lld convidadas e convidados"
+    "one": "%lld convidado",
+    "other": "%lld convidados"
    },
    {
-    "one": "%lld convidada ou convidado",
-    "other": "%lld convidadas e convidados"
+    "one": "%lld convidado",
+    "other": "%lld convidados"
    },
    {
-    "one": "%lld invitada o invitado",
-    "other": "%lld invitadas e invitados"
+    "one": "%lld invitado",
+    "other": "%lld invitados"
    },
    {
-    "one": "%lld invitada o invitado",
-    "other": "%lld invitadas e invitados"
+    "one": "%lld invitado",
+    "other": "%lld invitados"
    },
    {
     "one": "%lld ospite",
     "other": "%lld ospiti"
    },
    {
-    "one": "%lld invitée ou invité",
-    "other": "%lld invitées et invités"
+    "one": "%lld invité",
+    "other": "%lld invités"
    },
    {
     "one": "%lld Gast",

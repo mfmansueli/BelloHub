@@ -26,7 +26,7 @@ struct HelpView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("help.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     // MARK: - Sections

@@ -40,7 +40,7 @@ struct PrivacyContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("privacy.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: Binding(
             get: { viewModel.openedNotice != nil }, set: { if !$0 { viewModel.closeNotice() } }
         )) {

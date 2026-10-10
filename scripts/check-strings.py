@@ -201,6 +201,32 @@ def check_docs_strings(errors):
                 errors.append(f"message-templates: {language} '{kind}' placeholders differ from English")
 
 
+def check_navigation_titles(errors):
+    """Every `.navigationTitle` key in Screens/ is measured by BelloHubTests NavigationTitleFitTests, in the list of its
+    display mode (inline when an `.inline` display mode follows within three lines, large otherwise)."""
+    test = os.path.join(lib.ROOT, "BelloHubTests", "Models", "Locale", "NavigationTitleFitTests.swift")
+    with open(test, encoding="utf-8") as handle:
+        text = handle.read()
+    listed = {}
+    for name, mode in (("largeTitleKeys", "large"), ("inlineTitleKeys", "inline")):
+        block = re.search(name + r" = \[(.*?)\]", text, re.S)
+        for key in re.findall(r'"([^"]+)"', block.group(1) if block else ""):
+            listed[key] = mode
+    for path in swift_files("BelloHub/Screens"):
+        with open(path, encoding="utf-8") as handle:
+            lines = handle.read().split("\n")
+        for index, line in enumerate(lines):
+            if ".navigationTitle(" not in line:
+                continue
+            keys = re.findall(r'"([a-z][A-Za-z]*\.[A-Za-z.]+)"', " ".join(lines[index:index + 2]))
+            mode = "inline" if "(.inline)" in "\n".join(lines[index:index + 4]) else "large"
+            for key in keys:
+                if listed.get(key) != mode:
+                    errors.append(f"{os.path.relpath(path, lib.ROOT)}: title {key} is {mode}; list it under "
+                                  f"{'inlineTitleKeys' if mode == 'inline' else 'largeTitleKeys'} in "
+                                  "NavigationTitleFitTests")
+
+
 def namespaces(keys):
     return {key.split(".")[0] for key in keys}
 
@@ -233,6 +259,7 @@ def main():
     check_code(catalog, errors)
     check_style(catalog, errors)
     check_docs_strings(errors)
+    check_navigation_titles(errors)
     if os.path.exists(lib.INFOPLIST_CATALOG):
         check_style(lib.load_catalog(lib.INFOPLIST_CATALOG), errors)
     if "--final" in sys.argv:

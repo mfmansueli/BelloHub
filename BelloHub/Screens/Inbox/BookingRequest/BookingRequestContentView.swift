@@ -23,7 +23,7 @@ struct BookingRequestContentView: View {
         content
             .background(Palette.bg)
             .navigationTitle(Text("bookingRequest.title"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .refreshable { await viewModel.refreshAsync() }
             .task { await viewModel.loadAsync() }
             .sheet(isPresented: $viewModel.isPaywallPresented) { PaywallSheet() }

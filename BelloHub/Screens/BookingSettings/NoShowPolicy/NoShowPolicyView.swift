@@ -60,7 +60,7 @@ struct NoShowPolicyView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("noShowPolicy.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.appear() }
     }
 

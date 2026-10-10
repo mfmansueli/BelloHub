@@ -29324,7 +29324,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mettre les réservations en pause"
+            "value" : "Suspendre les réservations"
           }
         },
         "hi" : {
@@ -119234,7 +119234,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Protección contra citas no atendidas"
+            "value" : "Ausencias sin aviso"
           }
         },
         "es-419" : {
@@ -119252,7 +119252,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Protection contre les rendez-vous manqués"
+            "value" : "Rendez-vous manqués"
           }
         },
         "hi" : {
@@ -119270,7 +119270,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Protezione dalle mancate presentazioni"
+            "value" : "Mancati appuntamenti"
           }
         },
         "pt-BR" : {
@@ -175244,85 +175244,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "غير مناسب إذا كان لدى الشخص"
+            "value" : "موانع الاستعمال"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nicht geeignet, wenn die Person Folgendes hat"
+            "value" : "Kontraindikationen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not suitable if the client has"
+            "value" : "Contraindications"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Not suitable if the client has"
+            "value" : "Contraindications"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "No recomendado si la persona tiene"
+            "value" : "Contraindicaciones"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "No indicado si la persona tiene"
+            "value" : "Contraindicaciones"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "No indicado si la persona tiene"
+            "value" : "Contraindicaciones"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Déconseillé si la personne a"
+            "value" : "Contre-indications"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "इनके होने पर उपयुक्त नहीं"
+            "value" : "कंट्राइंडिकेशन"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak cocok jika klien memiliki"
+            "value" : "Kontraindikasi"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Non indicato se la persona ha"
+            "value" : "Controindicazioni"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Não indicado se a pessoa tiver"
+            "value" : "Contraindicações"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Não indicado se a pessoa tiver"
+            "value" : "Contraindicações"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Şu durumlarda uygun değil"
+            "value" : "Kontrendikasyonlar"
           }
         }
       }
@@ -190391,13 +190391,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitada o invitado"
+                  "value" : "%lld invitado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitadas e invitados"
+                  "value" : "%lld invitados"
                 }
               }
             }
@@ -190409,13 +190409,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitada o invitado"
+                  "value" : "%lld invitado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitadas e invitados"
+                  "value" : "%lld invitados"
                 }
               }
             }
@@ -190427,13 +190427,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitada o invitado"
+                  "value" : "%lld invitado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitadas e invitados"
+                  "value" : "%lld invitados"
                 }
               }
             }
@@ -190445,13 +190445,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitée ou invité"
+                  "value" : "%lld invité"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld invitées et invités"
+                  "value" : "%lld invités"
                 }
               }
             }
@@ -190511,13 +190511,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld convidada ou convidado"
+                  "value" : "%lld convidado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld convidadas e convidados"
+                  "value" : "%lld convidados"
                 }
               }
             }
@@ -190529,13 +190529,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld convidada ou convidado"
+                  "value" : "%lld convidado"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld convidadas e convidados"
+                  "value" : "%lld convidados"
                 }
               }
             }
@@ -190592,25 +190592,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitadas e invitados"
+            "value" : "invitados"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitadas e invitados"
+            "value" : "invitados"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitadas e invitados"
+            "value" : "invitados"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitées et invités"
+            "value" : "invités"
           }
         },
         "hi" : {
@@ -190634,13 +190634,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "convidadas e convidados"
+            "value" : "convidados"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "convidadas e convidados"
+            "value" : "convidados"
           }
         },
         "tr" : {
@@ -190682,25 +190682,25 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitada o invitado"
+            "value" : "invitado"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitada o invitado"
+            "value" : "invitado"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitada o invitado"
+            "value" : "invitado"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "invitée ou invité"
+            "value" : "invité"
           }
         },
         "hi" : {
@@ -190724,13 +190724,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "convidada ou convidado"
+            "value" : "convidado"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "convidada ou convidado"
+            "value" : "convidado"
           }
         },
         "tr" : {
@@ -191030,7 +191030,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Patientinnen und Patienten"
+            "value" : "Patienten"
           }
         },
         "en" : {
@@ -191303,13 +191303,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumna o alumno"
+                  "value" : "%lld alumno"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumnas y alumnos"
+                  "value" : "%lld alumnos"
                 }
               }
             }
@@ -191321,13 +191321,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumna o alumno"
+                  "value" : "%lld alumno"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumnas y alumnos"
+                  "value" : "%lld alumnos"
                 }
               }
             }
@@ -191339,13 +191339,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumna o alumno"
+                  "value" : "%lld alumno"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alumnas y alumnos"
+                  "value" : "%lld alumnos"
                 }
               }
             }
@@ -191405,13 +191405,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld allieva o allievo"
+                  "value" : "%lld allievo"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld allieve e allievi"
+                  "value" : "%lld allievi"
                 }
               }
             }
@@ -191423,13 +191423,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld aluna ou aluno"
+                  "value" : "%lld aluno"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alunas e alunos"
+                  "value" : "%lld alunos"
                 }
               }
             }
@@ -191441,13 +191441,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld aluna ou aluno"
+                  "value" : "%lld aluno"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld alunas e alunos"
+                  "value" : "%lld alunos"
                 }
               }
             }
@@ -191486,7 +191486,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schülerinnen und Schüler"
+            "value" : "Schüler"
           }
         },
         "en" : {
@@ -191504,19 +191504,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumnas y alumnos"
+            "value" : "alumnos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumnas y alumnos"
+            "value" : "alumnos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumnas y alumnos"
+            "value" : "alumnos"
           }
         },
         "fr" : {
@@ -191540,19 +191540,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "allieve e allievi"
+            "value" : "allievi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alunas e alunos"
+            "value" : "alunos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alunas e alunos"
+            "value" : "alunos"
           }
         },
         "tr" : {
@@ -191594,19 +191594,19 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumna o alumno"
+            "value" : "alumno"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumna o alumno"
+            "value" : "alumno"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "alumna o alumno"
+            "value" : "alumno"
           }
         },
         "fr" : {
@@ -191630,19 +191630,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "allieva o allievo"
+            "value" : "allievo"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "aluna ou aluno"
+            "value" : "aluno"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "aluna ou aluno"
+            "value" : "aluno"
           }
         },
         "tr" : {

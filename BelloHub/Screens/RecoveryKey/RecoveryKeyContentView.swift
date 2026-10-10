@@ -38,7 +38,7 @@ struct RecoveryKeyContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("recoveryKey.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .onDisappear(perform: viewModel.clear)
     }
 

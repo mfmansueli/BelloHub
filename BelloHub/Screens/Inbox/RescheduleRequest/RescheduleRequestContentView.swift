@@ -23,7 +23,7 @@ struct RescheduleRequestContentView: View {
         content
             .background(Palette.bg)
             .navigationTitle(Text("rescheduleRequest.title"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .refreshable { await viewModel.refreshAsync() }
     }
 

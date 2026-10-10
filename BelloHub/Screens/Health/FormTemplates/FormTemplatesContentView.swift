@@ -32,6 +32,7 @@ struct FormTemplatesContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("formTemplates.title"))
+        .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
             if viewModel.hasLoaded { saveBar }
         }

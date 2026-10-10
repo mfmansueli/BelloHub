@@ -37,7 +37,7 @@ struct ExportAllContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("export.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .onDisappear(perform: viewModel.discard)
     }
 

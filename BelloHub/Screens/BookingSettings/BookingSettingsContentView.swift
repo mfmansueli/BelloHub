@@ -44,7 +44,7 @@ struct BookingSettingsContentView: View {
         }
         .background(Palette.bg)
         .navigationTitle(Text("bookingSettings.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .refreshable { await viewModel.loadAsync() }
         .task { await viewModel.loadAsync() }
         .onAppear { viewModel.appear() }
