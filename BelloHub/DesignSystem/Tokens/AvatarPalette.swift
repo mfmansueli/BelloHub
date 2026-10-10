@@ -14,31 +14,33 @@ enum AvatarPalette: Int, CaseIterable {
     case sand
     case peach
 
+    /// The case names are the palette families (`rose` is the orange, `sage` the green, `peach` the slate, `sand` a
+    /// neutral grey); see `Palette`.
     var start: Color {
         switch self {
-        case .rose: Color(light: 0xF5E4EB, dark: 0x573645)
-        case .sage: Color(light: 0xE4ECDE, dark: 0x34493A)
-        case .sand: Color(light: 0xF2EADD, dark: 0x3E3A33)
-        case .peach: Color(light: 0xFAE7DA, dark: 0x5E3F2F)
+        case .rose: Color(light: 0xFFE8DC, dark: 0x4A2312)
+        case .sage: Color(light: 0xE3F2E8, dark: 0x1C3324)
+        case .sand: Color(light: 0xEDEDEB, dark: 0x2C2C2C)
+        case .peach: Color(light: 0xE8EAF0, dark: 0x262A3A)
         }
     }
 
     var end: Color {
         switch self {
-        case .rose: Color(light: 0xE3B5C7, dark: 0x684353)
-        case .sage: Color(light: 0xBDD0B3, dark: 0x3B5540)
-        case .sand: Color(light: 0xDDCBB4, dark: 0x4A443B)
-        case .peach: Color(light: 0xF0C5A6, dark: 0x704B37)
+        case .rose: Color(light: 0xFFC4A8, dark: 0x6A2E14)
+        case .sage: Color(light: 0xC9E8D3, dark: 0x1F4A30)
+        case .sand: Color(light: 0xD3D3D0, dark: 0x3A3A3A)
+        case .peach: Color(light: 0xD3D8E6, dark: 0x2A3045)
         }
     }
 
     /// Initials color: the deep family accent, 4.5:1 or more on both ends of the gradient in every appearance.
     var text: Color {
         switch self {
-        case .rose: Color(light: 0x74374F, dark: 0xF7D3E0, lightIncreased: 0x5E2C40, darkIncreased: 0xFDE3EC)
-        case .sage: Color(light: 0x3C5638, dark: 0xDCEBD0, lightIncreased: 0x2E442B, darkIncreased: 0xEAF4E0)
-        case .sand: Color(light: 0x4A4036, dark: 0xEDE3D6, lightIncreased: 0x2F2822, darkIncreased: 0xF6EEE4)
-        case .peach: Color(light: 0x70402A, dark: 0xFFE2CC, lightIncreased: 0x5C331F, darkIncreased: 0xFFEEDE)
+        case .rose: Color(light: 0x8A2E08, dark: 0xFFD3BF, lightIncreased: 0x6E2406, darkIncreased: 0xFFE4D6)
+        case .sage: Color(light: 0x1F5A33, dark: 0xC2EBD0, lightIncreased: 0x164426, darkIncreased: 0xDDF5E5)
+        case .sand: Color(light: 0x2E2E2C, dark: 0xEDEDEB, lightIncreased: 0x1A1A19, darkIncreased: 0xFFFFFF)
+        case .peach: Color(light: 0x343A52, dark: 0xD4D9EE, lightIncreased: 0x252A3D, darkIncreased: 0xE8EBF7)
         }
     }
 

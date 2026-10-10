@@ -29,7 +29,8 @@ struct TreatmentFlowContrastTests {
         pair("pending status: amberText on the card", Palette.amberText, Palette.surface),
         pair("kept status: sageText on the card", Palette.sageText, Palette.surface),
         pair("form error: coralText on the screen", Palette.coralText, Palette.bg),
-        pair("photo slot icon: ink2 on sunken", Palette.ink2, Palette.sunken, minimum: 3)
+        pair("photo slot icon: ink2 on sunken", Palette.ink2, Palette.sunken, minimum: 3),
+        pair("microphone glyph: onAction on the rose disc", Palette.onAction, Palette.rose, minimum: 3)
     ]
 
     @Test("Every pair the treatment flow draws is readable in every appearance", arguments: Appearance.all)

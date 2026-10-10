@@ -27,9 +27,9 @@ enum Elevation {
         }
     }
 
-    /// Shadow tint, a neutral green-graphite (rgba 46, 51, 41). The warm brown it replaced turned muddy under the
-    /// sage and ivory of the 2026-10-10 palette.
-    static let tint = Color(hex: 0x2E3329)
+    /// Shadow tint, a plain neutral graphite (rgba 26, 26, 26) for the graphite and orange palette. Any hue in the
+    /// shadow (the earlier green-graphite, the warm brown before it) reads as dirt next to pure neutrals.
+    static let tint = Color(hex: 0x1A1A1A)
 }
 
 private struct ElevationModifier: ViewModifier {

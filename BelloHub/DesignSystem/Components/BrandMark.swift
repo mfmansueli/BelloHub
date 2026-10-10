@@ -6,7 +6,8 @@
 import SwiftUI
 
 /// The Bello Hub mark, as the app icon draws it: a sage rounded square (a darker sage in dark mode) with an ivory "b"
-/// and a rose dot. Drawn, not an image, so it is
+/// and the logo dot (`Palette.rose`, the orange since the graphite and orange palette; the icon itself has not been
+/// redrawn yet). Drawn, not an image, so it is
 /// sharp at every size and follows the appearance. Decorative: callers that need a name add their own label.
 struct BrandMark: View {
     var size: CGFloat = 72
