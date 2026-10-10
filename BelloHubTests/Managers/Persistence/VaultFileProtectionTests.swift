@@ -8,7 +8,7 @@ import Foundation
 import Testing
 
 /// docs/06 section 4.4: the vault store's protection class is set explicitly, on the store, its SQLite companions and
-/// its folder. The simulator reports no protection class, so the read-back is checked where the platform gives one.
+/// its folder, and read back from the file system.
 @Suite("VaultFileProtection")
 struct VaultFileProtectionTests {
     @Test("The class is the one docs/06 asks for: readable for background sync after the first unlock")
@@ -33,10 +33,9 @@ struct VaultFileProtectionTests {
         _ = try VaultContainerFactory.make(storage: .file(store))
 
         #expect(VaultFileProtection.apply(to: store).isEmpty, "every existing file accepted the class")
+        #expect(VaultFileProtection.isProtected(store))
         for file in VaultFileProtection.files(of: store) where FileManager.default.fileExists(atPath: file.path) {
-            if let protection = VaultFileProtection.protection(of: file) {
-                #expect(protection == VaultFileProtection.level)
-            }
+            #expect(VaultFileProtection.isProtected(file), "\(file.lastPathComponent)")
         }
     }
 }

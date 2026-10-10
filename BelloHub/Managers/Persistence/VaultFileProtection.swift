@@ -34,10 +34,9 @@ enum VaultFileProtection {
         }
     }
 
-    /// The protection class a file reports, nil where the platform reports none (the simulator).
-    static func protection(of url: URL) -> FileProtectionType? {
-        (try? url.resourceValues(forKeys: [.fileProtectionKey]))?.fileProtection.map {
-            FileProtectionType(rawValue: $0.rawValue)
-        }
+    /// Whether the file reports `level` (the URL resource API names the same class `URLFileProtection`).
+    static func isProtected(_ url: URL) -> Bool {
+        (try? url.resourceValues(forKeys: [.fileProtectionKey]))?.fileProtection
+            == URLFileProtection.completeUntilFirstUserAuthentication
     }
 }
