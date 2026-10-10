@@ -73,7 +73,10 @@ final class ColorReviewUITests: XCTestCase {
             var arguments = ["-designCatalog", "-catalogSection", section]
             if mode == "dark" { arguments.append("-catalogDark") }
             let app = XCUIApplication.launchedForUITests(arguments: arguments)
-            _ = app.otherElements.firstMatch.waitForExistence(timeout: 5)
+            _ = app.element("catalog.section.\(section)").waitForExistence(timeout: 10)
+            // The catalog applies its appearance a moment after the first frame, which no element reflects; a short
+            // wait on an element that never appears lets it settle (a screenshot tool, nothing is asserted).
+            _ = app.element("colorReview.never").waitForExistence(timeout: 1.5)
             save(app, "catalog-\(section)-\(mode)")
             app.terminate()
         }
