@@ -4,6 +4,34 @@ Things the code cannot do on its own. Claude Code builds everything around them 
 
 Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U638Q`), the product, `pt-BR` and the business side; the Mac that runs Claude Code is his (Xcode 27). **Mateus** owns Firebase and engineering support; he must be added to the Apple team (see H1) to help with signing and TestFlight.
 
+## Minimum to run v1 in production (in this order)
+
+1. **Domain (H6, Iago/Mateus).** Register `bellohub.app`, attach it to Firebase Hosting, then tell Claude Code: it sets
+   `BELLO_WEB_BASE_URL` (app and web), redeploys, and the terms and privacy URLs for the stores become
+   `https://bellohub.app/legal/…`.
+2. **E-mail sender, CRITICAL (H7, Mateus).** Without it **no client can book on the web**: the e-mail code is the only
+   verification (D46, D57). Firebase does not sell e-mail sending. Create a Resend account in the EU region, sign its
+   DPA, verify the domain by pasting the SPF, DKIM and DMARC records at the DNS host (the registrar), put the API key
+   into the Secret Manager secret `EMAIL_API_KEY` and set `EMAIL_FROM`. Claude Code then redeploys the functions and
+   tests a real e-mail end to end (it must land in the inbox, not spam).
+3. **Apple Developer / App Store Connect (H14, H16, Iago).** App record, the two subscription products with their
+   prices (D42), privacy labels from `docs/store/app-privacy.md`, metadata from `docs/store/`, TestFlight group,
+   seller and EU trader data. Claude Code checks the product ids against the app.
+4. **Purchase verification on the server (H14, Mateus).** Install Apple's root certificates for the functions and set
+   the App Store Server Notifications URL (`appStoreNotifications`). Until then a sandbox purchase does not lift the
+   server's 10-client limit. Claude Code redeploys and tests a sandbox purchase.
+5. **Sign in with Apple key (H22, Iago).** Create the .p8 key, give its key id; store them as
+   `APPLE_SIGNIN_PRIVATE_KEY` and `APPLE_SIGNIN_KEY_ID`; enable the Apple provider in Firebase Auth. Claude Code
+   redeploys; account deletion then also revokes the Apple token.
+6. **Firebase production (H4, Mateus).** A `prod` project, or promote `bello-hub`: Blaze billing, Auth and Storage on,
+   APNs key, a budget alert of about 5 EUR. Claude Code deploys rules, indexes, functions and Hosting there.
+7. **Checks on a real iPhone (H3, H8, H19, Iago).** Contacts, CSV from Excel, Face ID, camera, microphone, VoiceOver,
+   scrolling 2,000 clients, the booking page inside WhatsApp and Instagram. Findings go to `PROGRESS.md`; Claude Code
+   fixes them.
+
+**Not needed for v1:** WhatsApp Cloud API (H13, H21), SMS (H21, D57), App Check enforcement (H5, before scaling), a
+company (only post-v1: Meta business verification and automated WhatsApp need a registered business).
+
 | Id | Task | Who | Needed by |
 |---|---|---|---|
 | H1 | Xcode signing and capabilities | Iago (Mateus helps) | S2 (iCloud), S8 (push) |
@@ -27,6 +55,7 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H19 | Release-candidate checks on a real iPhone: VoiceOver pass, hitches, cold start, Apple Calendar, camera, Face ID (S12) | Iago / Mateus | before external TestFlight |
 | H20 | Decide the phone sign-in: keep v1 Apple only, or have Claude Code wire Firebase phone auth and test it on a device | Iago | before the App Store submission |
 | H21 | Automated WhatsApp and SMS (post-v1, D57): choose among the three options below; needs a registered business | Iago / Mateus | after v1 |
+| H22 | Sign in with Apple key (.p8) and key id as secrets; Apple provider enabled in Firebase Auth | Iago | before the first real professional |
 
 ---
 
@@ -172,6 +201,13 @@ until one exists. Options, cheapest first:
 3. **SMS**: revert D46 for Firebase Auth phone verification with reCAPTCHA, or an SMS vendor behind a protocol;
    per-message fee by country, SMS-pumping risk, so a country allow-list and a budget alert are mandatory.
 Until then e-mail is the only channel, which makes H7 (Resend) critical.
+
+
+### H22 · Sign in with Apple key
+Apple Developer → Keys → new key with *Sign in with Apple* for the App ID `com.bellohub`; download the `.p8` once. Store
+its contents in the Secret Manager secret `APPLE_SIGNIN_PRIVATE_KEY` (a placeholder `unset` exists) and the key id in
+`APPLE_SIGNIN_KEY_ID` (`firebase/functions/.env.<project>`); enable the Apple provider in Firebase Auth with the team
+id and key. **Expected:** Claude Code redeploys; deleting an account revokes the Apple token (D44).
 
 ---
 
