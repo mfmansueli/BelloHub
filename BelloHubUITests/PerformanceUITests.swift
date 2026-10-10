@@ -76,18 +76,21 @@ final class PerformanceUITests: XCTestCase {
             "-uiSeed", "clientWithHealth", "-uiPerfPhotos", "200", "-uiRoute", "recordHistory"
         ])
         XCTAssertTrue(app.element("recordHistory.overview").waitForExistence(timeout: 120), "no record history")
-        // The screen may load before the 200 photos are seeded: pull to refresh until the timeline is there.
-        let timeline = app.element("recordHistory.timeline")
-        for _ in 0..<12 where !timeline.waitForExistence(timeout: 5) {
+        // The screen may load before the 200 photos are seeded: pull to refresh until the strip has photos. The strip
+        // is found through its photos (the section's identifier is passed down to its children).
+        let photos = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier BEGINSWITH 'recordHistory.photo.'"))
+        for _ in 0..<12 where !photos.firstMatch.waitForExistence(timeout: 5) {
             app.element("recordHistory.overview").swipeDown()
         }
-        for _ in 0..<6 where !timeline.isHittable { app.element("recordHistory.overview").swipeUp() }
-        XCTAssertTrue(timeline.exists, "no photo timeline")
+        let strip = photos.firstMatch
+        for _ in 0..<6 where !strip.isHittable { app.element("recordHistory.overview").swipeUp() }
+        XCTAssertTrue(strip.exists, "no photo on the timeline")
         let options = XCTMeasureOptions()
         options.iterationCount = 3
         measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
-            for _ in 0..<12 { timeline.swipeLeft(velocity: .fast) }
-            for _ in 0..<12 { timeline.swipeRight(velocity: .fast) }
+            for _ in 0..<12 { strip.swipeLeft(velocity: .fast) }
+            for _ in 0..<12 { strip.swipeRight(velocity: .fast) }
         }
     }
 }
