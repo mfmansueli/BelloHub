@@ -15,7 +15,7 @@ struct StepProgressBar: View {
         HStack(spacing: Spacing.sm) {
             ForEach(1...max(total, 1), id: \.self) { step in
                 Capsule()
-                    .fill(step <= current ? Palette.ink : Palette.hairline)
+                    .fill(step <= current ? Palette.action : Palette.hairline)
                     .frame(height: 4)
             }
         }

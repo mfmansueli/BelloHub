@@ -51,12 +51,12 @@ struct ImportEntryRow: View {
 
     private var check: some View {
         ZStack {
-            Circle().fill(isSelected ? Palette.ink : Color.clear)
-            Circle().strokeBorder(isSelected ? Palette.ink : Palette.fieldBorder, lineWidth: 1.5)
+            Circle().fill(isSelected ? Palette.action : Color.clear)
+            Circle().strokeBorder(isSelected ? Palette.action : Palette.fieldBorder, lineWidth: 1.5)
             if isSelected {
                 Image(icon: .check)
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Palette.inkOnFill)
+                    .foregroundStyle(Palette.onAction)
             }
         }
         .frame(width: 24, height: 24)

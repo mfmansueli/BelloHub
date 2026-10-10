@@ -11,6 +11,11 @@ struct CatalogColorsSection: View {
     private let tokens: [(name: String, color: Color)] = [
         ("bg", Palette.bg), ("surface", Palette.surface), ("sunken", Palette.sunken), ("hairline", Palette.hairline),
         ("ink", Palette.ink), ("ink2", Palette.ink2), ("ink3", Palette.ink3), ("fieldBorder", Palette.fieldBorder),
+        ("action", Palette.action), ("onAction", Palette.onAction), ("selectionFill", Palette.selectionFill),
+        ("selectionInk", Palette.selectionInk), ("ivory", Palette.ivory), ("brandMark", Palette.brandMark),
+        ("sageFill", Palette.sageFill), ("peachFill", Palette.peachFill), ("roseFill", Palette.roseFill),
+        ("onBrandCard", Palette.onBrandCard), ("sageBadge", Palette.sageBadge), ("peachBadge", Palette.peachBadge),
+        ("roseBadge", Palette.roseBadge),
         ("rose", Palette.rose), ("roseText", Palette.roseText), ("roseWash", Palette.roseWash),
         ("roseDeepWash", Palette.roseDeepWash), ("roseDeepText", Palette.roseDeepText),
         ("sage", Palette.sage), ("sageText", Palette.sageText), ("sageWash", Palette.sageWash),

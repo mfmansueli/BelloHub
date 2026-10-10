@@ -58,7 +58,8 @@ struct MainView: View {
             }
             .accessibilityIdentifier("main.tab.more")
         }
-        .tint(Palette.ink)
+        // The glass bar draws its own selection pill; only the selected item's foreground takes the selection ink.
+        .tint(Palette.selectionInk)
         // The phone's pending notifications follow her calendar for as long as she is signed in and unlocked.
         .task { notifications.startListening() }
         .onChange(of: scenePhase) { _, phase in

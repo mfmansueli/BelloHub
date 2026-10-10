@@ -67,9 +67,9 @@ struct NewAppointmentClientCard: View {
                 if isSelected {
                     Image(icon: .check)
                         .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Palette.inkOnFill)
+                        .foregroundStyle(Palette.onAction)
                         .frame(width: 28, height: 28)
-                        .background(Palette.ink, in: Circle())
+                        .background(Palette.action, in: Circle())
                         .accessibilityHidden(true)
                 }
             }

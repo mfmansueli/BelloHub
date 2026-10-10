@@ -139,7 +139,7 @@ struct PlanContentView: View {
             } else {
                 Button(action: viewModel.buy) {
                     if viewModel.isBusy {
-                        ProgressView().tint(Palette.inkOnFill)
+                        ProgressView().tint(Palette.onAction)
                     } else {
                         Text(buyTitle)
                     }

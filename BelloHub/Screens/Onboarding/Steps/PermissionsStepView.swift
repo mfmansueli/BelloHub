@@ -70,7 +70,7 @@ struct PermissionsStepView: View {
     private var dots: some View {
         HStack(spacing: Spacing.xs) {
             ForEach(0..<kinds.count, id: \.self) { step in
-                Capsule().fill(step == index ? Palette.ink : Palette.hairline)
+                Capsule().fill(step == index ? Palette.action : Palette.hairline)
                     .frame(width: step == index ? 22 : 6, height: 6)
             }
         }

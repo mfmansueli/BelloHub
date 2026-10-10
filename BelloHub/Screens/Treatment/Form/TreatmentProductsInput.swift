@@ -76,9 +76,9 @@ struct TreatmentProductsInput: View {
             Button(action: add) {
                 Image(icon: .plus)
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Palette.inkOnFill)
+                    .foregroundStyle(Palette.onAction)
                     .frame(width: Spacing.touchTarget + 8, height: Spacing.touchTarget + 8)
-                    .background(Palette.ink, in: Circle())
+                    .background(Palette.action, in: Circle())
             }
             .disabled(typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             .accessibilityLabel(Text("treatmentFlow.form.products.add"))

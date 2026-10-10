@@ -55,7 +55,7 @@ struct SuccessSeal: View {
     }
 
     private var fill: Color {
-        tone == .sage ? Palette.sageWash : Color(hex: 0x242321)
+        tone == .sage ? Palette.sageWash : HeroPalette.gradientEnd
     }
 
     private var ringColor: Color {

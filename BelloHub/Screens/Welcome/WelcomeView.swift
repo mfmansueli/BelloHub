@@ -48,7 +48,7 @@ struct WelcomeView: View {
         }
         .padding(.horizontal, Spacing.md)
         .padding(.vertical, Spacing.row)
-        .background(Color(hex: 0x242321), in: Capsule())
+        .background(HeroPalette.gradientEnd, in: Capsule())
     }
 
     private var actions: some View {

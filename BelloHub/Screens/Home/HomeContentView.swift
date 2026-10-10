@@ -112,7 +112,7 @@ struct HomeContentView: View {
         if !digest.winBack.isEmpty {
             HomeWinBackLink(count: digest.winBack.count, noun: noun(for: digest.winBack.count))
         }
-        quickActions
+        quickActions(isDayClear: digest.isDayClear)
     }
 
     private func restOfToday(_ digest: AgendaDigest) -> some View {
@@ -190,7 +190,9 @@ struct HomeContentView: View {
         }
     }
 
-    private var quickActions: some View {
+    /// "New appointment" is Home's primary action. On a clear day the empty state already shows it as the primary
+    /// button, so the quick action steps down to secondary there (one primary per screen).
+    private func quickActions(isDayClear: Bool) -> some View {
         VStack(alignment: .leading, spacing: Spacing.row) {
             Text("home.quick.title")
                 .font(Typography.section).foregroundStyle(Palette.ink)
@@ -198,7 +200,7 @@ struct HomeContentView: View {
             Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
                 Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
             }
-            .buttonStyle(.belloSecondary)
+            .buttonStyle(isDayClear ? .belloSecondary : .belloPrimary)
             .accessibilityIdentifier("home.quick.newAppointment")
             NavigationLink(value: AgendaRoute.weekGlance) {
                 Label { Text("home.quick.weekGlance") } icon: { Image(icon: .calendar) }

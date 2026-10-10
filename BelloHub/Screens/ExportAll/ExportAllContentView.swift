@@ -69,7 +69,7 @@ struct ExportAllContentView: View {
         Button { viewModel.prepare(locale: locale) } label: {
             if viewModel.isPreparing {
                 HStack(spacing: Spacing.sm) {
-                    ProgressView().tint(Palette.inkOnFill)
+                    ProgressView().tint(Palette.onAction)
                     Text("export.preparing")
                 }
             } else {

@@ -19,10 +19,10 @@ struct RegionPresetRow: View {
             HStack(spacing: Spacing.row) {
                 Text(verbatim: preset.code)
                     .font(Typography.metaStrong)
-                    .foregroundStyle(isSelected ? Palette.inkOnFill : Palette.ink)
+                    .foregroundStyle(isSelected ? Palette.selectionInk : Palette.ink)
                     .frame(width: Spacing.touchTarget, height: Spacing.touchTarget)
                     .background(
-                        isSelected ? Palette.ink : Palette.sunken,
+                        isSelected ? Palette.selectionFill : Palette.sunken,
                         in: RoundedRectangle(cornerRadius: Radius.control, style: .continuous)
                     )
                     .accessibilityHidden(true)

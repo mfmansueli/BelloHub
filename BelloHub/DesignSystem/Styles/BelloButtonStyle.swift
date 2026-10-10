@@ -16,7 +16,7 @@ struct BelloButtonStyle: ButtonStyle {
         case tertiary
         case onHero
         case destructive
-        /// Filter chip. `selected` fills it with `ink`.
+        /// Filter chip. `selected` gives it the selection fill, label and ring.
         case chip(selected: Bool)
     }
 
@@ -82,43 +82,46 @@ struct BelloButtonStyle: ButtonStyle {
 
     private var foreground: Color {
         switch variant {
-        case .primary: Palette.inkOnFill
+        case .primary: Palette.onAction
         case .secondary: Palette.ink
         case .tertiary: Palette.roseText
         case .onHero: HeroPalette.ink
         case .destructive: Palette.coralText
-        case .chip(let selected): selected ? Palette.inkOnFill : Palette.ink
+        case .chip(let selected): selected ? Palette.selectionInk : Palette.ink
         }
     }
 
     private var background: Color {
         switch variant {
-        case .primary: Palette.ink
+        case .primary: Palette.action
         case .secondary: Palette.surface
         case .tertiary: .clear
         case .onHero: HeroPalette.raised
         case .destructive: Palette.coralBg
-        case .chip(let selected): selected ? Palette.ink : Palette.surface
+        case .chip(let selected): selected ? Palette.selectionFill : Palette.surface
         }
     }
 
     @ViewBuilder
     private var border: some View {
         switch variant {
-        case .secondary, .chip(selected: false):
-            if isChip {
-                Capsule().strokeBorder(Palette.fieldBorder, lineWidth: 1)
-            } else {
-                RoundedRectangle(cornerRadius: Radius.button, style: .continuous)
-                    .strokeBorder(Palette.fieldBorder, lineWidth: 1)
-            }
+        case .secondary:
+            RoundedRectangle(cornerRadius: Radius.button, style: .continuous)
+                .strokeBorder(Palette.fieldBorder, lineWidth: 1)
+        case .chip(selected: false):
+            Capsule().strokeBorder(Palette.fieldBorder, lineWidth: 1)
+        case .chip(selected: true):
+            // Why a ring: the selection fill is only 1.4:1 against the page in light, so the 1.5 pt ring in the label
+            // color is what makes the selected state perceivable (WCAG 1.4.11).
+            Capsule().strokeBorder(Palette.selectionInk, lineWidth: 1.5)
         default:
             EmptyView()
         }
     }
 
     private var shadowColor: Color {
-        variant == .primary && isEnabled ? Color(hex: 0x242321).opacity(0.5) : .clear
+        // A soft lift in the neutral shadow tint; the old graphite at 50 % was heavy under a sage fill.
+        variant == .primary && isEnabled ? Elevation.tint.opacity(0.22) : .clear
     }
 }
 

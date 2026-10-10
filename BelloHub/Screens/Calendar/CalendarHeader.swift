@@ -94,7 +94,9 @@ struct CalendarHeader: View {
                             .font(Typography.bodyStrong)
                             .foregroundStyle(numberColor(isSelected: isSelected, isToday: isToday))
                             .frame(minWidth: 36, minHeight: 36)
-                            .background(isSelected ? Palette.ink : Color.clear, in: Circle())
+                            .background(isSelected ? Palette.selectionFill : Color.clear, in: Circle())
+                            // The ring carries the state: the selection fill alone is 1.4:1 on the page in light.
+                            .overlay { if isSelected { Circle().strokeBorder(Palette.selectionInk, lineWidth: 1.5) } }
                     }
                     .frame(maxWidth: .infinity, minHeight: Spacing.touchTarget)
                     .contentShape(Rectangle())
@@ -108,7 +110,7 @@ struct CalendarHeader: View {
     }
 
     private func numberColor(isSelected: Bool, isToday: Bool) -> Color {
-        if isSelected { return Palette.inkOnFill }
+        if isSelected { return Palette.selectionInk }
         return isToday ? Palette.roseText : Palette.ink
     }
 

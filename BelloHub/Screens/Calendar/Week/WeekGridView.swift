@@ -53,9 +53,10 @@ struct WeekGridView: View {
                         Text(verbatim: weekdayShort(layout.day)).font(Typography.caption).foregroundStyle(Palette.ink2)
                         Text(verbatim: formatters.number(formatters.calendar.component(.day, from: layout.day)))
                             .font(Typography.metaStrong)
-                            .foregroundStyle(isToday ? Palette.inkOnFill : Palette.ink)
+                            .foregroundStyle(isToday ? Palette.selectionInk : Palette.ink)
                             .frame(minWidth: 28, minHeight: 28)
-                            .background(isToday ? Palette.ink : Color.clear, in: Circle())
+                            .background(isToday ? Palette.selectionFill : Color.clear, in: Circle())
+                            .overlay { if isToday { Circle().strokeBorder(Palette.selectionInk, lineWidth: 1.5) } }
                     }
                     .frame(maxWidth: .infinity, minHeight: Spacing.touchTarget)
                     .contentShape(Rectangle())

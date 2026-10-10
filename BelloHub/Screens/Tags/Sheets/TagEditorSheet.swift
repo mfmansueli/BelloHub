@@ -100,16 +100,16 @@ struct TagEditorSheet: View {
                 if isSelected {
                     Image(icon: .check)
                         .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Palette.inkOnFill)
+                        .foregroundStyle(Palette.onAction)
                         .frame(width: 28, height: 28)
-                        .background(Palette.ink, in: Circle())
+                        .background(Palette.action, in: Circle())
                         .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, Spacing.md)
             .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
             .background(isSelected ? Palette.surface : Palette.sunken, in: shape)
-            .overlay { if isSelected { shape.strokeBorder(Palette.ink, lineWidth: 1.5) } }
+            .overlay { if isSelected { shape.strokeBorder(Palette.action, lineWidth: 1.5) } }
             .contentShape(shape)
         }
         .buttonStyle(.plain)
