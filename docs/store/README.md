@@ -32,3 +32,24 @@ Open before submission:
    (H6); until then use the Hosting address, or leave the lines out and fill the two URL fields of App Store Connect.
 2. Screenshots per localization (`LocalizationScreenshotUITests` produces the raw material).
 3. The booking link in TestFlight is the preview address (D54); the notes say so.
+
+## TestFlight (v1.0.0 release candidate, S12)
+
+The per-language "What to test" notes are in each file. For the build itself (H14, H16):
+
+1. Archive from a **release** Xcode (Xcode 27 build 27A266a looks like a release build; confirm in About Xcode), scheme
+   `BelloHub`, configuration Release, team `X5392U638Q`, bundle id `com.bellohub`. The tag `v1.0.0-rc1` marks the
+   commit to archive. `scripts/check-warnings.sh` was clean on it.
+2. Before uploading: deploy the CloudKit schema to Production (H2), create the two subscription products of D42 in
+   App Store Connect and install Apple's root certificates on the server (H14), otherwise `syncPlan` answers
+   NOT_CONFIGURED and a sandbox purchase does not lift the server's 10-client limit.
+3. App Privacy: paste the answers of `app-privacy.md`; the privacy manifest (`PrivacyInfo.xcprivacy`) is in the
+   build and `scripts/check-privacy.sh` passes.
+4. Export compliance: `ITSAppUsesNonExemptEncryption = NO` is set (standard encryption only).
+5. Internal testers first (the two owners on real iPhones, H3): the VoiceOver pass of
+   `docs/agent-notes/accessibility-audit.md` section 3, scrolling 2,000 clients with Instruments (hitches), Face ID,
+   camera, contacts import, Apple Calendar switch (a "Bello Hub" calendar appears with the week's visits), push for a
+   booking from the web page, recovery key on a second iPhone.
+6. Known limits to tell testers: sign-in is Apple only; voice notes say "not available yet"; the booking link is the
+   preview address `https://bello-hub.web.app/<slug>` until the domain exists (H6, D54); e-mail confirmations are off
+   until the e-mail provider key is set (H7).
