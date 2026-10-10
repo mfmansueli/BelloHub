@@ -14,6 +14,7 @@ import Testing
 @MainActor
 @Suite("PushService", .serialized)
 struct PushServiceTests {
+    @MainActor
     private struct Rig {
         let inbox: InboxRig
         let provider: FakePushTokenProvider
