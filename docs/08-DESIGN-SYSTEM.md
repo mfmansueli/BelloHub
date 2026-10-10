@@ -10,6 +10,8 @@ Replace the repo's placeholder blue palette and the "Identity: not decided" para
 
 ## 2. Colour tokens
 
+> **Superseded values (2026-10-10):** the owner approved a medium-intensity sage, rose and peach refinement with new roles (`action`, `selection*`, brand fills, `onBrandCard`, badges). The current values and roles are in `DESIGN.md` (Tokens, Color) and `BelloHub/DesignSystem/Tokens/Palette.swift`; the table below is the original prototype specification.
+
 Semantic names; each is a light/dark pair. Light values come from the prototype; **dark values are defined here** (the prototype only draws light) and their contrast was computed, but **you must still enforce them with tests** (`PaletteContrastTests`).
 
 ### Surfaces and ink
