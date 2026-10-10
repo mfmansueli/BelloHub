@@ -30,7 +30,7 @@ test('a client whose code never came confirms on WhatsApp: an unverified request
   const client = { name: 'Lia Prado', phone: '11 96543 2109', email: 'lia@example.com' };
   await page.clock.install();
   await toDetails(page, client, 4);
-  await expect(page.getByTestId('code')).toBeVisible();
+  await expect(page.getByTestId('resend-timer')).toBeVisible();
   await page.clock.fastForward(31_000);
   await page.getByTestId('no-code').click();
   await page.getByTestId('confirm-whatsapp').click();
@@ -46,6 +46,7 @@ test('a client whose code never came confirms on WhatsApp: an unverified request
 test('a client who booked with a code books again on the same page without one', async ({ page, store }) => {
   const client = { name: 'Nina Alves', phone: '11 95432 1098', email: 'nina@example.com' };
   await toDetails(page, client, 5);
+  await expect(page.getByTestId('resend-timer')).toBeVisible();
   await page.getByTestId('code').fill(EMAIL_CODE);
   await page.getByTestId('verify').click();
   await page.getByTestId('confirm').click();
