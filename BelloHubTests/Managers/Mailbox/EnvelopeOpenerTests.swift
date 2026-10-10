@@ -42,7 +42,8 @@ struct EnvelopeOpenerTests {
 
     private static func key(_ file: File, _ item: Case) throws -> Curve25519.KeyAgreement.PrivateKey {
         let recipient = try #require(file.recipients[item.recipient])
-        return try Curve25519.KeyAgreement.PrivateKey(rawRepresentation: #require(Data(base64URL: recipient.privateKey)))
+        let raw = try #require(Data(base64URL: recipient.privateKey))
+        return try Curve25519.KeyAgreement.PrivateKey(rawRepresentation: raw)
     }
 
     private static func opened(_ name: String) throws -> Data {
@@ -130,13 +131,17 @@ struct EnvelopeOpenerTests {
         #expect(plain.submittedAt == Self.submitted)
 
         let delete = try #require(MailboxMessage.decode(
-            Self.opened("datarequest-delete"), kind: .datarequest, id: "c", bookingId: "b", receivedAt: Self.submitted
+            Self.opened("datarequest-delete"), kind: .datarequest, id: "c", bookingId: "b",
+            receivedAt: Self.submitted
         ))
-        #expect(delete.content == .dataRequest(request: "delete", name: "Helena Duarte", phone: "+5511987654321", note: nil))
+        #expect(delete.content == .dataRequest(
+            request: "delete", name: "Helena Duarte", phone: "+5511987654321", note: nil
+        ))
         #expect(delete.submittedAt == Self.submitted)
 
         let copy = try #require(MailboxMessage.decode(
-            Self.opened("datarequest-copy-note"), kind: .datarequest, id: "d", bookingId: "b", receivedAt: Self.submitted
+            Self.opened("datarequest-copy-note"), kind: .datarequest, id: "d", bookingId: "b",
+            receivedAt: Self.submitted
         ))
         #expect(copy.content == .dataRequest(
             request: "copy", name: "José Ñandú", phone: "+34612345678", note: "Prefiero un PDF, gracias."
