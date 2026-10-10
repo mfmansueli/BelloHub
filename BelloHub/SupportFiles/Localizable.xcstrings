@@ -12722,7 +12722,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Extras"
+            "value" : "Complementos"
           }
         },
         "es-419" : {
@@ -12740,7 +12740,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Options"
+            "value" : "Suppléments"
           }
         },
         "hi" : {
@@ -63200,7 +63200,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soins après"
+            "value" : "Conseils après-soin"
           }
         },
         "hi" : {
@@ -63218,19 +63218,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Post-trattamento"
+            "value" : "Indicazioni post-trattamento"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados pós"
+            "value" : "Cuidados pós-atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados posteriores"
+            "value" : "Cuidados pós-tratamento"
           }
         },
         "tr" : {
@@ -128084,7 +128084,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soins après"
+            "value" : "Conseils après-soin"
           }
         },
         "hi" : {
@@ -128102,19 +128102,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cura successiva"
+            "value" : "Indicazioni post-trattamento"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados pós"
+            "value" : "Cuidados pós-atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados posteriores"
+            "value" : "Cuidados pós-tratamento"
           }
         },
         "tr" : {
@@ -155654,7 +155654,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soins après le soin"
+            "value" : "Conseils après-soin"
           }
         },
         "hi" : {
@@ -155672,19 +155672,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cura successiva"
+            "value" : "Indicazioni post-trattamento"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados posteriores"
+            "value" : "Cuidados pós-atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados posteriores"
+            "value" : "Cuidados pós-tratamento"
           }
         },
         "tr" : {
@@ -173840,7 +173840,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soins après"
+            "value" : "Conseils après-soin"
           }
         },
         "hi" : {
@@ -173858,19 +173858,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cura successiva"
+            "value" : "Indicazioni post-trattamento"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados pós"
+            "value" : "Cuidados pós-atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados posteriores"
+            "value" : "Cuidados pós-tratamento"
           }
         },
         "tr" : {
@@ -202592,7 +202592,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Soins après"
+            "value" : "Conseils après-soin"
           }
         },
         "hi" : {
@@ -202610,19 +202610,19 @@
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cure successive"
+            "value" : "Indicazioni post-trattamento"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados pós"
+            "value" : "Cuidados pós-atendimento"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cuidados pós"
+            "value" : "Cuidados pós-tratamento"
           }
         },
         "tr" : {
