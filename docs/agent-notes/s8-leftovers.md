@@ -129,7 +129,40 @@ Not measured: battery of the voice flow (voice capture is unavailable in v1).
   `RecordHistoryViewModel` (checked by running it with the old file): environmental, worth a look on "iPhone 17".
 - `scripts/test-firebase.sh`: not run, no file under `firebase/` changed.
 
-## 4. Merge notes (for the integrator)
+## 4. Third batch: accessibility audit, remaining S8 items, breach plan
+
+- **RecordUITests on another simulator**: `testHistoryCorrectsALockedRecordOnlyWithAReason` passes on "iPhone 17e"
+  (581B8F64-…): the failure on the Pro Max ("no keyboard focus") is simulator-specific; nothing changed.
+- **Accessibility (S12)**: opt-in `AccessibilityAuditUITests` (all audit types except pixel contrast; en and pt-BR;
+  default size and AX5; Increase Contrast and Reduce Motion on through the new DEBUG hooks `-uiIncreaseContrast`
+  (`HighContrastTraitOverride`, window-scene trait) and `-uiReduceMotion`). Fixed: onboarding step bar hit region,
+  logo read as one image, `MoreRow` and Services link rows wrap, Services add-row icon follows Dynamic Type, no isolate
+  marks around the form key. Documented exceptions (system bars, scrolling text fields, capped insight numbers, two
+  Services rows that do grow): see `docs/agent-notes/accessibility-audit.md`, which also holds the manual VoiceOver
+  pass list with the rotor order per screen. Contrast: XCTest's pixel check flagged 187 pairs far above 4.5:1 with and
+  without Increase Contrast; contrast stays measured exactly by `PaletteContrastTests`.
+- **Suggest another time (2.10)**: new owner function `suggestBookingTime` (`firebase/functions/src/owner/
+  suggestBookingTime.ts`, contract, API.md 6.3, schemas, 3 emulator tests in `ownerBookings.test.ts`): declines the
+  request and holds the proposed time like a waitlist offer; booking through it keeps the `bookingLink` origin
+  (`bookingCreate.ts` now marks `waitlist` only for offers tied to a waitlist entry). App: `SuggestTimeSheet` (picker
+  in the business time zone, "Keep this time", then a `ShareLink` with the offer link `<web>/<slug>/time?offer=…`),
+  `BookingSyncService.suggest`, `InboxRepository.suggestBookingTime` in every implementation; tests
+  `BookingRequestSuggestionTests`, `SuggestTimeUITests`. Strings: `Config/Locale/strings/s8-suggest-time.json`.
+  `scripts/test-firebase.sh`: lint, types, build, audit ok; unit 943, rules 66, use cases 289, transport 19 passed.
+- **"Cancels often"** on waitlist rows and the booking request (`CancelsOftenBadge`, same words as the client list):
+  `CancelsOftenLookup` matches by phone and uses `HabitsCalculator` (docs/05: ≥ 30 % of the last ten past
+  appointments, from four completed visits); tests `CancelsOftenLookupTests`.
+- **Check-in photo** on its Alerts card (from the opened envelope, in memory only, spoken "Photo the client sent").
+- **Breach plan**: `docs/BREACH-PLAN.md` and H18 in `docs/14-HUMAN-TASKS.md`.
+- **Measured at the end of the third batch** (iPhone 17 Pro Max): `scripts/test.sh fast` **2179 tests in 309 suites
+  passed**; `scripts/check-warnings.sh` **zero warnings**; `scripts/test-firebase.sh` green (above); the accessibility
+  audit passes both tests (en and pt-BR, default and AX5, Increase Contrast and Reduce Motion); UI suites
+  `SuggestTimeUITests`, `MailboxAlertsUITests`, `InboxUITests`, `OnboardingUITests`, `ServicesUITests`, `MoreUITests`,
+  `LaunchUITests` pass.
+- Noticed, not changed: on the `-uiRoute recordHistory` UI-test route the trail reads "Created by " with no name (the
+  profile is not loaded yet on that debug route; in the app it is).
+
+## 5. Merge notes (for the integrator)
 
 Most likely to conflict with S11:
 - `BelloHub/SupportFiles/Localizable.xcstrings` (additions only; keep both, then `python3 scripts/merge-strings.py`).
@@ -144,20 +177,32 @@ Most likely to conflict with S11:
   `ClientsPreviewHost`.
 - `BelloHub/SupportFiles/DefaultsKey.swift` (one key), `BelloHub/SupportFiles/UITestSeeding.swift` (one line),
   `scripts/check-privacy.sh` (rule 7 appended).
-Not touched: `docs/PROGRESS.md`, `docs/review`, `docs/strings`, `legal/`, `firebase/`, `web/`.
+Third batch adds: `firebase/functions` (new `suggestBookingTime`, `contracts/owner.ts`, `app/registry.ts`, `index.ts`,
+`lib/bookingCreate.ts`, `lib/docs.ts`, `API.md`, `contracts/schemas.json`, `test/integration/ownerBookings.test.ts`) and
+`BelloHubTests/Resources/ServerContract/schemas.json` (regenerate with `npm run gen:schemas` +
+`scripts/sync-server-contract.sh` if both sides changed); `docs/14-HUMAN-TASKS.md` (H18 row and section);
+`BelloHubTests/Models/Locale/NavigationTitleFitTests.swift` (one key); `BelloHub/SupportFiles/LaunchOptions.swift`
+and `View+UITesting.swift` (two hooks); `DesignSystem/Components/StepProgressBar.swift`, `BrandLockup.swift`,
+`Screens/More/Rows/MoreRow.swift`, `Screens/Services/ServicesContentView.swift`, `Screens/Inbox/**`,
+`Managers/Inbox/BookingSyncService.swift` (error text moved to `BookingSyncService+ErrorText.swift`).
+Not touched: `docs/PROGRESS.md`, `docs/review`, `docs/strings`, `legal/`, `web/`. Functions are **not deployed**:
+`suggestBookingTime` needs a functions deploy before the button works against dev.
 
-## 5. Text for docs/PROGRESS.md (paste after the merge)
+## 6. Text for docs/PROGRESS.md (paste after the merge)
 
-> **2026-10-10: S8 leftovers, security-review gaps and S12 documentation/performance done on `s8-leftovers`** (notes
-> `docs/agent-notes/s8-leftovers.md`, review `docs/agent-notes/security-review.md`). Server account deletion
-> (`RemoteAccountDeleter`, resumable after a half-finished attempt) and server-side plan verification
-> (`RemoteSubscriptionVerifier`: `appAccountToken` + `syncPlan`); client data deletion reaches the server through the
+> **2026-10-10: S8 leftovers, security-review gaps and S12 documentation, performance and accessibility done on
+> `s8-leftovers`** (notes `docs/agent-notes/s8-leftovers.md`, reviews `docs/agent-notes/security-review.md` and
+> `docs/agent-notes/accessibility-audit.md`). Server account deletion (resumable after a half-finished attempt) and
+> server plan verification (`appAccountToken` + `syncPlan`); client data deletion reaches the server through the
 > outbound queue ("Delete data" in 4.3); the registration count asks `reserveRegistrations` (ledger as cache, offline
-> replay); the page's inbox key is checked against the derived one after every profile change (`keyMismatch` stops
-> publishing) and Privacy shows the form key; store protection set explicitly; recovery words hidden while the screen
-> is recorded or shared; "From your clients" in Alerts acknowledges check-ins, data requests and unopened forms. Unit
-> suites for `MailboxService` and `PushService`. S12: `PrivacyInfo.xcprivacy` (+ `check-privacy.sh` rule 7), App
-> Privacy answers, App Store metadata drafts in 13 localizations (`docs/store/`), opt-in `PerformanceUITests`
-> Fast 2172 tests in 307 suites, check-warnings zero (cold start 1.39 s to Welcome on the simulator, search over 2,000 clients 12 ms, peak memory 97 MB with 200 photos;
-> the history's full-size photo cache is now bounded). Open: App Check (H5), breach plan, check-in photos in Alerts,
-> hitch measurement on a device; H14 needed before the server lifts the 10-client limit for a sandbox purchase.
+> replay); the page's inbox key is checked against the derived one (`keyMismatch` stops publishing) and Privacy shows
+> the form key; store protection set explicitly; recovery words hidden while recorded or shared; "From your clients"
+> in Alerts (check-ins with their photo, data requests, unopened forms) acknowledges each item; "Suggest another time"
+> on booking requests (new function `suggestBookingTime`, emulator tests; **needs a functions deploy**); "Cancels
+> often" on waitlist and requests. Unit suites for `MailboxService`, `PushService`. S12: `PrivacyInfo.xcprivacy`
+> (+ `check-privacy.sh` rule 7), App Privacy answers, App Store metadata in 13 localizations (`docs/store/`),
+> `PerformanceUITests` (cold start 1.39 s to Welcome, search over 2,000 clients 12 ms, peak 97 MB with 200 photos;
+> bounded full-size photo cache), `AccessibilityAuditUITests` (en and pt-BR, default and AX5, Increase Contrast and
+> Reduce Motion: clean after fixes; VoiceOver pass list for a device), breach plan `docs/BREACH-PLAN.md` (H18).
+> Fast 2179 tests in 309 suites, check-warnings zero, test-firebase green. Open: App Check (H5), hitch measurement and
+> the VoiceOver pass on a device, H14 before the server lifts the 10-client limit for a sandbox purchase.

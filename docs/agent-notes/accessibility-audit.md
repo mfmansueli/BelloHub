@@ -33,7 +33,7 @@ First run (en, default size, before fixes): 187 contrast, 20 Dynamic Type, 4 cli
 | Services "Products" row near the tab bar | Reported only while under the tab bar; the audit now skips elements the screen does not fully show (the next swipe audits them) |
 | Calendar week "Camila" (contrast nearly passed) | Week-grid chip text; covered by the calendar contrast tests; to look at on a device in the VoiceOver pass |
 
-The result of the final run is in `docs/agent-notes/s8-leftovers.md` (section 6).
+Second run (en, AX5 too): the Services add row's fixed-size icon fixed and the link rows wrap. Final run (2026-10-10, en and pt-BR, default and AX5): **both tests pass**.
 
 ## 3. Manual VoiceOver pass (rotor order per screen)
 
