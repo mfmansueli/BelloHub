@@ -4,8 +4,8 @@
  "professions": [
   {
    "id": "esthetician",
-   "name": "Esthéticien(ne)",
-   "plural": "esthéticiens et esthéticiennes",
+   "name": "Esthétique",
+   "plural": "esthétique",
    "services": [
     {
      "key": "esthetician.glow",
@@ -149,8 +149,8 @@
   },
   {
    "id": "hair",
-   "name": "Coiffeur(se)",
-   "plural": "coiffeurs et coiffeuses",
+   "name": "Coiffure",
+   "plural": "coiffure",
    "services": [
     {
      "key": "hair.cut",
@@ -581,8 +581,8 @@
   },
   {
    "id": "makeup",
-   "name": "Maquilleur(se)",
-   "plural": "maquilleurs et maquilleuses",
+   "name": "Maquillage",
+   "plural": "maquillage",
    "services": [
     {
      "key": "makeup.social",
@@ -715,7 +715,7 @@
   {
    "id": "tattoo",
    "name": "Tatouage / Maquillage permanent",
-   "plural": "tatoueurs et praticiens de maquillage permanent",
+   "plural": "tatouage et maquillage permanent",
    "services": [
     {
      "key": "tattoo.brows",
@@ -987,7 +987,7 @@
   {
    "id": "massage",
    "name": "Massage / Bien-être",
-   "plural": "masseurs et praticiens du bien-être",
+   "plural": "massage et bien-être",
    "services": [
     {
      "key": "massage.relax",

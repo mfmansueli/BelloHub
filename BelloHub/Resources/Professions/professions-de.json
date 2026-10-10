@@ -4,8 +4,8 @@
  "professions": [
   {
    "id": "esthetician",
-   "name": "Kosmetiker/in",
-   "plural": "Kosmetiker/innen",
+   "name": "Kosmetik",
+   "plural": "Kosmetik",
    "services": [
     {
      "key": "esthetician.glow",
@@ -149,8 +149,8 @@
   },
   {
    "id": "hair",
-   "name": "Friseur/in",
-   "plural": "Friseur/innen",
+   "name": "Haare",
+   "plural": "Haare",
    "services": [
     {
      "key": "hair.cut",
@@ -298,8 +298,8 @@
   },
   {
    "id": "lash",
-   "name": "Wimpernstylist/in",
-   "plural": "Wimpernstylist/innen",
+   "name": "Wimpern und Brauen",
+   "plural": "Wimpern und Brauen",
    "services": [
     {
      "key": "lash.classic",
@@ -444,8 +444,8 @@
   },
   {
    "id": "nail",
-   "name": "Nageldesigner/in",
-   "plural": "Nageldesigner/innen",
+   "name": "Nageldesign",
+   "plural": "Nageldesign",
    "services": [
     {
      "key": "nail.manicure",
@@ -581,8 +581,8 @@
   },
   {
    "id": "makeup",
-   "name": "Make-up-Artist",
-   "plural": "Make-up-Artists",
+   "name": "Make-up",
+   "plural": "Make-up",
    "services": [
     {
      "key": "makeup.social",
@@ -715,7 +715,7 @@
   {
    "id": "tattoo",
    "name": "Tattoo / PMU",
-   "plural": "Tätowierer/innen und PMU-Artists",
+   "plural": "Tattoo und PMU",
    "services": [
     {
      "key": "tattoo.brows",
@@ -987,7 +987,7 @@
   {
    "id": "massage",
    "name": "Massage / Wellness",
-   "plural": "Masseur/innen und Wellness-Therapeut/innen",
+   "plural": "Massage und Wellness",
    "services": [
     {
      "key": "massage.relax",

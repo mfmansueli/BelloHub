@@ -581,8 +581,8 @@
   },
   {
    "id": "makeup",
-   "name": "Maquillador(a)",
-   "plural": "maquilladores(as)",
+   "name": "Maquillaje",
+   "plural": "maquillaje",
    "services": [
     {
      "key": "makeup.social",

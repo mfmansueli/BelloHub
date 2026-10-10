@@ -149,8 +149,8 @@
   },
   {
    "id": "hair",
-   "name": "Cabeleireiro(a)",
-   "plural": "profissionais de cabelo",
+   "name": "Cabelo",
+   "plural": "cabelo",
    "services": [
     {
      "key": "hair.cut",
@@ -581,8 +581,8 @@
   },
   {
    "id": "makeup",
-   "name": "Maquiador(a)",
-   "plural": "maquiadores(as)",
+   "name": "Maquiagem",
+   "plural": "maquiagem",
    "services": [
     {
      "key": "makeup.social",
@@ -715,7 +715,7 @@
   {
    "id": "tattoo",
    "name": "Tatuagem / Micropigmentação",
-   "plural": "tatuadores e micropigmentadores",
+   "plural": "tatuagem e micropigmentação",
    "services": [
     {
      "key": "tattoo.brows",
@@ -854,8 +854,8 @@
   },
   {
    "id": "barber",
-   "name": "Barbeiro(a)",
-   "plural": "barbeiros",
+   "name": "Barbearia",
+   "plural": "barbearia",
    "services": [
     {
      "key": "barber.cut",
@@ -987,7 +987,7 @@
   {
    "id": "massage",
    "name": "Massoterapia / Bem-estar",
-   "plural": "massoterapeutas e profissionais de bem-estar",
+   "plural": "massoterapia e bem-estar",
    "services": [
     {
      "key": "massage.relax",

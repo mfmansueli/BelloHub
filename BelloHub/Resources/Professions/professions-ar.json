@@ -4,8 +4,8 @@
  "professions": [
   {
    "id": "esthetician",
-   "name": "أخصائي/ة تجميل",
-   "plural": "أخصائيو ومختصات التجميل",
+   "name": "التجميل",
+   "plural": "التجميل",
    "services": [
     {
      "key": "esthetician.glow",
@@ -149,8 +149,8 @@
   },
   {
    "id": "hair",
-   "name": "مصفّف/ة شعر",
-   "plural": "مصفّفو ومصفّفات الشعر",
+   "name": "تصفيف الشعر",
+   "plural": "تصفيف الشعر",
    "services": [
     {
      "key": "hair.cut",
@@ -298,8 +298,8 @@
   },
   {
    "id": "lash",
-   "name": "فنان/ة رموش",
-   "plural": "فنانو وفنانات الرموش",
+   "name": "الرموش",
+   "plural": "الرموش",
    "services": [
     {
      "key": "lash.classic",
@@ -444,8 +444,8 @@
   },
   {
    "id": "nail",
-   "name": "فنان/ة أظافر",
-   "plural": "فنانو وفنانات الأظافر",
+   "name": "الأظافر",
+   "plural": "الأظافر",
    "services": [
     {
      "key": "nail.manicure",
@@ -581,8 +581,8 @@
   },
   {
    "id": "makeup",
-   "name": "خبير/ة مكياج",
-   "plural": "خبراء وخبيرات المكياج",
+   "name": "المكياج",
+   "plural": "المكياج",
    "services": [
     {
      "key": "makeup.social",
