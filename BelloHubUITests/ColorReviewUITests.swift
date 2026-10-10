@@ -84,8 +84,8 @@ final class ColorReviewUITests: XCTestCase {
         }
     }
 
-    /// The pushed profile has no identifier shared by every seed, so the screenshot waits on its navigation bar; a tool,
-    /// not a check, so nothing is asserted on the wait.
+    /// The pushed profile has no identifier shared by every seed, so the screenshot waits on its navigation bar; a
+    /// tool, not a check, so nothing is asserted on the wait.
     private func waitForPush() {
         _ = XCUIApplication().navigationBars.firstMatch.waitForExistence(timeout: 3)
     }
