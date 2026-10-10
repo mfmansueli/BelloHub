@@ -5,8 +5,8 @@
 
 import XCTest
 
-/// Not a check: a design-review tool that saves screenshots of the key screen families (Home, Calendar, Alerts, a
-/// client, a form sheet and the Design Catalog) in light and dark, for comparing a palette change with its reference.
+/// Not a check: a design-review tool that saves screenshots of the key screen families (welcome, Home with visits and
+/// empty, Calendar, Alerts, Clients, a client, a form sheet and the Design Catalog) in light and dark, for comparing a palette change with its reference.
 /// It only runs when a folder is given, so every plan skips it:
 /// `TEST_RUNNER_SCREENSHOT_DIR=$PWD/build/screenshots ONLY_TESTING=BelloHubUITests/ColorReviewUITests \`
 /// `scripts/test.sh full`.
@@ -26,6 +26,7 @@ final class ColorReviewUITests: XCTestCase {
     func testScreensInLightAndDark() {
         for mode in ["light", "dark"] {
             homeAndSheet(mode: mode)
+            entryAndEmptyHome(mode: mode)
             tabs(mode: mode)
             catalog(mode: mode)
         }
@@ -46,6 +47,18 @@ final class ColorReviewUITests: XCTestCase {
             _ = app.buttons["newAppointment.cancelButton"].waitForExistence(timeout: 5)
             save(app, "sheet-new-appointment-\(mode)")
         }
+        app.terminate()
+    }
+
+    /// The welcome screen (the mark, the pill, the glow backdrop) and Home on a clear day (the empty state).
+    private func entryAndEmptyHome(mode: String) {
+        let welcome = XCUIApplication.launchedForUITests(arguments: dark(mode))
+        _ = welcome.buttons["welcome.phoneButton"].waitForExistence(timeout: 10)
+        save(welcome, "welcome-\(mode)")
+        welcome.terminate()
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded"] + dark(mode))
+        _ = app.element("home.empty").waitForExistence(timeout: 10)
+        save(app, "home-empty-\(mode)")
         app.terminate()
     }
 
