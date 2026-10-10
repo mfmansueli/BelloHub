@@ -66,7 +66,8 @@ needed.
 
 - `scripts/test.sh fast` (iPhone 17 Pro Max): **2140 tests in 300 suites passed** (2095 on the `build/v1` head this branch
   started from; +45 test functions in 5 new suites and 1 extended suite).
-- `scripts/check-warnings.sh`: see section 4 (filled in at the end of the run).
+- `scripts/check-warnings.sh`: **zero warnings** on simulator, device, Release and the test targets (privacy gate
+  with the new rule 7 included).
 - `scripts/test-firebase.sh`: not run, no file under `firebase/` changed.
 - SwiftLint clean on every touched folder.
 
