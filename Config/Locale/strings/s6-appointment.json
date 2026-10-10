@@ -602,7 +602,7 @@
    "WhatsApp est ouvert avec le message prêt. L'envoi vous appartient.",
    "WhatsApp ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei dir.",
    "WhatsApp mesaj hazır şekilde açıldı. Göndermek size kalmış.",
-   "WhatsApp terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim.",
+   "WhatsApp terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim.",
    "WhatsApp संदेश तैयार करके खुल गया है। भेजना आपके हाथ में है।",
    "فُتح واتساب والرسالة جاهزة. الإرسال بيدك."
   ],
@@ -618,7 +618,7 @@
    "Messages est ouvert avec le message prêt. L'envoi vous appartient.",
    "Nachrichten ist mit der fertigen Nachricht geöffnet. Das Senden liegt bei dir.",
    "Mesajlar uygulaması mesaj hazır şekilde açıldı. Göndermek size kalmış.",
-   "Aplikasi Pesan terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim.",
+   "Aplikasi Pesan terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim.",
    "संदेश ऐप तैयार संदेश के साथ खुल गया है। भेजना आपके हाथ में है।",
    "فُتح تطبيق الرسائل والرسالة جاهزة. الإرسال بيدك."
   ],
@@ -650,7 +650,7 @@
    "Vous pouvez quand même envoyer le message autrement.",
    "Du kannst die Nachricht trotzdem anders senden.",
    "Mesajı yine de başka bir yolla gönderebilirsiniz.",
-   "Anda tetap bisa mengirim pesan dengan cara lain.",
+   "Kamu tetap bisa mengirim pesan dengan cara lain.",
    "आप संदेश को फिर भी दूसरे तरीके से भेज सकते हैं।",
    "لا يزال بإمكانك إرسال الرسالة بطريقة أخرى."
   ],
@@ -826,7 +826,7 @@
    "Enregistré comme annulation de la cliente, selon vos règles.",
    "Wird als Absage durch die Person gespeichert, nach deinen Regeln.",
    "Müşterinin iptali olarak, kurallarınıza göre kaydedilir.",
-   "Disimpan sebagai pembatalan oleh klien, sesuai aturan Anda.",
+   "Disimpan sebagai pembatalan oleh klien, sesuai aturan kamu.",
    "क्लाइंट द्वारा रद्द के रूप में, आपके नियमों के अनुसार सहेजा जाता है।",
    "يُحفظ كإلغاء من العميل وفق قواعدك."
   ],
@@ -842,7 +842,7 @@
    "Annulé par vous, il ne compte donc pas contre %@.",
    "Von dir abgesagt, zählt also nicht gegen %@.",
    "Siz iptal ettiğiniz için %@ aleyhine sayılmaz.",
-   "Dibatalkan oleh Anda, jadi tidak dihitung sebagai kesalahan %@.",
+   "Dibatalkan oleh kamu, jadi tidak dihitung sebagai kesalahan %@.",
    "आपने रद्द किया है, इसलिए यह %@ के खिलाफ नहीं गिना जाएगा।",
    "أُلغي الموعد من جهتك، لذا لا يُحتسب على %@."
   ],
@@ -874,7 +874,7 @@
    "Nous sommes dans le délai gratuit (%1$@). C'est enregistré comme annulation tardive, et votre règle ne la compte pas dans la limite de %2$@.",
    "Das liegt innerhalb der kostenlosen Frist (%1$@). Es wird als späte Absage gespeichert, und deine Regel rechnet sie nicht auf das Limit von %2$@ an.",
    "Bu, ücretsiz süre içinde (%1$@). Geç iptal olarak kaydedilir ve kuralınız bunu %2$@ için sınıra saymaz.",
-   "Ini masuk dalam batas waktu gratis (%1$@). Disimpan sebagai pembatalan terlambat, dan aturan Anda tidak menghitungnya ke batas %2$@.",
+   "Ini masuk dalam batas waktu gratis (%1$@). Disimpan sebagai pembatalan terlambat, dan aturan kamu tidak menghitungnya ke batas %2$@.",
    "यह मुफ़्त अवधि (%1$@) के भीतर है। इसे देर से रद्द के रूप में सहेजा जाएगा, और आपका नियम इसे %2$@ की सीमा में नहीं गिनता।",
    "هذا ضمن المهلة المجانية (%1$@). يُحفظ كإلغاء متأخر، ولا تحتسبه قاعدتك ضمن حد %2$@."
   ],
@@ -906,7 +906,7 @@
    "Ouvre WhatsApp avec un message qui propose de nouveaux horaires. L'envoi vous appartient.",
    "Öffnet WhatsApp mit einer Nachricht, die neue Termine anbietet. Das Senden liegt bei dir.",
    "Yeni saatler öneren bir mesajla WhatsApp'ı açar. Göndermek size kalmış.",
-   "Membuka WhatsApp dengan pesan yang menawarkan waktu baru. Anda yang memutuskan untuk mengirim.",
+   "Membuka WhatsApp dengan pesan yang menawarkan waktu baru. Kamu yang memutuskan untuk mengirim.",
    "नए समय सुझाने वाले संदेश के साथ WhatsApp खुलता है। भेजना आपके हाथ में है।",
    "يفتح واتساب برسالة تعرض مواعيد جديدة. الإرسال بيدك."
   ],
@@ -1226,7 +1226,7 @@
    "Compte dans la limite de votre règle.",
    "Zählt auf das Limit deiner Regel.",
    "Kuralınızın sınırına sayılır.",
-   "Dihitung ke batas aturan Anda.",
+   "Dihitung ke batas aturan kamu.",
    "आपके नियम की सीमा में गिना जाता है।",
    "يُحتسب ضمن حد قاعدتك."
   ],
@@ -1290,7 +1290,7 @@
    "Dans WhatsApp, après l'enregistrement. Vous la relisez d'abord.",
    "In WhatsApp, nach dem Speichern. Du liest sie vorher.",
    "Kaydettikten sonra WhatsApp'ta. Önce siz okursunuz.",
-   "Di WhatsApp, setelah Anda menyimpan. Anda membacanya dulu.",
+   "Di WhatsApp, setelah kamu menyimpan. Kamu membacanya dulu.",
    "सहेजने के बाद WhatsApp में। पहले आप इसे पढ़ेंगे।",
    "في واتساب بعد الحفظ. تقرؤها أولًا."
   ],
@@ -1466,7 +1466,7 @@
    "Il en reste %lld avant votre limite.",
    "Bis zu deinem Limit: noch %lld.",
    "Sınıra kalan: %lld.",
-   "Sisa sebelum batas Anda: %lld.",
+   "Sisa sebelum batas kamu: %lld.",
    "आपकी सीमा तक बाकी: %lld।",
    "المتبقي قبل بلوغ حدك: %lld."
   ],
@@ -1527,7 +1527,7 @@
    "%@ a atteint votre limite.",
    "%@ hat dein Limit erreicht.",
    "%@ sınırınıza ulaştı.",
-   "%@ mencapai batas Anda.",
+   "%@ mencapai batas kamu.",
    "%@ के लिए आपकी सीमा पूरी हो गई।",
    "بلغ %@ حدّك."
   ],
@@ -1543,7 +1543,7 @@
    "%@ a atteint votre limite. Désormais, ses réservations en ligne nécessitent votre accord.",
    "%@ hat dein Limit erreicht. Ab jetzt brauchen die Online-Buchungen deine Bestätigung.",
    "%@ sınırınıza ulaştı. Bundan sonra online rezervasyonları onayınıza bağlı.",
-   "%@ mencapai batas Anda. Mulai sekarang, pemesanan online memerlukan persetujuan Anda.",
+   "%@ mencapai batas kamu. Mulai sekarang, pemesanan online memerlukan persetujuan kamu.",
    "%@ के लिए आपकी सीमा पूरी हो गई। अब से उनकी ऑनलाइन बुकिंग के लिए आपकी मंज़ूरी चाहिए।",
    "بلغ %@ حدّك. من الآن فصاعدًا تحتاج حجوزاته عبر الإنترنت إلى موافقتك."
   ],
@@ -1559,7 +1559,7 @@
    "%@ a atteint votre limite. Désormais, la réservation en ligne est suspendue.",
    "%@ hat dein Limit erreicht. Ab jetzt ist die Online-Buchung pausiert.",
    "%@ sınırınıza ulaştı. Bundan sonra online rezervasyon duraklatıldı.",
-   "%@ mencapai batas Anda. Mulai sekarang, pemesanan online dijeda.",
+   "%@ mencapai batas kamu. Mulai sekarang, pemesanan online dijeda.",
    "%@ के लिए आपकी सीमा पूरी हो गई। अब से ऑनलाइन बुकिंग रोक दी गई है।",
    "بلغ %@ حدّك. من الآن فصاعدًا تتوقف الحجوزات عبر الإنترنت."
   ],
@@ -1703,7 +1703,7 @@
    "Non compté par votre règle",
    "Zählt nach deiner Regel nicht",
    "Kuralınıza göre sayılmaz",
-   "Tidak dihitung oleh aturan Anda",
+   "Tidak dihitung oleh aturan kamu",
    "आपके नियम के अनुसार नहीं गिना जाता",
    "لا تحتسبه قاعدتك"
   ],
@@ -1879,7 +1879,7 @@
    "Vous seule le voyez. Le client connaît votre règle sur votre page de réservation et peut vous demander de la revoir.",
    "Nur du siehst das. Die Person kennt deine Regel von deiner Buchungsseite und kann dich bitten, sie zu überprüfen.",
    "Bunu yalnızca siz görürsünüz. Müşteri kuralınızı rezervasyon sayfanızdan bilir ve gözden geçirmenizi isteyebilir.",
-   "Hanya Anda yang melihat ini. Klien tahu aturan Anda dari halaman pemesanan dan dapat meminta Anda meninjaunya.",
+   "Hanya kamu yang melihat ini. Klien tahu aturan kamu dari halaman pemesanan dan dapat meminta kamu meninjaunya.",
    "इसे सिर्फ़ आप देखते हैं। क्लाइंट को आपके नियम की जानकारी आपके बुकिंग पेज पर मिलती है, और वह आपसे उसकी समीक्षा करने को कह सकता है।",
    "أنت وحدك ترى هذا. يعرف العميل قاعدتك من صفحة الحجز، ويمكنه أن يطلب منك مراجعتها."
   ],
@@ -1943,7 +1943,7 @@
    "Prévenez les prochains clients avant leur arrivée. Votre agenda reste tel quel.",
    "Sag den nächsten Terminen Bescheid, bevor sie ankommen. Dein Kalender bleibt unverändert.",
    "Sıradaki müşterilere gelmeden önce haber verin. Takviminiz olduğu gibi kalır.",
-   "Beri tahu klien berikutnya sebelum mereka tiba. Kalender Anda tidak berubah.",
+   "Beri tahu klien berikutnya sebelum mereka tiba. Kalender kamu tidak berubah.",
    "अगले क्लाइंट को उनके पहुँचने से पहले बता दें। आपका कैलेंडर जैसा है वैसा ही रहेगा।",
    "أخبر العملاء التاليين قبل وصولهم. يبقى تقويمك كما هو."
   ],
@@ -2039,7 +2039,7 @@
    "WhatsApp s'ouvre avec le message prêt. L'envoi vous appartient.",
    "WhatsApp öffnet sich mit der fertigen Nachricht. Das Senden liegt bei dir.",
    "WhatsApp mesaj hazır şekilde açılır. Göndermek size kalmış.",
-   "WhatsApp terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim.",
+   "WhatsApp terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim.",
    "WhatsApp संदेश तैयार करके खुलता है। भेजना आपके हाथ में है।",
    "يفتح واتساب والرسالة جاهزة. الإرسال بيدك."
   ],
@@ -2391,7 +2391,7 @@
    "Ce que vous savez du client · noté par vous",
    "Was du dir merkst · von dir notiert",
    "Müşteri bilgisi · sizin notunuz",
-   "Pengetahuan tentang klien · dicatat oleh Anda",
+   "Pengetahuan tentang klien · dicatat oleh kamu",
    "क्लाइंट के बारे में जानकारी · आपके द्वारा दर्ज",
    "معرفتك بالعميل · دوّنتها بنفسك"
   ],

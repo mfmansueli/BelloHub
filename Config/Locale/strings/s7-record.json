@@ -42,7 +42,7 @@
    "Il transforme votre voix en un dossier organisé. Vous gardez la main.",
    "Er macht aus deiner Stimme einen geordneten Eintrag. Du behältst die Kontrolle.",
    "Sesinizi düzenli bir kayda dönüştürür. Kontrol sizde kalır.",
-   "Mengubah suara Anda menjadi catatan yang tertata. Anda tetap yang mengendalikan.",
+   "Mengubah suara kamu menjadi catatan yang tertata. Kamu tetap yang mengendalikan.",
    "यह आपकी आवाज़ को व्यवस्थित रिकॉर्ड में बदलता है। नियंत्रण आपके हाथ में रहता है।",
    "يحوّل صوتك إلى سجل منظّم. وتبقين أنتِ المتحكمة."
   ],
@@ -90,7 +90,7 @@
    "Votre voix et vos notes sont organisées sur l'appareil. Rien n'est envoyé à un serveur.",
    "Deine Stimme und Notizen werden auf dem Gerät geordnet. Es wird nichts an einen Server gesendet.",
    "Sesiniz ve notlarınız cihazda düzenlenir. Hiçbir şey sunucuya gönderilmez.",
-   "Suara dan catatan Anda ditata di perangkat. Tidak ada yang dikirim ke server.",
+   "Suara dan catatan kamu ditata di perangkat. Tidak ada yang dikirim ke server.",
    "आपकी आवाज़ और नोट्स डिवाइस पर ही व्यवस्थित होते हैं। सर्वर को कुछ नहीं भेजा जाता।",
    "يتم تنظيم صوتك وملاحظاتك على الجهاز. لا يُرسل شيء إلى أي خادم."
   ],
@@ -234,7 +234,7 @@
    "Si cet iPhone ne peut pas, vous remplissez le dossier à la main ou vous le dictez.",
    "Wenn dieses iPhone es nicht kann, füllst du den Eintrag von Hand aus oder diktierst ihn.",
    "Bu iPhone yapamazsa kaydı elle doldurur ya da dikte edersiniz.",
-   "Jika iPhone ini tidak bisa, Anda mengisi catatan secara manual atau mendiktekannya.",
+   "Jika iPhone ini tidak bisa, kamu mengisi catatan secara manual atau mendiktekannya.",
    "अगर यह iPhone न कर सके, तो आप रिकॉर्ड हाथ से भरते हैं या बोलकर लिखवाते हैं।",
    "إذا لم يستطع هذا الـ iPhone ذلك، تملئين السجل يدويًا أو تمليه."
   ],
@@ -282,7 +282,7 @@
    "Organise ce que vous avez dit dans les champs de votre dossier",
    "Ordnet das Gesagte deinen Eintragsfeldern zu",
    "Söylediklerinizi kayıt alanlarınıza yerleştirir",
-   "Menata ucapan Anda ke kolom catatan Anda",
+   "Menata ucapan kamu ke kolom catatan kamu",
    "आपकी कही बातों को आपके रिकॉर्ड फ़ील्ड में व्यवस्थित करता है",
    "ينظّم ما قلتِه في حقول سجلك"
   ],
@@ -298,7 +298,7 @@
    "Suggère les produits et les étapes que vous avez mentionnés",
    "Schlägt die genannten Produkte und Schritte vor",
    "Bahsettiğiniz ürün ve adımları önerir",
-   "Menyarankan produk dan langkah yang Anda sebutkan",
+   "Menyarankan produk dan langkah yang kamu sebutkan",
    "आपके बताए उत्पाद और चरण सुझाता है",
    "يقترح المنتجات والخطوات التي ذكرتِها"
   ],
@@ -314,7 +314,7 @@
    "Rédige un suivi quand vous le demandez",
    "Entwirft auf Wunsch eine Nachfrage",
    "İstediğinizde bir takip mesajı taslağı hazırlar",
-   "Menyusun draf tindak lanjut saat Anda minta",
+   "Menyusun draf tindak lanjut saat kamu minta",
    "आपके कहने पर फ़ॉलो-अप का मसौदा बनाता है",
    "يصوغ رسالة متابعة عندما تطلبين"
   ],
@@ -362,7 +362,7 @@
    "Enregistrer quoi que ce soit avant votre relecture",
    "Etwas speichern, bevor du es geprüft hast",
    "Siz incelemeden hiçbir şeyi kaydetmek",
-   "Menyimpan apa pun sebelum Anda memeriksanya",
+   "Menyimpan apa pun sebelum kamu memeriksanya",
    "आपकी समीक्षा से पहले कुछ भी सहेजना",
    "حفظ أي شيء قبل أن تراجعيه"
   ],
@@ -458,7 +458,7 @@
    "Laisser l'assistant remplir les champs du dossier avec ce que vous avez dit",
    "Den Assistenten die Eintragsfelder aus dem Gesagten füllen lassen",
    "Asistanın kayıt alanlarını söylediklerinizden doldurmasına izin verin",
-   "Biarkan asisten mengisi kolom catatan dari ucapan Anda",
+   "Biarkan asisten mengisi kolom catatan dari ucapan kamu",
    "सहायक को आपकी बातों से रिकॉर्ड फ़ील्ड भरने दें",
    "السماح للمساعد بملء حقول السجل مما قلتِه"
   ],
@@ -970,7 +970,7 @@
    "Les soins que vous enregistrez pour cette cliente apparaissent ici, avec leur historique de modifications.",
    "Behandlungen, die du für diese Person erfasst, erscheinen hier mit ihrem Änderungsverlauf.",
    "Bu müşteri için kaydettiğiniz işlemler düzenleme geçmişiyle burada görünür.",
-   "Perawatan yang Anda catat untuk klien ini muncul di sini, lengkap dengan riwayat perubahannya.",
+   "Perawatan yang kamu catat untuk klien ini muncul di sini, lengkap dengan riwayat perubahannya.",
    "इस क्लाइंट के लिए दर्ज किए गए उपचार संपादन इतिहास के साथ यहाँ दिखते हैं।",
    "العلاجات التي تسجلينها لهذه العميلة تظهر هنا مع سجل تعديلاتها."
   ],
@@ -1338,7 +1338,7 @@
    "Ce dossier est encore ouvert : votre changement remplace le texte. Après le verrouillage, les changements sont consignés comme corrections.",
    "Dieser Eintrag ist noch offen, deine Änderung ersetzt also den Text. Nach der Sperre werden Änderungen als Korrekturen protokolliert.",
    "Bu kayıt hâlâ açık, değişiklik metnin yerine geçer. Kilitlendikten sonra değişiklikler düzeltme olarak kaydedilir.",
-   "Catatan ini masih terbuka, jadi perubahan Anda menggantikan teksnya. Setelah terkunci, perubahan dicatat sebagai koreksi.",
+   "Catatan ini masih terbuka, jadi perubahan kamu menggantikan teksnya. Setelah terkunci, perubahan dicatat sebagai koreksi.",
    "यह रिकॉर्ड अभी खुला है, इसलिए आपका बदलाव टेक्स्ट को बदल देता है। लॉक होने के बाद बदलाव सुधार के रूप में दर्ज होते हैं।",
    "هذا السجل ما زال مفتوحًا، لذا يستبدل تغييرك النص. بعد القفل تُسجَّل التغييرات كتصحيحات."
   ],
@@ -1546,7 +1546,7 @@
    "Les photos sont privées. Vous seule les voyez, sauf si la cliente a consenti au partage.",
    "Fotos sind privat. Nur du siehst sie, außer es liegt eine Einwilligung zum Teilen vor.",
    "Fotoğraflar özeldir. Müşteri paylaşıma onay vermedikçe yalnızca siz görürsünüz.",
-   "Foto bersifat pribadi. Hanya Anda yang melihatnya kecuali klien menyetujui berbagi.",
+   "Foto bersifat pribadi. Hanya kamu yang melihatnya kecuali klien menyetujui berbagi.",
    "फ़ोटो निजी हैं। जब तक क्लाइंट साझा करने की सहमति न दे, केवल आप उन्हें देखते हैं।",
    "الصور خاصة. لا يراها غيرك إلا إذا وافقت العميلة على المشاركة."
   ],
@@ -1770,7 +1770,7 @@
    "Rédigez une note claire et neutre de ce que la cliente a signalé ou de ce que vous avez vu.",
    "Halte klar und neutral fest, was berichtet wurde oder was du gesehen hast.",
    "Müşterinin bildirdiği veya sizin gördüğünüz şeyi açık ve tarafsız biçimde not edin.",
-   "Buat catatan yang jelas dan netral tentang apa yang klien laporkan atau Anda lihat.",
+   "Buat catatan yang jelas dan netral tentang apa yang klien laporkan atau kamu lihat.",
    "क्लाइंट ने जो बताया या आपने जो देखा, उसका स्पष्ट और तटस्थ नोट रखें।",
    "دوّني ملاحظة واضحة ومحايدة عمّا أبلغت به العميلة أو ما رأيتِه."
   ],
@@ -1850,7 +1850,7 @@
    "Ce que vous avez fait",
    "Was du getan hast",
    "Ne yaptınız",
-   "Yang Anda lakukan",
+   "Yang kamu lakukan",
    "आपने क्या किया",
    "ما فعلتِه"
   ],
@@ -1946,7 +1946,7 @@
    "Vous rappelle de prendre des nouvelles demain",
    "Erinnert dich, dich morgen zu melden",
    "Yarın haber vermenizi hatırlatır",
-   "Mengingatkan Anda untuk menghubungi besok",
+   "Mengingatkan kamu untuk menghubungi besok",
    "कल हालचाल पूछने की याद दिलाता है",
    "يذكّرك بالاطمئنان عليها غدًا"
   ],
@@ -2442,7 +2442,7 @@
    "La copie de la cliente n'inclut jamais vos notes internes.",
    "Die Kopie für die Person enthält nie deine internen Notizen.",
    "Müşteri kopyası dahili notlarınızı asla içermez.",
-   "Salinan untuk klien tidak pernah memuat catatan internal Anda.",
+   "Salinan untuk klien tidak pernah memuat catatan internal kamu.",
    "क्लाइंट की प्रति में आपके आंतरिक नोट्स कभी शामिल नहीं होते।",
    "نسخة العميلة لا تتضمن ملاحظاتك الداخلية أبدًا."
   ],
@@ -2682,7 +2682,7 @@
    "Vos propres notes",
    "Deine eigenen Notizen",
    "Kendi notlarınız",
-   "Catatan Anda sendiri",
+   "Catatan kamu sendiri",
    "आपके अपने नोट्स",
    "ملاحظاتك الخاصة"
   ],
@@ -2826,7 +2826,7 @@
    "Votre PDF est prêt.",
    "Dein PDF ist fertig.",
    "PDF'niz hazır.",
-   "PDF Anda sudah siap.",
+   "PDF kamu sudah siap.",
    "आपकी PDF तैयार है।",
    "ملف PDF جاهز."
   ],
@@ -2842,7 +2842,7 @@
    "Le dossier a été exporté avec les éléments choisis. Les photos et les notes internes restent privées, sauf si vous les avez incluses.",
    "Die Akte wurde mit den gewählten Inhalten exportiert. Fotos und interne Notizen bleiben privat, außer du hast sie einbezogen.",
    "Dosya seçtiğiniz öğelerle dışa aktarıldı. Dahil etmediğiniz sürece fotoğraflar ve dahili notlar özel kalır.",
-   "Rekam diekspor dengan item yang Anda pilih. Foto dan catatan internal tetap pribadi kecuali Anda menyertakannya.",
+   "Rekam diekspor dengan item yang kamu pilih. Foto dan catatan internal tetap pribadi kecuali kamu menyertakannya.",
    "रिकॉर्ड आपकी चुनी हुई चीज़ों के साथ एक्सपोर्ट हो गया। फ़ोटो और आंतरिक नोट्स तब तक निजी रहते हैं जब तक आप उन्हें शामिल न करें।",
    "تم تصدير السجل بالعناصر التي اخترتِها. تبقى الصور والملاحظات الداخلية خاصة ما لم تضمّنيها."
   ],
@@ -2890,7 +2890,7 @@
    "Le fichier est supprimé de cet iPhone après le partage ou quand vous quittez cet écran.",
    "Die Datei wird von diesem iPhone gelöscht, sobald du sie teilst oder diesen Bildschirm verlässt.",
    "Dosya paylaştıktan veya bu ekrandan çıktıktan sonra bu iPhone'dan silinir.",
-   "File dihapus dari iPhone ini setelah Anda membagikannya atau keluar dari layar ini.",
+   "File dihapus dari iPhone ini setelah kamu membagikannya atau keluar dari layar ini.",
    "साझा करने या इस स्क्रीन से निकलने के बाद फ़ाइल इस iPhone से हटा दी जाती है।",
    "يُحذف الملف من هذا الـ iPhone بعد مشاركته أو مغادرة هذه الشاشة."
   ],

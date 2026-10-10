@@ -176,7 +176,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hesabın siliniyor"
+            "value" : "Hesabınız siliniyor"
           }
         }
       }
@@ -266,7 +266,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apple senin olduğunu doğrulayamadı. Tekrar dene."
+            "value" : "Apple sizin olduğunuzu doğrulayamadı. Tekrar deneyin."
           }
         }
       }
@@ -356,7 +356,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apple ile giriş yaptığın için Apple bir kez daha onay istiyor. Onayladığın anda hesabın silinir."
+            "value" : "Apple ile giriş yaptığınız için Apple bir kez daha onay istiyor. Onayladığınız anda hesabınız silinir."
           }
         }
       }
@@ -512,7 +512,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Akun, klien, dan semua catatan Anda akan hilang. Tidak ada yang dihapus sebelum Anda mengetuk tombol di bawah."
+            "value" : "Akun, klien, dan semua catatan kamu akan hilang. Tidak ada yang dihapus sebelum kamu mengetuk tombol di bawah."
           }
         },
         "it" : {
@@ -536,7 +536,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hesabın, müşterilerin ve tüm kayıtlar silinecek. Aşağıdaki düğmeye dokunmadan hiçbir şey kaldırılmaz."
+            "value" : "Hesabınız, müşterileriniz ve tüm kayıtlar silinecek. Aşağıdaki düğmeye dokunmadan hiçbir şey kaldırılmaz."
           }
         }
       }
@@ -872,7 +872,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Semuanya telah dihapus. Untuk juga menghentikan Masuk dengan Apple untuk Bello Hub, buka Pengaturan, nama Anda, lalu Masuk dengan Apple."
+            "value" : "Semuanya telah dihapus. Untuk juga menghentikan Masuk dengan Apple untuk Bello Hub, buka Pengaturan, nama kamu, lalu Masuk dengan Apple."
           }
         },
         "it" : {
@@ -896,7 +896,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Her şey kaldırıldı. Bello Hub için Apple ile Giriş Yap’ı da kapatmak için Ayarlar, adın ve ardından Apple ile Giriş Yap’ı aç."
+            "value" : "Her şey kaldırıldı. Bello Hub için Apple ile Giriş Yap’ı da kapatmak isterseniz Ayarlar’da adınıza, ardından Apple ile Giriş Yap’a gidin."
           }
         }
       }
@@ -962,7 +962,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien dan catatan Anda telah dihapus dari iPhone ini. Bagian pemesanan akun Anda ditutup oleh tim kami tak lama setelahnya."
+            "value" : "Klien dan catatan kamu telah dihapus dari iPhone ini. Bagian pemesanan akun kamu ditutup oleh tim kami tak lama setelahnya."
           }
         },
         "it" : {
@@ -986,7 +986,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerin ve kayıtların bu iPhone’dan kaldırıldı. Hesabının randevu tarafı kısa süre sonra ekibimiz tarafından kapatılır."
+            "value" : "Müşterileriniz ve kayıtlarınız bu iPhone’dan kaldırıldı. Hesabınızın randevu tarafı kısa süre sonra ekibimiz tarafından kapatılır."
           }
         }
       }
@@ -1052,7 +1052,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ruang kerja, klien, dan catatan Anda telah dihapus dari iPhone ini, iCloud Anda, dan Bello Hub."
+            "value" : "Ruang kerja, klien, dan catatan kamu telah dihapus dari iPhone ini, iCloud kamu, dan Bello Hub."
           }
         },
         "it" : {
@@ -1076,7 +1076,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Çalışma alanın, müşterilerin ve kayıtların bu iPhone’dan, iCloud’undan ve Bello Hub’dan kaldırıldı."
+            "value" : "Çalışma alanınız, müşterileriniz ve kayıtlarınız bu iPhone’dan, iCloud’unuzdan ve Bello Hub’dan kaldırıldı."
           }
         }
       }
@@ -1142,7 +1142,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Akun Anda telah dihapus"
+            "value" : "Akun kamu telah dihapus"
           }
         },
         "it" : {
@@ -1166,7 +1166,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hesabın silindi"
+            "value" : "Hesabınız silindi"
           }
         }
       }
@@ -1232,7 +1232,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Akun Anda tidak dapat dihapus. Periksa koneksi dan coba lagi."
+            "value" : "Akun kamu tidak dapat dihapus. Periksa koneksi dan coba lagi."
           }
         },
         "it" : {
@@ -1256,7 +1256,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hesabın silinemedi. Bağlantını kontrol edip tekrar dene."
+            "value" : "Hesabınız silinemedi. Bağlantınızı kontrol edip tekrar deneyin."
           }
         }
       }
@@ -1502,7 +1502,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini menghapus secara permanen ruang kerja, klien, catatan, dan foto Anda dari iPhone ini, iCloud Anda, dan Bello Hub. Ekspor dulu jika Anda butuh salinannya."
+            "value" : "Ini menghapus secara permanen ruang kerja, klien, catatan, dan foto kamu dari iPhone ini, iCloud kamu, dan Bello Hub. Ekspor dulu jika kamu butuh salinannya."
           }
         },
         "it" : {
@@ -1526,7 +1526,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu işlem çalışma alanını, müşterilerini, kayıtlarını ve fotoğraflarını bu iPhone’dan, iCloud’undan ve Bello Hub’dan kalıcı olarak kaldırır. Bir kopyaya ihtiyacın varsa önce dışa aktar."
+            "value" : "Bu işlem çalışma alanınızı, müşterilerinizi, kayıtlarınızı ve fotoğraflarınızı bu iPhone’dan, iCloud’unuzdan ve Bello Hub’dan kalıcı olarak kaldırır. Bir kopyaya ihtiyacınız varsa önce dışa aktarın."
           }
         }
       }
@@ -1682,7 +1682,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menghapus ruang kerja dan semua data klien Anda"
+            "value" : "Menghapus ruang kerja dan semua data klien kamu"
           }
         },
         "it" : {
@@ -1706,7 +1706,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Çalışma alanını ve tüm müşteri verilerini kaldırır"
+            "value" : "Çalışma alanınızı ve tüm müşteri verilerini kaldırır"
           }
         }
       }
@@ -1862,7 +1862,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Masukkan nama Anda."
+            "value" : "Masukkan nama kamu."
           }
         },
         "it" : {
@@ -1886,7 +1886,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Adını yaz."
+            "value" : "Adınızı yazın."
           }
         }
       }
@@ -2042,7 +2042,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perubahan tidak dapat disimpan. Pastikan iPhone Anda punya ruang kosong dan coba lagi."
+            "value" : "Perubahan tidak dapat disimpan. Pastikan iPhone kamu punya ruang kosong dan coba lagi."
           }
         },
         "it" : {
@@ -2066,7 +2066,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Değişiklikler kaydedilemedi. iPhone’unda yer olduğundan emin olup tekrar dene."
+            "value" : "Değişiklikler kaydedilemedi. iPhone’unuzda yer olduğundan emin olup tekrar deneyin."
           }
         }
       }
@@ -2402,7 +2402,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nama Anda"
+            "value" : "Nama kamu"
           }
         },
         "it" : {
@@ -2426,7 +2426,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Adın"
+            "value" : "Adınız"
           }
         }
       }
@@ -2672,7 +2672,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk saat ini, inisial Anda menggantikan foto."
+            "value" : "Untuk saat ini, inisial kamu menggantikan foto."
           }
         },
         "it" : {
@@ -2696,7 +2696,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Şimdilik fotoğraf yerine baş harflerin görünüyor."
+            "value" : "Şimdilik fotoğraf yerine baş harfleriniz görünüyor."
           }
         }
       }
@@ -3392,7 +3392,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda bisa masuk lagi kapan saja"
+            "value" : "Kamu bisa masuk lagi kapan saja"
           }
         },
         "it" : {
@@ -3416,7 +3416,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İstediğin zaman yeniden giriş yapabilirsin"
+            "value" : "İstediğiniz zaman yeniden giriş yapabilirsiniz"
           }
         }
       }
@@ -4472,7 +4472,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beri nama sesuka Anda. Muncul di setiap layanan."
+            "value" : "Beri nama sesuka kamu. Muncul di setiap layanan."
           }
         },
         "it" : {
@@ -4922,7 +4922,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca tambahan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca tambahan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -5012,7 +5012,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah punya tambahan dengan nama ini."
+            "value" : "Kamu sudah punya tambahan dengan nama ini."
           }
         },
         "it" : {
@@ -5102,7 +5102,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -5192,7 +5192,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Harga mengikuti pengaturan tampilan harga Anda. Tidak ada yang ditagih di aplikasi."
+            "value" : "Harga mengikuti pengaturan tampilan harga kamu. Tidak ada yang ditagih di aplikasi."
           }
         },
         "it" : {
@@ -6092,7 +6092,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Biarkan asisten mengisi kolom catatan dari ucapan Anda"
+            "value" : "Biarkan asisten mengisi kolom catatan dari ucapan kamu"
           }
         },
         "it" : {
@@ -6722,7 +6722,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Suara dan catatan Anda ditata di perangkat. Tidak ada yang dikirim ke server."
+            "value" : "Suara dan catatan kamu ditata di perangkat. Tidak ada yang dikirim ke server."
           }
         },
         "it" : {
@@ -6902,7 +6902,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menata ucapan Anda ke kolom catatan Anda"
+            "value" : "Menata ucapan kamu ke kolom catatan kamu"
           }
         },
         "it" : {
@@ -6992,7 +6992,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menyarankan produk dan langkah yang Anda sebutkan"
+            "value" : "Menyarankan produk dan langkah yang kamu sebutkan"
           }
         },
         "it" : {
@@ -7082,7 +7082,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menyusun draf tindak lanjut saat Anda minta"
+            "value" : "Menyusun draf tindak lanjut saat kamu minta"
           }
         },
         "it" : {
@@ -7802,7 +7802,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menyimpan apa pun sebelum Anda memeriksanya"
+            "value" : "Menyimpan apa pun sebelum kamu memeriksanya"
           }
         },
         "it" : {
@@ -8882,7 +8882,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mengubah suara Anda menjadi catatan yang tertata. Anda tetap yang mengendalikan."
+            "value" : "Mengubah suara kamu menjadi catatan yang tertata. Kamu tetap yang mengendalikan."
           }
         },
         "it" : {
@@ -9332,7 +9332,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jika iPhone ini tidak bisa, Anda mengisi catatan secara manual atau mendiktekannya."
+            "value" : "Jika iPhone ini tidak bisa, kamu mengisi catatan secara manual atau mendiktekannya."
           }
         },
         "it" : {
@@ -10262,7 +10262,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevularından önce ve hatırlatmalar hazır olduğunda bir uyarı al. Bildirimlerde asla isim görünmez."
+            "value" : "Randevularınızdan önce ve hatırlatmalar hazır olduğunda bir uyarı alın. Bildirimlerde asla isim görünmez."
           }
         }
       }
@@ -10352,7 +10352,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gününü kontrol altında tut"
+            "value" : "Gününüzü kontrol altında tutun"
           }
         }
       }
@@ -10442,7 +10442,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ayarlar'ı aç"
+            "value" : "Ayarlar’ı aç"
           }
         }
       }
@@ -10532,7 +10532,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevularından önce uyarı almak için Ayarlar'dan aç."
+            "value" : "Randevularınızdan önce uyarı almak için Ayarlar’dan açın."
           }
         }
       }
@@ -11408,7 +11408,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menunggu jawaban Anda"
+            "value" : "Menunggu jawaban kamu"
           }
         },
         "it" : {
@@ -11432,7 +11432,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cevabını bekliyor"
+            "value" : "Yanıtınızı bekliyor"
           }
         }
       }
@@ -11612,7 +11612,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ saat %2$@. Başlamadan önce önemli noktalara göz at."
+            "value" : "%1$@ saat %2$@. Başlamadan önce önemli noktalara göz atın."
           }
         }
       }
@@ -14648,7 +14648,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aplikasi Pesan terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim."
+            "value" : "Aplikasi Pesan terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim."
           }
         },
         "it" : {
@@ -14738,7 +14738,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "WhatsApp terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim."
+            "value" : "WhatsApp terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim."
           }
         },
         "it" : {
@@ -15368,7 +15368,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda tetap bisa mengirim pesan dengan cara lain."
+            "value" : "Kamu tetap bisa mengirim pesan dengan cara lain."
           }
         },
         "it" : {
@@ -17348,7 +17348,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada istirahat. Klien dapat memesan kapan saja dalam jam kerja Anda."
+            "value" : "Tidak ada istirahat. Klien dapat memesan kapan saja dalam jam kerja kamu."
           }
         },
         "it" : {
@@ -19148,7 +19148,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca ketersediaan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca ketersediaan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -19238,7 +19238,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Janji temu Anda tetap pribadi. Halaman pemesanan Anda hanya mengetahui jam mana yang kosong."
+            "value" : "Janji temu kamu tetap pribadi. Halaman pemesanan kamu hanya mengetahui jam mana yang kosong."
           }
         },
         "it" : {
@@ -20678,7 +20678,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kapan klien dapat memesan waktu dengan Anda. Perubahan langsung berlaku di halaman pemesanan Anda."
+            "value" : "Kapan klien dapat memesan waktu dengan kamu. Perubahan langsung berlaku di halaman pemesanan kamu."
           }
         },
         "it" : {
@@ -21308,7 +21308,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pengetahuan tentang klien · dicatat oleh Anda"
+            "value" : "Pengetahuan tentang klien · dicatat oleh kamu"
           }
         },
         "it" : {
@@ -21578,7 +21578,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dibatalkan oleh Anda, jadi tidak pernah dihitung merugikan klien."
+            "value" : "Dibatalkan oleh kamu, jadi tidak pernah dihitung merugikan klien."
           }
         },
         "it" : {
@@ -21758,7 +21758,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Janji temu tetap ada. Anda memutuskan nanti."
+            "value" : "Janji temu tetap ada. Kamu memutuskan nanti."
           }
         },
         "it" : {
@@ -22484,7 +22484,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Janji temu tetap ada di kalender Anda dalam waktu yang diblokir."
+            "value" : "Janji temu tetap ada di kalender kamu dalam waktu yang diblokir."
           }
         },
         "it" : {
@@ -22754,7 +22754,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buka pesan untuk setiap klien. Anda membacanya dulu lalu menekan kirim."
+            "value" : "Buka pesan untuk setiap klien. Kamu membacanya dulu lalu menekan kirim."
           }
         },
         "it" : {
@@ -23114,7 +23114,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca kalender Anda. Pastikan iPhone tidak terkunci lalu coba lagi."
+            "value" : "Kami tidak dapat membaca kalender kamu. Pastikan iPhone tidak terkunci lalu coba lagi."
           }
         },
         "it" : {
@@ -23384,7 +23384,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tutup kalender Anda saat tidak bisa bekerja. Halaman pemesanan Anda berhenti menawarkan waktu ini."
+            "value" : "Tutup kalender kamu saat tidak bisa bekerja. Halaman pemesanan kamu berhenti menawarkan waktu ini."
           }
         },
         "it" : {
@@ -23924,7 +23924,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya Anda yang melihat ini."
+            "value" : "Hanya kamu yang melihat ini."
           }
         },
         "it" : {
@@ -25190,7 +25190,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Disetujui. Janji ada di kalender Anda."
+            "value" : "Disetujui. Janji ada di kalender kamu."
           }
         },
         "it" : {
@@ -25214,7 +25214,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Onaylandı. Randevu takviminde."
+            "value" : "Onaylandı. Randevu takviminizde."
           }
         }
       }
@@ -25460,7 +25460,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pendaftaran gratis Anda sudah habis. Pilih paket, lalu setujui lagi."
+            "value" : "Pendaftaran gratis kamu sudah habis. Pilih paket, lalu setujui lagi."
           }
         },
         "it" : {
@@ -25484,7 +25484,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ücretsiz kayıtların bitti. Bir plan seç, sonra tekrar onayla."
+            "value" : "Ücretsiz kayıtlarınız bitti. Bir plan seçin, sonra tekrar onaylayın."
           }
         }
       }
@@ -25664,7 +25664,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yeni bir danışanı onaylamak için plan gerekir."
+            "value" : "Yeni bir müşteriyi onaylamak için plan gerekir."
           }
         }
       }
@@ -25730,7 +25730,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pendaftaran gratis Anda sudah habis"
+            "value" : "Pendaftaran gratis kamu sudah habis"
           }
         },
         "it" : {
@@ -25754,7 +25754,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ücretsiz kayıtların bitti"
+            "value" : "Ücretsiz kayıtlarınız bitti"
           }
         }
       }
@@ -25820,7 +25820,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien baru menunggu persetujuan Anda, sesuai aturan Anda."
+            "value" : "Klien baru menunggu persetujuan kamu, sesuai aturan kamu."
           }
         },
         "it" : {
@@ -25844,7 +25844,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kurallarına göre yeni danışanlar onayını bekler."
+            "value" : "Kurallarınıza göre yeni müşteriler onayınızı bekler."
           }
         }
       }
@@ -25934,7 +25934,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yeni bir danışan"
+            "value" : "Yeni bir müşteri"
           }
         }
       }
@@ -26000,7 +26000,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien ini mencapai batas tidak hadir Anda."
+            "value" : "Klien ini mencapai batas tidak hadir kamu."
           }
         },
         "it" : {
@@ -26024,7 +26024,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu danışan gelmeme sınırına ulaştı."
+            "value" : "Bu müşteri gelmeme sınırına ulaştı."
           }
         }
       }
@@ -26090,7 +26090,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda meminta untuk mengonfirmasi booking %@."
+            "value" : "Kamu meminta untuk mengonfirmasi booking %@."
           }
         },
         "it" : {
@@ -26114,7 +26114,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ için randevuları kendin onaylamak istedin."
+            "value" : "%@ için randevuları kendiniz onaylamak istediniz."
           }
         }
       }
@@ -26204,7 +26204,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu danışan için çevrimiçi randevu yeniden açılır."
+            "value" : "Bu müşteri için çevrimiçi randevu yeniden açılır."
           }
         }
       }
@@ -26450,7 +26450,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ meminta waktu ini. Belum ada yang dipesan sampai Anda setuju."
+            "value" : "%@ meminta waktu ini. Belum ada yang dipesan sampai kamu setuju."
           }
         },
         "it" : {
@@ -26474,7 +26474,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ bu saati istedi. Sen onaylayana kadar bir şey ayrılmaz."
+            "value" : "%@ bu saati istedi. Siz onaylayana kadar hiçbir şey ayrılmaz."
           }
         }
       }
@@ -26630,7 +26630,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dijeda. Klien melihat pesan dan dapat menulis kepada Anda."
+            "value" : "Dijeda. Klien melihat pesan dan dapat menulis kepada kamu."
           }
         },
         "it" : {
@@ -27260,7 +27260,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda menyetujui setiap pemesanan pertama. Klien lama bisa memesan bebas."
+            "value" : "Kamu menyetujui setiap pemesanan pertama. Klien lama bisa memesan bebas."
           }
         },
         "it" : {
@@ -28256,7 +28256,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih alamat Anda"
+            "value" : "Pilih alamat kamu"
           }
         },
         "it" : {
@@ -28346,7 +28346,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya pratinjau. Tautan berfungsi setelah Anda online."
+            "value" : "Hanya pratinjau. Tautan berfungsi setelah kamu online."
           }
         },
         "it" : {
@@ -28616,7 +28616,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tautan janji temu Anda"
+            "value" : "Tautan janji temu kamu"
           }
         },
         "it" : {
@@ -29432,7 +29432,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien akan melihat bahwa Anda tidak menerima pemesanan dan dapat menulis kepada Anda. Janji temu yang sudah dipesan tetap seperti semula."
+            "value" : "Klien akan melihat bahwa kamu tidak menerima pemesanan dan dapat menulis kepada kamu. Janji temu yang sudah dipesan tetap seperti semula."
           }
         },
         "it" : {
@@ -29612,7 +29612,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien melihat ini di halaman Anda dan dapat mengirim pesan. Janji temu yang sudah dipesan tidak diubah."
+            "value" : "Klien melihat ini di halaman kamu dan dapat mengirim pesan. Janji temu yang sudah dipesan tidak diubah."
           }
         },
         "it" : {
@@ -31418,7 +31418,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca pengaturan pemesanan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca pengaturan pemesanan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -31508,7 +31508,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda memiliki ruang kosong, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu memiliki ruang kosong, lalu coba lagi."
           }
         },
         "it" : {
@@ -32498,7 +32498,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda tetap bisa menambahkan janji temu jika perlu."
+            "value" : "Kamu tetap bisa menambahkan janji temu jika perlu."
           }
         },
         "it" : {
@@ -32588,7 +32588,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda tidak bekerja di hari ini"
+            "value" : "Kamu tidak bekerja di hari ini"
           }
         },
         "it" : {
@@ -32858,7 +32858,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Janji temu yang Anda buat, atau yang dipesan klien, akan muncul di sini."
+            "value" : "Janji temu yang kamu buat, atau yang dipesan klien, akan muncul di sini."
           }
         },
         "it" : {
@@ -33038,7 +33038,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kalender Anda tidak tersedia. Pastikan iPhone tidak terkunci lalu coba lagi."
+            "value" : "Kalender kamu tidak tersedia. Pastikan iPhone tidak terkunci lalu coba lagi."
           }
         },
         "it" : {
@@ -36104,7 +36104,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Membuka WhatsApp dengan pesan yang menawarkan waktu baru. Anda yang memutuskan untuk mengirim."
+            "value" : "Membuka WhatsApp dengan pesan yang menawarkan waktu baru. Kamu yang memutuskan untuk mengirim."
           }
         },
         "it" : {
@@ -36284,7 +36284,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini masuk dalam batas waktu gratis (%1$@). Disimpan sebagai pembatalan terlambat, dan aturan Anda tidak menghitungnya ke batas %2$@."
+            "value" : "Ini masuk dalam batas waktu gratis (%1$@). Disimpan sebagai pembatalan terlambat, dan aturan kamu tidak menghitungnya ke batas %2$@."
           }
         },
         "it" : {
@@ -36464,7 +36464,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dibatalkan oleh Anda, jadi tidak dihitung sebagai kesalahan %@."
+            "value" : "Dibatalkan oleh kamu, jadi tidak dihitung sebagai kesalahan %@."
           }
         },
         "it" : {
@@ -36824,7 +36824,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Disimpan sebagai pembatalan oleh klien, sesuai aturan Anda."
+            "value" : "Disimpan sebagai pembatalan oleh klien, sesuai aturan kamu."
           }
         },
         "it" : {
@@ -37274,7 +37274,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda langsung mendapat peringatan dan waktunya masuk ke daftar tunggu Anda."
+            "value" : "Kamu langsung mendapat peringatan dan waktunya masuk ke daftar tunggu kamu."
           }
         },
         "it" : {
@@ -37724,7 +37724,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pembatalan ini dihitung dalam batas tidak datang Anda."
+            "value" : "Pembatalan ini dihitung dalam batas tidak datang kamu."
           }
         },
         "it" : {
@@ -37814,7 +37814,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pembatalan ini tidak dihitung dalam batas tidak datang Anda."
+            "value" : "Pembatalan ini tidak dihitung dalam batas tidak datang kamu."
           }
         },
         "it" : {
@@ -38264,7 +38264,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Berapa lama Anda menahan waktu saat klien terlambat. Mereka bisa memberi tahu Anda dari halaman mereka."
+            "value" : "Berapa lama kamu menahan waktu saat klien terlambat. Mereka bisa memberi tahu kamu dari halaman mereka."
           }
         },
         "it" : {
@@ -38624,7 +38624,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Waktu mereka saat ini tetap terpesan sampai Anda menyetujui."
+            "value" : "Waktu mereka saat ini tetap terpesan sampai kamu menyetujui."
           }
         },
         "it" : {
@@ -39794,7 +39794,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mati: mereka mengirim pesan kepada Anda untuk memindahkan janji temu."
+            "value" : "Mati: mereka mengirim pesan kepada kamu untuk memindahkan janji temu."
           }
         },
         "it" : {
@@ -43496,7 +43496,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ hilang dari daftar dan saran pemesanan Anda. Catatan tetap disimpan dan bisa dipulihkan kapan saja."
+            "value" : "%@ hilang dari daftar dan saran pemesanan kamu. Catatan tetap disimpan dan bisa dipulihkan kapan saja."
           }
         },
         "it" : {
@@ -44306,7 +44306,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kembalikan ke daftar Anda"
+            "value" : "Kembalikan ke daftar kamu"
           }
         },
         "it" : {
@@ -44576,7 +44576,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alasan (hanya Anda yang melihat)"
+            "value" : "Alasan (hanya kamu yang melihat)"
           }
         },
         "it" : {
@@ -44756,7 +44756,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pemesanan lewat tautan Anda dimatikan. Anda tetap bisa menambahkan janji temu sendiri."
+            "value" : "Pemesanan lewat tautan kamu dimatikan. Kamu tetap bisa menambahkan janji temu sendiri."
           }
         },
         "it" : {
@@ -46646,7 +46646,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada yang tersimpan. Pastikan iPhone Anda punya ruang lalu coba lagi."
+            "value" : "Tidak ada yang tersimpan. Pastikan iPhone kamu punya ruang lalu coba lagi."
           }
         },
         "it" : {
@@ -47546,7 +47546,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kepekaan, preferensi, apa pun yang tak ingin Anda lupakan"
+            "value" : "Kepekaan, preferensi, apa pun yang tak ingin kamu lupakan"
           }
         },
         "it" : {
@@ -48356,7 +48356,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada yang tersimpan. Pastikan iPhone Anda punya ruang lalu coba lagi."
+            "value" : "Tidak ada yang tersimpan. Pastikan iPhone kamu punya ruang lalu coba lagi."
           }
         },
         "it" : {
@@ -48446,7 +48446,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditampilkan kepada Anda sebelum setiap janji temu. Tidak pernah dibagikan kepada %@."
+            "value" : "Ditampilkan kepada kamu sebelum setiap janji temu. Tidak pernah dibagikan kepada %@."
           }
         },
         "it" : {
@@ -48536,7 +48536,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hal yang ingin Anda ingat tentang %@, dengan kata-kata Anda sendiri. Hanya Anda yang melihat ini."
+            "value" : "Hal yang ingin kamu ingat tentang %@, dengan kata-kata kamu sendiri. Hanya kamu yang melihat ini."
           }
         },
         "it" : {
@@ -48896,7 +48896,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yang Anda ingat"
+            "value" : "Yang kamu ingat"
           }
         },
         "it" : {
@@ -49928,7 +49928,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alles Gute zum Geburtstag, {name}! Ich wünsche dir einen schönen Tag. Wenn du dir etwas Gutes tun möchtest, bin ich da."
+            "value" : "Alles Gute zum Geburtstag, {name}! Ich wünsche Ihnen einen schönen Tag. Wenn Sie sich etwas Gutes tun möchten, bin ich für Sie da."
           }
         },
         "en" : {
@@ -49976,7 +49976,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Selamat ulang tahun, {name}! Semoga harimu menyenangkan. Kapan pun kamu ingin perawatan, aku siap membantu."
+            "value" : "Selamat ulang tahun, {name}! Semoga hari Anda menyenangkan. Kapan pun Anda ingin dimanjakan dengan perawatan, saya siap membantu."
           }
         },
         "it" : {
@@ -50000,7 +50000,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Doğum günün kutlu olsun {name}! Güzel bir gün dilerim. Kendine biraz bakım yaptırmak istediğinde buradayım."
+            "value" : "Doğum gününüz kutlu olsun {name}! Güzel bir gün geçirmenizi dilerim. Kendinize biraz bakım yaptırmak istediğinizde buradayım."
           }
         }
       }
@@ -50270,7 +50270,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Oku, istersen değiştir, sonra WhatsApp'ı aç."
+            "value" : "Okuyun, isterseniz değiştirin, sonra WhatsApp’ı açın."
           }
         }
       }
@@ -50360,7 +50360,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kayıtlı numara yok. Oku, istersen değiştir ve başka bir yolla paylaş."
+            "value" : "Kayıtlı numara yok. Okuyun, isterseniz değiştirin ve başka bir yolla paylaşın."
           }
         }
       }
@@ -51332,7 +51332,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda tidak dapat dibaca. Coba lagi sebentar lagi."
+            "value" : "Catatan kamu tidak dapat dibaca. Coba lagi sebentar lagi."
           }
         },
         "it" : {
@@ -52418,7 +52418,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya Anda"
+            "value" : "Hanya kamu"
           }
         },
         "it" : {
@@ -53318,7 +53318,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Belum ada catatan. Tambahkan hal yang ingin Anda ingat."
+            "value" : "Belum ada catatan. Tambahkan hal yang ingin kamu ingat."
           }
         },
         "it" : {
@@ -53408,7 +53408,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yang Anda ingat"
+            "value" : "Yang kamu ingat"
           }
         },
         "it" : {
@@ -55478,7 +55478,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditambahkan oleh Anda"
+            "value" : "Ditambahkan oleh kamu"
           }
         },
         "it" : {
@@ -56198,7 +56198,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Semua orang yang Anda tambahkan, atau yang memesan online, akan muncul di sini."
+            "value" : "Semua orang yang kamu tambahkan, atau yang memesan online, akan muncul di sini."
           }
         },
         "it" : {
@@ -56378,7 +56378,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda tidak dapat dibaca. Coba lagi sebentar lagi."
+            "value" : "Catatan kamu tidak dapat dibaca. Coba lagi sebentar lagi."
           }
         },
         "it" : {
@@ -59804,7 +59804,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Opsional, dengan kata-kata Anda"
+            "value" : "Opsional, dengan kata-kata kamu"
           }
         },
         "it" : {
@@ -60164,7 +60164,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ia menandatangani kertas bersama Anda"
+            "value" : "Ia menandatangani kertas bersama kamu"
           }
         },
         "it" : {
@@ -60254,7 +60254,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk kontrol Anda sendiri. Kertas yang ditandatangani tetap pada Anda; apa yang Anda catat di sini tidak pernah keluar dari iPhone ini."
+            "value" : "Untuk kontrol kamu sendiri. Kertas yang ditandatangani tetap pada kamu; apa yang kamu catat di sini tidak pernah keluar dari iPhone ini."
           }
         },
         "it" : {
@@ -60794,7 +60794,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini juga hilang dari halaman pemesanan Anda."
+            "value" : "Ini juga hilang dari halaman pemesanan kamu."
           }
         },
         "it" : {
@@ -61874,7 +61874,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca sertifikat Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca sertifikat kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -61964,7 +61964,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -62234,7 +62234,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Belum ada yang ditampilkan. Tambahkan sertifikat atau registrasi Anda."
+            "value" : "Belum ada yang ditampilkan. Tambahkan sertifikat atau registrasi kamu."
           }
         },
         "it" : {
@@ -62324,7 +62324,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sertifikat Anda disembunyikan dari halaman pemesanan. Aktifkan opsinya untuk menampilkannya."
+            "value" : "Sertifikat kamu disembunyikan dari halaman pemesanan. Aktifkan opsinya untuk menampilkannya."
           }
         },
         "it" : {
@@ -62594,7 +62594,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambahkan milik Anda"
+            "value" : "Tambahkan milik kamu"
           }
         },
         "it" : {
@@ -63134,7 +63134,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sertifikat Anda"
+            "value" : "Sertifikat kamu"
           }
         },
         "it" : {
@@ -63224,7 +63224,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Disembunyikan dari halaman Anda"
+            "value" : "Disembunyikan dari halaman kamu"
           }
         },
         "it" : {
@@ -63314,7 +63314,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien melihat ini di halaman Anda"
+            "value" : "Klien melihat ini di halaman kamu"
           }
         },
         "it" : {
@@ -63494,7 +63494,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bangun kepercayaan sebelum klien memesan. Tampil di halaman pemesanan Anda jika Anda mau."
+            "value" : "Bangun kepercayaan sebelum klien memesan. Tampil di halaman pemesanan kamu jika kamu mau."
           }
         },
         "it" : {
@@ -66308,7 +66308,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dosyalar’a kaydet veya paylaş. Dosya bu iPhone’da oluşturulur ve asla Bello Hub’dan geçmez."
+            "value" : "Dosyalar’a kaydedin veya paylaşın. Dosya bu iPhone’da oluşturulur ve asla Bello Hub’dan geçmez."
           }
         }
       }
@@ -66374,7 +66374,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ekspor tidak dapat disiapkan. Pastikan iPhone Anda punya ruang kosong dan coba lagi."
+            "value" : "Ekspor tidak dapat disiapkan. Pastikan iPhone kamu punya ruang kosong dan coba lagi."
           }
         },
         "it" : {
@@ -66398,7 +66398,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dışa aktarma hazırlanamadı. iPhone’unda yer olduğundan emin olup tekrar dene."
+            "value" : "Dışa aktarım hazırlanamadı. iPhone’unuzda yer olduğundan emin olup tekrar deneyin."
           }
         }
       }
@@ -66464,7 +66464,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Data klien Anda tetap pribadi, hanya milik Anda."
+            "value" : "Data klien kamu tetap pribadi, hanya milik kamu."
           }
         },
         "it" : {
@@ -66488,7 +66488,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerinin verileri yalnızca sana özel kalır."
+            "value" : "Müşterilerinizin verileri yalnızca sizde kalır."
           }
         }
       }
@@ -67118,7 +67118,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tedavi kayıtları"
+            "value" : "Uygulama kayıtları"
           }
         }
       }
@@ -67544,7 +67544,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dibuat di iPhone Anda. Berisi data pribadi dan kesehatan: simpan dengan aman."
+            "value" : "Dibuat di iPhone kamu. Berisi data pribadi dan kesehatan: simpan dengan aman."
           }
         },
         "it" : {
@@ -67568,7 +67568,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iPhone’unda oluşturuldu. Kişisel ve sağlık verileri içerir: güvende tut."
+            "value" : "iPhone’unuzda oluşturuldu. Kişisel ve sağlık verileri içerir: güvende tutun."
           }
         }
       }
@@ -67748,7 +67748,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dışa aktarmamı hazırla"
+            "value" : "Dışa aktarımı hazırla"
           }
         }
       }
@@ -67904,7 +67904,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ekspor Anda siap"
+            "value" : "Ekspor kamu siap"
           }
         },
         "it" : {
@@ -67928,7 +67928,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dışa aktarman hazır"
+            "value" : "Dışa aktarımınız hazır"
           }
         }
       }
@@ -67994,7 +67994,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagikan atau simpan ke File. Berkas dihapus dari layar ini saat Anda keluar."
+            "value" : "Bagikan atau simpan ke File. Berkas dihapus dari layar ini saat kamu keluar."
           }
         },
         "it" : {
@@ -68018,7 +68018,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Paylaş veya Dosyalar’a kaydet. Bu ekrandan çıkınca silinir."
+            "value" : "Paylaşın veya Dosyalar’a kaydedin. Bu ekrandan çıkınca silinir."
           }
         }
       }
@@ -68444,7 +68444,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Semua yang ada di akun Bello Hub Anda, untuk disimpan atau dipindahkan."
+            "value" : "Semua yang ada di akun Bello Hub kamu, untuk disimpan atau dipindahkan."
           }
         },
         "it" : {
@@ -68468,7 +68468,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub hesabındaki her şey; saklamak veya başka yere taşımak için."
+            "value" : "Bello Hub hesabınızdaki her şey; saklamak veya başka yere taşımak için."
           }
         }
       }
@@ -68804,7 +68804,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salinan untuk klien tidak pernah memuat catatan internal Anda."
+            "value" : "Salinan untuk klien tidak pernah memuat catatan internal kamu."
           }
         },
         "it" : {
@@ -71864,7 +71864,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda sendiri"
+            "value" : "Catatan kamu sendiri"
           }
         },
         "it" : {
@@ -72404,7 +72404,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "File dihapus dari iPhone ini setelah Anda membagikannya atau keluar dari layar ini."
+            "value" : "File dihapus dari iPhone ini setelah kamu membagikannya atau keluar dari layar ini."
           }
         },
         "it" : {
@@ -72494,7 +72494,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rekam diekspor dengan item yang Anda pilih. Foto dan catatan internal tetap pribadi kecuali Anda menyertakannya."
+            "value" : "Rekam diekspor dengan item yang kamu pilih. Foto dan catatan internal tetap pribadi kecuali kamu menyertakannya."
           }
         },
         "it" : {
@@ -72584,7 +72584,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "PDF Anda sudah siap."
+            "value" : "PDF kamu sudah siap."
           }
         },
         "it" : {
@@ -73844,7 +73844,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kolom ini tidak akan ditanyakan lagi. Catatan yang sudah Anda simpan tetap berisi tulisan Anda. Untuk menjedanya, matikan saja."
+            "value" : "Kolom ini tidak akan ditanyakan lagi. Catatan yang sudah kamu simpan tetap berisi tulisan kamu. Untuk menjedanya, matikan saja."
           }
         },
         "it" : {
@@ -74114,7 +74114,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah punya kolom dengan nama ini."
+            "value" : "Kamu sudah punya kolom dengan nama ini."
           }
         },
         "it" : {
@@ -74744,7 +74744,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagaimana Anda mengisinya?"
+            "value" : "Bagaimana kamu mengisinya?"
           }
         },
         "it" : {
@@ -77540,7 +77540,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apa yang Anda tanyakan sebelum kunjungan pertama dan seberapa sering Anda menanyakannya lagi."
+            "value" : "Apa yang kamu tanyakan sebelum kunjungan pertama dan seberapa sering kamu menanyakannya lagi."
           }
         },
         "it" : {
@@ -78626,7 +78626,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Belum ada persetujuan tercatat. Catat di sini apa yang ia tanda tangani bersama Anda; kertasnya tetap pada Anda."
+            "value" : "Belum ada persetujuan tercatat. Catat di sini apa yang ia tanda tangani bersama kamu; kertasnya tetap pada kamu."
           }
         },
         "it" : {
@@ -78716,7 +78716,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda sendiri: apa yang ia tanda tangani bersama Anda, di atas kertas. Aplikasi tidak memiliki teks persetujuan dan tidak meminta tanda tangan."
+            "value" : "Catatan kamu sendiri: apa yang ia tanda tangani bersama kamu, di atas kertas. Aplikasi tidak memiliki teks persetujuan dan tidak meminta tanda tangan."
           }
         },
         "it" : {
@@ -79886,7 +79886,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isi bersama saat kunjungan. Jawaban disegel dan tetap berada di iPhone Anda."
+            "value" : "Isi bersama saat kunjungan. Jawaban disegel dan tetap berada di iPhone kamu."
           }
         },
         "it" : {
@@ -81602,7 +81602,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pribadi. Hanya Anda yang dapat melihatnya."
+            "value" : "Pribadi. Hanya kamu yang dapat melihatnya."
           }
         },
         "it" : {
@@ -81872,7 +81872,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diisi oleh Anda · %@"
+            "value" : "Diisi oleh kamu · %@"
           }
         },
         "it" : {
@@ -81962,7 +81962,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diisi oleh Anda"
+            "value" : "Diisi oleh kamu"
           }
         },
         "it" : {
@@ -83408,7 +83408,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya Anda kumpulkan secara langsung."
+            "value" : "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya kamu kumpulkan secara langsung."
           }
         },
         "it" : {
@@ -83768,7 +83768,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama Anda, di luar aplikasi."
+            "value" : "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama kamu, di luar aplikasi."
           }
         },
         "it" : {
@@ -84152,7 +84152,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ne yardımcı olurdu, bize söyle"
+            "value" : "Neyin işinize yarayacağını bize söyleyin"
           }
         }
       }
@@ -84422,7 +84422,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir insana mı ihtiyacın var?"
+            "value" : "Bir insanla mı görüşmek istiyorsunuz?"
           }
         }
       }
@@ -84602,7 +84602,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hızlı yanıtlar ya da bir insanla konuş."
+            "value" : "Hızlı yanıtlar ya da bir insanla görüşme."
           }
         }
       }
@@ -84758,7 +84758,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagikan tautan pemesanan atau kode QR dari Lainnya, Halaman pemesanan. Klien memilih layanan dan waktu; yang baru muncul di kalender Anda."
+            "value" : "Bagikan tautan pemesanan atau kode QR dari Lainnya, Halaman pemesanan. Klien memilih layanan dan waktu; yang baru muncul di kalender kamu."
           }
         },
         "it" : {
@@ -84782,7 +84782,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevu bağlantını veya QR kodunu Daha Fazla, Randevu sayfası’ndan paylaş. Müşteriler bir hizmet ve saat seçer; yeni olanlar takviminde görünür."
+            "value" : "Randevu bağlantınızı veya QR kodunuzu Daha fazla, Randevu sayfası bölümünden paylaşın. Müşteriler bir hizmet ve saat seçer; yeni randevular takviminizde görünür."
           }
         }
       }
@@ -84962,7 +84962,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Profilini aç, Düzenle’ye, sonra bir kopya istiyorsa Verilerini dışa aktar’a ve Verilerini sil’e dokun. Kaydı, fotoğrafları ve notları gider; randevu geçmişi yalnızca sayı olarak kalır."
+            "value" : "Profilini açın, Düzenle’ye, sonra bir kopya istiyorsa Verilerini dışa aktar’a ve Verilerini sil’e dokunun. Kaydı, fotoğrafları ve notları silinir; randevu geçmişi yalnızca sayı olarak kalır."
           }
         }
       }
@@ -85142,7 +85142,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Evet. Gizlilik ve güvenlik, Tüm verilerimi dışa aktar bu iPhone’da tablolar ve bir PDF içeren bir ZIP oluşturur. Dosyalar’a kaydet veya paylaş."
+            "value" : "Evet. Gizlilik ve güvenlik bölümündeki Tüm verilerimi dışa aktar, bu iPhone’da tablolar ve bir PDF içeren bir ZIP oluşturur. Dosyalar’a kaydedin veya paylaşın."
           }
         }
       }
@@ -85298,7 +85298,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "10 klien pertama Anda gratis, bagaimanapun cara menambahkannya. Klien yang dihapus tetap dihitung. Setelah itu, paket menghapus batas; yang sudah Anda miliki tidak pernah dikunci."
+            "value" : "10 klien pertama kamu gratis, bagaimanapun cara menambahkannya. Klien yang dihapus tetap dihitung. Setelah itu, paket menghapus batas; yang sudah kamu miliki tidak pernah dikunci."
           }
         },
         "it" : {
@@ -85322,7 +85322,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İlk 10 müşterin, nasıl eklenirse eklensin ücretsizdir. Silinen müşteriler yine sayılır. Sonrasında bir plan sınırı kaldırır; zaten sahip olduğun hiçbir şey kilitlenmez."
+            "value" : "İlk 10 müşteriniz, nasıl eklenirse eklensin ücretsizdir. Silinen müşteriler yine sayılır. Sonrasında bir plan sınırı kaldırır; zaten sahip olduğunuz hiçbir şey kilitlenmez."
           }
         }
       }
@@ -85478,7 +85478,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini satu-satunya cara membaca catatan Anda di iPhone baru jika Rantai Kunci iCloud tidak dapat memulihkannya. Simpan hari ini di Privasi dan keamanan."
+            "value" : "Ini satu-satunya cara membaca catatan kamu di iPhone baru jika Rantai Kunci iCloud tidak dapat memulihkannya. Simpan hari ini di Privasi dan keamanan."
           }
         },
         "it" : {
@@ -85502,7 +85502,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iCloud Anahtar Zinciri kayıtlarını geri yükleyemezse, yeni bir iPhone’da kayıtlarını okumanın tek yolu budur. Bugün Gizlilik ve güvenlik’ten kaydet."
+            "value" : "iCloud Anahtar Zinciri kayıtlarınızı geri yükleyemezse yeni bir iPhone’da kayıtlarınızı okumanın tek yolu budur. Bugün Gizlilik ve güvenlik bölümünden kaydedin."
           }
         }
       }
@@ -85658,7 +85658,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di iPhone ini dan iCloud pribadi Anda, disegel agar hanya Anda yang bisa membacanya. Server Bello Hub hanya menyimpan pemesanan."
+            "value" : "Di iPhone ini dan iCloud pribadi kamu, disegel agar hanya kamu yang bisa membacanya. Server Bello Hub hanya menyimpan pemesanan."
           }
         },
         "it" : {
@@ -85682,7 +85682,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu iPhone’da ve özel iCloud’unda, yalnızca senin okuyabileceğin şekilde mühürlü. Bello Hub sunucuları yalnızca randevuları tutar."
+            "value" : "Bu iPhone’da ve özel iCloud’unuzda, yalnızca sizin okuyabileceğiniz şekilde mühürlü. Bello Hub sunucuları yalnızca randevuları tutar."
           }
         }
       }
@@ -86018,7 +86018,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hari Anda kosong"
+            "value" : "Hari kamu kosong"
           }
         },
         "it" : {
@@ -87308,7 +87308,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Geç mi kalacaksın? %@ kişisine haber ver"
+            "value" : "Geç mi kalacaksınız? %@ kişisine haber verin"
           }
         }
       }
@@ -88730,7 +88730,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld."
+            "value" : "Kamu memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld."
           }
         },
         "it" : {
@@ -88820,7 +88820,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sisanya memerlukan paket. Anda bisa memilihnya setelah impor ini."
+            "value" : "Sisanya memerlukan paket. Kamu bisa memilihnya setelah impor ini."
           }
         },
         "it" : {
@@ -91616,7 +91616,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pastikan iPhone punya ruang kosong, lalu coba lagi. Yang sudah tersimpan tetap ada di daftar Anda."
+            "value" : "Pastikan iPhone punya ruang kosong, lalu coba lagi. Yang sudah tersimpan tetap ada di daftar kamu."
           }
         },
         "it" : {
@@ -92066,7 +92066,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pendaftaran gratis Anda sudah habis. Pilih paket untuk menambahkan sisanya."
+            "value" : "Pendaftaran gratis kamu sudah habis. Pilih paket untuk menambahkan sisanya."
           }
         },
         "it" : {
@@ -92156,7 +92156,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%lld sudah ada di daftar Anda"
+            "value" : "%lld sudah ada di daftar kamu"
           }
         },
         "it" : {
@@ -92792,7 +92792,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Daftar %@ Anda sudah diperbarui. Tambahkan label dan catatan kapan saja."
+            "value" : "Daftar %@ kamu sudah diperbarui. Tambahkan label dan catatan kapan saja."
           }
         },
         "it" : {
@@ -93428,7 +93428,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perbaiki di file atau kontak Anda, lalu impor lagi."
+            "value" : "Perbaiki di file atau kontak kamu, lalu impor lagi."
           }
         },
         "it" : {
@@ -94328,7 +94328,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya kontak yang Anda pilih yang dibaca. Tidak ada yang disimpan kecuali yang Anda impor."
+            "value" : "Hanya kontak yang kamu pilih yang dibaca. Tidak ada yang disimpan kecuali yang kamu impor."
           }
         },
         "it" : {
@@ -94418,7 +94418,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Data Anda ada di Excel atau Numbers? Ekspor file sebagai CSV, lalu pilih di sini."
+            "value" : "Data kamu ada di Excel atau Numbers? Ekspor file sebagai CSV, lalu pilih di sini."
           }
         },
         "it" : {
@@ -94598,7 +94598,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bawa %@ Anda ke sini."
+            "value" : "Bawa %@ kamu ke sini."
           }
         },
         "it" : {
@@ -94982,7 +94982,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sunucu meşgul. Birazdan tekrar dene."
+            "value" : "Sunucu meşgul. Birazdan tekrar deneyin."
           }
         }
       }
@@ -95048,7 +95048,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Booking Anda tidak dapat dibaca. Coba lagi."
+            "value" : "Booking kamu tidak dapat dibaca. Coba lagi."
           }
         },
         "it" : {
@@ -95072,7 +95072,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevuların okunamadı. Tekrar dene."
+            "value" : "Randevularınız okunamadı. Tekrar deneyin."
           }
         }
       }
@@ -95138,7 +95138,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada koneksi. Yang Anda lihat berasal dari sinkronisasi terakhir."
+            "value" : "Tidak ada koneksi. Yang kamu lihat berasal dari sinkronisasi terakhir."
           }
         },
         "it" : {
@@ -95162,7 +95162,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bağlantı yok. Gördüklerin son eşitlemeden."
+            "value" : "Bağlantı yok. Gördükleriniz son eşitlemeden."
           }
         }
       }
@@ -95228,7 +95228,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Masuk lagi untuk melihat booking Anda."
+            "value" : "Masuk lagi untuk melihat booking kamu."
           }
         },
         "it" : {
@@ -95252,7 +95252,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevularını görmek için yeniden giriş yap."
+            "value" : "Randevularınızı görmek için yeniden giriş yapın."
           }
         }
       }
@@ -95342,7 +95342,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yanıtlandı ya da geri çekildi. Yenilemek için aşağı çek."
+            "value" : "Yanıtlandı ya da geri çekildi. Yenilemek için aşağı çekin."
           }
         }
       }
@@ -95588,7 +95588,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mengirim jawaban Anda…"
+            "value" : "Mengirim jawaban kamu…"
           }
         },
         "it" : {
@@ -95612,7 +95612,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cevabın gönderiliyor…"
+            "value" : "Yanıtınız gönderiliyor…"
           }
         }
       }
@@ -95678,7 +95678,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tersimpan. Dikirim begitu Anda online."
+            "value" : "Tersimpan. Dikirim begitu kamu online."
           }
         },
         "it" : {
@@ -95882,7 +95882,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Danışan bu talebi geri çekti."
+            "value" : "Müşteri bu talebi geri çekti."
           }
         }
       }
@@ -96848,7 +96848,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yang Anda lakukan"
+            "value" : "Yang kamu lakukan"
           }
         },
         "it" : {
@@ -97208,7 +97208,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mengingatkan Anda untuk menghubungi besok"
+            "value" : "Mengingatkan kamu untuk menghubungi besok"
           }
         },
         "it" : {
@@ -97298,7 +97298,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buat catatan yang jelas dan netral tentang apa yang klien laporkan atau Anda lihat."
+            "value" : "Buat catatan yang jelas dan netral tentang apa yang klien laporkan atau kamu lihat."
           }
         },
         "it" : {
@@ -99482,7 +99482,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Takvim erişimi kapalı. Ayarlar’dan izin ver."
+            "value" : "Takvim erişimi kapalı. Ayarlar’dan izin verin."
           }
         }
       }
@@ -99548,7 +99548,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Terhubung. Janji temu baru muncul di kalender Anda."
+            "value" : "Terhubung. Janji temu baru muncul di kalender kamu."
           }
         },
         "it" : {
@@ -99572,7 +99572,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bağlandı. Yeni randevular takviminde görünür."
+            "value" : "Bağlandı. Yeni randevular takviminizde görünür."
           }
         }
       }
@@ -99638,7 +99638,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tampilkan janji temu Anda di kalender iPhone"
+            "value" : "Tampilkan janji temu kamu di kalender iPhone"
           }
         },
         "it" : {
@@ -99662,7 +99662,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevularını iPhone takviminde göster"
+            "value" : "Randevularınızı iPhone takviminde gösterin"
           }
         }
       }
@@ -100022,7 +100022,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Telefonundan veya bir tablodan"
+            "value" : "Telefonunuzdan veya bir tablodan"
           }
         }
       }
@@ -100178,7 +100178,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambahkan tautan pemesanan Anda"
+            "value" : "Tambahkan tautan pemesanan kamu"
           }
         },
         "it" : {
@@ -100202,7 +100202,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevu bağlantını ekle"
+            "value" : "Randevu bağlantınızı ekleyin"
           }
         }
       }
@@ -100538,7 +100538,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hubungkan alat yang sudah Anda pakai."
+            "value" : "Hubungkan alat yang sudah kamu pakai."
           }
         },
         "it" : {
@@ -100562,7 +100562,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zaten kullandığın araçları bağla."
+            "value" : "Zaten kullandığınız araçları bağlayın."
           }
         }
       }
@@ -100808,7 +100808,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wilayah Anda memakai Pesan. Pesan dibuka di sana, dari nomor Anda."
+            "value" : "Wilayah kamu memakai Pesan. Pesan dibuka di sana, dari nomor kamu."
           }
         },
         "it" : {
@@ -100832,7 +100832,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bölgen Mesajlar’ı kullanıyor. Mesajlar orada, kendi numarandan açılır."
+            "value" : "Bölgenizde Mesajlar kullanılıyor. Mesajlar orada, kendi numaranızdan açılır."
           }
         }
       }
@@ -100898,7 +100898,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pesan dibuka di WhatsApp, dikirim dari nomor Anda"
+            "value" : "Pesan dibuka di WhatsApp, dikirim dari nomor kamu"
           }
         },
         "it" : {
@@ -100922,7 +100922,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mesajlar WhatsApp’ta açılır, kendi numarandan gönderilir"
+            "value" : "Mesajlar WhatsApp’ta açılır, kendi numaranızdan gönderilir"
           }
         }
       }
@@ -101078,7 +101078,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien Anda disebut"
+            "value" : "Klien kamu disebut"
           }
         },
         "it" : {
@@ -101102,7 +101102,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerine denir"
+            "value" : "Müşterilerinize verdiğiniz ad"
           }
         }
       }
@@ -101528,7 +101528,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perubahan tidak dapat disimpan. Pastikan iPhone Anda punya ruang kosong dan coba lagi."
+            "value" : "Perubahan tidak dapat disimpan. Pastikan iPhone kamu punya ruang kosong dan coba lagi."
           }
         },
         "it" : {
@@ -101552,7 +101552,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Değişiklikler kaydedilemedi. iPhone’unda yer olduğundan emin olup tekrar dene."
+            "value" : "Değişiklikler kaydedilemedi. iPhone’unuzda yer olduğundan emin olup tekrar deneyin."
           }
         }
       }
@@ -101708,7 +101708,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bahasa Anda, selalu aktif"
+            "value" : "Bahasa kamu, selalu aktif"
           }
         },
         "it" : {
@@ -101732,7 +101732,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kendi dilin, her zaman açık"
+            "value" : "Kendi diliniz, her zaman açık"
           }
         }
       }
@@ -101978,7 +101978,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tersimpan. Pesan dan halaman Anda memakai pengaturan baru."
+            "value" : "Tersimpan. Pesan dan halaman kamu memakai pengaturan baru."
           }
         },
         "it" : {
@@ -102002,7 +102002,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydedildi. Mesajların ve sayfan yeni ayarları kullanıyor."
+            "value" : "Kaydedildi. Mesajlarınız ve sayfanız yeni ayarları kullanıyor."
           }
         }
       }
@@ -102068,7 +102068,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mata uang harga Anda"
+            "value" : "Mata uang harga kamu"
           }
         },
         "it" : {
@@ -102092,7 +102092,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiyatlarının para birimi"
+            "value" : "Fiyatlarınızın para birimi"
           }
         }
       }
@@ -102158,7 +102158,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Harga hanya ditampilkan. Tidak ada yang ditagih di aplikasi. Klien melihat mata uang Anda ditulis sesuai cara bahasa mereka menulis angka."
+            "value" : "Harga hanya ditampilkan. Tidak ada yang ditagih di aplikasi. Klien melihat mata uang kamu ditulis sesuai cara bahasa mereka menulis angka."
           }
         },
         "it" : {
@@ -102248,7 +102248,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bahasa pesan dan halaman Anda"
+            "value" : "Bahasa pesan dan halaman kamu"
           }
         },
         "it" : {
@@ -102272,7 +102272,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mesajlarının ve sayfanın dili"
+            "value" : "Mesajlarınızın ve sayfanızın dili"
           }
         }
       }
@@ -102338,7 +102338,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aplikasi sendiri mengikuti bahasa iPhone Anda."
+            "value" : "Aplikasi sendiri mengikuti bahasa iPhone kamu."
           }
         },
         "it" : {
@@ -102362,7 +102362,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Uygulamanın kendisi iPhone’unun dilini izler."
+            "value" : "Uygulamanın kendisi iPhone’unuzun dilini izler."
           }
         }
       }
@@ -102428,7 +102428,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pesan ke klien Anda"
+            "value" : "Pesan ke klien kamu"
           }
         },
         "it" : {
@@ -102452,7 +102452,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerine mesajlar"
+            "value" : "Müşterilerinize mesajlar"
           }
         }
       }
@@ -102518,7 +102518,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagaimana konfirmasi dan pengingat terbaca dalam bahasa yang Anda pilih."
+            "value" : "Bagaimana konfirmasi dan pengingat terbaca dalam bahasa yang kamu pilih."
           }
         },
         "it" : {
@@ -102542,7 +102542,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seçtiğin dilde bir onay ve bir hatırlatma nasıl okunur."
+            "value" : "Seçtiğiniz dilde bir onay ve bir hatırlatma böyle görünür."
           }
         }
       }
@@ -102698,7 +102698,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien memilih salah satunya di halaman Anda. Bahasa Anda sendiri selalu aktif."
+            "value" : "Klien memilih salah satunya di halaman kamu. Bahasa kamu sendiri selalu aktif."
           }
         },
         "it" : {
@@ -102722,7 +102722,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşteriler sayfanda bunlardan birini seçer. Kendi dilin her zaman açıktır."
+            "value" : "Müşteriler sayfanızda bunlardan birini seçer. Kendi diliniz her zaman açıktır."
           }
         }
       }
@@ -103148,7 +103148,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ubah di kolom catatan Anda."
+            "value" : "Ubah di kolom catatan kamu."
           }
         },
         "it" : {
@@ -103172,7 +103172,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bunları kayıt alanlarından değiştir."
+            "value" : "Bunları kayıt alanlarınızdan değiştirebilirsiniz."
           }
         }
       }
@@ -103868,7 +103868,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagaimana aplikasi, halaman pemesanan, dan pesan Anda ke klien terbaca."
+            "value" : "Bagaimana aplikasi, halaman pemesanan, dan pesan kamu ke klien terbaca."
           }
         },
         "it" : {
@@ -103892,7 +103892,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Uygulamanın, randevu sayfanın ve müşterilere mesajlarının nasıl okunacağı."
+            "value" : "Uygulamanın, randevu sayfanızın ve müşterilerinize giden mesajların nasıl yazılacağı."
           }
         }
       }
@@ -104138,7 +104138,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iPhone ini tidak memiliki kunci catatan Anda. Pulihkan dengan frasa pemulihan Anda."
+            "value" : "iPhone ini tidak memiliki kunci catatan kamu. Pulihkan dengan frasa pemulihan kamu."
           }
         },
         "it" : {
@@ -104318,7 +104318,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Coba lagi, atau gunakan kode sandi Anda."
+            "value" : "Coba lagi, atau gunakan kode sandi kamu."
           }
         },
         "it" : {
@@ -104498,7 +104498,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buka klien dan catatan Anda."
+            "value" : "Buka klien dan catatan kamu."
           }
         },
         "it" : {
@@ -108008,7 +108008,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Paket Anda"
+            "value" : "Paket kamu"
           }
         },
         "it" : {
@@ -108032,7 +108032,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Planın"
+            "value" : "Planınız"
           }
         }
       }
@@ -108368,7 +108368,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Simpan kunci pemulihan Anda"
+            "value" : "Simpan kunci pemulihan kamu"
           }
         },
         "it" : {
@@ -110090,7 +110090,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda tetap di iPhone ini dan di iCloud Anda."
+            "value" : "Catatan kamu tetap di iPhone ini dan di iCloud kamu."
           }
         },
         "it" : {
@@ -111080,7 +111080,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca klien dan layanan Anda. Pastikan iPhone tidak terkunci."
+            "value" : "Kami tidak dapat membaca klien dan layanan kamu. Pastikan iPhone tidak terkunci."
           }
         },
         "it" : {
@@ -112880,7 +112880,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sisa sebelum batas Anda: %lld."
+            "value" : "Sisa sebelum batas kamu: %lld."
           }
         },
         "it" : {
@@ -113336,7 +113336,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ mencapai batas Anda. Mulai sekarang, pemesanan online memerlukan persetujuan Anda."
+            "value" : "%@ mencapai batas kamu. Mulai sekarang, pemesanan online memerlukan persetujuan kamu."
           }
         },
         "it" : {
@@ -113426,7 +113426,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ mencapai batas Anda. Mulai sekarang, pemesanan online dijeda."
+            "value" : "%@ mencapai batas kamu. Mulai sekarang, pemesanan online dijeda."
           }
         },
         "it" : {
@@ -113516,7 +113516,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ mencapai batas Anda."
+            "value" : "%@ mencapai batas kamu."
           }
         },
         "it" : {
@@ -114146,7 +114146,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya Anda yang melihat ini. Klien tahu aturan Anda dari halaman pemesanan dan dapat meminta Anda meninjaunya."
+            "value" : "Hanya kamu yang melihat ini. Klien tahu aturan kamu dari halaman pemesanan dan dapat meminta kamu meninjaunya."
           }
         },
         "it" : {
@@ -115496,7 +115496,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak dihitung oleh aturan Anda"
+            "value" : "Tidak dihitung oleh aturan kamu"
           }
         },
         "it" : {
@@ -116216,7 +116216,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dihitung ke batas aturan Anda."
+            "value" : "Dihitung ke batas aturan kamu."
           }
         },
         "it" : {
@@ -116576,7 +116576,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di WhatsApp, setelah Anda menyimpan. Anda membacanya dulu."
+            "value" : "Di WhatsApp, setelah kamu menyimpan. Kamu membacanya dulu."
           }
         },
         "it" : {
@@ -117116,7 +117116,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien dapat meminta waktu. Anda mengonfirmasi atau menolak."
+            "value" : "Klien dapat meminta waktu. Kamu mengonfirmasi atau menolak."
           }
         },
         "it" : {
@@ -117296,7 +117296,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien melihat pesan yang ramah lalu menghubungi Anda. Anda tetap bisa memesankan sendiri untuk mereka."
+            "value" : "Klien melihat pesan yang ramah lalu menghubungi kamu. Kamu tetap bisa memesankan sendiri untuk mereka."
           }
         },
         "it" : {
@@ -117566,7 +117566,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda mendapat peringatan. Pemesanan online tetap terbuka."
+            "value" : "Kamu mendapat peringatan. Pemesanan online tetap terbuka."
           }
         },
         "it" : {
@@ -118376,7 +118376,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perubahan tersimpan otomatis. Hitungan tetap di iPhone dan iCloud Anda. Hanya klien Anda sendiri yang dihitung: tidak ada yang dibagikan kepada profesional lain."
+            "value" : "Perubahan tersimpan otomatis. Hitungan tetap di iPhone dan iCloud kamu. Hanya klien kamu sendiri yang dihitung: tidak ada yang dibagikan kepada profesional lain."
           }
         },
         "it" : {
@@ -118736,7 +118736,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menghitung janji temu yang terlewat dan bertindak saat klien mencapai batas Anda."
+            "value" : "Menghitung janji temu yang terlewat dan bertindak saat klien mencapai batas kamu."
           }
         },
         "it" : {
@@ -118916,7 +118916,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ubah pesan yang Anda kirim"
+            "value" : "Ubah pesan yang kamu kirim"
           }
         },
         "it" : {
@@ -119096,7 +119096,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perlindungan mati. Siapa pun dapat memesan online. Janji temu yang terlewat tetap dicatat di profil setiap klien, jadi Anda dapat mengaktifkannya nanti dan melihat riwayatnya."
+            "value" : "Perlindungan mati. Siapa pun dapat memesan online. Janji temu yang terlewat tetap dicatat di profil setiap klien, jadi kamu dapat mengaktifkannya nanti dan melihat riwayatnya."
           }
         },
         "it" : {
@@ -119642,7 +119642,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditampilkan di halaman pemesanan Anda, di bawah kebijakan pembatalan."
+            "value" : "Ditampilkan di halaman pemesanan kamu, di bawah kebijakan pembatalan."
           }
         },
         "it" : {
@@ -119822,7 +119822,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bantu klien agar datang, atau memberi tahu Anda tepat waktu."
+            "value" : "Bantu klien agar datang, atau memberi tahu kamu tepat waktu."
           }
         },
         "it" : {
@@ -120026,7 +120026,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kimin olduğunu görmek ve tebrik göndermek için Bello Hub'ı aç."
+            "value" : "Kimin olduğunu görmek ve tebrik göndermek için Bello Hub’ı açın."
           }
         }
       }
@@ -120482,7 +120482,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Günün"
+            "value" : "Gününüz"
           }
         }
       }
@@ -120572,7 +120572,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Neleri hazırlayacağını görmek için Bello Hub'ı aç."
+            "value" : "Neleri hazırlayacağınızı görmek için Bello Hub’ı açın."
           }
         }
       }
@@ -120662,7 +120662,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sıradaki randevun birazdan başlıyor"
+            "value" : "Sıradaki randevunuz birazdan başlıyor"
           }
         }
       }
@@ -121208,7 +121208,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tebrik göndermen için bir gün önce hatırlatma"
+            "value" : "Tebrik göndermeniz için bir gün önce hatırlatma"
           }
         }
       }
@@ -121724,7 +121724,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hari Anda sekilas"
+            "value" : "Hari kamu sekilas"
           }
         },
         "it" : {
@@ -121748,7 +121748,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir bakışta günün"
+            "value" : "Gününüze bir bakış"
           }
         }
       }
@@ -121838,7 +121838,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu değişiklik kaydedilemedi. Tekrar dene."
+            "value" : "Bu değişiklik kaydedilemedi. Tekrar deneyin."
           }
         }
       }
@@ -121994,7 +121994,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien yang siap mendengar kabar Anda"
+            "value" : "Klien yang siap mendengar kabar kamu"
           }
         },
         "it" : {
@@ -122018,7 +122018,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Senden haber bekleyen müşteriler"
+            "value" : "Sizden haber bekleyen müşteriler"
           }
         }
       }
@@ -122174,7 +122174,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Saat seseorang memesan dengan Anda"
+            "value" : "Saat seseorang memesan dengan kamu"
           }
         },
         "it" : {
@@ -122198,7 +122198,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Biri senden randevu aldığında"
+            "value" : "Biri sizden randevu aldığında"
           }
         }
       }
@@ -122354,7 +122354,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iPhone Anda bertanya sekali. Anda bisa mengubahnya nanti di Pengaturan."
+            "value" : "iPhone kamu bertanya sekali. Kamu bisa mengubahnya nanti di Pengaturan."
           }
         },
         "it" : {
@@ -122378,7 +122378,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iPhone’un bir kez sorar. Daha sonra Ayarlar’dan değiştirebilirsin."
+            "value" : "iPhone’unuz bir kez sorar. Daha sonra Ayarlar’dan değiştirebilirsiniz."
           }
         }
       }
@@ -122558,7 +122558,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Randevular ve müşteriler hakkında uyarı almak için Ayarlar’dan aç."
+            "value" : "Randevular ve müşteriler hakkında uyarı almak için Ayarlar’dan açın."
           }
         }
       }
@@ -123704,7 +123704,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk klien Anda"
+            "value" : "Untuk klien kamu"
           }
         },
         "it" : {
@@ -123728,7 +123728,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerin için"
+            "value" : "Müşterileriniz için"
           }
         }
       }
@@ -123794,7 +123794,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk Anda"
+            "value" : "Untuk kamu"
           }
         },
         "it" : {
@@ -123818,7 +123818,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Senin için"
+            "value" : "Sizin için"
           }
         }
       }
@@ -123974,7 +123974,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih apa yang sampai ke Anda, dan apa yang sampai ke klien Anda."
+            "value" : "Pilih apa yang sampai ke kamu, dan apa yang sampai ke klien kamu."
           }
         },
         "it" : {
@@ -123998,7 +123998,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sana ve müşterilerine neyin ulaşacağını seç."
+            "value" : "Size ve müşterilerinize neyin ulaşacağını seçin."
           }
         }
       }
@@ -124334,7 +124334,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Nama Anda"
+            "value" : "Nama kamu"
           }
         },
         "it" : {
@@ -124604,7 +124604,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di mana Anda bekerja?"
+            "value" : "Di mana kamu bekerja?"
           }
         },
         "it" : {
@@ -124694,7 +124694,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini menentukan mata uang dan zona waktu Anda. Anda dapat mengubahnya nanti."
+            "value" : "Ini menentukan mata uang dan zona waktu kamu. Kamu dapat mengubahnya nanti."
           }
         },
         "it" : {
@@ -124784,7 +124784,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beginilah nama Anda tampil di aplikasi dan halaman pemesanan Anda."
+            "value" : "Beginilah nama kamu tampil di aplikasi dan halaman pemesanan kamu."
           }
         },
         "it" : {
@@ -124874,7 +124874,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami panggil Anda apa?"
+            "value" : "Kami panggil kamu apa?"
           }
         },
         "it" : {
@@ -125414,7 +125414,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ambil foto sebelum dan sesudah di dalam Bello Hub. Foto tidak pernah disimpan ke galeri ponsel Anda."
+            "value" : "Ambil foto sebelum dan sesudah di dalam Bello Hub. Foto tidak pernah disimpan ke galeri ponsel kamu."
           }
         },
         "it" : {
@@ -125684,7 +125684,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih kontak untuk diimpor. Kami hanya membaca yang Anda pilih."
+            "value" : "Pilih kontak untuk diimpor. Kami hanya membaca yang kamu pilih."
           }
         },
         "it" : {
@@ -125774,7 +125774,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bawa klien Anda."
+            "value" : "Bawa klien kamu."
           }
         },
         "it" : {
@@ -125864,7 +125864,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda dapat mengubah semuanya nanti di Privasi dan keamanan."
+            "value" : "Kamu dapat mengubah semuanya nanti di Privasi dan keamanan."
           }
         },
         "it" : {
@@ -126134,7 +126134,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub hanya mendengarkan saat Anda merekam perawatan, lalu mengatur apa yang Anda katakan. Anda meninjau semuanya sebelum disimpan."
+            "value" : "Bello Hub hanya mendengarkan saat kamu merekam perawatan, lalu mengatur apa yang kamu katakan. Kamu meninjau semuanya sebelum disimpan."
           }
         },
         "it" : {
@@ -126494,7 +126494,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pemesanan baru, pembatalan, dan check-in klien. Nama tetap tersembunyi di layar kunci jika Anda mau."
+            "value" : "Pemesanan baru, pembatalan, dan check-in klien. Nama tetap tersembunyi di layar kunci jika kamu mau."
           }
         },
         "it" : {
@@ -126584,7 +126584,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tahu saat ada yang membutuhkan Anda."
+            "value" : "Tahu saat ada yang membutuhkan kamu."
           }
         },
         "it" : {
@@ -126674,7 +126674,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih semua yang sesuai. Bello Hub menyesuaikan dengan cara kerja Anda."
+            "value" : "Pilih semua yang sesuai. Bello Hub menyesuaikan dengan cara kerja kamu."
           }
         },
         "it" : {
@@ -126764,7 +126764,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apa pekerjaan Anda?"
+            "value" : "Apa pekerjaan kamu?"
           }
         },
         "it" : {
@@ -127124,7 +127124,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tautan pemesanan Anda"
+            "value" : "Tautan pemesanan kamu"
           }
         },
         "it" : {
@@ -127214,7 +127214,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Siap setelah Anda online"
+            "value" : "Siap setelah kamu online"
           }
         },
         "it" : {
@@ -127304,7 +127304,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ruang kerja Anda tidak dapat disimpan. Pastikan iPhone Anda punya ruang lalu coba lagi."
+            "value" : "Ruang kerja kamu tidak dapat disimpan. Pastikan iPhone kamu punya ruang lalu coba lagi."
           }
         },
         "it" : {
@@ -127394,7 +127394,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@, ruang kerja Anda sudah siap untuk %2$@. Akan terisi seiring klien memesan."
+            "value" : "%1$@, ruang kerja kamu sudah siap untuk %2$@. Akan terisi seiring klien memesan."
           }
         },
         "it" : {
@@ -127484,7 +127484,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub Anda siap."
+            "value" : "Bello Hub kamu siap."
           }
         },
         "it" : {
@@ -127754,7 +127754,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda hanya melihat kolom ini saat mencatat perawatan. Catatan suara mengisinya untuk Anda."
+            "value" : "Kamu hanya melihat kolom ini saat mencatat perawatan. Catatan suara mengisinya untuk kamu."
           }
         },
         "it" : {
@@ -128024,7 +128024,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dicatat sudah atau belum ditandatangani; kertasnya ditandatangani bersama Anda"
+            "value" : "Dicatat sudah atau belum ditandatangani; kertasnya ditandatangani bersama kamu"
           }
         },
         "it" : {
@@ -128474,7 +128474,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan Anda disusun sesuai keahlian Anda. Aktifkan hanya yang Anda pakai."
+            "value" : "Catatan kamu disusun sesuai keahlian kamu. Aktifkan hanya yang kamu pakai."
           }
         },
         "it" : {
@@ -128564,7 +128564,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apa yang ingin Anda ingat tentang setiap %@?"
+            "value" : "Apa yang ingin kamu ingat tentang setiap %@?"
           }
         },
         "it" : {
@@ -130094,7 +130094,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apa yang Anda tawarkan?"
+            "value" : "Apa yang kamu tawarkan?"
           }
         },
         "it" : {
@@ -130184,7 +130184,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Layanan Anda"
+            "value" : "Layanan kamu"
           }
         },
         "it" : {
@@ -130544,7 +130544,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Periksa ponsel Anda."
+            "value" : "Periksa ponsel kamu."
           }
         },
         "it" : {
@@ -130724,7 +130724,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buat ruang kerja Anda"
+            "value" : "Buat ruang kerja kamu"
           }
         },
         "it" : {
@@ -130814,7 +130814,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami memakai nomor telepon Anda untuk menjaga akun tetap aman. Informasi klien Anda tetap di iPhone Anda."
+            "value" : "Kami memakai nomor telepon kamu untuk menjaga akun tetap aman. Informasi klien kamu tetap di iPhone kamu."
           }
         },
         "it" : {
@@ -130904,7 +130904,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buat ruang kerja Anda."
+            "value" : "Buat ruang kerja kamu."
           }
         },
         "it" : {
@@ -131174,7 +131174,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada koneksi. Periksa internet Anda lalu coba lagi."
+            "value" : "Tidak ada koneksi. Periksa internet kamu lalu coba lagi."
           }
         },
         "it" : {
@@ -132164,7 +132164,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Masuk untuk melihat hari Anda dan klien Anda."
+            "value" : "Masuk untuk melihat hari kamu dan klien kamu."
           }
         },
         "it" : {
@@ -132524,7 +132524,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Label bersifat privat. Klien Anda tidak pernah melihatnya."
+            "value" : "Label bersifat privat. Klien kamu tidak pernah melihatnya."
           }
         },
         "it" : {
@@ -132974,7 +132974,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Label memudahkan mencari klien dan mengingatkan hal penting. Pilih beberapa, tambahkan milik Anda kapan saja."
+            "value" : "Label memudahkan mencari klien dan mengingatkan hal penting. Pilih beberapa, tambahkan milik kamu kapan saja."
           }
         },
         "it" : {
@@ -133064,7 +133064,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beri label sesuai cara Anda berpikir."
+            "value" : "Beri label sesuai cara kamu berpikir."
           }
         },
         "it" : {
@@ -133154,7 +133154,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambah nama yang Anda pakai"
+            "value" : "Tambah nama yang kamu pakai"
           }
         },
         "it" : {
@@ -133874,7 +133874,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub mempelajari nama yang Anda pakai untuk layanan dan protokol, sehingga catatan suara dan rekaman terdengar seperti Anda."
+            "value" : "Bello Hub mempelajari nama yang kamu pakai untuk layanan dan protokol, sehingga catatan suara dan rekaman terdengar seperti kamu."
           }
         },
         "it" : {
@@ -133964,7 +133964,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beri nama layanan dan protokol Anda sesuai cara Anda menyebutnya. Namanya tampil persis begitu di mana-mana."
+            "value" : "Beri nama layanan dan protokol kamu sesuai cara kamu menyebutnya. Namanya tampil persis begitu di mana-mana."
           }
         },
         "it" : {
@@ -134054,7 +134054,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apa sebutan Anda untuk orang yang Anda layani?"
+            "value" : "Apa sebutan kamu untuk orang yang kamu layani?"
           }
         },
         "it" : {
@@ -134144,7 +134144,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pakai bahasa yang sudah Anda pakai."
+            "value" : "Pakai bahasa yang sudah kamu pakai."
           }
         },
         "it" : {
@@ -134414,7 +134414,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diingat, supaya Anda tak perlu"
+            "value" : "Diingat, supaya kamu tak perlu"
           }
         },
         "it" : {
@@ -135044,7 +135044,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Semua yang Anda perlukan untuk mengelola bisnis kecantikan dan mengingat setiap klien."
+            "value" : "Semua yang kamu perlukan untuk mengelola bisnis kecantikan dan mengingat setiap klien."
           }
         },
         "it" : {
@@ -136598,7 +136598,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "App Store planları şu anda gösteremedi. Bağlantını kontrol edip tekrar dene."
+            "value" : "App Store planları şu anda gösteremedi. Bağlantınızı kontrol edip tekrar deneyin."
           }
         }
       }
@@ -136958,7 +136958,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sesle girişli tedavi kayıtları"
+            "value" : "Sesle girilebilen uygulama kayıtları"
           }
         }
       }
@@ -137114,7 +137114,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ditagih oleh Apple. Batalkan kapan saja di langganan App Store Anda. Harga ditampilkan dalam mata uang toko Anda."
+            "value" : "Ditagih oleh Apple. Batalkan kapan saja di langganan App Store kamu. Harga ditampilkan dalam mata uang toko kamu."
           }
         },
         "it" : {
@@ -137138,7 +137138,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Apple tarafından faturalandırılır. App Store aboneliklerinden istediğin zaman iptal et. Fiyatlar mağazanın para birimindedir."
+            "value" : "Apple tarafından faturalandırılır. App Store aboneliklerinizden istediğiniz zaman iptal edebilirsiniz. Fiyatlar mağazanızın para birimindedir."
           }
         }
       }
@@ -137408,7 +137408,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "App Store bunu tamamlayamadı. Birazdan tekrar dene."
+            "value" : "App Store bunu tamamlayamadı. Birazdan tekrar deneyin."
           }
         }
       }
@@ -137564,7 +137564,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menunggu persetujuan. Paket Anda dimulai setelah disetujui."
+            "value" : "Menunggu persetujuan. Paket kamu dimulai setelah disetujui."
           }
         },
         "it" : {
@@ -137588,7 +137588,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Onay bekleniyor. Planın onaylandığında başlar."
+            "value" : "Onay bekleniyor. Planınız onaylandığında başlar."
           }
         }
       }
@@ -137654,7 +137654,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda kini di Bello Hub Pro. Terima kasih."
+            "value" : "Kamu kini di Bello Hub Pro. Terima kasih."
           }
         },
         "it" : {
@@ -137678,7 +137678,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Artık Bello Hub Pro’dasın. Teşekkürler."
+            "value" : "Artık Bello Hub Pro kullanıyorsunuz. Teşekkürler."
           }
         }
       }
@@ -137744,7 +137744,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Paket Anda kembali di iPhone ini."
+            "value" : "Paket kamu kembali di iPhone ini."
           }
         },
         "it" : {
@@ -137768,7 +137768,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Planın bu iPhone’a geri geldi."
+            "value" : "Planınız bu iPhone’a geri geldi."
           }
         }
       }
@@ -138398,7 +138398,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ödeme şeklini seç"
+            "value" : "Ödeme şeklini seçin"
           }
         }
       }
@@ -138644,7 +138644,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Memeriksa paket Anda"
+            "value" : "Memeriksa paket kamu"
           }
         },
         "it" : {
@@ -138668,7 +138668,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Planın kontrol ediliyor"
+            "value" : "Planınız kontrol ediliyor"
           }
         }
       }
@@ -139004,7 +139004,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Paket Anda masih berjalan. Perbarui metode pembayaran di App Store untuk mempertahankannya."
+            "value" : "Paket kamu masih berjalan. Perbarui metode pembayaran di App Store untuk mempertahankannya."
           }
         },
         "it" : {
@@ -139028,7 +139028,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Planın hâlâ çalışıyor. Korumak için App Store’da ödeme yöntemini güncelle."
+            "value" : "Planınız hâlâ çalışıyor. Devam etmesi için App Store’da ödeme yönteminizi güncelleyin."
           }
         }
       }
@@ -139184,7 +139184,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "10 pendaftaran klien pertama Anda gratis. Paket menghapus batas itu."
+            "value" : "10 pendaftaran klien pertama kamu gratis. Paket menghapus batas itu."
           }
         },
         "it" : {
@@ -139208,7 +139208,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İlk 10 müşteri kaydın ücretsiz. Bir plan bu sınırı kaldırır."
+            "value" : "İlk 10 müşteri kaydınız ücretsiz. Bir plan bu sınırı kaldırır."
           }
         }
       }
@@ -139364,7 +139364,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini langganan Bello Hub Anda. Terpisah dari apa pun yang Anda tagihkan ke klien."
+            "value" : "Ini langganan Bello Hub kamu. Terpisah dari apa pun yang kamu tagihkan ke klien."
           }
         },
         "it" : {
@@ -139388,7 +139388,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu senin Bello Hub aboneliğin. Müşterilerinden aldığın ücretlerden bağımsızdır."
+            "value" : "Bu, Bello Hub aboneliğinizdir. Müşterilerinizden aldığınız ücretlerden bağımsızdır."
           }
         }
       }
@@ -139454,7 +139454,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Paket Anda"
+            "value" : "Paket kamu"
           }
         },
         "it" : {
@@ -139478,7 +139478,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Planın"
+            "value" : "Planınız"
           }
         }
       }
@@ -143534,7 +143534,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien dapat meminta salinan atau penghapusan datanya kapan saja. Anda yang memutuskan siapa yang ada di catatannya."
+            "value" : "Klien dapat meminta salinan atau penghapusan datanya kapan saja. Kamu yang memutuskan siapa yang ada di catatannya."
           }
         },
         "it" : {
@@ -143558,7 +143558,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşteriler istedikleri zaman verilerinin bir kopyasını veya silinmesini isteyebilir. Kayıtlarında kimin olduğuna sen karar verirsin."
+            "value" : "Müşteriler istedikleri zaman verilerinin bir kopyasını veya silinmesini isteyebilir. Kayıtlarda kimin olduğuna siz karar verirsiniz."
           }
         }
       }
@@ -144548,7 +144548,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Uygulamayı açarken iPhone parolanı iste"
+            "value" : "Uygulamayı açarken iPhone parolanızı iste"
           }
         }
       }
@@ -145448,7 +145448,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Profilinden, Düzenle altında"
+            "value" : "Profilinden, Düzenle bölümünde"
           }
         }
       }
@@ -145628,7 +145628,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Asla film rulona kaydedilmez"
+            "value" : "Asla film rulonuza kaydedilmez"
           }
         }
       }
@@ -145808,7 +145808,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Henüz kaydedilmedi. Bugün yap."
+            "value" : "Henüz kaydedilmedi. Bugün kaydedin."
           }
         }
       }
@@ -146054,7 +146054,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sampai Anda atau klien meminta penghapusan"
+            "value" : "Sampai kamu atau klien meminta penghapusan"
           }
         },
         "it" : {
@@ -146078,7 +146078,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sen veya müşteri silinmesini isteyene kadar"
+            "value" : "Siz veya müşteri silinmesini isteyene kadar"
           }
         }
       }
@@ -146504,7 +146504,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di mana data Anda berada"
+            "value" : "Di mana data kamu berada"
           }
         },
         "it" : {
@@ -146528,7 +146528,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Verilerin nerede"
+            "value" : "Verileriniz nerede"
           }
         }
       }
@@ -146594,7 +146594,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Data klien bersifat sensitif. Pengaturan ini menjaganya tetap milik Anda."
+            "value" : "Data klien bersifat sensitif. Pengaturan ini menjaganya tetap milik kamu."
           }
         },
         "it" : {
@@ -146618,7 +146618,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşteri verileri hassastır. Bu ayarlar onları sende tutar."
+            "value" : "Müşteri verileri hassastır. Bu ayarlar onları sizde tutar."
           }
         }
       }
@@ -146864,7 +146864,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada analitik atau iklan yang membaca data klien Anda"
+            "value" : "Tidak ada analitik atau iklan yang membaca data klien kamu"
           }
         },
         "it" : {
@@ -146888,7 +146888,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hiçbir analiz veya reklam aracı müşterilerinin verilerini okumaz"
+            "value" : "Hiçbir analiz veya reklam aracı müşterilerinizin verilerini okumaz"
           }
         }
       }
@@ -146954,7 +146954,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Di iCloud Anda"
+            "value" : "Di iCloud kamu"
           }
         },
         "it" : {
@@ -146978,7 +146978,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "iCloud’unda"
+            "value" : "iCloud’unuzda"
           }
         }
       }
@@ -147044,7 +147044,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Salinan pribadi, disegel agar hanya Anda yang bisa membacanya"
+            "value" : "Salinan pribadi, disegel agar hanya kamu yang bisa membacanya"
           }
         },
         "it" : {
@@ -147068,7 +147068,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yalnızca senin okuyabileceğin, mühürlü özel bir kopya"
+            "value" : "Yalnızca sizin okuyabileceğiniz, mühürlü özel bir kopya"
           }
         }
       }
@@ -147404,7 +147404,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya pemesanan: nama, telepon, hari, dan jam. Jawaban kesehatan tiba tersegel dan dihapus begitu iPhone Anda menerimanya"
+            "value" : "Hanya pemesanan: nama, telepon, hari, dan jam. Jawaban kesehatan tiba tersegel dan dihapus begitu iPhone kamu menerimanya"
           }
         },
         "it" : {
@@ -147428,7 +147428,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yalnızca randevular: ad, telefon, gün ve saat. Sağlık yanıtları mühürlü gelir ve iPhone’un aldığında silinir"
+            "value" : "Yalnızca randevular: ad, telefon, gün ve saat. Sağlık yanıtları mühürlü gelir ve iPhone’unuz aldığında silinir"
           }
         }
       }
@@ -147944,7 +147944,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hanya Anda yang melihat produk ini. Ketuk untuk membagikannya ke klien."
+            "value" : "Hanya kamu yang melihat produk ini. Ketuk untuk membagikannya ke klien."
           }
         },
         "it" : {
@@ -149834,7 +149834,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambahkan yang Anda pakai dan rekomendasikan. Masing-masing tetap pribadi sampai Anda membagikannya."
+            "value" : "Tambahkan yang kamu pakai dan rekomendasikan. Masing-masing tetap pribadi sampai kamu membagikannya."
           }
         },
         "it" : {
@@ -150014,7 +150014,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca produk Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca produk kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -150104,7 +150104,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah punya produk ini dari merek yang sama."
+            "value" : "Kamu sudah punya produk ini dari merek yang sama."
           }
         },
         "it" : {
@@ -150194,7 +150194,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -150284,7 +150284,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Produk yang dibagikan muncul di tampilan klien sendiri. Yang pribadi hanya muncul di catatan Anda."
+            "value" : "Produk yang dibagikan muncul di tampilan klien sendiri. Yang pribadi hanya muncul di catatan kamu."
           }
         },
         "it" : {
@@ -150644,7 +150644,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yang Anda pakai dan rekomendasikan. Pilih mana yang boleh dilihat klien."
+            "value" : "Yang kamu pakai dan rekomendasikan. Pilih mana yang boleh dilihat klien."
           }
         },
         "it" : {
@@ -151184,7 +151184,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Buka kunci Bello Hub untuk menerbitkan halaman Anda."
+            "value" : "Buka kunci Bello Hub untuk menerbitkan halaman kamu."
           }
         },
         "it" : {
@@ -151274,7 +151274,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih alamat Anda terlebih dahulu."
+            "value" : "Pilih alamat kamu terlebih dahulu."
           }
         },
         "it" : {
@@ -151364,7 +151364,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambahkan minimal satu layanan aktif agar halaman Anda bisa online."
+            "value" : "Tambahkan minimal satu layanan aktif agar halaman kamu bisa online."
           }
         },
         "it" : {
@@ -151454,7 +151454,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada koneksi. Halaman Anda belum online. Coba lagi saat Anda terhubung."
+            "value" : "Tidak ada koneksi. Halaman kamu belum online. Coba lagi saat kamu terhubung."
           }
         },
         "it" : {
@@ -151544,7 +151544,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada koneksi. Halaman Anda online, tetapi perubahan terbaru belum ada di sana. Kami akan mengirimnya saat Anda terhubung."
+            "value" : "Tidak ada koneksi. Halaman kamu online, tetapi perubahan terbaru belum ada di sana. Kami akan mengirimnya saat kamu terhubung."
           }
         },
         "it" : {
@@ -151634,7 +151634,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Halaman Anda tidak dapat diterbitkan. Periksa data Anda dan coba lagi."
+            "value" : "Halaman kamu tidak dapat diterbitkan. Periksa data kamu dan coba lagi."
           }
         },
         "it" : {
@@ -151724,7 +151724,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Masuk lagi untuk menerbitkan halaman Anda."
+            "value" : "Masuk lagi untuk menerbitkan halaman kamu."
           }
         },
         "it" : {
@@ -152174,7 +152174,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Memperbarui halaman Anda…"
+            "value" : "Memperbarui halaman kamu…"
           }
         },
         "it" : {
@@ -152264,7 +152264,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Online, tetapi perubahan terbaru Anda belum ada di halaman."
+            "value" : "Online, tetapi perubahan terbaru kamu belum ada di halaman."
           }
         },
         "it" : {
@@ -152444,7 +152444,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien yang membuka tautan Anda akan melihat bahwa Anda tidak menerima pemesanan. Pemesanan yang sudah ada tetap berlaku."
+            "value" : "Klien yang membuka tautan kamu akan melihat bahwa kamu tidak menerima pemesanan. Pemesanan yang sudah ada tetap berlaku."
           }
         },
         "it" : {
@@ -152534,7 +152534,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Offline-kan halaman Anda?"
+            "value" : "Offline-kan halaman kamu?"
           }
         },
         "it" : {
@@ -152648,7 +152648,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir danışan sağlık formu gönderdi."
+            "value" : "Bir müşteri sağlık formu gönderdi."
           }
         }
       }
@@ -154064,7 +154064,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda selalu bisa menulisnya lagi."
+            "value" : "Kamu selalu bisa menulisnya lagi."
           }
         },
         "it" : {
@@ -155594,7 +155594,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca balasan cepat Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca balasan cepat kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -156134,7 +156134,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pesan siap pakai untuk WhatsApp. Anda selalu memeriksanya sebelum mengirim."
+            "value" : "Pesan siap pakai untuk WhatsApp. Kamu selalu memeriksanya sebelum mengirim."
           }
         },
         "it" : {
@@ -158384,7 +158384,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan ini masih terbuka, jadi perubahan Anda menggantikan teksnya. Setelah terkunci, perubahan dicatat sebagai koreksi."
+            "value" : "Catatan ini masih terbuka, jadi perubahan kamu menggantikan teksnya. Setelah terkunci, perubahan dicatat sebagai koreksi."
           }
         },
         "it" : {
@@ -158654,7 +158654,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Perawatan yang Anda catat untuk klien ini muncul di sini, lengkap dengan riwayat perubahannya."
+            "value" : "Perawatan yang kamu catat untuk klien ini muncul di sini, lengkap dengan riwayat perubahannya."
           }
         },
         "it" : {
@@ -160724,7 +160724,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foto bersifat pribadi. Hanya Anda yang melihatnya kecuali klien menyetujui berbagi."
+            "value" : "Foto bersifat pribadi. Hanya kamu yang melihatnya kecuali klien menyetujui berbagi."
           }
         },
         "it" : {
@@ -162074,7 +162074,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambah kolom Anda sendiri"
+            "value" : "Tambah kolom kamu sendiri"
           }
         },
         "it" : {
@@ -162254,7 +162254,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kolom catatan Anda akan muncul di sini setelah ruang kerja Anda siap."
+            "value" : "Kolom catatan kamu akan muncul di sini setelah ruang kerja kamu siap."
           }
         },
         "it" : {
@@ -162434,7 +162434,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca kolom catatan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca kolom catatan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -162524,7 +162524,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -163244,7 +163244,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah mencapai batas kolom sendiri untuk profesi ini."
+            "value" : "Kamu sudah mencapai batas kolom sendiri untuk profesi ini."
           }
         },
         "it" : {
@@ -163334,7 +163334,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mematikan kolom hanya menghentikan pertanyaannya. Yang sudah Anda simpan tetap ada."
+            "value" : "Mematikan kolom hanya menghentikan pertanyaannya. Yang sudah kamu simpan tetap ada."
           }
         },
         "it" : {
@@ -163424,7 +163424,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kolom Anda"
+            "value" : "Kolom kamu"
           }
         },
         "it" : {
@@ -163514,7 +163514,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hal yang ingin Anda ingat tentang setiap %@. Asisten suara mengisinya untuk Anda."
+            "value" : "Hal yang ingin kamu ingat tentang setiap %@. Asisten suara mengisinya untuk kamu."
           }
         },
         "it" : {
@@ -163964,7 +163964,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jika suatu saat Anda membuka Bello Hub di iPhone baru dan iCloud tidak dapat memulihkan catatan Anda, masukkan 12 kata ini. Anda bisa melihatnya lagi di sini kapan saja."
+            "value" : "Jika suatu saat kamu membuka Bello Hub di iPhone baru dan iCloud tidak dapat memulihkan catatan kamu, masukkan 12 kata ini. Kamu bisa melihatnya lagi di sini kapan saja."
           }
         },
         "it" : {
@@ -163988,7 +163988,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir gün Bello Hub’ı yeni bir iPhone’da açar ve iCloud kayıtlarını geri yükleyemezse bu 12 kelimeyi gir. Onları burada istediğin zaman yeniden görebilirsin."
+            "value" : "Bir gün Bello Hub’ı yeni bir iPhone’da açar ve iCloud kayıtlarınızı geri yükleyemezse bu 12 kelimeyi girin. Onları burada istediğiniz zaman yeniden görebilirsiniz."
           }
         }
       }
@@ -164054,7 +164054,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kunci Anda tersimpan."
+            "value" : "Kunci kamu tersimpan."
           }
         },
         "it" : {
@@ -164078,7 +164078,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anahtarın kaydedildi."
+            "value" : "Anahtarınız kaydedildi."
           }
         }
       }
@@ -164144,7 +164144,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pulihkan dulu dari 12 kata Anda di layar kunci."
+            "value" : "Pulihkan dulu dari 12 kata kamu di layar kunci."
           }
         },
         "it" : {
@@ -164168,7 +164168,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Önce kilit ekranında 12 kelimenden geri yükle."
+            "value" : "Önce kilit ekranında 12 kelimenizle geri yükleyin."
           }
         }
       }
@@ -164324,7 +164324,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Coba lagi, atau gunakan kode sandi Anda."
+            "value" : "Coba lagi, atau gunakan kode sandi kamu."
           }
         },
         "it" : {
@@ -164348,7 +164348,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tekrar dene ya da parolanı kullan."
+            "value" : "Tekrar deneyin ya da parolanızı kullanın."
           }
         }
       }
@@ -164594,7 +164594,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Simpan jauh dari iPhone Anda. Siapa pun yang memiliki kata-kata ini dapat membaca catatan Anda."
+            "value" : "Simpan jauh dari iPhone kamu. Siapa pun yang memiliki kata-kata ini dapat membaca catatan kamu."
           }
         },
         "it" : {
@@ -164618,7 +164618,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bunu iPhone’undan uzak tut. Bu kelimelere sahip olan herkes kayıtlarını okuyabilir."
+            "value" : "Bunu iPhone’unuzdan uzak tutun. Bu kelimelere sahip olan herkes kayıtlarınızı okuyabilir."
           }
         }
       }
@@ -164798,7 +164798,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kâğıdı güvenli bir yerde sakla"
+            "value" : "Kâğıdı güvenli bir yerde saklayın"
           }
         }
       }
@@ -164864,7 +164864,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tampilkan kunci pemulihan Anda."
+            "value" : "Tampilkan kunci pemulihan kamu."
           }
         },
         "it" : {
@@ -164888,7 +164888,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kurtarma anahtarını göster."
+            "value" : "Kurtarma anahtarınızı gösterin."
           }
         }
       }
@@ -165404,7 +165404,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Berkas teks yang hanya bisa Anda buka"
+            "value" : "Berkas teks yang hanya bisa kamu buka"
           }
         },
         "it" : {
@@ -165428,7 +165428,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yalnızca senin açabileceğin bir metin dosyası"
+            "value" : "Yalnızca sizin açabileceğiniz bir metin dosyası"
           }
         }
       }
@@ -165494,7 +165494,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan klien Anda disegel agar hanya Anda yang bisa membacanya. Kunci ini adalah jalan kembali jika Anda kehilangan iPhone dan Rantai Kunci iCloud."
+            "value" : "Catatan klien kamu disegel agar hanya kamu yang bisa membacanya. Kunci ini adalah jalan kembali jika kamu kehilangan iPhone dan Rantai Kunci iCloud."
           }
         },
         "it" : {
@@ -165518,7 +165518,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Müşterilerinin kayıtları yalnızca senin okuyabileceğin şekilde mühürlü. iPhone’unu ve iCloud Anahtar Zinciri’ni kaybedersen geri dönüş yolu bu anahtardır."
+            "value" : "Müşterilerinizin kayıtları yalnızca sizin okuyabileceğiniz şekilde mühürlüdür. iPhone’unuzu ve iCloud Anahtar Zinciri’ni kaybederseniz geri dönüş yolu bu anahtardır."
           }
         }
       }
@@ -165674,7 +165674,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub tidak pernah melihat kunci ini dan tidak bisa memulihkannya untuk Anda. Tanpanya, catatan yang disegel untuk Anda tetap tersegel. Simpan jauh dari iPhone Anda."
+            "value" : "Bello Hub tidak pernah melihat kunci ini dan tidak bisa memulihkannya untuk kamu. Tanpanya, catatan yang disegel untuk kamu tetap tersegel. Simpan jauh dari iPhone kamu."
           }
         },
         "it" : {
@@ -165698,7 +165698,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub bu anahtarı asla görmez ve senin için kurtaramaz. Onsuz, senin için mühürlenen kayıtlar mühürlü kalır. iPhone’undan uzakta sakla."
+            "value" : "Bello Hub bu anahtarı asla görmez ve sizin için kurtaramaz. Anahtar olmadan, sizin için mühürlenen kayıtlar mühürlü kalır. Anahtarı iPhone’unuzdan uzakta saklayın."
           }
         }
       }
@@ -165944,7 +165944,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tulis berurutan. Kata-kata ini disembunyikan lagi saat Anda meninggalkan layar ini."
+            "value" : "Tulis berurutan. Kata-kata ini disembunyikan lagi saat kamu meninggalkan layar ini."
           }
         },
         "it" : {
@@ -165968,7 +165968,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sırayla not al. Bu ekrandan çıkınca yeniden gizlenirler."
+            "value" : "Sırayla not alın. Bu ekrandan çıkınca yeniden gizlenirler."
           }
         }
       }
@@ -166034,7 +166034,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "12 kata Anda"
+            "value" : "12 kata kamu"
           }
         },
         "it" : {
@@ -166058,7 +166058,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "12 kelimen"
+            "value" : "12 kelimeniz"
           }
         }
       }
@@ -168110,7 +168110,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dipindahkan. Kalender Anda menampilkan waktu baru."
+            "value" : "Dipindahkan. Kalender kamu menampilkan waktu baru."
           }
         },
         "it" : {
@@ -168134,7 +168134,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Taşındı. Takvimin yeni saati gösteriyor."
+            "value" : "Taşındı. Takviminiz yeni saati gösteriyor."
           }
         }
       }
@@ -168494,7 +168494,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Önce başkası aldı. Randevu saatinde kalır; talebi reddet."
+            "value" : "Önce başkası aldı. Randevu saatinde kalır; talebi reddedin."
           }
         }
       }
@@ -168650,7 +168650,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ meminta memindahkan janji. Waktu saat ini tetap dipesan sampai Anda setuju."
+            "value" : "%@ meminta memindahkan janji. Waktu saat ini tetap dipesan sampai kamu setuju."
           }
         },
         "it" : {
@@ -168674,7 +168674,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%@ bir randevuyu değiştirmek istedi. Sen onaylayana kadar mevcut saat ayrılı kalır."
+            "value" : "%@ bir randevuyu değiştirmek istedi. Siz onaylayana kadar mevcut saat ayrılı kalır."
           }
         }
       }
@@ -168740,7 +168740,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aturan Anda: perubahan bebas hingga %@ sebelumnya, setelah itu klien mengirim permintaan."
+            "value" : "Aturan kamu: perubahan bebas hingga %@ sebelumnya, setelah itu klien mengirim permintaan."
           }
         },
         "it" : {
@@ -168764,7 +168764,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kuralın: %@ öncesine kadar serbest değişiklik, sonrasında danışan talep gönderir."
+            "value" : "Kuralınız: %@ öncesine kadar serbest değişiklik, sonrasında müşteri talep gönderir."
           }
         }
       }
@@ -169214,7 +169214,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu kelimeler geçerli bir anahtar oluşturmuyor. Sırayı kontrol et."
+            "value" : "Bu kelimeler geçerli bir anahtar oluşturmuyor. Sırayı kontrol edin."
           }
         }
       }
@@ -169304,7 +169304,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anahtar bu iPhone’a kaydedilemedi. Tekrar dene."
+            "value" : "Anahtar bu iPhone’a kaydedilemedi. Tekrar deneyin."
           }
         }
       }
@@ -169394,7 +169394,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%lld. kelime listede yok. Yazımını kontrol et."
+            "value" : "%lld. kelime listede yok. Yazımını kontrol edin."
           }
         }
       }
@@ -169460,7 +169460,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kunci terdiri dari 12 kata; Anda mengetik %lld."
+            "value" : "Kunci terdiri dari 12 kata; kamu mengetik %lld."
           }
         },
         "it" : {
@@ -169484,7 +169484,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir anahtarda 12 kelime vardır; sen %lld yazdın."
+            "value" : "Bir anahtarda 12 kelime vardır; siz %lld kelime yazdınız."
           }
         }
       }
@@ -169730,7 +169730,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ketik 12 kata kunci pemulihan Anda, berurutan, dipisahkan spasi."
+            "value" : "Ketik 12 kata kunci pemulihan kamu, berurutan, dipisahkan spasi."
           }
         },
         "it" : {
@@ -169754,7 +169754,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kurtarma anahtarının 12 kelimesini sırayla, boşlukla ayırarak yaz."
+            "value" : "Kurtarma anahtarınızın 12 kelimesini sırayla, boşlukla ayırarak yazın."
           }
         }
       }
@@ -169820,7 +169820,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pulihkan kunci Anda"
+            "value" : "Pulihkan kunci kamu"
           }
         },
         "it" : {
@@ -169844,7 +169844,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anahtarını geri yükle"
+            "value" : "Anahtarınızı geri yükleyin"
           }
         }
       }
@@ -170000,7 +170000,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "WhatsApp terbuka dengan pesan siap. Anda yang memutuskan untuk mengirim."
+            "value" : "WhatsApp terbuka dengan pesan siap. Kamu yang memutuskan untuk mengirim."
           }
         },
         "it" : {
@@ -170360,7 +170360,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beri tahu klien berikutnya sebelum mereka tiba. Kalender Anda tidak berubah."
+            "value" : "Beri tahu klien berikutnya sebelum mereka tiba. Kalender kamu tidak berubah."
           }
         },
         "it" : {
@@ -171530,7 +171530,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda menutupnya di kalender."
+            "value" : "Kamu menutupnya di kalender."
           }
         },
         "it" : {
@@ -171710,7 +171710,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Waktu itu adalah salah satu jeda Anda."
+            "value" : "Waktu itu adalah salah satu jeda kamu."
           }
         },
         "it" : {
@@ -171890,7 +171890,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda suka memberi jeda %@ di antara janji temu."
+            "value" : "Kamu suka memberi jeda %@ di antara janji temu."
           }
         },
         "it" : {
@@ -172250,7 +172250,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini di luar jam mingguan Anda."
+            "value" : "Ini di luar jam mingguan kamu."
           }
         },
         "it" : {
@@ -172340,7 +172340,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda tidak bekerja di hari ini."
+            "value" : "Kamu tidak bekerja di hari ini."
           }
         },
         "it" : {
@@ -172700,7 +172700,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini salah satu hari libur Anda."
+            "value" : "Ini salah satu hari libur kamu."
           }
         },
         "it" : {
@@ -172880,7 +172880,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda tetap bisa menjadwalkannya, misalnya kunjungan lampau."
+            "value" : "Kamu tetap bisa menjadwalkannya, misalnya kunjungan lampau."
           }
         },
         "it" : {
@@ -173240,7 +173240,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Berakhir setelah jam kerja Anda."
+            "value" : "Berakhir setelah jam kerja kamu."
           }
         },
         "it" : {
@@ -173330,7 +173330,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dimulai sebelum jam kerja Anda."
+            "value" : "Dimulai sebelum jam kerja kamu."
           }
         },
         "it" : {
@@ -173420,7 +173420,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jatuh di antara jam kerja Anda."
+            "value" : "Jatuh di antara jam kerja kamu."
           }
         },
         "it" : {
@@ -173510,7 +173510,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ini di luar jam kerja Anda."
+            "value" : "Ini di luar jam kerja kamu."
           }
         },
         "it" : {
@@ -174320,7 +174320,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tulis yang Anda bagikan setelah kunjungan"
+            "value" : "Tulis yang kamu bagikan setelah kunjungan"
           }
         },
         "it" : {
@@ -175676,7 +175676,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda melihat peringatan saat formulir kesehatan klien cocok. Pemesanan tidak pernah dihentikan."
+            "value" : "Kamu melihat peringatan saat formulir kesehatan klien cocok. Pemesanan tidak pernah dihentikan."
           }
         },
         "it" : {
@@ -175856,7 +175856,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Centang semua hal yang perlu memberi Anda peringatan saat layanan ini dipesan."
+            "value" : "Centang semua hal yang perlu memberi kamu peringatan saat layanan ini dipesan."
           }
         },
         "it" : {
@@ -176756,7 +176756,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Beri nama sesuka Anda"
+            "value" : "Beri nama sesuka kamu"
           }
         },
         "it" : {
@@ -177116,7 +177116,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Harga di halaman pemesanan Anda"
+            "value" : "Harga di halaman pemesanan kamu"
           }
         },
         "it" : {
@@ -177296,7 +177296,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tambahkan layanan Anda, lengkap dengan durasi, harga, dan tindak lanjut. Bisa diubah kapan saja."
+            "value" : "Tambahkan layanan kamu, lengkap dengan durasi, harga, dan tindak lanjut. Bisa diubah kapan saja."
           }
         },
         "it" : {
@@ -177476,7 +177476,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca layanan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca layanan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -177566,7 +177566,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah punya layanan dengan nama ini."
+            "value" : "Kamu sudah punya layanan dengan nama ini."
           }
         },
         "it" : {
@@ -177746,7 +177746,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -178106,7 +178106,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yang Anda pakai dan rekomendasikan"
+            "value" : "Yang kamu pakai dan rekomendasikan"
           }
         },
         "it" : {
@@ -179276,7 +179276,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Layanan Anda"
+            "value" : "Layanan kamu"
           }
         },
         "it" : {
@@ -179366,7 +179366,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Dengan nama yang Anda pakai. Masing-masing punya ritme tindak lanjut sendiri."
+            "value" : "Dengan nama yang kamu pakai. Masing-masing punya ritme tindak lanjut sendiri."
           }
         },
         "it" : {
@@ -179726,7 +179726,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien tidak pernah melihat waktu ini di durasi maupun harga. Agenda Anda tetap realistis."
+            "value" : "Klien tidak pernah melihat waktu ini di durasi maupun harga. Agenda kamu tetap realistis."
           }
         },
         "it" : {
@@ -180086,7 +180086,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda bebas saat proses berjalan, misalnya pewarna rambut. Klien lain bisa dilayani saat itu."
+            "value" : "Kamu bebas saat proses berjalan, misalnya pewarna rambut. Klien lain bisa dilayani saat itu."
           }
         },
         "it" : {
@@ -183146,7 +183146,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami belum bisa memeriksa alamat ini sekarang. Alamat akan diperiksa lagi saat halaman Anda online."
+            "value" : "Kami belum bisa memeriksa alamat ini sekarang. Alamat akan diperiksa lagi saat halaman kamu online."
           }
         },
         "it" : {
@@ -183776,7 +183776,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alamat Anda"
+            "value" : "Alamat kamu"
           }
         },
         "it" : {
@@ -184766,7 +184766,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Halaman Anda terbuka untuk klien setelah Anda online. Sebelum itu, tautan belum berfungsi."
+            "value" : "Halaman kamu terbuka untuk klien setelah kamu online. Sebelum itu, tautan belum berfungsi."
           }
         },
         "it" : {
@@ -184946,7 +184946,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Klien bisa membuka tautan ini dan memesan pada Anda."
+            "value" : "Klien bisa membuka tautan ini dan memesan pada kamu."
           }
         },
         "it" : {
@@ -185036,7 +185036,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Halaman Anda online"
+            "value" : "Halaman kamu online"
           }
         },
         "it" : {
@@ -185486,7 +185486,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Satu tautan untuk Instagram, WhatsApp, dan meja Anda."
+            "value" : "Satu tautan untuk Instagram, WhatsApp, dan meja kamu."
           }
         },
         "it" : {
@@ -185576,7 +185576,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bagikan tautan Anda"
+            "value" : "Bagikan tautan kamu"
           }
         },
         "it" : {
@@ -185936,7 +185936,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada yang terhapus. Tutup aplikasi lalu buka lagi. Jika terus terjadi, nyalakan ulang iPhone Anda."
+            "value" : "Tidak ada yang terhapus. Tutup aplikasi lalu buka lagi. Jika terus terjadi, nyalakan ulang iPhone kamu."
           }
         },
         "it" : {
@@ -186026,7 +186026,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membuka catatan Anda"
+            "value" : "Kami tidak dapat membuka catatan kamu"
           }
         },
         "it" : {
@@ -186701,7 +186701,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "needs_review",
-                  "value" : "%lld orang akan kehilangan label ini. Daftar Anda tetap seperti semula."
+                  "value" : "%lld orang akan kehilangan label ini. Daftar kamu tetap seperti semula."
                 }
               }
             }
@@ -186842,7 +186842,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tidak ada yang memakai label ini. Daftar Anda tetap seperti semula."
+            "value" : "Tidak ada yang memakai label ini. Daftar kamu tetap seperti semula."
           }
         },
         "it" : {
@@ -186932,7 +186932,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Orang yang memiliki label ini akan kehilangannya. Daftar Anda tetap seperti semula."
+            "value" : "Orang yang memiliki label ini akan kehilangannya. Daftar kamu tetap seperti semula."
           }
         },
         "it" : {
@@ -188102,7 +188102,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda sudah punya label dengan nama ini."
+            "value" : "Kamu sudah punya label dengan nama ini."
           }
         },
         "it" : {
@@ -188192,7 +188192,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca label Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi."
+            "value" : "Kami tidak dapat membaca label kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi."
           }
         },
         "it" : {
@@ -188282,7 +188282,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi."
+            "value" : "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi."
           }
         },
         "it" : {
@@ -189008,7 +189008,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Label Anda"
+            "value" : "Label kamu"
           }
         },
         "it" : {
@@ -189098,7 +189098,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Label singkat untuk membantu Anda mengingat siapa adalah siapa."
+            "value" : "Label singkat untuk membantu kamu mengingat siapa adalah siapa."
           }
         },
         "it" : {
@@ -189278,7 +189278,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anda pemiliknya dan selalu melihat semuanya. Setiap profesional punya kalender dan jam pemesanan sendiri."
+            "value" : "Kamu pemiliknya dan selalu melihat semuanya. Setiap profesional punya kalender dan jam pemesanan sendiri."
           }
         },
         "it" : {
@@ -189548,7 +189548,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Menambah satu langkah di halaman pemesanan Anda"
+            "value" : "Menambah satu langkah di halaman pemesanan kamu"
           }
         },
         "it" : {
@@ -190268,7 +190268,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hal yang bisa Anda tentukan"
+            "value" : "Hal yang bisa kamu tentukan"
           }
         },
         "it" : {
@@ -191462,7 +191462,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello’nun fotoğraf çekmek için kameraya ihtiyacı var. Ayarlar’dan izin verebilir ya da kitaplığından bir fotoğraf ekleyebilirsin."
+            "value" : "Bello’nun fotoğraf çekmek için kameraya ihtiyacı var. Ayarlar’dan izin verebilir ya da kitaplığınızdan bir fotoğraf ekleyebilirsiniz."
           }
         }
       }
@@ -192092,7 +192092,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yalnızca Bello’da saklanır, film rulosunda değil"
+            "value" : "Yalnızca Bello’da saklanır, film rulonuzda değil"
           }
         }
       }
@@ -192452,7 +192452,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu cihazda Bello’nun kullanabileceği bir kamera yok. Bunun yerine kitaplığından bir fotoğraf ekle."
+            "value" : "Bu cihazda Bello’nun kullanabileceği bir kamera yok. Bunun yerine kitaplığınızdan bir fotoğraf ekleyin."
           }
         }
       }
@@ -192902,7 +192902,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu ziyaret için yazdıkların veya söylediklerin henüz kaydedilmedi."
+            "value" : "Bu ziyaret için yazdıklarınız veya söyledikleriniz henüz kaydedilmedi."
           }
         }
       }
@@ -193082,7 +193082,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu kayıt açılamadı. Tekrar dene."
+            "value" : "Bu kayıt açılamadı. Tekrar deneyin."
           }
         }
       }
@@ -193172,7 +193172,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Söylediklerin düzenlenemedi. Düzenleyebileceğin notlar olarak saklandı."
+            "value" : "Söyledikleriniz düzenlenemedi. Düzenleyebileceğiniz notlar olarak saklandı."
           }
         }
       }
@@ -193262,7 +193262,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu görsel kullanılamadı. Başka birini dene."
+            "value" : "Bu görsel kullanılamadı. Başka birini deneyin."
           }
         }
       }
@@ -193352,7 +193352,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu kayıt kaydedilemedi. Hiçbir şey kaybolmadı: tekrar dene."
+            "value" : "Bu kayıt kaydedilemedi. Hiçbir şey kaybolmadı: tekrar deneyin."
           }
         }
       }
@@ -193622,7 +193622,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydetmeden önce bir şey yaz veya seç."
+            "value" : "Kaydetmeden önce bir şey yazın veya seçin."
           }
         }
       }
@@ -193712,7 +193712,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir sayı gir, örneğin 2,5."
+            "value" : "Bir sayı girin, örneğin 2,5."
           }
         }
       }
@@ -193802,7 +193802,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İşine uygun alanlar"
+            "value" : "İşinize uygun alanlar"
           }
         }
       }
@@ -193892,7 +193892,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Boş bıraktığın alan boş kalır. Hiçbir şey tahmin edilmez ya da senin yerine doldurulmaz."
+            "value" : "Boş bıraktığınız alan boş kalır. Hiçbir şey tahmin edilmez ya da sizin yerinize doldurulmaz."
           }
         }
       }
@@ -194612,7 +194612,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Konuşmaya başla. Sözlerin burada görünür."
+            "value" : "Konuşmaya başlayın. Sözleriniz burada görünür."
           }
         }
       }
@@ -194702,7 +194702,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Epey ayrıntı oldu. Hazır olduğunda “Konuşmayı bitirdim”e dokun."
+            "value" : "Epey ayrıntı oldu. Hazır olduğunuzda “Konuşmayı bitirdim”e dokunun."
           }
         }
       }
@@ -194882,7 +194882,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu kaydı 24 saat boyunca değiştirebilirsin. Sonra kilitlenir ve her düzeltme bir düzenleme geçmişinde görünür kalır."
+            "value" : "Bu kaydı 24 saat boyunca değiştirebilirsiniz. Sonra kilitlenir ve her düzeltme bir düzenleme geçmişinde görünür kalır."
           }
         }
       }
@@ -195512,7 +195512,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "%1$@ için varsayılanın %2$@."
+            "value" : "%1$@ için varsayılanınız %2$@."
           }
         }
       }
@@ -196232,7 +196232,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Söylediklerini kaydının alanlarına ayırıyorum. Hiçbir şey kaydedilmeden önce her birini kontrol edeceksin."
+            "value" : "Söylediklerinizi kaydınızın alanlarına ayırıyorum. Hiçbir şey kaydedilmeden önce her birini kontrol edeceksiniz."
           }
         }
       }
@@ -196322,7 +196322,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Her şey bu iPhone’da kalır. Sen incelemeden hiçbir şey kaydedilmez."
+            "value" : "Her şey bu iPhone’da kalır. Siz incelemeden hiçbir şey kaydedilmez."
           }
         }
       }
@@ -196412,7 +196412,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydın düzenleniyor"
+            "value" : "Kaydınız düzenleniyor"
           }
         }
       }
@@ -196502,7 +196502,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Söylediklerin yazıya döküldü"
+            "value" : "Söyledikleriniz yazıya döküldü"
           }
         }
       }
@@ -196862,7 +196862,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotoğraflar yalnızca sende kalır"
+            "value" : "Fotoğraflar yalnızca sizde kalır"
           }
         }
       }
@@ -197582,7 +197582,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Varsayılan olarak özel. Fotoğraflar müşteriye, tarihe ve bu ziyarete bağlı kalır; sen seçmedikçe asla tanıtımda kullanılmaz."
+            "value" : "Varsayılan olarak özel. Fotoğraflar müşteriye, tarihe ve bu ziyarete bağlı kalır; siz seçmedikçe asla tanıtımda kullanılmaz."
           }
         }
       }
@@ -198662,7 +198662,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Şöyle bir şey diyebilirsin"
+            "value" : "Şöyle bir şey diyebilirsiniz"
           }
         }
       }
@@ -198752,7 +198752,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ne yaptığını anlat"
+            "value" : "Ne yaptığınızı anlatın"
           }
         }
       }
@@ -198842,7 +198842,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tekrar deneyebilir ya da kendin yazabilirsin."
+            "value" : "Tekrar deneyebilir ya da kendiniz yazabilirsiniz."
           }
         }
       }
@@ -199112,7 +199112,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu ziyaretin kaydını yaz"
+            "value" : "Bu ziyaretin kaydını yazın"
           }
         }
       }
@@ -199202,7 +199202,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Yalnızca sana özel, bu iPhone’da."
+            "value" : "Yalnızca size özel, bu iPhone’da."
           }
         }
       }
@@ -199292,7 +199292,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello için mikrofon kapalı. Ayarlar’dan açabilir ya da formu doldurabilirsin: bu eksiksiz bir kayıt yoludur."
+            "value" : "Bello için mikrofon kapalı. Ayarlar’dan açabilir ya da formu doldurabilirsiniz: bu eksiksiz bir kayıt yoludur."
           }
         }
       }
@@ -199382,7 +199382,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ses henüz dilinde kullanılamıyor. Form, bu ziyareti kaydetmenin eksiksiz bir yoludur."
+            "value" : "Ses henüz dilinizde kullanılamıyor. Form, bu ziyareti kaydetmenin eksiksiz bir yoludur."
           }
         }
       }
@@ -199472,7 +199472,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sesle kayıt daha sonra geliyor. Form, bu ziyareti kaydetmenin eksiksiz bir yoludur ve yalnızca sana özeldir."
+            "value" : "Sesle kayıt daha sonra geliyor. Form, bu ziyareti kaydetmenin eksiksiz bir yoludur ve yalnızca size özeldir."
           }
         }
       }
@@ -199832,7 +199832,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mikrofona dokun ve ziyareti anlat. Kaydedilmeden önce her şeyi inceleyeceksin."
+            "value" : "Mikrofona dokunun ve ziyareti anlatın. Kaydedilmeden önce her şeyi inceleyeceksiniz."
           }
         }
       }
@@ -200822,7 +200822,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Her alanı tut, düzenle ya da çıkar. Hepsine karar vermeden hiçbir şey kaydedilmez."
+            "value" : "Her alanı tutun, düzenleyin ya da çıkarın. Hepsine karar vermeden hiçbir şey kaydedilmez."
           }
         }
       }
@@ -201182,7 +201182,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Her şeyi çıkardın. Kaydı kendin doldurabilir ya da geri dönebilirsin."
+            "value" : "Her şeyi çıkardınız. Kaydı kendiniz doldurabilir ya da geri dönebilirsiniz."
           }
         }
       }
@@ -201272,7 +201272,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kaydetmek için %lld alan daha için karar ver."
+            "value" : "Kaydetmek için %lld alan için daha karar verin."
           }
         }
       }
@@ -201362,7 +201362,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Duyduğum bazı şeyler alanlarına uymadı, bu yüzden dışarıda bıraktım."
+            "value" : "Duyduğum bazı şeyler alanlarınıza uymadı, bu yüzden dışarıda bıraktım."
           }
         }
       }
@@ -201902,7 +201902,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anladıklarımı kontrol et"
+            "value" : "Anladıklarımı kontrol edin"
           }
         }
       }
@@ -202712,7 +202712,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu kaydı 24 saat daha düzenleyebilirsin. Sonra kilitlenir ve düzeltmeler bir düzenleme geçmişinde kalır."
+            "value" : "Bu kaydı 24 saat daha düzenleyebilirsiniz. Sonra kilitlenir ve düzeltmeler bir düzenleme geçmişinde kalır."
           }
         }
       }
@@ -204062,7 +204062,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir gün dolunca danışanlar saat boşalırsa haber isteyebilir. Burada görünürler."
+            "value" : "Bir gün dolunca müşteriler, saat boşalırsa haber almak isteyebilir. Burada görünürler."
           }
         }
       }
@@ -205232,7 +205232,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bir saat boşaldı. İsteyenlere teklif et."
+            "value" : "Bir saat boşaldı. İsteyenlere teklif edin."
           }
         }
       }
@@ -205658,7 +205658,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kami tidak dapat membaca minggu Anda. Pastikan iPhone tidak terkunci lalu coba lagi."
+            "value" : "Kami tidak dapat membaca minggu kamu. Pastikan iPhone tidak terkunci lalu coba lagi."
           }
         },
         "it" : {
@@ -205748,7 +205748,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Slot kosong mengikuti ketersediaan Anda dan jeda di antara janji temu."
+            "value" : "Slot kosong mengikuti ketersediaan kamu dan jeda di antara janji temu."
           }
         },
         "it" : {

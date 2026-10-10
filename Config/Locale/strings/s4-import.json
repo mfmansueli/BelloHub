@@ -42,7 +42,7 @@
    "Emmenez vos %@ avec vous.",
    "Bring deine %@ mit.",
    "Yanınıza alın: %@.",
-   "Bawa %@ Anda ke sini.",
+   "Bawa %@ kamu ke sini.",
    "%@ को अपने साथ लाएँ।",
    "أحضر %@ معك."
   ],
@@ -170,7 +170,7 @@
    "Vos données sont dans Excel ou Numbers ? Exportez le fichier en CSV, puis choisissez-le ici.",
    "Deine Daten liegen in Excel oder Numbers? Exportiere die Datei als CSV und wähle sie hier aus.",
    "Verileriniz Excel veya Numbers'da mı? Dosyayı önce CSV olarak dışa aktarın, sonra buradan seçin.",
-   "Data Anda ada di Excel atau Numbers? Ekspor file sebagai CSV, lalu pilih di sini.",
+   "Data kamu ada di Excel atau Numbers? Ekspor file sebagai CSV, lalu pilih di sini.",
    "आपका डेटा Excel या Numbers में है? फ़ाइल को पहले CSV के रूप में एक्सपोर्ट करें, फिर यहाँ चुनें।",
    "بياناتك في Excel أو Numbers؟ صدّر الملف بصيغة CSV أولًا ثم اخترْه هنا."
   ],
@@ -186,7 +186,7 @@
    "Seuls les contacts que vous choisissez sont lus. Rien n'est conservé, sauf ce que vous importez.",
    "Es werden nur die Kontakte gelesen, die du auswählst. Gespeichert wird nur, was du importierst.",
    "Yalnızca seçtiğiniz kişiler okunur. İçe aktardıklarınız dışında hiçbir şey saklanmaz.",
-   "Hanya kontak yang Anda pilih yang dibaca. Tidak ada yang disimpan kecuali yang Anda impor.",
+   "Hanya kontak yang kamu pilih yang dibaca. Tidak ada yang disimpan kecuali yang kamu impor.",
    "सिर्फ़ वही कॉन्टैक्ट पढ़े जाते हैं जो आप चुनते हैं। इम्पोर्ट किए गए के अलावा कुछ भी सहेजा नहीं जाता।",
    "نقرأ فقط جهات الاتصال التي تختارها. لا يُحفظ شيء سوى ما تستورده."
   ],
@@ -346,7 +346,7 @@
    "Vérifiez que l'iPhone dispose d'espace libre, puis réessayez. Les personnes déjà enregistrées restent dans votre liste.",
    "Prüfe, ob auf dem iPhone Speicher frei ist, und versuche es erneut. Bereits Gespeichertes bleibt in deiner Liste.",
    "iPhone'unuzda boş yer olduğundan emin olun ve yeniden deneyin. Kaydedilmiş olanlar listenizde kalır.",
-   "Pastikan iPhone punya ruang kosong, lalu coba lagi. Yang sudah tersimpan tetap ada di daftar Anda.",
+   "Pastikan iPhone punya ruang kosong, lalu coba lagi. Yang sudah tersimpan tetap ada di daftar kamu.",
    "जाँचें कि iPhone में खाली जगह है, फिर दोबारा कोशिश करें। जो पहले सहेजे जा चुके हैं वे आपकी सूची में रहेंगे।",
    "تأكد من وجود مساحة فارغة على الـ iPhone ثم حاول مجددًا. من حُفظ بالفعل يبقى في قائمتك."
   ],
@@ -716,7 +716,7 @@
    "Vous en avez choisi %2$lld, mais vos fiches gratuites en couvrent %1$lld.",
    "Du hast %2$lld ausgewählt, deine kostenlosen Registrierungen reichen aber nur für %1$lld.",
    "%2$lld seçtiniz ancak ücretsiz kayıtlarınız %1$lld için yetiyor.",
-   "Anda memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld.",
+   "Kamu memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld.",
    "आपने %2$lld चुने, लेकिन मुफ़्त रजिस्ट्रेशन सिर्फ़ %1$lld के लिए काफ़ी हैं।",
    "اخترت %2$lld لكن التسجيلات المجانية تكفي لـ %1$lld فقط."
   ],
@@ -732,7 +732,7 @@
    "Les autres nécessitent une offre. Vous pourrez en choisir une après cet import.",
    "Für die übrigen brauchst du ein Abo. Du kannst es nach diesem Import wählen.",
    "Geri kalanlar için bir plan gerekir. Bu içe aktarmadan sonra seçebilirsiniz.",
-   "Sisanya memerlukan paket. Anda bisa memilihnya setelah impor ini.",
+   "Sisanya memerlukan paket. Kamu bisa memilihnya setelah impor ini.",
    "बाक़ी के लिए प्लान चाहिए। आप इस इम्पोर्ट के बाद एक चुन सकते हैं।",
    "يحتاج الباقون إلى خطة. يمكنك اختيار واحدة بعد هذا الاستيراد."
   ],
@@ -796,7 +796,7 @@
    "Corrigez-les dans votre fichier ou vos contacts, puis importez à nouveau.",
    "Korrigiere diese in deiner Datei oder deinen Kontakten und importiere erneut.",
    "Bunları dosyanızda veya kişilerinizde düzeltip yeniden içe aktarın.",
-   "Perbaiki di file atau kontak Anda, lalu impor lagi.",
+   "Perbaiki di file atau kontak kamu, lalu impor lagi.",
    "इन्हें अपनी फ़ाइल या कॉन्टैक्ट में ठीक करें और फिर से इम्पोर्ट करें।",
    "صحّحها في ملفك أو جهات اتصالك ثم أعد الاستيراد."
   ],
@@ -1022,7 +1022,7 @@
    "Votre liste de %@ est à jour. Ajoutez des étiquettes et des notes quand vous voulez.",
    "Deine Liste „%@“ ist auf dem neuesten Stand. Füge Markierungen und Notizen hinzu, wann immer du möchtest.",
    "%@ listeniz güncel. İstediğiniz zaman etiket ve not ekleyin.",
-   "Daftar %@ Anda sudah diperbarui. Tambahkan label dan catatan kapan saja.",
+   "Daftar %@ kamu sudah diperbarui. Tambahkan label dan catatan kapan saja.",
    "आपकी %@ सूची अपडेट हो गई है। जब चाहें टैग और नोट जोड़ें।",
    "قائمة %@ لديك محدّثة. أضف وسومًا وملاحظات متى شئت."
   ],
@@ -1038,7 +1038,7 @@
    "%lld déjà dans votre liste",
    "%lld bereits in deiner Liste",
    "%lld tanesi zaten listenizde",
-   "%lld sudah ada di daftar Anda",
+   "%lld sudah ada di daftar kamu",
    "%lld पहले से आपकी सूची में हैं",
    "%lld موجودون بالفعل في قائمتك"
   ],
@@ -1152,7 +1152,7 @@
    "Vos fiches gratuites sont épuisées. Choisissez une offre pour ajouter les autres.",
    "Deine kostenlosen Registrierungen sind aufgebraucht. Wähle ein Abo, um die übrigen hinzuzufügen.",
    "Ücretsiz kayıtlarınız bitti. Geri kalanları eklemek için bir plan seçin.",
-   "Pendaftaran gratis Anda sudah habis. Pilih paket untuk menambahkan sisanya.",
+   "Pendaftaran gratis kamu sudah habis. Pilih paket untuk menambahkan sisanya.",
    "आपके मुफ़्त रजिस्ट्रेशन पूरे हो गए हैं। बाक़ी जोड़ने के लिए एक प्लान चुनें।",
    "انتهت تسجيلاتك المجانية. اختر خطة لإضافة الباقين."
   ],

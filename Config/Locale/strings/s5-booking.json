@@ -493,7 +493,7 @@
    "Nous n'avons pas pu lire vos réglages de réservation. Vérifiez que votre iPhone est déverrouillé et réessayez.",
    "Wir konnten deine Buchungseinstellungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Rezervasyon ayarlarınız okunamadı. iPhone'unuzun kilidinin açık olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat membaca pengaturan pemesanan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi.",
+   "Kami tidak dapat membaca pengaturan pemesanan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi.",
    "हम आपकी बुकिंग सेटिंग नहीं पढ़ सके। जाँचें कि आपका iPhone अनलॉक है, फिर दोबारा कोशिश करें।",
    "تعذّرت قراءة إعدادات الحجز. تأكد من أن iPhone غير مقفل ثم حاول مرة أخرى."
   ],
@@ -509,7 +509,7 @@
    "Nous n'avons pas pu enregistrer cette modification. Vérifiez que votre iPhone dispose d'assez d'espace et réessayez.",
    "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Bu değişiklik kaydedilemedi. iPhone'unuzda yeterli alan olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda memiliki ruang kosong, lalu coba lagi.",
+   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu memiliki ruang kosong, lalu coba lagi.",
    "हम यह बदलाव सहेज नहीं सके। जाँचें कि आपके iPhone में जगह है, फिर दोबारा कोशिश करें।",
    "تعذّر حفظ هذا التغيير. تأكد من وجود مساحة كافية على iPhone ثم حاول مرة أخرى."
   ],
@@ -637,7 +637,7 @@
    "Quand vos clients peuvent réserver. Les modifications s'appliquent tout de suite à votre page de réservation.",
    "Wann deine Kundschaft bei dir buchen kann. Änderungen gelten sofort für deine Buchungsseite.",
    "Müşterilerinizin ne zaman rezervasyon yapabileceği. Değişiklikler randevu sayfanıza hemen yansır.",
-   "Kapan klien dapat memesan waktu dengan Anda. Perubahan langsung berlaku di halaman pemesanan Anda.",
+   "Kapan klien dapat memesan waktu dengan kamu. Perubahan langsung berlaku di halaman pemesanan kamu.",
    "क्लाइंट आपके साथ कब बुकिंग कर सकते हैं। बदलाव आपके बुकिंग पेज पर तुरंत लागू हो जाते हैं।",
    "الأوقات التي يمكن للعملاء الحجز فيها لديك. تُطبَّق التغييرات على صفحة الحجز فورًا."
   ],
@@ -765,7 +765,7 @@
    "Aucune pause. Vos clients peuvent réserver à tout moment pendant vos horaires de travail.",
    "Keine Pausen. Deine Kundschaft kann jederzeit innerhalb deiner Arbeitszeiten buchen.",
    "Mola yok. Müşteriler çalışma saatleriniz içinde istedikleri zaman rezervasyon yapabilir.",
-   "Tidak ada istirahat. Klien dapat memesan kapan saja dalam jam kerja Anda.",
+   "Tidak ada istirahat. Klien dapat memesan kapan saja dalam jam kerja kamu.",
    "कोई ब्रेक नहीं। क्लाइंट आपके काम के घंटों में कभी भी बुकिंग कर सकते हैं।",
    "لا توجد فترات راحة. يمكن للعملاء الحجز في أي وقت ضمن ساعات عملك."
   ],
@@ -973,7 +973,7 @@
    "Nous n'avons pas pu lire vos disponibilités. Vérifiez que votre iPhone est déverrouillé et réessayez.",
    "Wir konnten deine Verfügbarkeit nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Müsaitliğiniz okunamadı. iPhone'unuzun kilidinin açık olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat membaca ketersediaan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi.",
+   "Kami tidak dapat membaca ketersediaan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi.",
    "हम आपकी उपलब्धता नहीं पढ़ सके। जाँचें कि आपका iPhone अनलॉक है, फिर दोबारा कोशिश करें।",
    "تعذّرت قراءة أوقات عملك. تأكد من أن iPhone غير مقفل ثم حاول مرة أخرى."
   ],
@@ -989,7 +989,7 @@
    "Vos rendez-vous restent privés. Votre page de réservation sait seulement quels créneaux sont libres.",
    "Deine Termine bleiben privat. Deine Buchungsseite erfährt nur, welche Zeiten frei sind.",
    "Randevularınız gizli kalır. Randevu sayfanız yalnızca hangi saatlerin boş olduğunu öğrenir.",
-   "Janji temu Anda tetap pribadi. Halaman pemesanan Anda hanya mengetahui jam mana yang kosong.",
+   "Janji temu kamu tetap pribadi. Halaman pemesanan kamu hanya mengetahui jam mana yang kosong.",
    "आपकी अपॉइंटमेंट निजी रहती हैं। आपका बुकिंग पेज सिर्फ़ यह जान पाता है कि कौन से घंटे खाली हैं।",
    "تبقى مواعيدك خاصة. تعرف صفحة الحجز فقط الساعات الفارغة."
   ],
@@ -1485,7 +1485,7 @@
    "Votre lien de prise de rendez-vous",
    "Dein Buchungslink",
    "Randevu bağlantınız",
-   "Tautan janji temu Anda",
+   "Tautan janji temu kamu",
    "आपका अपॉइंटमेंट लिंक",
    "رابط المواعيد الخاص بك"
   ],
@@ -1501,7 +1501,7 @@
    "Choisissez votre adresse",
    "Wähle deine Adresse",
    "Adresinizi seçin",
-   "Pilih alamat Anda",
+   "Pilih alamat kamu",
    "अपना वेब पता चुनें",
    "اختر عنوانك"
   ],
@@ -1645,7 +1645,7 @@
    "En pause. Vos clients voient un message et peuvent vous écrire.",
    "Pausiert. Deine Kundschaft sieht einen Hinweis und kann dir schreiben.",
    "Duraklatıldı. Müşteriler bir mesaj görür ve size yazabilir.",
-   "Dijeda. Klien melihat pesan dan dapat menulis kepada Anda.",
+   "Dijeda. Klien melihat pesan dan dapat menulis kepada kamu.",
    "रोका गया है। क्लाइंट एक संदेश देखते हैं और आपको लिख सकते हैं।",
    "متوقف مؤقتًا. يرى العملاء رسالة ويمكنهم مراسلتك."
   ],
@@ -1725,7 +1725,7 @@
    "Vos clients voient ceci sur votre page et peuvent vous écrire. Les rendez-vous déjà réservés ne changent pas.",
    "Deine Kundschaft sieht das auf deiner Seite und kann dir schreiben. Bereits gebuchte Termine bleiben unverändert.",
    "Müşteriler bunu sayfanızda görür ve size yazabilir. Önceden alınmış randevulara dokunulmaz.",
-   "Klien melihat ini di halaman Anda dan dapat mengirim pesan. Janji temu yang sudah dipesan tidak diubah.",
+   "Klien melihat ini di halaman kamu dan dapat mengirim pesan. Janji temu yang sudah dipesan tidak diubah.",
    "क्लाइंट इसे आपके पेज पर देखते हैं और आपको संदेश भेज सकते हैं। पहले से बुक किए गए अपॉइंटमेंट नहीं बदलते।",
    "يرى العملاء هذا في صفحتك ويمكنهم مراسلتك. لا تتأثر المواعيد المحجوزة مسبقًا."
   ],
@@ -1757,7 +1757,7 @@
    "Vos clients verront que vous n'acceptez pas de réservations et pourront vous écrire. Les rendez-vous déjà réservés restent tels quels.",
    "Deine Kundschaft sieht, dass du keine Buchungen annimmst, und kann dir schreiben. Bereits gebuchte Termine bleiben, wie sie sind.",
    "Müşteriler randevu kabul etmediğinizi görür ve size yazabilir. Önceden alınmış randevular olduğu gibi kalır.",
-   "Klien akan melihat bahwa Anda tidak menerima pemesanan dan dapat menulis kepada Anda. Janji temu yang sudah dipesan tetap seperti semula.",
+   "Klien akan melihat bahwa kamu tidak menerima pemesanan dan dapat menulis kepada kamu. Janji temu yang sudah dipesan tetap seperti semula.",
    "क्लाइंट देखेंगे कि आप बुकिंग नहीं ले रहे हैं और आपको लिख सकेंगे। पहले से बुक किए गए अपॉइंटमेंट जैसे हैं वैसे ही रहेंगे।",
    "سيرى العملاء أنك لا تستقبل حجوزات ويمكنهم مراسلتك. تبقى المواعيد المحجوزة مسبقًا كما هي."
   ],
@@ -1821,7 +1821,7 @@
    "Vous validez chaque première réservation. Les clients déjà connus réservent librement.",
    "Du bestätigst jede Erstbuchung. Bestehende Kundschaft bucht frei.",
    "Her ilk randevuyu siz onaylarsınız. Daha önce gelenler serbestçe randevu alır.",
-   "Anda menyetujui setiap pemesanan pertama. Klien lama bisa memesan bebas.",
+   "Kamu menyetujui setiap pemesanan pertama. Klien lama bisa memesan bebas.",
    "आप हर पहली बुकिंग मंज़ूर करते हैं। पहले आ चुके क्लाइंट सीधे बुक कर सकते हैं।",
    "توافق على كل حجز أول. العملاء السابقون يحجزون بحرية."
   ],
@@ -2226,7 +2226,7 @@
    "Partagez votre lien",
    "Deinen Link teilen",
    "Bağlantınızı paylaşın",
-   "Bagikan tautan Anda",
+   "Bagikan tautan kamu",
    "अपना लिंक शेयर करें",
    "شارك رابطك"
   ],
@@ -2242,7 +2242,7 @@
    "Un seul lien pour Instagram, WhatsApp et votre table.",
    "Ein Link für Instagram, WhatsApp und deinen Empfangstisch.",
    "Instagram, WhatsApp ve masanız için tek bağlantı.",
-   "Satu tautan untuk Instagram, WhatsApp, dan meja Anda.",
+   "Satu tautan untuk Instagram, WhatsApp, dan meja kamu.",
    "Instagram, WhatsApp और आपकी टेबल के लिए एक ही लिंक।",
    "رابط واحد لـ Instagram وWhatsApp وطاولتك."
   ],
@@ -2258,7 +2258,7 @@
    "Votre adresse",
    "Deine Adresse",
    "Adresiniz",
-   "Alamat Anda",
+   "Alamat kamu",
    "आपका वेब पता",
    "عنوانك"
   ],
@@ -2546,7 +2546,7 @@
    "Votre page s'ouvre à vos clients dès que vous êtes en ligne. D'ici là, le lien ne fonctionne pas.",
    "Deine Seite ist für deine Kundschaft erreichbar, sobald du online bist. Bis dahin funktioniert der Link nicht.",
    "Sayfanız, çevrimiçi olduğunuzda müşterilere açılır. O zamana kadar bağlantı çalışmaz.",
-   "Halaman Anda terbuka untuk klien setelah Anda online. Sebelum itu, tautan belum berfungsi.",
+   "Halaman kamu terbuka untuk klien setelah kamu online. Sebelum itu, tautan belum berfungsi.",
    "आपका पेज ऑनलाइन होते ही क्लाइंट के लिए खुल जाएगा। तब तक लिंक काम नहीं करेगा।",
    "تُفتح صفحتك للعملاء عند اتصالك بالإنترنت. إلى ذلك الحين لا يعمل الرابط."
   ],
@@ -2930,7 +2930,7 @@
    "Désactivé : ils vous écrivent pour déplacer le rendez-vous.",
    "Aus: Wer verschieben möchte, schreibt dir.",
    "Kapalı: randevuyu taşımak için size mesaj yazarlar.",
-   "Mati: mereka mengirim pesan kepada Anda untuk memindahkan janji temu.",
+   "Mati: mereka mengirim pesan kepada kamu untuk memindahkan janji temu.",
    "बंद: वे समय बदलने के लिए आपको संदेश भेजते हैं।",
    "معطّل: يراسلونك لتغيير الموعد."
   ],
@@ -3097,7 +3097,7 @@
    "Vous recevez une alerte tout de suite et le créneau passe sur votre liste d'attente.",
    "Du erhältst sofort einen Hinweis und die Zeit geht an deine Warteliste.",
    "Hemen bir bildirim alırsınız ve o saat bekleme listenize geçer.",
-   "Anda langsung mendapat peringatan dan waktunya masuk ke daftar tunggu Anda.",
+   "Kamu langsung mendapat peringatan dan waktunya masuk ke daftar tunggu kamu.",
    "आपको तुरंत अलर्ट मिलता है और वह समय आपकी वेटलिस्ट में चला जाता है।",
    "يصلك تنبيه فورًا وينتقل الموعد إلى قائمة الانتظار لديك."
   ],
@@ -3145,7 +3145,7 @@
    "Ces annulations comptent dans votre limite de rendez-vous manqués.",
    "Diese Absagen zählen zu deinem Limit für nicht wahrgenommene Termine.",
    "Bu iptaller, randevuya gelmeme sınırınıza sayılır.",
-   "Pembatalan ini dihitung dalam batas tidak datang Anda.",
+   "Pembatalan ini dihitung dalam batas tidak datang kamu.",
    "ऐसे रद्दीकरण आपकी ‘नहीं आए’ की सीमा में गिने जाते हैं।",
    "تُحتسب هذه الإلغاءات ضمن حد عدم الحضور لديك."
   ],
@@ -3161,7 +3161,7 @@
    "Ces annulations ne comptent pas dans votre limite de rendez-vous manqués.",
    "Diese Absagen zählen nicht zu deinem Limit für nicht wahrgenommene Termine.",
    "Bu iptaller, randevuya gelmeme sınırınıza sayılmaz.",
-   "Pembatalan ini tidak dihitung dalam batas tidak datang Anda.",
+   "Pembatalan ini tidak dihitung dalam batas tidak datang kamu.",
    "ऐसे रद्दीकरण आपकी ‘नहीं आए’ की सीमा में नहीं गिने जाते।",
    "لا تُحتسب هذه الإلغاءات ضمن حد عدم الحضور لديك."
   ],
@@ -3225,7 +3225,7 @@
    "Leur horaire actuel reste réservé tant que vous n'avez pas accepté.",
    "Der bisherige Termin bleibt gebucht, bis du zusagst.",
    "Siz onaylayana kadar mevcut saatleri ayrılmış kalır.",
-   "Waktu mereka saat ini tetap terpesan sampai Anda menyetujui.",
+   "Waktu mereka saat ini tetap terpesan sampai kamu menyetujui.",
    "आपके हाँ कहने तक उनका मौजूदा समय बुक रहता है।",
    "يبقى موعدهم الحالي محجوزًا إلى أن توافق."
   ],
@@ -3353,7 +3353,7 @@
    "Combien de temps vous gardez le créneau quand quelqu'un est en retard. Ils peuvent vous prévenir depuis leur page.",
    "Wie lange du den Termin freihältst, wenn sich jemand verspätet. Das lässt sich dir über die eigene Seite mitteilen.",
    "Biri geciktiğinde saati ne kadar süre ayırdığınız. Sayfalarından size haber verebilirler.",
-   "Berapa lama Anda menahan waktu saat klien terlambat. Mereka bisa memberi tahu Anda dari halaman mereka.",
+   "Berapa lama kamu menahan waktu saat klien terlambat. Mereka bisa memberi tahu kamu dari halaman mereka.",
    "जब कोई क्लाइंट देर से आए तो आप समय को कितनी देर रोके रखते हैं। वे अपने पेज से आपको बता सकते हैं।",
    "كم من الوقت تحتفظ بالموعد عندما يتأخر أحد العملاء. يمكن للعملاء إبلاغك من صفحتهم."
   ],
@@ -3449,7 +3449,7 @@
    "Aidez vos clients à venir, ou à vous prévenir à temps.",
    "Hilf deiner Kundschaft, zu erscheinen oder rechtzeitig Bescheid zu geben.",
    "Müşterilerin gelmesini ya da size zamanında haber vermesini sağlayın.",
-   "Bantu klien agar datang, atau memberi tahu Anda tepat waktu.",
+   "Bantu klien agar datang, atau memberi tahu kamu tepat waktu.",
    "क्लाइंट को आने के लिए, या समय रहते बताने के लिए प्रेरित करें।",
    "ساعد العملاء على الحضور، أو على إبلاغك في الوقت المناسب."
   ],
@@ -3481,7 +3481,7 @@
    "Compte les rendez-vous manqués et agit quand quelqu'un atteint votre limite.",
    "Zählt nicht wahrgenommene Termine und reagiert, wenn jemand dein Limit erreicht.",
    "Gelinmeyen randevuları sayar ve biri sınırınıza ulaştığında harekete geçer.",
-   "Menghitung janji temu yang terlewat dan bertindak saat klien mencapai batas Anda.",
+   "Menghitung janji temu yang terlewat dan bertindak saat klien mencapai batas kamu.",
    "छूटे हुए अपॉइंटमेंट गिनता है और किसी क्लाइंट के आपकी सीमा तक पहुँचने पर कदम उठाता है।",
    "يحتسب المواعيد الفائتة ويتصرف عندما يصل أحد العملاء إلى حدك."
   ],
@@ -3776,7 +3776,7 @@
    "Vous recevez une alerte. La réservation en ligne reste ouverte.",
    "Du erhältst einen Hinweis. Die Online-Buchung bleibt offen.",
    "Bir bildirim alırsınız. Çevrimiçi randevu açık kalır.",
-   "Anda mendapat peringatan. Pemesanan online tetap terbuka.",
+   "Kamu mendapat peringatan. Pemesanan online tetap terbuka.",
    "आपको अलर्ट मिलता है। ऑनलाइन बुकिंग खुली रहती है।",
    "يصلك تنبيه. يبقى الحجز عبر الإنترنت متاحًا."
   ],
@@ -3808,7 +3808,7 @@
    "Vos clients peuvent demander un créneau. Vous confirmez ou refusez.",
    "Die Person kann einen Termin anfragen. Du bestätigst oder lehnst ab.",
    "Müşteri bir saat talep edebilir. Siz onaylar ya da reddedersiniz.",
-   "Klien dapat meminta waktu. Anda mengonfirmasi atau menolak.",
+   "Klien dapat meminta waktu. Kamu mengonfirmasi atau menolak.",
    "क्लाइंट समय माँग सकते हैं। आप पुष्टि करते हैं या मना कर देते हैं।",
    "يمكن للعملاء طلب موعد. تؤكده أنت أو ترفضه."
   ],
@@ -3840,7 +3840,7 @@
    "La personne voit un message aimable et vous contacte. Vous pouvez toujours réserver pour elle.",
    "Die Person sieht eine freundliche Nachricht und meldet sich bei dir. Du kannst weiterhin selbst für sie buchen.",
    "Müşteri nazik bir mesaj görür ve size ulaşır. Yine de randevusunu siz oluşturabilirsiniz.",
-   "Klien melihat pesan yang ramah lalu menghubungi Anda. Anda tetap bisa memesankan sendiri untuk mereka.",
+   "Klien melihat pesan yang ramah lalu menghubungi kamu. Kamu tetap bisa memesankan sendiri untuk mereka.",
    "क्लाइंट को एक विनम्र संदेश दिखता है और वे आपसे संपर्क करते हैं। आप फिर भी खुद उनकी बुकिंग कर सकते हैं।",
    "تظهر لهم رسالة لطيفة ويتواصلون معك. ويمكنك مع ذلك الحجز لهم بنفسك."
   ],
@@ -3872,7 +3872,7 @@
    "Modifiez les messages que vous envoyez",
    "Bearbeite die Nachrichten, die du sendest",
    "Gönderdiğiniz mesajları düzenleyin",
-   "Ubah pesan yang Anda kirim",
+   "Ubah pesan yang kamu kirim",
    "आप जो संदेश भेजते हैं, उन्हें बदलें",
    "عدّل الرسائل التي ترسلها"
   ],
@@ -3904,7 +3904,7 @@
    "Affiché sur votre page de réservation, sous la politique d'annulation.",
    "Wird auf deiner Buchungsseite unter den Regeln für Absagen angezeigt.",
    "Randevu sayfanızda iptal politikasının altında gösterilir.",
-   "Ditampilkan di halaman pemesanan Anda, di bawah kebijakan pembatalan.",
+   "Ditampilkan di halaman pemesanan kamu, di bawah kebijakan pembatalan.",
    "आपके बुकिंग पेज पर रद्द करने की नीति के नीचे दिखता है।",
    "تظهر في صفحة الحجز الخاصة بك أسفل سياسة الإلغاء."
   ],
@@ -3920,7 +3920,7 @@
    "La protection est désactivée. Tout le monde peut réserver en ligne. Les rendez-vous manqués restent notés sur le profil de chaque client, vous pouvez donc l'activer plus tard et consulter l'historique.",
    "Der Schutz ist aus. Alle können online buchen. Nicht wahrgenommene Termine werden weiterhin im Profil jeder Person festgehalten, sodass du ihn später einschalten und die Vergangenheit sehen kannst.",
    "Koruma kapalı. Herkes çevrimiçi randevu alabilir. Gelinmeyen randevular yine de her müşterinin profiline yazılır; böylece korumayı sonra açıp geçmişi görebilirsiniz.",
-   "Perlindungan mati. Siapa pun dapat memesan online. Janji temu yang terlewat tetap dicatat di profil setiap klien, jadi Anda dapat mengaktifkannya nanti dan melihat riwayatnya.",
+   "Perlindungan mati. Siapa pun dapat memesan online. Janji temu yang terlewat tetap dicatat di profil setiap klien, jadi kamu dapat mengaktifkannya nanti dan melihat riwayatnya.",
    "सुरक्षा बंद है। कोई भी ऑनलाइन बुकिंग कर सकता है। छूटे हुए अपॉइंटमेंट फिर भी हर क्लाइंट की प्रोफ़ाइल में दर्ज होते रहते हैं, इसलिए आप इसे बाद में चालू करके पिछला रिकॉर्ड देख सकते हैं।",
    "الحماية معطّلة. يمكن لأي شخص الحجز عبر الإنترنت. تبقى المواعيد الفائتة مسجّلة في ملف كل عميل، فيمكنك تفعيلها لاحقًا ورؤية ما مضى."
   ],
@@ -3936,7 +3936,7 @@
    "Les modifications s'enregistrent automatiquement. Les comptages restent sur votre iPhone et dans votre iCloud. Seuls vos propres clients sont comptés : rien n'est partagé avec d'autres professionnels.",
    "Änderungen werden automatisch gespeichert. Die Zähler bleiben auf deinem iPhone und in deiner iCloud. Es wird nur deine eigene Kundschaft gezählt: Nichts wird mit anderen Fachkräften geteilt.",
    "Değişiklikler otomatik kaydedilir. Sayımlar iPhone'unuzda ve iCloud'unuzda kalır. Yalnızca kendi müşterileriniz sayılır: başka profesyonellerle hiçbir şey paylaşılmaz.",
-   "Perubahan tersimpan otomatis. Hitungan tetap di iPhone dan iCloud Anda. Hanya klien Anda sendiri yang dihitung: tidak ada yang dibagikan kepada profesional lain.",
+   "Perubahan tersimpan otomatis. Hitungan tetap di iPhone dan iCloud kamu. Hanya klien kamu sendiri yang dihitung: tidak ada yang dibagikan kepada profesional lain.",
    "बदलाव अपने आप सेव हो जाते हैं। गिनती आपके iPhone और आपके iCloud में ही रहती है। सिर्फ़ आपके अपने क्लाइंट गिने जाते हैं: दूसरे प्रोफ़ेशनल्स के साथ कुछ भी साझा नहीं होता।",
    "تُحفظ التغييرات تلقائيًا. تبقى الأعداد على iPhone وفي iCloud الخاص بك. يُحتسب عملاؤك أنت فقط: لا يُشارك شيء مع مختصين آخرين."
   ],
@@ -3968,7 +3968,7 @@
    "Messages prêts pour WhatsApp. Vous les relisez toujours avant d'envoyer.",
    "Fertige Nachrichten für WhatsApp. Du prüfst sie immer vor dem Senden.",
    "WhatsApp için hazır mesajlar. Göndermeden önce her zaman siz kontrol edersiniz.",
-   "Pesan siap pakai untuk WhatsApp. Anda selalu memeriksanya sebelum mengirim.",
+   "Pesan siap pakai untuk WhatsApp. Kamu selalu memeriksanya sebelum mengirim.",
    "WhatsApp के लिए तैयार संदेश। भेजने से पहले आप हमेशा खुद जाँचते हैं।",
    "رسائل جاهزة لإرسالها عبر WhatsApp. تراجعها دائمًا قبل الإرسال."
   ],
@@ -4032,7 +4032,7 @@
    "Nous n'avons pas pu lire vos réponses rapides. Vérifiez que votre iPhone est déverrouillé et réessayez.",
    "Wir konnten deine Schnellantworten nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Hızlı yanıtlarınız okunamadı. iPhone'unuzun kilidinin açık olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat membaca balasan cepat Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi.",
+   "Kami tidak dapat membaca balasan cepat kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi.",
    "हम आपके त्वरित जवाब नहीं पढ़ सके। जाँचें कि आपका iPhone अनलॉक है, फिर दोबारा कोशिश करें।",
    "تعذّرت قراءة ردودك السريعة. تأكد من أن iPhone غير مقفل ثم حاول مرة أخرى."
   ],
@@ -4288,7 +4288,7 @@
    "Vous pourrez toujours la réécrire.",
    "Du kannst sie jederzeit neu schreiben.",
    "İstediğiniz zaman yeniden yazabilirsiniz.",
-   "Anda selalu bisa menulisnya lagi.",
+   "Kamu selalu bisa menulisnya lagi.",
    "आप इसे हमेशा दोबारा लिख सकते हैं।",
    "يمكنك دائمًا كتابته من جديد."
   ],

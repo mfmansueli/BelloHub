@@ -42,7 +42,7 @@
    "Fermez votre agenda quand vous ne pouvez pas travailler. Votre page de réservation n'offre plus ces horaires.",
    "Sperr deinen Kalender, wenn du nicht arbeiten kannst. Deine Buchungsseite bietet diese Zeiten dann nicht mehr an.",
    "Çalışamadığınız zamanlarda takvimi kapatın. Rezervasyon sayfanız bu saatleri sunmayı bırakır.",
-   "Tutup kalender Anda saat tidak bisa bekerja. Halaman pemesanan Anda berhenti menawarkan waktu ini.",
+   "Tutup kalender kamu saat tidak bisa bekerja. Halaman pemesanan kamu berhenti menawarkan waktu ini.",
    "जब आप काम नहीं कर सकते, तब कैलेंडर बंद कर दें। आपका बुकिंग पेज ये समय देना बंद कर देता है।",
    "أغلق تقويمك عندما لا تستطيع العمل. تتوقف صفحة الحجز عن عرض هذه الأوقات."
   ],
@@ -202,7 +202,7 @@
    "Vous seul le voyez.",
    "Nur du siehst das.",
    "Bunu yalnızca siz görürsünüz.",
-   "Hanya Anda yang melihat ini.",
+   "Hanya kamu yang melihat ini.",
    "इसे सिर्फ़ आप देखते हैं।",
    "أنت وحدك من يرى هذا."
   ],
@@ -314,7 +314,7 @@
    "Annulé par vous, donc il ne compte jamais contre le client.",
    "Von dir abgesagt, zählt also nie gegen die Person.",
    "Sizin tarafınızdan iptal edildiği için müşteri aleyhine asla sayılmaz.",
-   "Dibatalkan oleh Anda, jadi tidak pernah dihitung merugikan klien.",
+   "Dibatalkan oleh kamu, jadi tidak pernah dihitung merugikan klien.",
    "आपने रद्द किया है, इसलिए यह क्लाइंट के खिलाफ़ कभी नहीं गिना जाता।",
    "ألغيته أنت، لذلك لا يُحتسب أبدًا ضد العميل."
   ],
@@ -346,7 +346,7 @@
    "Les rendez-vous restent pris. Vous déciderez plus tard.",
    "Die Termine bleiben gebucht. Du entscheidest später.",
    "Randevular kalır. Sonra karar verirsiniz.",
-   "Janji temu tetap ada. Anda memutuskan nanti.",
+   "Janji temu tetap ada. Kamu memutuskan nanti.",
    "अपॉइंटमेंट बुक रहते हैं। आप बाद में तय करें।",
    "تبقى المواعيد محجوزة. تقرر لاحقًا."
   ],
@@ -466,7 +466,7 @@
    "Impossible de lire votre agenda. Vérifiez que l'iPhone est déverrouillé et réessayez.",
    "Dein Kalender konnte nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Takviminiz okunamadı. iPhone'un kilidinin açık olduğundan emin olun ve tekrar deneyin.",
-   "Kami tidak dapat membaca kalender Anda. Pastikan iPhone tidak terkunci lalu coba lagi.",
+   "Kami tidak dapat membaca kalender kamu. Pastikan iPhone tidak terkunci lalu coba lagi.",
    "आपका कैलेंडर पढ़ा नहीं जा सका। देखें कि iPhone अनलॉक है और फिर कोशिश करें।",
    "تعذّرت قراءة تقويمك. تأكد من أن الـ iPhone غير مقفل وحاول مجددًا."
   ],
@@ -530,7 +530,7 @@
    "Ouvrez un message pour chaque client. Vous le lisez d'abord, puis vous envoyez.",
    "Öffne für jede Person eine Nachricht. Du liest sie zuerst und sendest selbst.",
    "Her müşteri için bir mesaj açın. Önce siz okur, sonra gönderirsiniz.",
-   "Buka pesan untuk setiap klien. Anda membacanya dulu lalu menekan kirim.",
+   "Buka pesan untuk setiap klien. Kamu membacanya dulu lalu menekan kirim.",
    "हर क्लाइंट के लिए संदेश खोलें। आप पहले पढ़ते हैं, फिर भेजते हैं।",
    "افتح رسالة لكل عميل. تقرأها أولًا ثم ترسلها بنفسك."
   ],
@@ -594,7 +594,7 @@
    "Ils restent dans votre agenda pendant le créneau bloqué.",
    "Sie bleiben in deinem Kalender innerhalb der gesperrten Zeit.",
    "Kapatılan zaman içinde takviminizde kalırlar.",
-   "Janji temu tetap ada di kalender Anda dalam waktu yang diblokir.",
+   "Janji temu tetap ada di kalender kamu dalam waktu yang diblokir.",
    "वे ब्लॉक किए गए समय में भी आपके कैलेंडर में रहते हैं।",
    "تبقى في تقويمك داخل الوقت المحظور."
   ],
@@ -866,7 +866,7 @@
    "Vous ne travaillez pas ce jour-là",
    "An diesem Tag arbeitest du nicht",
    "Bu gün çalışmıyorsunuz",
-   "Anda tidak bekerja di hari ini",
+   "Kamu tidak bekerja di hari ini",
    "आप इस दिन काम नहीं करते",
    "لا تعمل في هذا اليوم"
   ],
@@ -898,7 +898,7 @@
    "Vous pouvez quand même ajouter un rendez-vous si besoin.",
    "Du kannst bei Bedarf trotzdem einen Termin hinzufügen.",
    "Gerekirse yine de randevu ekleyebilirsiniz.",
-   "Anda tetap bisa menambahkan janji temu jika perlu.",
+   "Kamu tetap bisa menambahkan janji temu jika perlu.",
    "ज़रूरत हो तो आप फिर भी अपॉइंटमेंट जोड़ सकते हैं।",
    "يمكنك إضافة موعد إذا احتجت إلى ذلك."
   ],
@@ -1266,7 +1266,7 @@
    "Votre agenda n'est pas disponible. Vérifiez que l'iPhone est déverrouillé et réessayez.",
    "Dein Kalender ist nicht verfügbar. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Takviminiz kullanılamıyor. iPhone'un kilidinin açık olduğundan emin olun ve tekrar deneyin.",
-   "Kalender Anda tidak tersedia. Pastikan iPhone tidak terkunci lalu coba lagi.",
+   "Kalender kamu tidak tersedia. Pastikan iPhone tidak terkunci lalu coba lagi.",
    "आपका कैलेंडर उपलब्ध नहीं है। देखें कि iPhone अनलॉक है और फिर कोशिश करें।",
    "تقويمك غير متاح. تأكد من أن الـ iPhone غير مقفل وحاول مجددًا."
   ],
@@ -1666,7 +1666,7 @@
    "Impossible de lire vos clients et prestations. Vérifiez que l'iPhone est déverrouillé.",
    "Kundschaft und Leistungen konnten nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist.",
    "Müşterileriniz ve hizmetleriniz okunamadı. iPhone'un kilidinin açık olduğundan emin olun.",
-   "Kami tidak dapat membaca klien dan layanan Anda. Pastikan iPhone tidak terkunci.",
+   "Kami tidak dapat membaca klien dan layanan kamu. Pastikan iPhone tidak terkunci.",
    "आपके क्लाइंट और सेवाएँ पढ़ी नहीं जा सकीं। देखें कि iPhone अनलॉक है।",
    "تعذّرت قراءة عملائك وخدماتك. تأكد من أن الـ iPhone غير مقفل."
   ],
@@ -2098,7 +2098,7 @@
    "Les créneaux libres suivent vos disponibilités et le temps que vous gardez entre les rendez-vous.",
    "Freie Zeiten folgen deiner Verfügbarkeit und der Pause zwischen den Terminen.",
    "Boş saatler, uygunluğunuzu ve randevular arasında bıraktığınız süreyi izler.",
-   "Slot kosong mengikuti ketersediaan Anda dan jeda di antara janji temu.",
+   "Slot kosong mengikuti ketersediaan kamu dan jeda di antara janji temu.",
    "खाली स्लॉट आपकी उपलब्धता और अपॉइंटमेंट के बीच के अंतराल के हिसाब से होते हैं।",
    "تتبع الأوقات المتاحة توفرك والفاصل الذي تتركه بين المواعيد."
   ],
@@ -2114,7 +2114,7 @@
    "Impossible de lire votre semaine. Vérifiez que l'iPhone est déverrouillé et réessayez.",
    "Deine Woche konnte nicht gelesen werden. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Haftanız okunamadı. iPhone'un kilidinin açık olduğundan emin olun ve tekrar deneyin.",
-   "Kami tidak dapat membaca minggu Anda. Pastikan iPhone tidak terkunci lalu coba lagi.",
+   "Kami tidak dapat membaca minggu kamu. Pastikan iPhone tidak terkunci lalu coba lagi.",
    "आपका सप्ताह पढ़ा नहीं जा सका। देखें कि iPhone अनलॉक है और फिर कोशिश करें।",
    "تعذّرت قراءة أسبوعك. تأكد من أن الـ iPhone غير مقفل وحاول مجددًا."
   ],
@@ -2258,7 +2258,7 @@
    "Vous pouvez quand même le réserver, par exemple une visite passée.",
    "Du kannst ihn trotzdem eintragen, zum Beispiel einen vergangenen Termin.",
    "Yine de ekleyebilirsiniz, örneğin geçmiş bir randevu.",
-   "Anda tetap bisa menjadwalkannya, misalnya kunjungan lampau.",
+   "Kamu tetap bisa menjadwalkannya, misalnya kunjungan lampau.",
    "आप फिर भी इसे बुक कर सकते हैं, जैसे बीते हुए अपॉइंटमेंट को।",
    "يمكنك حجزه على أي حال، مثلًا لزيارة سابقة."
   ],
@@ -2338,7 +2338,7 @@
    "Vous l'avez fermé dans votre agenda.",
    "Du hast diese Zeit in deinem Kalender gesperrt.",
    "Takviminizde kapattınız.",
-   "Anda menutupnya di kalender.",
+   "Kamu menutupnya di kalender.",
    "आपने इसे अपने कैलेंडर में बंद किया है।",
    "أغلقته في تقويمك."
   ],
@@ -2370,7 +2370,7 @@
    "C'est l'un de vos jours de congé.",
    "Es ist einer deiner freien Tage.",
    "Bu, izin günlerinizden biri.",
-   "Ini salah satu hari libur Anda.",
+   "Ini salah satu hari libur kamu.",
    "यह आपकी छुट्टी के दिनों में से एक है।",
    "إنه أحد أيام إجازتك."
   ],
@@ -2386,7 +2386,7 @@
    "Vous ne travaillez pas ce jour-là.",
    "An diesem Tag arbeitest du nicht.",
    "Bu gün çalışmıyorsunuz.",
-   "Anda tidak bekerja di hari ini.",
+   "Kamu tidak bekerja di hari ini.",
    "आप इस दिन काम नहीं करते।",
    "لا تعمل في هذا اليوم."
   ],
@@ -2402,7 +2402,7 @@
    "C'est en dehors de vos horaires de la semaine.",
    "Es liegt außerhalb deiner Wochenzeiten.",
    "Haftalık saatlerinizin dışında.",
-   "Ini di luar jam mingguan Anda.",
+   "Ini di luar jam mingguan kamu.",
    "यह आपके साप्ताहिक समय के बाहर है।",
    "إنه خارج ساعات عملك الأسبوعية."
   ],
@@ -2418,7 +2418,7 @@
    "Commence avant vos heures de travail.",
    "Beginnt vor deinen Arbeitszeiten.",
    "Çalışma saatlerinizden önce başlıyor.",
-   "Dimulai sebelum jam kerja Anda.",
+   "Dimulai sebelum jam kerja kamu.",
    "आपके काम के समय से पहले शुरू होता है।",
    "يبدأ قبل ساعات عملك."
   ],
@@ -2434,7 +2434,7 @@
    "Se termine après vos heures de travail.",
    "Endet nach deinen Arbeitszeiten.",
    "Çalışma saatlerinizden sonra bitiyor.",
-   "Berakhir setelah jam kerja Anda.",
+   "Berakhir setelah jam kerja kamu.",
    "आपके काम के समय के बाद ख़त्म होता है।",
    "ينتهي بعد ساعات عملك."
   ],
@@ -2450,7 +2450,7 @@
    "Tombe entre vos plages de travail.",
    "Liegt zwischen deinen Arbeitsblöcken.",
    "Çalışma aralıklarınızın arasına düşüyor.",
-   "Jatuh di antara jam kerja Anda.",
+   "Jatuh di antara jam kerja kamu.",
    "यह आपके काम के दो समय-खंडों के बीच पड़ता है।",
    "يقع بين فترتي عملك."
   ],
@@ -2466,7 +2466,7 @@
    "C'est en dehors de vos heures de travail.",
    "Es liegt außerhalb deiner Arbeitszeiten.",
    "Çalışma saatlerinizin dışında.",
-   "Ini di luar jam kerja Anda.",
+   "Ini di luar jam kerja kamu.",
    "यह आपके काम के समय के बाहर है।",
    "إنه خارج ساعات عملك."
   ],
@@ -2498,7 +2498,7 @@
    "Cet horaire est l'une de vos pauses.",
    "Diese Zeit ist eine deiner Pausen.",
    "Bu saat molalarınızdan biri.",
-   "Waktu itu adalah salah satu jeda Anda.",
+   "Waktu itu adalah salah satu jeda kamu.",
    "यह समय आपके ब्रेक में से एक है।",
    "هذا الوقت هو إحدى استراحاتك."
   ],
@@ -2530,7 +2530,7 @@
    "Vous aimez garder %@ entre les rendez-vous.",
    "Du planst %@ zwischen den Terminen ein.",
    "Randevular arasında %@ bırakmayı seviyorsunuz.",
-   "Anda suka memberi jeda %@ di antara janji temu.",
+   "Kamu suka memberi jeda %@ di antara janji temu.",
    "आप अपॉइंटमेंट के बीच %@ रखना पसंद करते हैं।",
    "تفضّل ترك %@ بين المواعيد."
   ],

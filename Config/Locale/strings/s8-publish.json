@@ -90,7 +90,7 @@
    "Mise à jour de votre page…",
    "Deine Seite wird aktualisiert …",
    "Sayfanız güncelleniyor…",
-   "Memperbarui halaman Anda…",
+   "Memperbarui halaman kamu…",
    "आपका पेज अपडेट हो रहा है…",
    "جارٍ تحديث صفحتك…"
   ],
@@ -106,7 +106,7 @@
    "En ligne, mais vos dernières modifications ne sont pas encore sur la page.",
    "Online, aber deine letzten Änderungen sind noch nicht auf der Seite.",
    "Çevrimiçi, ancak son değişiklikleriniz henüz sayfada değil.",
-   "Online, tetapi perubahan terbaru Anda belum ada di halaman.",
+   "Online, tetapi perubahan terbaru kamu belum ada di halaman.",
    "ऑनलाइन है, पर आपके ताज़ा बदलाव अभी पेज पर नहीं हैं।",
    "متصلة، لكن آخر تغييراتك لم تظهر في الصفحة بعد."
   ],
@@ -122,7 +122,7 @@
    "Simple aperçu. Le lien fonctionne dès que vous êtes en ligne.",
    "Nur eine Vorschau. Der Link funktioniert, sobald du online bist.",
    "Yalnızca önizleme. Bağlantı, çevrimiçi olduğunuzda çalışır.",
-   "Hanya pratinjau. Tautan berfungsi setelah Anda online.",
+   "Hanya pratinjau. Tautan berfungsi setelah kamu online.",
    "सिर्फ़ प्रीव्यू है। ऑनलाइन होने पर लिंक काम करेगा।",
    "معاينة فقط. يعمل الرابط عندما تصبح صفحتك متصلة."
   ],
@@ -138,7 +138,7 @@
    "Choisissez d'abord votre adresse.",
    "Wähle zuerst deine Adresse.",
    "Önce adresinizi seçin.",
-   "Pilih alamat Anda terlebih dahulu.",
+   "Pilih alamat kamu terlebih dahulu.",
    "पहले अपना पता चुनें।",
    "اختر عنوانك أولًا."
   ],
@@ -154,7 +154,7 @@
    "Ajoutez au moins une prestation active pour mettre votre page en ligne.",
    "Füge mindestens eine aktive Leistung hinzu, um deine Seite online zu stellen.",
    "Sayfanızı yayına almak için en az bir etkin hizmet ekleyin.",
-   "Tambahkan minimal satu layanan aktif agar halaman Anda bisa online.",
+   "Tambahkan minimal satu layanan aktif agar halaman kamu bisa online.",
    "पेज ऑनलाइन करने के लिए कम से कम एक सक्रिय सेवा जोड़ें।",
    "أضف خدمة نشطة واحدة على الأقل لتفعيل صفحتك."
   ],
@@ -186,7 +186,7 @@
    "Reconnectez-vous pour publier votre page.",
    "Melde dich erneut an, um deine Seite zu veröffentlichen.",
    "Sayfanızı yayınlamak için yeniden giriş yapın.",
-   "Masuk lagi untuk menerbitkan halaman Anda.",
+   "Masuk lagi untuk menerbitkan halaman kamu.",
    "पेज प्रकाशित करने के लिए फिर से साइन इन करें।",
    "سجّل الدخول مرة أخرى لنشر صفحتك."
   ],
@@ -202,7 +202,7 @@
    "Déverrouillez Bello Hub pour publier votre page.",
    "Entsperre Bello Hub, um deine Seite zu veröffentlichen.",
    "Sayfanızı yayınlamak için Bello Hub kilidini açın.",
-   "Buka kunci Bello Hub untuk menerbitkan halaman Anda.",
+   "Buka kunci Bello Hub untuk menerbitkan halaman kamu.",
    "पेज प्रकाशित करने के लिए Bello Hub अनलॉक करें।",
    "افتح قفل Bello Hub لنشر صفحتك."
   ],
@@ -234,7 +234,7 @@
    "Pas de connexion. Votre page est en ligne, mais vos dernières modifications n'y sont pas encore. Nous les enverrons dès que vous serez connectée.",
    "Keine Verbindung. Deine Seite ist online, aber deine letzten Änderungen sind noch nicht darauf. Wir senden sie, sobald du verbunden bist.",
    "Bağlantı yok. Sayfanız çevrimiçi ama son değişiklikleriniz henüz üzerinde değil. Bağlandığınızda göndereceğiz.",
-   "Tidak ada koneksi. Halaman Anda online, tetapi perubahan terbaru belum ada di sana. Kami akan mengirimnya saat Anda terhubung.",
+   "Tidak ada koneksi. Halaman kamu online, tetapi perubahan terbaru belum ada di sana. Kami akan mengirimnya saat kamu terhubung.",
    "कनेक्शन नहीं है। आपका पेज ऑनलाइन है, पर आपके ताज़ा बदलाव अभी उस पर नहीं हैं। कनेक्ट होते ही हम उन्हें भेज देंगे।",
    "لا يوجد اتصال. صفحتك متصلة، لكن آخر تغييراتك لم تصل إليها بعد. سنرسلها عند عودة الاتصال."
   ],
@@ -250,7 +250,7 @@
    "Pas de connexion. Votre page n'est pas encore en ligne. Réessayez une fois connectée.",
    "Keine Verbindung. Deine Seite ist noch nicht online. Versuche es erneut, wenn du verbunden bist.",
    "Bağlantı yok. Sayfanız henüz çevrimiçi değil. Bağlandığınızda yeniden deneyin.",
-   "Tidak ada koneksi. Halaman Anda belum online. Coba lagi saat Anda terhubung.",
+   "Tidak ada koneksi. Halaman kamu belum online. Coba lagi saat kamu terhubung.",
    "कनेक्शन नहीं है। आपका पेज अभी ऑनलाइन नहीं है। कनेक्ट होने पर फिर कोशिश करें।",
    "لا يوجد اتصال. صفحتك ليست متصلة بعد. حاول مرة أخرى عند عودة الاتصال."
   ],
@@ -266,7 +266,7 @@
    "Votre page n'a pas pu être publiée. Vérifiez vos informations et réessayez.",
    "Deine Seite konnte nicht veröffentlicht werden. Prüfe deine Angaben und versuche es erneut.",
    "Sayfanız yayınlanamadı. Bilgilerinizi kontrol edip yeniden deneyin.",
-   "Halaman Anda tidak dapat diterbitkan. Periksa data Anda dan coba lagi.",
+   "Halaman kamu tidak dapat diterbitkan. Periksa data kamu dan coba lagi.",
    "आपका पेज प्रकाशित नहीं हो सका। अपनी जानकारी जाँचें और फिर कोशिश करें।",
    "تعذّر نشر صفحتك. تحقق من بياناتك وحاول مرة أخرى."
   ],
@@ -314,7 +314,7 @@
    "Mettre votre page hors ligne ?",
    "Deine Seite offline nehmen?",
    "Sayfanız çevrimdışı yapılsın mı?",
-   "Offline-kan halaman Anda?",
+   "Offline-kan halaman kamu?",
    "पेज ऑफ़लाइन करें?",
    "إيقاف صفحتك؟"
   ],
@@ -330,7 +330,7 @@
    "Les clients qui ouvrent votre lien verront que vous n'acceptez pas de réservations. Les réservations déjà faites restent inchangées.",
    "Wer deinen Link öffnet, sieht, dass du keine Buchungen annimmst. Bereits gemachte Buchungen bleiben bestehen.",
    "Bağlantınızı açanlar randevu kabul etmediğinizi görür. Daha önce alınmış randevular olduğu gibi kalır.",
-   "Klien yang membuka tautan Anda akan melihat bahwa Anda tidak menerima pemesanan. Pemesanan yang sudah ada tetap berlaku.",
+   "Klien yang membuka tautan kamu akan melihat bahwa kamu tidak menerima pemesanan. Pemesanan yang sudah ada tetap berlaku.",
    "आपका लिंक खोलने वाले ग्राहक देखेंगे कि आप बुकिंग नहीं ले रहे। पहले की बुकिंग जैसी हैं वैसी ही रहेंगी।",
    "سيرى من يفتح رابطك أنك لا تستقبل حجوزات. تبقى الحجوزات الحالية كما هي."
   ],
@@ -362,7 +362,7 @@
    "Votre page est en ligne",
    "Deine Seite ist online",
    "Sayfanız çevrimiçi",
-   "Halaman Anda online",
+   "Halaman kamu online",
    "आपका पेज ऑनलाइन है",
    "صفحتك متصلة"
   ],
@@ -378,7 +378,7 @@
    "Vos clients peuvent ouvrir ce lien et réserver chez vous.",
    "Deine Kundschaft kann diesen Link öffnen und bei dir buchen.",
    "Müşterileriniz bu bağlantıyı açıp randevu alabilir.",
-   "Klien bisa membuka tautan ini dan memesan pada Anda.",
+   "Klien bisa membuka tautan ini dan memesan pada kamu.",
    "ग्राहक यह लिंक खोलकर आपके साथ बुकिंग कर सकते हैं।",
    "يمكن لعملائك فتح هذا الرابط والحجز لديك."
   ],
@@ -394,7 +394,7 @@
    "Nous n'avons pas pu vérifier cette adresse maintenant. Elle sera vérifiée à nouveau quand votre page passera en ligne.",
    "Wir konnten diese Adresse gerade nicht prüfen. Sie wird erneut geprüft, sobald deine Seite online geht.",
    "Bu adresi şu anda kontrol edemedik. Sayfanız çevrimiçi olduğunda yeniden kontrol edilecek.",
-   "Kami belum bisa memeriksa alamat ini sekarang. Alamat akan diperiksa lagi saat halaman Anda online.",
+   "Kami belum bisa memeriksa alamat ini sekarang. Alamat akan diperiksa lagi saat halaman kamu online.",
    "हम अभी इस पते की जाँच नहीं कर सके। पेज ऑनलाइन होने पर इसे फिर जाँचा जाएगा।",
    "تعذّر التحقق من هذا العنوان الآن. سيُتحقق منه مجددًا عند تفعيل صفحتك."
   ]

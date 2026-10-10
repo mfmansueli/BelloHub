@@ -25,8 +25,8 @@
    "Nessuna connessione. Ciò che vedi risale all'ultima sincronizzazione.",
    "Pas de connexion. Ce que vous voyez date de la dernière synchronisation.",
    "Keine Verbindung. Du siehst den Stand der letzten Synchronisierung.",
-   "Bağlantı yok. Gördüklerin son eşitlemeden.",
-   "Tidak ada koneksi. Yang Anda lihat berasal dari sinkronisasi terakhir.",
+   "Bağlantı yok. Gördükleriniz son eşitlemeden.",
+   "Tidak ada koneksi. Yang kamu lihat berasal dari sinkronisasi terakhir.",
    "कनेक्शन नहीं है। आप जो देख रही हैं वह पिछली सिंक का है।",
    "لا يوجد اتصال. ما تراه من آخر مزامنة."
   ],
@@ -41,7 +41,7 @@
    "Il server è occupato. Riprova tra poco.",
    "Le serveur est occupé. Réessayez dans un instant.",
    "Der Server ist ausgelastet. Versuch es gleich noch einmal.",
-   "Sunucu meşgul. Birazdan tekrar dene.",
+   "Sunucu meşgul. Birazdan tekrar deneyin.",
    "Server sedang sibuk. Coba lagi sebentar lagi.",
    "सर्वर व्यस्त है। थोड़ी देर में फिर कोशिश करें।",
    "الخادم مشغول. حاول مرة أخرى بعد قليل."
@@ -57,8 +57,8 @@
    "Accedi di nuovo per vedere le tue prenotazioni.",
    "Reconnectez-vous pour voir vos réservations.",
    "Melde dich erneut an, um deine Buchungen zu sehen.",
-   "Randevularını görmek için yeniden giriş yap.",
-   "Masuk lagi untuk melihat booking Anda.",
+   "Randevularınızı görmek için yeniden giriş yapın.",
+   "Masuk lagi untuk melihat booking kamu.",
    "अपनी बुकिंग देखने के लिए फिर से साइन इन करें।",
    "سجّل الدخول مرة أخرى لترى حجوزاتك."
   ],
@@ -73,8 +73,8 @@
    "Non è stato possibile leggere le tue prenotazioni. Riprova.",
    "Impossible de lire vos réservations. Réessayez.",
    "Deine Buchungen konnten nicht gelesen werden. Versuch es noch einmal.",
-   "Randevuların okunamadı. Tekrar dene.",
-   "Booking Anda tidak dapat dibaca. Coba lagi.",
+   "Randevularınız okunamadı. Tekrar deneyin.",
+   "Booking kamu tidak dapat dibaca. Coba lagi.",
    "आपकी बुकिंग पढ़ी नहीं जा सकीं। फिर कोशिश करें।",
    "تعذّرت قراءة حجوزاتك. حاول مرة أخرى."
   ],
@@ -105,7 +105,7 @@
    "Un cliente ha inviato una scheda sanitaria.",
    "Un client a envoyé une fiche santé.",
    "Ein Gesundheitsfragebogen ist eingegangen.",
-   "Bir danışan sağlık formu gönderdi.",
+   "Bir müşteri sağlık formu gönderdi.",
    "Seorang klien mengirim formulir kesehatan.",
    "एक क्लाइंट ने स्वास्थ्य फ़ॉर्म भेजा।",
    "أرسل أحد العملاء استمارة صحية."
@@ -121,8 +121,8 @@
    "In attesa della tua risposta",
    "En attente de votre réponse",
    "Warten auf deine Antwort",
-   "Cevabını bekliyor",
-   "Menunggu jawaban Anda",
+   "Yanıtınızı bekliyor",
+   "Menunggu jawaban kamu",
    "आपके जवाब का इंतज़ार",
    "بانتظار ردّك"
   ],
@@ -329,8 +329,8 @@
    "Invio della risposta…",
    "Envoi de votre réponse…",
    "Deine Antwort wird gesendet …",
-   "Cevabın gönderiliyor…",
-   "Mengirim jawaban Anda…",
+   "Yanıtınız gönderiliyor…",
+   "Mengirim jawaban kamu…",
    "आपका जवाब भेजा जा रहा है…",
    "جارٍ إرسال ردّك…"
   ],
@@ -346,7 +346,7 @@
    "Enregistré. Envoyé dès que vous êtes en ligne.",
    "Gespeichert. Wird gesendet, sobald du online bist.",
    "Kaydedildi. Çevrimiçi olunca gönderilir.",
-   "Tersimpan. Dikirim begitu Anda online.",
+   "Tersimpan. Dikirim begitu kamu online.",
    "सहेजा गया। ऑनलाइन होते ही भेज दिया जाएगा।",
    "تم الحفظ. سيُرسل فور اتصالك بالإنترنت."
   ],
@@ -361,7 +361,7 @@
    "Il cliente ha ritirato questa richiesta.",
    "Le client a retiré cette demande.",
    "Die Anfrage wurde zurückgezogen.",
-   "Danışan bu talebi geri çekti.",
+   "Müşteri bu talebi geri çekti.",
    "Klien menarik permintaan ini.",
    "क्लाइंट ने यह अनुरोध वापस ले लिया।",
    "سحب العميل هذا الطلب."
@@ -393,7 +393,7 @@
    "È stata gestita o ritirata. Trascina verso il basso per aggiornare.",
    "Elle a reçu une réponse ou a été retirée. Tirez vers le bas pour actualiser.",
    "Sie wurde beantwortet oder zurückgezogen. Zum Aktualisieren nach unten ziehen.",
-   "Yanıtlandı ya da geri çekildi. Yenilemek için aşağı çek.",
+   "Yanıtlandı ya da geri çekildi. Yenilemek için aşağı çekin.",
    "Sudah dijawab atau ditarik. Tarik ke bawah untuk memuat ulang.",
    "इसका जवाब दिया जा चुका है या इसे वापस लिया गया। ताज़ा करने के लिए नीचे खींचें।",
    "تمت الإجابة عنه أو سُحب. اسحب للأسفل للتحديث."
@@ -425,8 +425,8 @@
    "%@ ha chiesto questo orario. Nulla è prenotato finché non accetti.",
    "%@ a demandé ce créneau. Rien n'est réservé tant que vous n'acceptez pas.",
    "%@ hat diesen Termin angefragt. Gebucht ist erst, wenn du zusagst.",
-   "%@ bu saati istedi. Sen onaylayana kadar bir şey ayrılmaz.",
-   "%@ meminta waktu ini. Belum ada yang dipesan sampai Anda setuju.",
+   "%@ bu saati istedi. Siz onaylayana kadar hiçbir şey ayrılmaz.",
+   "%@ meminta waktu ini. Belum ada yang dipesan sampai kamu setuju.",
    "%@ ने यह समय माँगा है। आपकी हाँ के बिना कुछ बुक नहीं होता।",
    "طلب %@ هذا الموعد. لا يُحجز شيء حتى توافق."
   ],
@@ -441,8 +441,8 @@
    "Hai chiesto di confermare le prenotazioni di %@.",
    "Vous avez demandé à valider les réservations de %@.",
    "Du wolltest die Buchungen von %@ selbst bestätigen.",
-   "%@ için randevuları kendin onaylamak istedin.",
-   "Anda meminta untuk mengonfirmasi booking %@.",
+   "%@ için randevuları kendiniz onaylamak istediniz.",
+   "Kamu meminta untuk mengonfirmasi booking %@.",
    "आपने %@ की बुकिंग खुद पक्की करने को कहा था।",
    "طلبتَ تأكيد حجوزات %@ بنفسك."
   ],
@@ -457,8 +457,8 @@
    "Questo cliente ha raggiunto il tuo limite di assenze.",
    "Ce client a atteint votre limite d'absences.",
    "Diese Person hat deine Grenze für Nichterscheinen erreicht.",
-   "Bu danışan gelmeme sınırına ulaştı.",
-   "Klien ini mencapai batas tidak hadir Anda.",
+   "Bu müşteri gelmeme sınırına ulaştı.",
+   "Klien ini mencapai batas tidak hadir kamu.",
    "यह क्लाइंट आपकी नो-शो सीमा तक पहुँच गया है।",
    "وصل هذا العميل إلى حدّ الغياب الذي حدّدته."
   ],
@@ -489,8 +489,8 @@
    "Hai usato le registrazioni gratuite",
    "Vos inscriptions gratuites sont utilisées",
    "Deine kostenlosen Registrierungen sind aufgebraucht",
-   "Ücretsiz kayıtların bitti",
-   "Pendaftaran gratis Anda sudah habis",
+   "Ücretsiz kayıtlarınız bitti",
+   "Pendaftaran gratis kamu sudah habis",
    "आपके मुफ़्त रजिस्ट्रेशन खत्म हो गए",
    "استُخدمت تسجيلاتك المجانية"
   ],
@@ -505,7 +505,7 @@
    "Per approvare un nuovo cliente serve un piano.",
    "Accepter un nouveau client nécessite un abonnement.",
    "Für eine neue Person brauchst du ein Abo.",
-   "Yeni bir danışanı onaylamak için plan gerekir.",
+   "Yeni bir müşteriyi onaylamak için plan gerekir.",
    "Menyetujui klien baru memerlukan paket.",
    "नए क्लाइंट को मंज़ूरी देने के लिए प्लान चाहिए।",
    "الموافقة على عميل جديد تتطلب اشتراكًا."
@@ -521,7 +521,7 @@
    "Un nuovo cliente",
    "Un nouveau client",
    "Eine neue Person",
-   "Yeni bir danışan",
+   "Yeni bir müşteri",
    "Klien baru",
    "एक नया क्लाइंट",
    "عميل جديد"
@@ -537,8 +537,8 @@
    "I nuovi clienti attendono il tuo sì, come dicono le tue regole.",
    "Les nouveaux clients attendent votre accord, selon vos règles.",
    "Neue Personen warten auf deine Zusage, so wie deine Regeln es vorsehen.",
-   "Kurallarına göre yeni danışanlar onayını bekler.",
-   "Klien baru menunggu persetujuan Anda, sesuai aturan Anda.",
+   "Kurallarınıza göre yeni müşteriler onayınızı bekler.",
+   "Klien baru menunggu persetujuan kamu, sesuai aturan kamu.",
    "आपके नियमों के अनुसार नए क्लाइंट आपकी हाँ का इंतज़ार करते हैं।",
    "ينتظر العملاء الجدد موافقتك، كما تنص قواعدك."
   ],
@@ -569,7 +569,7 @@
    "La prenotazione online si riapre per questo cliente.",
    "La réservation en ligne s'ouvre à nouveau pour ce client.",
    "Online-Buchung ist für diese Person wieder offen.",
-   "Bu danışan için çevrimiçi randevu yeniden açılır.",
+   "Bu müşteri için çevrimiçi randevu yeniden açılır.",
    "Booking online dibuka lagi untuk klien ini.",
    "इस क्लाइंट के लिए ऑनलाइन बुकिंग फिर से खुल जाती है।",
    "يُعاد فتح الحجز عبر الإنترنت لهذا العميل."
@@ -601,8 +601,8 @@
    "Approvata. L'appuntamento è nel tuo calendario.",
    "Acceptée. Le rendez-vous est dans votre agenda.",
    "Zugesagt. Der Termin steht in deinem Kalender.",
-   "Onaylandı. Randevu takviminde.",
-   "Disetujui. Janji ada di kalender Anda.",
+   "Onaylandı. Randevu takviminizde.",
+   "Disetujui. Janji ada di kalender kamu.",
    "मंज़ूर। विज़िट आपके कैलेंडर में है।",
    "تمت الموافقة. الموعد في تقويمك."
   ],
@@ -649,8 +649,8 @@
    "Hai usato le registrazioni gratuite. Scegli un piano e approva di nuovo.",
    "Vos inscriptions gratuites sont utilisées. Choisissez un abonnement, puis acceptez à nouveau.",
    "Deine kostenlosen Registrierungen sind aufgebraucht. Wähle ein Abo und sag dann noch einmal zu.",
-   "Ücretsiz kayıtların bitti. Bir plan seç, sonra tekrar onayla.",
-   "Pendaftaran gratis Anda sudah habis. Pilih paket, lalu setujui lagi.",
+   "Ücretsiz kayıtlarınız bitti. Bir plan seçin, sonra tekrar onaylayın.",
+   "Pendaftaran gratis kamu sudah habis. Pilih paket, lalu setujui lagi.",
    "आपके मुफ़्त रजिस्ट्रेशन खत्म हो गए। प्लान चुनें, फिर दोबारा मंज़ूर करें।",
    "استُخدمت تسجيلاتك المجانية. اختر اشتراكًا ثم وافق مرة أخرى."
   ],
@@ -697,8 +697,8 @@
    "%@ ha chiesto di spostare un appuntamento. L'orario attuale resta finché non accetti.",
    "%@ a demandé à déplacer un rendez-vous. L'horaire actuel reste réservé tant que vous n'acceptez pas.",
    "%@ möchte einen Termin verschieben. Die jetzige Zeit bleibt gebucht, bis du zusagst.",
-   "%@ bir randevuyu değiştirmek istedi. Sen onaylayana kadar mevcut saat ayrılı kalır.",
-   "%@ meminta memindahkan janji. Waktu saat ini tetap dipesan sampai Anda setuju.",
+   "%@ bir randevuyu değiştirmek istedi. Siz onaylayana kadar mevcut saat ayrılı kalır.",
+   "%@ meminta memindahkan janji. Waktu saat ini tetap dipesan sampai kamu setuju.",
    "%@ ने एक विज़िट का समय बदलने को कहा है। आपकी हाँ तक मौजूदा समय बुक रहता है।",
    "طلب %@ نقل موعد. يبقى الموعد الحالي محجوزًا حتى توافق."
   ],
@@ -761,8 +761,8 @@
    "La tua regola: modifiche libere fino a %@ prima, poi il cliente invia una richiesta.",
    "Votre règle : changements libres jusqu'à %@ avant, ensuite le client envoie une demande.",
    "Deine Regel: freie Änderungen bis %@ vorher, danach kommt eine Anfrage.",
-   "Kuralın: %@ öncesine kadar serbest değişiklik, sonrasında danışan talep gönderir.",
-   "Aturan Anda: perubahan bebas hingga %@ sebelumnya, setelah itu klien mengirim permintaan.",
+   "Kuralınız: %@ öncesine kadar serbest değişiklik, sonrasında müşteri talep gönderir.",
+   "Aturan kamu: perubahan bebas hingga %@ sebelumnya, setelah itu klien mengirim permintaan.",
    "आपका नियम: %@ पहले तक बदलाव मुफ़्त, उसके बाद क्लाइंट अनुरोध भेजते हैं।",
    "قاعدتك: التغيير مجاني حتى %@ قبل الموعد، وبعدها يرسل العميل طلبًا."
   ],
@@ -793,8 +793,8 @@
    "Spostato. Il calendario mostra il nuovo orario.",
    "Déplacé. Votre agenda affiche le nouvel horaire.",
    "Verschoben. Dein Kalender zeigt die neue Zeit.",
-   "Taşındı. Takvimin yeni saati gösteriyor.",
-   "Dipindahkan. Kalender Anda menampilkan waktu baru.",
+   "Taşındı. Takviminiz yeni saati gösteriyor.",
+   "Dipindahkan. Kalender kamu menampilkan waktu baru.",
    "समय बदल गया। आपका कैलेंडर नया समय दिखाता है।",
    "تم النقل. يعرض تقويمك الموعد الجديد."
   ],
@@ -841,7 +841,7 @@
    "È stato prenotato prima. L'appuntamento resta all'orario; rifiuta la richiesta.",
    "Il a été réservé avant. Le rendez-vous garde son horaire ; refusez la demande.",
    "Sie wurde zuerst gebucht. Der Termin bleibt; lehne die Anfrage ab.",
-   "Önce başkası aldı. Randevu saatinde kalır; talebi reddet.",
+   "Önce başkası aldı. Randevu saatinde kalır; talebi reddedin.",
    "Sudah dipesan lebih dulu. Janji tetap; tolak permintaannya.",
    "वह पहले बुक हो गया। विज़िट का समय वही रहेगा; अनुरोध मना करें।",
    "حُجز قبل ذلك. يبقى الموعد في وقته؛ ارفض الطلب."
@@ -873,7 +873,7 @@
    "Si è liberato un orario. Offrilo a chi l'ha chiesto.",
    "Un créneau s'est libéré. Proposez-le aux personnes qui l'ont demandé.",
    "Ein Termin ist frei geworden. Biete ihn den Wartenden an.",
-   "Bir saat boşaldı. İsteyenlere teklif et.",
+   "Bir saat boşaldı. İsteyenlere teklif edin.",
    "Ada waktu yang kosong. Tawarkan kepada yang meminta.",
    "एक समय खाली हुआ। जिन्होंने माँगा था उन्हें पेशकश करें।",
    "أصبح موعد متاحًا. اعرضه على من طلبوا."
@@ -1129,7 +1129,7 @@
    "Quando un giorno è pieno, i clienti possono chiedere un avviso se si libera un orario. Compaiono qui.",
    "Quand une journée est complète, les clients peuvent demander à être prévenus si un créneau se libère. Ils apparaissent ici.",
    "Wenn ein Tag voll ist, kann deine Kundschaft darum bitten, Bescheid zu bekommen, falls eine Zeit frei wird. Sie erscheinen hier.",
-   "Bir gün dolunca danışanlar saat boşalırsa haber isteyebilir. Burada görünürler.",
+   "Bir gün dolunca müşteriler, saat boşalırsa haber almak isteyebilir. Burada görünürler.",
    "Saat satu hari penuh, klien bisa minta diberi tahu jika ada waktu kosong. Mereka muncul di sini.",
    "जब कोई दिन भर जाता है, क्लाइंट समय खाली होने पर बताने को कह सकते हैं। वे यहाँ दिखते हैं।",
    "عندما يمتلئ يوم، يمكن للعملاء طلب إخبارهم إذا توفّر موعد. يظهرون هنا."

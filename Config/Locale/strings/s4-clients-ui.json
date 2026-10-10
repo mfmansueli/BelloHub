@@ -361,7 +361,7 @@
    "Vos fiches n'ont pas pu être lues. Réessayez dans un instant.",
    "Deine Daten konnten nicht gelesen werden. Versuche es gleich noch einmal.",
    "Kayıtlarınız okunamadı. Birazdan tekrar deneyin.",
-   "Catatan Anda tidak dapat dibaca. Coba lagi sebentar lagi.",
+   "Catatan kamu tidak dapat dibaca. Coba lagi sebentar lagi.",
    "आपके रिकॉर्ड नहीं पढ़े जा सके। थोड़ी देर में फिर कोशिश करें।",
    "تعذّرت قراءة سجلاتك. حاول مرة أخرى بعد قليل."
   ],
@@ -584,7 +584,7 @@
    "Vos fiches n'ont pas pu être lues. Réessayez dans un instant.",
    "Deine Daten konnten nicht gelesen werden. Versuche es gleich noch einmal.",
    "Kayıtlarınız okunamadı. Birazdan tekrar deneyin.",
-   "Catatan Anda tidak dapat dibaca. Coba lagi sebentar lagi.",
+   "Catatan kamu tidak dapat dibaca. Coba lagi sebentar lagi.",
    "आपके रिकॉर्ड नहीं पढ़े जा सके। थोड़ी देर में फिर कोशिश करें।",
    "تعذّرت قراءة سجلاتك. حاول مرة أخرى بعد قليل."
   ],
@@ -840,7 +840,7 @@
    "Ce dont vous vous souvenez",
    "Was du dir merkst",
    "Hatırladıklarınız",
-   "Yang Anda ingat",
+   "Yang kamu ingat",
    "आपको क्या याद है",
    "ما تتذكره"
   ],
@@ -872,7 +872,7 @@
    "Rien de noté pour l'instant. Ajoutez ce dont vous voulez vous souvenir.",
    "Noch nichts notiert. Halte fest, was du dir merken möchtest.",
    "Henüz not yok. Hatırlamak istediklerinizi ekleyin.",
-   "Belum ada catatan. Tambahkan hal yang ingin Anda ingat.",
+   "Belum ada catatan. Tambahkan hal yang ingin kamu ingat.",
    "अभी कुछ नहीं लिखा है। जो याद रखना चाहते हैं, वह जोड़ें।",
    "لا توجد ملاحظات بعد. أضف ما تريد تذكّره."
   ],
@@ -952,7 +952,7 @@
    "Privé",
    "Nur du",
    "Sadece siz",
-   "Hanya Anda",
+   "Hanya kamu",
    "सिर्फ़ आप",
    "أنت فقط"
   ],
@@ -1229,7 +1229,7 @@
    "Ajouté par vous",
    "Von dir hinzugefügt",
    "Sizin eklediğiniz",
-   "Ditambahkan oleh Anda",
+   "Ditambahkan oleh kamu",
    "आपने जोड़ा",
    "أضفته بنفسك"
   ],
@@ -1485,7 +1485,7 @@
    "Sensibilités, préférences, tout ce que vous ne voulez jamais oublier",
    "Empfindlichkeiten, Vorlieben, alles, was du nie vergessen willst",
    "Hassasiyetler, tercihler, asla unutmak istemedikleriniz",
-   "Kepekaan, preferensi, apa pun yang tak ingin Anda lupakan",
+   "Kepekaan, preferensi, apa pun yang tak ingin kamu lupakan",
    "संवेदनशीलताएँ, पसंद, जो कुछ आप कभी भूलना नहीं चाहते",
    "الحساسيات والتفضيلات وكل ما لا تريد نسيانه أبدًا"
   ],
@@ -1629,7 +1629,7 @@
    "Rien n'a été enregistré. Vérifiez que votre iPhone a de la place et réessayez.",
    "Es wurde nichts gespeichert. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Hiçbir şey kaydedilmedi. iPhone'unuzda yer olduğundan emin olup tekrar deneyin.",
-   "Tidak ada yang tersimpan. Pastikan iPhone Anda punya ruang lalu coba lagi.",
+   "Tidak ada yang tersimpan. Pastikan iPhone kamu punya ruang lalu coba lagi.",
    "कुछ भी सहेजा नहीं गया। जाँचें कि iPhone में जगह है और फिर कोशिश करें।",
    "لم يُحفظ شيء. تأكد من وجود مساحة على iPhone وحاول مرة أخرى."
   ],
@@ -1837,7 +1837,7 @@
    "La réservation via votre lien est désactivée. Vous pouvez toujours ajouter des rendez-vous.",
    "Die Buchung über deinen Link ist aus. Termine kannst du weiterhin selbst eintragen.",
    "Bağlantınız üzerinden randevu alma kapalı. Randevuları yine kendiniz ekleyebilirsiniz.",
-   "Pemesanan lewat tautan Anda dimatikan. Anda tetap bisa menambahkan janji temu sendiri.",
+   "Pemesanan lewat tautan kamu dimatikan. Kamu tetap bisa menambahkan janji temu sendiri.",
    "आपके लिंक से बुकिंग बंद है। आप खुद अपॉइंटमेंट जोड़ सकते हैं।",
    "الحجز عبر رابطك متوقف. ما زال بإمكانك إضافة المواعيد بنفسك."
   ],
@@ -1853,7 +1853,7 @@
    "Motif (visible par vous seul)",
    "Grund (nur für dich sichtbar)",
    "Neden (yalnızca siz görürsünüz)",
-   "Alasan (hanya Anda yang melihat)",
+   "Alasan (hanya kamu yang melihat)",
    "कारण (सिर्फ़ आप देखते हैं)",
    "السبب (تراه أنت فقط)"
   ],
@@ -1997,7 +1997,7 @@
    "%@ disparaît de vos listes et des suggestions de réservation. La fiche est conservée et vous pouvez la restaurer à tout moment.",
    "%@ verschwindet aus deinen Listen und den Buchungsvorschlägen. Die Akte bleibt erhalten und du kannst sie jederzeit wiederherstellen.",
    "%@ listelerinizden ve randevu önerilerinden kalkar. Kayıt korunur ve istediğiniz zaman geri yükleyebilirsiniz.",
-   "%@ hilang dari daftar dan saran pemesanan Anda. Catatan tetap disimpan dan bisa dipulihkan kapan saja.",
+   "%@ hilang dari daftar dan saran pemesanan kamu. Catatan tetap disimpan dan bisa dipulihkan kapan saja.",
    "आपकी सूचियों और बुकिंग सुझावों से %@ हट जाएँगे। रिकॉर्ड सुरक्षित रहता है और आप इसे कभी भी वापस ला सकते हैं।",
    "تتم إزالة %@ من قوائمك ومن اقتراحات الحجز. يبقى السجل محفوظًا ويمكنك استعادته في أي وقت."
   ],
@@ -2029,7 +2029,7 @@
    "Remettre dans vos listes",
    "Wieder in deine Listen aufnehmen",
    "Listelerinize geri al",
-   "Kembalikan ke daftar Anda",
+   "Kembalikan ke daftar kamu",
    "सूचियों में वापस लाएँ",
    "إعادة إلى قوائمك"
   ],
@@ -2077,7 +2077,7 @@
    "Ce dont vous vous souvenez",
    "Was du dir merkst",
    "Hatırladıklarınız",
-   "Yang Anda ingat",
+   "Yang kamu ingat",
    "आपको क्या याद है",
    "ما تتذكره"
   ],
@@ -2109,7 +2109,7 @@
    "Ce que vous voulez retenir de %@, avec vos propres mots. Vous seul le voyez.",
    "Was du dir über %@ merken möchtest, in deinen eigenen Worten. Nur du siehst das.",
    "%@ hakkında hatırlamak istedikleriniz, kendi cümlelerinizle. Bunu yalnızca siz görürsünüz.",
-   "Hal yang ingin Anda ingat tentang %@, dengan kata-kata Anda sendiri. Hanya Anda yang melihat ini.",
+   "Hal yang ingin kamu ingat tentang %@, dengan kata-kata kamu sendiri. Hanya kamu yang melihat ini.",
    "%@ के बारे में जो आप याद रखना चाहते हैं, अपने शब्दों में। इसे सिर्फ़ आप देखते हैं।",
    "ما تريد تذكّره عن %@ بكلماتك. أنت وحدك من يراه."
   ],
@@ -2125,7 +2125,7 @@
    "Affiché avant chaque rendez-vous. Jamais partagé avec %@.",
    "Wird dir vor jedem Termin angezeigt. Wird nie mit %@ geteilt.",
    "Her randevudan önce size gösterilir. %@ ile asla paylaşılmaz.",
-   "Ditampilkan kepada Anda sebelum setiap janji temu. Tidak pernah dibagikan kepada %@.",
+   "Ditampilkan kepada kamu sebelum setiap janji temu. Tidak pernah dibagikan kepada %@.",
    "हर अपॉइंटमेंट से पहले आपको दिखता है। %@ के साथ कभी साझा नहीं किया जाता।",
    "يظهر لك قبل كل موعد. لا تتم مشاركته مع %@ أبدًا."
   ],
@@ -2189,7 +2189,7 @@
    "Rien n'a été enregistré. Vérifiez que votre iPhone a de la place et réessayez.",
    "Es wurde nichts gespeichert. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Hiçbir şey kaydedilmedi. iPhone'unuzda yer olduğundan emin olup tekrar deneyin.",
-   "Tidak ada yang tersimpan. Pastikan iPhone Anda punya ruang lalu coba lagi.",
+   "Tidak ada yang tersimpan. Pastikan iPhone kamu punya ruang lalu coba lagi.",
    "कुछ भी सहेजा नहीं गया। जाँचें कि iPhone में जगह है और फिर कोशिश करें।",
    "لم يُحفظ شيء. تأكد من وجود مساحة على iPhone وحاول مرة أخرى."
   ],

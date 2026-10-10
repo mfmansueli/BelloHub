@@ -218,7 +218,7 @@
    "In ritardo? Avvisa %@",
    "En retard ? Prévenez %@",
    "Verspätet? Sag %@ Bescheid",
-   "Geç mi kalacaksın? %@ kişisine haber ver",
+   "Geç mi kalacaksınız? %@ kişisine haber verin",
    "Terlambat? Beri tahu %@",
    "देर हो रही है? %@ को बताएँ",
    "هل ستتأخر؟ أبلغ %@"
@@ -540,7 +540,7 @@
    "Ricevi un avviso prima degli appuntamenti e quando i promemoria sono pronti. Le notifiche non mostrano mai nomi.",
    "Recevez un rappel avant vos rendez-vous et quand les rappels sont prêts. Les notifications n'affichent jamais de nom.",
    "Erhalte einen Hinweis vor deinen Terminen und wenn Erinnerungen bereit sind. Mitteilungen zeigen nie einen Namen.",
-   "Randevularından önce ve hatırlatmalar hazır olduğunda bir uyarı al. Bildirimlerde asla isim görünmez.",
+   "Randevularınızdan önce ve hatırlatmalar hazır olduğunda bir uyarı alın. Bildirimlerde asla isim görünmez.",
    "Dapatkan pemberitahuan sebelum janji temu dan saat pengingat siap. Notifikasi tidak pernah menampilkan nama.",
    "अपॉइंटमेंट से पहले और रिमाइंडर तैयार होने पर सूचना पाएँ। सूचनाओं में कभी कोई नाम नहीं दिखता।",
    "احصل على تنبيه قبل مواعيدك وعندما تصبح التذكيرات جاهزة. لا تعرض الإشعارات أي اسم أبدًا."
@@ -556,7 +556,7 @@
    "Tieni la giornata sotto controllo",
    "Gardez votre journée sous contrôle",
    "Behalte deinen Tag im Blick",
-   "Gününü kontrol altında tut",
+   "Gününüzü kontrol altında tutun",
    "Pantau harimu",
    "अपने दिन पर नज़र रखें",
    "ابقَ على اطلاع بيومك"
@@ -572,7 +572,7 @@
    "Apri Impostazioni",
    "Ouvrir les Réglages",
    "Einstellungen öffnen",
-   "Ayarlar'ı aç",
+   "Ayarlar’ı aç",
    "Buka Pengaturan",
    "सेटिंग्स खोलें",
    "فتح الإعدادات"
@@ -588,7 +588,7 @@
    "Attivale in Impostazioni per ricevere un avviso prima degli appuntamenti.",
    "Activez-les dans Réglages pour recevoir un rappel avant vos rendez-vous.",
    "Aktiviere sie in den Einstellungen, um vor deinen Terminen einen Hinweis zu bekommen.",
-   "Randevularından önce uyarı almak için Ayarlar'dan aç.",
+   "Randevularınızdan önce uyarı almak için Ayarlar’dan açın.",
    "Aktifkan di Pengaturan untuk mendapat pemberitahuan sebelum janji temu.",
    "अपॉइंटमेंट से पहले सूचना पाने के लिए सेटिंग्स में इन्हें चालू करें।",
    "فعّلها من الإعدادات لتصلك تنبيهات قبل مواعيدك."
@@ -668,7 +668,7 @@
    "%1$@ alle %2$@. Controlla ciò che conta prima di iniziare.",
    "%1$@ à %2$@. Vérifiez l'essentiel avant de commencer.",
    "%1$@ um %2$@ Uhr. Prüfe das Wichtige, bevor du anfängst.",
-   "%1$@ saat %2$@. Başlamadan önce önemli noktalara göz at.",
+   "%1$@ saat %2$@. Başlamadan önce önemli noktalara göz atın.",
    "%1$@ pukul %2$@. Tinjau hal penting sebelum mulai.",
    "%1$@ %2$@ बजे। शुरू करने से पहले ज़रूरी बातें देख लें।",
    "%1$@ في %2$@. راجع المهم قبل أن تبدأ."
@@ -747,9 +747,9 @@
    "¡Feliz cumpleaños, {name}! Te deseo un día precioso. Cuando quieras un poco de cuidado, aquí estoy.",
    "Buon compleanno, {name}! Ti auguro una giornata splendida. Quando vorrai un po' di cura, io sono qui.",
    "Joyeux anniversaire, {name} ! Je vous souhaite une belle journée. Quand vous voulez un moment de soin, je suis là.",
-   "Alles Gute zum Geburtstag, {name}! Ich wünsche dir einen schönen Tag. Wenn du dir etwas Gutes tun möchtest, bin ich da.",
-   "Doğum günün kutlu olsun {name}! Güzel bir gün dilerim. Kendine biraz bakım yaptırmak istediğinde buradayım.",
-   "Selamat ulang tahun, {name}! Semoga harimu menyenangkan. Kapan pun kamu ingin perawatan, aku siap membantu.",
+   "Alles Gute zum Geburtstag, {name}! Ich wünsche Ihnen einen schönen Tag. Wenn Sie sich etwas Gutes tun möchten, bin ich für Sie da.",
+   "Doğum gününüz kutlu olsun {name}! Güzel bir gün geçirmenizi dilerim. Kendinize biraz bakım yaptırmak istediğinizde buradayım.",
+   "Selamat ulang tahun, {name}! Semoga hari Anda menyenangkan. Kapan pun Anda ingin dimanjakan dengan perawatan, saya siap membantu.",
    "जन्मदिन मुबारक, {name}! आपका दिन बहुत सुंदर बीते। जब भी थोड़ी देखभाल चाहिए, मैं यहाँ हूँ।",
    "عيد ميلاد سعيد، {name}! أتمنى لك يومًا جميلًا. متى احتجت إلى عناية، أنا هنا."
   ],
@@ -796,7 +796,7 @@
    "Leggilo, modificalo se vuoi, poi apri WhatsApp.",
    "Relisez-le, modifiez-le si vous voulez, puis ouvrez WhatsApp.",
    "Lies es, ändere es nach Wunsch und öffne dann WhatsApp.",
-   "Oku, istersen değiştir, sonra WhatsApp'ı aç.",
+   "Okuyun, isterseniz değiştirin, sonra WhatsApp’ı açın.",
    "Baca, ubah jika perlu, lalu buka WhatsApp.",
    "इसे पढ़ें, चाहें तो बदलें, फिर WhatsApp खोलें।",
    "اقرأها وعدّلها إن شئت ثم افتح واتساب."
@@ -812,7 +812,7 @@
    "Non c'è un numero salvato. Leggilo, modificalo se vuoi e condividilo in un altro modo.",
    "Aucun numéro enregistré. Relisez-le, modifiez-le si vous voulez, puis partagez-le autrement.",
    "Es ist keine Nummer gespeichert. Lies es, ändere es nach Wunsch und teile es auf anderem Weg.",
-   "Kayıtlı numara yok. Oku, istersen değiştir ve başka bir yolla paylaş.",
+   "Kayıtlı numara yok. Okuyun, isterseniz değiştirin ve başka bir yolla paylaşın.",
    "Tidak ada nomor tersimpan. Baca, ubah jika perlu, lalu bagikan dengan cara lain.",
    "कोई नंबर सहेजा हुआ नहीं है। इसे पढ़ें, चाहें तो बदलें और किसी दूसरे तरीके से साझा करें।",
    "لا يوجد رقم محفوظ. اقرأها وعدّلها إن شئت ثم شاركها بطريقة أخرى."
@@ -988,7 +988,7 @@
    "Apri Bello Hub per vedere chi è e inviare gli auguri.",
    "Ouvrez Bello Hub pour voir qui et envoyer vos vœux.",
    "Öffne Bello Hub, um zu sehen, wer es ist, und Glückwünsche zu senden.",
-   "Kimin olduğunu görmek ve tebrik göndermek için Bello Hub'ı aç.",
+   "Kimin olduğunu görmek ve tebrik göndermek için Bello Hub’ı açın.",
    "Buka Bello Hub untuk melihat siapa dan mengirim ucapan.",
    "कौन है यह देखने और बधाई भेजने के लिए Bello Hub खोलें।",
    "افتح Bello Hub لترى من هو وترسل تهانيك."
@@ -1069,7 +1069,7 @@
    "La tua giornata",
    "Votre journée",
    "Dein Tag",
-   "Günün",
+   "Gününüz",
    "Harimu",
    "आपका दिन",
    "يومك"
@@ -1085,7 +1085,7 @@
    "Apri Bello Hub per vedere cosa preparare.",
    "Ouvrez Bello Hub pour voir quoi préparer.",
    "Öffne Bello Hub, um zu sehen, was du vorbereiten musst.",
-   "Neleri hazırlayacağını görmek için Bello Hub'ı aç.",
+   "Neleri hazırlayacağınızı görmek için Bello Hub’ı açın.",
    "Buka Bello Hub untuk melihat apa yang perlu disiapkan.",
    "क्या तैयार करना है यह देखने के लिए Bello Hub खोलें।",
    "افتح Bello Hub لترى ما يجب تحضيره."
@@ -1101,7 +1101,7 @@
    "Il tuo prossimo appuntamento sta per iniziare",
    "Votre prochain rendez-vous va bientôt commencer",
    "Dein nächster Termin beginnt gleich",
-   "Sıradaki randevun birazdan başlıyor",
+   "Sıradaki randevunuz birazdan başlıyor",
    "Janji temu berikutnya akan segera dimulai",
    "आपका अगला अपॉइंटमेंट जल्द शुरू होने वाला है",
    "موعدك القادم على وشك البدء"

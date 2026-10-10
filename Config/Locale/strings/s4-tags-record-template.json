@@ -216,7 +216,7 @@
    "Des étiquettes rapides pour vous souvenir de qui est qui.",
    "Kurze Markierungen, damit du weißt, wer wer ist.",
    "Kimin kim olduğunu hatırlamanıza yardımcı olan hızlı etiketler.",
-   "Label singkat untuk membantu Anda mengingat siapa adalah siapa.",
+   "Label singkat untuk membantu kamu mengingat siapa adalah siapa.",
    "त्वरित टैग जो याद रखने में मदद करते हैं कि कौन कौन है।",
    "تصنيفات سريعة تساعدك على تذكّر من هو من."
   ],
@@ -232,7 +232,7 @@
    "Vos étiquettes",
    "Deine Markierungen",
    "Etiketleriniz",
-   "Label Anda",
+   "Label kamu",
    "आपके टैग",
    "تصنيفاتك"
   ],
@@ -399,7 +399,7 @@
    "Nous n'avons pas pu lire vos étiquettes. Vérifiez que votre iPhone est déverrouillé et réessayez.",
    "Wir konnten deine Markierungen nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Etiketleriniz okunamadı. iPhone'unuzun kilidinin açık olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat membaca label Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi.",
+   "Kami tidak dapat membaca label kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi.",
    "हम आपके टैग नहीं पढ़ सके। जाँचें कि आपका iPhone अनलॉक है, फिर दोबारा कोशिश करें।",
    "تعذّرت قراءة تصنيفاتك. تأكد من أن iPhone غير مقفل ثم حاول مرة أخرى."
   ],
@@ -415,7 +415,7 @@
    "Nous n'avons pas pu enregistrer cette modification. Vérifiez que votre iPhone a assez d'espace et réessayez.",
    "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Bu değişiklik kaydedilemedi. iPhone'unuzda yer olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi.",
+   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi.",
    "हम यह बदलाव सहेज नहीं सके। जाँचें कि आपके iPhone में जगह है, फिर दोबारा कोशिश करें।",
    "تعذّر حفظ هذا التغيير. تأكد من وجود مساحة على iPhone ثم حاول مرة أخرى."
   ],
@@ -431,7 +431,7 @@
    "Vous avez déjà une étiquette portant ce nom.",
    "Du hast bereits eine Markierung mit diesem Namen.",
    "Bu adla bir etiketiniz zaten var.",
-   "Anda sudah punya label dengan nama ini.",
+   "Kamu sudah punya label dengan nama ini.",
    "इस नाम का टैग आपके पास पहले से है।",
    "لديك تصنيف بهذا الاسم بالفعل."
   ],
@@ -635,7 +635,7 @@
     "other": "%lld kişi bu etiketi kaybedecek. Listeniz olduğu gibi kalır."
    },
    {
-    "other": "%lld orang akan kehilangan label ini. Daftar Anda tetap seperti semula."
+    "other": "%lld orang akan kehilangan label ini. Daftar kamu tetap seperti semula."
    },
    {
     "one": "%lld व्यक्ति से यह टैग हट जाएगा। आपकी सूची जैसी है वैसी ही रहेगी।",
@@ -662,7 +662,7 @@
    "Personne n'a cette étiquette. Votre liste reste inchangée.",
    "Niemand hat diese Markierung. Deine Liste bleibt unverändert.",
    "Bu etikete sahip kimse yok. Listeniz olduğu gibi kalır.",
-   "Tidak ada yang memakai label ini. Daftar Anda tetap seperti semula.",
+   "Tidak ada yang memakai label ini. Daftar kamu tetap seperti semula.",
    "यह टैग किसी के पास नहीं है। आपकी सूची जैसी है वैसी ही रहेगी।",
    "لا أحد لديه هذا التصنيف. تبقى قائمتك كما هي."
   ],
@@ -678,7 +678,7 @@
    "Les personnes qui ont cette étiquette la perdront. Votre liste reste inchangée.",
    "Wer diese Markierung hat, verliert sie. Deine Liste bleibt unverändert.",
    "Bu etikete sahip olanlar onu kaybedecek. Listeniz olduğu gibi kalır.",
-   "Orang yang memiliki label ini akan kehilangannya. Daftar Anda tetap seperti semula.",
+   "Orang yang memiliki label ini akan kehilangannya. Daftar kamu tetap seperti semula.",
    "जिनके पास यह टैग है, उनसे यह हट जाएगा। आपकी सूची जैसी है वैसी ही रहेगी।",
    "سيُزال هذا التصنيف عن كل من لديه. تبقى قائمتك كما هي."
   ],
@@ -790,7 +790,7 @@
    "Ce que vous voulez retenir pour chaque %@. L'assistant vocal les remplit pour vous.",
    "Was du pro %@ festhalten möchtest. Der Sprachassistent füllt diese Felder für dich aus.",
    "Her %@ hakkında hatırlamak istedikleriniz. Sesli asistan bunları sizin yerinize doldurur.",
-   "Hal yang ingin Anda ingat tentang setiap %@. Asisten suara mengisinya untuk Anda.",
+   "Hal yang ingin kamu ingat tentang setiap %@. Asisten suara mengisinya untuk kamu.",
    "हर %@ के बारे में आप क्या याद रखना चाहते हैं। वॉइस असिस्टेंट इन्हें भर देता है।",
    "ما تريد تذكّره عن كل %@. يملأ المساعد الصوتي هذه الحقول عنك."
   ],
@@ -806,7 +806,7 @@
    "Vos champs",
    "Deine Felder",
    "Kendi alanlarınız",
-   "Kolom Anda",
+   "Kolom kamu",
    "आपके फ़ील्ड",
    "حقولك"
   ],
@@ -822,7 +822,7 @@
    "Ajouter votre propre champ",
    "Eigenes Feld hinzufügen",
    "Kendi alanınızı ekleyin",
-   "Tambah kolom Anda sendiri",
+   "Tambah kolom kamu sendiri",
    "अपना फ़ील्ड जोड़ें",
    "أضف حقلك الخاص"
   ],
@@ -838,7 +838,7 @@
    "Désactiver un champ ne fait que cesser de le demander. Ce que vous avez déjà enregistré reste.",
    "Ein ausgeschaltetes Feld wird nur nicht mehr abgefragt. Was du bereits gespeichert hast, bleibt erhalten.",
    "Bir alanı kapatmak yalnızca sorulmasını durdurur. Daha önce kaydettikleriniz kalır.",
-   "Mematikan kolom hanya menghentikan pertanyaannya. Yang sudah Anda simpan tetap ada.",
+   "Mematikan kolom hanya menghentikan pertanyaannya. Yang sudah kamu simpan tetap ada.",
    "किसी फ़ील्ड को बंद करने से वह बस पूछा जाना बंद होता है। जो पहले सहेजा जा चुका है, वह बना रहता है।",
    "إيقاف حقل يعني فقط التوقف عن سؤاله. ما حفظته سابقًا يبقى كما هو."
   ],
@@ -854,7 +854,7 @@
    "Vous avez atteint la limite de champs personnels pour cette profession.",
    "Du hast die Höchstzahl eigener Felder für diesen Beruf erreicht.",
    "Bu meslek için kendi alanlarınızın sınırına ulaştınız.",
-   "Anda sudah mencapai batas kolom sendiri untuk profesi ini.",
+   "Kamu sudah mencapai batas kolom sendiri untuk profesi ini.",
    "आप इस पेशे के लिए अपने फ़ील्ड की सीमा तक पहुँच गए हैं।",
    "وصلت إلى الحد الأقصى للحقول الخاصة بهذه المهنة."
   ],
@@ -918,7 +918,7 @@
    "Les champs de votre fiche apparaîtront ici quand votre espace de travail sera prêt.",
    "Die Felder deiner Akte erscheinen hier, sobald dein Arbeitsbereich bereit ist.",
    "Çalışma alanınız hazır olduğunda kayıt alanlarınız burada görünür.",
-   "Kolom catatan Anda akan muncul di sini setelah ruang kerja Anda siap.",
+   "Kolom catatan kamu akan muncul di sini setelah ruang kerja kamu siap.",
    "आपका वर्कस्पेस तैयार होते ही आपके रिकॉर्ड फ़ील्ड यहाँ दिखेंगे।",
    "ستظهر حقول سجلّك هنا عندما تصبح مساحة عملك جاهزة."
   ],
@@ -950,7 +950,7 @@
    "Nous n'avons pas pu lire les champs de votre fiche. Vérifiez que votre iPhone est déverrouillé et réessayez.",
    "Wir konnten die Felder deiner Akte nicht lesen. Prüfe, ob dein iPhone entsperrt ist, und versuche es erneut.",
    "Kayıt alanlarınız okunamadı. iPhone'unuzun kilidinin açık olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat membaca kolom catatan Anda. Pastikan iPhone Anda tidak terkunci, lalu coba lagi.",
+   "Kami tidak dapat membaca kolom catatan kamu. Pastikan iPhone kamu tidak terkunci, lalu coba lagi.",
    "हम आपके रिकॉर्ड फ़ील्ड नहीं पढ़ सके। जाँचें कि आपका iPhone अनलॉक है, फिर दोबारा कोशिश करें।",
    "تعذّرت قراءة حقول سجلّك. تأكد من أن iPhone غير مقفل ثم حاول مرة أخرى."
   ],
@@ -966,7 +966,7 @@
    "Nous n'avons pas pu enregistrer cette modification. Vérifiez que votre iPhone a assez d'espace et réessayez.",
    "Wir konnten diese Änderung nicht speichern. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Bu değişiklik kaydedilemedi. iPhone'unuzda yer olduğundan emin olup tekrar deneyin.",
-   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone Anda punya ruang, lalu coba lagi.",
+   "Kami tidak dapat menyimpan perubahan ini. Pastikan iPhone kamu punya ruang, lalu coba lagi.",
    "हम यह बदलाव सहेज नहीं सके। जाँचें कि आपके iPhone में जगह है, फिर दोबारा कोशिश करें।",
    "تعذّر حفظ هذا التغيير. تأكد من وجود مساحة على iPhone ثم حاول مرة أخرى."
   ],
@@ -1126,7 +1126,7 @@
    "Comment le remplissez-vous ?",
    "Wie füllst du es aus?",
    "Nasıl doldurursunuz?",
-   "Bagaimana Anda mengisinya?",
+   "Bagaimana kamu mengisinya?",
    "आप इसे कैसे भरते हैं?",
    "كيف تملؤه؟"
   ],
@@ -1302,7 +1302,7 @@
    "Il ne sera plus demandé. Les fiches déjà enregistrées gardent ce que vous avez écrit. Pour le mettre en pause, désactivez-le.",
    "Es wird nicht mehr abgefragt. Bereits gespeicherte Einträge behalten, was du geschrieben hast. Zum Pausieren schalte es stattdessen aus.",
    "Artık sorulmayacak. Daha önce kaydettiğiniz kayıtlar yazdıklarınızı korur. Duraklatmak için bunun yerine kapatın.",
-   "Kolom ini tidak akan ditanyakan lagi. Catatan yang sudah Anda simpan tetap berisi tulisan Anda. Untuk menjedanya, matikan saja.",
+   "Kolom ini tidak akan ditanyakan lagi. Catatan yang sudah kamu simpan tetap berisi tulisan kamu. Untuk menjedanya, matikan saja.",
    "यह अब नहीं पूछा जाएगा। पहले से सहेजे गए रिकॉर्ड में आपका लिखा हुआ बना रहेगा। रोकने के लिए इसे बंद कर दें।",
    "لن يُسأل عن هذا الحقل بعد الآن. تحتفظ السجلات المحفوظة سابقًا بما كتبته. لإيقافه مؤقتًا، أوقفه بدلًا من حذفه."
   ],
@@ -1350,7 +1350,7 @@
    "Vous avez déjà un champ portant ce nom.",
    "Du hast bereits ein Feld mit diesem Namen.",
    "Bu adla bir alanınız zaten var.",
-   "Anda sudah punya kolom dengan nama ini.",
+   "Kamu sudah punya kolom dengan nama ini.",
    "इस नाम का फ़ील्ड आपके पास पहले से है।",
    "لديك حقل بهذا الاسم بالفعل."
   ],

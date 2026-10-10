@@ -42,7 +42,7 @@
    "Privé. Visible uniquement par vous.",
    "Privat. Nur du kannst das sehen.",
    "Özel. Yalnızca siz görebilirsiniz.",
-   "Pribadi. Hanya Anda yang dapat melihatnya.",
+   "Pribadi. Hanya kamu yang dapat melihatnya.",
    "निजी। इसे सिर्फ़ आप देख सकते हैं।",
    "خاص. لا يراه سواك."
   ],
@@ -122,7 +122,7 @@
    "Elle se remplit ensemble pendant la visite. Les réponses sont scellées et restent sur votre iPhone.",
    "Füllt ihn beim Termin gemeinsam aus. Die Antworten werden versiegelt und bleiben auf deinem iPhone.",
    "Ziyaret sırasında birlikte doldurulur. Yanıtlar mühürlenir ve iPhone'unuzda kalır.",
-   "Isi bersama saat kunjungan. Jawaban disegel dan tetap berada di iPhone Anda.",
+   "Isi bersama saat kunjungan. Jawaban disegel dan tetap berada di iPhone kamu.",
    "विज़िट के दौरान साथ मिलकर भरें। जवाब सील होकर आपके iPhone पर ही रहते हैं।",
    "تُملأ الاستمارة معًا أثناء الزيارة. تُختم الإجابات وتبقى على جهاز iPhone الخاص بك."
   ],
@@ -202,7 +202,7 @@
    "Remplie par vous · %@",
    "Von dir ausgefüllt · %@",
    "Sizin tarafınızdan dolduruldu · %@",
-   "Diisi oleh Anda · %@",
+   "Diisi oleh kamu · %@",
    "आपने भरा · %@",
    "تم الملء بواسطتك · %@"
   ],
@@ -218,7 +218,7 @@
    "Remplie par vous",
    "Von dir ausgefüllt",
    "Sizin tarafınızdan dolduruldu",
-   "Diisi oleh Anda",
+   "Diisi oleh kamu",
    "आपने भरा",
    "تم الملء بواسطتك"
   ],
@@ -545,7 +545,7 @@
    "Aucun consentement enregistré. Notez ici ce qu’elle a signé avec vous ; le papier reste chez vous.",
    "Noch keine Einwilligung vermerkt. Halte hier fest, was bei dir unterschrieben wurde; das Papier bleibt bei dir.",
    "Henüz onay kaydı yok. Sizinle imzaladıklarını buraya not edin; kâğıt sizde kalır.",
-   "Belum ada persetujuan tercatat. Catat di sini apa yang ia tanda tangani bersama Anda; kertasnya tetap pada Anda.",
+   "Belum ada persetujuan tercatat. Catat di sini apa yang ia tanda tangani bersama kamu; kertasnya tetap pada kamu.",
    "अभी कोई सहमति दर्ज नहीं है। उसने आपके साथ जो हस्ताक्षर किए, यहाँ नोट करें; कागज़ आपके पास रहता है।",
    "لم تُسجَّل أي موافقة بعد. دوّني هنا ما وقّعته معك؛ تبقى الورقة لديك."
   ],
@@ -792,7 +792,7 @@
    "Posez les questions et enregistrez les réponses. Tout consentement se signe avec vous, hors de l’app.",
    "Stell die Fragen und speichere die Antworten. Einwilligungen werden bei dir unterschrieben, außerhalb der App.",
    "Soruları sorun ve yanıtları kaydedin. Onaylar sizinle, uygulama dışında imzalanır.",
-   "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama Anda, di luar aplikasi.",
+   "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama kamu, di luar aplikasi.",
    "प्रश्न पूछें और उत्तर सहेजें। कोई भी सहमति आपके साथ, ऐप के बाहर हस्ताक्षरित होती है।",
    "اطرحي الأسئلة واحفظي الإجابات. تُوقَّع أي موافقة معك خارج التطبيق."
   ],
@@ -824,7 +824,7 @@
    "Indiquez le nom du mineur. Un parent ou tuteur répond pour lui ; vous recueillez le consentement en personne.",
    "Trag den Namen der minderjährigen Person ein. Ein Elternteil oder eine erziehungsberechtigte Person antwortet für sie; die Einwilligung holst du persönlich ein.",
    "Reşit olmayan kişinin adını yazın. Bir ebeveyn veya veli onun adına yanıtlar; onayı siz bizzat alırsınız.",
-   "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya Anda kumpulkan secara langsung.",
+   "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya kamu kumpulkan secara langsung.",
    "नाबालिग का नाम लिखें। माता-पिता या अभिभावक उसके लिए उत्तर देते हैं; सहमति आप व्यक्तिगत रूप से लेती हैं।",
    "اكتبي اسم القاصر. يجيب أحد الوالدين أو ولي الأمر نيابةً عنه؛ وتجمعين الموافقة شخصيًا."
   ],
@@ -1064,7 +1064,7 @@
    "Ce que vous demandez avant la première visite et à quelle fréquence vous le redemandez.",
    "Was du vor dem ersten Besuch abfragst und wie oft du erneut fragst.",
    "İlk ziyaretten önce sorduklarınız ve ne sıklıkla yeniden sorduğunuz.",
-   "Apa yang Anda tanyakan sebelum kunjungan pertama dan seberapa sering Anda menanyakannya lagi.",
+   "Apa yang kamu tanyakan sebelum kunjungan pertama dan seberapa sering kamu menanyakannya lagi.",
    "पहली विज़िट से पहले आप क्या पूछते हैं, और कितनी बार दोबारा पूछते हैं।",
    "ما تسأل عنه قبل الزيارة الأولى، وكم مرة تسأل من جديد."
   ],
@@ -1462,7 +1462,7 @@
    "Votre registre : ce qu’elle a signé avec vous, sur papier. L’app n’a aucun texte de consentement et ne demande aucune signature.",
    "Deine eigene Übersicht: was bei dir auf Papier unterschrieben wurde. Die App hat keinen Einwilligungstext und verlangt keine Unterschrift.",
    "Kendi kaydınız: sizinle kâğıt üzerinde imzaladıkları. Uygulamada onay metni yoktur ve imza istenmez.",
-   "Catatan Anda sendiri: apa yang ia tanda tangani bersama Anda, di atas kertas. Aplikasi tidak memiliki teks persetujuan dan tidak meminta tanda tangan.",
+   "Catatan kamu sendiri: apa yang ia tanda tangani bersama kamu, di atas kertas. Aplikasi tidak memiliki teks persetujuan dan tidak meminta tanda tangan.",
    "आपका अपना रिकॉर्ड: उसने आपके साथ कागज़ पर जो हस्ताक्षर किए। ऐप में कोई सहमति पाठ नहीं है और कोई हस्ताक्षर नहीं माँगा जाता।",
    "سجلك الخاص: ما وقّعته معك على الورق. لا يحتوي التطبيق على نص موافقة ولا يطلب توقيعًا."
   ],
@@ -1510,7 +1510,7 @@
    "Pour votre suivi. Le papier signé reste chez vous ; ce que vous notez ici ne quitte jamais cet iPhone.",
    "Für deine eigene Übersicht. Das unterschriebene Papier bleibt bei dir; was du hier vermerkst, verlässt dieses iPhone nie.",
    "Kendi kontrolünüz için. İmzalı kâğıt sizde kalır; buraya not ettikleriniz bu iPhone’dan asla çıkmaz.",
-   "Untuk kontrol Anda sendiri. Kertas yang ditandatangani tetap pada Anda; apa yang Anda catat di sini tidak pernah keluar dari iPhone ini.",
+   "Untuk kontrol kamu sendiri. Kertas yang ditandatangani tetap pada kamu; apa yang kamu catat di sini tidak pernah keluar dari iPhone ini.",
    "आपके अपने नियंत्रण के लिए। हस्ताक्षरित कागज़ आपके पास रहता है; यहाँ नोट की गई बात इस iPhone से कभी बाहर नहीं जाती।",
    "لمتابعتك الخاصة. تبقى الورقة الموقَّعة لديك؛ وما تدوّنينه هنا لا يغادر هذا الـ iPhone أبدًا."
   ],
@@ -1558,7 +1558,7 @@
    "Facultatif, avec vos mots",
    "Optional, in deinen Worten",
    "İsteğe bağlı, kendi sözlerinizle",
-   "Opsional, dengan kata-kata Anda",
+   "Opsional, dengan kata-kata kamu",
    "वैकल्पिक, अपने शब्दों में",
    "اختياري، بكلماتك"
   ],
@@ -1590,7 +1590,7 @@
    "Elle a signé le papier avec vous",
    "Das Papier wurde bei dir unterschrieben",
    "Kâğıdı sizinle imzaladı",
-   "Ia menandatangani kertas bersama Anda",
+   "Ia menandatangani kertas bersama kamu",
    "उसने कागज़ पर आपके साथ हस्ताक्षर किए",
    "وقّعت الورقة معك"
   ],

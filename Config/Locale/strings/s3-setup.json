@@ -154,7 +154,7 @@
    "Que faites-vous ?",
    "Was machst du beruflich?",
    "Ne iş yapıyorsunuz?",
-   "Apa pekerjaan Anda?",
+   "Apa pekerjaan kamu?",
    "आप क्या काम करते हैं?",
    "ما مهنتك؟"
   ],
@@ -170,7 +170,7 @@
    "Choisissez tout ce qui vous correspond. Bello Hub s'adapte à votre façon de travailler.",
    "Wähle alles, was zutrifft. Bello Hub passt sich deiner Arbeitsweise an.",
    "Geçerli olan her şeyi seçin. Bello Hub çalışma şeklinize uyum sağlar.",
-   "Pilih semua yang sesuai. Bello Hub menyesuaikan dengan cara kerja Anda.",
+   "Pilih semua yang sesuai. Bello Hub menyesuaikan dengan cara kerja kamu.",
    "जो भी लागू हो सब चुनें। Bello Hub आपके काम के तरीक़े के हिसाब से ढल जाता है।",
    "اختر كل ما ينطبق. يتكيّف Bello Hub مع طريقة عملك."
   ],
@@ -186,7 +186,7 @@
    "Que proposez-vous ?",
    "Was bietest du an?",
    "Neler sunuyorsunuz?",
-   "Apa yang Anda tawarkan?",
+   "Apa yang kamu tawarkan?",
    "आप क्या सेवाएँ देते हैं?",
    "ماذا تقدّم؟"
   ],
@@ -218,7 +218,7 @@
    "Votre prestation",
    "Deine Leistung",
    "Sizin hizmetiniz",
-   "Layanan Anda",
+   "Layanan kamu",
    "आपकी सेवा",
    "خدمتك"
   ],
@@ -474,7 +474,7 @@
    "Gardez vos propres mots.",
    "Sprich deine eigene Sprache.",
    "Zaten kullandığınız dili kullanın.",
-   "Pakai bahasa yang sudah Anda pakai.",
+   "Pakai bahasa yang sudah kamu pakai.",
    "वही भाषा इस्तेमाल करें जो आप पहले से करते हैं।",
    "استخدم اللغة التي تستخدمها أصلًا."
   ],
@@ -490,7 +490,7 @@
    "Nommez vos prestations et vos protocoles comme vous les dites. Ils apparaissent tels quels partout.",
    "Benenne deine Leistungen und Protokolle so, wie du sie aussprichst. Überall erscheinen sie genau so.",
    "Hizmetlerinizi ve protokollerinizi söylediğiniz gibi adlandırın. Her yerde tam olarak böyle görünürler.",
-   "Beri nama layanan dan protokol Anda sesuai cara Anda menyebutnya. Namanya tampil persis begitu di mana-mana.",
+   "Beri nama layanan dan protokol kamu sesuai cara kamu menyebutnya. Namanya tampil persis begitu di mana-mana.",
    "अपनी सेवाओं और प्रोटोकॉल के नाम वैसे ही रखें जैसे आप बोलते हैं। वे हर जगह बिल्कुल ऐसे ही दिखेंगे।",
    "سمِّ خدماتك وبروتوكولاتك كما تنطقها. ستظهر هكذا تمامًا في كل مكان."
   ],
@@ -506,7 +506,7 @@
    "Comment appelez-vous les personnes que vous recevez ?",
    "Wie nennst du die Menschen, die du betreust?",
    "Hizmet verdiğiniz kişilere ne diyorsunuz?",
-   "Apa sebutan Anda untuk orang yang Anda layani?",
+   "Apa sebutan kamu untuk orang yang kamu layani?",
    "आप जिन लोगों को सेवा देते हैं उन्हें क्या कहते हैं?",
    "ماذا تسمّي الأشخاص الذين تخدمهم؟"
   ],
@@ -554,7 +554,7 @@
    "Ajouter un nom que vous utilisez",
    "Eigenen Namen hinzufügen",
    "Kullandığınız bir ad ekleyin",
-   "Tambah nama yang Anda pakai",
+   "Tambah nama yang kamu pakai",
    "अपना इस्तेमाल किया हुआ नाम जोड़ें",
    "أضف اسمًا تستخدمه"
   ],
@@ -570,7 +570,7 @@
    "Bello Hub apprend les noms que vous utilisez pour vos prestations et protocoles, afin que les notes vocales et les fiches vous ressemblent.",
    "Bello Hub lernt die Namen, die du für deine Leistungen und Protokolle verwendest, damit Sprachnotizen und Akten nach dir klingen.",
    "Bello Hub, hizmetleriniz ve protokolleriniz için kullandığınız adları öğrenir; böylece sesli notlar ve kayıtlar size benzer.",
-   "Bello Hub mempelajari nama yang Anda pakai untuk layanan dan protokol, sehingga catatan suara dan rekaman terdengar seperti Anda.",
+   "Bello Hub mempelajari nama yang kamu pakai untuk layanan dan protokol, sehingga catatan suara dan rekaman terdengar seperti kamu.",
    "Bello Hub आपकी सेवाओं और प्रोटोकॉल के नाम सीखता है, ताकि वॉइस नोट और रिकॉर्ड आपकी तरह लगें।",
    "يتعلّم Bello Hub الأسماء التي تستخدمها لخدماتك وبروتوكولاتك، لتبدو الملاحظات الصوتية والسجلات كأنها منك."
   ],
@@ -666,7 +666,7 @@
    "Étiquetez à votre façon.",
    "Markiere so, wie du denkst.",
    "Düşündüğünüz gibi etiketleyin.",
-   "Beri label sesuai cara Anda berpikir.",
+   "Beri label sesuai cara kamu berpikir.",
    "अपनी सोच के हिसाब से टैग लगाएँ।",
    "صنّف بالطريقة التي تفكّر بها."
   ],
@@ -682,7 +682,7 @@
    "Les étiquettes aident à retrouver les clients et rappellent ce qui compte. Choisissez-en quelques-unes, ajoutez les vôtres à tout moment.",
    "Markierungen helfen dir, deine Kundschaft zu finden, und erinnern dich an Wichtiges. Wähle einige aus und füge jederzeit eigene hinzu.",
    "Etiketler müşterileri bulmayı kolaylaştırır ve önemli olanı hatırlatır. Birkaçını seçin, kendinizinkileri istediğiniz zaman ekleyin.",
-   "Label memudahkan mencari klien dan mengingatkan hal penting. Pilih beberapa, tambahkan milik Anda kapan saja.",
+   "Label memudahkan mencari klien dan mengingatkan hal penting. Pilih beberapa, tambahkan milik kamu kapan saja.",
    "टैग से क्लाइंट ढूँढना आसान होता है और ज़रूरी बातें याद रहती हैं। कुछ चुनें, अपने टैग कभी भी जोड़ें।",
    "تسهّل التصنيفات العثور على العملاء وتذكّرك بما يهم. اختر بعضها وأضف تصنيفاتك في أي وقت."
   ],
@@ -714,7 +714,7 @@
    "Les étiquettes sont privées. Vos clients ne les voient jamais.",
    "Markierungen sind privat. Deine Kundschaft sieht sie nie.",
    "Etiketler özeldir. Müşterileriniz onları asla görmez.",
-   "Label bersifat privat. Klien Anda tidak pernah melihatnya.",
+   "Label bersifat privat. Klien kamu tidak pernah melihatnya.",
    "टैग निजी होते हैं। आपके क्लाइंट उन्हें कभी नहीं देखते।",
    "التصنيفات خاصة. لا يراها عملاؤك أبدًا."
   ],
@@ -794,7 +794,7 @@
    "Que voulez-vous retenir de chaque %@ ?",
    "Was möchtest du pro %@ festhalten?",
    "Her %@ hakkında neleri hatırlamak istersiniz?",
-   "Apa yang ingin Anda ingat tentang setiap %@?",
+   "Apa yang ingin kamu ingat tentang setiap %@?",
    "हर %@ के बारे में आप क्या याद रखना चाहते हैं?",
    "ماذا تريد أن تتذكر عن كل %@؟"
   ],
@@ -810,7 +810,7 @@
    "Votre fiche est construite autour de votre métier. N'activez que ce que vous utilisez.",
    "Deine Akte ist auf dein Handwerk zugeschnitten. Schalte nur ein, was du nutzt.",
    "Kaydınız mesleğinize göre oluşturulur. Yalnızca kullandıklarınızı açın.",
-   "Catatan Anda disusun sesuai keahlian Anda. Aktifkan hanya yang Anda pakai.",
+   "Catatan kamu disusun sesuai keahlian kamu. Aktifkan hanya yang kamu pakai.",
    "आपका रिकॉर्ड आपके काम के हिसाब से बनता है। सिर्फ़ वही चालू करें जो आप इस्तेमाल करते हैं।",
    "سجلّك مبني حول مهنتك. فعّل فقط ما تستخدمه."
   ],
@@ -858,7 +858,7 @@
    "Vous ne voyez ces champs que lorsque vous enregistrez un soin. Les notes vocales les remplissent pour vous.",
    "Diese Felder siehst du nur, wenn du eine Behandlung erfasst. Sprachnotizen füllen sie für dich aus.",
    "Bu alanları yalnızca bir işlemi kaydederken görürsünüz. Sesli notlar bunları sizin yerinize doldurur.",
-   "Anda hanya melihat kolom ini saat mencatat perawatan. Catatan suara mengisinya untuk Anda.",
+   "Kamu hanya melihat kolom ini saat mencatat perawatan. Catatan suara mengisinya untuk kamu.",
    "आप ये फ़ील्ड केवल उपचार दर्ज करते समय देखते हैं। वॉइस नोट इन्हें आपके लिए भर देते हैं।",
    "لا ترى هذه الحقول إلا عند تسجيل خدمة. تملؤها الملاحظات الصوتية عنك."
   ],
@@ -938,7 +938,7 @@
    "Noté signé ou non ; le papier se signe avec vous",
    "Als unterschrieben oder nicht vermerkt; das Papier wird bei dir unterschrieben",
    "İmzalandı veya imzalanmadı olarak not edilir; kâğıt sizinle imzalanır",
-   "Dicatat sudah atau belum ditandatangani; kertasnya ditandatangani bersama Anda",
+   "Dicatat sudah atau belum ditandatangani; kertasnya ditandatangani bersama kamu",
    "हस्ताक्षरित या नहीं के रूप में नोट; कागज़ पर आपके साथ हस्ताक्षर होते हैं",
    "تُدوَّن كموقَّعة أو غير موقَّعة؛ وتُوقَّع الورقة معك"
   ],
@@ -986,7 +986,7 @@
    "Votre Bello Hub est prêt.",
    "Dein Bello Hub ist bereit.",
    "Bello Hub'ınız hazır.",
-   "Bello Hub Anda siap.",
+   "Bello Hub kamu siap.",
    "आपका Bello Hub तैयार है।",
    "Bello Hub الخاص بك جاهز."
   ],
@@ -1002,7 +1002,7 @@
    "%1$@, votre espace est prêt pour %2$@. Il se remplira au fil des réservations.",
    "%1$@, dein Arbeitsbereich ist für %2$@ eingerichtet. Er füllt sich, sobald gebucht wird.",
    "%1$@, çalışma alanınız %2$@ için hazır. Müşteriler randevu aldıkça dolacak.",
-   "%1$@, ruang kerja Anda sudah siap untuk %2$@. Akan terisi seiring klien memesan.",
+   "%1$@, ruang kerja kamu sudah siap untuk %2$@. Akan terisi seiring klien memesan.",
    "%1$@, आपका वर्कस्पेस %2$@ के लिए तैयार है। क्लाइंट की बुकिंग के साथ यह भरता जाएगा।",
    "%1$@، مساحة عملك جاهزة لـ%2$@. ستمتلئ مع حجوزات العملاء."
   ],
@@ -1050,7 +1050,7 @@
    "Votre lien de réservation",
    "Dein Buchungslink",
    "Randevu bağlantınız",
-   "Tautan pemesanan Anda",
+   "Tautan pemesanan kamu",
    "आपका बुकिंग लिंक",
    "رابط الحجز الخاص بك"
   ],
@@ -1066,7 +1066,7 @@
    "Prêt dès que vous êtes en ligne",
    "Bereit, sobald du online bist",
    "Çevrimiçi olduğunuzda hazır olur",
-   "Siap setelah Anda online",
+   "Siap setelah kamu online",
    "ऑनलाइन होते ही तैयार",
    "يصبح جاهزًا عند اتصالك بالإنترنت"
   ],
@@ -1098,7 +1098,7 @@
    "Nous n'avons pas pu enregistrer votre espace. Vérifiez que votre iPhone a de la place et réessayez.",
    "Dein Arbeitsbereich konnte nicht gespeichert werden. Prüfe, ob dein iPhone Speicherplatz hat, und versuche es erneut.",
    "Çalışma alanınız kaydedilemedi. iPhone'unuzda yer olduğundan emin olup tekrar deneyin.",
-   "Ruang kerja Anda tidak dapat disimpan. Pastikan iPhone Anda punya ruang lalu coba lagi.",
+   "Ruang kerja kamu tidak dapat disimpan. Pastikan iPhone kamu punya ruang lalu coba lagi.",
    "आपका वर्कस्पेस सेव नहीं हो सका। जाँचें कि iPhone में जगह है और फिर कोशिश करें।",
    "تعذّر حفظ مساحة عملك. تأكد من وجود مساحة على iPhone وحاول مرة أخرى."
   ]
