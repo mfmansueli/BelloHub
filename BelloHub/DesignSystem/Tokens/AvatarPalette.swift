@@ -5,7 +5,8 @@
 
 import SwiftUI
 
-/// The four wash pairs of an avatar. The pair is chosen by a stable hash of the id, so a person keeps
+/// The four gradient pairs of an avatar: a soft start and the approved brand card fill as the end (sand has no card
+/// fill, so it keeps its own). The pair is chosen by a stable hash of the id, so a person keeps
 /// the same color across launches and devices.
 enum AvatarPalette: Int, CaseIterable {
     case rose
@@ -15,30 +16,29 @@ enum AvatarPalette: Int, CaseIterable {
 
     var start: Color {
         switch self {
-        case .rose: Color(light: 0xF6E4E8, dark: 0x4A343A)
-        case .sage: Color(light: 0xE6ECE0, dark: 0x30402C)
-        case .sand: Color(light: 0xF3E7DA, dark: 0x3A322B)
-        case .peach: Color(light: 0xFBE9DD, dark: 0x40291F)
+        case .rose: Color(light: 0xF5E4EB, dark: 0x573645)
+        case .sage: Color(light: 0xE4ECDE, dark: 0x34493A)
+        case .sand: Color(light: 0xF2EADD, dark: 0x3E3A33)
+        case .peach: Color(light: 0xFAE7DA, dark: 0x5E3F2F)
         }
     }
 
     var end: Color {
         switch self {
-        case .rose: Color(light: 0xE8C6CF, dark: 0x5A4047)
-        case .sage: Color(light: 0xC9D6C0, dark: 0x3D5037)
-        case .sand: Color(light: 0xE2CDB6, dark: 0x4A4036)
-        case .peach: Color(light: 0xEDC7B2, dark: 0x52352A)
+        case .rose: Color(light: 0xE3B5C7, dark: 0x684353)
+        case .sage: Color(light: 0xBDD0B3, dark: 0x3B5540)
+        case .sand: Color(light: 0xDDCBB4, dark: 0x4A443B)
+        case .peach: Color(light: 0xF0C5A6, dark: 0x704B37)
         }
     }
 
-    /// Initials color. Darker than the prototype's for sage and peach, whose initials were 4.0:1
-    /// on the end of the gradient.
+    /// Initials color: the deep family accent, 4.5:1 or more on both ends of the gradient in every appearance.
     var text: Color {
         switch self {
-        case .rose: Color(light: 0x74404F, dark: 0xF2C4D0, lightIncreased: 0x5E3342, darkIncreased: 0xFADDE5)
-        case .sage: Color(light: 0x46573F, dark: 0xD0DEC6, lightIncreased: 0x3F4F39, darkIncreased: 0xE2EEDA)
-        case .sand: Color(light: 0x4A4036, dark: 0xE2D6C8, lightIncreased: 0x2F2822, darkIncreased: 0xF0E6DA)
-        case .peach: Color(light: 0x74432C, dark: 0xEBBFA9, lightIncreased: 0x6B3D27, darkIncreased: 0xF3D0BC)
+        case .rose: Color(light: 0x74374F, dark: 0xF7D3E0, lightIncreased: 0x5E2C40, darkIncreased: 0xFDE3EC)
+        case .sage: Color(light: 0x3C5638, dark: 0xDCEBD0, lightIncreased: 0x2E442B, darkIncreased: 0xEAF4E0)
+        case .sand: Color(light: 0x4A4036, dark: 0xEDE3D6, lightIncreased: 0x2F2822, darkIncreased: 0xF6EEE4)
+        case .peach: Color(light: 0x70402A, dark: 0xFFE2CC, lightIncreased: 0x5C331F, darkIncreased: 0xFFEEDE)
         }
     }
 

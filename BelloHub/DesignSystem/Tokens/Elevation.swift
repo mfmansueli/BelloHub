@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-/// Warm, tinted, two-layer shadows (docs/08-DESIGN-SYSTEM.md section 4). In dark mode shadows barely
+/// Soft, tinted, two-layer shadows (docs/08-DESIGN-SYSTEM.md section 4). In dark mode shadows barely
 /// show, so elevation falls back to a subtle top highlight and the card's own hairline.
 enum Elevation {
     case e1
@@ -27,8 +27,9 @@ enum Elevation {
         }
     }
 
-    /// Shadow tint, a warm brown (rgba 70, 45, 30).
-    static let tint = Color(hex: 0x462D1E)
+    /// Shadow tint, a neutral green-graphite (rgba 46, 51, 41). The warm brown it replaced turned muddy under the
+    /// sage and ivory of the 2026-10-10 palette.
+    static let tint = Color(hex: 0x2E3329)
 }
 
 private struct ElevationModifier: ViewModifier {
