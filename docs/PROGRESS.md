@@ -94,8 +94,8 @@ Last updated 2026-10-10, 01:40, by the single integration agent. **State: `build
 | S10 account | `s10-account` | Merged and green; notes `docs/agent-notes/s10-account.md`; DESIGN.md updated |
 | D55 iOS | `d55-ios` | Merged (7b8d10d) and green. Resolution: a minimal legal reader stays for `LegalNotice` only (terms + privacy policy): `Models/Legal/{LegalFileName,LegalTextRenderer,LegalTextValues}`, `Managers/Legal/{LegalTextError,LegalTextRenderer+Build,LegalNoticeLibrary,BundleLegalNoticeLibrary}`; `scripts/sync-legal-resources.py` bundles only `terms-dpa` and `privacy-policy` (28 files), `check-legal-resources.sh` stays in `test.sh`; `merge-strings.py` = build/v1's version + D55's `--prune` (run `python3 scripts/merge-strings.py --prune` after deleting keys from a batch); `MailboxService` no longer passes the removed `HealthForm` signature/guardian fields |
 | D55 web + backend | merged (`573a50f`) | **Deployed to dev 2026-10-10** |
-| S8 inbox | `s8-inbox` (`agent-a4fad1e70d1273c5e`) | Services merged and green (models, server reads, mailbox opening and import into 4.5, outbound queue, push wiring, UI-test inbox server `-uiInbox fixtures|paywall`); `AppDependencies` builds them through `InboxServices`. **Screens 2.9 Waitlist, 2.10 BookingRequest, 2.11 RescheduleRequest not built**; no `docs/agent-notes/s8-inbox.md` exists |
-| Next | | S8 inbox screens 2.9 to 2.11 (+ tests, strings, audits), S9, S11, S12; the `pt-BR`, `de`, `hi` audit runs of S6 to S8 never finished |
+| S8 inbox | `s8-inbox` merged; screens built on `build/v1` | Services (models, server reads, mailbox opening and import into 4.5, outbound queue, push wiring, UI-test inbox server `-uiInbox fixtures|paywall`, built through `InboxServices`) **and screens 2.9 Waitlist, 2.10 BookingRequest, 2.11 RescheduleRequest** (`Screens/Inbox/`, cards at the top of Alerts, `AgendaRoute.bookingRequest/rescheduleRequest/waitlist`), strings `s8-inbox.json`, 30 unit tests (`WaitlistBoard`, `InboxRequestPhase`, `RescheduleTiming`, `InboxAlerts`, three ViewModels over `FakeInboxRepository` incl. queue replay after offline), `InboxUITests` (3 flows, smoke) and `InboxAuditUITests` (Full). Not built: "Suggest another time" (no server call), the waitlist "Cancels often" chip, `MailboxService`/`PushService` unit tests |
+| Next | | S8 leftovers: `FirebaseAuthProvider` server deletion and subscription verification swaps, mailbox and push service tests; then S9, S11, S12; the `pt-BR`, `de`, `hi` audit runs of S6 to S8 never finished |
 
 Integration fixes made on 2026-10-10 (all committed): `AppDependencies` split through `InboxServices` (SwiftLint body length); `FirestoreDocumentDecoder` integer helper (complexity); orphaned doc comment in `UITestInboxRepository`; the deprecated `Messaging.fcmToken` getter replaced by `TokenContinuations` keeping the last token; the `ConsentRecordViewModelTests` delete-guard test gave the record another client's id.
 
@@ -265,7 +265,7 @@ Open questions: Home quick actions are "New appointment" and "Week at a glance" 
 Merged earlier with S6 (`docs/agent-notes/s7-flow.md`, `s7-record.md`): 5.1 to 5.9 with voice and AI as unavailable stubs, the manual form fully real; 4.7, 4.9, 4.10; 7.5 AISettings (row in More → Preferences). Tagged at the 2026-10-10 integration head (fast 2008, smoke 42, zero warnings).
 
 ### S8 · Backend and iOS integration (partial) · tag stage-S8 on 2026-10-10
-Done: backend and web (D55 deployed to dev 2026-10-10), the publish slice (booking link live), inbox services (sync, mailbox, outbound queue, push). Open: screens 2.9, 2.10, 2.11, `FirebaseAuthProvider` server deletion swap (`OfflineAccountDeleter`), server subscription verification (`OfflineSubscriptionVerifier`). The tag marks the integration head, not the stage exit.
+Done: backend and web (D55 deployed to dev 2026-10-10), the publish slice (booking link live), inbox services (sync, mailbox, outbound queue, push), and after the tag the inbox screens 2.9, 2.10, 2.11 with their Alerts cards, tests and audit (DESIGN.md "Changes from the prototype (S8 inbox)"). Open: `OfflineAccountDeleter` and `OfflineSubscriptionVerifier` swaps to the server, mailbox and push service unit tests. The tag marks the integration head, not the stage exit.
 
 ### S10 · Account and settings · done 2026-10-10 · tag stage-S10
 Done: 7.1 to 7.4 and 7.6 to 7.10 (`docs/agent-notes/s10-account.md`): account with delete-account cascade, language and region, plan and paywall over StoreKit 2, notification settings, integrations, privacy with the legal notices, export all (ZIP of CSVs and a PDF), recovery key with restore from Locked, help. Also D55 iOS (`docs/agent-notes/d55-ios.md`): consent status records with an optional photo or file replace the consent texts and signing.
@@ -395,9 +395,9 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 | 2.6 | WeekGlance | S6 | done | `CalendarAuditUITests` |
 | 2.7 | FollowUps | S6 | done | `HomeAuditUITests` |
 | 2.8 | WinBack | S6 | done | `HomeAuditUITests` |
-| 2.9 | Waitlist | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
-| 2.10 | BookingRequest | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
-| 2.11 | RescheduleRequest | S8 | in-progress | services and models merged (S8 inbox WIP); screen not built |
+| 2.9 | Waitlist | S8 | done | `InboxUITests`, `InboxAuditUITests` |
+| 2.10 | BookingRequest | S8 | done | `InboxUITests`, `InboxAuditUITests` |
+| 2.11 | RescheduleRequest | S8 | done | `InboxUITests`, `InboxAuditUITests` |
 | 2.12 | RunningLate | S6 | done | `AppointmentAuditUITests` |
 | 3.1 | NewAppointment | S6 | done | `CalendarUITests` |
 | 3.2 | Appointment | S6 | done | `AppointmentUITests` |
