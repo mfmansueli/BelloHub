@@ -83,10 +83,11 @@ struct RecoveryKeyContentView: View {
         .belloCard()
     }
 
-    /// Three columns up to the default size, two at the larger sizes, one at accessibility sizes, so a word is never
-    /// cut or shrunk: the accessibility audit flags a one-line word as clippable, and a shrunk word is hard to copy.
+    /// Two columns up to the default size, one above it, so a word is never cut or shrunk: the accessibility audit
+    /// flags a one-line word as clippable, and a shrunk word is hard to copy. Three columns left about 54 pt for the
+    /// word, and an eight-letter word ("mountain") was cut at the default size.
     private var wordsGrid: some View {
-        let count = typeSize.isAccessibilitySize ? 1 : (typeSize > .large ? 2 : 3)
+        let count = typeSize > .large ? 1 : 2
         let columns = Array(repeating: GridItem(.flexible(), spacing: Spacing.sm), count: count)
         return LazyVGrid(columns: columns, spacing: Spacing.sm) {
             ForEach(viewModel.cells) { cell in

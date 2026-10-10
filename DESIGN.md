@@ -374,8 +374,8 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **7.7 Privacy**: the terms with the DPA and the privacy policy open in a Legal notice sheet read from the bundle;
   pending operator fields are visibly pending in DEBUG and absent in Release; the word "draft" never appears.
 - **7.8 Export**: D18 copy (Save to Files or share, no e-mail link, no format choice).
-- **7.9 Recovery key**: the real twelve words behind Face ID (three columns, two at large sizes, one at accessibility
-  sizes, forced left to right, `privacySensitive`); Restore lives on the Locked screen.
+- **7.9 Recovery key**: the real twelve words behind Face ID (two columns, one above the default text size, so an
+  eight-letter word is never cut; forced left to right, `privacySensitive`); Restore lives on the Locked screen.
 - **7.10 Help**: six questions as rows, "Write to support" and "Send feedback" as `mailto:` links; no chat.
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
