@@ -10,11 +10,19 @@ How strings get into the app (docs/07-LOCALIZATION.md). The committed catalog is
   language needs (Arabic has six). Keys are semantic (`home.nextUp.title`), never the English sentence.
 - `overrides/es-419.json` and `overrides/en-GB.json`: the only hand-written part of the two derived
   localizations. A key that is missing means "same as the parent" (`es-MX` and `en`).
-- `python3 scripts/merge-strings.py` merges every batch into the catalog and re-derives `es-419` and `en-GB`.
+- `infoplist/*.json`: the permission texts and the display name, same format, merged into
+  `BelloHub/SupportFiles/InfoPlist.xcstrings` (S11: neither catalog is edited by hand).
+- `reviewed/<id>.json`: strings a native reader approved (`scripts/import-strings.sh <id> <file.csv> --reviewed`), as
+  key -> fingerprint of the approved text; the merge keeps them `translated` while the text is unchanged.
+- `python3 scripts/merge-strings.py` merges every batch into the catalogs and re-derives `es-419` and `en-GB`
+  (add `--prune` after deleting keys). A key may be authored by one batch only.
   It stores every non-English value as `needs_review`: no native has read it, and only a human promotes a
   string to `translated` (`scripts/import-strings.sh <id> <file.csv> --reviewed`).
-- `scripts/check-strings.sh` is the gate (it runs inside `scripts/test.sh fast`); `scripts/export-strings.sh
-  <id|all>` writes `build/strings-<id>.csv` for reviewers.
+- `scripts/check-strings.sh --final` is the gate (it runs inside `scripts/test.sh fast`): completeness, plurals,
+  placeholders, derived localizations, the S11 style rules (address per audience, regional words, gender slashes,
+  Arabic punctuation, US/UK spelling, the same rules on the booking pages), the glossary and message templates, and the
+  navigation-title lists. `scripts/export-strings.sh <id|all>` and `scripts/import-strings.sh` are the reviewer round
+  trip (`docs/review/README.md`).
 
 Strings with arguments keep the semantic key and carry the interpolation in the default value:
 `LocalizedStringResource("catalog.sample.greeting", defaultValue: "Good morning, \(name)")`.

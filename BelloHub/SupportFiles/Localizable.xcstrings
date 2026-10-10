@@ -97250,7 +97250,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agendar una visita de revisión"
+            "value" : "Reservar una visita de revisión"
           }
         },
         "es-419" : {
@@ -120776,7 +120776,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Check-ins de clientes"
+            "value" : "Cómo se sienten tus clientes tras la visita"
           }
         },
         "es-419" : {
@@ -136076,7 +136076,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Seguimientos, lista de espera y check-ins"
+            "value" : "Seguimientos, lista de espera y valoraciones tras la visita"
           }
         },
         "es-419" : {

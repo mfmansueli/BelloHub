@@ -460,6 +460,24 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   the hidden ones keeps the list open.
 - No new tokens.
 
+### Navigation titles and long text (S11, localization)
+
+- **Large titles only where they fit in all fourteen localizations** on the smallest supported iPhone (34 pt bold within
+  343 pt). Tab roots keep large titles; settings-like pushed screens (Booking page, Cancellations and changes, No-show
+  protection, Credentials, Privacy and security, Recovery key, Export all, Help), the request screens (2.10, 2.11) and
+  long sheet titles use **inline** titles, as iOS Settings does. The prototype shows large titles; the German, French,
+  Italian and Portuguese titles of these screens did not fit ("Pedido de agendamen…"). `NavigationTitleFitTests`
+  measures every title and `check-strings.sh` keeps its lists in step with the screens.
+- Shorter titles where the old one was a sentence: "Contraindications" for the picker (was "Not suitable if the client
+  has"), shorter no-show and pause titles in es, fr, it.
+- **Counts** read "Not back in 2+ months: 3 clients", "Ready for a follow-up: 2 clients": the counted noun follows the
+  language's plural rules (`ClientTerm.countText`, Arabic six forms, German "Personen"), so the sentence needs no
+  agreement.
+- **Chips** keep a one-line label on one line (`FlowLayout` places them at their natural size; "12 hr" wrapped before).
+- The client terms in the plural are tab titles, so they are short: generic plurals in pt, es, it, fr ("convidados",
+  "alunos"), "Kundschaft", "Patienten" and "Schüler" in German; profession names are fields, not gendered job titles
+  ("Kosmetik", "Cabelo", "Acconciatura", "Coiffure").
+
 ## Empty, loading and error states
 
 Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
@@ -482,4 +500,7 @@ that cannot be read or is above 10 MB shows an error in the sheet.
 - Every string is localized (`SupportFiles/Localizable.xcstrings`, source language `en`, fourteen localizations, see
   `docs/07-LOCALIZATION.md`). Strings no native has read are `needs_review`.
 - Check light and dark, Dynamic Type to AX5, Increase Contrast, Reduce Motion and right-to-left before a feature is done.
+- `LocalizationScreenshotUITests` (Full plan) renders the key screens in all fourteen localizations at the default size
+  with no clipped text, checks Arabic mirroring (first tab and back button on the right) and runs a double-length
+  pseudolanguage; with `TEST_RUNNER_SCREENSHOT_DIR` it saves `<localization>-<screen>.png` for native readers.
 - Contrast: text 4.5:1, UI parts 3:1, measured by tests, never `.opacity` on text.
