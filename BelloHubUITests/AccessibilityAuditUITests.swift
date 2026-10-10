@@ -180,7 +180,8 @@ final class AccessibilityAuditUITests: XCTestCase {
     ///   bottom edge): the next swipe audits it in place;
     /// - navigation-bar titles and toolbar buttons (system-drawn; Liquid Glass bars cap their own text size);
     /// - text fields and search fields reported as clipped: they scroll their text horizontally;
-    /// - the insight tiles' numbers, capped at AX2 on purpose so a 30 pt figure fits its tile (`InsightTile`).
+    /// - the insight tiles' numbers, capped at AX2 on purpose so a 30 pt figure fits its tile (`InsightTile`);
+    /// - the parts of the logo (`BrandLockup`, one element read as the image "Bello Hub"): a logo keeps its size.
     private static let auditTypes: XCUIAccessibilityAuditType = .all.subtracting(.contrast)
 
     private func audit(_ app: XCUIApplication, _ screen: String) throws {
@@ -189,10 +190,13 @@ final class AccessibilityAuditUITests: XCTestCase {
         let visibleBottom = tabBar.exists ? tabBar.frame.minY : window.maxY
         let navigationBar = app.navigationBars.firstMatch
         let bar = navigationBar.exists ? navigationBar.frame : .zero
+        let logo = app.images["Bello Hub"].firstMatch
+        let logoFrame = logo.exists ? logo.frame.insetBy(dx: -2, dy: -2) : .zero
         try app.performAccessibilityAudit(for: Self.auditTypes) { issue in
             guard let element = issue.element, !(element.label.isEmpty && element.frame == .zero) else { return true }
             let frame = element.frame
             if frame.minY < window.minY || frame.maxY > visibleBottom { return true }
+            if !logoFrame.isEmpty, logoFrame.contains(frame) { return true }
             if !bar.isEmpty, bar.contains(CGPoint(x: frame.midX, y: frame.midY)) { return true }
             let kind = element.elementType
             if issue.auditType == .textClipped, kind == .textField || kind == .searchField { return true }
