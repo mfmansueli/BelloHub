@@ -24,6 +24,8 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
 | H17 | GitHub CLI login (to open pull requests) and repository access for pushes | Iago | end of phase A |
 | H18 | Breach plan: read `docs/BREACH-PLAN.md`, name who is on call, keep a private incident log, have the professional email template ready | Iago / Mateus | before the first real professional |
+| H19 | Release-candidate checks on a real iPhone: VoiceOver pass, hitches, cold start, Apple Calendar, camera, Face ID (S12) | Iago / Mateus | before external TestFlight |
+| H20 | Decide the phone sign-in: keep v1 Apple only, or have Claude Code wire Firebase phone auth and test it on a device | Iago | before the App Store submission |
 
 ---
 
@@ -110,6 +112,29 @@ In App Store Connect → the app → *Pricing and Availability* → countries an
 Read `docs/BREACH-PLAN.md` once together. Decide who is on call, where the private incident log lives (not in the
 repository), and keep a short email template for professionals ready (facts, data affected, what we did, what she can
 do). A lawyer can turn the page into the formal procedure when H11 happens.
+
+
+### H19 · Release-candidate checks on a real iPhone (S12)
+The simulator cannot measure these; run them on the `v1.0.0-rc1` build (an iPhone 12-class device or newer, iOS 26+):
+1. **VoiceOver pass**: `docs/agent-notes/accessibility-audit.md` section 3, in `en` then `pt-BR`, also with Increase
+   Contrast, Reduce Motion and the largest text size. Note any stop that reads an identifier, a raw date or nothing.
+2. **Performance** (`docs/13-TESTING-QUALITY.md` section 6): Instruments > Animation Hitches while scrolling the
+   Clients list with 2,000 clients (`-uiTesting -uiPerfClients 2000` on a Debug build, or a real import), the week
+   view with about 80 visits, and Tx-6-Photos with 200 photos (memory under 250 MB); cold start to Locked/Home on a
+   Release build (budget 1.5 s); a 12 MP photo save (budget 800 ms). Simulator numbers of S12 are in `PROGRESS.md`.
+3. **Apple Calendar** (More > Integrations): switch on, allow full access; a calendar "Bello Hub" appears with the
+   week's visits titled "Bello Hub appointment"; turn on names on the lock screen (Privacy) and the titles become
+   "Client · Service"; cancel a visit and its event goes; switch off and the calendar is gone.
+4. Face ID unlock and the lock grace period, the camera in the treatment flow (photos never in the camera roll),
+   contacts import, a push for a booking made on the web page, the recovery key restored on a second iPhone (H3).
+**Expected:** findings written in `docs/PROGRESS.md` (Claude Code fixes them).
+
+### H20 · Phone sign-in (decision)
+D44 keeps the phone code as the alternative to Sign in with Apple, but the v1 Firebase provider does not send codes
+(`FirebaseAuthProvider` answers `unavailable`), so since S12 the Welcome screen shows "Continue with phone" only on
+builds whose provider can (the development provider). Choose: (a) v1 stays Apple only (nothing to do), or (b) Claude
+Code wires Firebase phone auth (`PhoneAuthProvider`, the reCAPTCHA URL scheme from `GoogleService-Info.plist`, APNs
+silent verification) and a person tests it on a real iPhone with a real number in an allow-listed country.
 
 ---
 

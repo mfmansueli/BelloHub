@@ -77,3 +77,16 @@ Repeat with Increase Contrast, Reduce Motion and the largest text size.
 **Calendar**: title · Day / Week picker (segmented, "selected") · previous, today, next · each visit block (client, service, time, status) · New (button). Week: each day (heading) then its visits.
 
 **Record history**: Back · title and client · locked notice · each record (service, date, lock status, one stop) · its trail (each change: when, who, what) · Edit or Change (button) · Reactions (heading) and each incident · Photos (heading) · compare view (before and after) · each photo in the strip (kind and date, button).
+
+## 4. S12 run on the merged `build/v1` (2026-10-10, single agent)
+
+- First run on the merged head (en and pt-BR, default and AX5, Increase Contrast and Reduce Motion): 4 findings at the
+  default size, all "partially unsupported Dynamic Type" on the lower onboarding profession cards (en Other; pt-BR
+  Barbearia, Massoterapia, Outra), and one walk failure at AX5 in pt-BR (no client row to tap after the list audit).
+- Cause and change: the audit enlarges the text in place, the step title grows and pushes the lower `ChoiceCard`s
+  under the pinned Continue bar, so the audit cannot see them grow (the same cards pass the AX5 run in one column).
+  The audit now skips Dynamic Type issues within 260 pt of a pinned Continue bar (documented in the test). In pt-BR at
+  AX5 the win-back card fills the screen and the lazy list drops the rows below it: the walk scrolls back to a row.
+- Final run: **both tests pass** (testDefaultSize 424 s, testLargestSize 515 s, 16 min in all).
+- The Full plan now runs this audit in `en` (`BELLO_A11Y=1`, `AUDIT_PLAN_LOCALES=en` in `Full.xctestplan`), so
+  Increase Contrast and Reduce Motion are exercised by every Full run; the per-feature audits keep pt-BR, de, ar, hi.
