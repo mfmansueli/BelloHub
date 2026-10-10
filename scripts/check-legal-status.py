@@ -23,6 +23,17 @@ FORBIDDEN = ["unhackable", "impossible to intercept", "100% secure", "military-g
 BEGIN, END = "<!-- table:start -->", "<!-- table:end -->"
 
 
+# The European set (docs/16-MARKETS.md section 2): a common GDPR core plus a national annex. From version 2026-10-2
+# the terms and the privacy policy of these localizations say so in their header and carry both parts.
+EUROPEAN = {"pt-PT": "PT", "es": "ES", "it": "IT", "fr": "FR", "de": "DE", "en-GB": "UK"}
+CORE_DOCUMENTS = ["terms-dpa", "privacy-policy"]
+
+
+def version_key(name):
+    """2026-10 < 2026-10-2 < 2026-10-10: compared as numbers, the way the app and the page pick the newest."""
+    return [int(part) for part in re.findall(r"\d+", name)]
+
+
 def parse(path):
     with open(path, encoding="utf-8") as handle:
         text = handle.read()
@@ -41,7 +52,8 @@ def main():
     for document in DOCUMENTS:
         for localization in LOCALIZATIONS:
             folder = os.path.join(LEGAL, document, localization)
-            versions = sorted(f for f in os.listdir(folder) if f.endswith(".md")) if os.path.isdir(folder) else []
+            versions = sorted((f for f in os.listdir(folder) if f.endswith(".md")), key=version_key) \
+                if os.path.isdir(folder) else []
             if not versions:
                 errors.append(f"missing: legal/{document}/{localization}/")
                 continue
@@ -64,6 +76,12 @@ def main():
             for phrase in FORBIDDEN:
                 if phrase in lowered:
                     errors.append(f"{rel}: forbidden claim '{phrase}'")
+            if document in CORE_DOCUMENTS and localization in EUROPEAN and version_key(versions[-1]) >= [2026, 10, 2]:
+                annex = EUROPEAN[localization]
+                if not header.get("structure", "").startswith("gdpr-core") or annex not in header.get("structure", ""):
+                    errors.append(f"{rel}: header 'structure' must name the GDPR core and the {annex} annex")
+                if body.count("\n# ") < 2:
+                    errors.append(f"{rel}: needs Part A (common core) and Part B (national annex) headings")
             if len(body.split()) < 40:
                 errors.append(f"{rel}: suspiciously short")
             rows.append((document, localization, header.get("region", ""), header.get("version", ""),

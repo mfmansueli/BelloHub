@@ -73,6 +73,18 @@ function operator(): { values: Operator; missing: string[] } {
   };
 }
 
+/** Orders `2026-10.md`, `2026-10-2.md`, `2026-10-10.md` by their numbers. */
+export function compareVersions(a: string, b: string): number {
+  const parts = (name: string): number[] => (name.match(/\d+/g) ?? []).map(Number);
+  const left = parts(a);
+  const right = parts(b);
+  for (let index = 0; index < Math.max(left.length, right.length); index += 1) {
+    const difference = (left[index] ?? -1) - (right[index] ?? -1);
+    if (difference !== 0) return difference;
+  }
+  return 0;
+}
+
 function effectiveDate(version: string, localization: string): string {
   const [year, month] = version.split('-').map(Number);
   if (year === undefined || month === undefined) return version;
@@ -135,7 +147,10 @@ function main(): void {
   for (const document of DOCUMENTS) {
     for (const localization of LOCALIZATIONS) {
       const directory = join(legalRoot, document, localization);
-      const versions = readdirSync(directory).filter((name) => name.endsWith('.md')).sort();
+      // Compared as numbers, so 2026-10-2 comes after 2026-10 (the app picks the newest the same way).
+      const versions = readdirSync(directory)
+        .filter((name) => name.endsWith('.md'))
+        .sort(compareVersions);
       const latest = versions.at(-1);
       if (latest === undefined) throw new Error(`no version for ${document}/${localization}`);
       const version = latest.replace(/\.md$/, '');
