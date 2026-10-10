@@ -171,12 +171,19 @@ struct AppDependencies {
                 defaults: defaults
             ),
             notificationSettings: NotificationSettingsService(permissions: permissions, defaults: defaults),
-            calendar: CalendarIntegrationService(
-                provider: UITestCalendarAccess(), writer: UITestCalendarWriter(), appointments: appointments, vault: vault,
-                defaults: defaults
-            ),
+            calendar: uiTestCalendar(appointments: appointments, vault: vault, defaults: defaults),
             export: DataExportService(vault: vault),
             inbox: inbox,
+            defaults: defaults
+        )
+    }
+
+    /// Apple Calendar granted without a dialog and kept in memory, so a UI test never touches the simulator's calendar.
+    private static func uiTestCalendar(
+        appointments: AppointmentService, vault: VaultService, defaults: UserDefaults
+    ) -> CalendarIntegrationService {
+        CalendarIntegrationService(
+            provider: UITestCalendarAccess(), writer: UITestCalendarWriter(), appointments: appointments, vault: vault,
             defaults: defaults
         )
     }

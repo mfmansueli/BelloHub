@@ -11,9 +11,9 @@ import Observation
 /// (a preference, not client data).
 ///
 /// The calendar is a mirror of the vault, never a source: while she is signed in and unlocked it watches her visits
-/// (`startListening` / `stopListening`) and, after every change, asks `CalendarEventPlanner` what differs and hands that
-/// to the writer. It needs full access, because a mirror has to read back what it wrote; with write-only access the
-/// switch stays on but nothing is written. Switching it off or signing out removes the "Bello Hub" calendar.
+/// (`startListening` / `stopListening`) and, after every change, asks `CalendarEventPlanner` what differs and hands
+/// that to the writer. It needs full access, because a mirror has to read back what it wrote; with write-only access
+/// the switch stays on but nothing is written. Switching it off or signing out removes the "Bello Hub" calendar.
 @MainActor
 @Observable
 final class CalendarIntegrationService {

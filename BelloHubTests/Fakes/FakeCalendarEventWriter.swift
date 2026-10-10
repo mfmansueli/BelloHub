@@ -44,7 +44,9 @@ final class FakeCalendarEventWriter: CalendarEventWriting, Sendable {
             if state.fails { throw CalendarWriteError.noSource }
             state.applied.append(changes)
             for identifier in changes.deletes { state.events[identifier] = nil }
-            for update in changes.updates { state.events[update.identifier] = Self.record(update.identifier, update.draft) }
+            for update in changes.updates {
+                state.events[update.identifier] = Self.record(update.identifier, update.draft)
+            }
             for draft in changes.creates {
                 state.nextID += 1
                 let identifier = "event-\(state.nextID)"

@@ -27,8 +27,9 @@ actor EventKitCalendarWriter: CalendarEventWriting {
         let predicate = store.predicateForEvents(withStart: range.start, end: range.end, calendars: [calendar])
         return store.events(matching: predicate).map { event in
             CalendarEventRecord(
-                identifier: event.eventIdentifier ?? "", appointmentID: CalendarEventPlanner.appointmentID(from: event.url),
-                title: event.title ?? "", start: event.startDate, end: event.endDate
+                identifier: event.eventIdentifier ?? "",
+                appointmentID: CalendarEventPlanner.appointmentID(from: event.url), title: event.title ?? "",
+                start: event.startDate, end: event.endDate
             )
         }
     }
