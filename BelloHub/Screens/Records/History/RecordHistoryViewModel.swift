@@ -32,7 +32,7 @@ final class RecordHistoryViewModel {
     private let profile: ProfileService
     private let now: @Sendable () -> Date
     private let makeID: @Sendable () -> UUID
-    private var imageCache: [UUID: PhotoData] = [:]
+    private var imageCache = PhotoMemoryCache()
 
     init(
         clientID: UUID, vault: VaultService, profile: ProfileService, now: @escaping @Sendable () -> Date = { Date() },
@@ -165,13 +165,14 @@ final class RecordHistoryViewModel {
 
     // MARK: - Photos
 
-    /// The bytes of a photo, decrypted for this screen and kept only while it is open.
+    /// The bytes of a photo, decrypted for this screen and kept only while it is open: every thumbnail, but full-size
+    /// images only for the last few opened (`PhotoMemoryCache`), so a strip of 200 photos never holds 200 of them.
     func imageData(for photo: Photo) async -> PhotoData? {
-        if let cached = imageCache[photo.id] { return cached }
+        if let cached = imageCache.photo(photo.id) { return cached }
         guard let repository = vault.repository, let data = try? await repository.photoData(id: photo.id) else {
             return nil
         }
-        imageCache[photo.id] = data
+        imageCache.store(data, for: photo.id)
         return data
     }
 
