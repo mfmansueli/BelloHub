@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Usage: scripts/derive-locales.py [--check]
 
-Rewrites the derived localizations (es-419 from es-MX, en-GB from en) in the catalog from their parents
+Rewrites the derived localizations (es-419 from es-MX, en-GB from en) in both catalogs (Localizable and
+InfoPlist) from their parents
 plus the small override files in Config/Locale/overrides/<id>.json. A key missing from the override file
 means "same as the parent". Every derived value is stored as `needs_review`.
 With --check it changes nothing and exits 1 when a derived localization is out of date
@@ -46,14 +47,22 @@ def derive(catalog):
 
 def main():
     check_only = "--check" in sys.argv
-    catalog = lib.load_catalog()
-    stale = derive(catalog)
+    stale_total = 0
+    for path in (lib.CATALOG, lib.INFOPLIST_CATALOG):
+        if not os.path.exists(path):
+            continue
+        catalog = lib.load_catalog(path)
+        stale = derive(catalog)
+        stale_total += len(stale)
+        if check_only:
+            for language, key in stale:
+                print(f"error: {language} is out of date for {key} in {os.path.basename(path)}; "
+                      "run scripts/derive-locales.py", file=sys.stderr)
+        else:
+            lib.save_catalog(catalog, path)
     if check_only:
-        for language, key in stale:
-            print(f"error: {language} is out of date for {key}; run scripts/derive-locales.py", file=sys.stderr)
-        sys.exit(1 if stale else 0)
-    lib.save_catalog(catalog)
-    print(f"Derived es-419 and en-GB ({len(stale)} entries updated)")
+        sys.exit(1 if stale_total else 0)
+    print(f"Derived es-419 and en-GB ({stale_total} entries updated)")
 
 
 if __name__ == "__main__":

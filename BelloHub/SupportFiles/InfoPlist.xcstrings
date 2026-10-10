@@ -194,7 +194,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um die von Ihnen gewählten Kontakte als Kundschaft zu importieren."
+            "value" : "Um die Kontakte, die du auswählst, als Kundschaft zu importieren."
           }
         },
         "en" : {
@@ -242,7 +242,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk mengimpor klien yang Anda pilih."
+            "value" : "Untuk mengimpor klien yang kamu pilih."
           }
         },
         "it" : {
@@ -284,7 +284,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Um Ihre Kundschaft und Unterlagen zu öffnen."
+            "value" : "Um deine Kundschaft und Akten zu öffnen."
           }
         },
         "en" : {
@@ -332,7 +332,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Untuk membuka klien dan catatan Anda."
+            "value" : "Untuk membuka klien dan catatanmu."
           }
         },
         "it" : {

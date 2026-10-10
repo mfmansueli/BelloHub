@@ -18,7 +18,7 @@ esac
 # The cheap gates (strings, privacy, legal drafts, their bundled copies, profession and health form catalogs) run
 # before the simulator does (docs/13-TESTING-QUALITY.md).
 if [[ "$plan" != "UISmoke" ]]; then
-    "$ROOT/scripts/check-strings.sh" > /dev/null
+    "$ROOT/scripts/check-strings.sh" --final > /dev/null
     "$ROOT/scripts/check-privacy.sh" > /dev/null
     "$ROOT/scripts/check-legal-status.sh" > /dev/null
     "$ROOT/scripts/check-legal-resources.sh" > /dev/null

@@ -12,6 +12,8 @@ CATALOG = os.path.join(ROOT, "BelloHub", "SupportFiles", "Localizable.xcstrings"
 INFOPLIST_CATALOG = os.path.join(ROOT, "BelloHub", "SupportFiles", "InfoPlist.xcstrings")
 OVERRIDES_DIR = os.path.join(ROOT, "Config", "Locale", "overrides")
 BATCH_DIR = os.path.join(ROOT, "Config", "Locale", "strings")
+# The permission texts and display name (InfoPlist.xcstrings) are authored the same way, in their own folder.
+INFOPLIST_BATCH_DIR = os.path.join(ROOT, "Config", "Locale", "infoplist")
 
 SOURCE_LANGUAGE = "en"
 # The fourteen localizations (docs/07-LOCALIZATION.md section 1).

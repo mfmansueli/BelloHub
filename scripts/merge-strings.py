@@ -12,6 +12,8 @@ catalog too; an unauthored key that code still uses is kept and reported. A batc
 Each row is [key, comment, <one value per language, in the order of "languages">]. A value is a string,
 or a {"one": ..., "other": ...} object for a plural ({"*": text} repeats one text for every category the language needs). es-419 and en-GB are not written by hand: they come
 from their parents plus Config/Locale/overrides/<id>.json (scripts/derive-locales.py).
+The permission texts and the display name are authored the same way in Config/Locale/infoplist/*.json and merged
+into BelloHub/SupportFiles/InfoPlist.xcstrings, so neither catalog is ever edited by hand.
 Every authored value is stored as `needs_review` except the English source (`translated`): no native has
 read it, and Claude Code never promotes a string to reviewed (docs/07-LOCALIZATION.md section 1).
 """
@@ -131,14 +133,18 @@ def main():
     if pruned:
         print(f"Dropped {pruned} auto-extracted key(s) from Localizable.xcstrings")
     infoplist = lib.load_catalog(lib.INFOPLIST_CATALOG)
+    infoplist["sourceLanguage"] = lib.SOURCE_LANGUAGE
     pruned = prune_auto_extracted(infoplist)
     if pruned:
-        lib.save_catalog(infoplist, lib.INFOPLIST_CATALOG)
         print(f"Dropped {pruned} auto-extracted key(s) from InfoPlist.xcstrings")
+    infoplist_paths = sorted(glob.glob(os.path.join(lib.INFOPLIST_BATCH_DIR, "*.json")))
+    infoplist_total = sum(merge(path, infoplist) for path in infoplist_paths)
+    lib.save_catalog(infoplist, lib.INFOPLIST_CATALOG)
     total = sum(merge(path, catalog) for path in paths)
     removed = prune_unauthored(catalog, paths) if prune else 0
     lib.save_catalog(catalog)
-    print(f"Merged {total} strings from {len(paths)} batch file(s)" + (f", removed {removed}" if prune else ""))
+    print(f"Merged {total} strings from {len(paths)} batch file(s)" + (f", removed {removed}" if prune else "")
+          + f"; {infoplist_total} InfoPlist strings")
     subprocess.check_call([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "derive-locales.py")])
 
 

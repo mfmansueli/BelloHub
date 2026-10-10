@@ -4,10 +4,14 @@
 Fails (exit 1) on: a key missing from any of the fourteen localizations, an empty value, a missing plural
 category (all six for ar), a placeholder mismatch, a hard-coded text literal in Screens/, a key used in code
 that is absent from the catalog, or a derived localization (es-419, en-GB) that is out of date.
+It also fails on the style rules of docs/07-LOCALIZATION.md that a script can see (S11): one address per
+audience (the app speaks to the professional as du / tu / kamu / siz; the messages and rules a client reads keep
+the polite form), regional vocabulary from docs/strings/glossary.csv (pt-PT never says "você" or "agendamento", es
+never "celular"...), no gender slashes or stars, Arabic punctuation, American spelling in en and British in en-GB.
 Always prints a coverage table (languages x translated x needs review).
 With --final (stage S11 and later) it also fails on any `needs_review` string whose language is not in
-the allowed list at the top of docs/PROGRESS.md section "Strings awaiting reviewers" (pt-BR and the other
-languages stay listed there until a human promotes them).
+the allowed list in docs/PROGRESS.md section "Strings awaiting reviewers" (every non-English localization stays
+listed there until a human promotes it; D41).
 """
 import os
 import re
@@ -26,6 +30,43 @@ KEY_CALLS = re.compile(
         (?:title|label|message|actionTitle|prompt|subtitle|closeLabel|placeholder|text)\s*:\s*"([^"\\]+)"
     """, re.VERBOSE)
 HARD_CODED_TEXT = re.compile(r'\bText\(\s*"([^"\\]*)"\s*\)')
+
+# Strings a client reads (messages she sends, rules on the booking page, the QR card and share texts). They keep
+# the polite address (de Sie, id Anda, tr siz) while the app speaks to the professional informally.
+CLIENT_FACING = re.compile(r"^(policy\.rule\.|quickReplies\.default\.\w+\.text$|appointment\.message\.|"
+                           r"clientMessage\.birthday$|shareLink\.(card\.|instagram\.text$|whatsapp\.text$|message$))")
+# Strings that speak to the professional and quote what a client reads, so both addresses appear in them.
+MIXED_ADDRESS = {"clientEdit.stop.hint"}
+# (localization, pattern, why). Applied to every value of the localization; `app` rules skip client-facing keys,
+# `client` rules apply only to them.
+STYLE_RULES = [
+    ("pt-PT", "all", r"\b(você|vocês|celular|agendamentos?|tela|usuári[oa]s?|contatos?|equipe|aplicativo|câmera|"
+                     r"registros?|salvar|salvo|excluir|excluíd[oa]s?|Oi)\b", "pt-BR word in pt-PT (glossary)"),
+    ("pt-PT", "all", r"ligação de marcação", "pt-PT says link de marcação (glossary)"),
+    ("pt-BR", "all", r"\b(telemóvel|marcaç(ão|ões)|registos?|ficheiros?|ecrã|utilizador(es|a|as)?|contactos?|"
+                     r"equipa|desmarc\w*)\b", "pt-PT word in pt-BR (glossary)"),
+    ("es", "all", r"\b(celular(es)?|computadora|costo)\b", "Latin American word in es (Spain)"),
+    ("es-MX", "all", r"\b(móvil(es)?|ordenador|coste|vosotr\w+|vuestr\w+)\b", "Spain word in es-MX"),
+    ("de", "app", r"\b\w+en Sie\b|(?<=[a-zäöüß,] )(Ihnen|Ihr|Ihre|Ihren|Ihrem|Ihrer|Ihres)\b",
+     "the app says du to the professional"),
+    ("de", "client", r"\b(du|dich|dir|dein\w*)\b", "client texts say Sie"),
+    ("de", "all", r"\w[*:_/]in(nen)?\b|\bKund(e|en|in|innen)\b", "gender-neutral German: Kundschaft or Person"),
+    ("fr", "all", r"\b(tu|ton|ta|tes|toi)\b", "French says vous everywhere"),
+    ("fr", "all", r"\bvous seule?\b", "neutral French: visible par vous uniquement"),
+    ("tr", "app", r"\b(sen|senin|sana|seni|sende)\b|\b(dene|kontrol et|aç|seç|yaz|dokun|gir)[.!]",
+     "the app says siz to the professional"),
+    ("id", "app", r"\bAnda\b", "the app says kamu to the professional"),
+    ("id", "client", r"\bkamu\b", "client texts say Anda"),
+    ("hi", "all", r"तुम|तेरा|तेरी", "Hindi uses आप"),
+    ("ar", "all", r"[?;]|(?<=[\u0600-\u06FF]),", "Arabic punctuation: ؟ ؛ ،"),
+    ("en", "all", r"\b(colour\w*|organis\w*|authoris\w*|recognis\w*|customis\w*|personalis\w*|prioritis\w*|"
+                  r"summaris\w*|synchronis\w*|analys(e|ed|es|ing)|favourite\w*|centre\w*|tick|ticked|whilst|programme)\b",
+     "en is American English"),
+    ("en-GB", "all", r"\b(color\w*|\w+iz(e|ed|es|ing)\b|favorite|center|waitlist|vacation|toward)\b",
+     "en-GB is British English"),
+    ("*", "all", r"^\s|\s$|  |\.\.\.", "no stray spaces; use … for an ellipsis"),
+    ("*", "all", r"\w/(a|as|o|os|e|es|in|innen)\b|\((a|as|o|os|e|es|in|innen)\)", "no gender slashes or brackets"),
+]
 
 
 def swift_files(*roots):
@@ -95,6 +136,45 @@ def check_code(catalog, errors):
                 errors.append(f"{relative}: key \"{literal}\" is not in the catalog")
 
 
+def check_style(catalog, errors):
+    for key, entry in sorted(catalog.get("strings", {}).items()):
+        client = bool(CLIENT_FACING.match(key))
+        for language, scope, pattern, why in STYLE_RULES:
+            if scope == "app" and client or scope == "client" and not client:
+                continue
+            if scope != "all" and key in MIXED_ADDRESS:
+                continue
+            languages = lib.LOCALIZATIONS if language == "*" else [language]
+            for code in languages:
+                for text in lib.entry_values(entry.get("localizations", {}).get(code)).values():
+                    match = re.search(pattern, text)
+                    if match:
+                        errors.append(f"style: {key} [{code}] \"{match.group(0)}\": {why}")
+
+
+def awaiting_reviewers():
+    """Localizations listed in docs/PROGRESS.md under "Strings awaiting reviewers" (a line of backticked ids)."""
+    path = os.path.join(lib.ROOT, "docs", "PROGRESS.md")
+    with open(path, encoding="utf-8") as handle:
+        text = handle.read()
+    match = re.search(r"## Strings awaiting reviewers\n(.*?)(\n## |\Z)", text, re.S)
+    return set(re.findall(r"`([a-zA-Z0-9-]+)`", match.group(1))) if match else set()
+
+
+def check_final(catalog, errors):
+    allowed = awaiting_reviewers()
+    pending = {}
+    for key, entry in catalog.get("strings", {}).items():
+        for language in lib.LOCALIZATIONS:
+            if lib.entry_state(entry.get("localizations", {}).get(language)) == "needs_review":
+                pending.setdefault(language, []).append(key)
+    for language, keys in sorted(pending.items()):
+        if language not in allowed:
+            errors.append(f"final: {len(keys)} strings in {language} need review but {language} is not listed under "
+                          f"'Strings awaiting reviewers' in docs/PROGRESS.md")
+    print("awaiting reviewers: " + ", ".join(f"{language} {len(keys)}" for language, keys in sorted(pending.items())))
+
+
 def namespaces(keys):
     return {key.split(".")[0] for key in keys}
 
@@ -125,6 +205,11 @@ def main():
     if os.path.exists(lib.INFOPLIST_CATALOG):
         check_catalog(lib.load_catalog(lib.INFOPLIST_CATALOG), "InfoPlist", errors)
     check_code(catalog, errors)
+    check_style(catalog, errors)
+    if os.path.exists(lib.INFOPLIST_CATALOG):
+        check_style(lib.load_catalog(lib.INFOPLIST_CATALOG), errors)
+    if "--final" in sys.argv:
+        check_final(catalog, errors)
     derived = subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "derive-locales.py"),
                               "--check"], capture_output=True, text=True)
     errors.extend(line.removeprefix("error: ") for line in derived.stderr.splitlines() if line.strip())

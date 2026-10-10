@@ -56,6 +56,11 @@ Nothing here blocks the build; each item has a safe default in use.
 
 Under D40 and D41 the first two columns are not gates: the owner opens markets by his own judgement (H15). They stay `no` because it is true.
 
+## Strings awaiting reviewers
+Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is allowed only in a localization listed here. Under D41 no native reviewer is planned, so every non-English localization stays listed until a human reads it and imports the corrections with `scripts/import-strings.sh <id> <file.csv> --reviewed` (how: `docs/review/README.md`).
+
+`pt-BR` `pt-PT` `es-MX` `es-419` `es` `en-GB` `it` `fr` `de` `tr` `id` `hi` `ar`
+
 ## Environment (S0, 2026-10-08)
 - Xcode 27.0, build 27A266a (a three-digit build number, which looks like a release build and not a beta; confirm in Xcode > About Xcode. If it is a beta, TestFlight uploads need a release Xcode, H16 item 4).
 - iOS runtimes: 18.0, 18.1, 18.2, 18.4, 18.5, 26.5, 27.0. Simulator used by the scripts: iPhone 17 on the oldest iOS 26+ runtime (26.5).
