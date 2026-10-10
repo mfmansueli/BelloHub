@@ -37,7 +37,8 @@ struct BookingSetupContrastTests {
         text("amberText on amberBg (error notices)", Palette.amberText, on: Palette.amberBg),
         text("roseDeepText on roseWash (icon tiles)", Palette.roseDeepText, on: Palette.roseWash),
         text("peachText on peachWash (icon tiles)", Palette.peachText, on: Palette.peachWash),
-        text("inkOnFill on ink (primary and selected chips)", Palette.inkOnFill, on: Palette.ink),
+        text("onAction on action (primary)", Palette.onAction, on: Palette.action),
+        text("selectionInk on selectionFill (selected chips)", Palette.selectionInk, on: Palette.selectionFill),
         // The link card is the hero: its text colors are measured on its gradient in HeroContrastTests; the chips on
         // it:
         ContrastPair(name: "hero ink on a hero button", foreground: HeroPalette.ink, background: HeroPalette.raised,

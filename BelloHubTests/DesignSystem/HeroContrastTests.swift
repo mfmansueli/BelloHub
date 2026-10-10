@@ -60,6 +60,14 @@ struct HeroContrastTests {
         }
     }
 
+    @Test("The next-up dot (the logo rose) reaches 3:1 on both ends of the hero gradient")
+    func nextUpDotIsVisible() {
+        for point in Self.worstPoints where point.name.hasPrefix("gradient") {
+            let ratio = ContrastRatio.between(UIColor(HeroPalette.glowRose), point.color)
+            #expect(ratio >= 3, "next-up dot on \(point.name) is \(ratio):1")
+        }
+    }
+
     @Test("Quiet hero chips and buttons keep their label at 4.5:1")
     func raisedSurfaceKeepsLabelsReadable() {
         let ratio = ContrastRatio.between(UIColor(HeroPalette.ink), UIColor(HeroPalette.raised))

@@ -45,8 +45,8 @@ struct CatalogContrastTests {
                      background: Palette.sunken, minimum: 4.5),
         ContrastPair(name: "invalid field text: coralText on the field fill", foreground: Palette.coralText,
                      background: Palette.sunken, minimum: 4.5),
-        ContrastPair(name: "selected chip: inkOnFill on ink", foreground: Palette.inkOnFill, background: Palette.ink,
-                     minimum: 4.5)
+        ContrastPair(name: "selected chip: selectionInk on selectionFill", foreground: Palette.selectionInk,
+                     background: Palette.selectionFill, minimum: 4.5)
     ]
 
     private static let parts: [ContrastPair] = [

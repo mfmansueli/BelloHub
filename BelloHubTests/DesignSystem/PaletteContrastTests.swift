@@ -15,8 +15,8 @@ struct PaletteContrastTests {
         ContrastPair(name: name, foreground: foreground, background: background, minimum: minimum)
     }
 
-    /// Every text token on every surface it is allowed on. `roseText` is deliberately absent from
-    /// `roseWash` (4.49:1 in light): small text on a rose wash uses `roseDeepText`.
+    /// Every text token on every surface it is allowed on, including the 2026-10-10 roles: the primary action, the
+    /// selection pair and text on the brand card fills.
     static let textPairs: [ContrastPair] = [
         text("ink on bg", Palette.ink, on: Palette.bg),
         text("ink on surface", Palette.ink, on: Palette.surface),
@@ -24,7 +24,13 @@ struct PaletteContrastTests {
         text("ink2 on bg", Palette.ink2, on: Palette.bg),
         text("ink2 on surface", Palette.ink2, on: Palette.surface),
         text("ink2 on sunken", Palette.ink2, on: Palette.sunken),
-        text("inkOnFill on ink (primary button)", Palette.inkOnFill, on: Palette.ink),
+        text("onAction on action (primary button)", Palette.onAction, on: Palette.action),
+        text("selectionInk on selectionFill (selected chip, day, option)", Palette.selectionInk,
+             on: Palette.selectionFill),
+        text("onBrandCard on sageFill", Palette.onBrandCard, on: Palette.sageFill),
+        text("onBrandCard on peachFill", Palette.onBrandCard, on: Palette.peachFill),
+        text("onBrandCard on roseFill", Palette.onBrandCard, on: Palette.roseFill),
+        text("roseText on roseWash", Palette.roseText, on: Palette.roseWash),
         text("roseText on bg", Palette.roseText, on: Palette.bg),
         text("roseText on surface", Palette.roseText, on: Palette.surface),
         text("accent on bg", Palette.accent, on: Palette.bg),
@@ -56,7 +62,14 @@ struct PaletteContrastTests {
         text("fieldBorder on surface", Palette.fieldBorder, on: Palette.surface, minimum: 3),
         text("fieldBorder on sunken (input fill)", Palette.fieldBorder, on: Palette.sunken, minimum: 3),
         text("sage (switch track, success) on bg", Palette.sage, on: Palette.bg, minimum: 3),
-        text("sage on surface", Palette.sage, on: Palette.surface, minimum: 3)
+        text("sage on surface", Palette.sage, on: Palette.surface, minimum: 3),
+        text("action (check disc, radio, progress) on bg", Palette.action, on: Palette.bg, minimum: 3),
+        text("action on surface", Palette.action, on: Palette.surface, minimum: 3),
+        text("selectionInk ring on bg", Palette.selectionInk, on: Palette.bg, minimum: 3),
+        text("selectionInk ring on surface", Palette.selectionInk, on: Palette.surface, minimum: 3),
+        text("sage icon on sageBadge", Palette.sageText, on: Palette.sageBadge, minimum: 3),
+        text("peach icon on peachBadge", Palette.peachText, on: Palette.peachBadge, minimum: 3),
+        text("rose icon on roseBadge", Palette.roseText, on: Palette.roseBadge, minimum: 3)
     ]
 
     @Test("Every text pair reaches 4.5:1 in every appearance", arguments: Appearance.all)
@@ -89,14 +102,5 @@ struct PaletteContrastTests {
                 "\(pair.name) got worse with Increase Contrast (\(isDark ? "dark" : "light"))"
             )
         }
-    }
-
-    @Test("The documented quirk holds: roseText on roseWash is below AA in light, so it is not used")
-    @MainActor
-    func roseTextOnRoseWashIsBelowAAInLight() {
-        let light = Appearance(isDark: false, isIncreasedContrast: false)
-        let pair = Self.text("roseText on roseWash", Palette.roseText, on: Palette.roseWash)
-
-        #expect(pair.ratio(in: light) < 4.5)
     }
 }

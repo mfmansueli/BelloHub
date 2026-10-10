@@ -24,8 +24,8 @@ struct CalendarContrastTests {
                      minimum: 4.5),
         ContrastPair(name: "blocked band: neutralText on neutralWash", foreground: Palette.neutralText,
                      background: Palette.neutralWash, minimum: 4.5),
-        ContrastPair(name: "selected day: inkOnFill on ink", foreground: Palette.inkOnFill, background: Palette.ink,
-                     minimum: 4.5),
+        ContrastPair(name: "selected day and today in the week grid: selectionInk on selectionFill",
+                     foreground: Palette.selectionInk, background: Palette.selectionFill, minimum: 4.5),
         ContrastPair(name: "today in the strip: roseText on the screen", foreground: Palette.roseText,
                      background: Palette.bg, minimum: 4.5),
         ContrastPair(name: "today in the week summary: roseDeepText on the list row", foreground: Palette.roseDeepText,
@@ -36,19 +36,21 @@ struct CalendarContrastTests {
                      background: Palette.coralBg, minimum: 4.5),
         ContrastPair(name: "information: sageText on sageWash", foreground: Palette.sageText,
                      background: Palette.sageWash, minimum: 4.5),
-        ContrastPair(name: "week summary tiles: ink2 on sageWash", foreground: Palette.ink2,
-                     background: Palette.sageWash, minimum: 4.5),
-        ContrastPair(name: "week summary tiles: ink2 on peachWash", foreground: Palette.ink2,
-                     background: Palette.peachWash, minimum: 4.5),
-        ContrastPair(name: "week summary tiles: ink2 on roseWash", foreground: Palette.ink2,
-                     background: Palette.roseWash, minimum: 4.5)
+        ContrastPair(name: "week summary tiles: onBrandCard on sageFill", foreground: Palette.onBrandCard,
+                     background: Palette.sageFill, minimum: 4.5),
+        ContrastPair(name: "week summary tiles: onBrandCard on peachFill", foreground: Palette.onBrandCard,
+                     background: Palette.peachFill, minimum: 4.5),
+        ContrastPair(name: "week summary tiles: onBrandCard on roseFill", foreground: Palette.onBrandCard,
+                     background: Palette.roseFill, minimum: 4.5)
     ]
 
     private static let parts: [ContrastPair] = [
         ContrastPair(name: "current-time marker: roseText on the screen", foreground: Palette.roseText,
                      background: Palette.bg, minimum: 3),
         ContrastPair(name: "progress bar: sage on the list row", foreground: Palette.sage,
-                     background: Palette.surface, minimum: 3)
+                     background: Palette.surface, minimum: 3),
+        ContrastPair(name: "selected day ring: selectionInk on the screen", foreground: Palette.selectionInk,
+                     background: Palette.bg, minimum: 3)
     ]
 
     @Test("Every text pair the calendar draws reaches 4.5:1 in every appearance", arguments: Appearance.all)

@@ -19,7 +19,7 @@ struct HealthContrastTests {
         "ink on bg", "ink on surface", "ink on sunken", "ink2 on bg", "ink2 on surface", "ink2 on sunken",
         "roseText on surface", "sageText on sageWash", "coralText on bg", "coralText on surface",
         "coralText on coralBg", "StatusPalette.confirmed", "StatusPalette.pending", "StatusPalette.attention",
-        "inkOnFill on ink (primary button)"
+        "onAction on action (primary button)"
     ]
 
     /// The field border, the chevrons and the icons beside text, and the switch of the agreement.

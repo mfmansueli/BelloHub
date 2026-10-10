@@ -8,7 +8,7 @@ import SwiftUI
 import Testing
 
 /// Every text pair Home, Alerts, Follow-ups, Win back, the reminders list and the client message sheet draw, measured
-/// in every appearance (CLAUDE.md section 5). The tiles' own pairs are measured by the Palette suite.
+/// in every appearance (CLAUDE.md section 5). The hero's own pairs are in `HeroContrastTests`.
 @Suite("Home screens contrast")
 struct HomeContrastTests {
     private static let text: [ContrastPair] = [
@@ -33,14 +33,26 @@ struct HomeContrastTests {
         ContrastPair(name: "alert card tones: sageText on sageWash", foreground: Palette.sageText,
                      background: Palette.sageWash, minimum: 4.5),
         ContrastPair(name: "alert card tones: roseDeepText on roseWash", foreground: Palette.roseDeepText,
-                     background: Palette.roseWash, minimum: 4.5)
+                     background: Palette.roseWash, minimum: 4.5),
+        ContrastPair(name: "New appointment: onAction on action", foreground: Palette.onAction,
+                     background: Palette.action, minimum: 4.5),
+        ContrastPair(name: "remaining-visits tile: onBrandCard on sageFill", foreground: Palette.onBrandCard,
+                     background: Palette.sageFill, minimum: 4.5),
+        ContrastPair(name: "open-slots tile: onBrandCard on peachFill", foreground: Palette.onBrandCard,
+                     background: Palette.peachFill, minimum: 4.5),
+        ContrastPair(name: "not-returned tile: onBrandCard on roseFill", foreground: Palette.onBrandCard,
+                     background: Palette.roseFill, minimum: 4.5)
     ]
 
     private static let parts: [ContrastPair] = [
         ContrastPair(name: "chevrons: ink3 on the surface", foreground: Palette.ink3,
                      background: Palette.surface, minimum: 3),
-        ContrastPair(name: "next-visit dot: roseDeepText on the surface", foreground: Palette.roseDeepText,
-                     background: Palette.surface, minimum: 3)
+        ContrastPair(name: "remaining-visits badge: sageText on sageBadge", foreground: Palette.sageText,
+                     background: Palette.sageBadge, minimum: 3),
+        ContrastPair(name: "open-slots badge: peachText on peachBadge", foreground: Palette.peachText,
+                     background: Palette.peachBadge, minimum: 3),
+        ContrastPair(name: "not-returned badge: roseText on roseBadge", foreground: Palette.roseText,
+                     background: Palette.roseBadge, minimum: 3)
     ]
 
     @Test("Every text pair the home screens draw reaches 4.5:1 in every appearance", arguments: Appearance.all)
