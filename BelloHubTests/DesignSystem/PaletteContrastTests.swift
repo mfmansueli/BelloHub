@@ -63,8 +63,8 @@ struct PaletteContrastTests {
         text("fieldBorder on sunken (input fill)", Palette.fieldBorder, on: Palette.sunken, minimum: 3),
         text("sage (switch track, success) on bg", Palette.sage, on: Palette.bg, minimum: 3),
         text("sage on surface", Palette.sage, on: Palette.surface, minimum: 3),
-        // On a card the dark action fill is 2.8:1, so there it only carries an ivory check (measured as text above) and
-        // never stands alone as a boundary; selected outlines use `selectionInk`.
+        // Filled progress sits on the page; the light orange is the tightest point (3.5:1). Selected outlines use
+        // `selectionInk`, never the action fill.
         text("action (filled progress) on bg", Palette.action, on: Palette.bg, minimum: 3),
         text("selectionInk ring on bg", Palette.selectionInk, on: Palette.bg, minimum: 3),
         text("selectionInk ring on surface", Palette.selectionInk, on: Palette.surface, minimum: 3),
