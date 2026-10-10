@@ -78,8 +78,9 @@ describe('the whole booking journey, as the web app makes it', () => {
     expect(page.profile.inboxKey.keyId).toBe(inboxKey.keyId);
     expect(page.intakeAvailable).toBe(true);
 
-    const slots = await callOk<{ days: { slots: string[] }[] }>('getSlots', { slug, serviceId: SERVICE.glowFacial, from: date, to: date });
-    expect(slots.days[0]?.slots).toContain(instant);
+    // D56: 10:00 leaves a 60 minute gap before it (her shortest offer needs 75), so it sits behind "Show all times".
+    const slots = await callOk<{ days: { slots: string[]; more?: string[] }[] }>('getSlots', { slug, serviceId: SERVICE.glowFacial, from: date, to: date });
+    expect(slots.days[0]?.more).toContain(instant);
 
     const idToken = await signInWithPhone(CLIENT_PHONE);
     const booked = await callOk<{ status: string; manageToken: string; bookingId: string }>('createBooking', {
@@ -100,8 +101,8 @@ describe('the whole booking journey, as the web app makes it', () => {
     expect(body).toContain('BEGIN:VEVENT');
     expect(body).toContain(`DTSTART:${instant.replaceAll('-', '').replaceAll(':', '').replace('.000', '')}`);
 
-    const after = await callOk<{ days: { slots: string[] }[] }>('getSlots', { slug, serviceId: SERVICE.glowFacial, from: date, to: date });
-    expect(after.days[0]?.slots).not.toContain(instant);
+    const after = await callOk<{ days: { slots: string[]; more?: string[] }[] }>('getSlots', { slug, serviceId: SERVICE.glowFacial, from: date, to: date });
+    expect([...(after.days[0]?.slots ?? []), ...(after.days[0]?.more ?? [])]).not.toContain(instant);
     const second = await callOk<{ status: string }>('createBooking', {
       slug, serviceId: SERVICE.glowFacial, startsAt: instant,
       client: { name: 'Bia Lima', phone: '+5511976543210', locale: 'pt-BR' },
