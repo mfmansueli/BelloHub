@@ -38,16 +38,16 @@ enum Palette {
 
     /// Fill of the one primary button of a screen and of check discs and filled progress. Ivory on it is 5.45:1 in
     /// light and 4.82:1 in dark. On a dark card the fill is 2.8:1, so a check disc there relies on its ivory glyph and
-    /// selected outlines use `selectionInk`. The dark Increase Contrast fill stays put (a darker one would sink into the page) and
-    /// the label turns white instead.
+    /// selected outlines use `selectionInk`. The dark Increase Contrast fill stays put (a darker one would sink into the
+    /// page) and the label turns white instead.
     static let action = Color(light: 0x4F6B4D, dark: 0x57744E, lightIncreased: 0x435A41)
     /// Label and glyph on `action`.
     static let onAction = Color(light: 0xFAF5EB, dark: 0xFAF5EB, darkIncreased: 0xFFFFFF)
 
     // MARK: Selection
 
-    /// Fill of a selected chip, day or option. Close to the page in light (1.4:1), so a selected element always pairs it
-    /// with a `selectionInk` ring or a check: the fill alone never carries the state.
+    /// Fill of a selected chip, day or option. Close to the page in light (1.4:1), so a selected element always pairs
+    /// it with a `selectionInk` ring or a check: the fill alone never carries the state.
     static let selectionFill = Color(light: 0xCADAC2, dark: 0x435C3C)
     /// Label of a selected element and its ring; also the tab bar tint (the native bar draws its own selection
     /// pill).
