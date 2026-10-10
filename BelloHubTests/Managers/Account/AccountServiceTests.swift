@@ -101,4 +101,47 @@ struct AccountServiceTests {
         #expect(outcome == .deviceOnly)
         #expect(try await world.repository.allClients().isEmpty)
     }
+    @Test("After the server confirmed, a second attempt goes straight to the wipe (half-finished deletion)")
+    func resumesAfterServerConfirmed() async throws {
+        let deleter = FakeAccountDeleter(error: FakeServerError())
+        let world = try await makeWorld(deleter: deleter)
+        defer { world.defaults.removePersistentDomain(forName: world.suite) }
+        world.defaults.set(
+            AccountDeletionConfirmation.stored(.deletedWithoutAppleRevocation, userID: "u1"),
+            forKey: DefaultsKey.accountDeletionConfirmed
+        )
+
+        let outcome = await world.service.deleteAccount(AccountDeletionRequest(userID: "u1"), confirmed: true)
+
+        #expect(outcome == .deletedWithoutAppleRevocation, "the server's first answer is what the last screen says")
+        #expect(deleter.requests.isEmpty, "a server that no longer knows her is not asked again")
+        #expect(try await world.repository.allClients().isEmpty)
+        #expect(world.defaults.object(forKey: DefaultsKey.accountDeletionConfirmed) == nil, "cleared after the wipe")
+    }
+
+    @Test("The server's confirmation is kept until the wipe succeeds, and only for that account")
+    func confirmationIsPerAccount() async throws {
+        let deleter = FakeAccountDeleter(outcome: .deleted)
+        let world = try await makeWorld(deleter: deleter)
+        defer { world.defaults.removePersistentDomain(forName: world.suite) }
+        world.defaults.set(
+            AccountDeletionConfirmation.stored(.deleted, userID: "someone-else"),
+            forKey: DefaultsKey.accountDeletionConfirmed
+        )
+
+        let outcome = await world.service.deleteAccount(AccountDeletionRequest(userID: "u1"), confirmed: true)
+
+        #expect(outcome == .deleted)
+        #expect(deleter.requests.count == 1, "another account's confirmation does not count")
+    }
+
+    @Test("The stored confirmation reads back only for its own account")
+    func confirmationFormat() {
+        for outcome in [AccountDeletionOutcome.deleted, .deletedWithoutAppleRevocation, .deviceOnly] {
+            let plain = AccountDeletionConfirmation.stored(outcome, userID: "u1")
+            #expect(AccountDeletionConfirmation.outcome(plain, userID: "u1") == outcome)
+            #expect(AccountDeletionConfirmation.outcome(plain, userID: "u2") == nil)
+        }
+        #expect(AccountDeletionConfirmation.outcome("garbage", userID: "u1") == nil)
+    }
 }
