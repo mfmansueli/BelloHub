@@ -70,3 +70,17 @@ Legend: **OK** = in the code and tested; **PARTIAL** = in the code, with a hole 
 6. **Breach plan page** (9.6), owner and agent together.
 7. Screen-capture hiding for the recovery words (4.2) and an explicit, tested file-protection level for the store (4.4).
 8. Docs: section 5 still describes phone sign-in; v1 is Apple only (D44).
+
+## 5. Status after the second batch (same branch, later on 2026-10-10)
+
+| Gap (section 4) | Status | Where |
+|---|---|---|
+| 1. Mailbox messages and undecryptable items not shown | **Closed** | Alerts "From your clients" (`MailboxAlertCards`, pure `MailboxAlerts`): check-ins, copy/deletion requests, unopened and unmatched forms, imported-form count; every card's action acknowledges the item on the server (`MailboxAlertsTests`, `MailboxAlertsUITests`). Open: a check-in photo is not shown (it is dropped with the message) |
+| 2. Client deletion does not reach the server | **Closed** | "Delete data" in 4.3 (`ClientDeleteDataRow`) -> `ClientDataDeletionService`: vault cascade, then `deleteClientServerData` through the outbound queue in chunks of 200 booking ids (`ClientServerDeletionPlan`); survives offline and a relaunch (`ClientDataDeletionServiceTests`, `ClientDataDeletionUITests`) |
+| 3. App Check | **Open (owner, H5)** | Not part of this batch by instruction |
+| 4. Registration gate on the server | **Closed** | `ClientRegistrationService` asks `reserveRegistrations` before saving; the vault ledger and the last server count are the cache; offline claims wait in the queue and replay; a permanent refusal falls back to the cache (`ClientRegistrationServerTests`). Note: until H14, the server's plan is `none` (syncPlan answers NOT_CONFIGURED), so a sandbox purchase does not lift the server's limit of 10 |
+| 5. Key integrity and fingerprint | **Closed** | `InboxKeyVerifier` after every profile change: reads the page's key (`getPublicPage`), republishes once on a mismatch, then stops publishing with `PublishFailure.keyMismatch` until she retries (`PublishingKeyIntegrityTests`); Privacy shows "Form key <keyId>", the code the booking form prints |
+| 6. Breach plan | **Open (owner + agent)** | Not in this batch |
+| 7. Capture hiding, file protection | **Closed** | `hiddenWhileCaptured()` on the recovery words (recording, mirroring, sharing; screenshots cannot be refused with a public API; the app switcher is `PrivacyCover`); `VaultFileProtection` sets `completeUntilFirstUserAuthentication` on the store, its `-wal`/`-shm` and folder, read back in `VaultFileProtectionTests` |
+| 8. Phone sign-in in docs | **Open (decision)** | v1 is Apple only (D44); docs/06 section 5 still describes phone |
+| Account deletion after a half-finished attempt | **Closed** | `AccountService` keeps the server's confirmation (`DefaultsKey.accountDeletionConfirmed`, `AccountDeletionConfirmation`) until the wipe succeeds, so a retry never asks a server (and an Auth user) that no longer exist. The server side was already idempotent (`deletion.test.ts`: "is safe to call again"), so no function changed |

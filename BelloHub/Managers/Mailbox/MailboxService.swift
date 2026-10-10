@@ -102,6 +102,7 @@ final class MailboxService {
         guard let userID, !isSyncing else { return }
         isSyncing = true
         defer { isSyncing = false }
+        await waitForFirstBookingSync()
         let items: [MailboxItem]
         do {
             items = try await repository.mailboxItems(uid: userID)
@@ -116,6 +117,16 @@ final class MailboxService {
             await process(item)
         }
         queue.flush()
+    }
+
+    /// A form names its client through its booking: when the session starts, the bookings' first sync runs at the same
+    /// time as this one, and a form matched before it lands would wait as "unmatched" until the next push or
+    /// foreground. So the first mailbox sync waits for it, at most about five seconds (a failed booking sync ends the
+    /// wait too: `isLoading` turns false either way).
+    private func waitForFirstBookingSync() async {
+        for _ in 0..<100 where bookings.isLoading {
+            try? await Task.sleep(for: .milliseconds(50))
+        }
     }
 
     // MARK: - Her actions

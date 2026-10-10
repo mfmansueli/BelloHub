@@ -27,7 +27,8 @@ final class ClientDataDeletionUITests: XCTestCase {
         XCTAssertTrue(row.waitForExistence(timeout: 5), "no delete-data row")
         app.bringIntoView(row)
         row.tap()
-        let confirm = app.buttons["clientEdit.deleteDataConfirmButton"]
+        // The system dialog exposes its button twice (sheet and popover forms): take the first.
+        let confirm = app.buttons["clientEdit.deleteDataConfirmButton"].firstMatch
         XCTAssertTrue(confirm.waitForExistence(timeout: 5), "no confirmation")
         confirm.tap()
 
