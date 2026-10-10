@@ -26,6 +26,7 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H18 | Breach plan: read `docs/BREACH-PLAN.md`, name who is on call, keep a private incident log, have the professional email template ready | Iago / Mateus | before the first real professional |
 | H19 | Release-candidate checks on a real iPhone: VoiceOver pass, hitches, cold start, Apple Calendar, camera, Face ID (S12) | Iago / Mateus | before external TestFlight |
 | H20 | Decide the phone sign-in: keep v1 Apple only, or have Claude Code wire Firebase phone auth and test it on a device | Iago | before the App Store submission |
+| H21 | Automated WhatsApp and SMS (post-v1, D57): choose among the three options below; needs a registered business | Iago / Mateus | after v1 |
 
 ---
 
@@ -62,6 +63,9 @@ iOS: register **App Attest** (and DeviceCheck fallback) in Firebase App Check. W
 Register **`bellohub.app`** (recommended: HTTPS-only top-level domain, short, no local-presence rules), point it to Firebase Hosting (prod) and a staging subdomain (`staging.bellohub.app`), enable HTTPS, serve `/.well-known/apple-app-site-association` with app id `X5392U638Q.com.bellohub` when universal links are wanted. **Expected:** `BELLO_WEB_BASE_URL` values in `Config/*.xcconfig` and `web/.env.*`.
 
 ### H7 · Email provider
+> **Critical for production (D57):** the e-mail code is the only client verification and e-mail the only automatic
+> channel in v1, so the Resend key and a verified sending domain must exist before real clients book.
+
 Pick a transactional email service (Resend, Postmark, SES…), verify the sending domain (SPF, DKIM, DMARC), create an API key, store it as a Functions secret. Sign the provider's DPA. **Expected:** `EmailProvider` implementation selected in `firebase/functions/src/messaging/` (Claude Code writes the adapter for the one you choose; tell it which).
 
 ### H8 · In-app browser tests
@@ -146,6 +150,20 @@ D44 keeps the phone code as the alternative to Sign in with Apple, but the v1 Fi
 builds whose provider can (the development provider). Choose: (a) v1 stays Apple only (nothing to do), or (b) Claude
 Code wires Firebase phone auth (`PhoneAuthProvider`, the reCAPTCHA URL scheme from `GoogleService-Info.plist`, APNs
 silent verification) and a person tests it on a real iPhone with a real number in an allow-listed country.
+
+
+### H21 · Automated WhatsApp and SMS (post-v1, D57)
+Meta onboarding requires a **registered business** (personal documents are not accepted), so none of this is possible
+until one exists. Options, cheapest first:
+1. **Reverse verification**: the page shows a short code and a button that opens WhatsApp to the Bello Hub number with
+   the code prefilled; the server receives the message through the Cloud API webhook and takes the sender's number as
+   verified. Client-initiated, so no template approval is expected. Needs the Meta account, a dedicated number and a
+   webhook endpoint (code work by Claude Code).
+2. **WhatsApp authentication template sent by us**: per-message fee, template approval per language, and the wiring
+   in `createDeps` described in H13.
+3. **SMS**: revert D46 for Firebase Auth phone verification with reCAPTCHA, or an SMS vendor behind a protocol;
+   per-message fee by country, SMS-pumping risk, so a country allow-list and a budget alert are mandatory.
+Until then e-mail is the only channel, which makes H7 (Resend) critical.
 
 ---
 
