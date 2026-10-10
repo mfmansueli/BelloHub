@@ -1,11 +1,10 @@
 # Agent notes: S8 leftovers + S12 documentation items
 
 Branch `s8-leftovers`, started from `origin/build/v1` at `4c121a7` (2026-10-10), in its own worktree, while S11 owned
-`build/v1`. Simulator: "iPhone 17 Pro Max" (`SIM_UDID=1D7CD4D7-…`). Functions, web and `Localizable.xcstrings` untouched:
-no new strings (the Plan screen's existing "failed" notice covers the new purchase error), so `merge-strings.py` was not
-needed.
+`build/v1`. Simulator: "iPhone 17 Pro Max" (`SIM_UDID=1D7CD4D7-…`). Functions and web untouched. The first batch
+(section 1) added no strings; the second batch (section 2) adds two new string batch files only.
 
-## 1. What changed
+## 1. What changed (first batch: Fast 2140 tests in 300 suites, check-warnings zero)
 
 ### Server account deletion (S8 leftover)
 - `Managers/Account/RemoteAccountDeleter.swift`: calls the owner function `deleteAccount` (`{confirm: true,
@@ -62,47 +61,104 @@ needed.
 - `docs/agent-notes/security-review.md`: docs/06 section 9 + sections 3 to 8 + section 11, each item checked against the
   code, with the gap list.
 
-## 2. Measured
+## 2. Second batch (same branch): security gaps and S12 performance
 
-- `scripts/test.sh fast` (iPhone 17 Pro Max): **2140 tests in 300 suites passed** (2095 on the `build/v1` head this branch
-  started from; +45 test functions in 5 new suites and 1 extended suite).
-- `scripts/check-warnings.sh`: **zero warnings** on simulator, device, Release and the test targets (privacy gate
-  with the new rule 7 included).
+### Security gaps closed (details and evidence: `security-review.md` section 5)
+- **Client data deletion reaches the server**: "Delete data" in 4.3 (`ClientDeleteDataRow`, coral row, destructive
+  confirmation) -> `ClientDataDeletionService` (built with the inbox services, in the environment): vault cascade, then
+  `OutboundAction.deleteClientServerData` per `ClientServerDeletionPlan` (phone once, booking ids in chunks of 200).
+  `InboxRepository.deleteClientServerData` in Remote/Offline/UITest/Fake.
+- **Server registration count (D42)**: `ClientRegistrationService(server:queue:)` asks `reserveRegistrations` before a
+  new client is saved (one claim, or an import in chunks of 200); the vault ledger and `serverCount` are the cache. The
+  cache answers "paywall" without asking; offline the client is saved and `.reserveRegistrations` waits in the queue
+  (its outcome `.registrations` refreshes the cache); a permanent refusal (no server, refused token) falls back to the
+  cache. Models `RegistrationClaim`, `RegistrationReservation`. **Note:** until H14 the server's plan stays `none`
+  (`syncPlan` answers NOT_CONFIGURED), so after 10 clients a sandbox purchase does not lift the server's limit; the
+  TestFlight note "buy Bello Hub Pro after the 10th client" only works once H14 is done.
+- **Inbox key integrity + fingerprint**: `InboxKeyVerifier` (+ `BookingRepository.servedInboxKey` via `getPublicPage`)
+  after every profile change: mismatch -> one republish -> still wrong -> `PublishFailure.keyMismatch`, publishing
+  blocked until she taps Try again. Privacy shows "Form key <keyId>" (the code the booking form prints).
+  `PublishingService` mapping moved to `PublishingService+FailureMapping.swift` (type body length).
+- **Store protection**: `VaultFileProtection` sets `completeUntilFirstUserAuthentication` on the store, `-wal`, `-shm`
+  and folder (`VaultContainerFactory`); read back in tests.
+- **Recovery words**: `hiddenWhileCaptured()` (DesignSystem, `SceneCaptureObserver` over
+  `UITraitCollection.sceneCaptureState`) replaces the words while the screen is recorded, mirrored or shared. A
+  screenshot cannot be refused with a public API; the app-switcher snapshot is `PrivacyCover` (already there).
+- **Account deletion after a half-finished attempt**: `AccountService` stores the server's answer
+  (`DefaultsKey.accountDeletionConfirmed`, format in `AccountDeletionConfirmation`) until the wipe succeeds, so a retry
+  goes straight to the wipe. Server already idempotent (`deletion.test.ts` "is safe to call again"): no function change,
+  so `scripts/test-firebase.sh` was not needed.
+- **"From your clients" in Alerts** (`MailboxAlertCards`, pure `MailboxAlerts`, `AlertsViewModel(mailbox:)`): check-ins,
+  copy/deletion requests, unopened and unmatched forms, imported-form count; each action acknowledges on the server.
+  Found and fixed on the way: the first mailbox sync raced the bookings' first sync, so the fixture form waited as
+  "unmatched" until the next push; `MailboxService` now waits (at most ~5 s) for the bookings' first sync.
+- Strings: two new batches, `Config/Locale/strings/s8-inbox-unopened.json` (18 keys) and
+  `Config/Locale/strings/s8-leftovers.json` (10 keys), merged with `scripts/merge-strings.py <both files>` (catalog
+  diff is additions only). On the S11 merge: keep both sides of `Localizable.xcstrings`, then run
+  `python3 scripts/merge-strings.py` to regenerate.
+
+Not done by instruction: App Check (owner task H5) and phone sign-in (v1 is Apple only, D44). Still open: a breach-plan
+page; check-in photos are not shown in the Alerts card (dropped when handled).
+
+### S12 performance (`BelloHubUITests/PerformanceUITests`, opt-in)
+Run: `TEST_RUNNER_BELLO_PERF=1 ONLY_TESTING=BelloHubUITests/PerformanceUITests scripts/test.sh full`. Seeding
+(DEBUG): `-uiPerfClients N`, `-uiPerfPhotos N` (`PerformanceUITestSeeding`; photos are distinct 1200 x 1600 JPEGs).
+Measured 2026-10-10 on the "iPhone 17 Pro Max" simulator (iOS 26), **Debug build**, in-memory UI-test vault:
+
+| Budget (docs/13 section 6) | Metric | Result |
+|---|---|---|
+| Cold start to Locked/Home ≤ 1.5 s | `XCTApplicationLaunchMetric` (first frame responsive), 5 runs | **1.39 s** to Welcome (no seeding); 1.67 s to Home with the UI-test seeding of the onboarded workspace included in the launch |
+| 2,000 clients: search ≤ 150 ms | signpost `clientSearch` (`PerformanceSignposts`, no values) | **12 ms** per search |
+| 2,000 clients: scroll with no hitch > 8 ms | `scrollDecelerationMetric` / `scrollDraggingMetric` | deceleration 2.43 s, dragging 0.14 s per fling; the simulator reports no hitch ratio, so the hitch budget needs a device run (Instruments, Animation Hitches) |
+| Memory with 200 photos ≤ 250 MB | `XCTMemoryMetric` while flinging the photo strip of 4.7 back and forth | **peak 97 MB**, absolute 91 MB |
+
+Regression found and fixed: the record history kept every decrypted full-size photo for as long as the screen was open.
+In the in-memory UI-test vault the bytes are shared, so the metric could not show it, but in the SwiftData vault each
+decrypted photo is a new buffer (200 camera photos would be hundreds of MB). `PhotoMemoryCache` now keeps every
+thumbnail and only the last four full-size images (`PhotoMemoryCacheTests`). The treatment flow (Tx-6-Photos) holds
+the full images of the photos of the visit being recorded until it is saved; that is a handful, not 200.
+Not measured: battery of the voice flow (voice capture is unavailable in v1).
+
+## 3. Measured (end of the second batch)
+
+- `scripts/test.sh fast` (iPhone 17 Pro Max): see the final report (2172+ tests in 307+ suites at the last green run
+  before the final one).
+- `scripts/check-warnings.sh`: zero warnings (see final report).
+- UI: `ClientDataDeletionUITests`, `MailboxAlertsUITests`, `ClientsUITests`, `InboxUITests`, `AccountUITests`,
+  `PublishUITests`, `MoreUITests` pass. `RecordUITests.testHistoryCorrectsALockedRecordOnlyWithAReason` fails on the
+  Pro Max simulator ("no keyboard focus" typing the reason) **with and without this branch's change** to
+  `RecordHistoryViewModel` (checked by running it with the old file): environmental, worth a look on "iPhone 17".
 - `scripts/test-firebase.sh`: not run, no file under `firebase/` changed.
-- SwiftLint clean on every touched folder.
-
-## 3. Open (not done here)
-
-From the security review (`security-review.md` section 4), in order:
-1. No screen shows `MailboxService.messages` (check-ins, data requests) or `undecryptable`; they are never acknowledged.
-2. Deleting a client does not call `deleteClientServerData`.
-3. App Check not wired in the app; enforcement off (H5, D43/D46).
-4. `ClientRegistrationService` counts locally; the server's `reserveRegistration(s)` is not called (D42 gate).
-5. Inbox public-key integrity check (served vs derived) and fingerprint.
-6. Breach-plan page; screen-capture hiding of the recovery words; explicit tested file protection for the store.
-Also: phone sign-in is still `unavailable` in `FirebaseAuthProvider` (v1 is Apple only); docs/06 section 5 describes
-the phone path. Deleting an account whose Auth user was already removed by an earlier, interrupted attempt fails at the
-ID token (`unauthenticated`) and keeps showing the error; rare, but a "delete this iPhone only" fallback after that
-specific error would help.
 
 ## 4. Merge notes (for the integrator)
 
-Files most likely to conflict with S11: `BelloHub/Screens/Main/Support/AppDependencies.swift` (subscription and account
-wiring, small), `BelloHub/Screens/More/MoreView.swift` and `MoreTab.swift`, `Screens/Plan/PlanView.swift`,
-`Screens/Shared/Registration/PaywallSheet.swift`, `Screens/Account/AccountView.swift` (only their `#Preview` blocks), and
-`scripts/check-privacy.sh` (appended rule 7). No `Localizable.xcstrings`, `Config/Locale`, `docs/PROGRESS.md`,
-`docs/review`, `docs/strings`, `legal/` change.
+Most likely to conflict with S11:
+- `BelloHub/SupportFiles/Localizable.xcstrings` (additions only; keep both, then `python3 scripts/merge-strings.py`).
+- `BelloHub/Screens/Main/RootView.swift` (one `@State`, one init line, one `.environment`),
+  `BelloHub/Screens/Main/Support/AppDependencies.swift`, `BelloHub/Screens/Main/Support/InboxServices.swift`.
+- `DESIGN.md` (new section "Changes from the security review (S8 leftovers)" before "Client web app (S9)").
+- `BelloHub/Screens/Alerts/AlertsContentView.swift`, `AlertsView.swift`, `AlertsViewModel.swift`;
+  `BelloHub/Screens/Clients/Form/ClientEditView.swift`, `Screens/Clients/ClientsTabView.swift`;
+  `BelloHub/Screens/Privacy/PrivacyContentView.swift`, `PrivacyView.swift`;
+  `BelloHub/Screens/RecoveryKey/RecoveryKeyContentView.swift`; `BelloHub/Screens/BookingSettings/Support/PublishStatusText.swift`.
+- `#Preview` blocks of `MoreView`, `MoreTab`, `PlanView`, `PaywallSheet`, `AccountView`; `HomePreviewHost`,
+  `ClientsPreviewHost`.
+- `BelloHub/SupportFiles/DefaultsKey.swift` (one key), `BelloHub/SupportFiles/UITestSeeding.swift` (one line),
+  `scripts/check-privacy.sh` (rule 7 appended).
+Not touched: `docs/PROGRESS.md`, `docs/review`, `docs/strings`, `legal/`, `firebase/`, `web/`.
 
 ## 5. Text for docs/PROGRESS.md (paste after the merge)
 
-> **2026-10-10: S8 leftovers and S12 documentation done on `s8-leftovers`** (notes `docs/agent-notes/s8-leftovers.md`).
-> The app now deletes the account on the server (`RemoteAccountDeleter` -> `deleteAccount`, Apple token revoked with a
-> fresh code) and verifies the plan on the server (`RemoteSubscriptionVerifier`: `appAccountToken` from
-> `ensureAccount` in every StoreKit purchase, `syncPlan` re-verifies the JWS; the server's plan wins, offline or
-> `NOT_CONFIGURED` keeps StoreKit's answer). Offline stand-ins are DEBUG only. New unit suites for `MailboxService`
-> (import, idempotency, queue replay offline and after relaunch, undecryptable paths) and `PushService` (token
-> registration, offline replay, silent push). S12 docs: `PrivacyInfo.xcprivacy` (+ `check-privacy.sh` rule 7),
-> `docs/store/app-privacy.md`, App Store metadata drafts in 13 localizations (`docs/store/`), security review
-> (`docs/agent-notes/security-review.md`, 8 gaps listed). Fast 2140 tests in 300 suites; check-warnings zero.
-> Next: the gaps of the security review (mailbox messages screen, client server deletion, App Check, server
-> registration gate).
+> **2026-10-10: S8 leftovers, security-review gaps and S12 documentation/performance done on `s8-leftovers`** (notes
+> `docs/agent-notes/s8-leftovers.md`, review `docs/agent-notes/security-review.md`). Server account deletion
+> (`RemoteAccountDeleter`, resumable after a half-finished attempt) and server-side plan verification
+> (`RemoteSubscriptionVerifier`: `appAccountToken` + `syncPlan`); client data deletion reaches the server through the
+> outbound queue ("Delete data" in 4.3); the registration count asks `reserveRegistrations` (ledger as cache, offline
+> replay); the page's inbox key is checked against the derived one after every profile change (`keyMismatch` stops
+> publishing) and Privacy shows the form key; store protection set explicitly; recovery words hidden while the screen
+> is recorded or shared; "From your clients" in Alerts acknowledges check-ins, data requests and unopened forms. Unit
+> suites for `MailboxService` and `PushService`. S12: `PrivacyInfo.xcprivacy` (+ `check-privacy.sh` rule 7), App
+> Privacy answers, App Store metadata drafts in 13 localizations (`docs/store/`), opt-in `PerformanceUITests`
+> (cold start 1.39 s to Welcome on the simulator, search over 2,000 clients 12 ms, peak memory 97 MB with 200 photos;
+> the history's full-size photo cache is now bounded). Open: App Check (H5), breach plan, check-in photos in Alerts,
+> hitch measurement on a device; H14 needed before the server lifts the 10-client limit for a sandbox purchase.
