@@ -10,4 +10,6 @@ enum ServiceFormIssue: Equatable, Sendable {
     case nameTaken
     /// The price field holds something that is not an amount.
     case priceInvalid
+    /// The processing time does not lie inside the visit (D56): it starts too late or lasts too long for its length.
+    case processingDoesNotFit
 }

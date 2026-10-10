@@ -32,6 +32,9 @@ enum ServiceRules {
         case .duplicate: found.append(.nameTaken)
         }
         if PriceInput(draft.priceText, locale: locale).isInvalid { found.append(.priceInvalid) }
+        if let timing = timing(for: draft), !timing.processingFits(visibleMinutes: draft.minutes) {
+            found.append(.processingDoesNotFit)
+        }
         return found
     }
 
@@ -60,8 +63,56 @@ enum ServiceRules {
             position: existing?.position ?? PositionRules.next(after: services),
             contraindications: unique(draft.contraindications),
             requiresPatchTest: draft.requiresPatchTest,
-            patchTestHoursBefore: draft.patchTestHoursBefore
+            patchTestHoursBefore: draft.patchTestHoursBefore,
+            timing: timing(for: draft)
         )
+    }
+
+    // MARK: - Time around the visit (D56)
+
+    /// The processing lengths the menu offers.
+    static let processingOptions = [10, 15, 20, 25, 30, 40, 45, 60, 75, 90, 120]
+
+    /// The visit's shape from the form; nil when it has no extra or processing time (a plain service stays plain).
+    static func timing(for draft: ServiceDraft) -> VisitTiming? {
+        let timing = VisitTiming(
+            prepMinutes: max(draft.prepMinutes, 0), cleanupMinutes: max(draft.cleanupMinutes, 0),
+            processingStartMinutes: draft.hasProcessing ? max(draft.processingStartMinutes, 0) : 0,
+            processingMinutes: draft.hasProcessing ? max(draft.processingMinutes, 0) : 0
+        )
+        return timing.isPlain ? nil : timing
+    }
+
+    /// Prep and clean-up choices; a value that is not on the list stays a choice.
+    static func extraMinuteOptions(including current: Int) -> [Int] {
+        VisitTiming.extraMinuteOptions.contains(current)
+            ? VisitTiming.extraMinuteOptions : (VisitTiming.extraMinuteOptions + [current]).sorted()
+    }
+
+    /// Processing lengths that leave at least 5 minutes of work in a visit of `minutes`, plus `current`.
+    static func processingOptions(visitMinutes minutes: Int, including current: Int) -> [Int] {
+        Set(processingOptions.filter { $0 <= minutes - 5 } + [current]).sorted()
+    }
+
+    /// When processing can start, every 5 minutes, so that it ends by the end of the visit; plus `current`.
+    static func processingStartOptions(visitMinutes minutes: Int, processing: Int, including current: Int) -> [Int] {
+        Set(Array(stride(from: 0, through: max(minutes - processing, 0), by: 5)) + [current]).sorted()
+    }
+
+    /// The draft with processing moved to fit after she changed the length: it keeps its length when it can, then
+    /// its start moves earlier. Turned off when the visit is too short to hold any.
+    static func fittingProcessing(_ draft: ServiceDraft) -> ServiceDraft {
+        guard draft.hasProcessing else { return draft }
+        var fitted = draft
+        if fitted.processingMinutes > fitted.minutes - 5 {
+            fitted.processingMinutes = processingOptions.last { $0 <= fitted.minutes - 5 } ?? 0
+        }
+        if fitted.processingMinutes <= 0 {
+            fitted.hasProcessing = false
+            return fitted
+        }
+        fitted.processingStartMinutes = min(fitted.processingStartMinutes, fitted.minutes - fitted.processingMinutes)
+        return fitted
     }
 
     /// The tokens without blanks or repeats, in the order given.

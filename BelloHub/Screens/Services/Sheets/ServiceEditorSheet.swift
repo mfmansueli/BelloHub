@@ -38,6 +38,7 @@ struct ServiceEditorSheet: View {
                         ErrorNotice(message: message).accessibilityIdentifier("serviceEditor.saveError")
                     }
                     ServiceBasicsSection(draft: $draft, formatters: formatters, nameError: nameError)
+                    ServiceTimingSection(draft: $draft, formatters: formatters)
                     ServiceCategorySection(draft: $draft, categories: categories)
                     priceVisibility
                     followUp

@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-/// "Booking rules" on the booking page settings: the door to her hours with their summary, the buffer, minimum notice
-/// and booking window menus, and the doors to her cancellation rules and her no-show protection, each with its
+/// "Booking rules" on the booking page settings: the door to her hours with their summary, the buffer, slot interval,
+/// minimum notice and booking window menus, the "Keep my day compact" switch (D56), and the doors to her cancellation rules and her no-show protection, each with its
 /// one-line summary. The three menus change her availability; the two doors push the policy screens, handing them the
 /// editor the settings screen shares with them.
 struct BookingRulesSection: View {
@@ -25,6 +25,8 @@ struct BookingRulesSection: View {
             ListCard(dividerInset: Spacing.md) {
                 availabilityRow
                 bufferRow
+                slotStepRow
+                compactRow
                 noticeRow
                 windowRow
                 cancelRow
@@ -54,6 +56,28 @@ struct BookingRulesSection: View {
             ),
             options: viewModel.options(AvailabilityEditor.bufferOptions, including: availability.bufferMinutes),
             label: bufferLabel, identifier: "bookingSettings.bufferPicker"
+        )
+    }
+
+    private var slotStepRow: some View {
+        MenuPickerRow(
+            title: "bookingSettings.rules.slotStep",
+            selection: Binding(
+                get: { availability.effectiveSlotStep }, set: { value in Task { await viewModel.setSlotStep(value) } }
+            ),
+            options: AvailabilitySettings.slotStepChoices(including: availability.effectiveSlotStep),
+            label: slotStepLabel, identifier: "bookingSettings.slotStepPicker"
+        )
+    }
+
+    private var compactRow: some View {
+        ToggleRow(
+            title: LocalizedStringResource("bookingSettings.rules.compact").resolved(in: locale),
+            subtitle: LocalizedStringResource("bookingSettings.rules.compactHint").resolved(in: locale),
+            isOn: Binding(
+                get: { availability.keepsDayCompact }, set: { value in Task { await viewModel.setCompactDay(value) } }
+            ),
+            identifier: "bookingSettings.compactToggle"
         )
     }
 
@@ -123,6 +147,14 @@ struct BookingRulesSection: View {
     private func bufferLabel(_ minutes: Int) -> String {
         guard minutes > 0 else { return LocalizedStringResource("availability.buffer.none").resolved(in: locale) }
         return formatters.minutes(minutes)
+    }
+
+    private func slotStepLabel(_ minutes: Int) -> String {
+        guard minutes > 0 else {
+            return LocalizedStringResource("bookingSettings.slotStep.matchService").resolved(in: locale)
+        }
+        return LocalizedStringResource("bookingSettings.slotStep.every", defaultValue: "Every \(minutes) min")
+            .resolved(in: locale)
     }
 
     private func noticeLabel(_ hours: Int) -> String {

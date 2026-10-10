@@ -24,6 +24,10 @@ struct SchedulingWarningInput: Sendable {
     var patchTests: [PatchTest] = []
     var ignoring: UUID?
     var now: Date
+    /// Her services, for the extra and processing time of the visits around (D56). Empty means plain visits.
+    var services: [Service] = []
+    /// The visit's own extra and processing time when `service` is not given (a move); else the service's.
+    var timing: VisitTiming?
 }
 
 /// The warnings of a new visit (overlap, break, end of day, buffer, missing patch test, contraindication, a client who
@@ -45,10 +49,14 @@ enum SchedulingWarningEngine {
         let holding = input.appointments.filter {
             $0.id != input.ignoring && $0.status != .cancelled && $0.status != .noShow
         }
-        for other in holding where overlaps(interval, other.interval) { found.append(.overlap(with: other.id)) }
+        let mine = segments(of: interval, timing: input.timing ?? input.service?.visitTiming ?? .noExtraTime)
+        let timings = Dictionary(input.services.map { ($0.id, $0.visitTiming) }) { first, _ in first }
+        for other in holding where clash(mine, segments(of: other, timings: timings), buffer: 0) {
+            found.append(.overlap(with: other.id))
+        }
         if input.blocks.contains(where: { overlaps(interval, $0.interval) }) { found.append(.blocked) }
         found += hoursWarnings(input)
-        found += bufferWarnings(input, holding: holding)
+        found += bufferWarnings(input, holding: holding, mine: mine, timings: timings)
         return found
     }
 
@@ -78,19 +86,37 @@ enum SchedulingWarningEngine {
         return found
     }
 
-    /// A neighbour closer than the buffer, without touching the visit (touching is already an overlap warning).
-    private static func bufferWarnings(_ input: SchedulingWarningInput, holding: [Appointment]) -> [SchedulingWarning] {
+    /// A neighbour closer than the buffer, without touching the visit (touching is already an overlap warning). The
+    /// stretches include prep and clean-up, and no buffer is owed inside a processing stretch (D56).
+    private static func bufferWarnings(
+        _ input: SchedulingWarningInput, holding: [Appointment], mine: [FreeSlotsCalculator.Segment],
+        timings: [UUID: VisitTiming]
+    ) -> [SchedulingWarning] {
         let buffer = TimeInterval(input.settings.bufferMinutes * 60)
         guard buffer > 0 else { return [] }
-        let interval = input.interval
         return holding.compactMap { other in
-            guard !overlaps(interval, other.interval) else { return nil }
-            let gap = other.startsAt >= interval.end
-                ? other.startsAt.timeIntervalSince(interval.end)
-                : interval.start.timeIntervalSince(other.endsAt)
-            guard gap < buffer else { return nil }
+            let theirs = segments(of: other, timings: timings)
+            guard !clash(mine, theirs, buffer: 0), clash(mine, theirs, buffer: buffer) else { return nil }
             return .buffer(minutes: input.settings.bufferMinutes, neighbour: other.id)
         }
+    }
+
+    // MARK: - Stretches (D56)
+
+    private static func segments(of interval: DateInterval, timing: VisitTiming) -> [FreeSlotsCalculator.Segment] {
+        FreeSlotsCalculator.Segment.of(start: interval.start, end: interval.end, timing: timing)
+    }
+
+    private static func segments(
+        of appointment: Appointment, timings: [UUID: VisitTiming]
+    ) -> [FreeSlotsCalculator.Segment] {
+        segments(of: appointment.interval, timing: appointment.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
+    }
+
+    private static func clash(
+        _ mine: [FreeSlotsCalculator.Segment], _ theirs: [FreeSlotsCalculator.Segment], buffer: TimeInterval
+    ) -> Bool {
+        mine.contains { segment in theirs.contains { segment.conflicts(with: $0, buffer: buffer) } }
     }
 
     /// Two stretches overlap when they share some time; ones that only touch do not.

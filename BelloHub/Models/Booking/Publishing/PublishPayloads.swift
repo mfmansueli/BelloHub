@@ -95,6 +95,9 @@ enum PublishPayloads {
             bufferMinutes: min(max(settings.bufferMinutes, 0), 120),
             minNoticeHours: min(max(settings.minNoticeHours, 0), 336),
             maxDaysAhead: min(max(settings.maxDaysAhead, 1), 365),
+            slotStepMinutes: AvailabilitySettings.slotStepOptions.contains(settings.effectiveSlotStep)
+                ? settings.effectiveSlotStep : FreeSlotsRequest.defaultStepMinutes,
+            compactDay: settings.keepsDayCompact,
             busy: busy(inputs, now: now),
             noShow: .init(
                 isOn: noShow.isOn, limit: min(max(noShow.limit, 1), 5), action: noShow.action.rawValue,
@@ -108,9 +111,13 @@ enum PublishPayloads {
     /// Her own agenda minus link bookings: manual visits that still hold a time, and her time blocks, from `now` on.
     /// Visits made from the link carry a `bookingID` and the server already knows them (API.md 6.2).
     static func busy(_ inputs: PublishInputs, now: Date) -> [PublishAvailabilityRequest.Busy] {
+        let timings = Dictionary(inputs.services.map { ($0.id, $0.visitTiming) }) { first, _ in first }
         let visits = inputs.appointments
             .filter { $0.origin == .manual && $0.bookingID == nil && $0.status.holdsTime && $0.endsAt > now }
-            .map { PublishAvailabilityRequest.Busy(kind: "appointment", startsAt: $0.startsAt, endsAt: $0.endsAt) }
+            .map {
+                PublishAvailabilityRequest.Busy(kind: "appointment", startsAt: $0.startsAt, endsAt: $0.endsAt,
+                                                timing: $0.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
+            }
         let blocks = inputs.blocks
             .filter { $0.endsAt > now && $0.endsAt > $0.startsAt }
             .map { PublishAvailabilityRequest.Busy(kind: "block", startsAt: $0.startsAt, endsAt: $0.endsAt) }
@@ -158,12 +165,18 @@ enum PublishPayloads {
     }
 
     private static func service(_ service: Service) -> PublishProfileRequest.Service {
-        .init(
+        let minutes = min(max(service.durationMinutes, 5), 720)
+        let timing = PublishTimingFields(service.visitTiming, visibleMinutes: minutes)
+        return .init(
             id: service.id.uuidString.lowercased(),
             name: clip(service.name),
             category: service.category.isEmpty ? nil : clip(service.category),
-            durationMinutes: min(max(service.durationMinutes, 5), 720),
-            price: price(service)
+            durationMinutes: minutes,
+            price: price(service),
+            prepMinutes: timing.prepMinutes,
+            cleanupMinutes: timing.cleanupMinutes,
+            processingStartMinutes: timing.processingStartMinutes,
+            processingMinutes: timing.processingMinutes
         )
     }
 

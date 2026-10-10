@@ -17,6 +17,11 @@ struct AvailabilitySettings: Hashable, Codable, Sendable {
     /// Or further ahead than this.
     var maxDaysAhead: Int
     var timeZoneID: String
+    /// The grid of start times (D56): 10, 15, 20, 30 or 60 minutes, or `FreeSlotsRequest.matchServiceStep`. Nil
+    /// (saved before D56) means 15.
+    var slotStepMinutes: Int?
+    /// "Keep my day compact" (D56). Nil (saved before D56) means on.
+    var compactDay: Bool?
 
     var timeZone: TimeZone {
         TimeZone(identifier: timeZoneID) ?? .current

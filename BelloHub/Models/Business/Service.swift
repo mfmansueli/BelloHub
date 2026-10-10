@@ -25,6 +25,11 @@ struct Service: Identifiable, Hashable, Codable, Sendable, Positioned {
     var requiresPatchTest: Bool
     /// How long before the first visit the patch test is asked for.
     var patchTestHoursBefore: Int
+    /// Prep, clean-up and processing time (D56). Nil for a service saved before D56 and for one with none.
+    var timing: VisitTiming?
+
+    /// The shape of a visit of this service: no extra time when she set none.
+    var visitTiming: VisitTiming { timing ?? .noExtraTime }
 
     init(
         id: UUID = UUID(),
@@ -40,7 +45,8 @@ struct Service: Identifiable, Hashable, Codable, Sendable, Positioned {
         position: Int = 0,
         contraindications: [String] = [],
         requiresPatchTest: Bool = false,
-        patchTestHoursBefore: Int = 48
+        patchTestHoursBefore: Int = 48,
+        timing: VisitTiming? = nil
     ) {
         self.id = id
         self.name = name
@@ -56,5 +62,6 @@ struct Service: Identifiable, Hashable, Codable, Sendable, Positioned {
         self.contraindications = contraindications
         self.requiresPatchTest = requiresPatchTest
         self.patchTestHoursBefore = patchTestHoursBefore
+        self.timing = timing
     }
 }

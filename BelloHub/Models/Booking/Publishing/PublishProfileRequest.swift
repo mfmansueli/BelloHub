@@ -44,6 +44,12 @@ struct PublishProfileRequest: Encodable, Equatable, Sendable {
         var category: String?
         var durationMinutes: Int
         var price: Price?
+        /// D56: blocked before and after the visit, never shown; sent only when not 0.
+        var prepMinutes: Int?
+        var cleanupMinutes: Int?
+        /// D56: she is free inside the visit for this long, from this many minutes after it starts.
+        var processingStartMinutes: Int?
+        var processingMinutes: Int?
     }
 
     struct Price: Encodable, Equatable, Sendable {

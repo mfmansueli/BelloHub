@@ -111,11 +111,17 @@ final class NewAppointmentViewModel {
 
     var canAddGuest: Bool { guestNames.count < Self.maximumGuests }
 
-    /// The free start times of the chosen day for this visit's length.
-    var slots: [Date] {
-        guard totalMinutes > 0 else { return [] }
-        return OpenTimes.slots(on: day, request(duration: totalMinutes))
+    /// The free starts of the chosen day for this visit (D56: her slot interval, extra and processing time).
+    var slotPlan: FreeSlotsPlan {
+        guard totalMinutes > 0 else { return .empty }
+        return OpenTimes.plan(on: day, request(duration: totalMinutes))
     }
+
+    /// The times suggested first: with "Keep my day compact", the ones that leave no gap nobody can book.
+    var slots: [Date] { slotPlan.recommended }
+
+    /// The other free times, behind "Show all times".
+    var moreSlots: [Date] { slotPlan.more }
 
     var warnings: [SchedulingWarning] {
         guard let start, let service = selectedService, totalMinutes > 0 else { return [] }
@@ -123,7 +129,7 @@ final class NewAppointmentViewModel {
             interval: DateInterval(start: start, duration: TimeInterval(totalMinutes * 60)),
             settings: availability, appointments: context.appointments, blocks: context.blocks, service: service,
             clientID: clientID, clientAppointments: context.clientAppointments, form: context.form,
-            catalog: context.catalog, patchTests: context.patchTests, now: now()
+            catalog: context.catalog, patchTests: context.patchTests, now: now(), services: services
         ))
     }
 
@@ -277,7 +283,8 @@ final class NewAppointmentViewModel {
     private func request(duration: Int) -> OpenTimes.Request {
         OpenTimes.Request(
             durationMinutes: duration, settings: availability, appointments: context.appointments,
-            blocks: context.blocks, now: now(), stepMinutes: 30
+            blocks: context.blocks, now: now(), services: services,
+            timing: selectedService?.visitTiming ?? .noExtraTime
         )
     }
 

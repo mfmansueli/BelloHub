@@ -27,6 +27,8 @@ final class RescheduleViewModel {
     /// The days that have a free start for this visit, with their times, soonest first.
     private(set) var offeredDays: [(day: Date, slots: [Date])] = []
     private(set) var context = SchedulingContext.empty
+    /// Her services, for the extra and processing time of each visit (D56).
+    private(set) var services: [Service] = []
     var messagesClient = true
     private(set) var errorMessage: String?
     private(set) var saveErrorMessage: String?
@@ -69,11 +71,17 @@ final class RescheduleViewModel {
 
     var availability: AvailabilitySettings { bookingSetup.availability }
 
-    /// The free start times of the chosen day.
-    var slots: [Date] {
-        guard let appointment else { return [] }
-        return OpenTimes.slots(on: day, request(for: appointment))
+    /// The free starts of the chosen day for this visit (D56: her slot interval, extra and processing time).
+    var slotPlan: FreeSlotsPlan {
+        guard let appointment else { return .empty }
+        return OpenTimes.plan(on: day, request(for: appointment))
     }
+
+    /// The times suggested first: with "Keep my day compact", the ones that leave no gap nobody can book.
+    var slots: [Date] { slotPlan.recommended }
+
+    /// The other free times, behind "Show all times".
+    var moreSlots: [Date] { slotPlan.more }
 
     /// The warnings about the chosen time (the client's health does not change by moving the visit).
     var warnings: [SchedulingWarning] {
@@ -81,7 +89,7 @@ final class RescheduleViewModel {
         return SchedulingWarningEngine.warnings(for: SchedulingWarningInput(
             interval: DateInterval(start: start, duration: TimeInterval(appointment.totalMinutes * 60)),
             settings: availability, appointments: context.appointments, blocks: context.blocks, service: nil,
-            clientID: nil, ignoring: appointment.id, now: now()
+            clientID: nil, ignoring: appointment.id, now: now(), services: services, timing: timing(of: appointment)
         ))
     }
 
@@ -108,7 +116,10 @@ final class RescheduleViewModel {
                 return
             }
             appointment = found
-            if let repository = vault.repository { client = try? await repository.client(id: found.clientID) }
+            if let repository = vault.repository {
+                client = try? await repository.client(id: found.clientID)
+                services = (try? await repository.services()) ?? []
+            }
             try await bookingSetup.load(timeZoneID: timeZoneID)
             let today = days.start(of: now())
             let horizon = DateInterval(start: days.adding(days: -1, to: today), end: days.adding(days: 50, to: today))
@@ -176,8 +187,14 @@ final class RescheduleViewModel {
     private func request(for appointment: Appointment) -> OpenTimes.Request {
         OpenTimes.Request(
             durationMinutes: appointment.totalMinutes, settings: availability, appointments: context.appointments,
-            blocks: context.blocks, now: now(), ignoring: appointment.id, stepMinutes: 30
+            blocks: context.blocks, now: now(), ignoring: appointment.id, services: services,
+            timing: timing(of: appointment)
         )
+    }
+
+    /// The moved visit keeps the shape of its service (none when the service is gone).
+    private func timing(of appointment: Appointment) -> VisitTiming {
+        services.first { $0.id == appointment.serviceID }?.visitTiming ?? .noExtraTime
     }
 
     /// A day outside the offered window (picked with the date picker) needs its own surroundings.

@@ -21,6 +21,13 @@ struct ServiceDraft: Equatable, Sendable {
     var patchTestHoursBefore = 48
     var contraindications: [String] = []
     var isActive = true
+    /// D56: blocked before and after the visit, never shown to the client.
+    var prepMinutes = 0
+    var cleanupMinutes = 0
+    /// D56: a stretch inside the visit while she is free (colour developing, a mask setting).
+    var hasProcessing = false
+    var processingMinutes = 20
+    var processingStartMinutes = 20
 
     /// A new service with the defaults the setup uses.
     init() {}
@@ -42,5 +49,13 @@ struct ServiceDraft: Equatable, Sendable {
         patchTestHoursBefore = service.patchTestHoursBefore
         contraindications = service.contraindications
         isActive = service.isActive
+        let timing = service.visitTiming
+        prepMinutes = timing.prepMinutes
+        cleanupMinutes = timing.cleanupMinutes
+        hasProcessing = timing.processingMinutes > 0
+        if hasProcessing {
+            processingMinutes = timing.processingMinutes
+            processingStartMinutes = timing.processingStartMinutes
+        }
     }
 }

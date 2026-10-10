@@ -16,6 +16,10 @@ struct PublishAvailabilityRequest: Encodable, Equatable, Sendable {
     var bufferMinutes: Int
     var minNoticeHours: Int
     var maxDaysAhead: Int
+    /// D56: the grid of start times; 0 is "match the service".
+    var slotStepMinutes: Int
+    /// D56: "Keep my day compact".
+    var compactDay: Bool
     var busy: [Busy]
     var noShow: NoShow
 
@@ -43,6 +47,22 @@ struct PublishAvailabilityRequest: Encodable, Equatable, Sendable {
         var kind: String
         var startsAt: Date
         var endsAt: Date
+        /// D56, appointments only: the visit's extra and processing time, sent only when not 0.
+        var prepMinutes: Int?
+        var cleanupMinutes: Int?
+        var processingStartMinutes: Int?
+        var processingMinutes: Int?
+
+        init(kind: String, startsAt: Date, endsAt: Date, timing: VisitTiming = .noExtraTime) {
+            self.kind = kind
+            self.startsAt = startsAt
+            self.endsAt = endsAt
+            let fields = PublishTimingFields(timing, visibleMinutes: Int(endsAt.timeIntervalSince(startsAt) / 60))
+            prepMinutes = fields.prepMinutes
+            cleanupMinutes = fields.cleanupMinutes
+            processingStartMinutes = fields.processingStartMinutes
+            processingMinutes = fields.processingMinutes
+        }
     }
 
     struct NoShow: Encodable, Equatable, Sendable {

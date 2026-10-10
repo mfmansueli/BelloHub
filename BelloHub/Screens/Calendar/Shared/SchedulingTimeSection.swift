@@ -7,14 +7,17 @@ import SwiftUI
 
 /// The day and the time of a visit, for New appointment and Reschedule: the day (a date picker, or chips for the days
 /// that have room), the free start times as chips and, when none fits, a time picker for any minute. A chip is a
-/// button with the selected trait, so VoiceOver says which time is chosen. The views own nothing: the ViewModel
-/// answers `onSelect…`.
+/// button with the selected trait, so VoiceOver says which time is chosen. With "Keep my day compact" (D56) the chips
+/// are the suggested times and "Show all times" reveals the other free ones in place. The views own nothing: the
+/// ViewModel answers `onSelect…`.
 struct SchedulingTimeSection: View {
     let idPrefix: String
     let formatters: Formatters
     let day: Date
     let start: Date?
     let slots: [Date]
+    /// The other free times (D56), revealed by "Show all times".
+    var moreSlots: [Date] = []
     /// When set, the days are chips instead of a date picker.
     var offeredDays: [Date]?
     let onSelectDay: (Date) -> Void
@@ -22,12 +25,14 @@ struct SchedulingTimeSection: View {
     let onSelectMinutes: (Int) -> Void
 
     @State private var showsCustomTime = false
+    @State private var showsAllTimes = false
 
     private static let shownSlotLimit = 12
 
-    /// The free times, plus the chosen one when it is not among them (a tap on the calendar, or a typed time).
+    /// The free times, plus the chosen one when it is not among them (a tap on the calendar, or a typed time). All of
+    /// them once she asked for all times.
     private var chips: [Date] {
-        var shown = Array(slots.prefix(Self.shownSlotLimit))
+        var shown = showsAllTimes ? (slots + moreSlots).sorted() : Array(slots.prefix(Self.shownSlotLimit))
         if let start, !shown.contains(start), formatters.calendar.isDate(start, inSameDayAs: day) {
             shown.append(start)
             shown.sort()
@@ -52,8 +57,20 @@ struct SchedulingTimeSection: View {
                     }
                 }
             }
+            if !showsAllTimes, !moreSlots.isEmpty { showAllButton }
             customTime
         }
+        .onChange(of: day) { showsAllTimes = false }
+    }
+
+    private var showAllButton: some View {
+        Button { showsAllTimes = true } label: {
+            Text("scheduling.time.showAll")
+                .font(Typography.metaStrong).foregroundStyle(Palette.roseText)
+                .frame(minHeight: Spacing.touchTarget, alignment: .leading)
+        }
+        .accessibilityHint(Text("scheduling.time.showAllHint"))
+        .accessibilityIdentifier("\(idPrefix).showAllTimesButton")
     }
 
     // MARK: - Parts

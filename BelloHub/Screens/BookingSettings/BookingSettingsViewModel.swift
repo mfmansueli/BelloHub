@@ -176,6 +176,16 @@ final class BookingSettingsViewModel {
         await changeAvailability { $0.maxDaysAhead = days }
     }
 
+    /// The grid of start times her page and her own suggestions offer (D56); 0 is "match the service".
+    func setSlotStep(_ minutes: Int) async {
+        await changeAvailability { $0.slotStepMinutes = minutes }
+    }
+
+    /// "Keep my day compact" (D56).
+    func setCompactDay(_ isOn: Bool) async {
+        await changeAvailability { $0.compactDay = isOn }
+    }
+
     // MARK: - Link
 
     func copyLink() {
