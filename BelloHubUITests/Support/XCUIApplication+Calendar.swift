@@ -30,6 +30,19 @@ extension XCUIApplication {
         descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'calendar.slot.'"))
     }
 
+    /// The hour of a `calendar.slot.<hour>` element.
+    @MainActor
+    static func slotHour(_ slot: XCUIElement) -> Int? {
+        Int(slot.identifier.replacingOccurrences(of: "calendar.slot.", with: ""))
+    }
+
+    /// The hour now in the time zone `-uiCalendar` seeds (the calendar shows the day there).
+    static var currentHour: Int {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Sao_Paulo") ?? .current
+        return calendar.component(.hour, from: Date())
+    }
+
     /// The first free hour that can be tapped now, scrolling the day when none shows.
     @MainActor
     func firstTappableSlot(file: StaticString = #filePath, line: UInt = #line) -> XCUIElement? {
@@ -39,9 +52,13 @@ extension XCUIApplication {
             // `isHittable` but a tap on it lands on the bar (found after 18:30, when the day opens on the last hours).
             let window = self.windows.firstMatch.frame
             let band = (window.minY + window.height * 0.25)...(window.minY + window.height * 0.7)
-            if let slot = calendarSlots.allElementsBoundByIndex.first(where: {
+            let candidates = calendarSlots.allElementsBoundByIndex.filter {
                 $0.exists && $0.isHittable && band.contains($0.frame.midY)
-            }) {
+            }
+            // An hour still ahead today first: a tap on an hour that already passed did not open New appointment on
+            // 2026-10-10 (the day jumped to Monday instead; open in docs/agent-notes/s11-localization.md).
+            if let slot = candidates.first(where: { Self.slotHour($0).map { $0 > Self.currentHour } ?? false })
+                ?? candidates.first {
                 return slot
             }
             if attempt.isMultiple(of: 2) { swipeUp() } else { swipeDown() }

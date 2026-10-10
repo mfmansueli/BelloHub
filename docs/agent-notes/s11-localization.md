@@ -82,3 +82,7 @@ strings `translated` while unchanged. `docs/review/README.md` and one reading-or
 - Text in Arabic and Devanagari is skipped by the clipped-text audit (its heuristic measures fallback fonts with Latin
   metrics); those screens are covered by the screenshots and the title-width test.
 - No native reader exists (D41): every non-English string stays `needs_review`.
+- **Calendar, found by the smoke run on 2026-10-10 at 11:35 in São Paulo**: on today's day view, a tap on the 09:00
+  row (an hour already past) did not open New appointment and the day jumped to Monday 5 October; a tap on 14:00
+  opened it. Not caused by S11 (the same with the S10 `FlowLayout`); `CalendarUITests` now taps an hour still ahead
+  (`firstTappableSlot`). To investigate in S12 (`DayTimelineView` hour rows, `CalendarHeader`).
