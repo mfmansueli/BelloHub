@@ -25,5 +25,7 @@ struct BrandLockup: View {
         .environment(\.layoutDirection, .leftToRight)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(verbatim: "Bello Hub"))
+        // A logo, read as an image: its fixed size is the brand's, not body text that should follow Dynamic Type.
+        .accessibilityAddTraits(.isImage)
     }
 }

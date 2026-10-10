@@ -81,7 +81,7 @@ struct PrivacyContentView: View {
         LocalizedStringResource(
             "privacy.inboxKey.subtitle",
             defaultValue: """
-            Form key \(BidiIsolate.wrapLeftToRight(keyID)). Your booking form shows the same code at the bottom.
+            Form key \(keyID). Your booking form shows the same code at the bottom.
             """
         ).localized(in: locale)
     }
