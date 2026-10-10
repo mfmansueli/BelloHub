@@ -8,6 +8,8 @@ import os
 
 /// A sign-in provider the test scripts: which errors it throws and which user it returns. Records what it was asked.
 final class FakeAuthProvider: AuthProvider, Sendable {
+    let supportsPhoneSignIn = true
+
     private struct State {
         var user: AuthUser?
         var requestError: AuthError?

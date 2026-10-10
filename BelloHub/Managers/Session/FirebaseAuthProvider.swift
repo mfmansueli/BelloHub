@@ -7,12 +7,15 @@ import FirebaseAuth
 import Foundation
 
 /// The Release provider: Firebase Auth links the Apple identity as the owner account (D44). This file and the
-/// `SessionService` that holds it are the only places that read the auth SDK. The phone path arrives with S8, so it
-/// answers `unavailable` here.
+/// `SessionService` that holds it are the only places that read the auth SDK. Phone sign-in is not wired to Firebase in
+/// v1 (it needs the reCAPTCHA URL scheme and a device check, H3): it answers `unavailable` and says so through
+/// `supportsPhoneSignIn`, so the Welcome screen offers Apple only.
 ///
 /// Not exercised against the live project from tests (that needs a real Apple sheet and the Apple provider enabled in
 /// the Firebase console); the flow above it is covered through the protocol with fakes.
 struct FirebaseAuthProvider: AuthProvider {
+    let supportsPhoneSignIn = false
+
     func currentUser() async -> AuthUser? {
         Auth.auth().currentUser.map { Self.authUser(from: $0) }
     }

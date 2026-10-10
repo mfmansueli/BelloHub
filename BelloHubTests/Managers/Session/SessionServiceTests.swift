@@ -188,4 +188,13 @@ struct LocalDevAuthProviderTests {
         await #expect(throws: AuthError.invalidCode) { try await provider.verify(code: LocalDevAuthProvider.fixedCode) }
         await #expect(throws: AuthError.invalidPhone) { try await provider.requestCode(phoneE164: "123") }
     }
+
+    @Test("The phone path is offered only by a provider that can send codes; the Firebase provider cannot in v1")
+    func phoneSignInCapability() {
+        let (defaults, name) = makeDefaults()
+        defer { defaults.removePersistentDomain(forName: name) }
+        #expect(!SessionService(provider: FirebaseAuthProvider(), defaults: defaults).supportsPhoneSignIn)
+        let development = SessionService(provider: LocalDevAuthProvider(defaults: defaults), defaults: defaults)
+        #expect(development.supportsPhoneSignIn)
+    }
 }

@@ -7,6 +7,9 @@
 /// The real implementation talks to Firebase Auth; `SessionService` is the only caller, so no screen reads an SDK
 /// for the user (CLAUDE.md section 9, point 2).
 protocol AuthProvider: Sendable {
+    /// Whether this provider can send and check a phone code. The Welcome screen offers the phone path only then, so a
+    /// build never shows a way in that ends in "unavailable".
+    var supportsPhoneSignIn: Bool { get }
     /// The user the provider already holds from a previous launch, if any.
     func currentUser() async -> AuthUser?
     /// Sends the six-digit code to `phoneE164`.

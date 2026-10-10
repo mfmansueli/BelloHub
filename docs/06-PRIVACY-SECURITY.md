@@ -127,7 +127,7 @@ entropy E (128 bits, SecRandomCopyBytes)  ──▶  12-word BIP-39 phrase (Engl
 
 ## 5. Authentication and sessions
 
-- **Professional:** phone number + SMS code through Firebase Auth (behind `AuthProvider`); the Firebase ID token is used only for the booking/mailbox functions. Face ID unlock is local. Sign-out clears the session, queues, caches and **keeps the vault** (it is her data; deleting the account is a separate, confirmed action).
+- **Professional:** Sign in with Apple through Firebase Auth (behind `AuthProvider`, D44); the phone code is the planned alternative, offered only by a provider that can send codes (`AuthProvider.supportsPhoneSignIn`; the v1 Firebase provider cannot, so the Welcome screen shows Apple only). The Firebase ID token is used only for the booking/mailbox functions. Face ID unlock is local. Sign-out clears the session, queues, caches and **keeps the vault** (it is her data; deleting the account is a separate, confirmed action).
 - **Client:** no account. Identity = possession of the **personal link** `…/m/{token}` (128-bit random, stored hashed on the server, valid until the visit ends + 7 days) plus, for "Find my appointment", a code sent to the phone she booked with. Tokens are never logged. Pages set `Referrer-Policy: no-referrer`, `Cache-Control: no-store`, `X-Robots-Tag: noindex`.
 - **Portal** tokens (`Cl-2-Portal`) are per client and professional, revocable by the professional, expire after 180 days of inactivity, and expose only what she chose to publish.
 

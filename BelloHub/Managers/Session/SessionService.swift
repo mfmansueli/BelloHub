@@ -25,6 +25,9 @@ final class SessionService {
     private let provider: any AuthProvider
     private let defaults: UserDefaults
 
+    /// Whether the phone code is a way in on this build (the Welcome screen hides it otherwise).
+    var supportsPhoneSignIn: Bool { provider.supportsPhoneSignIn }
+
     init(provider: any AuthProvider = AuthProviderFactory.make(), defaults: UserDefaults = .standard) {
         self.provider = provider
         self.defaults = defaults

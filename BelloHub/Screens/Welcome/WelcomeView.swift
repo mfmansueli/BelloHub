@@ -6,14 +6,16 @@
 import SwiftUI
 
 /// 1.1 Onb-1-Welcome. Sign in with Apple is the main action (D44) and creates or opens the workspace alike; the phone
-/// number is the alternative.
+/// number is the alternative where the build can send a code (`SessionService.supportsPhoneSignIn`).
 struct WelcomeView: View {
     let onUsePhone: () -> Void
+    private let offersPhone: Bool
 
     @State private var appleSignIn: AppleSignInViewModel
 
     init(session: SessionService, onSignedIn: @escaping @MainActor () async -> Void, onUsePhone: @escaping () -> Void) {
         self.onUsePhone = onUsePhone
+        offersPhone = session.supportsPhoneSignIn
         _appleSignIn = State(initialValue: AppleSignInViewModel(session: session, onSignedIn: onSignedIn))
     }
 
@@ -54,9 +56,11 @@ struct WelcomeView: View {
     private var actions: some View {
         VStack(spacing: Spacing.sm) {
             AppleSignInSection(viewModel: appleSignIn, identifier: "signIn.appleButton")
-            Button(action: onUsePhone) { Text("onb.apple.usePhone") }
-                .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("welcome.phoneButton")
+            if offersPhone {
+                Button(action: onUsePhone) { Text("onb.apple.usePhone") }
+                    .buttonStyle(.belloSecondary)
+                    .accessibilityIdentifier("welcome.phoneButton")
+            }
         }
         .padding(.horizontal, Spacing.gutter)
         .padding(.vertical, Spacing.md)

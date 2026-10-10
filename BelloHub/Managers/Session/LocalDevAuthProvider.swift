@@ -11,6 +11,8 @@ import os
 /// It accepts one fixed code and remembers the user across launches in `UserDefaults`. DEBUG only: a Release build
 /// must never carry a sign-in shortcut.
 final class LocalDevAuthProvider: AuthProvider, Sendable {
+    let supportsPhoneSignIn = true
+
     /// The code every sign-in accepts.
     static let fixedCode = "123456"
 
