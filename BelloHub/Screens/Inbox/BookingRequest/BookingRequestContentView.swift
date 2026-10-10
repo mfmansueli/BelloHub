@@ -173,7 +173,9 @@ struct BookingRequestContentView: View {
         } else {
             Text(LocalizedStringResource(
                 "bookingRequest.unverified.messageNoReference",
-                defaultValue: "The client could not receive the code. Check that the WhatsApp message came from \(phone)."
+                defaultValue: """
+                The client could not receive the code. Check that the WhatsApp message came from \(phone).
+                """
             ).localized(in: locale))
         }
         return VStack(alignment: .leading, spacing: Spacing.sm) {
