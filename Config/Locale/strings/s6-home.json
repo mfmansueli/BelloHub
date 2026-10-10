@@ -79,55 +79,6 @@
    "المتابعات"
   ],
   [
-   "home.followUps.summary",
-   "Home follow-ups card: how many people are ready to hear from her. %1$lld is the count, %2$@ the word she chose for them (singular for one). Written without gender agreement where the verb would need it.",
-   {
-    "one": "%1$lld %2$@ is ready to hear from you",
-    "other": "%1$lld %2$@ are ready to hear from you"
-   },
-   {
-    "one": "Para você contatar agora: %1$lld %2$@",
-    "other": "Para você contatar agora: %1$lld %2$@"
-   },
-   {
-    "one": "Para contactar agora: %1$lld %2$@",
-    "other": "Para contactar agora: %1$lld %2$@"
-   },
-   {
-    "one": "Para contactar ahora: %1$lld %2$@",
-    "other": "Para contactar ahora: %1$lld %2$@"
-   },
-   {
-    "one": "Para contactar ahora: %1$lld %2$@",
-    "other": "Para contactar ahora: %1$lld %2$@"
-   },
-   {
-    "one": "Da ricontattare ora: %1$lld %2$@",
-    "other": "Da ricontattare ora: %1$lld %2$@"
-   },
-   {
-    "one": "À recontacter maintenant : %1$lld %2$@",
-    "other": "À recontacter maintenant : %1$lld %2$@"
-   },
-   {
-    "one": "Jetzt zu kontaktieren: %1$lld %2$@",
-    "other": "Jetzt zu kontaktieren: %1$lld %2$@"
-   },
-   {
-    "*": "Şimdi ulaşılacak: %1$lld %2$@"
-   },
-   {
-    "*": "Siap dihubungi sekarang: %1$lld %2$@"
-   },
-   {
-    "one": "अभी संपर्क करने के लिए: %1$lld %2$@",
-    "other": "अभी संपर्क करने के लिए: %1$lld %2$@"
-   },
-   {
-    "*": "للتواصل الآن: %1$lld %2$@"
-   }
-  ],
-  [
    "home.followUps.view",
    "Link under the follow-ups on Home and Alerts: opens the Follow-ups screen.",
    "View follow-ups",
@@ -447,55 +398,6 @@
    "Ulang tahun minggu ini",
    "इस हफ़्ते के जन्मदिन",
    "أعياد ميلاد هذا الأسبوع"
-  ],
-  [
-   "alerts.followUps.message",
-   "Alerts: how many people wait for a follow-up. %1$lld is the count, %2$@ the word she chose for them.",
-   {
-    "one": "%1$lld %2$@ is ready for a follow-up.",
-    "other": "%1$lld %2$@ are ready for a follow-up."
-   },
-   {
-    "one": "Retorno pendente: %1$lld %2$@",
-    "other": "Retorno pendente: %1$lld %2$@"
-   },
-   {
-    "one": "Seguimento pendente: %1$lld %2$@",
-    "other": "Seguimento pendente: %1$lld %2$@"
-   },
-   {
-    "one": "Seguimiento pendiente: %1$lld %2$@",
-    "other": "Seguimiento pendiente: %1$lld %2$@"
-   },
-   {
-    "one": "Seguimiento pendiente: %1$lld %2$@",
-    "other": "Seguimiento pendiente: %1$lld %2$@"
-   },
-   {
-    "one": "Richiamo da fare: %1$lld %2$@",
-    "other": "Richiamo da fare: %1$lld %2$@"
-   },
-   {
-    "one": "Suivi à faire : %1$lld %2$@",
-    "other": "Suivi à faire : %1$lld %2$@"
-   },
-   {
-    "one": "Nachfassen fällig: %1$lld %2$@",
-    "other": "Nachfassen fällig: %1$lld %2$@"
-   },
-   {
-    "*": "Takip bekleyen: %1$lld %2$@"
-   },
-   {
-    "*": "Perlu ditindaklanjuti: %1$lld %2$@"
-   },
-   {
-    "one": "फ़ॉलो-अप बाकी: %1$lld %2$@",
-    "other": "फ़ॉलो-अप बाकी: %1$lld %2$@"
-   },
-   {
-    "*": "متابعة مستحقة: %1$lld %2$@"
-   }
   ],
   [
    "alerts.followUps.title",
@@ -1250,55 +1152,6 @@
    "Orang yang kunjungan terakhirnya lebih dari 2 bulan lalu.",
    "जिन लोगों की पिछली विज़िट 2 महीने से ज़्यादा पहले थी।",
    "من كانت آخر زيارة له قبل أكثر من شهرين."
-  ],
-  [
-   "winBack.summary",
-   "Win back: how many people to reconnect with. %1$lld is the count, %2$@ the word she chose.",
-   {
-    "one": "%1$lld %2$@ to reconnect",
-    "other": "%1$lld %2$@ to reconnect"
-   },
-   {
-    "one": "Para reconquistar: %1$lld %2$@",
-    "other": "Para reconquistar: %1$lld %2$@"
-   },
-   {
-    "one": "Para recuperar: %1$lld %2$@",
-    "other": "Para recuperar: %1$lld %2$@"
-   },
-   {
-    "one": "Para reconectar: %1$lld %2$@",
-    "other": "Para reconectar: %1$lld %2$@"
-   },
-   {
-    "one": "Para reconectar: %1$lld %2$@",
-    "other": "Para reconectar: %1$lld %2$@"
-   },
-   {
-    "one": "Da riconquistare: %1$lld %2$@",
-    "other": "Da riconquistare: %1$lld %2$@"
-   },
-   {
-    "one": "À reconquérir : %1$lld %2$@",
-    "other": "À reconquérir : %1$lld %2$@"
-   },
-   {
-    "one": "Zurückgewinnen: %1$lld %2$@",
-    "other": "Zurückgewinnen: %1$lld %2$@"
-   },
-   {
-    "*": "Geri kazanılacak: %1$lld %2$@"
-   },
-   {
-    "*": "Untuk dihubungi kembali: %1$lld %2$@"
-   },
-   {
-    "one": "वापस जोड़ने के लिए: %1$lld %2$@",
-    "other": "वापस जोड़ने के लिए: %1$lld %2$@"
-   },
-   {
-    "*": "لاستعادتهم: %1$lld %2$@"
-   }
   ]
  ]
 }

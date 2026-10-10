@@ -9,7 +9,8 @@ import SwiftUI
 /// the full list (2.7). The message itself is written on that screen, so this card never offers a half-feature.
 struct HomeFollowUpsCard: View {
     let digest: AgendaDigest
-    let noun: String
+    /// How many, with what she calls the people she serves: "3 clients" (`ClientTerm.countText`).
+    let counted: String
     let formatters: Formatters
     @Environment(\.locale) private var locale
 
@@ -18,8 +19,7 @@ struct HomeFollowUpsCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(LocalizedStringResource(
-                "home.followUps.summary",
-                defaultValue: "\(digest.followUps.count) \(BidiIsolate.wrap(noun)) are ready to hear from you"
+                "home.followUps.ready", defaultValue: "Ready to hear from you: \(BidiIsolate.wrap(counted))"
             ).localized(in: locale))
                 .font(Typography.meta).foregroundStyle(Palette.ink2)
                 .padding(Spacing.md)

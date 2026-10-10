@@ -121,7 +121,7 @@ struct ClientsView: View {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 if viewModel.winBackCount > 0 {
-                    WinBackStrip(count: viewModel.winBackCount, noun: noun(for: viewModel.winBackCount))
+                    WinBackStrip(counted: profile.clientTerm.countText(viewModel.winBackCount, in: locale))
                         .listRowInsets(EdgeInsets())
                         .listRowBackground(Color.clear)
                         .listRowSeparator(.hidden)
@@ -156,9 +156,7 @@ struct ClientsView: View {
     }
 
     private var countHeader: some View {
-        Text(LocalizedStringResource(
-            "clients.count", defaultValue: "\(viewModel.count) \(noun(for: viewModel.count))"
-        ).localized(in: locale))
+        Text(verbatim: profile.clientTerm.countText(viewModel.count, in: locale))
             .font(Typography.meta)
             .foregroundStyle(Palette.ink2)
             .textCase(nil)
@@ -204,11 +202,6 @@ struct ClientsView: View {
 
     private var searchPrompt: LocalizedStringResource {
         LocalizedStringResource("clients.search.prompt", defaultValue: "Search \(termPlural)").localized(in: locale)
-    }
-
-    /// The word for one person or for several, so "1 client" and "12 clients" both read right.
-    private func noun(for count: Int) -> String {
-        count == 1 ? profile.clientTerm.singularText(in: locale) : profile.clientTerm.pluralText(in: locale)
     }
 
     private var formatters: Formatters {

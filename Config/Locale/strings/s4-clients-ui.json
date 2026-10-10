@@ -47,22 +47,6 @@
    "استيراد"
   ],
   [
-   "clients.count",
-   "Clients list: the count under the chips. %1$lld is the number, %2$@ the word she chose for the people she serves (client, patient...), singular for one and plural for the rest.",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@",
-   "%1$lld %2$@"
-  ],
-  [
    "clients.badge.cancelsOften",
    "Client row: the word at the end of the row for someone who cancels often (HabitsCalculator decides). Neutral wording, never blame.",
    "Cancels often",
@@ -269,53 +253,6 @@
    "Cari %@",
    "%@ खोजें",
    "ابحث في %@"
-  ],
-  [
-   "clients.winBack",
-   "Clients list strip: how many have not been back in two months (FollowUpPlanner). %1$lld is the count, %2$@ the word she chose (singular for one). Written without gender where the verb would need it.",
-   {
-    "one": "%1$lld %2$@ has not been back in 2+ months",
-    "other": "%1$lld %2$@ have not been back in 2+ months"
-   },
-   {
-    "one": "%1$lld %2$@ não voltou há mais de 2 meses",
-    "other": "%1$lld %2$@ não voltaram há mais de 2 meses"
-   },
-   {
-    "one": "%1$lld %2$@ não regressou há mais de 2 meses",
-    "other": "%1$lld %2$@ não regressaram há mais de 2 meses"
-   },
-   {
-    "one": "%1$lld %2$@ no ha vuelto en más de 2 meses",
-    "other": "%1$lld %2$@ no han vuelto en más de 2 meses"
-   },
-   {
-    "one": "%1$lld %2$@ no ha vuelto en más de 2 meses",
-    "other": "%1$lld %2$@ no han vuelto en más de 2 meses"
-   },
-   {
-    "one": "%1$lld %2$@ non torna da più di 2 mesi",
-    "other": "%1$lld %2$@ non tornano da più di 2 mesi"
-   },
-   {
-    "*": "Sans retour depuis plus de 2 mois : %1$lld %2$@"
-   },
-   {
-    "one": "%1$lld %2$@ war seit über 2 Monaten nicht mehr da",
-    "other": "%1$lld %2$@ waren seit über 2 Monaten nicht mehr da"
-   },
-   {
-    "*": "%1$lld %2$@ 2 aydan uzun süredir gelmedi"
-   },
-   {
-    "other": "%1$lld %2$@ belum kembali dalam 2+ bulan"
-   },
-   {
-    "*": "2+ महीनों से वापसी नहीं: %1$lld %2$@"
-   },
-   {
-    "*": "بدون عودة منذ أكثر من شهرين: %1$lld %2$@"
-   }
   ],
   [
    "clients.empty.title",

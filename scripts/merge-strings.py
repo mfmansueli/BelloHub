@@ -18,11 +18,14 @@ read it, and Claude Code never promotes a string to reviewed (docs/07-LOCALIZATI
 import glob
 import json
 import os
+import re
 import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import stringslib as lib  # noqa: E402
+
+IDENTIFIER = re.compile(r'accessibilityIdentifier\(\s*"[^"]*"')
 
 
 def merge(batch_path, catalog):
@@ -86,7 +89,8 @@ def duplicate_keys(paths):
 
 
 def source_text():
-    """Every Swift file of the app target, joined, to see whether a key is still named in code."""
+    """Every Swift file of the app target, joined, to see whether a key is still named in code. Accessibility
+    identifiers often share a key's name ("clients.count") and are not a use of the key, so they are left out."""
     root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "BelloHub")
     parts = []
     for folder, _, names in os.walk(root):
@@ -94,7 +98,7 @@ def source_text():
             if name.endswith(".swift"):
                 with open(os.path.join(folder, name), encoding="utf-8") as handle:
                     parts.append(handle.read())
-    return "\n".join(parts)
+    return IDENTIFIER.sub("", "\n".join(parts))
 
 
 def prune_unauthored(catalog, paths):

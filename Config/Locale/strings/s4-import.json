@@ -897,22 +897,6 @@
    "البريد الإلكتروني غير صالح"
   ],
   [
-   "import.button.import",
-   "Primary button of the choose step. %1$lld is how many are selected, %2$@ her word for clients (singular when there is one, plural otherwise).",
-   "Import %1$lld %2$@",
-   "Importar %1$lld %2$@",
-   "Importar %1$lld %2$@",
-   "Importar %1$lld %2$@",
-   "Importar %1$lld %2$@",
-   "Importa %1$lld %2$@",
-   "Importer %1$lld %2$@",
-   "%1$lld %2$@ importieren",
-   "%1$lld %2$@ içe aktar",
-   "Impor %1$lld %2$@",
-   "%1$lld %2$@ इम्पोर्ट करें",
-   "استيراد %1$lld %2$@"
-  ],
-  [
    "import.button.chooseOne",
    "Disabled primary button when nobody is selected.",
    "Choose at least one",

@@ -56,4 +56,18 @@ enum ClientTerm: String, PersistedEnum, Identifiable {
     func singularText(in locale: Locale) -> String {
         String(localized: singular.localized(in: locale))
     }
+
+    /// "1 client", "12 clients": the noun with its number, picked by the language's own plural rules. Choosing between
+    /// the singular and the plural noun by `count == 1` is wrong in most of the fourteen localizations: Arabic has six
+    /// forms (an 11th client takes the singular accusative), French and Portuguese treat 0 as singular, and the German
+    /// plural word "Kundschaft" is a collective that cannot follow a number at all.
+    func countText(_ count: Int, in locale: Locale) -> String {
+        let resource: LocalizedStringResource = switch self {
+        case .client: LocalizedStringResource("term.client.count", defaultValue: "\(count) clients")
+        case .patient: LocalizedStringResource("term.patient.count", defaultValue: "\(count) patients")
+        case .student: LocalizedStringResource("term.student.count", defaultValue: "\(count) students")
+        case .guest: LocalizedStringResource("term.guest.count", defaultValue: "\(count) guests")
+        }
+        return String(localized: resource.localized(in: locale))
+    }
 }

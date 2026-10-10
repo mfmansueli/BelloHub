@@ -110,7 +110,7 @@ struct HomeContentView: View {
         tiles(digest)
         if !digest.followUps.isEmpty { followUps(digest) }
         if !digest.winBack.isEmpty {
-            HomeWinBackLink(count: digest.winBack.count, noun: noun(for: digest.winBack.count))
+            HomeWinBackLink(counted: profile.clientTerm.countText(digest.winBack.count, in: locale))
         }
         quickActions(isDayClear: digest.isDayClear)
     }
@@ -185,7 +185,8 @@ struct HomeContentView: View {
                 .accessibilityAddTraits(.isHeader)
                 .padding(.bottom, Spacing.row)
             HomeFollowUpsCard(
-                digest: digest, noun: noun(for: digest.followUps.count), formatters: formatters
+                digest: digest, counted: profile.clientTerm.countText(digest.followUps.count, in: locale),
+                formatters: formatters
             )
         }
     }
@@ -208,9 +209,5 @@ struct HomeContentView: View {
             .buttonStyle(.belloSecondary)
             .accessibilityIdentifier("home.quick.weekGlance")
         }
-    }
-
-    private func noun(for count: Int) -> String {
-        count == 1 ? profile.clientTerm.singularText(in: locale) : profile.clientTerm.pluralText(in: locale)
     }
 }

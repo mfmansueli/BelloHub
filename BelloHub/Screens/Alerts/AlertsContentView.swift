@@ -180,12 +180,11 @@ struct AlertsContentView: View {
     }
 
     private func followUpsCard(_ count: Int) -> some View {
-        let noun = BidiIsolate.wrap(count == 1
-            ? profile.clientTerm.singularText(in: locale) : profile.clientTerm.pluralText(in: locale))
+        let counted = BidiIsolate.wrap(profile.clientTerm.countText(count, in: locale))
         return AlertCard(
             icon: .repeatArrows, tone: .peach, title: Text("alerts.followUps.title"),
             message: Text(LocalizedStringResource(
-                "alerts.followUps.message", defaultValue: "\(count) \(noun) are ready for a follow-up."
+                "alerts.followUps.due", defaultValue: "Ready for a follow-up: \(counted)"
             ).localized(in: locale)),
             identifier: "alerts.followUps"
         ) {
@@ -196,11 +195,11 @@ struct AlertsContentView: View {
     }
 
     private func winBackCard(_ count: Int) -> some View {
-        let noun = count == 1 ? profile.clientTerm.singularText(in: locale) : profile.clientTerm.pluralText(in: locale)
+        let counted = BidiIsolate.wrap(profile.clientTerm.countText(count, in: locale))
         return AlertCard(
             icon: .clients, tone: .rose, title: Text("alerts.winBack.title"),
             message: Text(LocalizedStringResource(
-                "clients.winBack", defaultValue: "\(count) \(BidiIsolate.wrap(noun)) have not been back in 2+ months"
+                "clients.winBack.due", defaultValue: "Not back in 2+ months: \(counted)"
             ).localized(in: locale)),
             identifier: "alerts.winBack"
         ) {

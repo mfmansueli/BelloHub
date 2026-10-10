@@ -5,12 +5,11 @@
 
 import SwiftUI
 
-/// "3 clients have not been back in 2+ months". Informational: the Win back screen (2.8) arrives with the calendar
+/// "Not back in 2+ months: 3 clients". Informational: the Win back screen (2.8) arrives with the calendar
 /// stage, and a strip that looks tappable and does nothing would be a dead end, so it is plain text for now.
 struct WinBackStrip: View {
-    let count: Int
-    /// What she calls the people she serves, for several of them or one: "clients", "patients".
-    let noun: String
+    /// How many, with what she calls the people she serves: "3 clients", "1 patient" (`ClientTerm.countText`).
+    let counted: String
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var typeSize
 
@@ -29,7 +28,7 @@ struct WinBackStrip: View {
                 .foregroundStyle(Palette.peachText)
                 .accessibilityHidden(true)
             Text(LocalizedStringResource(
-                "clients.winBack", defaultValue: "\(count) \(BidiIsolate.wrap(noun)) have not been back in 2+ months"
+                "clients.winBack.due", defaultValue: "Not back in 2+ months: \(BidiIsolate.wrap(counted))"
             ).localized(in: locale))
                 .font(Typography.meta)
                 .foregroundStyle(Palette.peachText)
@@ -44,5 +43,5 @@ struct WinBackStrip: View {
 }
 
 #Preview {
-    WinBackStrip(count: 3, noun: "clients")
+    WinBackStrip(counted: "3 clients")
 }

@@ -5,11 +5,11 @@
 
 import SwiftUI
 
-/// "3 clients have not been back in 2+ months", a peach strip on Home that opens Win back (2.8). It uses the same
+/// "Not back in 2+ months: 3 clients", a peach strip on Home that opens Win back (2.8). It uses the same
 /// wording as the Clients list strip, so the two read alike.
 struct HomeWinBackLink: View {
-    let count: Int
-    let noun: String
+    /// How many, with what she calls the people she serves: "3 clients" (`ClientTerm.countText`).
+    let counted: String
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var typeSize
 
@@ -27,8 +27,7 @@ struct HomeWinBackLink: View {
                     .foregroundStyle(Palette.peachText)
                     .accessibilityHidden(true)
                 Text(LocalizedStringResource(
-                    "clients.winBack",
-                    defaultValue: "\(count) \(BidiIsolate.wrap(noun)) have not been back in 2+ months"
+                    "clients.winBack.due", defaultValue: "Not back in 2+ months: \(BidiIsolate.wrap(counted))"
                 ).localized(in: locale))
                     .font(Typography.meta)
                     .foregroundStyle(Palette.peachText)

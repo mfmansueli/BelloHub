@@ -172,11 +172,10 @@ struct ImportChooseView: View {
         .accessibilityIdentifier("importClients.importButton")
     }
 
-    /// "Import 4 clients", with the noun in the singular for one.
+    /// "Import 4 clients", with the number and the noun agreeing in the reader's language.
     private var importTitle: LocalizedStringResource {
-        let count = viewModel.selection.count
-        let noun = count == 1 ? term.singularText(in: locale) : term.pluralText(in: locale)
-        return LocalizedStringResource("import.button.import", defaultValue: "Import \(count) \(noun)")
+        let counted = BidiIsolate.wrap(term.countText(viewModel.selection.count, in: locale))
+        return LocalizedStringResource("import.button.importCount", defaultValue: "Import \(counted)")
             .localized(in: locale)
     }
 }
