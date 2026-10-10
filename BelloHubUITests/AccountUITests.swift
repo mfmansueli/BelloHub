@@ -66,8 +66,11 @@ final class AccountUITests: XCTestCase {
         XCTAssertTrue(app.element("recoveryKey.word.12").exists)
 
         // Confirm: the switch, then the button; Privacy shows the date.
-        app.bringIntoView(app.switches["recoveryKey.confirmSwitch"])
-        app.flip(app.switches["recoveryKey.confirmSwitch"])
+        // The tap can land while the scroll of `bringIntoView` still settles; flip again if the switch stayed off.
+        let confirmSwitch = app.switches["recoveryKey.confirmSwitch"]
+        app.bringIntoView(confirmSwitch)
+        app.flip(confirmSwitch)
+        if !waitUntil(timeout: 2, { confirmSwitch.value as? String == "1" }) { app.flip(confirmSwitch) }
         XCTAssertTrue(waitUntil { app.buttons["recoveryKey.confirmButton"].isEnabled })
         app.tapButton("recoveryKey.confirmButton")
         XCTAssertTrue(app.element("recoveryKey.doneNotice").waitForExistence(timeout: 5))
