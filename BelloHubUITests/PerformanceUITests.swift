@@ -86,11 +86,16 @@ final class PerformanceUITests: XCTestCase {
         let strip = photos.firstMatch
         for _ in 0..<6 where !strip.isHittable { app.element("recordHistory.overview").swipeUp() }
         XCTAssertTrue(strip.exists, "no photo on the timeline")
+        // Drag at the strip's height across the screen: a photo element scrolls out from under a swipe on itself.
+        let origin = app.coordinate(withNormalizedOffset: .zero)
+        let row = strip.frame.midY
+        let right = origin.withOffset(CGVector(dx: app.frame.width - 30, dy: row))
+        let left = origin.withOffset(CGVector(dx: 30, dy: row))
         let options = XCTMeasureOptions()
         options.iterationCount = 3
         measure(metrics: [XCTMemoryMetric(application: app)], options: options) {
-            for _ in 0..<12 { strip.swipeLeft(velocity: .fast) }
-            for _ in 0..<12 { strip.swipeRight(velocity: .fast) }
+            for _ in 0..<12 { right.press(forDuration: 0.05, thenDragTo: left, withVelocity: .fast, thenHoldForDuration: 0) }
+            for _ in 0..<12 { left.press(forDuration: 0.05, thenDragTo: right, withVelocity: .fast, thenHoldForDuration: 0) }
         }
     }
 }
