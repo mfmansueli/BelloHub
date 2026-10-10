@@ -20,4 +20,6 @@ struct PublishInputs: Equatable, Sendable {
     var appointments: [Appointment]
     var blocks: [TimeBlock]
     var inboxKey: InboxPublicKey
+    /// Her health form and its wording in the booking languages; nil publishes the page without a form.
+    var healthForm: HealthFormPublication?
 }

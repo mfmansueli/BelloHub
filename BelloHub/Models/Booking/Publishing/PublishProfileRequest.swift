@@ -27,6 +27,8 @@ struct PublishProfileRequest: Encodable, Equatable, Sendable {
         /// One text per booking language, produced by `PolicyRuleText`.
         var rulesText: [String: String]
         var inboxKey: InboxPublicKey
+        /// Her health form for the page (nil: the page offers no form, `getFormContext` answers NOT_FOUND).
+        var intake: Intake?
     }
 
     struct Credential: Encodable, Equatable, Sendable {

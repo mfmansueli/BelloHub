@@ -12,11 +12,18 @@ import Foundation
 struct VaultPublishingSource: PublishingSource {
     private let vault: VaultService
     private let keys: any InboxKeyProviding
+    private let catalogs: any HealthFormCatalogProviding
     private let windowDays: Int
 
-    init(vault: VaultService, keys: any InboxKeyProviding, windowDays: Int = 400) {
+    init(
+        vault: VaultService,
+        keys: any InboxKeyProviding,
+        catalogs: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
+        windowDays: Int = 400
+    ) {
         self.vault = vault
         self.keys = keys
+        self.catalogs = catalogs
         self.windowDays = windowDays
     }
 
@@ -40,8 +47,33 @@ struct VaultPublishingSource: PublishingSource {
             availability: stored ?? .starter(timeZoneID: profile.timeZoneID),
             appointments: try await repository.loadAppointments(in: range),
             blocks: try await repository.loadTimeBlocks(in: range),
-            inboxKey: inboxKey
+            inboxKey: inboxKey,
+            healthForm: try await healthForm(profile: profile, repository: repository, now: now)
         )
+    }
+
+    /// The form she asks today in every booking language, so the page can ask it (docs/10 section 5). A professional
+    /// who never opened the form editor gets her professions' default, stored as version 1 at once
+    /// (`currentHealthFormTemplate`): a client may answer it from the page, and the answer must find its questions.
+    /// A bundle without catalogs publishes no form rather than failing the whole page.
+    private func healthForm(
+        profile: ProfessionalProfile, repository: any FormTemplateRepository, now: Date
+    ) async throws -> HealthFormPublication? {
+        let locales = PublishPayloads.bookingLocales(profile)
+        var byLocale: [AppLocalization: HealthFormCatalog] = [:]
+        var noneLabels: [AppLocalization: String] = [:]
+        for locale in locales {
+            guard let catalog = try? catalogs.catalog(for: locale) else { continue }
+            byLocale[locale] = catalog
+            var none = LocalizedStringResource("health.answer.none")
+            none.locale = locale.locale
+            noneLabels[locale] = String(localized: none)
+        }
+        guard let business = locales.first.flatMap({ byLocale[$0] }) else { return nil }
+        let template = try await repository.currentHealthFormTemplate(
+            catalog: business, professions: profile.professions, now: now
+        )
+        return HealthFormPublication(template: template, catalogs: byLocale, noneLabels: noneLabels)
     }
 
     func changes() -> AsyncStream<Void> {

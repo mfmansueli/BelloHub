@@ -60,7 +60,8 @@ enum PublishPayloads {
             booking: booking,
             policy: policy(inputs.setup.cancellation),
             rulesText: rules,
-            inboxKey: inputs.inboxKey
+            inboxKey: inputs.inboxKey,
+            intake: inputs.healthForm.flatMap { intake($0, locales: locales) }
         ))
     }
 

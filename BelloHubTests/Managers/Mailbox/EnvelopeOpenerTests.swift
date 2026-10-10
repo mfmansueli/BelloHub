@@ -87,7 +87,7 @@ struct EnvelopeOpenerTests {
             "allergies": .choices(["latex", "fragrance"]),
             "medication": .yes,
             "pregnancy": .no,
-            "anythingElse": .text("Pele sensível; fiz um peeling há duas semanas."),
+            "anythingElse": .text("Pele sensível; fiz um peeling há duas semanas.")
         ])
     }
 
@@ -114,8 +114,10 @@ struct EnvelopeOpenerTests {
         }
         #expect(feeling == "irritated")
         #expect(note == "Bochechas vermelhas desde a manhã.")
-        let jpeg = try #require(photo)
-        #expect(jpeg.starts(with: [0xFF, 0xD8]), "a JPEG")
+        let object = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
+        let sent = try #require(object["photoJpeg"] as? String)
+        #expect(photo == Data(base64Encoded: sent), "the bytes the page sent, standard base64")
+        #expect(photo?.isEmpty == false)
         #expect(message.submittedAt == Self.submitted)
     }
 
@@ -153,7 +155,7 @@ struct EnvelopeOpenerTests {
             SealedEnvelope(keyId: envelope.keyId, kind: "checkin", itemId: envelope.itemId, enc: envelope.enc,
                            ct: envelope.ct),
             SealedEnvelope(keyId: "AAAAAAAAAAA", kind: envelope.kind, itemId: envelope.itemId, enc: envelope.enc,
-                           ct: envelope.ct),
+                           ct: envelope.ct)
         ]
         for wrong in moved {
             #expect(throws: EnvelopeOpener.Failure.openFailed) { try EnvelopeOpener.open(wrong, with: key) }
