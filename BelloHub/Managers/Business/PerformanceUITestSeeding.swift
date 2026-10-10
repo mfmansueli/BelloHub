@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 /// Data for the performance budgets of docs/13-TESTING-QUALITY.md section 6, measured by `PerformanceUITests`:
-/// `-uiPerfClients 2000` adds that many clients (names, phones, a few tags), `-uiPerfPhotos 200` adds that many photos
+/// `-uiPerfClients 2000` adds that many clients (names and phones), `-uiPerfPhotos 200` adds that many photos
 /// to the seeded client of `-uiSeed clientWithHealth`, each a distinct 1200 x 1600 JPEG with its thumbnail, as the
 /// camera pipeline would store them. DEBUG only; runs after `UITestSeeding` created the professional.
 enum PerformanceUITestSeeding {
