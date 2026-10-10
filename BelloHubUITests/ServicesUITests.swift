@@ -75,4 +75,34 @@ final class ServicesUITests: XCTestCase {
         app.tapButton("services.addOnsLink")
         XCTAssertTrue(app.button(prefix: "addOns.row.", containing: "Hand massage").waitForExistence(timeout: 5))
     }
+
+    /// D56: prep, clean-up and processing time live in the service form, are kept, and the processing menus appear
+    /// only while the switch is on.
+    func testExtraAndProcessingTime() {
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded"])
+        app.openBusinessScreen(row: "more.servicesRow")
+        let glow = app.button(prefix: "services.row.", containing: "Glow Facial")
+        XCTAssertTrue(glow.waitForExistence(timeout: 5))
+        glow.tap()
+
+        XCTAssertTrue(app.buttons["serviceEditor.prepMenu"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["serviceEditor.cleanupMenu"].exists)
+        XCTAssertFalse(app.buttons["serviceEditor.processingMenu"].exists, "no processing menus while it is off")
+        let processing = app.switches["serviceEditor.processingToggle"]
+        XCTAssertTrue(app.scrollUntilVisible(processing))
+        app.flip(processing)
+        XCTAssertEqual(processing.value as? String, "1")
+        XCTAssertTrue(app.buttons["serviceEditor.processingMenu"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["serviceEditor.processingStartMenu"].exists)
+        app.tapButton("serviceEditor.saveButton")
+
+        let again = app.button(prefix: "services.row.", containing: "Glow Facial")
+        XCTAssertTrue(again.waitForExistence(timeout: 5))
+        again.tap()
+        let kept = app.switches["serviceEditor.processingToggle"]
+        XCTAssertTrue(app.scrollUntilVisible(kept))
+        XCTAssertEqual(kept.value as? String, "1", "the processing time was kept")
+        XCTAssertTrue(app.buttons["serviceEditor.processingMenu"].exists)
+        app.tapButton("serviceEditor.cancelButton")
+    }
 }

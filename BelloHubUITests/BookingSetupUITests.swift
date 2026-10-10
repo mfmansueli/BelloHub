@@ -102,6 +102,27 @@ final class BookingSetupUITests: XCTestCase {
         XCTAssertTrue(app.buttons["quickReplyEditor.saveButton"].label.contains("Saved"))
     }
 
+    /// D56: the slot interval menu and "Keep my day compact" sit with the booking rules; switching the compact day
+    /// off is kept when she comes back.
+    func testSlotIntervalAndCompactDay() {
+        let app = XCUIApplication.launchedOnBookingSetup()
+        app.openMoreRow("more.bookingPageRow")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.slotStepPicker"]))
+        XCTAssertTrue(app.buttons["bookingSettings.slotStepPicker"].label.contains("15"),
+                      app.buttons["bookingSettings.slotStepPicker"].label)
+        let compact = app.switches["bookingSettings.compactToggle"]
+        XCTAssertTrue(app.scrollUntilExists(compact))
+        XCTAssertEqual(compact.value as? String, "1", "on by default")
+        app.flipSwitch("bookingSettings.compactToggle")
+        XCTAssertEqual(compact.value as? String, "0")
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.tapButton("more.bookingPageRow")
+        let again = app.switches["bookingSettings.compactToggle"]
+        XCTAssertTrue(app.scrollUntilExists(again))
+        XCTAssertEqual(again.value as? String, "0", "her choice was kept")
+    }
+
     // MARK: - Helpers
 
     private func waitForLabel(_ element: XCUIElement, containing text: String, timeout: TimeInterval = 8) -> Bool {
