@@ -92,6 +92,6 @@ func makeBlock(hours: Double, length: Double = 1, reason: String? = "Dentist") -
 extension PublishFailure {
     /// Every case, so a table test cannot miss a new one by forgetting to extend a list.
     static let allCasesForTests: [PublishFailure] = [
-        .needsAddress, .needsService, .addressTaken, .offline, .busy, .signedOut, .locked, .rejected
+        .needsAddress, .needsService, .addressTaken, .offline, .busy, .signedOut, .locked, .rejected, .keyMismatch
     ]
 }

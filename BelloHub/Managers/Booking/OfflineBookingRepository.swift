@@ -35,4 +35,8 @@ struct OfflineBookingRepository: BookingRepository {
     func updateInboxKey(_ key: InboxPublicKey, compromised: Bool) async throws {
         throw BookingRepositoryError.notPublishedYet
     }
+
+    func servedInboxKey(slug: String) async throws -> InboxPublicKey? {
+        throw BookingRepositoryError.notPublishedYet
+    }
 }

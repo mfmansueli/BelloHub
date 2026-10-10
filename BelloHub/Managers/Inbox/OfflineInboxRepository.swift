@@ -20,11 +20,20 @@ struct OfflineInboxRepository: InboxRepository {
     func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome {
         throw BookingRepositoryError.notPublishedYet
     }
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        throw BookingRepositoryError.notPublishedYet
+    }
     func removeWaitlistEntry(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func resetNoShowCount(phone: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }
     func mailboxItem(id: String) async throws -> MailboxItem { throw BookingRepositoryError.notPublishedYet }
     func acknowledgeMailboxItem(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        throw BookingRepositoryError.notPublishedYet
+    }
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        throw BookingRepositoryError.notPublishedYet
+    }
     func registerDevice(fcmToken: String, locale: String?) async throws { throw BookingRepositoryError.notPublishedYet }
     func unregisterDevice(fcmToken: String) async throws { throw BookingRepositoryError.notPublishedYet }
 }

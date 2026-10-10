@@ -26,7 +26,7 @@ final class AccountService {
         vault: VaultService,
         keyManager: KeyManager,
         keyStore: any KeyStoring,
-        deleter: any AccountDeleting = OfflineAccountDeleter(),
+        deleter: any AccountDeleting,
         defaults: UserDefaults = .standard
     ) {
         self.vault = vault
@@ -44,7 +44,7 @@ final class AccountService {
         errorMessage = nil
         defer { isDeleting = false }
         do {
-            let outcome = try await deleter.deleteAccount(request)
+            let outcome = try await serverOutcome(for: request)
             try await wipeDevice()
             return outcome
         } catch {
@@ -61,6 +61,21 @@ final class AccountService {
     }
 
     // MARK: - Private
+
+    /// The server's answer, asked once per account: after it confirmed, the answer is kept until the wipe finished, so
+    /// a second attempt never depends on a server account (and an Auth user) that no longer exist.
+    private func serverOutcome(for request: AccountDeletionRequest) async throws -> AccountDeletionOutcome {
+        if let stored = defaults.string(forKey: DefaultsKey.accountDeletionConfirmed),
+           let outcome = AccountDeletionConfirmation.outcome(stored, userID: request.userID) {
+            return outcome
+        }
+        let outcome = try await deleter.deleteAccount(request)
+        defaults.set(
+            AccountDeletionConfirmation.stored(outcome, userID: request.userID),
+            forKey: DefaultsKey.accountDeletionConfirmed
+        )
+        return outcome
+    }
 
     private func wipeDevice() async throws {
         guard let repository = vault.repository else { throw VaultRepositoryError.unavailable }

@@ -13,6 +13,8 @@ struct InboxServices {
     let bookings: BookingSyncService
     let mailbox: MailboxService
     let push: PushService
+    /// Deleting a client's data on the phone and, through the queue, on the server.
+    let clientDeletion: ClientDataDeletionService
 
     /// Wires the Services over one inbox server. The defaults are the live ones; UI tests pass short retry delays, no
     /// polling and a notifier that never asks iOS.
@@ -34,6 +36,9 @@ struct InboxServices {
         let push = PushService(
             provider: pushProvider, queue: queue, bookings: bookings, mailbox: mailbox, defaults: defaults
         )
-        return InboxServices(queue: queue, bookings: bookings, mailbox: mailbox, push: push)
+        return InboxServices(
+            queue: queue, bookings: bookings, mailbox: mailbox, push: push,
+            clientDeletion: ClientDataDeletionService(vault: vault, queue: queue)
+        )
     }
 }

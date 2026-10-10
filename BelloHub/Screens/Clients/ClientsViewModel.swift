@@ -5,6 +5,7 @@
 
 import Foundation
 import Observation
+import os
 
 /// State and actions of the Clients list: it watches the vault, builds the entries once per change
 /// (`ClientListBuilder`, off the main actor) and narrows them by the chip and the search (`ClientListFilter`,
@@ -186,7 +187,9 @@ final class ClientsViewModel {
     }
 
     private func applyQuery() {
-        visible = ClientSearch.filter(filter.apply(to: list.entries), query: searchText, tags: profile.tags)
+        visible = PerformanceSignposts.signposter.withIntervalSignpost(PerformanceSignposts.clientSearch) {
+            ClientSearch.filter(filter.apply(to: list.entries), query: searchText, tags: profile.tags)
+        }
     }
 
     /// The business time zone decides what "a month ago" and "this afternoon" mean (docs/07 section 2.4).

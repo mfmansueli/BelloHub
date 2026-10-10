@@ -48,9 +48,12 @@ struct MoreRow: View {
                 .background(tint.background, in: RoundedRectangle(cornerRadius: Radius.control, style: .continuous))
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: Spacing.xxs) {
+                // Both grow to every line they need: a long subtitle (the form key) must never be cut.
                 title.font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                    .fixedSize(horizontal: false, vertical: true)
                 if let subtitle {
                     subtitle.font(Typography.meta).foregroundStyle(Palette.ink2)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

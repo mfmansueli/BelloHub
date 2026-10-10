@@ -107,11 +107,28 @@ actor UITestInboxRepository: InboxRepository {
         return .offered(holdKey: "offer-\(offer.waitlistId)", expiresAt: Date().addingTimeInterval(3 * 3_600))
     }
 
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        guard let index = bookings.firstIndex(where: { $0.id == bookingId }) else {
+            throw BookingRepositoryError.rejected
+        }
+        bookings[index].status = .declined
+        return .suggested(holdKey: "suggest-\(bookingId)", expiresAt: Date().addingTimeInterval(3 * 3_600))
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         waitlist.removeAll { $0.id == id }
     }
 
     func resetNoShowCount(phone: String) async throws {}
+
+    /// Everything is allowed: UI tests drive the free limit through the vault's own count (`-uiPlan`).
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        RegistrationReservation(allowed: Set(claims.map(\.clientID)), refused: [], count: claims.count)
+    }
+
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        bookings.removeAll { booking in bookingIds.contains(booking.id) || booking.client.phone == phone }
+    }
 
     func acknowledgeMailboxItem(id: String) async throws {
         acknowledged.append(id)

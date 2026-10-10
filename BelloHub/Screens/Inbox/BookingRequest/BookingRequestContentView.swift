@@ -27,6 +27,12 @@ struct BookingRequestContentView: View {
             .refreshable { await viewModel.refreshAsync() }
             .task { await viewModel.loadAsync() }
             .sheet(isPresented: $viewModel.isPaywallPresented) { PaywallSheet() }
+            .sheet(isPresented: $viewModel.isSuggestSheetPresented) {
+                SuggestTimeSheet(
+                    viewModel: viewModel, clientName: viewModel.booking?.client.name ?? "",
+                    timeZone: settings.timeZone
+                )
+            }
     }
 
     // MARK: - States
@@ -63,6 +69,7 @@ struct BookingRequestContentView: View {
                     note: booking.note, identifier: "bookingRequest"
                 ) {
                     timeLine(booking)
+                    if viewModel.cancelsOften { CancelsOftenBadge(identifier: "bookingRequest.cancelsOften") }
                 }
                 if let message = viewModel.errorMessage, viewModel.phase.canAnswer {
                     ErrorNotice(message: message).accessibilityIdentifier("bookingRequest.error")
@@ -70,6 +77,11 @@ struct BookingRequestContentView: View {
                 if viewModel.phase.canAnswer { reason(booking, name: name) }
                 if viewModel.phase == .needsPlan { needsPlan }
                 if viewModel.phase.canAnswer, viewModel.offersCountReset { resetCount }
+                if viewModel.phase.canAnswer {
+                    Button(action: viewModel.beginSuggestion) { Text("bookingRequest.suggest.title") }
+                        .buttonStyle(.belloTertiary)
+                        .accessibilityIdentifier("bookingRequest.suggestButton")
+                }
                 RequestOutcomeNotice(
                     phase: viewModel.phase, acceptedText: "bookingRequest.approved",
                     declinedText: "bookingRequest.declined", isWaitingForNetwork: viewModel.isWaitingForNetwork,

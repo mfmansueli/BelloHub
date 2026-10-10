@@ -58,6 +58,7 @@ enum UITestSeeding {
         }
         await TreatmentFlowUITestSeeding.seedIfRequested(dependencies)
         await RecordUITestSeeding.seedIfRequested(dependencies)
+        await PerformanceUITestSeeding.seedIfRequested(dependencies)
     }
 }
 #endif

@@ -45,6 +45,7 @@ struct WaitlistContentView: View {
         .navigationTitle(Text("waitlist.title"))
         .navigationBarTitleDisplayMode(.large)
         .refreshable { await viewModel.refreshAsync() }
+        .task { await viewModel.loadHabits() }
     }
 
     // MARK: - States
@@ -110,6 +111,7 @@ struct WaitlistContentView: View {
             ForEach(entries) { entry in
                 WaitlistPersonRow(
                     entry: entry, formatters: formatters, canOffer: canOffer && !viewModel.isTimeTaken,
+                    cancelsOften: viewModel.cancelsOften(entry),
                     isOffering: viewModel.offering.contains(entry.id), result: viewModel.results[entry.id],
                     onOffer: { viewModel.offer(entry) }, onRemove: { viewModel.remove(entry) }
                 )

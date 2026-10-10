@@ -21,6 +21,8 @@ protocol InboxRepository: Sendable {
     func respondBookingRequest(id: String, approve: Bool) async throws -> BookingRequestOutcome
     func respondRescheduleRequest(id: String, accept: Bool) async throws -> RescheduleOutcome
     func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome
+    /// "Suggest another time": declines the request and holds `startsAt` for the client (`suggestBookingTime`).
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome
     func removeWaitlistEntry(id: String) async throws
     /// `markNoShow` with `reset`: her count starts from zero and online booking opens again for her (2.10).
     func resetNoShowCount(phone: String) async throws
@@ -31,6 +33,14 @@ protocol InboxRepository: Sendable {
     func mailboxItem(id: String) async throws -> MailboxItem
     /// Deletes the item on the server; an unknown id is also fine (idempotent).
     func acknowledgeMailboxItem(id: String) async throws
+
+    /// `deleteClientServerData` (D30): the server forgets a client she deleted on the phone: her bookings, sealed
+    /// items, requests, waitlist rows, portal and contact row. At most 200 booking ids per call; idempotent.
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws
+
+    /// `reserveRegistrations` (D42): the server counts new clients, at most 200 per call, in order; idempotent per
+    /// client id and phone. The server is the authority for the count and the plan.
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation
 
     func registerDevice(fcmToken: String, locale: String?) async throws
     func unregisterDevice(fcmToken: String) async throws

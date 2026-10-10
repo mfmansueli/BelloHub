@@ -423,6 +423,36 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   has a skeleton, an empty state, an offer error (offers are never queued) and a taken-time notice.
 - No new tokens.
 
+### Changes from the security review (S8 leftovers)
+
+- **Alerts, "From your clients"** (`MailboxAlertCards`, pure `MailboxAlerts`): after the request cards, one `AlertCard`
+  per thing her clients sent through their sealed links: a check-in (feeling and her note in quotes; rose for
+  irritation or a reaction, sage otherwise), a copy or deletion request (name and phone as the client typed them, and
+  what to do), a form that could not be opened (rose, "Ask the client to send it again") or that waits for its client
+  (peach), and "Health forms received" with a count. Each card has one secondary action ("Mark as handled",
+  "Dismiss", "Got it") that clears it and acknowledges it on the server. Identifiers `alerts.mailbox.<itemId>[.action]`,
+  `alerts.mailbox.imported[.action]`. A check-in photo shows under its text (180 pt tall, rounded, spoken "Photo the
+  client sent"), from memory only.
+- **2.10 BookingRequest, "Suggest another time"**: a tertiary button under the reason opens `SuggestTimeSheet` (graphical
+  date and time picker in the business time zone, primary "Keep this time"); after the server held the time, an info
+  notice and a primary `ShareLink` "Send the link" with a ready message. Identifiers `bookingRequest.suggestButton`,
+  `bookingRequest.suggest.*`.
+- **"Cancels often" on 2.9 and 2.10** (`CancelsOftenBadge`): the client list's coral dot and words, under the person's
+  details on the waitlist and inside the request's summary card.
+- **Accessibility (S12)**: `StepProgressBar` speaks through a 44 pt overlay; `BrandLockup` reads as one image; `MoreRow`
+  title and subtitle wrap to every line.
+- **4.3 ClientEdit, "Delete data"** (`ClientDeleteDataRow`): a coral `ActionRow` under Merge, a destructive
+  confirmation ("Delete the data of Ana?") and an error alert; after it the Clients stack returns to the list.
+  Identifiers `clientEdit.deleteDataRow`, `clientEdit.deleteDataConfirmButton`.
+- **7.7 Privacy, "Booking form key"**: a neutral `MoreRow` at the end of "Where your data lives" with the key id the
+  booking form shows in its footer (`privacy.inboxKeyRow`), hidden while the vault is locked.
+- **Booking page error "key mismatch"**: `PublishFailureNotice` with Try again, when the page serves a form key that is
+  not this iPhone's (`PublishFailure.keyMismatch`).
+- **Recovery words while the screen is recorded or shared**: the words grid is replaced by a footnote ("Hidden while
+  your screen is recorded or shared.") through the generic `hiddenWhileCaptured()` modifier (`SceneCaptureObserver`
+  reads `UITraitCollection.sceneCaptureState`; SwiftUI has no environment value for it). The app-switcher snapshot was
+  already covered by `PrivacyCover`.
+
 ### Client web app (S9, `web/`)
 
 The web pages use the same tokens (generated into CSS variables by `web/scripts/gen-tokens.ts`); the screen inventory

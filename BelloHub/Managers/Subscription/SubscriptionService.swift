@@ -23,10 +23,9 @@ final class SubscriptionService: SubscriptionStatusProviding {
     private let verifier: any SubscriptionVerifying
     private var updates: Task<Void, Never>?
 
-    init(
-        provider: any SubscriptionProviding = StoreKitSubscriptionProvider(),
-        verifier: any SubscriptionVerifying = OfflineSubscriptionVerifier()
-    ) {
+    /// The app passes `StoreKitSubscriptionProvider` and `RemoteSubscriptionVerifier`; DEBUG launches without a
+    /// server pass their stand-ins (`preview`, UI tests).
+    init(provider: any SubscriptionProviding, verifier: any SubscriptionVerifying) {
         self.provider = provider
         self.verifier = verifier
     }
@@ -78,8 +77,10 @@ final class SubscriptionService: SubscriptionStatusProviding {
 
     // MARK: - Buying
 
+    /// The server's account token goes into the transaction first; without it the store is not asked at all.
     func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
-        let outcome = try await provider.purchase(period)
+        let token = try await verifier.purchaseToken()
+        let outcome = try await provider.purchase(period, appAccountToken: token)
         if outcome == .purchased { await refreshState() }
         return outcome
     }
@@ -96,10 +97,12 @@ final class SubscriptionService: SubscriptionStatusProviding {
 
     // MARK: - Private
 
-    /// The store's answer goes through the server first; when the server cannot be reached the store's answer is
-    /// kept, because StoreKit 2 already checked Apple's signature on the device.
+    /// The store's answer goes through the server first (with the signed transaction behind it); when the server
+    /// cannot be reached the store's answer is kept, because StoreKit 2 already checked Apple's signature on the
+    /// device.
     private func adopt(_ storeState: SubscriptionState) async {
-        state = (try? await verifier.verify(storeState)) ?? storeState
+        let signed = await provider.currentSignedTransaction()
+        state = (try? await verifier.verify(storeState, signedTransaction: signed)) ?? storeState
     }
 
     private static var unavailableMessage: String {

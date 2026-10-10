@@ -28,7 +28,7 @@ final class UITestSubscriptionProvider: SubscriptionProviding, Sendable {
         ]
     }
 
-    func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
+    func purchase(_ period: PlanPeriod, appAccountToken: UUID?) async throws -> PurchaseOutcome {
         state.withLock { $0 = .active(period: period, expiresAt: nil, willRenew: true) }
         return .purchased
     }
@@ -39,6 +39,11 @@ final class UITestSubscriptionProvider: SubscriptionProviding, Sendable {
 
     func currentState() async -> SubscriptionState {
         state.withLock { $0 }
+    }
+
+    /// No signed transaction: there is no server to show it to.
+    func currentSignedTransaction() async -> String? {
+        nil
     }
 
     func stateUpdates() -> AsyncStream<SubscriptionState> {

@@ -3,9 +3,18 @@
 //  BelloHub
 //
 
-/// No server yet: the store's own answer stands. Replaced by the Firebase function in S8.
+#if DEBUG
+import Foundation
+
+/// No server: the store's own answer stands and a purchase carries no account token. DEBUG only, for UI-test launches
+/// (no network) and previews; the app uses `RemoteSubscriptionVerifier`.
 struct OfflineSubscriptionVerifier: SubscriptionVerifying {
-    func verify(_ state: SubscriptionState) async throws -> SubscriptionState {
+    func purchaseToken() async throws -> UUID? {
+        nil
+    }
+
+    func verify(_ state: SubscriptionState, signedTransaction: String?) async throws -> SubscriptionState {
         state
     }
 }
+#endif

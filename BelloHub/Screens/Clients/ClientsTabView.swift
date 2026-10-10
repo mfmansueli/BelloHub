@@ -58,7 +58,7 @@ struct ClientsTabView: View {
             ClientEditView(
                 clientID: clientID, vault: vault, profile: profile, registrar: registration, regions: regions,
                 onFinish: didFinishEditing, onOpenExisting: { path.append(ClientsRoute.profile(clientID: $0)) },
-                onMerged: { path.removeLast() }
+                onMerged: { path.removeLast() }, onDeleted: { path = NavigationPath() }
             )
         case .knowledge(let clientID):
             ClientKnowledgeView(

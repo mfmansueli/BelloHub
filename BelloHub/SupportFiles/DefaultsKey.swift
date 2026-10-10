@@ -34,8 +34,11 @@ enum DefaultsKey {
     /// (the lock) stay.
     static let clearedOnAccountDeletion = [
         setupCompletedUserID, localDevUser, recoveryKeySavedAt, notificationPrefs, hideNamesOnLockScreen,
-        appleCalendarEnabled, aiPreferences, publishingOnlineUserID
+        appleCalendarEnabled, aiPreferences, publishingOnlineUserID, accountDeletionConfirmed
     ]
+    /// The server already deleted this account (`"<userID>|<outcome>"`, `AccountService`): a retry after a wipe that
+    /// failed or an app killed mid-way goes straight to the wipe instead of asking a server that no longer knows her.
+    static let accountDeletionConfirmed = "account.deletionConfirmed"
     /// Prefix of the per-user queue of writes waiting for the server (`OutboundQueue`, JSON): `<prefix>.<userID>`.
     static let outboundQueue = "inbox.outbound"
     /// Prefix of the per-user `InboxSnapshot` (`BookingSyncService`, JSON): `<prefix>.<userID>`.

@@ -22,6 +22,7 @@ import { reserveRegistrations } from '../owner/reserveRegistrations.js';
 import { respondBookingRequest } from '../owner/respondBookingRequest.js';
 import { respondRescheduleRequest } from '../owner/respondRescheduleRequest.js';
 import { setOnlineBookingStopped } from '../owner/setOnlineBookingStopped.js';
+import { suggestBookingTime } from '../owner/suggestBookingTime.js';
 import { syncPlan } from '../owner/syncPlan.js';
 import { unregisterDevice } from '../owner/unregisterDevice.js';
 import { updateInboxKey } from '../owner/updateInboxKey.js';
@@ -54,7 +55,8 @@ export const USE_CASES: readonly AnyUseCase[] = [
   // owner (the iPhone app)
   ensureAccount, reserveRegistration, reserveRegistrations, syncPlan, isSlugAvailable, claimSlug, publishProfile,
   publishAvailability, updateInboxKey, respondBookingRequest, respondRescheduleRequest, cancelBookingByOwner,
-  moveBookingByOwner, offerWaitlistSlot, removeWaitlistEntry, markNoShow, setOnlineBookingStopped, publishPortal,
+  moveBookingByOwner, suggestBookingTime, offerWaitlistSlot, removeWaitlistEntry, markNoShow, setOnlineBookingStopped,
+  publishPortal,
   getMailboxItem, acknowledgeMailboxItem, registerDevice, unregisterDevice, deleteClientServerData, deleteAccount
 ];
 

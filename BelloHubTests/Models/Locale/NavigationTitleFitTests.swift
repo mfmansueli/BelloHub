@@ -32,7 +32,8 @@ struct NavigationTitleFitTests {
     static let inlineTitleKeys = [
         "account.delete.title", "addOns.editor.addTitle", "addOns.editor.editTitle", "appointment.title",
         "availability.breakSheet.addTitle", "availability.breakSheet.editTitle", "availability.dayOffSheet.addTitle",
-        "availability.dayOffSheet.editTitle", "beforeYouStart.title", "blockTime.title", "bookingRequest.title",
+        "availability.dayOffSheet.editTitle", "beforeYouStart.title", "blockTime.title",
+        "bookingRequest.suggest.title", "bookingRequest.title",
         "bookingSettings.pauseSheet.title", "bookingSettings.title", "cancelAppointment.title", "cancelPolicy.title",
         "clientKnowledge.title", "clientMerge.title", "credentials.preview.title", "credentials.title",
         "export.title", "exportRecord.title", "fieldEditor.addTitle", "fieldEditor.editTitle", "formTemplates.title",

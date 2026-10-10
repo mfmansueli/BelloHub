@@ -80,6 +80,7 @@ struct MoreTab: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let vault = VaultService(repository: nil)
     let keys = KeyManager()
@@ -88,7 +89,8 @@ struct MoreTab: View {
         .environment(vault)
         .environment(AppLockService(keyManager: keys))
         .environment(BookingSetupService(vault: vault))
-        .environment(SubscriptionService())
+        .environment(SubscriptionService.preview())
         .environment(RecoveryKeyService(keyManager: keys))
         .environment(PublishingService.preview)
 }
+#endif

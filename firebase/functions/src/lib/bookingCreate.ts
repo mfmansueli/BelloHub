@@ -205,7 +205,8 @@ export async function createBookingCore(deps: Deps, request: CreateBookingReques
       ...(request.note ? { note: request.note } : {}),
       manageTokenHashes: [tokenHash(manageToken)],
       // Booking through a link she sent from the waitlist is a waitlist booking.
-      origin: ownHolds.some((hold) => hold.data.kind === 'offer') ? 'waitlist' : request.origin,
+      // A waitlist offer makes a waitlist booking; a suggested time (no waitlist entry) keeps the request's origin.
+      origin: ownHolds.some((hold) => hold.data.kind === 'offer' && hold.data.waitlistId) ? 'waitlist' : request.origin,
       // D47: the rules she published now apply to this booking for good; `rulesText` goes with them.
       policy: profile.policy,
       rulesText: profile.rulesText,

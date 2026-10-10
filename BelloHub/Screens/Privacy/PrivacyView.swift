@@ -12,11 +12,13 @@ struct PrivacyView: View {
     @Environment(RecoveryKeyService.self) private var recoveryKey
     @Environment(NotificationSettingsService.self) private var notifications
     @Environment(ProfileService.self) private var profile
+    @Environment(KeyManager.self) private var keys
 
     var body: some View {
         PrivacyContentView(
             lock: lock, recoveryKey: recoveryKey, notifications: notifications,
-            localization: profile.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
+            localization: profile.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en,
+            inboxKeyID: (try? keys.currentInboxPublicKey())?.keyId
         )
     }
 }
@@ -28,4 +30,5 @@ struct PrivacyView: View {
         .environment(RecoveryKeyService(keyManager: keys))
         .environment(NotificationSettingsService(permissions: PermissionService()))
         .environment(ProfileService(vault: VaultService(repository: nil)))
+        .environment(keys)
 }

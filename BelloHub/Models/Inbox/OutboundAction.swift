@@ -18,6 +18,10 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         case resetNoShowCount(phone: String)
         case registerDevice(fcmToken: String, locale: String?)
         case unregisterDevice(fcmToken: String)
+        /// She deleted a client on the phone: the server forgets her too (D30). At most 200 booking ids per action.
+        case deleteClientServerData(phone: String?, bookingIds: [String])
+        /// Clients registered while the server was away: the server counts them when it answers (D42).
+        case reserveRegistrations(claims: [RegistrationClaim])
     }
 
     let id: UUID
@@ -41,6 +45,8 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         case .removeWaitlistEntry(let waitlistId): "waitlist:\(waitlistId)"
         case .resetNoShowCount(let phone): "contact:\(phone)"
         case .registerDevice, .unregisterDevice: "device"
+        case .deleteClientServerData(let phone, let bookingIds): "contact:\(phone ?? bookingIds.first ?? "")"
+        case .reserveRegistrations: "registrations"
         }
     }
 }

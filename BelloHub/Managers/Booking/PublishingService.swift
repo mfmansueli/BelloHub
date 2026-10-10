@@ -53,6 +53,10 @@ final class PublishingService {
     @ObservationIgnored private var lastProfile: PublishProfileRequest?
     @ObservationIgnored private var lastAvailability: PublishAvailabilityRequest?
     @ObservationIgnored private var attempt = 0
+    /// The served inbox key was checked against the derived one since the profile last changed (docs/06 3.2).
+    @ObservationIgnored private var keyVerified = false
+    /// The page serves a key that is not hers: nothing is published until she retries.
+    @ObservationIgnored private var keyMismatch = false
     @ObservationIgnored private var isDirty = false
     @ObservationIgnored private var syncTask: Task<Void, Never>?
     @ObservationIgnored private var debounceTask: Task<Void, Never>?
@@ -118,6 +122,8 @@ final class PublishingService {
         lastProfile = nil
         lastAvailability = nil
         attempt = 0
+        keyVerified = false
+        keyMismatch = false
         isDirty = false
         account = nil
         lastPublishedAt = nil
@@ -153,6 +159,7 @@ final class PublishingService {
 
     func retryAsync() async {
         retryTask?.cancel()
+        keyMismatch = false
         await syncNow()
     }
 
@@ -225,6 +232,10 @@ final class PublishingService {
 
     private func publishOnce() async {
         retryTask?.cancel()
+        guard !keyMismatch else {
+            state = .error(.keyMismatch, wasOnline: isLive)
+            return
+        }
         state = .publishing(wasOnline: isLive)
         do {
             let inputs = try await source.inputs(now: now())
@@ -238,7 +249,9 @@ final class PublishingService {
             if profile != lastProfile {
                 try await repository.publishProfile(profile)
                 lastProfile = profile
+                keyVerified = false
             }
+            try await verifyServedKey(profile)
             if availability != lastAvailability {
                 try await repository.publishAvailability(availability)
                 lastAvailability = availability
@@ -269,7 +282,17 @@ final class PublishingService {
         lastProfile = nil
     }
 
+    /// Once per profile change (and once per session): the key the page serves must be the derived one.
+    private func verifyServedKey(_ profile: PublishProfileRequest) async throws {
+        guard !keyVerified, let slug = claimedSlug else { return }
+        try await InboxKeyVerifier(repository: repository).verify(expected: profile.profile.inboxKey, slug: slug) {
+            try await repository.publishProfile(profile)
+        }
+        keyVerified = true
+    }
+
     private func fail(with failure: PublishFailure) {
+        if failure == .keyMismatch { keyMismatch = true }
         state = .error(failure, wasOnline: isLive)
         if failure == .addressTaken { claimedSlug = nil }
         guard failure.isRetryable, wantsOnline else { return }
@@ -285,38 +308,5 @@ final class PublishingService {
     private func forgetWanting() {
         wantsOnline = false
         defaults.removeObject(forKey: DefaultsKey.publishingOnlineUserID)
-    }
-
-    // MARK: - Mapping
-
-    /// Any error a publish can end in, as the failure the screens explain.
-    static func failure(for error: any Error) -> PublishFailure {
-        switch error {
-        case let error as BookingRepositoryError: failure(for: error)
-        case let error as ServerError: failure(for: error)
-        case let error as PublishSourceError: error == .locked ? .locked : .rejected
-        case VaultError.locked: .locked
-        default: .rejected
-        }
-    }
-
-    private static func failure(for error: BookingRepositoryError) -> PublishFailure {
-        switch error {
-        case .unreachable, .notPublishedYet: .offline
-        case .busy: .busy
-        case .unauthenticated: .signedOut
-        case .slugTaken: .addressTaken
-        case .slugInvalid, .rejected: .rejected
-        }
-    }
-
-    private static func failure(for error: ServerError) -> PublishFailure {
-        switch error {
-        case .network: .offline
-        case .unavailable, .rateLimited: .busy
-        case .unauthenticated, .forbidden: .signedOut
-        case .slugTaken: .addressTaken
-        default: .rejected
-        }
     }
 }

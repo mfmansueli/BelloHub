@@ -17,12 +17,14 @@ struct PlanView: View {
     }
 }
 
+#if DEBUG
 #Preview("Plan") {
     NavigationStack { PlanView(mode: .plan) }
-        .environment(SubscriptionService())
+        .environment(SubscriptionService.preview())
 }
 
 #Preview("Paywall") {
     NavigationStack { PlanView(mode: .paywall) }
-        .environment(SubscriptionService())
+        .environment(SubscriptionService.preview())
 }
+#endif

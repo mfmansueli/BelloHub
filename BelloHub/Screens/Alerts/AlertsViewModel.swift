@@ -26,6 +26,8 @@ final class AlertsViewModel {
     private let source: AgendaDigestSource
     /// What arrives through her link (S8); nil in tests that only check the local part.
     private let inbox: BookingSyncService?
+    /// The sealed mailbox (S8); nil in tests that only check the local part.
+    private let mailbox: MailboxService?
     private let permissions: PermissionService
     private let notifications: NotificationService
     private let settingsOpener: any SettingsOpening
@@ -35,10 +37,12 @@ final class AlertsViewModel {
         permissions: PermissionService, notifications: NotificationService,
         settingsOpener: any SettingsOpening = SystemSettingsOpener(),
         prefs: any NotificationPrefsStoring = DefaultsNotificationPrefsStore(),
-        inbox: BookingSyncService? = nil
+        inbox: BookingSyncService? = nil,
+        mailbox: MailboxService? = nil
     ) {
         self.settings = settings
         self.inbox = inbox
+        self.mailbox = mailbox
         self.permissions = permissions
         self.notifications = notifications
         self.settingsOpener = settingsOpener
@@ -59,8 +63,16 @@ final class AlertsViewModel {
         )
     }
 
+    /// What her clients sent through the sealed mailbox; empty when there is no mailbox.
+    var mailboxAlerts: MailboxAlerts {
+        guard let mailbox else { return .empty }
+        return MailboxAlerts.make(
+            messages: mailbox.messages, undecryptable: mailbox.undecryptable, imports: mailbox.imports
+        )
+    }
+
     func phase(now: Date) -> ScreenPhase {
-        source.phase(isEmpty: list(now: now).isEmpty && inboxAlerts(now: now).isEmpty)
+        source.phase(isEmpty: list(now: now).isEmpty && inboxAlerts(now: now).isEmpty && mailboxAlerts.isEmpty)
     }
 
     var notice: PermissionNotice {
@@ -85,7 +97,22 @@ final class AlertsViewModel {
     func refreshAsync() async {
         await source.service.refresh()
         await inbox?.syncAsync()
+        await mailbox?.syncAsync()
         await permissions.refresh()
+    }
+
+    /// She dealt with a check-in or a request, or gave up on an item that does not open: either way it leaves the
+    /// list and is acknowledged on the server, so nothing a client sent stays unanswered there.
+    func resolve(_ item: MailboxAlerts.Item) {
+        if item.isMessage {
+            mailbox?.markHandled(messageID: item.id)
+        } else {
+            mailbox?.dismissUndecryptable(id: item.id)
+        }
+    }
+
+    func markImportsSeen() {
+        mailbox?.markImportsSeen()
     }
 
     /// Shows the system dialog and, when she agrees, schedules the notifications at once.

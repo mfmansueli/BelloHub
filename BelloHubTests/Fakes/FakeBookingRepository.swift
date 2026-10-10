@@ -23,6 +23,8 @@ actor FakeBookingRepository: BookingRepository {
     private(set) var availabilities: [PublishAvailabilityRequest] = []
     private(set) var inboxKeys: [InboxPublicKey] = []
     private var delay: Duration?
+    private var servedKeyOverride: InboxPublicKey?
+    private(set) var servedKeyReads = 0
 
     func setAnswer(_ answer: SlugAvailability, for slug: String) {
         answers[slug] = answer
@@ -82,6 +84,19 @@ actor FakeBookingRepository: BookingRepository {
     func updateInboxKey(_ key: InboxPublicKey, compromised: Bool) async throws {
         try await enter("updateInboxKey", key.keyId)
         inboxKeys.append(key)
+    }
+
+    /// What the page serves: the last published key, or `servedKeyOverride` (a server that swapped it). Not recorded
+    /// in `calls`, so the publish sequences the other tests check stay as they were.
+    func servedInboxKey(slug: String) async throws -> InboxPublicKey? {
+        servedKeyReads += 1
+        if let servedKeyOverride { return servedKeyOverride }
+        return profiles.last?.profile.inboxKey
+    }
+
+    /// Makes the page serve this key whatever was published (nil = honest server).
+    func setServedKeyOverride(_ key: InboxPublicKey?) {
+        servedKeyOverride = key
     }
 
     // MARK: - Private

@@ -12,11 +12,12 @@ struct HomePreviewHost<Content: View>: View {
     @State private var world: CalendarPreviewWorld?
     @State private var digest: AgendaDigestService?
     @State private var inbox: BookingSyncService?
+    @State private var mailbox: MailboxService?
     @ViewBuilder let content: () -> Content
 
     var body: some View {
         Group {
-            if let world, let digest, let inbox {
+            if let world, let digest, let inbox, let mailbox {
                 content()
                     .environment(world.vault)
                     .environment(world.profile)
@@ -28,6 +29,7 @@ struct HomePreviewHost<Content: View>: View {
                     .environment(PermissionService(provider: UITestPermissionProvider()))
                     .environment(digest)
                     .environment(inbox)
+                    .environment(mailbox)
             } else {
                 ProgressView()
             }
@@ -38,11 +40,18 @@ struct HomePreviewHost<Content: View>: View {
             digest = built.map {
                 AgendaDigestService(appointments: $0.appointments, timeBlocks: $0.timeBlocks, vault: $0.vault)
             }
-            inbox = built.map {
-                let offline = OfflineInboxRepository()
-                return BookingSyncService(
-                    repository: offline, queue: OutboundQueue(repository: offline), appointments: $0.appointments,
-                    vault: $0.vault, pollInterval: nil
+            let offline = OfflineInboxRepository()
+            let queue = OutboundQueue(repository: offline)
+            let sync = built.map {
+                BookingSyncService(
+                    repository: offline, queue: queue, appointments: $0.appointments, vault: $0.vault, pollInterval: nil
+                )
+            }
+            inbox = sync
+            if let built, let sync {
+                mailbox = MailboxService(
+                    repository: offline, keys: KeyManager(), vault: built.vault, queue: queue, bookings: sync,
+                    notifier: UITestNotificationPoster()
                 )
             }
         }

@@ -23,6 +23,7 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 | H15 | Open markets in App Store Connect: **every market the owner can (D40)** | Iago | at the owner's discretion |
 | H16 | Individual-account duties (trader status, seller name) and release Xcode for uploads | Iago | before the first App Store submission |
 | H17 | GitHub CLI login (to open pull requests) and repository access for pushes | Iago | end of phase A |
+| H18 | Breach plan: read `docs/BREACH-PLAN.md`, name who is on call, keep a private incident log, have the professional email template ready | Iago / Mateus | before the first real professional |
 
 ---
 
@@ -104,6 +105,11 @@ In App Store Connect → the app → *Pricing and Availability* → countries an
 2. **EU trader status:** a seller of auto-renewing subscriptions to EU customers is normally a "trader" under the Digital Services Act and must provide and publish contact details in App Store Connect (*Business → Compliance*). Check with the accountant before opening any EU market (**wave 1**).
 3. **Agreements and tax:** accept the Paid Apps agreement and fill in bank and tax information in App Store Connect before subscriptions can be tested in production. (This is Apple's payout for the subscription, the only money in the system, D4.)
 4. **Xcode for uploads:** TestFlight and App Store uploads need a release version of Xcode. If `xcodebuild -version` shows a beta (D39), keep developing with it but install the matching release before uploading.
+
+### H18 · Breach plan
+Read `docs/BREACH-PLAN.md` once together. Decide who is on call, where the private incident log lives (not in the
+repository), and keep a short email template for professionals ready (facts, data affected, what we did, what she can
+do). A lawyer can turn the page into the formal procedure when H11 happens.
 
 ---
 

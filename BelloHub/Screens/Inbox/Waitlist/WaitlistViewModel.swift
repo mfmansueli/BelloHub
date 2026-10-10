@@ -20,13 +20,22 @@ final class WaitlistViewModel {
     private(set) var offering: Set<String> = []
     private(set) var results: [String: OfferResult] = [:]
     private(set) var errorMessage: String?
+    /// Phones of her clients who cancel often (`CancelsOftenLookup`), for the chip on their rows.
+    private(set) var cancelsOftenPhones: Set<String> = []
 
     let timeZone: TimeZone
     @ObservationIgnored private let sync: BookingSyncService
+    @ObservationIgnored private let vault: VaultService?
+    @ObservationIgnored private let now: @Sendable () -> Date
 
-    init(sync: BookingSyncService, timeZone: TimeZone) {
+    init(
+        sync: BookingSyncService, timeZone: TimeZone, vault: VaultService? = nil,
+        now: @escaping @Sendable () -> Date = { Date() }
+    ) {
         self.sync = sync
         self.timeZone = timeZone
+        self.vault = vault
+        self.now = now
     }
 
     // MARK: - Reading
@@ -38,6 +47,25 @@ final class WaitlistViewModel {
     var isLoading: Bool { sync.isLoading && sync.snapshot.syncedAt == nil }
 
     var syncErrorMessage: String? { sync.errorMessage }
+
+    func cancelsOften(_ entry: WaitlistRequest) -> Bool {
+        CancelsOftenLookup.cancelsOften(phone: entry.phone, in: cancelsOftenPhones)
+    }
+
+    /// Reads her clients and visits once, for the "Cancels often" chip.
+    func loadHabits() async {
+        guard let repository = vault?.repository,
+              let clients = try? await repository.allClients(),
+              let visits = try? await repository.loadAppointments(in: Self.anyTime)
+        else { return }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        cancelsOftenPhones = CancelsOftenLookup.phones(
+            clients: clients, appointments: visits, now: now(), calendar: calendar
+        )
+    }
+
+    private static let anyTime = DateInterval(start: .distantPast, end: .distantFuture)
 
     /// The time was given to somebody else, or the server said it is gone: no more offers.
     var isTimeTaken: Bool { results.values.contains(.slotTaken) }

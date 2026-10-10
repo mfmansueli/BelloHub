@@ -286,13 +286,15 @@ struct MoreView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let keys = KeyManager()
     NavigationStack { MoreView() }
         .environment(ProfileService(vault: VaultService(repository: nil)))
         .environment(AppLockService(keyManager: keys))
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
-        .environment(SubscriptionService())
+        .environment(SubscriptionService.preview())
         .environment(RecoveryKeyService(keyManager: keys))
         .environment(PublishingService.preview)
 }
+#endif

@@ -7,7 +7,7 @@ import SwiftUI
 
 /// 4.3 ClientEdit. Name, WhatsApp, email, birthday and tags; stopping online booking with a private reason; turning
 /// reminders off; archiving (the client leaves the lists, the record stays, and she can be restored) and merging a
-/// duplicate profile into this one. "Delete client data" belongs to the privacy tools (S10) and is not here.
+/// duplicate profile into this one; deleting her data when she asks (`ClientDeleteDataRow`, D30).
 ///
 /// It is pushed on the Clients stack, so the back button is replaced by Cancel: leaving with unsaved changes asks
 /// first.
@@ -16,6 +16,8 @@ struct ClientEditView: View {
     let onOpenExisting: (UUID) -> Void
     /// The duplicate was merged into this client: the screen has nothing left to edit.
     let onMerged: () -> Void
+    /// Her data was deleted: there is no profile to go back to.
+    let onDeleted: () -> Void
 
     @State private var viewModel: ClientFormViewModel
     @State private var confirmsArchive = false
@@ -30,7 +32,8 @@ struct ClientEditView: View {
     init(
         clientID: UUID, vault: VaultService, profile: ProfileService, registrar: any ClientRegistering,
         regions: RegionCatalog, onFinish: @escaping (ClientFormViewModel.Finish) -> Void,
-        onOpenExisting: @escaping (UUID) -> Void, onMerged: @escaping () -> Void
+        onOpenExisting: @escaping (UUID) -> Void, onMerged: @escaping () -> Void,
+        onDeleted: @escaping () -> Void = {}
     ) {
         _viewModel = State(initialValue: ClientFormViewModel(
             mode: .edit(clientID: clientID), registrar: registrar, vault: vault, profile: profile, regions: regions
@@ -40,6 +43,7 @@ struct ClientEditView: View {
         self.onFinish = onFinish
         self.onOpenExisting = onOpenExisting
         self.onMerged = onMerged
+        self.onDeleted = onDeleted
     }
 
     var body: some View {
@@ -168,6 +172,7 @@ struct ClientEditView: View {
                 icon: .clients, title: "clientEdit.merge.title", subtitle: Text("clientEdit.merge.subtitle"),
                 tone: .rose, identifier: "clientEdit.mergeRow", action: { showsMerge = true }
             )
+            ClientDeleteDataRow(clientID: clientID, firstName: viewModel.firstName, onDeleted: onDeleted)
         }
     }
 

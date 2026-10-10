@@ -16,13 +16,14 @@ struct AlertsView: View {
     @Environment(PermissionService.self) private var permissions
     @Environment(NotificationService.self) private var notifications
     @Environment(BookingSyncService.self) private var inbox
+    @Environment(MailboxService.self) private var mailbox
 
     var body: some View {
         let settings = CalendarSettings(profile: profile.profile)
         AlertsContentView(
             viewModel: AlertsViewModel(
                 settings: settings, digest: digest, bookingSetup: bookingSetup, permissions: permissions,
-                notifications: notifications, inbox: inbox
+                notifications: notifications, inbox: inbox, mailbox: mailbox
             )
         )
     }

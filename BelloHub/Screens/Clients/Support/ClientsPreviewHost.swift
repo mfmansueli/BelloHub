@@ -18,6 +18,9 @@ struct ClientsPreviewHost<Content: View>: View {
                     .environment(world.profile)
                     .environment(world.vault)
                     .environment(world.registration)
+                    .environment(ClientDataDeletionService(
+                        vault: world.vault, queue: OutboundQueue(repository: OfflineInboxRepository())
+                    ))
             } else {
                 ProgressView()
             }

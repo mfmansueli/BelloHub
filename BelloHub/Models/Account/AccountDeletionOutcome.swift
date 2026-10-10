@@ -10,7 +10,7 @@ enum AccountDeletionOutcome: Equatable, Sendable {
     case deleted
     /// The server removed the account but could not revoke the Apple token: she can do it in Settings > Apple ID.
     case deletedWithoutAppleRevocation
-    /// No server yet (before S8), or offline: only this iPhone was cleared. The server side is a human follow-up
-    /// until S8 wires the function.
+    /// A DEBUG launch with no server (UI tests, `-devLogin`): only this iPhone was cleared. The app itself never
+    /// answers this: when the server cannot be reached nothing is deleted and she is asked to try again.
     case deviceOnly
 }

@@ -11,6 +11,7 @@ import { removeWaitlistEntry } from '../../src/owner/removeWaitlistEntry.js';
 import { respondBookingRequest } from '../../src/owner/respondBookingRequest.js';
 import { respondRescheduleRequest } from '../../src/owner/respondRescheduleRequest.js';
 import { setOnlineBookingStopped } from '../../src/owner/setOnlineBookingStopped.js';
+import { suggestBookingTime } from '../../src/owner/suggestBookingTime.js';
 import { getHold } from '../../src/public/getHold.js';
 import { joinWaitlist } from '../../src/public/joinWaitlist.js';
 import { requestReschedule } from '../../src/token/requestReschedule.js';
@@ -129,6 +130,43 @@ describe('respondBookingRequest (D42: approving is what adds the client)', () =>
     const request = await pending();
 
     await expect(env.call(respondBookingRequest, { bookingId: request.bookingId, decision: 'approve' })).rejects.toMatchObject({ code: 'UNAUTHENTICATED' });
+  });
+});
+
+describe('suggestBookingTime (2.10: Suggest another time)', () => {
+  it('declines the request and holds the suggested time for the client, with the same service, without an email', async () => {
+    const request = await pending();
+
+    const result = (await env.call(suggestBookingTime, { bookingId: request.bookingId, startsAt: LATER }, owner())) as {
+      status: string; holdKey: string; expiresAt: string;
+    };
+
+    expect(result.status).toBe('suggested');
+    expect(result.expiresAt).toBe('2026-10-01T18:00:00.000Z'); // 3 hours by default
+    expect((await bookingDoc(env, request.bookingId)).status).toBe('declined');
+    expect(await env.call(getHold, { slug: pro.slug, holdKey: result.holdKey })).toMatchObject({ startsAt: LATER, serviceId: SERVICE.glowFacial });
+    expect(env.mail.sent).toHaveLength(0);
+    // Somebody else cannot take the held time; the client books it through the link.
+    expect((await book(env, pro, { client: BIA, startsAt: LATER })).status).toBe('slotTaken');
+    await refs(env.deps.db).profile(pro.slug).update({ 'booking.requiresApproval': false });
+    const booked = asBooked(await book(env, pro, { client: ANA, startsAt: LATER, holdKey: result.holdKey }));
+    expect(booked.status).toBe('confirmed');
+    expect((await bookingDoc(env, booked.bookingId)).origin).toBe('bookingLink');
+  });
+
+  it('answers slotTaken for a time that is not free, and leaves the request pending', async () => {
+    const request = await pending();
+    asBooked(await book(env, pro, { client: BIA, startsAt: LATER }));
+
+    expect(await env.call(suggestBookingTime, { bookingId: request.bookingId, startsAt: LATER }, owner())).toEqual({ status: 'slotTaken' });
+    expect((await bookingDoc(env, request.bookingId)).status).toBe('pendingApproval');
+  });
+
+  it('only for her own request that is still pending', async () => {
+    const request = await pending();
+    await expect(env.call(suggestBookingTime, { bookingId: request.bookingId, startsAt: LATER }, ownerContext('someone-else'))).rejects.toMatchObject({ code: 'NOT_FOUND' });
+    await env.call(respondBookingRequest, { bookingId: request.bookingId, decision: 'decline' }, owner());
+    await expect(env.call(suggestBookingTime, { bookingId: request.bookingId, startsAt: LATER }, owner())).rejects.toMatchObject({ code: 'BOOKING_NOT_ACTIVE' });
   });
 });
 

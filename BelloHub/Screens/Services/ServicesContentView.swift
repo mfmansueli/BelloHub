@@ -146,9 +146,9 @@ struct ServicesContentView: View {
     private var addRow: some View {
         Button { editor = .add } label: {
             HStack(spacing: Spacing.row) {
+                // The icon follows Dynamic Type with the label (a fixed size made the row "partially unsupported").
                 Image(icon: .plus)
-                    .font(.system(size: 17, weight: .semibold))
-                    .frame(width: 20, height: 20)
+                    .font(Typography.bodyStrong)
                     .accessibilityHidden(true)
                 Text("services.add").font(Typography.bodyStrong)
                 Spacer(minLength: 0)
@@ -196,8 +196,11 @@ struct ServicesContentView: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: Spacing.xxs) {
                 title.font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                    .fixedSize(horizontal: false, vertical: true)
                 subtitle.font(Typography.meta).foregroundStyle(Palette.ink2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, Spacing.xs)
         .frame(minHeight: 64)

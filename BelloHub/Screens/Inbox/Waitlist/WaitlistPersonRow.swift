@@ -11,6 +11,7 @@ struct WaitlistPersonRow: View {
     let entry: WaitlistRequest
     let formatters: Formatters
     let canOffer: Bool
+    var cancelsOften = false
     let isOffering: Bool
     let result: WaitlistViewModel.OfferResult?
     let onOffer: () -> Void
@@ -24,6 +25,7 @@ struct WaitlistPersonRow: View {
             VStack(alignment: .leading, spacing: Spacing.xxs) {
                 Text(verbatim: entry.name).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 Text(verbatim: detail).font(Typography.meta).foregroundStyle(Palette.ink2)
+                if cancelsOften { CancelsOftenBadge(identifier: "waitlist.cancelsOften.\(entry.id)") }
                 if let status { Text(status).font(Typography.metaStrong).foregroundStyle(Palette.sageText) }
             }
             .accessibilityElement(children: .combine)

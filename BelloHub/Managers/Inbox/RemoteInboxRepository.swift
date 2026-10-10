@@ -82,6 +82,16 @@ struct RemoteInboxRepository: InboxRepository {
         return .slotTaken
     }
 
+    func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome {
+        let answer: SuggestAnswer = try await perform(
+            "suggestBookingTime", SuggestRequest(bookingId: bookingId, startsAt: startsAt)
+        )
+        if answer.status == "suggested", let holdKey = answer.holdKey, let expiresAt = answer.expiresAt {
+            return .suggested(holdKey: holdKey, expiresAt: expiresAt)
+        }
+        return .slotTaken
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         let _: Acknowledged = try await perform("removeWaitlistEntry", WaitlistIDRequest(waitlistId: id))
     }
@@ -101,6 +111,21 @@ struct RemoteInboxRepository: InboxRepository {
 
     func acknowledgeMailboxItem(id: String) async throws {
         let _: Acknowledged = try await perform("acknowledgeMailboxItem", ItemIDRequest(itemId: id))
+    }
+
+    func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {
+        let request = DeleteClientRequest(phone: phone, bookingIds: bookingIds.isEmpty ? nil : bookingIds)
+        let _: DeletedAnswer = try await perform("deleteClientServerData", request)
+    }
+
+    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
+        let request = ReserveRequest(clients: claims.map {
+            ReserveClaim(clientId: $0.clientID.uuidString.lowercased(), phone: $0.phone)
+        })
+        let answer: ReserveAnswer = try await perform("reserveRegistrations", request)
+        let allowed = answer.results.filter { $0.decision == "allowed" }.map(\.clientId)
+        let refused = answer.results.filter { $0.decision != "allowed" }.map(\.clientId)
+        return RegistrationReservation(allowed: Set(allowed), refused: Set(refused), count: answer.count)
     }
 
     func registerDevice(fcmToken: String, locale: String?) async throws {
@@ -165,6 +190,17 @@ struct RemoteInboxRepository: InboxRepository {
 
     private struct WaitlistIDRequest: Encodable { let waitlistId: String }
 
+    private struct SuggestRequest: Encodable {
+        let bookingId: String
+        let startsAt: Date
+    }
+
+    private struct SuggestAnswer: Decodable {
+        let status: String
+        let holdKey: String?
+        let expiresAt: Date?
+    }
+
     private struct NoShowRequest: Encodable {
         let phone: String
         let action: String
@@ -189,6 +225,31 @@ struct RemoteInboxRepository: InboxRepository {
     }
 
     private struct UnregisterDeviceRequest: Encodable { let fcmToken: String }
+
+    private struct DeleteClientRequest: Encodable {
+        let phone: String?
+        let bookingIds: [String]?
+    }
+
+    private struct ReserveClaim: Encodable {
+        let clientId: String
+        let phone: String?
+    }
+
+    private struct ReserveRequest: Encodable { let clients: [ReserveClaim] }
+
+    private struct ReserveResult: Decodable {
+        let clientId: UUID
+        let decision: String
+    }
+
+    private struct ReserveAnswer: Decodable {
+        let results: [ReserveResult]
+        let count: Int
+    }
+
+    /// The counts per collection; the app only needs to know the call went through.
+    private struct DeletedAnswer: Decodable { let deleted: [String: Int] }
 
     private struct Acknowledged: Decodable { let ok: Bool }
 }

@@ -24,6 +24,12 @@ struct LaunchOptions: Equatable {
     /// `-uiDark` runs the whole app in dark appearance, for screenshots: the iOS 27 simulator's appearance switch
     /// (`simctl ui appearance`, `XCUIDevice.appearance`) reached neither this app nor Settings when it was tried.
     var uiDark = false
+    /// `-uiIncreaseContrast` runs the app with the Increase Contrast trait (`accessibilityContrast = .high`), so the
+    /// accessibility audit checks the high-contrast pairs of `Palette` without touching the simulator's settings.
+    var uiIncreaseContrast = false
+    /// `-uiReduceMotion` runs the app as with Reduce Motion on: the design system's motion kit stands still (the same
+    /// switch `-uiTesting` sets) and SwiftUI animations are off.
+    var uiReduceMotion = false
     /// A UI test launch starts from nothing (a fresh vault in memory, empty defaults) unless it asks to keep what
     /// the previous launch left, which is how a test relaunches the app.
     var keepsState = false
@@ -67,6 +73,8 @@ struct LaunchOptions: Equatable {
         catalogTextSize = Self.value(after: "-catalogTextSize", in: arguments)
         catalogDark = arguments.contains("-catalogDark")
         uiDark = arguments.contains("-uiDark")
+        uiIncreaseContrast = arguments.contains("-uiIncreaseContrast")
+        uiReduceMotion = arguments.contains("-uiReduceMotion")
         keepsState = arguments.contains("-uiKeepState")
         seed = Self.value(after: "-uiSeed", in: arguments)
         biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)
