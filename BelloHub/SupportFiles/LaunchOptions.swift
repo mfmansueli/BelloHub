@@ -65,6 +65,9 @@ struct LaunchOptions: Equatable {
     /// `-uiTab calendar` opens the app on that tab (a `MainTab` raw value), built in the first frame as the tab she
     /// was on is after an unlock: before her profile has been read.
     var initialTab: String?
+    /// `-uiTimeZoneNotice` lets the time-zone notice show in a UI test. Off by default there, because the simulator
+    /// follows the Mac's zone and the seeded business is in São Paulo: every other test would meet the notice.
+    var showsTimeZoneNotice = false
 
     init() {}
 
@@ -91,6 +94,7 @@ struct LaunchOptions: Equatable {
         uiOnline = Self.value(after: "-uiOnline", in: arguments)
         uiInbox = Self.value(after: "-uiInbox", in: arguments)
         initialTab = Self.value(after: "-uiTab", in: arguments)
+        showsTimeZoneNotice = arguments.contains("-uiTimeZoneNotice")
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

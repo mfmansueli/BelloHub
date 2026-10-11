@@ -15,6 +15,11 @@ struct RegionCatalog: Sendable {
         return presets.first { $0.code == code }
     }
 
+    /// The preset that offers `timeZoneID` (`Europe/Rome` is Italy's). Nil for a zone no preset lists.
+    func preset(containingTimeZone timeZoneID: String) -> RegionPreset? {
+        presets.first { $0.timeZones.contains(timeZoneID) }
+    }
+
     /// The preset whose calling code is the longest prefix of `digits`. The United States wins "1"
     /// over any longer code that does not exist here.
     func preset(matchingInternationalDigits digits: String) -> RegionPreset? {

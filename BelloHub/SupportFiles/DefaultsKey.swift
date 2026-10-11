@@ -45,7 +45,9 @@ enum DefaultsKey {
     ]
     /// Per-user keys (`<prefix>.<userID>`) that go with the account: the setup in progress and the follow-up queue's
     /// decisions and visit closings (they name clients by id).
-    static let prefixesClearedOnAccountDeletion = [onboardingProgress, followUpDecisions, visitClosings]
+    static let prefixesClearedOnAccountDeletion = [
+        onboardingProgress, followUpDecisions, visitClosings, timeZoneNoticeKept
+    ]
     /// The server already deleted this account (`"<userID>|<outcome>"`, `AccountService`): a retry after a wipe that
     /// failed or an app killed mid-way goes straight to the wipe instead of asking a server that no longer knows her.
     static let accountDeletionConfirmed = "account.deletionConfirmed"
@@ -65,4 +67,8 @@ enum DefaultsKey {
     static let visitClosings = "followUps.visitClosings"
     /// Prefix of the per-user FCM token the server knows (`PushService`): `<prefix>.<userID>`.
     static let pushRegisteredToken = "push.registeredToken"
+    /// Prefix of the per-user pair of zones (business and iPhone) she chose to keep when the time-zone notice asked
+    /// (`TimeZoneNoticeService`, JSON `TimeZoneMismatch.Pair`): `<prefix>.<userID>`. She is asked again only when one
+    /// of the two zones changes.
+    static let timeZoneNoticeKept = "timeZone.noticeKept"
 }
