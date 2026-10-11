@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | Kosmetikerin,Friseurin,Nageldesign,Wimpern,Augenbrauen,Barbier,Permanent Make-up,Terminbuchung | 94 / 100 |
 | Promotional text | Deine Kundschaft bucht über einen Link, in jedem Browser. Du behältst jeden Besuch, jedes Foto und jeden Gesundheitsfragebogen privat auf deinem iPhone. | 152 / 170 |
 
-## Description (2573 / 4000)
+## Description (2647 / 4000)
 
 ```text
+Du bist nicht mehr allein. Bello Hub, an deiner Seite bei jedem Schritt.
+
 Bello Hub ist Kalender und Kundenkartei für Selbstständige in Beauty und Kosmetik: Kosmetikerinnen, Friseurinnen, Nageldesignerinnen, Lash- und Brow-Stylistinnen, Barbiere, Tätowiererinnen und Permanent-Make-up-Artists, Masseurinnen.
 
 DEIN KALENDER

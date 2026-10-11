@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | kecantikan,salon,kuku,bulu mata,alis,barber,sulam alis,tautan janji temu,formulir kesehatan | 91 / 100 |
 | Promotional text | Klien membuat janji temu dari tautan, di browser apa pun. Kamu menyimpan setiap kunjungan, foto, dan formulir kesehatan dalam catatan pribadi di iPhone-mu. | 155 / 170 |
 
-## Description (2375 / 4000)
+## Description (2444 / 4000)
 
 ```text
+Kamu tidak sendirian lagi. Bello Hub, menemanimu di setiap langkah.
+
 Bello Hub adalah agenda dan catatan klien untuk profesional kecantikan dan estetika yang bekerja mandiri: ahli estetika, penata rambut, nail artist, lash dan brow artist, barber, seniman tato dan sulam, terapis pijat.
 
 AGENDAMU

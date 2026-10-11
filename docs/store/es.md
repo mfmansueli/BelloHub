@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | esteticista,uñas,pestañas,cejas,barbero,micropigmentación,enlace de reserva,ficha de salud | 90 / 100 |
 | Promotional text | Tus clientes reservan desde un enlace, en cualquier navegador. Tú guardas cada visita, foto y ficha de salud en un registro privado en tu iPhone. | 145 / 170 |
 
-## Description (2409 / 4000)
+## Description (2461 / 4000)
 
 ```text
+Ya no estás sola. Bello Hub, contigo en cada paso.
+
 Bello Hub es la agenda y la ficha de clientes de la profesional independiente de belleza y estética: esteticistas, peluqueras, manicuristas, técnicas de pestañas y cejas, barberos, tatuadoras y micropigmentadoras, masajistas.
 
 TU AGENDA

@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | esthetician,salon,nails,lash,brow,barber,appointment,scheduler,booking link,health form,waitlist,PMU | 100 / 100 |
 | Promotional text | Clients book from your link in any browser. You keep every visit, photo and health form in one private record on your iPhone. | 125 / 170 |
 
-## Description (2133 / 4000)
+## Description (2203 / 4000)
 
 ```text
+You're not alone anymore. Bello Hub, with you every step of the way.
+
 Bello Hub is the agenda and client record for independent beauty and aesthetic-health professionals: estheticians, hairdressers, nail techs, lash and brow artists, barbers, tattoo and PMU artists, and massage therapists.
 
 YOUR AGENDA

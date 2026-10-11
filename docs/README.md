@@ -21,6 +21,7 @@ Start with `00-START-HERE.md`. Version: see `../VERSION`.
 | `14-HUMAN-TASKS.md` | What only people can do, with exact steps |
 | `15-PROGRESS-TEMPLATE.md` | Copy to `PROGRESS.md` in S0 |
 | `16-MARKETS.md` | Markets, region presets, laws to confirm, channels, rollout waves (Brazil and Europe first) |
+| `MARKETING.md` | Approved marketing phrases ("Você não está mais sozinha…"), where to use them and where not, adaptations per language |
 | `screens/` | `SCREENS.md` (97 ids), `INDEX.md` (navigation), `HANDOFF.md` (behavior and exact English copy per screen, Portuguese prose) |
 | `strings/` | `glossary.csv`, `message-templates.json` |
 

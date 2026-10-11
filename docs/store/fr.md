@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | esthéticienne,coiffeuse,ongles,cils,sourcils,barbier,maquillage permanent,prise de rendez-vous | 94 / 100 |
 | Promotional text | Vos clientes réservent depuis un lien, dans n'importe quel navigateur. Vous gardez chaque visite, photo et fiche santé dans un dossier privé sur votre iPhone. | 158 / 170 |
 
-## Description (2641 / 4000)
+## Description (2705 / 4000)
 
 ```text
+Vous n'êtes plus seule. Bello Hub, à vos côtés à chaque étape.
+
 Bello Hub est l'agenda et le fichier clients des indépendantes de la beauté et de l'esthétique : esthéticiennes, coiffeuses, prothésistes ongulaires, techniciennes cils et sourcils, barbiers, tatoueuses et dermographes, masseuses.
 
 VOTRE AGENDA
