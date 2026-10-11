@@ -36,7 +36,8 @@ struct RemoteInboxRepositoryTests {
 
     @Test("More bookings than one page all arrive, each once, even when several share a start")
     func pages() async throws {
-        let (repository, _, firestore) = make()
+        let rig = Rig()
+        let (repository, firestore) = (rig.repository, rig.firestore)
         let count = RemoteInboxRepository.pageLimit + 120
         let rows = (0..<count).map { index in
             // Pairs share a start (1-2, 3-4, ... 499-500), so the first page ends inside a pair.
@@ -54,7 +55,8 @@ struct RemoteInboxRepositoryTests {
 
     @Test("One booking the app cannot read never hides the others, and a new server field or status is no failure")
     func toleratesUnknownShapes() async throws {
-        let (repository, _, firestore) = make()
+        let rig = Rig()
+        let (repository, firestore) = (rig.repository, rig.firestore)
         firestore.set("bookings", rows: [
             makeRow(id: "broken", startsAt: TestClock.now, extra: ["startsAt": "not a date"]),
             makeRow(id: "cancelled", startsAt: TestClock.now, status: "cancelledByClient", extra: [
@@ -73,7 +75,8 @@ struct RemoteInboxRepositoryTests {
 
     @Test("One booking is read by id; a missing one is nil")
     func bookingByID() async throws {
-        let (repository, _, firestore) = make()
+        let rig = Rig()
+        let (repository, firestore) = (rig.repository, rig.firestore)
         firestore.set("bookings", rows: [makeRow(id: "bk-1", startsAt: TestClock.now, status: "cancelledByPro")])
 
         let found = try await repository.booking(uid: "u1", id: "bk-1")
@@ -85,7 +88,8 @@ struct RemoteInboxRepositoryTests {
 
     @Test("Her cancel, move, no-show and forgive match the server's schemas")
     func ownerCallsMatchContract() async throws {
-        let (repository, client, _) = make()
+        let rig = Rig()
+        let (repository, client) = (rig.repository, rig.client)
         client.answer("cancelBookingByOwner", with: #"{"status":"cancelled"}"#)
         client.answer(
             "moveBookingByOwner", with: #"{"startsAt":"2026-10-03T13:00:00.000Z","endsAt":"2026-10-03T14:00:00.000Z"}"#
@@ -114,7 +118,8 @@ struct RemoteInboxRepositoryTests {
 
     @Test("A booking that no longer holds time is refused for good, so the queue drops the change")
     func refusedCancel() async {
-        let (repository, client, _) = make()
+        let rig = Rig()
+        let (repository, client) = (rig.repository, rig.client)
         client.fail("cancelBookingByOwner", with: .unexpected(code: "BOOKING_NOT_ACTIVE"))
 
         await #expect(throws: BookingRepositoryError.rejected) {

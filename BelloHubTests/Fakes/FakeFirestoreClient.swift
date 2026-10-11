@@ -36,7 +36,7 @@ final class FakeFirestoreClient: FirestoreClient, Sendable {
         state.withLock { state in
             state.queries.append(since?.date)
             let rows = (state.rows[collection] ?? [])
-                .filter { since.map { bound in $0.startsAt >= bound.date } ?? true }
+                .filter { row in since.map { row.startsAt >= $0.date } ?? true }
                 .sorted { ($0.startsAt, $0.id) < ($1.startsAt, $1.id) }
             return rows.prefix(limit).map(\.json)
         }

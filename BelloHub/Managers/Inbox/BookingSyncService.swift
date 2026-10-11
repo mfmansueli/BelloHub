@@ -286,8 +286,11 @@ final class BookingSyncService: LinkVisitChangeReporting {
         persist()
     }
 
-    // MARK: - Outcomes
+}
 
+// MARK: - Outcomes
+
+extension BookingSyncService {
     private func didFinish(_ action: OutboundAction, _ outcome: OutboundOutcome) {
         switch (action.kind, outcome) {
         case (.respondBookingRequest(let id, _), .bookingRequest(let answer)):
