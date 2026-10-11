@@ -14,6 +14,8 @@ struct RemoteInboxRepository: InboxRepository {
 
     /// Never more than this many documents per read; bookings are purged 7 days after the visit, so a window is short.
     static let pageLimit = 500
+    /// 10 pages of 500 bookings: far beyond a real agenda, and a bound if the server ever answered in a loop.
+    static let maxPages = 10
 
     init(client: any CallableClient, firestore: any FirestoreClient) {
         self.client = client
@@ -22,13 +24,41 @@ struct RemoteInboxRepository: InboxRepository {
 
     // MARK: - Reads
 
+    /// Every booking from `since` on, a page at a time: a busy agenda can hold more than one page, and a booking cut
+    /// off the end of the first page would never reach the phone. The next page starts at the last start read
+    /// (inclusive, so bookings at the same minute are not skipped) and repeats are dropped by id.
     func bookings(uid: String, since: Date) async throws -> [IncomingBooking] {
-        try await read {
-            try await firestore.query(
-                collection: "bookings", ownerField: "ownerUid", uid: uid,
-                since: FirestoreSince(field: "startsAt", date: since), limit: Self.pageLimit
-            )
+        var all: [IncomingBooking] = []
+        var seen: Set<String> = []
+        var cursor = since
+        for _ in 0..<Self.maxPages {
+            let rows = try await fetch {
+                try await firestore.query(
+                    collection: "bookings", ownerField: "ownerUid", uid: uid,
+                    since: FirestoreSince(field: "startsAt", date: cursor), limit: Self.pageLimit
+                )
+            }
+            let page: [IncomingBooking] = Self.decode(rows)
+            for booking in page where seen.insert(booking.id).inserted { all.append(booking) }
+            // A short page is the last one (counted before decoding: a skipped document still filled the page). A full
+            // page whose last start is the cursor could only repeat itself.
+            guard rows.count >= Self.pageLimit, let last = page.map(\.startsAt).max(), last > cursor else { break }
+            cursor = last
         }
+        return all
+    }
+
+    func booking(uid: String, id: String) async throws -> IncomingBooking? {
+        let row: Data?
+        do {
+            row = try await firestore.document(path: "bookings/\(id)")
+        } catch let error as ServerError {
+            throw RemoteBookingRepository.map(error)
+        }
+        guard let row, let booking = try? CallableJSON.decoder.decode(IncomingBooking.self, from: row) else {
+            return nil
+        }
+        return booking
     }
 
     func rescheduleRequests(uid: String) async throws -> [RescheduleRequest] {
@@ -106,6 +136,27 @@ struct RemoteInboxRepository: InboxRepository {
         let _: CountAnswer = try await perform("markNoShow", NoShowRequest(phone: phone, action: "reset"))
     }
 
+    func cancelBookingByOwner(id: String) async throws {
+        let _: CancelAnswer = try await perform("cancelBookingByOwner", BookingIDRequest(bookingId: id))
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        let _: MoveAnswer = try await perform("moveBookingByOwner", MoveRequest(bookingId: id, startsAt: startsAt))
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        let request = NoShowRequest(
+            phone: phone, action: "mark", markId: markId.uuidString.lowercased(), markedAt: markedAt,
+            bookingId: bookingId
+        )
+        let _: CountAnswer = try await perform("markNoShow", request)
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {
+        let request = NoShowRequest(phone: phone, action: "forgive", markId: markId.uuidString.lowercased())
+        let _: CountAnswer = try await perform("markNoShow", request)
+    }
+
     func mailboxItem(id: String) async throws -> MailboxItem {
         let answer: MailboxItemAnswer = try await perform("getMailboxItem", ItemIDRequest(itemId: id))
         return MailboxItem(
@@ -146,15 +197,21 @@ struct RemoteInboxRepository: InboxRepository {
 
     // MARK: - Mapping
 
-    private func read<Row: Decodable>(_ fetch: () async throws -> [Data]) async throws -> [Row] {
-        let rows: [Data]
+    private func read<Row: Decodable>(_ rows: () async throws -> [Data]) async throws -> [Row] {
+        Self.decode(try await fetch(rows))
+    }
+
+    private func fetch(_ rows: () async throws -> [Data]) async throws -> [Data] {
         do {
-            rows = try await fetch()
+            return try await rows()
         } catch let error as ServerError {
             throw RemoteBookingRepository.map(error)
         }
-        // A document the app cannot read (an older shape) is skipped, never a reason to hide the rest.
-        return rows.compactMap { try? CallableJSON.decoder.decode(Row.self, from: $0) }
+    }
+
+    /// A document the app cannot read (an older or newer shape) is skipped, never a reason to hide the rest.
+    private static func decode<Row: Decodable>(_ rows: [Data]) -> [Row] {
+        rows.compactMap { try? CallableJSON.decoder.decode(Row.self, from: $0) }
     }
 
     private func perform<Request: Encodable, Response: Decodable>(
@@ -214,9 +271,25 @@ struct RemoteInboxRepository: InboxRepository {
         let expiresAt: Date
     }
 
+    /// Absent optionals are left out (never `null`): the server's schema is strict.
     private struct NoShowRequest: Encodable {
         let phone: String
         let action: String
+        var markId: String?
+        var markedAt: Date?
+        var bookingId: String?
+    }
+
+    private struct MoveRequest: Encodable {
+        let bookingId: String
+        let startsAt: Date
+    }
+
+    private struct CancelAnswer: Decodable { let status: String }
+
+    private struct MoveAnswer: Decodable {
+        let startsAt: Date
+        let endsAt: Date
     }
 
     private struct CountAnswer: Decodable { let counted: Int }

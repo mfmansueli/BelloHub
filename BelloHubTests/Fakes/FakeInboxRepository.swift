@@ -79,7 +79,7 @@ actor FakeInboxRepository: InboxRepository {
 
     func bookings(uid: String, since: Date) async throws -> [IncomingBooking] {
         try read("bookings")
-        return bookings
+        return bookings.filter { !unlisted.contains($0.id) }
     }
 
     func rescheduleRequests(uid: String) async throws -> [RescheduleRequest] { requests }
@@ -165,6 +165,59 @@ actor FakeInboxRepository: InboxRepository {
 
     func resetNoShowCount(phone: String) async throws {
         try write("resetNoShowCount:\(phone)")
+    }
+
+    /// Bookings `bookings(uid:since:)` leaves out, as if they sat outside the window (still served by id).
+    private var unlisted: Set<String> = []
+
+    func setUnlisted(_ ids: Set<String>) {
+        unlisted = ids
+    }
+
+    func booking(uid: String, id: String) async throws -> IncomingBooking? {
+        try read("booking:\(id)")
+        return bookings.first { $0.id == id }
+    }
+
+    func cancelBookingByOwner(id: String) async throws {
+        try write("cancelBookingByOwner:\(id)")
+        try changeActive(id) {
+            $0.status = .cancelledByPro
+            $0.cancelledBy = "professional"
+            $0.cancelledAt = TestClock.now
+            $0.isLateCancellation = false
+        }
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        try write("moveBookingByOwner:\(id):\(CallableJSON.instant(startsAt))")
+        try changeActive(id) {
+            $0.endsAt = startsAt.addingTimeInterval($0.endsAt.timeIntervalSince($0.startsAt))
+            $0.startsAt = startsAt
+            $0.clientConfirmedAt = nil
+            $0.lateByMinutes = nil
+        }
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        try write("markNoShow:mark:\(phone):\(bookingId)")
+        if let index = bookings.firstIndex(where: { $0.id == bookingId && $0.status == .confirmed }) {
+            bookings[index].status = .noShow
+            bookings[index].updatedAt = TestClock.now
+        }
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {
+        try write("markNoShow:forgive:\(phone)")
+    }
+
+    /// Like the server: a booking that no longer holds time is `BOOKING_NOT_ACTIVE` (`rejected`).
+    private func changeActive(_ id: String, _ change: (inout IncomingBooking) -> Void) throws {
+        guard let index = bookings.firstIndex(where: { $0.id == id }), bookings[index].status.holdsTime else {
+            throw BookingRepositoryError.rejected
+        }
+        change(&bookings[index])
+        bookings[index].updatedAt = TestClock.now
     }
 
     func acknowledgeMailboxItem(id: String) async throws {

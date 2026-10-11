@@ -170,6 +170,14 @@ final class OutboundQueue {
             try await repository.deleteClientServerData(phone: phone, bookingIds: bookingIds)
         case .reserveRegistrations(let claims):
             return .registrations(try await repository.reserveRegistrations(claims))
+        case .cancelBookingByOwner(let bookingId):
+            try await repository.cancelBookingByOwner(id: bookingId)
+        case .moveBookingByOwner(let bookingId, let startsAt):
+            try await repository.moveBookingByOwner(id: bookingId, startsAt: startsAt)
+        case .markNoShow(let bookingId, let phone, let markId, let markedAt):
+            try await repository.markNoShow(phone: phone, markId: markId, markedAt: markedAt, bookingId: bookingId)
+        case .forgiveNoShow(_, let phone, let markId):
+            try await repository.forgiveNoShow(phone: phone, markId: markId)
         }
         return .done
     }

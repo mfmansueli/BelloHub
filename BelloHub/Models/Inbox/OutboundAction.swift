@@ -22,6 +22,26 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         case deleteClientServerData(phone: String?, bookingIds: [String])
         /// Clients registered while the server was away: the server counts them when it answers (D42).
         case reserveRegistrations(claims: [RegistrationClaim])
+        /// She cancelled a link visit in the app (`cancelBookingByOwner`).
+        case cancelBookingByOwner(bookingId: String)
+        /// She moved a link visit in the app (`moveBookingByOwner`).
+        case moveBookingByOwner(bookingId: String, startsAt: Date)
+        /// She marked a link visit as a no-show (`markNoShow` `mark` with the booking: its status becomes `noShow`).
+        case markNoShow(bookingId: String, phone: String, markId: UUID, markedAt: Date)
+        /// She forgave that no-show (`markNoShow` `forgive`): it no longer counts against the client.
+        case forgiveNoShow(bookingId: String, phone: String, markId: UUID)
+
+        /// The link booking whose state this action changes on the server. Until the server took it, a sync must not
+        /// put the server's older state back over her change (`BookingImporter`).
+        var changedBookingID: String? {
+            switch self {
+            case .cancelBookingByOwner(let id), .moveBookingByOwner(let id, _), .markNoShow(let id, _, _, _),
+                 .forgiveNoShow(let id, _, _):
+                id
+            default:
+                nil
+            }
+        }
     }
 
     let id: UUID
@@ -39,7 +59,10 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
     /// Actions on the same thing are sent in order; unrelated ones may be reordered after a failure.
     var aggregate: String {
         switch kind {
-        case .respondBookingRequest(let bookingId, _): "booking:\(bookingId)"
+        case .respondBookingRequest(let bookingId, _), .cancelBookingByOwner(let bookingId),
+             .moveBookingByOwner(let bookingId, _), .markNoShow(let bookingId, _, _, _),
+             .forgiveNoShow(let bookingId, _, _):
+            "booking:\(bookingId)"
         case .respondRescheduleRequest(let requestId, _): "reschedule:\(requestId)"
         case .acknowledgeMailboxItem(let itemId): "mailbox:\(itemId)"
         case .removeWaitlistEntry(let waitlistId): "waitlist:\(waitlistId)"

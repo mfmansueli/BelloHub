@@ -17,6 +17,19 @@ protocol InboxRepository: Sendable {
     func bookings(uid: String, since: Date) async throws -> [IncomingBooking]
     func rescheduleRequests(uid: String) async throws -> [RescheduleRequest]
     func waitlist(uid: String) async throws -> [WaitlistRequest]
+    /// One of her bookings by id, wherever its time is; nil when the server no longer has it (purged, deleted). The
+    /// sync asks for a visit whose booking left the list it reads, so no visit stays stale out of sight.
+    func booking(uid: String, id: String) async throws -> IncomingBooking?
+
+    /// She cancelled a link visit in the app (`cancelBookingByOwner`): the booking becomes `cancelledByPro` and the
+    /// client is told. `BOOKING_NOT_ACTIVE` (`rejected`) when it no longer holds time on the server.
+    func cancelBookingByOwner(id: String) async throws
+    /// She moved a link visit in the app (`moveBookingByOwner`); the server keeps the booking's length.
+    func moveBookingByOwner(id: String, startsAt: Date) async throws
+    /// `markNoShow` `mark` with the booking: her count for that phone, and the booking's status becomes `noShow`.
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws
+    /// `markNoShow` `forgive`: that mark no longer counts.
+    func forgiveNoShow(phone: String, markId: UUID) async throws
 
     func respondBookingRequest(id: String, approve: Bool) async throws -> BookingRequestOutcome
     func respondRescheduleRequest(id: String, accept: Bool) async throws -> RescheduleOutcome

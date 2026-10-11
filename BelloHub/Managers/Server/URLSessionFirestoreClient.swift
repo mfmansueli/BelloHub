@@ -43,6 +43,15 @@ struct URLSessionFirestoreClient: FirestoreClient {
         return try await send(URLRequest(url: url))
     }
 
+    func document(path: String) async throws -> Data? {
+        let (body, status) = try await answer(URLRequest(url: config.firestoreDocumentsURL.appending(path: path)))
+        // Firestore says 404 for a missing document and 403 when the rules refuse a read of a missing one.
+        if status == 404 || status == 403 { return nil }
+        if let failure = CallableErrorMapper.error(httpStatus: status, body: body) { throw failure }
+        guard let object = try? JSONSerialization.jsonObject(with: body) as? [String: Any] else { return nil }
+        return FirestoreDocumentDecoder.data(fromDocument: object)
+    }
+
     // MARK: - Wire shape
 
     /// The `structuredQuery` of `runQuery`: owner filter, optional lower bound on `since.field` (ordered by it, which
@@ -68,6 +77,12 @@ struct URLSessionFirestoreClient: FirestoreClient {
     }
 
     private func send(_ request: URLRequest) async throws -> [Data] {
+        let (body, status) = try await answer(request)
+        if let failure = CallableErrorMapper.error(httpStatus: status, body: body) { throw failure }
+        return FirestoreDocumentDecoder.documents(fromResponse: body)
+    }
+
+    private func answer(_ request: URLRequest) async throws -> (body: Data, status: Int) {
         var request = request
         let token = try await tokens.idToken()
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -81,7 +96,6 @@ struct URLSessionFirestoreClient: FirestoreClient {
         } catch {
             throw CallableErrorMapper.error(transport: error)
         }
-        if let failure = CallableErrorMapper.error(httpStatus: status, body: body) { throw failure }
-        return FirestoreDocumentDecoder.documents(fromResponse: body)
+        return (body, status)
     }
 }

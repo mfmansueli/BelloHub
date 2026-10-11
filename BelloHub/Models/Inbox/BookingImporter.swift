@@ -10,8 +10,15 @@ import Foundation
 ///
 /// Rules:
 /// - A request still waiting for her answer (`pendingApproval`) and a declined request never enter the calendar.
-/// - A booking the phone already mirrored (same `bookingID`) is updated in place: time, status and the client's
-///   confirmation follow the server; what is hers alone (private note, session plan, reminder sent, forgiven) stays.
+/// - A booking the phone already mirrored (same `bookingID`, wherever the visit's time is) is updated in place: time,
+///   status and the client's confirmation follow the server; what is hers alone (private note, session plan, reminder
+///   sent, forgiven) stays. `existing` must hold every mirrored visit, not only those near the bookings' times: a
+///   booking the client moved is no longer where its visit was (fix-booking-status).
+/// - Her own decisions win over an older server state: a booking she changed on this phone and the server has not
+///   taken yet (`heldLocally`) is left alone, and a server "confirmed" never reopens a visit she closed, cancelled or
+///   marked as a no-show (the server never hears of a close, and hears of the others through the outbound queue).
+/// - Two visits mirrored from one booking (an older build added one when the booking moved) become one: the first
+///   mirror stays, a later copy with nothing of hers on it leaves the agenda.
 /// - A booking never seen before enters the calendar when it holds a time or already happened; a cancellation the phone
 ///   never saw is not worth a cancelled visit.
 /// - The client is matched by phone. A new phone becomes a new client with `source: .bookingLink`; the server already
@@ -22,30 +29,40 @@ enum BookingImporter {
         var newClients: [Client] = []
         var appointments: [Appointment] = []
         var conflicts: [BookingConflict] = []
+        /// Duplicate mirrors to delete.
+        var removals: [UUID] = []
 
-        var isEmpty: Bool { newClients.isEmpty && appointments.isEmpty }
+        var isEmpty: Bool { newClients.isEmpty && appointments.isEmpty && removals.isEmpty }
     }
 
     static func plan(
         bookings: [IncomingBooking], appointments existing: [Appointment], clients: [Client], services: [Service],
-        now: Date
+        now: Date, heldLocally: Set<String> = []
     ) -> Plan {
         var plan = Plan()
         var byPhone: [String: UUID] = [:]
         for client in clients {
             if let phone = normalized(client.phoneE164), byPhone[phone] == nil { byPhone[phone] = client.id }
         }
-        let mirrored = Dictionary(existing.compactMap { visit in visit.bookingID.map { ($0, visit) } }) { first, _ in
-            first
-        }
+        let mirrors = mirrors(in: existing)
         let serviceIDs = Set(services.map(\.id))
         let manual = existing.filter { $0.origin == .manual && $0.status.holdsTime }
 
         for booking in bookings.sorted(by: { $0.createdAt < $1.createdAt }) {
-            guard !booking.status.isRequest, booking.status != .declined else { continue }
-            if let current = mirrored[booking.id] {
+            guard !booking.status.isRequest, booking.status != .declined, !heldLocally.contains(booking.id) else {
+                continue
+            }
+            if let copies = mirrors[booking.id], let current = copies.first {
                 let updated = apply(booking, to: current, now: now)
                 if updated != current { plan.appointments.append(updated) }
+                for copy in copies.dropFirst() {
+                    if hasHerOwnData(copy) {
+                        let follows = apply(booking, to: copy, now: now)
+                        if follows != copy { plan.appointments.append(follows) }
+                    } else {
+                        plan.removals.append(copy.id)
+                    }
+                }
                 continue
             }
             guard booking.status != .cancelledByClient, booking.status != .cancelledByPro else { continue }
@@ -56,6 +73,28 @@ enum BookingImporter {
 
         plan.conflicts = conflicts(of: plan.appointments, with: manual)
         return plan
+    }
+
+    /// The visits mirrored from each booking, the one to keep first: the one with her own data on it, then the oldest.
+    private static func mirrors(in existing: [Appointment]) -> [String: [Appointment]] {
+        var byBooking: [String: [Appointment]] = [:]
+        var seen: Set<UUID> = []
+        for visit in existing where seen.insert(visit.id).inserted {
+            if let bookingID = visit.bookingID { byBooking[bookingID, default: []].append(visit) }
+        }
+        return byBooking.mapValues { copies in
+            copies.sorted { lhs, rhs in
+                let (left, right) = (hasHerOwnData(lhs), hasHerOwnData(rhs))
+                if left != right { return left }
+                return (lhs.createdAt, lhs.id.uuidString) < (rhs.createdAt, rhs.id.uuidString)
+            }
+        }
+    }
+
+    /// Something only she wrote on the visit, which a cleanup must never throw away.
+    private static func hasHerOwnData(_ visit: Appointment) -> Bool {
+        visit.privateNote != nil || visit.sessionPlanID != nil || visit.linkedAppointmentID != nil
+            || !visit.status.holdsTime
     }
 
     /// Link visits that hold a time over a manual visit that holds the same time.
@@ -110,11 +149,18 @@ enum BookingImporter {
         visit.lateByMinutes = booking.lateByMinutes
         visit.rescheduleCount = booking.rescheduleCount
         switch booking.status {
-        case .confirmed:
+        case .confirmed where appointment.status.holdsTime:
             visit.status = .confirmed
             visit.cancelledAt = nil
             visit.cancelledBy = nil
             visit.isLateCancellation = false
+        case .confirmed:
+            // She closed, cancelled or marked it here; the server's "confirmed" is older than her decision.
+            break
+        case .cancelledByPro where appointment.status == .cancelled:
+            // Her own cancel, as the server took it. What she recorded (who asked, when) is more precise: the owner
+            // call always says "professional", even when she wrote down that the client called to cancel.
+            break
         case .cancelledByClient, .cancelledByPro:
             visit.status = .cancelled
             visit.cancelledAt = booking.cancelledAt ?? now

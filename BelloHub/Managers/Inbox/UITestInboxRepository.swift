@@ -55,6 +55,10 @@ actor UITestInboxRepository: InboxRepository {
 
     func waitlist(uid: String) async throws -> [WaitlistRequest] { waitlist }
 
+    func booking(uid: String, id: String) async throws -> IncomingBooking? {
+        bookings.first { $0.id == id }
+    }
+
     func mailboxItems(uid: String) async throws -> [MailboxItem] {
         if !sealed {
             sealed = true
@@ -133,6 +137,42 @@ actor UITestInboxRepository: InboxRepository {
     }
 
     func resetNoShowCount(phone: String) async throws {}
+
+    func cancelBookingByOwner(id: String) async throws {
+        try change(id) {
+            $0.status = .cancelledByPro
+            $0.cancelledBy = "professional"
+            $0.cancelledAt = Date()
+            $0.isLateCancellation = false
+        }
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        try change(id) {
+            $0.endsAt = startsAt.addingTimeInterval($0.endsAt.timeIntervalSince($0.startsAt))
+            $0.startsAt = startsAt
+            $0.clientConfirmedAt = nil
+            $0.lateByMinutes = nil
+        }
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        // The server counts the mark either way and changes only a booking still confirmed.
+        guard let index = bookings.firstIndex(where: { $0.id == bookingId && $0.status == .confirmed }) else { return }
+        bookings[index].status = .noShow
+        bookings[index].updatedAt = Date()
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {}
+
+    /// Like the server: only a booking that still holds time changes (`BOOKING_NOT_ACTIVE` otherwise).
+    private func change(_ id: String, _ update: (inout IncomingBooking) -> Void) throws {
+        guard let index = bookings.firstIndex(where: { $0.id == id }), bookings[index].status.holdsTime else {
+            throw BookingRepositoryError.rejected
+        }
+        update(&bookings[index])
+        bookings[index].updatedAt = Date()
+    }
 
     /// Everything is allowed: UI tests drive the free limit through the vault's own count (`-uiPlan`).
     func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {

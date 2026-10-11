@@ -109,6 +109,37 @@ struct BookingSyncServiceTests {
         #expect(visits.first?.status == .cancelled)
     }
 
+    @Test("A visit whose booking left the list is read by id and follows it; a booking the server no longer has is not")
+    func looksUpMissingBookings() async throws {
+        let original = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)
+        let rig = await start(with: [original])
+        defer { rig.cleanUp() }
+
+        await rig.repository.replace(cancelledByClient(original))
+        await rig.repository.setUnlisted(["bk-1"])
+        await rig.sync.syncAsync()
+
+        let reads = await rig.repository.reads
+        #expect(reads.contains("booking:bk-1"))
+        let statuses = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(statuses == [.cancelled])
+    }
+
+    @Test("A booking the server no longer has is read by id once per session, and its visit is left as it was")
+    func goneBookingIsNotReadAgain() async throws {
+        let rig = await start(with: [makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)])
+        defer { rig.cleanUp() }
+        try await rig.repository.deleteClientServerData(phone: nil, bookingIds: ["bk-1"])
+
+        await rig.sync.syncAsync()
+        await rig.sync.syncAsync()
+
+        let lookUps = await rig.repository.reads.filter { $0 == "booking:bk-1" }
+        #expect(lookUps.count == 1)
+        let statuses = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(statuses == [.confirmed], "nothing is known about it, so nothing changes")
+    }
+
     @Test("Presence confirmed and lateness reported on the web reach the visit")
     func clientSignals() async throws {
         let original = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)

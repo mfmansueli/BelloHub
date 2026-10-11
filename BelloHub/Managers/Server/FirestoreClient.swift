@@ -17,4 +17,7 @@ protocol FirestoreClient: Sendable {
     ) async throws -> [Data]
     /// Every document under `path` (a collection path such as `inbox/<uid>/items`), at most `limit`.
     func list(path: String, limit: Int) async throws -> [Data]
+    /// One document (a path such as `bookings/<id>`); nil when it does not exist or is not hers (the rules answer
+    /// both the same way, which is right: either way she has nothing there).
+    func document(path: String) async throws -> Data?
 }
