@@ -563,10 +563,13 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   color with 30 minutes of processing lets you fit a 20-minute bangs trim inside it").
 - **5.8 Camera, framing reference**: when the client has an earlier photo, it lies over the preview (default 35 %)
   with thin `ivory` rule-of-thirds lines (`FramingGuides`, decorative, VoiceOver-hidden; over a live picture no fixed
-  contrast can be measured, which is why they only help and never carry meaning). Under the "only saved in Bello"
-  note, a card with the native switch "Show previous photo" (`treatmentFlow.camera.referenceToggle`), a "How visible"
-  slider 15 to 60 % (`treatmentFlow.camera.referenceOpacity`, value spoken as a percentage) and a two-line guide. The
-  old "Ghost" bar button is gone. Evaluation: `docs/agent-notes/photo-framing.md`.
+  contrast can be measured, which is why they only help and never carry meaning). The native switch "Show previous
+  photo" (`treatmentFlow.camera.referenceToggle`) and, while it is on, "How visible" with a slider 15 to 60 %
+  (`treatmentFlow.camera.referenceOpacity`, value spoken as a percentage) sit in the pinned bar above "Take photo", so
+  they are on screen without scrolling on every iPhone (on a 6.1-inch screen the 3:4 preview fills the view and a card
+  under it was hidden behind the bar); at large text the bar grows and the preview scrolls. The two-line guide stays
+  under the preview while the reference shows. The old "Ghost" bar button is gone. Evaluation:
+  `docs/agent-notes/photo-framing.md`.
 - No new tokens and no new text/background pairs (every pair above is an existing measured one).
 
 ### Navigation titles and long text (S11, localization)

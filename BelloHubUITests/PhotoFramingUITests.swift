@@ -15,8 +15,21 @@ final class PhotoFramingUITests: XCTestCase {
     }
 
     func testThePreviousPhotoIsOfferedAsAFramingReference() {
-        let app = XCUIApplication.launchedOnTreatmentFlow()
+        walkFramingReference(XCUIApplication.launchedOnTreatmentFlow())
+    }
 
+    /// At AX3 the bar grows and the preview gives way; the switch and the slider must still be on screen and work.
+    func testTheFramingReferenceIsReachableAtLargeText() {
+        let app = XCUIApplication.launchedForUITests(arguments: [
+            "-uiSeed", "clientWithHealth", "-uiRoute", "treatmentFlow", "-uiTreatmentFlow", "-uiCamera", "scripted",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXL"
+        ])
+        walkFramingReference(app)
+    }
+
+    // MARK: - Helpers
+
+    private func walkFramingReference(_ app: XCUIApplication) {
         XCTAssertTrue(app.buttons["treatmentFlow.register.manualButton"].waitForExistence(timeout: 30))
         app.tapButton("treatmentFlow.register.manualButton")
         app.typeNotes("Skin a little sensitive around the cheeks.")
@@ -37,17 +50,14 @@ final class PhotoFramingUITests: XCTestCase {
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         let toggle = app.switches["treatmentFlow.camera.referenceToggle"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 10), "the visit's first photo is offered")
-        XCTAssertTrue(app.scrollUntilVisible(toggle))
+        // Pinned above the capture button: reachable at once, without scrolling, on every screen size.
+        XCTAssertTrue(toggle.isHittable, "the switch is on screen without scrolling")
         XCTAssertEqual(toggle.value as? String, "1", "shown by default")
         let slider = app.sliders["treatmentFlow.camera.referenceOpacity"]
-        XCTAssertTrue(slider.exists)
+        XCTAssertTrue(slider.exists && slider.isHittable)
         slider.adjust(toNormalizedSliderPosition: 0.9)
 
-        // The switch sits in the scrolling content above the pinned capture bar: keep it clear of the bar, so a tap
-        // meant for it never lands on the bar, and wait for the new value instead of reading it at once.
-        app.flipSwitch(
-            "treatmentFlow.camera.referenceToggle", clearOf: app.buttons["treatmentFlow.camera.captureButton"]
-        )
+        app.flipSwitch("treatmentFlow.camera.referenceToggle")
         let off = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == '0'"), object: toggle)
         XCTAssertEqual(XCTWaiter().wait(for: [off], timeout: 5), .completed, "the reference can be turned off")
         XCTAssertTrue(app.waitUntilGone(slider), "the slider goes away with the reference")

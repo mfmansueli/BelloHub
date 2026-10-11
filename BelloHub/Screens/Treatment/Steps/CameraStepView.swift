@@ -82,7 +82,10 @@ struct CameraStepView: View {
                 .accessibilityIdentifier("treatmentFlow.camera.preview")
                 Text("treatmentFlow.camera.private").font(Typography.meta).foregroundStyle(Palette.ink2)
                     .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
-                if reference != nil { referenceControls }
+                if reference != nil, showsReference {
+                    Text("treatmentFlow.camera.reference.guide").font(Typography.footnote).foregroundStyle(Palette.ink2)
+                        .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
+                }
             }
             .padding(.vertical, Spacing.md)
         }
@@ -92,6 +95,7 @@ struct CameraStepView: View {
 
     private var controls: some View {
         FlowBottomBar {
+            if reference != nil { referenceControls }
             HStack(spacing: Spacing.md) {
                 if camera.supportsFlash {
                     Toggle(isOn: $flashOn) { Image(icon: .bolt) }
@@ -109,16 +113,19 @@ struct CameraStepView: View {
         }
     }
 
-    /// "Show previous photo", how strongly it shows, and how to line up with it. Native switch and slider.
+    /// "Show previous photo" and how strongly it shows, pinned above the capture button. They live in the bar, not in
+    /// the scrolling content: on a 6.1-inch iPhone the 3:4 preview fills the screen and a card under it sat behind the
+    /// bar, out of sight and out of reach. Native switch and slider; the guide stays under the preview.
+    @ViewBuilder
     private var referenceControls: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            Toggle(isOn: $showsReference) {
-                Text("treatmentFlow.camera.reference.toggle").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-            }
-            .tint(Palette.action)
-            .frame(minHeight: Spacing.touchTarget)
-            .accessibilityIdentifier("treatmentFlow.camera.referenceToggle")
-            if showsReference {
+        Toggle(isOn: $showsReference) {
+            Text("treatmentFlow.camera.reference.toggle").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+        }
+        .tint(Palette.action)
+        .frame(minHeight: Spacing.touchTarget)
+        .accessibilityIdentifier("treatmentFlow.camera.referenceToggle")
+        if showsReference {
+            HStack(spacing: Spacing.row) {
                 Text("treatmentFlow.camera.reference.opacity").font(Typography.meta).foregroundStyle(Palette.ink2)
                     .accessibilityHidden(true)
                 Slider(value: $referenceOpacity, in: Self.referenceOpacityRange) {
@@ -127,13 +134,9 @@ struct CameraStepView: View {
                 .tint(Palette.action)
                 .accessibilityValue(Text(referenceOpacity.formatted(.percent.precision(.fractionLength(0)))))
                 .accessibilityIdentifier("treatmentFlow.camera.referenceOpacity")
-                Text("treatmentFlow.camera.reference.guide").font(Typography.footnote).foregroundStyle(Palette.ink2)
             }
+            .frame(minHeight: Spacing.touchTarget)
         }
-        .padding(Spacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .belloCard()
-        .padding(.horizontal, Spacing.gutter)
     }
 
     // MARK: - Review

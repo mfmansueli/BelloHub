@@ -84,6 +84,7 @@ extension XCUIApplication {
         _ identifier: String, englishLabel: String, on visit: XCUIElement, file: StaticString = #filePath,
         line: UInt = #line
     ) {
+        bringClearOfCalendarHeader(visit)
         visit.press(forDuration: 1.2)
         let byIdentifier = buttons[identifier]
         if byIdentifier.waitForExistence(timeout: 3) {
@@ -93,6 +94,25 @@ extension XCUIApplication {
         let byLabel = buttons[englishLabel]
         XCTAssertTrue(byLabel.waitForExistence(timeout: 3), "no menu item \(identifier)", file: file, line: line)
         byLabel.tap()
+    }
+
+    /// Scrolls the day until the whole visit lies between the pinned header and the lower quarter of the screen. The day
+    /// view opens one hour before now, so late in the day a morning visit sits under the header, where it still reports
+    /// `isHittable` but a long press lands on the week strip (found at 18:50 São Paulo, 2026-10-11).
+    @MainActor
+    func bringClearOfCalendarHeader(_ element: XCUIElement, attempts: Int = 8) {
+        let window = windows.firstMatch.frame
+        let lowest = window.minY + window.height * 0.75
+        for _ in 0..<attempts {
+            let top = calendarHeaderBottom + 8
+            let frame = element.frame
+            if frame.minY >= top && frame.maxY <= lowest { return }
+            let showEarlier = frame.minY < top
+            let from = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: showEarlier ? 0.45 : 0.65))
+            let to = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: showEarlier ? 0.65 : 0.45))
+            from.press(forDuration: 0.05, thenDragTo: to)
+            if element.frame == frame { return }
+        }
     }
 
     /// The identifiers of a chip family (`reschedule.slot.`), in order, to pick one by position.
