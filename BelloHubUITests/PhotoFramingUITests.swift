@@ -22,7 +22,7 @@ final class PhotoFramingUITests: XCTestCase {
         app.typeNotes("Skin a little sensitive around the cheeks.")
         app.tapButton("treatmentFlow.form.saveButton")
         XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
-        app.tapButton("treatmentFlow.saved.photosButton")
+        app.tapButton("treatmentFlow.saved.continueButton")
 
         // First photo: nothing to line up with yet.
         app.tapButton("treatmentFlow.photos.takeButton")
