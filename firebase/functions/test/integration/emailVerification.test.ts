@@ -50,7 +50,7 @@ describe('sendEmailCode', () => {
   it('emails a six digit code that is stored only as a hash and expires in ten minutes', async () => {
     const result = await send();
 
-    expect(result).toEqual({ resendAfterSeconds: 30, expiresInSeconds: 600 });
+    expect(result).toEqual({ resendAfterSeconds: 30, expiresInSeconds: 1800 });
     expect(env.mail.sent).toHaveLength(1);
     expect(env.mail.sent[0]?.to).toBe(EMAIL);
     expect(env.mail.sent[0]?.subject).toContain(lastCode());

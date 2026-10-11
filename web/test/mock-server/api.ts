@@ -512,7 +512,7 @@ export class MockApi {
         if (hold.slug === slug && hold.holdKey === holdKey && hold.offer === undefined && hold.expiresAt > now) hold.expiresAt = Math.max(hold.expiresAt, now + 10 * MINUTE);
       }
     }
-    return { resendAfterSeconds: this.resendAfterSeconds, expiresInSeconds: 600 };
+    return { resendAfterSeconds: this.resendAfterSeconds, expiresInSeconds: 1800 };
   }
 
   verifyEmailCode(input: Json): Json {

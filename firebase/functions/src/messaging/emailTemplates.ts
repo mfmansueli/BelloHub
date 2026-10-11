@@ -42,7 +42,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   'pt-BR': {
     verificationCode: {
       subject: '{code} é o seu código de verificação',
-      body: 'Seu código de verificação é {code}. Ele vale por 10 minutos. Se você não pediu esse código, ignore esta mensagem.'
+      body: 'Seu código de verificação é {code}. Ele vale por 30 minutos. Se você não pediu esse código, ignore esta mensagem.'
     },
     bookingConfirmed: {
       subject: 'Seu horário com {professional} está confirmado',
@@ -72,7 +72,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   'pt-PT': {
     verificationCode: {
       subject: '{code} é o seu código de verificação',
-      body: 'O seu código de verificação é {code}. É válido durante 10 minutos. Se não pediu este código, ignore esta mensagem.'
+      body: 'O seu código de verificação é {code}. É válido durante 30 minutos. Se não pediu este código, ignore esta mensagem.'
     },
     bookingConfirmed: {
       subject: 'A sua marcação com {professional} está confirmada',
@@ -102,7 +102,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   'es-MX': {
     verificationCode: {
       subject: '{code} es tu código de verificación',
-      body: 'Tu código de verificación es {code}. Vale por 10 minutos. Si no lo pediste, ignora este mensaje.'
+      body: 'Tu código de verificación es {code}. Vale por 30 minutos. Si no lo pediste, ignora este mensaje.'
     },
     bookingConfirmed: {
       subject: 'Tu cita con {professional} está confirmada',
@@ -132,7 +132,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   es: {
     verificationCode: {
       subject: '{code} es tu código de verificación',
-      body: 'Tu código de verificación es {code}. Caduca en 10 minutos. Si no lo has pedido, ignora este mensaje.'
+      body: 'Tu código de verificación es {code}. Caduca en 30 minutos. Si no lo has pedido, ignora este mensaje.'
     },
     bookingConfirmed: {
       subject: 'Tu cita con {professional} está confirmada',
@@ -162,7 +162,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   en: {
     verificationCode: {
       subject: '{code} is your verification code',
-      body: 'Your verification code is {code}. It is valid for 10 minutes. If you did not ask for it, ignore this message.'
+      body: 'Your verification code is {code}. It is valid for 30 minutes. If you did not ask for it, ignore this message.'
     },
     bookingConfirmed: {
       subject: 'Your appointment with {professional} is confirmed',
@@ -192,7 +192,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   it: {
     verificationCode: {
       subject: '{code} è il tuo codice di verifica',
-      body: "Il tuo codice di verifica è {code}. Vale 10 minuti. Se non l'hai richiesto, ignora questo messaggio."
+      body: "Il tuo codice di verifica è {code}. Vale 30 minuti. Se non l'hai richiesto, ignora questo messaggio."
     },
     bookingConfirmed: {
       subject: 'Il tuo appuntamento con {professional} è confermato',
@@ -222,7 +222,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   fr: {
     verificationCode: {
       subject: '{code} est votre code de vérification',
-      body: "Votre code de vérification est {code}. Il est valable 10 minutes. Si vous ne l'avez pas demandé, ignorez ce message."
+      body: "Votre code de vérification est {code}. Il est valable 30 minutes. Si vous ne l'avez pas demandé, ignorez ce message."
     },
     bookingConfirmed: {
       subject: 'Votre rendez-vous avec {professional} est confirmé',
@@ -252,7 +252,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   de: {
     verificationCode: {
       subject: '{code} ist Ihr Bestätigungscode',
-      body: 'Ihr Bestätigungscode lautet {code}. Er ist 10 Minuten gültig. Wenn Sie ihn nicht angefordert haben, ignorieren Sie diese Nachricht.'
+      body: 'Ihr Bestätigungscode lautet {code}. Er ist 30 Minuten gültig. Wenn Sie ihn nicht angefordert haben, ignorieren Sie diese Nachricht.'
     },
     bookingConfirmed: {
       subject: 'Ihr Termin bei {professional} ist bestätigt',
@@ -282,7 +282,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   tr: {
     verificationCode: {
       subject: '{code} doğrulama kodunuzdur',
-      body: 'Doğrulama kodunuz: {code}. 10 dakika geçerlidir. Siz istemediyseniz bu mesajı yok sayın.'
+      body: 'Doğrulama kodunuz: {code}. 30 dakika geçerlidir. Siz istemediyseniz bu mesajı yok sayın.'
     },
     bookingConfirmed: {
       subject: '{professional} ile randevunuz onaylandı',
@@ -312,7 +312,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   id: {
     verificationCode: {
       subject: '{code} adalah kode verifikasi Anda',
-      body: 'Kode verifikasi Anda adalah {code}. Berlaku selama 10 menit. Jika Anda tidak memintanya, abaikan pesan ini.'
+      body: 'Kode verifikasi Anda adalah {code}. Berlaku selama 30 menit. Jika Anda tidak memintanya, abaikan pesan ini.'
     },
     bookingConfirmed: {
       subject: 'Janji temu Anda dengan {professional} sudah dikonfirmasi',
@@ -342,7 +342,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   hi: {
     verificationCode: {
       subject: '{code} आपका सत्यापन कोड है',
-      body: 'आपका सत्यापन कोड {code} है। यह 10 मिनट तक मान्य है। अगर आपने इसे नहीं माँगा है, तो इस संदेश को अनदेखा करें।'
+      body: 'आपका सत्यापन कोड {code} है। यह 30 मिनट तक मान्य है। अगर आपने इसे नहीं माँगा है, तो इस संदेश को अनदेखा करें।'
     },
     bookingConfirmed: {
       subject: '{professional} के साथ आपकी अपॉइंटमेंट पक्की हो गई है',
@@ -372,7 +372,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
   ar: {
     verificationCode: {
       subject: '{code} هو رمز التحقق الخاص بك',
-      body: 'رمز التحقق الخاص بك هو {code}. صالح لمدة 10 دقائق. إذا لم تطلبه، تجاهل هذه الرسالة.'
+      body: 'رمز التحقق الخاص بك هو {code}. صالح لمدة 30 دقيقة. إذا لم تطلبه، تجاهل هذه الرسالة.'
     },
     bookingConfirmed: {
       subject: 'تم تأكيد موعدك مع {professional}',

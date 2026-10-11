@@ -1,5 +1,5 @@
 import { defineUseCase } from '../app/UseCase.js';
-import { EMAIL_CODE_TTL_SECONDS, EMAIL_RESEND_SECONDS, RATE } from '../config/limits.js';
+import { EMAIL_CODE_HOLD_SECONDS, EMAIL_CODE_TTL_SECONDS, EMAIL_RESEND_SECONDS, RATE } from '../config/limits.js';
 import * as contract from '../contracts/public.js';
 import { keyedHash } from '../lib/crypto.js';
 import type { EmailCodeDoc, HoldDoc, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
@@ -58,7 +58,7 @@ export const sendEmailCode = defineUseCase({
     });
 
     if (input.purpose === 'booking' && input.holdKey) {
-      await extendSoftHold(deps.db, claim.ownerUid, input.holdKey, now + EMAIL_CODE_TTL_SECONDS * 1000, now);
+      await extendSoftHold(deps.db, claim.ownerUid, input.holdKey, now + EMAIL_CODE_HOLD_SECONDS * 1000, now);
     }
 
     const profile = dataOf<PublicProfileDoc>(await r.profile(input.slug).get());
@@ -74,7 +74,7 @@ export const sendEmailCode = defineUseCase({
       throw error;
     }
     deps.log.info('emailCode.sent', { kind: input.purpose });
-    return { resendAfterSeconds: 30 as const, expiresInSeconds: 600 as const };
+    return { resendAfterSeconds: 30 as const, expiresInSeconds: 1800 as const };
   }
 });
 

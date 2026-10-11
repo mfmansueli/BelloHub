@@ -151,7 +151,7 @@ export interface SendEmailCodeRequest {
   readonly email: string;
   readonly locale: LocaleId;
   readonly purpose: 'booking' | 'find';
-  /** Booking codes: the hold under this key is stretched to the code's 10 minutes. */
+  /** Booking codes: the hold under this key is stretched to 10 minutes (the code itself lasts 30). */
   readonly holdKey?: string;
 }
 

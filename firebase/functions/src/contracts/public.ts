@@ -101,7 +101,7 @@ export const sendEmailCode = {
     /** The browser's hold key: a soft hold under it is extended to cover the code's 10 minutes. */
     holdKey: HoldKey.optional()
   }),
-  output: z.strictObject({ resendAfterSeconds: z.literal(30), expiresInSeconds: z.literal(600) })
+  output: z.strictObject({ resendAfterSeconds: z.literal(30), expiresInSeconds: z.literal(1800) })
 };
 
 export const verifyEmailCode = {

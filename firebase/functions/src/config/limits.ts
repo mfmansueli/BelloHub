@@ -49,7 +49,10 @@ export const RATE = {
 
 /** Seconds between two verification emails to the same address. */
 export const EMAIL_RESEND_SECONDS = 30;
-export const EMAIL_CODE_TTL_SECONDS = 600;
+/** A code lasts 30 minutes: an e-mail can be slow, and a late code is still the same person's code (5 tries). */
+export const EMAIL_CODE_TTL_SECONDS = 1800;
+/** The soft hold under a booking code is stretched to this, not to the code's life: a slot is not kept for 30 minutes. */
+export const EMAIL_CODE_HOLD_SECONDS = 600;
 export const EMAIL_CODE_MAX_ATTEMPTS = 5;
 export const EMAIL_PROOF_TTL_SECONDS = 1800;
 /** A phone sign-in older than this is not accepted as proof (docs/10 section 3). */

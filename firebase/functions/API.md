@@ -275,14 +275,14 @@ res: { serviceId: Uuid; addOnIds: Uuid[]; guests: number; startsAt: Instant; end
 Errors: `NOT_FOUND`, `TOKEN_EXPIRED`.
 
 ### 5.5 `sendEmailCode`  (public)
-Sends a 6-digit code (10 minutes, 5 tries). **The only verification the web page uses (D46):** the page keeps
+Sends a 6-digit code (30 minutes, 5 tries). **The only verification the web page uses (D46):** the page keeps
 `connect-src 'self'` and loads no Firebase SDK. SMS (5.7) stays available for a later API-side SMS provider.
 ```ts
 req: { slug: Slug; email: string; locale: LocaleId; purpose: "booking" | "find"; holdKey?: string }
-res: { resendAfterSeconds: 30; expiresInSeconds: 600 }
+res: { resendAfterSeconds: 30; expiresInSeconds: 1800 }
 ```
-With `purpose: "booking"` and the browser's `holdKey`, a live soft hold under that key is extended to the code's
-10 minutes (never shortened, never revived once expired, offer holds untouched), so waiting for the e-mail does not
+With `purpose: "booking"` and the browser's `holdKey`, a live soft hold under that key is extended to
+10 minutes (the code itself lasts 30; never shortened, never revived once expired, offer holds untouched), so waiting for the e-mail does not
 lose the time.
 Errors: `RATE_LIMITED` (resend before 30 s; 5/hour per email; 10/hour per IP; a daily cap per professional),
 `NOT_CONFIGURED` (no email provider in this environment: show SMS only). The response is identical whether or not the
@@ -738,7 +738,7 @@ Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readabl
 | Booking | 7 days after the visit ends (`purgeAt`); the manage link stops working then |
 | Sealed envelope | when the app acknowledges it, and in any case 30 days after it arrived |
 | Hold | 5 minutes (offers: their own length) |
-| Email code, email proof | 10 min, 30 min |
+| Email code, email proof | 30 min, 30 min |
 | Unverified request (`verification: "whatsapp"`) not answered | released (`declined`) 24 hours after it was made, or at the visit's start; then as any booking |
 | Trusted-device token (hash) | 90 days, or "Forget this device", or with her data |
 | Waitlist entry | 7 days after its last day |
