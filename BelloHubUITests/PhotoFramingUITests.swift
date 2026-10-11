@@ -43,8 +43,8 @@ final class PhotoFramingUITests: XCTestCase {
         XCTAssertTrue(slider.exists)
         slider.adjust(toNormalizedSliderPosition: 0.9)
 
-        // The switch sits in the scrolling content above the pinned capture bar: keep it clear of the bar, so a tap meant
-        // for it never lands on the bar, and wait for the new value instead of reading it at once.
+        // The switch sits in the scrolling content above the pinned capture bar: keep it clear of the bar, so a tap
+        // meant for it never lands on the bar, and wait for the new value instead of reading it at once.
         app.flipSwitch(
             "treatmentFlow.camera.referenceToggle", clearOf: app.buttons["treatmentFlow.camera.captureButton"]
         )
