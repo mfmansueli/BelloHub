@@ -37,6 +37,7 @@ struct PhotosStepView: View {
         }
         .background(Palette.bg)
         .navigationBarTitleDisplayMode(.inline)
+        .confirmationSeal(whenIncreases: viewModel.photos.count)
         .accessibilityIdentifier("treatmentFlow.photos")
         .safeAreaInset(edge: .bottom) {
             FlowBottomBar {

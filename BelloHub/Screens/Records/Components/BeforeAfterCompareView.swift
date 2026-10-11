@@ -21,6 +21,7 @@ struct BeforeAfterCompareView: View {
 
     @State private var fraction = 0.5
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.motionPolicy) private var policy
 
     var body: some View {
         switch mode {
@@ -80,7 +81,14 @@ struct BeforeAfterCompareView: View {
                 Text("treatmentFlow.photos.after").font(Typography.metaStrong).foregroundStyle(Palette.ink)
             }
             .accessibilityHidden(true)
-            Slider(value: $fraction, in: 0...1)
+            // The system slider follows the finger 1:1 and speaks its value; on release the handle settles on an end
+            // or the middle when it is close to one (`BeforeAfterSnap`), with the one curve.
+            Slider(value: $fraction, in: 0...1, onEditingChanged: { editing in
+                guard !editing else { return }
+                withAnimation(MotionChange.animation(.settle, policy: policy)) {
+                    fraction = BeforeAfterSnap.settled(fraction)
+                }
+            })
                 .tint(Palette.sage)
                 .frame(minHeight: Spacing.touchTarget)
                 .accessibilityLabel(Text("recordHistory.compare.slider"))

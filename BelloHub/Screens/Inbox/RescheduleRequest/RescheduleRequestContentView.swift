@@ -25,6 +25,7 @@ struct RescheduleRequestContentView: View {
             .navigationTitle(Text("rescheduleRequest.title"))
             .navigationBarTitleDisplayMode(.inline)
             .refreshable { await viewModel.refreshAsync() }
+            .confirmationSeal(whenTrue: viewModel.phase == .accepted)
     }
 
     // MARK: - States

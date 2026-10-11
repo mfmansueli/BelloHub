@@ -107,9 +107,13 @@ struct ClientMessageContentView: View {
     private var outcome: some View {
         switch viewModel.outcome {
         case .opened(let channel)?:
-            Text(channel == .whatsapp ? "appointment.opened.whatsapp" : "appointment.opened.sms")
-                .font(Typography.meta).foregroundStyle(Palette.sageText)
-                .accessibilityIdentifier("clientMessage.opened")
+            HStack(spacing: Spacing.sm) {
+                InlineCheck()
+                Text(channel == .whatsapp ? "appointment.opened.whatsapp" : "appointment.opened.sms")
+                    .font(Typography.meta).foregroundStyle(Palette.sageText)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("clientMessage.opened")
         case .needsShareSheet(let text)?:
             ShareFallbackCard(text: text, identifier: "clientMessage.shareFallback")
         case nil:

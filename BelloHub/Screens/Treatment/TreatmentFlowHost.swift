@@ -32,6 +32,10 @@ struct TreatmentFlowHost: View {
             await viewModel.load()
         }
         .onChange(of: locale) { _, new in viewModel.useLocale(new) }
+        // The last step of the closing is settled: the visit is done. A haptic only, because the flow closes at once.
+        .sensoryFeedback(.success, trigger: viewModel.closing?.isComplete ?? false) { old, new in
+            ConfirmationCue.fires(flagFrom: old, to: new)
+        }
         .onDisappear { viewModel.tearDown() }
         .agendaSheet(item: $agendaSheet)
         .confirmationDialog(

@@ -70,6 +70,9 @@ struct SavedStepView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
+            // The visit is saved: the one confirmation the clinical steps allow (docs/09-MOTION.md section 3.6). It
+            // is small, takes no touch and never delays the button below.
+            SuccessSeal(size: 56)
             Label { Text("treatmentFlow.saved.badge") } icon: { Image(icon: .check) }
                 .font(Typography.footnoteStrong)
                 .foregroundStyle(Palette.sageText)

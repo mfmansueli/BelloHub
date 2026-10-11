@@ -26,6 +26,7 @@ struct BookingRequestContentView: View {
             .navigationTitle(Text("bookingRequest.title"))
             .navigationBarTitleDisplayMode(.inline)
             .refreshable { await viewModel.refreshAsync() }
+            .confirmationSeal(whenTrue: viewModel.phase == .accepted)
             .task { await viewModel.loadAsync() }
             .sheet(isPresented: $viewModel.isPaywallPresented) { PaywallSheet() }
             .sheet(isPresented: $viewModel.isSuggestSheetPresented) {

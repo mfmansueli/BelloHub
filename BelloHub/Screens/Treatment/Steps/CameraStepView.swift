@@ -30,6 +30,9 @@ struct CameraStepView: View {
     @State private var referenceOpacity = Self.defaultReferenceOpacity
     @State private var isTaking = false
     @State private var isReady = false
+    /// Photos taken on this screen; the flash and its haptic watch it.
+    @State private var shotCount = 0
+    @Environment(\.motionPolicy) private var motion
 
     /// Light enough to see the live picture through it, strong enough to find the outline.
     private static let defaultReferenceOpacity = 0.35
@@ -37,6 +40,7 @@ struct CameraStepView: View {
 
     var body: some View {
         content
+            .captureFlash(trigger: shotCount)
             .background(Palette.bg)
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(Text(kind.title))
@@ -69,10 +73,12 @@ struct CameraStepView: View {
             VStack(spacing: Spacing.md) {
                 ZStack {
                     CameraPreview(camera: camera)
+                    // The reference fades in and out with the switch (0.28 s; a short crossfade with Reduce Motion).
                     if showsReference, let reference {
                         DataImage(data: reference).opacity(referenceOpacity)
                             .allowsHitTesting(false).accessibilityHidden(true)
-                        FramingGuides().allowsHitTesting(false)
+                            .transition(.opacity)
+                        FramingGuides().allowsHitTesting(false).transition(.opacity)
                     }
                 }
                 .aspectRatio(3 / 4, contentMode: .fit)
@@ -85,8 +91,10 @@ struct CameraStepView: View {
                 if reference != nil, showsReference {
                     Text("treatmentFlow.camera.reference.guide").font(Typography.footnote).foregroundStyle(Palette.ink2)
                         .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
+                        .transition(.opacity)
                 }
             }
+            .animation(MotionChange.animation(.fade, policy: motion), value: showsReference)
             .padding(.vertical, Spacing.md)
         }
         .scrollBounceBehavior(.basedOnSize)
@@ -111,6 +119,7 @@ struct CameraStepView: View {
                 .disabled(isTaking || !isReady)
                 .accessibilityIdentifier("treatmentFlow.camera.captureButton")
         }
+        .animation(MotionChange.animation(.fade, policy: motion), value: showsReference)
     }
 
     /// "Show previous photo" and how strongly it shows, pinned above the capture button. They live in the bar, not in
@@ -136,6 +145,7 @@ struct CameraStepView: View {
                 .accessibilityIdentifier("treatmentFlow.camera.referenceOpacity")
             }
             .frame(minHeight: Spacing.touchTarget)
+            .transition(.opacity)
         }
     }
 
@@ -221,6 +231,7 @@ struct CameraStepView: View {
         defer { isTaking = false }
         do {
             shot = try await camera.capture()
+            shotCount += 1
             viewModel.failure = nil
         } catch {
             viewModel.failure = .photo
