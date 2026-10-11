@@ -46,13 +46,14 @@ struct BookingSyncServiceTests {
     // MARK: - Direction A: the client changes the booking on the web
 
     @Test("A booking moved on the web and then cancelled cancels the visit mirrored at the old time", arguments: [
-        (farAhead, soon), (soon, farAhead)
+        (20, 2), (2, 20)
     ])
     func movedThenCancelled(from: Int, to: Int) async throws {
         let original = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: from)
         let rig = await start(with: [original])
         defer { rig.cleanUp() }
-        #expect(await rig.visits(bookingID: "bk-1").map(\.status) == [.confirmed])
+        let mirrored = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(mirrored == [.confirmed])
 
         await rig.repository.replace(cancelledByClient(moved(original, toDaysAhead: to)))
         await rig.sync.syncAsync()
@@ -64,7 +65,7 @@ struct BookingSyncServiceTests {
     }
 
     @Test("A booking moved on the web moves its visit, never adds a second one", arguments: [
-        (farAhead, soon), (soon, farAhead)
+        (20, 2), (2, 20)
     ])
     func movedOnTheWeb(from: Int, to: Int) async throws {
         let original = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: from)
@@ -141,7 +142,8 @@ struct BookingSyncServiceTests {
         await rig.sync.syncAsync()
 
         #expect(sent, "the server is told")
-        #expect(await rig.repository.bookings.first?.status == .cancelledByPro)
+        let serverStatus = await rig.repository.bookings.first?.status
+        #expect(serverStatus == .cancelledByPro)
         let after = try #require(await rig.visits(bookingID: "bk-1").first)
         #expect(after.status == .cancelled)
         #expect(after.cancelledBy == .professional)
@@ -167,7 +169,8 @@ struct BookingSyncServiceTests {
         await rig.queue.flushAsync()
         await rig.sync.syncAsync()
 
-        #expect(await rig.repository.bookings.first?.status == .cancelledByPro)
+        let serverStatus = await rig.repository.bookings.first?.status
+        #expect(serverStatus == .cancelledByPro)
         let settled = try #require(await rig.visits(bookingID: "bk-1").first)
         #expect(settled.status == .cancelled)
         #expect(settled.cancelledBy == .client, "what she recorded (the client called) stays")
@@ -184,15 +187,19 @@ struct BookingSyncServiceTests {
         try await rig.appointments.reschedule(id: visit.id, to: newStart, now: TestClock.now)
         await Wait.untilMain(timeout: .seconds(5)) { rig.queue.pending.count == 1 }
         await rig.sync.syncAsync()
-        #expect(await rig.visits(bookingID: "bk-1").map(\.startsAt) == [newStart], "a stale read keeps her time")
+        let heldTimes = await rig.visits(bookingID: "bk-1").map(\.startsAt)
+        #expect(heldTimes == [newStart], "a stale read keeps her time")
 
         await rig.repository.setWriteFailure(nil)
         await rig.queue.flushAsync()
         await rig.sync.syncAsync()
 
-        #expect(await rig.repository.writes.contains("moveBookingByOwner:bk-1:\(CallableJSON.instant(newStart))"))
-        #expect(await rig.repository.bookings.first?.startsAt == newStart)
-        #expect(await rig.visits(bookingID: "bk-1").map(\.startsAt) == [newStart])
+        let writes = await rig.repository.writes
+        #expect(writes.contains("moveBookingByOwner:bk-1:\(CallableJSON.instant(newStart))"))
+        let serverStart = await rig.repository.bookings.first?.startsAt
+        #expect(serverStart == newStart)
+        let times = await rig.visits(bookingID: "bk-1").map(\.startsAt)
+        #expect(times == [newStart])
     }
 
     @Test("A no-show on a link visit is marked on the server with the booking")
@@ -208,8 +215,10 @@ struct BookingSyncServiceTests {
         await rig.sync.syncAsync()
 
         #expect(sent)
-        #expect(await rig.repository.bookings.first?.status == .noShow)
-        #expect(await rig.visits(bookingID: "bk-1").map(\.status) == [.noShow])
+        let serverStatus = await rig.repository.bookings.first?.status
+        #expect(serverStatus == .noShow)
+        let statuses = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(statuses == [.noShow])
     }
 
     @Test("A link visit she closed stays completed after a sync (the server keeps it confirmed)")
@@ -221,6 +230,7 @@ struct BookingSyncServiceTests {
         try await rig.appointments.complete(id: visit.id, now: TestClock.now)
         await rig.sync.syncAsync()
 
-        #expect(await rig.visits(bookingID: "bk-1").map(\.status) == [.completed])
+        let statuses = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(statuses == [.completed])
     }
 }
