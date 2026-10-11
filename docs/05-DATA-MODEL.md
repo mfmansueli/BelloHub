@@ -59,7 +59,7 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 - **SessionPlan**: `client`, `name`, `totalSessions`, `intervalWeeks`, `startDate`, `currentIndex`.
 
 ### Agenda
-- **Appointment**: `client`, `service`, `startsAt`, `endsAt`, `totalMinutes`, `status` (`booked`, `confirmed`, `completed`, `cancelled`, `noShow`), `cancelledAt?`, `cancelledBy?`, `isLateCancellation`, `origin` (`bookingLink`, `manual`), `bookingID?` (server id), `visitType` (`treatment`, `touchUp`, `reactionCheck`), `linkedAppointment?`, `addOns`, `guests` (name; same service, in sequence), `sessionPlan?`, `rescheduleCount`, `reminderSentAt?`, `clientConfirmedAt?`, `lateByMinutes?`.
+- **Appointment**: `client`, `service`, `startsAt`, `endsAt`, `totalMinutes`, `status` (`booked`, `confirmed`, `completed`, `cancelled`, `noShow`), `cancelledAt?`, `cancelledBy?`, `isLateCancellation`, `origin` (`bookingLink`, `manual`), `bookingID?` (server id), `visitType` (`treatment`, `touchUp`, `reactionCheck`), `linkedAppointment?`, `addOns`, `guests` (name; same service, in sequence), `sessionPlan?`, `rescheduleCount`, `reminderSentAt?` (the reminder chat was **opened**; it proves neither sending nor delivery), `reminderMarkedSentAt?` (routine-a, 2026-10-11: she said she sent it herself; optional and additive, older visits decode as nil; both cleared by a reschedule), `clientConfirmedAt?`, `lateByMinutes?`.
 - **WaitlistEntry**: `client?`, `nameIfNoClient`, `phoneE164`, `serviceID?`, `dayFrom`, `dayTo`, `status`, `offeredAt?`.
 - **RescheduleRequest**: `appointment`, `requestedStart`, `note?`, `status`. The current slot stays reserved until she answers.
 - **MessageLog**: `client`, `channel`, `template`, `openedAt`. Records that the chat was **opened** with the text ready.
@@ -76,7 +76,15 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 
 ### Derived, never stored
 - **ClientHabits**: `visits`, `cancelled`, `noShows`, `lateCancellations`, `returnsEveryWeeks` (median interval), `usualPeriod`, `reminderResponseDays`, `mostBookedService`, `source`. The cancellation rate shows only with ≥ 4 completed visits. Definition: rate = (cancellations by the client + no-shows) ÷ past appointments among the last 10; "cancels often" at ≥ 30 %. A cancellation made by the professional is excluded; a forgiven no-show is excluded.
-- **FollowUp**: last completed visit ≥ the service's `followUpWeeks`. **WinBack**: no visit for ≥ 60 days.
+- **FollowUp**: last completed visit ≥ the service's `followUpWeeks` (carries `intervalWeeks` for the reason she reads). **WinBack**: no visit for ≥ 60 days.
+- **FollowUpQueue** (routine-a, 2026-10-11): reminders, visits left with "Finish later", check-ins after a visit of today or yesterday, returns due, clients not back and birthdays, grouped by client, each with a reason built from her own data (`FollowUpReason`, no clinical inference) and a `MessageDeliveryState` (ready to send, conversation opened, marked as sent by her).
+
+### Local to this iPhone (UserDefaults, per user, never synced or sent)
+Ids, dates and flags only, nothing clinical; removed with the account (`DefaultsKey.prefixesClearedOnAccountDeletion`).
+- **OnboardingProgress**: the unfinished setup's step and draft (her name, business name, professions, first service), so it resumes after a relaunch; cleared at the end of the setup.
+- **FollowUpDecision** by occurrence: `snoozedUntil?`, `dismissedAt?`, `markedSentAt?` (a new visit is a new occurrence).
+- **VisitClosing** by record id: `clientID`, `appointmentID?`, `serviceName`, `recordCreatedAt`, settled steps (`photos`, `aftercare`, `nextVisit`), `isDeferred` ("Finish later"). The record itself, its lock and its corrections are unchanged.
+- **Interface language** (`interface.language`): "system" or one of the fourteen; device-wide, kept when the account goes.
 - **FreeSlots** (D56): availability − appointments − breaks − days off − blocks − buffer, respecting the business time zone and DST. Candidates are the slot grid plus starts anchored against every visit, break, block and stretch edge; the blocked stretch of a visit is prep + visit + clean-up, minus its processing stretch. The result is two lists: every free start, and the *recommended* ones that leave no dead fragment (free time shorter than her shortest offer plus the buffer), with the honest fallback per gap. Pure, mirrored line by line by `functions/src/lib/freeSlots.ts`.
 
 ### Photos pipeline

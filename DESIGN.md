@@ -228,16 +228,16 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | Setup (1.3 to 1.10) | `Screens/Onboarding/OnboardingView` (+ `SetupView`) | `OnboardingViewModel` | `onboarding.<step>.title`, `onboarding.<step>.continueButton`, `onboarding.backButton` |
 | About you (new, S3) | `Steps/AboutStepView` | shared | `onboarding.about.nameField`, `onboarding.about.businessField` |
 | 1.3 Profession | `Steps/ProfessionStepView` | shared | `onboarding.profession.choice.<id>` |
-| 1.4 Services | `Steps/ServicesStepView` | shared | `onboarding.services.choice.<key>`, `onboarding.services.custom.<id>`, `onboarding.services.addCustomButton` |
+| 1.4 Your first service | `Steps/ServicesStepView` | shared (`OnboardingProgressStore` keeps it across a relaunch) | `onboarding.services.firstMenu`, `onboarding.services.durationMenu`, `onboarding.services.priceField`, `onboarding.services.choice.<key>`, `onboarding.services.custom.<id>`, `onboarding.services.addCustomButton` |
 | 1.5 CustomService (sheet) | `Onboarding/CustomServiceSheet` | local `@State` | `customService.nameField`, `categoryField`, `priceField`, `durationMenu`, `followUp.<weeks>`, `photosToggle`, `aftercareToggle`, `addButton`, `cancelButton` |
-| 1.6 Terminology | `Steps/TerminologyStepView` + `AddNameSheet` | shared | `onboarding.terminology.term.<id>`, `onboarding.terminology.addButton`, `addName.*` |
-| 1.7 Tags | `Steps/TagsStepView` | shared | `onboarding.tags.choice.<key>`, `onboarding.tags.newButton` |
-| 1.8 Record | `Steps/RecordStepView` | shared | `onboarding.record.profession.<id>`, `onboarding.record.field.<key>`, `onboarding.record.intake.<item>` |
-| 1.9 Permissions | `Steps/PermissionsStepView` | none (reads `PermissionService`) | `onboarding.permissions.title`, `allowButton`, `notNowButton`, `continueButton` |
+| 1.6 Terminology | removed from the setup (routine-a): the word for clients is in 7.2 | | `languageRegion.clientTermMenu` |
+| 1.7 Tags | removed from the setup (routine-a): defaults stored, edited in More, Tags | | |
+| 1.8 Record | removed from the setup (routine-a): defaults stored, edited in More, Record fields | | |
+| 1.9 Permissions | removed (routine-a): each permission is asked when its feature is used; notifications from Home once a visit is coming | | `home.today.notificationsButton` |
 | 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
 | 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
-| 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeVisitRow`, `RemindersReadyCard`, `HomeFollowUpsCard`, `HomeWinBackLink`) | `HomeViewModel` (reads `AgendaDigestService`) | `home.*` |
-| 2.7 FollowUps, 2.8 WinBack | `Screens/FollowUps/`, `Screens/WinBack/` | one view model each (pure lists in `Support/`) | `followUps.*`, `winBack.*` |
+| 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeTodayCard`, `HomeVisitRow`, `HomeReachOutCard`, `HomeCountRow`) | `HomeViewModel` (reads `AgendaDigestService`, `FollowUpQueueService`; `HomePending`, `HomeReachOut`) | `home.*`, `home.quick.newAppointment` (toolbar) |
+| 2.7 To reach out (2.8 Win back is its "Not back" filter) | `Screens/FollowUps/` (`FollowUpRowCard`) | `FollowUpsViewModel` (`FollowUpQueue`, `FollowUpAction`) | `followUps.*` (`followUps.filter.<filter>`, `followUps.row.<client>`, `followUps.reason.<occurrence>`, `followUps.action.<occurrence>`) |
 | Client message (sheet, `AgendaSheet.clientMessage`) | `Screens/Shared/ClientMessage/` | `ClientMessageViewModel` (`ClientMessageComposer` is pure; nothing is sent by the app, D14) | `clientMessage.*` |
 | 7.11 Shared states | `Screens/Shared/States/` (`ScreenPhase`, `ScreenStateView`, `ListLoadingView`) | none | caller-defined |
 | 2.2 Clients | `Screens/Clients/ClientsTabView` (stack, `ClientsRoute`) + `ClientsView` | `ClientsViewModel` | `clients.empty`, `clients.row.<uuid>`, `clients.filter.<chip>`, `clients.newButton`, `clients.importButton` |
@@ -589,6 +589,21 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   states: "Ready to send", "Conversation opened … Opening WhatsApp does not confirm the message was sent.", "Marked
   as sent by you, …". Alerts (2.4) keeps requests, mailbox and the visit that starts soon, and replaces the reminders
   list and the follow-up, win-back and birthday cards with one "To reach out" card.
+- **Visit detail reminder line (item 6).** 3.2's amber line says "Conversation opened …" or "Marked as sent by you, …"
+  and "No answer from the client yet.", with "I sent it" while only the chat was opened and "Remind again".
+- **Visit closing (item 7).** After Save the treatment flow shows a `StepProgressBar` "Step n of 4" (`ClosingProgress`)
+  on Saved (1), Photos (2), the new **Aftercare** step (3: the record's aftercare text in a `BelloNoteField` while the
+  record can be edited, read-only with an info notice and the way to the history once locked, and "Send the aftercare
+  message" through the visit's message sheet with a note that the message never carries the record's words) and Next
+  visit (4: "Save suggestion" only while the record can be edited). Saved's bottom bar is "Continue" with a line saying
+  the next steps are optional; its toolbar button is "Finish later" while a step is open ("Done" once all are settled).
+  Every step has Skip or Continue; a visit left with Finish later is listed in the queue ("Continue" resumes it on the
+  first open step, "Mark as done" in its menu).
+- **Manual record (item 8, non-AI part).** The form shows the observations, the record's own fields (technique,
+  products, result, aftercare) and the first two of her own fields; the rest are in a native `DisclosureGroup` "More
+  fields" with the count, unless already answered. A chip "Same as last visit, <date>" fills only empty fields from the
+  client's last record of the same service. The voice and AI presentation (Register screen, AI settings) is unchanged:
+  deferred by the owner.
 
 ## Empty, loading and error states
 
