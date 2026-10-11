@@ -17,7 +17,7 @@ struct HomeReachOut: Equatable, Sendable {
     /// The first rows, each reduced to those reasons.
     let preview: [FollowUpQueue.Row]
 
-    var isEmpty: Bool { count == 0 }
+    var isEmpty: Bool { preview.isEmpty }
 
     static func make(queue: FollowUpQueue) -> HomeReachOut {
         let rows = queue.rows.compactMap { row -> FollowUpQueue.Row? in

@@ -19,8 +19,9 @@ struct FollowUpReasonTextTests {
 
     @Test("A return says the service, its usual interval and that nothing is booked")
     func returnDue() {
-        let sentence = text().why(.returnDue(serviceName: "Glow Facial", intervalWeeks: 6, lastVisit: TestClock.now))
-        #expect(sentence.contains("Glow Facial") && sentence.contains("6 weeks"))
+        let reader = text()
+        let sentence = reader.why(.returnDue(serviceName: "Glow Facial", intervalWeeks: 6, lastVisit: TestClock.now))
+        #expect(sentence.contains("Glow Facial") && sentence.contains(reader.formatters.weeks(6)))
         #expect(sentence.contains("no return is booked"))
     }
 

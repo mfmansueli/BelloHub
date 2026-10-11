@@ -41,40 +41,31 @@ final class HomeAuditUITests: XCTestCase {
             app.swipeUp()
             try audit(app, "\(tag) home, bottom")
             try auditFollowUps(app, tag: tag)
-            try auditWinBack(app, tag: tag)
             try auditAlerts(app, tag: tag)
             app.terminate()
         }
     }
 
+    /// The follow-up queue (routine-a item 5), opened from Home's "To reach out" card, then a message sheet.
     private func auditFollowUps(_ app: XCUIApplication, tag: String) throws {
         app.scrollToTop()
-        app.scrollToAndTap(prefix: "home.followUps.view")
-        XCTAssertTrue(app.element("followUps.subtitle").waitForExistence(timeout: 10), "\(tag) follow-ups")
+        app.scrollToAndTap(prefix: "home.reachOut.open")
+        XCTAssertTrue(app.element("followUps.subtitle").waitForExistence(timeout: 10), "\(tag) queue")
         XCTAssertTrue(app.elements(prefix: "followUps.row.").firstMatch.waitForExistence(timeout: 10),
-                      "\(tag) follow-ups has rows")
-        try audit(app, "\(tag) follow-ups")
+                      "\(tag) queue has rows")
+        try audit(app, "\(tag) queue")
         app.swipeUp()
-        try audit(app, "\(tag) follow-ups, lower half")
+        try audit(app, "\(tag) queue, lower half")
         app.swipeDown()
-        app.scrollToAndTap(prefix: "followUps.message.")
+        app.tapButton("followUps.filter.notBack")
+        XCTAssertTrue(app.elements(prefix: "followUps.row.").firstMatch.waitForExistence(timeout: 10),
+                      "\(tag) not back")
+        try audit(app, "\(tag) queue, not back")
+        app.scrollToAndTap(prefix: "followUps.action.notBack")
         XCTAssertTrue(app.element("clientMessage.form").waitForExistence(timeout: 10), "\(tag) client message")
         try audit(app, "\(tag) client message")
         app.tapButton("clientMessage.closeButton")
         XCTAssertTrue(app.element("followUps.subtitle").waitForExistence(timeout: 5))
-        app.goBack()
-        XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 5))
-    }
-
-    private func auditWinBack(_ app: XCUIApplication, tag: String) throws {
-        app.scrollToTop()
-        app.scrollToAndTap(prefix: "home.winBack")
-        XCTAssertTrue(app.element("winBack.subtitle").waitForExistence(timeout: 10), "\(tag) win back")
-        XCTAssertTrue(app.elements(prefix: "winBack.row.").firstMatch.waitForExistence(timeout: 10),
-                      "\(tag) win back has rows")
-        try audit(app, "\(tag) win back")
-        app.swipeUp()
-        try audit(app, "\(tag) win back, lower half")
         app.goBack()
         XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 5))
     }

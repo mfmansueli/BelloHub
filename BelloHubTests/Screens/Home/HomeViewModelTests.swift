@@ -17,8 +17,12 @@ struct HomeViewModelTests {
             appointments: vault.map { AppointmentService(vault: $0) } ?? world.appointments,
             timeBlocks: world.timeBlocks, vault: vault ?? world.vault, now: { TestClock.now }
         )
+        let queue = FollowUpQueueService(
+            defaults: UserDefaults(suiteName: "home-vm-\(UUID().uuidString)") ?? .standard, vault: vault ?? world.vault,
+            now: { TestClock.now }
+        )
         let model = HomeViewModel(
-            settings: settings, digest: digest, bookingSetup: world.bookingSetup,
+            settings: settings, digest: digest, bookingSetup: world.bookingSetup, queue: queue,
             prefs: FixedNotificationPrefsStore()
         )
         return (model, digest)
@@ -83,6 +87,30 @@ struct HomeViewModelTests {
         await model.refreshAsync()
 
         #expect(digest.services.contains { $0.name == "Peeling" })
+        digest.stopListening()
+    }
+
+    @Test("Today offers notifications once a visit is coming, while the system was never asked")
+    func notificationOffer() async throws {
+        let world = try await CalendarWorld.make()
+        try await world.appointments.book(makeVisit(clientID: world.ana.id, start: TestClock.date("2026-10-01 13:00")))
+        let digest = AgendaDigestService(
+            appointments: world.appointments, timeBlocks: world.timeBlocks, vault: world.vault, now: { TestClock.now }
+        )
+        let queue = FollowUpQueueService(
+            defaults: UserDefaults(suiteName: "home-offer-\(UUID().uuidString)") ?? .standard, vault: world.vault,
+            now: { TestClock.now }
+        )
+        let permissions = PermissionService(provider: FakePermissionStatusProvider(status: .notDetermined))
+        let model = HomeViewModel(
+            settings: settings, digest: digest, bookingSetup: world.bookingSetup, queue: queue,
+            permissions: permissions, prefs: FixedNotificationPrefsStore()
+        )
+        model.start()
+        await Wait.untilMain { model.phase == .content && !digest.clients.isEmpty }
+
+        let day = model.digest(now: TestClock.now)
+        #expect(model.pending(digest: day, now: TestClock.now).items.contains(.notifications))
         digest.stopListening()
     }
 }

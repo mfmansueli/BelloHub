@@ -97,7 +97,8 @@ struct FollowUpQueueTests {
         closing.isDeferred = true
         closing.settled = [.photos]
         let decisions = ["visit:\(closing.id)": FollowUpDecision(dismissedAt: TestClock.now)]
-        let item = try #require(queue([], clients: [ana], decisions: decisions, closings: [closing]).rows.first?.primary)
+        let built = queue([], clients: [ana], decisions: decisions, closings: [closing])
+        let item = try #require(built.rows.first?.primary)
 
         #expect(item.kind == .unfinishedVisit && item.recordID == closing.id)
         #expect(item.reason == .unfinishedVisit(serviceName: "Glow Facial", openSteps: [.aftercare, .nextVisit]))
