@@ -1,5 +1,6 @@
 import { AppError } from '../lib/errors.js';
 import type { EmailMessage, EmailProvider } from './EmailProvider.js';
+import { emailHtml } from './emailHtml.js';
 
 export interface ResendConfig {
   /** The API key from Secret Manager (`EMAIL_API_KEY`, H7). */
@@ -17,7 +18,7 @@ type FetchLike = (url: string, init: { method: string; headers: Record<string, s
 const DEFAULT_ENDPOINT = 'https://api.resend.com/emails';
 
 /**
- * Transactional email over Resend's HTTPS API (H7): one JSON POST per message, plain text only. The class never logs
+ * Transactional email over Resend's HTTPS API (H7): one JSON POST per message, a text part and a plain HTML part built from it (no images, no tracking). The class never logs
  * the address, the subject or the text, and a provider failure is a generic error (the booking carries on without its
  * email, D31). Changing vendor means replacing this one file: the request body is the only vendor-specific part.
  */
@@ -43,7 +44,13 @@ export class ResendEmailProvider implements EmailProvider {
     const response = await this.fetchFn(this.endpoint, {
       method: 'POST',
       headers: { Authorization: `Bearer ${this.config.apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: this.config.from, to: [message.to], subject: message.subject, text: message.text })
+      body: JSON.stringify({
+        from: this.config.from,
+        to: [message.to],
+        subject: message.subject,
+        text: message.text,
+        html: emailHtml(message.subject, message.text, message.lang)
+      })
     });
     if (!response.ok) throw new AppError(response.status === 429 || response.status >= 500 ? 'TRY_AGAIN' : 'INTERNAL');
   }

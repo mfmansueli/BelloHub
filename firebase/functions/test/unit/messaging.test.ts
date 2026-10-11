@@ -9,6 +9,7 @@ import { DisabledWhatsAppProvider } from '../../src/messaging/DisabledWhatsAppPr
 import { EMAIL_TEMPLATE_IDS, emailTextsFor } from '../../src/messaging/emailTemplates.js';
 import { ProviderClientMessenger } from '../../src/messaging/ProviderClientMessenger.js';
 import { fillTemplate, formatWhen, isolate } from '../../src/messaging/render.js';
+import { emailHtml } from '../../src/messaging/emailHtml.js';
 import { ResendEmailProvider } from '../../src/messaging/ResendEmailProvider.js';
 import { WhatsAppCloudProvider } from '../../src/messaging/WhatsAppCloudProvider.js';
 import { WHATSAPP_LANGUAGE, WHATSAPP_TEMPLATES, whatsAppTemplateName } from '../../src/messaging/whatsAppTemplates.js';
@@ -241,11 +242,41 @@ describe('push payloads (docs/11 section 7)', () => {
   });
 });
 
+describe('emailHtml (the HTML part of every email)', () => {
+  it('escapes everything, so a name can never inject markup', () => {
+    const html = emailHtml('Hi <b>', 'Ana <script>alert(1)</script> & "co"');
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+    expect(html).toContain('&amp;');
+    expect(html).toContain('<title>Hi &lt;b&gt;</title>');
+  });
+
+  it('links a bare address without its trailing punctuation, and keeps line breaks', () => {
+    const html = emailHtml('Visit', 'Friday 10:00.\nOpen https://bellohub.app/m/abc123.');
+    expect(html).toContain('<a href="https://bellohub.app/m/abc123"');
+    expect(html).toContain('</a>.');
+    expect(html).toContain('Friday 10:00.<br>Open');
+  });
+
+  it('shows a six-digit verification code large and leaves other numbers alone', () => {
+    const html = emailHtml('Code', 'Your code is 272545. It lasts 10 minutes. Order 1234567.');
+    expect(html).toContain('<strong style="font-size:26px;letter-spacing:3px;white-space:nowrap">272545</strong>');
+    expect(html).toContain('10 minutes');
+    expect(html).not.toContain('>1234567</strong>');
+  });
+
+  it('carries the language, no images and no remote styles', () => {
+    const html = emailHtml('Código', 'Olá.', 'pt-BR');
+    expect(html).toContain('<html lang="pt-BR">');
+    expect(html).not.toMatch(/<img|<link|<script|url\(/);
+  });
+});
+
 describe('ResendEmailProvider (mocked vendor, H7)', () => {
   const config = { apiKey: 're_secret', from: 'Bello Hub <no-reply@bellohub.app>' };
   const message = { to: 'ana@example.com', subject: 'Your visit', text: 'Friday 10:00. https://bellohub.app/m/x' };
 
-  it('posts one plain-text message with the key in the header and the sender from the configuration', async () => {
+  it('posts one message, text and HTML, with the key in the header and the sender from the configuration', async () => {
     const calls: { url: string; headers: Record<string, string>; body: unknown }[] = [];
     const provider = new ResendEmailProvider(config, (url, init) => {
       calls.push({ url, headers: init.headers, body: JSON.parse(init.body) });
@@ -256,7 +287,13 @@ describe('ResendEmailProvider (mocked vendor, H7)', () => {
 
     expect(calls[0]?.url).toBe('https://api.resend.com/emails');
     expect(calls[0]?.headers).toEqual({ Authorization: 'Bearer re_secret', 'Content-Type': 'application/json' });
-    expect(calls[0]?.body).toEqual({ from: config.from, to: ['ana@example.com'], subject: 'Your visit', text: message.text });
+    expect(calls[0]?.body).toEqual({
+      from: config.from,
+      to: ['ana@example.com'],
+      subject: 'Your visit',
+      text: message.text,
+      html: emailHtml('Your visit', message.text)
+    });
   });
 
   it('turns vendor failures into generic errors: retry on 429 and 5xx, give up on the rest, never quoting the message', async () => {

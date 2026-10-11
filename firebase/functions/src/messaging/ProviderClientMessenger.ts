@@ -29,7 +29,8 @@ export class ProviderClientMessenger implements ClientMessenger {
     await this.email.send({
       to: request.to,
       subject: fillTemplate(text.subject, request.vars, request.locale),
-      text: fillTemplate(text.body, request.vars, request.locale)
+      text: fillTemplate(text.body, request.vars, request.locale),
+      lang: request.locale
     });
   }
 

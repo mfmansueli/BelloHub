@@ -1,8 +1,10 @@
 export interface EmailMessage {
   to: string;
   subject: string;
-  /** Plain text only: booking facts and a link, never clinical content (docs/06 section 8). */
+  /** Booking facts and a link, never clinical content (docs/06 section 8). The HTML part is built from it. */
   text: string;
+  /** The language of the text, for the `lang` of the HTML part. */
+  lang?: string;
 }
 
 /**
