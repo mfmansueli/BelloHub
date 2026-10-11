@@ -113,6 +113,14 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-12: Motion 1 to 5 done on `build/v1`, tag `motion-done`** (notes `docs/agent-notes/motion-1-5.md`, spec
+`docs/09-MOTION.md` section 8, stage log "Motion 1 to 5"). Numbers flow, rows enter and leave, confirmations with seal and
+haptic, camera flash and before/after settle, the calendar slides by direction of travel. Fast 2424 tests in 355 suites,
+check-warnings zero, UI suites Home, Calendar, Inbox, MailboxAlerts, Clients, TreatmentFlow, PhotoFraming, Appointment and
+the new MotionUITests green, accessibility audit en and pt-BR with Reduce Motion green (one flake, below), 2,000-client
+scroll unchanged. **Not built on purpose:** a drag-to-move gesture (it does not exist in the app). **Needs a real iPhone:**
+how it feels at 60 fps, haptics, VoiceOver with row removals (list in the notes). Nothing deployed.
+
 **2026-10-12: Client messages and location done on `build/v1`, tag `client-messages-done`** (task
 `docs/tasks/client-messages-and-location.md`, notes `docs/agent-notes/client-messages-location.md`, stage log
 "Client messages and location"). Every link in a client message is a full `https://` address on its own line
@@ -482,6 +490,21 @@ e2e-local 9; UI suites BookingSetup, Inbox, Home, Appointment, Publish, SuggestT
 `BookingSetupContrastTests`); e-mail colors measured in `messaging.test.ts`.
 Open questions: none. Human tasks: H7 note on `EMAIL_REPLY_TO`; H8 checklist extended (WhatsApp/Instagram opening the
 exact link, e-mail links in Outlook/Gmail/Apple Mail, Apple Maps and Google Maps).
+
+### Motion 1 to 5 · done 2026-10-12 · tag motion-done
+Done: (1) `.motionNumber` on counts, times and totals; (2) `.motionRows`/`.motionRow` on Home, Alerts, the queue, the
+waitlist, the calendar and the Clients list, only for inserted and removed identities; (3) `SuccessSeal` on the saved step,
+a brief seal and `InlineCheck`, haptics; (4) `.captureFlash`, the reference fade, `BeforeAfterSnap`; (5) `DaySlide`, the
+matched day chip, the now line and moved visits glide. Kit in `DesignSystem/Motion/` (`MotionChange` holds the decisions);
+DEBUG switch `-uiAnimate`. Business logic and time zones untouched.
+Decisions: no drag-to-move exists, so none was added (the settle is ready for it); Reduce Motion has no flash and no slide;
+the soft overshoot is not used by the new motion.
+Measured: fast 2424 tests in 355 suites; check-warnings zero; 18 UI tests of the touched suites green, MotionUITests 7
+green; `AccessibilityAuditUITests` en and pt-BR, default and AX5, Increase Contrast and Reduce Motion on: green (the AX5
+run failed once in the More-row walk, "pt-BR AX5 booking page back on More", and was green alone on re-run).
+Performance, 2,000 clients (`PerformanceUITests`): scroll deceleration 2.435 s before and 2.436 s after, dragging 0.145 s
+and 0.137 s, search 12 ms: no regression (animations off in that launch).
+Open: a real-iPhone pass of the feel, haptics and VoiceOver (notes).
 
 ## Assumptions
 | # | Assumption | Reason | Stage |
