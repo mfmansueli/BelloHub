@@ -43,7 +43,7 @@ final class PhotoFramingUITests: XCTestCase {
         XCTAssertTrue(slider.exists)
         slider.adjust(toNormalizedSliderPosition: 0.9)
 
-        app.flip(toggle)
+        app.flipSwitch("treatmentFlow.camera.referenceToggle")
         XCTAssertEqual(toggle.value as? String, "0")
         XCTAssertFalse(slider.exists, "the slider goes away with the reference")
 
