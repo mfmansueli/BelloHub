@@ -8,8 +8,8 @@ import Observation
 
 /// What the time-zone notice needs to know beyond her profile (tz-mismatch-notice): the iPhone's zone, kept current
 /// while the app is open, and the pair of zones she chose to keep, per user in `UserDefaults`. Home and Calendar read
-/// the same instance, so "Keep it" on one hides the other at once. Created once in `RootView`; `start(userID:)` when the
-/// app is unlocked, `stop()` when it locks or she signs out.
+/// the same instance, so "Keep it" on one hides the other at once. Created once in `RootView` (`forApp`);
+/// `start(userID:)` when the app is unlocked, `stop()` when it locks or she signs out.
 ///
 /// The pair she kept holds only two zone identifiers, nothing about her clients.
 @MainActor

@@ -38,7 +38,8 @@ struct TimeZoneNoticeText {
     /// The quieter line at the top of Calendar: "Times are in São Paulo time. Your iPhone is on Rome time."
     var row: LocalizedStringResource {
         LocalizedStringResource(
-            "timeZoneNotice.row", defaultValue: "Times are in \(businessZone) time. Your iPhone is on \(phoneZone) time."
+            "timeZoneNotice.row",
+            defaultValue: "Times are in \(businessZone) time. Your iPhone is on \(phoneZone) time."
         )
     }
 

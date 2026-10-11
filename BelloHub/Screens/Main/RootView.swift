@@ -80,15 +80,7 @@ struct RootView: View {
             defaults: dependencies.defaults, vault: dependencies.vault
         ))
         let regions = (try? RegionCatalog.loadBundled()) ?? RegionCatalog(presets: [])
-        #if DEBUG
-        let options = LaunchOptions.current
-        let showsTimeZoneNotice = !options.isUITesting || options.showsTimeZoneNotice
-        #else
-        let showsTimeZoneNotice = true
-        #endif
-        _timeZoneNotice = State(initialValue: TimeZoneNoticeService(
-            defaults: dependencies.defaults, regions: regions, isEnabled: showsTimeZoneNotice
-        ))
+        _timeZoneNotice = State(initialValue: .forApp(defaults: dependencies.defaults, regions: regions))
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
