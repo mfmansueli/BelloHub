@@ -14,8 +14,8 @@ struct HealthDebugRoute: View {
 
     var body: some View {
         if route == "treatmentFlow" {
-            // The flow brings its own navigation stack, like when it is presented full screen.
-            TreatmentFlowView(request: TreatmentFlowRequest(clientID: UITestSeeding.healthClientID))
+            // Presented full screen, like in the app, so closing it can be seen.
+            TreatmentFlowDebugRoute()
         } else {
             NavigationStack {
                 switch route {

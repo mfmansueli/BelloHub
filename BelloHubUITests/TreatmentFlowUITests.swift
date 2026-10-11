@@ -58,7 +58,7 @@ final class TreatmentFlowUITests: XCTestCase {
         app.tapButton("treatmentFlow.next.saveButton")
         XCTAssertTrue(app.element("treatmentFlow.next.savedNotice").waitForExistence(timeout: 10))
         app.tapButton("treatmentFlow.next.skipButton")
-        XCTAssertTrue(app.element("treatmentFlow.next").waitForNonExistence(timeout: 10))
+        XCTAssertTrue(app.element("treatmentFlow.debug.closed").waitForExistence(timeout: 10))
     }
 
     func testFinishLaterClosesTheFlowAfterTheRecordIsSaved() {
@@ -70,7 +70,7 @@ final class TreatmentFlowUITests: XCTestCase {
         XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
 
         app.tapButton("treatmentFlow.saved.doneButton")
-        XCTAssertTrue(app.element("treatmentFlow.saved").waitForNonExistence(timeout: 10))
+        XCTAssertTrue(app.element("treatmentFlow.debug.closed").waitForExistence(timeout: 10))
     }
 
     func testVoicePathReviewsEveryFieldBeforeAnythingIsSaved() {
