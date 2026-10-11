@@ -116,7 +116,7 @@ struct WaitlistContentView: View {
                     entry: entry, formatters: formatters, canOffer: canOffer && !viewModel.isTimeTaken,
                     cancelsOften: viewModel.cancelsOften(entry),
                     isOffering: viewModel.offering.contains(entry.id), result: viewModel.results[entry.id],
-                    isSent: viewModel.sent.contains(entry.id),
+                    canSend: viewModel.canSend, isSent: viewModel.sent.contains(entry.id),
                     onOffer: { viewModel.offer(entry) }, onSend: { viewModel.send(entry) },
                     onRemove: { viewModel.remove(entry) }
                 )

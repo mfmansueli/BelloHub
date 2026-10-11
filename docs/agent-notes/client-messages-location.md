@@ -158,3 +158,37 @@ default; when set, Resend gets `reply_to`). No images, no tracking.
 the text carries it on its own line.
 
 **Deploy:** functions and hosting both change.
+
+## 2. What was built (2026-10-12)
+
+Commits on `build/v1` from `f097a32` (map) to the tag `client-messages-done`; `origin/push-messages` (fa61667) merged
+in `e7a561e` without conflicts (the catalog regenerated identical).
+
+| Point | Result |
+|---|---|
+| 1. Full links | `ClientLinkText` + `QuickReplyRenderer` placement; WhatsApp greeting, editor and language previews; `BookingLink.messageText`; e-mail HTML never takes an isolate into an `href`, links not isolated in Arabic; message templates doc. Found and fixed on the way: **the waitlist offer never reached the person** (the hold key was dropped): "Send" on 2.9 now opens WhatsApp with `WaitlistOfferMessage` and the one-time link (hidden when she has no booking address). |
+| 2. Exact link | `mintManageLink` (server, API.md 6.3, 8 emulator tests); `ClientLinkService` / `ClientLinkPlan` / `ClientLinkChoice` (app); "Preparing the link…" and the quiet line on 3.6; retry on Open after offline or a refusal; manage page "Change or cancel" first; Playwright with WhatsApp and Instagram user agents and storage blocked. Approval and change e-mails now carry a fresh personal link too. |
+| 3. Address | `BookingSetup.location`, Where you work screen (Booking settings), `PublishPayloads.location` checked against the server contract, `businessLocations/{uid}` + public copy, `lib/location.ts` (`shownLocation`), `getBooking.location`, e-mail place block (confirmation, request received only when public, approval, change), ICS in the browser and `getIcs` (now the page link, D50), `PlaceCard` on the booking, confirmation and manage pages, `{address}` and the rewritten Confirm and Reschedule built-ins (`QuickReplyUpgrade`). |
+| 4. E-mail | HTML on the web tokens (ivory, graphite, orange links, measured 4.5:1+), place box, Change or cancel button after the link paragraph, `dir="rtl"` in Arabic, `EMAIL_REPLY_TO` (empty by default; `.env.bello-hub` and `.env.local` carry it empty). |
+
+Root causes worth remembering: links were the display form (`BookingLink.display`) because the first message builder
+was written for the share screen; `getIcs` still carried the manage link from before D50 (the web never called it).
+
+### Checks on the final head
+`scripts/test.sh fast` (2385+ tests in 348 suites), `scripts/check-warnings.sh` zero warnings, `scripts/test-firebase.sh`
+(unit 1005, rules 67, use cases 331, transport 19), `scripts/test-web.sh full` (unit 260; Playwright 228 passed and 15
+skipped; one WebKit flake on the cancel reason chip, a page this task did not touch, passed 3 of 3 on rerun; Chromium
+green), `scripts/e2e-local.sh` 9 passed, UI tests BookingSetup (incl. `testWhereYouWork`), Inbox, Home, Appointment,
+Publish, SuggestTime, More (16 passed), `AccessibilityAuditUITests` walk `workplace` in en and pt-BR at the default size
+and AX5 (clean; the first run flagged only the system keyboard's prediction bar, so the walk now ends editing first).
+
+### Verified only with mocks or emulators
+WhatsApp and Instagram in-app browsers (user agents and blocked storage in Playwright), the e-mail rendering in real
+mail apps, Apple Maps and Google Maps opening, the minted link round trip on the real server (emulator), Resend
+`reply_to` (mocked fetch).
+
+### Open
+- The app never publishes `city`, `bio`, `photo` or `whatsappE164` (`PublishProfileRequest` has no field for them), so
+  the D58 "Confirm with <Name> on WhatsApp" path and the page's city never appear for a real professional. Not part of
+  this task; reported.
+- In UI tests the inbox seed has no booking address, so "Send" on 2.9 is covered by unit tests only.

@@ -113,6 +113,18 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-12: Client messages and location done on `build/v1`, tag `client-messages-done`** (task
+`docs/tasks/client-messages-and-location.md`, notes `docs/agent-notes/client-messages-location.md`, stage log
+"Client messages and location"). Every link in a client message is a full `https://` address on its own line
+(`ClientLinkText`); "Message <client>" carries the client's own link to change or cancel (new owner callable
+`mintManageLink`, idempotent for 30 minutes without storing the token) with a quiet line saying which link went in; the
+waitlist offer finally reaches the person (Send); "Where you work" in Booking settings (optional address, shown to
+confirmed clients by default or also on the page) in e-mails, ICS, the confirmation and manage pages and `{address}`;
+the manage page opens on "Change or cancel"; e-mails get a place box, a Change or cancel button and an optional
+`EMAIL_REPLY_TO`. Merged `origin/push-messages` (fa61667, already deployed by the coordinator). **Needs a deploy of
+functions and Hosting** (the coordinator deploys); the app must ship with the functions (it publishes `location`, which
+an older server refuses).
+
 **2026-10-11: v1 COMPLETE. S12 done on `build/v1`, tags `stage-S12` and `v1.0.0-rc1` at `9bb014f`** (stage log "S12", notes
 `docs/agent-notes/s12-release.md`, acceptance `docs/13-TESTING-QUALITY.md` section 8 checked with evidence). Palette
 changed to graphite and orange by PR #1 after S11/S12 measurements; contrast and audits re-run on `9bb014f`.
@@ -441,6 +453,35 @@ Measured: fast 2259 tests in 327 suites; smoke 57 UI tests (6 skipped tools), th
 and rerun green (Apple sign-in walk updated; Account flaked once, green on rerun); check-warnings zero; audits in
 DESIGN/notes. Contrast: brand mark measured; no new text/background pair.
 Open questions: none. Human tasks created: none (real-iPhone checks listed in the notes).
+
+### Client messages and location · done 2026-10-12 · tag client-messages-done
+Done: (1) `ClientLinkText` (full address, own line, no glued punctuation, no isolates) used by `QuickReplyRenderer`,
+the WhatsApp greeting, the editor and language previews; server e-mail HTML keeps isolates out of `href`, links not
+isolated in Arabic; `message-templates.json` puts `{link}` on its own line; the waitlist offer message (`Send` on 2.9,
+`WaitlistOfferMessage`). (2) Owner callable `mintManageLink` (API.md 6.3, `ownerLinkMintedAt`, HMAC-derived token,
+60/hour, five-token cap), `ClientLinkService` + `ClientLinkPlan` + `ClientLinkChoice`, the 3.6 sheet's "Preparing the
+link" and quiet line, retry on Open; manage page "Change or cancel" first. (3) `BookingSetup.location`
+(`BusinessLocation`, `LocationVisibility`, `BusinessLocationFormat`), Where you work screen, `PublishPayloads.location`,
+`businessLocations/{uid}` + public copy, `lib/location.ts` (one visibility rule), `getBooking.location`, place block in
+the confirmation, request-received (public only), approval and change e-mails (approval and change now mint a fresh
+personal link), both ICS builders (`getIcs` now carries the page, D50), `PlaceCard` on the web, `{address}` and the
+rewritten Confirm and Reschedule built-ins (`QuickReplyUpgrade` upgrades untouched ones). (4) E-mail HTML on the web
+tokens, place box, Change or cancel button, `dir="rtl"`, `EMAIL_REPLY_TO`.
+Decisions/assumptions: ASSUMPTION-cml-1: a request still waiting for approval never sees a confirmed-only address;
+ASSUMPTION-cml-2: the app formats the address and builds the map links (Apple `?address=`, Google Maps URLs API with
+the country's English name), the server only checks their shape; ASSUMPTION-cml-3: `{address}` carries the Google
+Maps link only (it opens on any phone), e-mails and pages carry both; ASSUMPTION-cml-4: the Instagram bio line keeps
+the short address (Instagram never links bio text); ASSUMPTION-cml-5: `mintManageLink` refuses cancelled, declined and
+finished visits (the message then carries her booking page).
+Design additions: Where you work screen and row; the 3.6 link line; Send on 2.9 (DESIGN.md "Client messages and
+location").
+Measured: fast 2385+ tests in 348 suites; check-warnings zero; firebase unit 1005, rules 67, use cases 331, transport
+19; web unit 260, Playwright 228 passed + 15 skipped (one WebKit flake on the cancel chip, green 3/3 on rerun);
+e2e-local 9; UI suites BookingSetup, Inbox, Home, Appointment, Publish, SuggestTime, More 16 passed; accessibility walk
+"workplace" clean in en and pt-BR at default size and AX5. Contrast: no new app pair (all measured in
+`BookingSetupContrastTests`); e-mail colors measured in `messaging.test.ts`.
+Open questions: none. Human tasks: H7 note on `EMAIL_REPLY_TO`; H8 checklist extended (WhatsApp/Instagram opening the
+exact link, e-mail links in Outlook/Gmail/Apple Mail, Apple Maps and Google Maps).
 
 ## Assumptions
 | # | Assumption | Reason | Stage |

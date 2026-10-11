@@ -15,6 +15,7 @@ struct WaitlistPersonRow: View {
     var cancelsOften = false
     let isOffering: Bool
     let result: WaitlistViewModel.OfferResult?
+    var canSend = false
     var isSent = false
     let onOffer: () -> Void
     var onSend: () -> Void = {}
@@ -41,7 +42,7 @@ struct WaitlistPersonRow: View {
                     .buttonStyle(.belloChip(selected: false))
                     .fixedSize()
                     .accessibilityIdentifier("waitlist.offer.\(entry.id)")
-            } else if case .offered? = result {
+            } else if canSend, case .offered? = result {
                 Button(action: onSend) { Text(isSent ? "waitlist.sendAgain" : "waitlist.send") }
                     .buttonStyle(.belloChip(selected: false))
                     .fixedSize()

@@ -119,6 +119,9 @@ final class WaitlistViewModel {
         }
     }
 
+    /// Send can work: she has a booking address (an offer needs her page online anyway) and a way to open a chat.
+    var canSend: Bool { link != nil && messages != nil && business != nil }
+
     /// The offer's text for this person, or nil before the server held the time (or without her booking address).
     func offerText(for entry: WaitlistRequest, now: Date) -> String? {
         guard case .offered(let until, let holdKey)? = results[entry.id], let link, let business,

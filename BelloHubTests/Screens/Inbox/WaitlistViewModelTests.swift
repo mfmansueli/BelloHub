@@ -29,6 +29,7 @@ struct WaitlistViewModelTests {
         let sent = try #require(await rig.repository.offers.first)
         #expect(sent.waitlistId == "a" && sent.serviceId == "svc-glow" && sent.startsAt == cancelled.startsAt)
         #expect(model.results["a"] == .offered(until: TestClock.now, holdKey: "hold"))
+        #expect(!model.canSend, "without her booking address there is no link to send")
         #expect(model.board(now: TestClock.now).offerable.map(\.id) == ["b"], "an offered person is not offerable")
     }
 
@@ -45,6 +46,7 @@ struct WaitlistViewModelTests {
             link: BookingLink(slug: "maria"), business: AgendaBusinessContext(profile: nil), now: { TestClock.now }
         )
         let entry = try #require(model.board(now: TestClock.now).offerable.first)
+        #expect(model.canSend)
         #expect(model.offerText(for: entry, now: TestClock.now) == nil, "nothing to send before the server held it")
         await model.offerAsync(entry, now: TestClock.now)
         let text = try #require(model.offerText(for: entry, now: TestClock.now))
