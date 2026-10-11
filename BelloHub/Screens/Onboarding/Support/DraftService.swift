@@ -6,7 +6,7 @@
 import Foundation
 
 /// A service she typed herself in onboarding (`Onb-4-CustomService`) before it becomes a `Service`.
-struct DraftService: Identifiable, Equatable, Sendable {
+struct DraftService: Identifiable, Equatable, Codable, Sendable {
     let id: UUID
     var name: String
     var category: String

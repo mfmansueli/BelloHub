@@ -7,15 +7,20 @@ import Foundation
 import Observation
 
 /// The workspace setup, from "About you" to "Ready". One ViewModel for every step, so going back and forward keeps
-/// each choice (docs/04-ARCHITECTURE.md section 5). Nothing is saved until the end: `finish()` stores the profile,
-/// services, tags and record template together.
+/// each choice (docs/04-ARCHITECTURE.md section 5). Nothing reaches the vault until the end: `finish()` stores the
+/// profile, services, tags and record template together. Every change is saved as progress (`OnboardingProgressStore`),
+/// so a relaunch resumes on the same step with the same choices.
 @MainActor
 @Observable
 final class OnboardingViewModel {
-    private(set) var step: OnboardingStep = .about
+    private(set) var step: OnboardingStep = .about {
+        didSet { saveProgress() }
+    }
     /// Which way the last move went, so the next screen slides in from the right side.
     private(set) var isMovingForward = true
-    private(set) var draft: OnboardingDraft
+    private(set) var draft: OnboardingDraft {
+        didSet { saveProgress() }
+    }
     private(set) var catalog: ProfessionCatalog
     private(set) var isSaving = false
     private(set) var errorMessage: String?
@@ -23,6 +28,7 @@ final class OnboardingViewModel {
 
     private let profile: ProfileService
     let regions: RegionCatalog
+    private let progress: OnboardingProgressStore?
     private let deviceTimeZoneID: String
     private let now: @Sendable () -> Date
     private let makeID: @Sendable () -> UUID
@@ -33,15 +39,19 @@ final class OnboardingViewModel {
         catalog: ProfessionCatalog,
         profile: ProfileService,
         regions: RegionCatalog = RegionCatalog(presets: []),
+        progress: OnboardingProgressStore? = nil,
         deviceTimeZoneID: String = TimeZone.current.identifier,
         now: @escaping @Sendable () -> Date = { Date() },
         makeID: @escaping @Sendable () -> UUID = { UUID() },
         onFinished: @escaping @MainActor () -> Void
     ) {
-        self.draft = draft
+        let saved = progress?.load()
+        self.draft = saved?.draft ?? draft
+        self.step = saved?.step ?? .about
         self.catalog = catalog
         self.profile = profile
         self.regions = regions
+        self.progress = progress
         self.deviceTimeZoneID = deviceTimeZoneID
         self.now = now
         self.makeID = makeID
@@ -82,8 +92,9 @@ final class OnboardingViewModel {
 
     func isSelected(_ profession: ProfessionID) -> Bool { draft.professions.contains(profession) }
 
-    /// Switches a profession on or off. Her service and tag picks follow: a profession she drops takes its picks
-    /// with it, and one she adds brings its preselected suggestions.
+    /// Switches a profession on or off. Her service and tag picks follow: a profession she drops takes its picks with
+    /// it; the first service follows her first profession unless she chose one that is still offered; tags take the
+    /// catalog's preselection of a profession she adds (she edits them later in More, Tags).
     func toggle(_ profession: ProfessionID) {
         let previous = draft.professions
         var updated = previous
@@ -92,25 +103,68 @@ final class OnboardingViewModel {
         } else {
             updated.append(profession)
         }
-        draft.selectedServiceKeys = OnboardingSuggestions.reconciledServiceKeys(
-            selected: draft.selectedServiceKeys, previous: previous, current: updated, in: catalog
+        let services = OnboardingSuggestions.reconciledServices(
+            selected: draft.selectedServiceKeys, firstKey: draft.firstServiceKey, current: updated, in: catalog
         )
-        draft.selectedTagKeys = OnboardingSuggestions.reconciledTagKeys(
+        var changed = draft
+        changed.selectedServiceKeys = services.selected
+        changed.firstServiceKey = services.firstKey
+        changed.selectedTagKeys = OnboardingSuggestions.reconciledTagKeys(
             selected: draft.selectedTagKeys, previous: previous, current: updated, in: catalog
         )
-        draft.professions = updated
-        if let current = draft.recordProfession, !updated.contains(current) { draft.recordProfession = nil }
+        changed.professions = updated
+        if let current = changed.recordProfession, !updated.contains(current) { changed.recordProfession = nil }
+        draft = changed
     }
 
-    // MARK: - Services
+    // MARK: - First service
 
     var suggestedServices: [SuggestedService] {
         OnboardingSuggestions.services(for: draft.professions, in: catalog)
     }
 
+    /// The suggestion she starts with.
+    var firstService: SuggestedService? {
+        suggestedServices.first { $0.key == draft.firstServiceKey }
+    }
+
+    /// The other suggestions, offered as optional extras.
+    var otherServices: [SuggestedService] {
+        suggestedServices.filter { $0.key != draft.firstServiceKey }
+    }
+
+    func chooseFirstService(_ key: String) {
+        guard key != draft.firstServiceKey, suggestedServices.contains(where: { $0.key == key }) else { return }
+        var changed = draft
+        if let old = changed.firstServiceKey { changed.selectedServiceKeys.remove(old) }
+        changed.selectedServiceKeys.insert(key)
+        changed.firstServiceKey = key
+        draft = changed
+    }
+
+    /// The duration of a suggested service: hers, or the catalog's.
+    func minutes(of service: SuggestedService) -> Int {
+        draft.serviceMinutes[service.key] ?? service.minutes
+    }
+
+    func setMinutes(_ minutes: Int, of service: SuggestedService) {
+        draft.serviceMinutes[service.key] = minutes == service.minutes ? nil : minutes
+    }
+
+    func price(of service: SuggestedService) -> Decimal? {
+        draft.servicePrices[service.key]
+    }
+
+    /// A price she typed (nil clears it: prices are optional).
+    func setPrice(_ amount: Decimal?, of service: SuggestedService) {
+        draft.servicePrices[service.key] = amount
+    }
+
     func isServiceSelected(_ key: String) -> Bool { draft.selectedServiceKeys.contains(key) }
 
+    /// Switches an extra suggestion on or off. The first service stays: it is changed, never removed.
     func toggleService(_ key: String) {
+        guard key != draft.firstServiceKey else { return }
         if draft.selectedServiceKeys.contains(key) {
             draft.selectedServiceKeys.remove(key)
         } else {
@@ -130,88 +184,6 @@ final class OnboardingViewModel {
         draft.customServices.removeAll { $0.id == id }
     }
 
-    // MARK: - Terminology
-
-    func setClientTerm(_ term: ClientTerm) { draft.clientTerm = term }
-
-    /// Names that already exist on this step: the chosen services and what she added.
-    var knownNames: [String] {
-        suggestedServices.filter { draft.selectedServiceKeys.contains($0.key) }.map(\.name)
-            + draft.customServices.map(\.name) + draft.vocabulary.map(\.text)
-    }
-
-    @discardableResult
-    func addVocabulary(_ raw: String, kind: VocabularyKind) -> Bool {
-        guard let name = OnboardingRules.acceptedName(raw, existing: knownNames) else { return false }
-        draft.vocabulary.append(VocabularyTerm(id: makeID(), text: name, kind: kind))
-        return true
-    }
-
-    func removeVocabulary(id: UUID) {
-        draft.vocabulary.removeAll { $0.id == id }
-    }
-
-    // MARK: - Tags
-
-    var suggestedTags: [SuggestedTag] {
-        OnboardingSuggestions.tags(for: draft.professions, in: catalog)
-    }
-
-    func isTagSelected(_ key: String) -> Bool { draft.selectedTagKeys.contains(key) }
-
-    func toggleTag(_ key: String) {
-        if draft.selectedTagKeys.contains(key) {
-            draft.selectedTagKeys.remove(key)
-        } else {
-            draft.selectedTagKeys.insert(key)
-        }
-    }
-
-    @discardableResult
-    func addCustomTag(_ raw: String) -> Bool {
-        let existing = suggestedTags.map(\.name) + draft.customTags
-        guard let name = OnboardingRules.acceptedName(raw, existing: existing) else { return false }
-        draft.customTags.append(name)
-        return true
-    }
-
-    func removeCustomTag(_ name: String) {
-        draft.customTags.removeAll { $0 == name }
-    }
-
-    // MARK: - Record
-
-    /// The profession whose fields the Record step shows: her pick, or the first one she chose.
-    var recordProfession: ProfessionID? {
-        draft.recordProfession.flatMap { draft.professions.contains($0) ? $0 : nil } ?? draft.professions.first
-    }
-
-    func showRecord(of profession: ProfessionID) { draft.recordProfession = profession }
-
-    func fields(of profession: ProfessionID) -> [SuggestedField] {
-        catalog.entry(for: profession)?.fields ?? []
-    }
-
-    func isFieldOn(_ field: SuggestedField, of profession: ProfessionID) -> Bool {
-        draft.fieldOverrides[RecordFieldSetting(profession: profession, key: field.key, isOn: false).id] ?? field.on
-    }
-
-    func setField(_ field: SuggestedField, of profession: ProfessionID, on: Bool) {
-        let id = RecordFieldSetting(profession: profession, key: field.key, isOn: on).id
-        draft.fieldOverrides[id] = on == field.on ? nil : on
-    }
-
-    func isIntakeOn(_ item: IntakeItem, of profession: ProfessionID) -> Bool {
-        let id = IntakeSetting(profession: profession, item: item, isOn: false).id
-        return draft.intakeOverrides[id] ?? (catalog.entry(for: profession)?.intake.contains(item) ?? false)
-    }
-
-    func setIntake(_ item: IntakeItem, of profession: ProfessionID, on: Bool) {
-        let id = IntakeSetting(profession: profession, item: item, isOn: on).id
-        let defaultOn = catalog.entry(for: profession)?.intake.contains(item) ?? false
-        draft.intakeOverrides[id] = on == defaultOn ? nil : on
-    }
-
     // MARK: - Finish
 
     /// Fire-and-forget entry point for the button; `finishAsync()` is what tests await.
@@ -229,6 +201,7 @@ final class OnboardingViewModel {
         do {
             try await profile.saveOnboarding(built)
             result = built
+            progress?.clear()
             onFinished()
         } catch {
             errorMessage = String(interface: LocalizedStringResource(
@@ -238,8 +211,10 @@ final class OnboardingViewModel {
         }
     }
 
-    /// Number of record fields switched on for a profession, for "7 of 8 on".
-    func onCount(for profession: ProfessionID) -> Int {
-        fields(of: profession).filter { isFieldOn($0, of: profession) }.count
+    // MARK: - Private
+
+    private func saveProgress() {
+        guard result == nil else { return }
+        progress?.save(OnboardingProgress(stepName: step.name, draft: draft))
     }
 }

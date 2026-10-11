@@ -215,6 +215,7 @@ struct RootView: View {
             case .setup:
                 SetupView(
                     profile: profile, regions: regions, suggestedName: session.user?.displayName,
+                    progress: setupProgress,
                     onFinished: model.didFinishSetup,
                     onExit: { Task { await model.signOut() } }
                 )
@@ -245,6 +246,11 @@ struct RootView: View {
     private var mainView: some View {
         MainView(onSignOut: { Task { await model.signOut() } })
             .id(language.localization)
+    }
+
+    /// Her setup resumes where she left it after a relaunch (per user, in the app's defaults).
+    private var setupProgress: OnboardingProgressStore? {
+        session.user.map { OnboardingProgressStore(defaults: dependencies.defaults, userID: $0.id) }
     }
 
     private var initialRegion: RegionPreset {

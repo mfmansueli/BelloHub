@@ -59,17 +59,13 @@ extension XCUIApplication {
         tapButton("signIn.appleButton")
     }
 
-    /// Walks the whole setup with the first profession and the suggested defaults, ending on the Ready screen.
+    /// Walks the whole setup (name, profession, the suggested first service), ending on the Ready screen.
     @MainActor
     func completeSetup(name: String = "Maria Silva", profession: String = "esthetician") {
         type(name, intoField: "onboarding.about.nameField")
         tapButton("onboarding.about.continueButton")
         tapButton("onboarding.profession.choice.\(profession)")
         tapButton("onboarding.profession.continueButton")
-        for step in ["services", "terminology", "tags", "record"] {
-            tapButton("onboarding.\(step).continueButton")
-        }
-        for _ in 0..<4 { tapButton("onboarding.permissions.allowButton") }
-        tapButton("onboarding.permissions.continueButton")
+        tapButton("onboarding.services.continueButton")
     }
 }

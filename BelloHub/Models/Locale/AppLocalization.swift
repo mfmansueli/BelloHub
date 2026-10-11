@@ -7,7 +7,7 @@ import Foundation
 
 /// The fourteen localizations of the product (docs/07-LOCALIZATION.md section 1). `es419` and `enGB`
 /// are derived from `esMX` and `en` by `scripts/derive-locales.py`.
-enum AppLocalization: String, CaseIterable, Identifiable, Hashable, Sendable {
+enum AppLocalization: String, CaseIterable, Identifiable, Hashable, Codable, Sendable {
     case ptBR = "pt-BR"
     case ptPT = "pt-PT"
     case esMX = "es-MX"

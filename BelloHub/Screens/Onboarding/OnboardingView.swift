@@ -60,10 +60,6 @@ struct OnboardingView: View {
         case .about: AboutStepView(viewModel: viewModel)
         case .profession: ProfessionStepView(viewModel: viewModel)
         case .services: ServicesStepView(viewModel: viewModel)
-        case .terminology: TerminologyStepView(viewModel: viewModel)
-        case .tags: TagsStepView(viewModel: viewModel)
-        case .record: RecordStepView(viewModel: viewModel)
-        case .permissions: PermissionsStepView(onContinue: viewModel.goNext)
         case .ready: ReadyStepView(viewModel: viewModel)
         }
     }

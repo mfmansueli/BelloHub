@@ -76,23 +76,42 @@ struct OnboardingViewModelTests {
         #expect(model.step == .profession && !model.isMovingForward)
     }
 
-    @Test("Choosing a profession preselects its services and tags, and dropping it removes them")
+    @Test("Choosing a profession picks its first service and its preselected tags; dropping it removes them")
     func professionChoice() {
         let model = makeRig().model
         model.toggle(.esthetician)
-        #expect(model.isServiceSelected("est.glow") && model.isServiceSelected("shared.consult"))
-        #expect(!model.isServiceSelected("est.peel"))
-        #expect(model.isTagSelected("est.sensitive") && !model.isTagSelected("est.vip"))
+        #expect(model.firstService?.key == "est.glow")
+        #expect(model.isServiceSelected("est.glow") && !model.isServiceSelected("shared.consult"))
+        #expect(model.draft.selectedTagKeys.contains("est.sensitive") && !model.draft.selectedTagKeys.contains("est.vip"))
 
         model.toggleService("est.peel")
         model.toggle(.hair)
-        #expect(model.isServiceSelected("hair.cut") && model.isServiceSelected("est.peel"))
+        #expect(model.isServiceSelected("est.peel") && !model.isServiceSelected("hair.cut"))
         #expect(model.suggestedServices.count == 4)
 
         model.toggle(.esthetician)
         #expect(!model.isServiceSelected("est.peel") && !model.isServiceSelected("est.glow"))
-        #expect(model.isServiceSelected("hair.cut"))
+        #expect(model.firstService?.key == "hair.cut" && model.isServiceSelected("hair.cut"))
         #expect(model.draft.professions == [.hair])
+    }
+
+    @Test("The first service can be changed, timed and priced, but not switched off")
+    func firstService() throws {
+        let model = makeRig(professions: [.esthetician]).model
+        let glow = try #require(model.firstService)
+        model.toggleService("est.glow")
+        #expect(model.isServiceSelected("est.glow"))
+
+        model.setMinutes(75, of: glow)
+        model.setPrice(120, of: glow)
+        #expect(model.minutes(of: glow) == 75 && model.price(of: glow) == 120)
+        model.setMinutes(glow.minutes, of: glow)
+        #expect(model.draft.serviceMinutes.isEmpty)
+
+        model.chooseFirstService("est.peel")
+        #expect(model.firstService?.key == "est.peel")
+        #expect(!model.isServiceSelected("est.glow") && model.isServiceSelected("est.peel"))
+        #expect(model.otherServices.map(\.key) == ["est.glow", "shared.consult"])
     }
 
     @Test("Custom services are added only when valid, and can be removed")
@@ -102,73 +121,38 @@ struct OnboardingViewModelTests {
         let service = DraftService(name: "Brazilian Glow", priceAmount: 120, minutes: 90)
         #expect(model.addCustomService(service))
         #expect(model.draft.customServices.map(\.name) == ["Brazilian Glow"])
-        #expect(model.knownNames.contains("Brazilian Glow"))
         model.removeCustomService(id: service.id)
         #expect(model.draft.customServices.isEmpty)
     }
 
-    @Test("Names she adds are cleaned and never repeat a service she already has")
-    func vocabulary() {
-        let model = makeRig(professions: [.esthetician]).model
-        #expect(model.addVocabulary("  Protocolo   360 ", kind: .protocolName))
-        #expect(!model.addVocabulary("protocolo 360", kind: .protocolName))
-        #expect(!model.addVocabulary("glow facial", kind: .service))
-        #expect(!model.addVocabulary("   ", kind: .service))
-        #expect(model.draft.vocabulary.map(\.text) == ["Protocolo 360"])
-        #expect(model.draft.vocabulary.first?.kind == .protocolName)
-        let id = model.draft.vocabulary[0].id
-        model.removeVocabulary(id: id)
-        #expect(model.draft.vocabulary.isEmpty)
-    }
+    @Test("Progress is saved after every change and a new ViewModel resumes on the same step with the same choices")
+    func progressResumes() async throws {
+        let suite = "onboarding-progress-\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = OnboardingProgressStore(defaults: defaults, userID: "user-1")
+        let profile = ProfileService(vault: VaultService(repository: InMemoryClientRecordRepository()))
+        let first = OnboardingViewModel(
+            draft: makeDraft(professions: [], name: ""), catalog: makeCatalog(), profile: profile, progress: store,
+            onFinished: {}
+        )
+        first.setDisplayName("Maria")
+        first.goNext()
+        first.toggle(.hair)
+        first.goNext()
 
-    @Test("Her own tags cannot repeat a suggested one")
-    func customTags() {
-        let model = makeRig(professions: [.esthetician]).model
-        #expect(!model.addCustomTag("vip"))
-        #expect(model.addCustomTag("Neighbor"))
-        #expect(!model.addCustomTag("neighbor"))
-        #expect(model.draft.customTags == ["Neighbor"])
-        model.removeCustomTag("Neighbor")
-        #expect(model.draft.customTags.isEmpty)
-    }
+        let resumed = OnboardingViewModel(
+            draft: makeDraft(professions: [], name: ""), catalog: makeCatalog(), profile: profile, progress: store,
+            onFinished: {}
+        )
+        #expect(resumed.step == .services)
+        #expect(resumed.draft.displayName == "Maria" && resumed.draft.professions == [.hair])
+        #expect(resumed.firstService?.key == "hair.cut")
 
-    @Test("The record step starts on her first profession and counts the fields that are on")
-    func recordFields() throws {
-        let model = makeRig(professions: [.esthetician, .hair]).model
-        #expect(model.recordProfession == .esthetician)
-        let fields = model.fields(of: .esthetician)
-        let skin = try #require(fields.first { $0.key == "est.skin" })
-        let technique = try #require(fields.first { $0.key == "est.technique" })
-        #expect(model.isFieldOn(skin, of: .esthetician) && !model.isFieldOn(technique, of: .esthetician))
-        #expect(model.onCount(for: .esthetician) == 1)
-
-        model.setField(technique, of: .esthetician, on: true)
-        model.setField(skin, of: .esthetician, on: false)
-        #expect(model.onCount(for: .esthetician) == 1)
-        #expect(model.isFieldOn(technique, of: .esthetician))
-
-        // Putting a switch back where the catalog had it leaves no override behind.
-        model.setField(technique, of: .esthetician, on: false)
-        model.setField(skin, of: .esthetician, on: true)
-        #expect(model.draft.fieldOverrides.isEmpty)
-
-        model.showRecord(of: .hair)
-        #expect(model.recordProfession == .hair)
-        model.toggle(.hair)
-        #expect(model.recordProfession == .esthetician)
-    }
-
-    @Test("Intake switches start from the catalog and remember only what she changed")
-    func intake() {
-        let model = makeRig(professions: [.esthetician]).model
-        #expect(model.isIntakeOn(.healthHistory, of: .esthetician))
-        #expect(!model.isIntakeOn(.patchTestLog, of: .esthetician))
-        model.setIntake(.patchTestLog, of: .esthetician, on: true)
-        model.setIntake(.healthHistory, of: .esthetician, on: false)
-        #expect(model.isIntakeOn(.patchTestLog, of: .esthetician))
-        #expect(!model.isIntakeOn(.healthHistory, of: .esthetician))
-        model.setIntake(.patchTestLog, of: .esthetician, on: false)
-        #expect(model.draft.intakeOverrides.count == 1)
+        await resumed.finishAsync()
+        #expect(store.load() == nil)
+        let other = OnboardingProgressStore(defaults: defaults, userID: "user-2")
+        #expect(other.load() == nil)
     }
 
     @Test("Finishing saves the whole workspace together and tells the app once")

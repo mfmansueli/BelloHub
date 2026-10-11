@@ -14,7 +14,7 @@ struct SetupView: View {
 
     init(
         profile: ProfileService, regions: RegionCatalog, suggestedName: String? = nil,
-        onFinished: @escaping @MainActor () -> Void, onExit: @escaping () -> Void
+        progress: OnboardingProgressStore? = nil, onFinished: @escaping @MainActor () -> Void, onExit: @escaping () -> Void
     ) {
         self.onFinished = onFinished
         self.onExit = onExit
@@ -30,7 +30,9 @@ struct SetupView: View {
         if let suggestedName { draft.displayName = suggestedName }
         let catalog = try? ProfessionCatalog.loadBundled(localization: interface)
         _viewModel = State(initialValue: catalog.map {
-            OnboardingViewModel(draft: draft, catalog: $0, profile: profile, regions: regions, onFinished: onFinished)
+            OnboardingViewModel(
+                draft: draft, catalog: $0, profile: profile, regions: regions, progress: progress, onFinished: onFinished
+            )
         })
     }
 

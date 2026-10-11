@@ -74,19 +74,9 @@ final class OnboardingAuditUITests: XCTestCase {
         try audit(app, "\(tag) profession")
         app.tapButton("onboarding.profession.continueButton")
 
-        for step in ["services", "terminology", "tags", "record"] {
-            XCTAssertTrue(app.staticTexts["onboarding.\(step).title"].waitForExistence(timeout: 5), "\(tag) \(step)")
-            try audit(app, "\(tag) \(step)")
-            app.tapButton("onboarding.\(step).continueButton")
-        }
-
-        for page in 1...4 {
-            XCTAssertTrue(app.staticTexts["onboarding.permissions.title"].waitForExistence(timeout: 5))
-            try audit(app, "\(tag) permissions \(page)")
-            app.tapButton("onboarding.permissions.allowButton")
-        }
-        try audit(app, "\(tag) permissions done")
-        app.tapButton("onboarding.permissions.continueButton")
+        XCTAssertTrue(app.staticTexts["onboarding.services.title"].waitForExistence(timeout: 5), "\(tag) services")
+        try audit(app, "\(tag) first service")
+        app.tapButton("onboarding.services.continueButton")
 
         XCTAssertTrue(app.staticTexts["onboarding.ready.title"].waitForExistence(timeout: 5), "\(tag) ready")
         try audit(app, "\(tag) ready")

@@ -12,7 +12,6 @@ struct LanguageRegionContentView: View {
     @State private var viewModel: LanguageRegionViewModel
 
     @Environment(\.locale) private var locale
-    @Environment(ProfileService.self) private var profile
     @Environment(InterfaceLanguageService.self) private var interfaceLanguage
 
     init(profile: ProfileService, bookingSetup: BookingSetupService, regions: RegionCatalog) {
@@ -223,15 +222,23 @@ struct LanguageRegionContentView: View {
     private var wordsSection: some View {
         SettingsSection(title: "languageRegion.section.words", subtitle: "languageRegion.section.words.subtitle") {
             ListCard(dividerInset: Spacing.md) {
+                // Editable here since the setup no longer asks (routine-a item 3); saved with the rest on Save.
                 HStack(spacing: Spacing.row) {
                     Text("languageRegion.clientTerm").font(Typography.meta).foregroundStyle(Palette.ink2)
-                    Spacer(minLength: Spacing.sm)
-                    Text(verbatim: profile.clientTerm.titlePlural(in: viewModel.draft.localization.locale))
-                        .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Picker(selection: clientTermBinding) {
+                        ForEach(ClientTerm.allCases) { term in
+                            Text(verbatim: term.titlePlural(in: locale)).tag(term)
+                        }
+                    } label: {
+                        Text("languageRegion.clientTerm")
+                    }
+                    .pickerStyle(.menu)
+                    .tint(Palette.roseText)
+                    .accessibilityIdentifier("languageRegion.clientTermMenu")
                 }
                 .padding(.horizontal, Spacing.md)
                 .padding(.vertical, Spacing.sm)
-                .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("languageRegion.clientTermRow")
             }
         }
@@ -268,6 +275,10 @@ struct LanguageRegionContentView: View {
 
     private var languageBinding: Binding<AppLocalization> {
         Binding(get: { viewModel.draft.localization }, set: { viewModel.choose($0) })
+    }
+
+    private var clientTermBinding: Binding<ClientTerm> {
+        Binding(get: { viewModel.draft.clientTerm }, set: { viewModel.setClientTerm($0) })
     }
 
     private var currencyBinding: Binding<String> {

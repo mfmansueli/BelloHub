@@ -59,6 +59,21 @@ struct OnboardingBuilderTests {
         #expect(services.allSatisfy { $0.priceAmount == nil && $0.isActive })
     }
 
+    @Test("Her first service comes first, with the duration and price she set")
+    func firstService() {
+        var draft = makeDraft(professions: [.esthetician])
+        draft.selectedServiceKeys = ["est.glow", "shared.consult"]
+        draft.firstServiceKey = "shared.consult"
+        draft.serviceMinutes = ["shared.consult": 45]
+        draft.servicePrices = ["shared.consult": Decimal(string: "80.50") ?? 0]
+
+        let services = build(draft).services
+
+        #expect(services.map(\.name) == ["Consultation", "Glow Facial"])
+        #expect(services[0].durationMinutes == 45 && services[0].priceAmount == Decimal(string: "80.50"))
+        #expect(services[1].durationMinutes == 60 && services[1].priceAmount == nil)
+    }
+
     @Test("A custom service keeps her price and turns aftercare into an empty template")
     func customService() {
         var draft = makeDraft(professions: [.esthetician])

@@ -53,6 +53,8 @@ enum DefaultsKey {
     /// Prefix of the per-user list of sealed items the phone could not open (`MailboxService`, JSON, ids and times
     /// only): `<prefix>.<userID>`.
     static let mailboxUndecryptable = "mailbox.undecryptable"
+    /// Prefix of the per-user unfinished workspace setup (`OnboardingProgress`, JSON): `<prefix>.<userID>`.
+    static let onboardingProgress = "onboarding.progress"
     /// Prefix of the per-user FCM token the server knows (`PushService`): `<prefix>.<userID>`.
     static let pushRegisteredToken = "push.registeredToken"
 }

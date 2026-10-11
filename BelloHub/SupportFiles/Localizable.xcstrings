@@ -106586,85 +106586,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "غيّريها في حقول السجل."
+            "value" : "التسمية التي يستخدمها التطبيق للعملاء. تستخدم صفحة الحجز دائمًا كلمات محايدة."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ändere sie in den Aktenfeldern."
+            "value" : "Wie die App die Menschen nennt, die zu dir kommen. Deine Buchungsseite bleibt immer neutral."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Change them in your record fields."
+            "value" : "What the app calls the people you serve. Your booking page always uses neutral words."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Change them in your record fields."
+            "value" : "What the app calls the people you serve. Your booking page always uses neutral words."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cámbialas en los campos de la ficha."
+            "value" : "Cómo llama la app a quienes atiendes. Tu página de reservas siempre usa palabras neutras."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cámbialas en los campos de la ficha."
+            "value" : "Cómo llama la app a quienes atiendes. Tu página de reservas siempre usa palabras neutras."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cámbialas en los campos de la ficha."
+            "value" : "Cómo llama la app a quienes atiendes. Tu página de reservas siempre usa palabras neutras."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Modifiez-les dans les champs de fiche."
+            "value" : "Le nom que l’app donne aux personnes que vous recevez. Votre page de réservation reste toujours neutre."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "इन्हें अपने रिकॉर्ड फ़ील्ड में बदलें।"
+            "value" : "ऐप उन लोगों को क्या कहता है जिनकी आप सेवा करते हैं। बुकिंग पेज हमेशा तटस्थ शब्द इस्तेमाल करता है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ubah di kolom catatan kamu."
+            "value" : "Sebutan aplikasi untuk orang yang kamu layani. Halaman pemesanan selalu memakai kata netral."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Modificale nei campi della scheda."
+            "value" : "Come l’app chiama chi segui. La tua pagina di prenotazione usa sempre parole neutre."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Altere nas configurações da ficha."
+            "value" : "Como o app chama quem você atende. Sua página de agendamento sempre usa palavras neutras."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Altere nos campos da ficha."
+            "value" : "Como a app chama quem atende. A sua página de marcações usa sempre palavras neutras."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bunları kayıt alanlarınızdan değiştirebilirsiniz."
+            "value" : "Uygulamanın hizmet verdiğiniz kişilere verdiği ad. Randevu sayfanız her zaman tarafsız ifadeler kullanır."
           }
         }
       }
@@ -128755,1082 +128755,452 @@
         }
       }
     },
-    "onb.permissions.camera.allow" : {
-      "comment" : "Permission page: allow button.",
+    "onb.firstService.more" : {
+      "comment" : "Setup: header above the other suggested services, which are off unless she switches them on.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "السماح بالكاميرا"
+            "value" : "خدمات أخرى، اختيارية"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kamera erlauben"
+            "value" : "Weitere Leistungen, optional"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allow camera"
+            "value" : "Other services, optional"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Allow camera"
+            "value" : "Other services, optional"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir cámara"
+            "value" : "Otros servicios, opcional"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir cámara"
+            "value" : "Otros servicios, opcional"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir cámara"
+            "value" : "Otros servicios, opcional"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Autoriser l'appareil photo"
+            "value" : "Autres prestations, facultatives"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "कैमरे की अनुमति दें"
+            "value" : "अन्य सेवाएँ, वैकल्पिक"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Izinkan kamera"
+            "value" : "Layanan lain, opsional"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consenti la fotocamera"
+            "value" : "Altri servizi, facoltativi"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir câmera"
+            "value" : "Outros serviços, opcional"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir câmara"
+            "value" : "Outros serviços, opcional"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kameraya izin ver"
+            "value" : "Diğer hizmetler, isteğe bağlı"
           }
         }
       }
     },
-    "onb.permissions.camera.text" : {
-      "comment" : "Permission page: camera explanation.",
+    "onb.firstService.price" : {
+      "comment" : "Setup, first service card: label of the optional price field (the placeholder shows the currency).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "التقط صور قبل وبعد داخل Bello Hub. لا تُحفظ أبدًا في معرض صور هاتفك."
+            "value" : "السعر، اختياري"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Mach Vorher-nachher-Fotos direkt in Bello Hub. Sie landen nie in deiner Fotomediathek."
+            "value" : "Preis, optional"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Take before and after photos inside Bello Hub. They are never saved to your camera roll."
+            "value" : "Price, optional"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Take before and after photos inside Bello Hub. They are never saved to your camera roll."
+            "value" : "Price, optional"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Haz fotos de antes y después dentro de Bello Hub. Nunca se guardan en tu carrete."
+            "value" : "Precio, opcional"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Haz fotos de antes y después dentro de Bello Hub. Nunca se guardan en tu carrete."
+            "value" : "Precio, opcional"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Haz fotos de antes y después dentro de Bello Hub. Nunca se guardan en tu carrete."
+            "value" : "Precio, opcional"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Prenez des photos avant et après dans Bello Hub. Elles ne sont jamais enregistrées dans votre pellicule."
+            "value" : "Prix, facultatif"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bello Hub के अंदर पहले और बाद की तस्वीरें लें। वे आपके कैमरा रोल में कभी सेव नहीं होतीं।"
+            "value" : "क़ीमत, वैकल्पिक"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ambil foto sebelum dan sesudah di dalam Bello Hub. Foto tidak pernah disimpan ke galeri ponsel kamu."
+            "value" : "Harga, opsional"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scatta foto prima e dopo all'interno di Bello Hub. Non vengono mai salvate nel rullino."
+            "value" : "Prezzo, facoltativo"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tire fotos de antes e depois dentro do Bello Hub. Elas nunca são salvas no rolo da câmera."
+            "value" : "Preço, opcional"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tire fotografias de antes e depois dentro do Bello Hub. Nunca são guardadas na galeria."
+            "value" : "Preço, opcional"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Öncesi ve sonrası fotoğraflarını Bello Hub içinde çekin. Fotoğraf arşivinize asla kaydedilmez."
+            "value" : "Fiyat, isteğe bağlı"
           }
         }
       }
     },
-    "onb.permissions.camera.title" : {
-      "comment" : "Permission page: camera.",
+    "onb.firstService.service" : {
+      "comment" : "Setup, first service card: label of the menu that chooses which suggested service it is.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "صور تبقى خاصة."
+            "value" : "الخدمة"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos, die privat bleiben."
+            "value" : "Leistung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Photos that stay private."
+            "value" : "Service"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Photos that stay private."
+            "value" : "Service"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos que se quedan en privado."
+            "value" : "Servicio"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos que se quedan en privado."
+            "value" : "Servicio"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos que se quedan en privado."
+            "value" : "Servicio"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Des photos qui restent privées."
+            "value" : "Prestation"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "तस्वीरें जो निजी रहती हैं।"
+            "value" : "सेवा"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foto yang tetap privat."
+            "value" : "Layanan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Foto che restano private."
+            "value" : "Servizio"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotos que ficam privadas."
+            "value" : "Serviço"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fotografias que ficam privadas."
+            "value" : "Serviço"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gizli kalan fotoğraflar."
+            "value" : "Hizmet"
           }
         }
       }
     },
-    "onb.permissions.contacts.allow" : {
-      "comment" : "Permission page: allow button.",
+    "onb.firstService.subtitle" : {
+      "comment" : "Setup: under the first service title. More, Services is where the rest is added later.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "السماح بجهات الاتصال"
+            "value" : "خدمة واحدة تكفي للبدء. يمكن إضافة البقية في أي وقت من المزيد، الخدمات."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kontakte erlauben"
+            "value" : "Eine reicht für den Anfang. Weitere fügst du jederzeit unter Mehr, Leistungen hinzu."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Allow contacts"
+            "value" : "One is enough to start. Add the rest whenever you like in More, Services."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Allow contacts"
+            "value" : "One is enough to start. Add the rest whenever you like in More, Services."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir contactos"
+            "value" : "Con uno basta para empezar. Añade los demás cuando quieras en Más, Servicios."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir contactos"
+            "value" : "Con uno basta para empezar. Agrega los demás cuando quieras en Más, Servicios."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir contactos"
+            "value" : "Con uno basta para empezar. Agrega los demás cuando quieras en Más, Servicios."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Autoriser les contacts"
+            "value" : "Une seule suffit pour commencer. Ajoutez les autres quand vous voulez dans Plus, Prestations."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "कॉन्टैक्ट की अनुमति दें"
+            "value" : "शुरू करने के लिए एक सेवा काफ़ी है। बाकी कभी भी और, सेवाएँ में जोड़ें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Izinkan kontak"
+            "value" : "Satu sudah cukup untuk mulai. Tambahkan yang lain kapan saja di Lainnya, Layanan."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Consenti i contatti"
+            "value" : "Ne basta uno per iniziare. Aggiungi gli altri quando vuoi in Altro, Servizi."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir contatos"
+            "value" : "Um basta para começar. Adicione os outros quando quiser em Mais, Serviços."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Permitir contactos"
+            "value" : "Um chega para começar. Adicione os restantes quando quiser em Mais, Serviços."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kişilere izin ver"
+            "value" : "Başlamak için bir tane yeter. Diğerlerini istediğiniz zaman Daha fazla, Hizmetler bölümünden ekleyin."
           }
         }
       }
     },
-    "onb.permissions.contacts.text" : {
-      "comment" : "Permission page: contacts explanation.",
+    "onb.firstService.title" : {
+      "comment" : "Setup: title of the step that sets her first service (one is enough to start).",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "اختر جهات الاتصال لاستيرادها. نقرأ فقط ما تختاره."
+            "value" : "خدمتك الأولى"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Wähle Kontakte zum Importieren. Wir lesen nur die, die du auswählst."
+            "value" : "Deine erste Leistung"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choose contacts to import. We only read the ones you select."
+            "value" : "Your first service"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Choose contacts to import. We only read the ones you select."
+            "value" : "Your first service"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige contactos para importar. Solo leemos los que selecciones."
+            "value" : "Tu primer servicio"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige contactos para importar. Solo leemos los que selecciones."
+            "value" : "Tu primer servicio"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Elige contactos para importar. Solo leemos los que selecciones."
+            "value" : "Tu primer servicio"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Choisissez les contacts à importer. Nous ne lisons que ceux que vous sélectionnez."
+            "value" : "Votre première prestation"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "इम्पोर्ट करने के लिए कॉन्टैक्ट चुनें। हम सिर्फ़ वही पढ़ते हैं जो आप चुनते हैं।"
+            "value" : "आपकी पहली सेवा"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Pilih kontak untuk diimpor. Kami hanya membaca yang kamu pilih."
+            "value" : "Layanan pertama kamu"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Scegli i contatti da importare. Leggiamo solo quelli che selezioni."
+            "value" : "Il tuo primo servizio"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Escolha contatos para importar. Só lemos os que você selecionar."
+            "value" : "Seu primeiro serviço"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Escolha contactos para importar. Só lemos os que selecionar."
+            "value" : "O seu primeiro serviço"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "İçe aktarılacak kişileri seçin. Yalnızca seçtiklerinizi okuruz."
-          }
-        }
-      }
-    },
-    "onb.permissions.contacts.title" : {
-      "comment" : "Permission page: contacts.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أحضر عملاءك معك."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bring deine Kundschaft mit."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bring your clients along."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bring your clients along."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Trae a tus clientes contigo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Trae a tus clientes contigo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Trae a tus clientes contigo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Emmenez vos clients avec vous."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अपने क्लाइंट साथ लाएँ।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bawa klien kamu."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Porta con te i tuoi clienti."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Traga os seus clientes."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Traga os seus clientes consigo."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Müşterilerinizi de getirin."
-          }
-        }
-      }
-    },
-    "onb.permissions.done.text" : {
-      "comment" : "Permissions finished: where to change them.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "يمكنك تغيير كل هذا لاحقًا من الخصوصية والأمان."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Du kannst das alles später unter Datenschutz und Sicherheit ändern."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You can change any of this later in Privacy and security."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "You can change any of this later in Privacy and security."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Puedes cambiar todo esto más tarde en Privacidad y seguridad."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Puedes cambiar todo esto más tarde en Privacidad y seguridad."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Puedes cambiar todo esto más tarde en Privacidad y seguridad."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vous pourrez tout modifier plus tard dans Confidentialité et sécurité."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आप यह सब बाद में गोपनीयता और सुरक्षा में बदल सकते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kamu dapat mengubah semuanya nanti di Privasi dan keamanan."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Puoi cambiare tutto più tardi in Privacy e sicurezza."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Você pode mudar tudo isso depois em Privacidade e segurança."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pode alterar tudo isto mais tarde em Privacidade e segurança."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bunların hepsini daha sonra Gizlilik ve güvenlik bölümünden değiştirebilirsiniz."
-          }
-        }
-      }
-    },
-    "onb.permissions.done.title" : {
-      "comment" : "Permissions finished.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "كل شيء جاهز."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alles bereit."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All set."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "All set."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Todo listo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Todo listo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Todo listo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tout est prêt."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "सब तैयार है।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Semua siap."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tutto pronto."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tudo pronto."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tudo pronto."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hepsi tamam."
-          }
-        }
-      }
-    },
-    "onb.permissions.microphone.allow" : {
-      "comment" : "Permission page: allow button.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "السماح بالميكروفون"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mikrofon erlauben"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow microphone"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Allow microphone"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permitir micrófono"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permitir micrófono"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permitir micrófono"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Autoriser le microphone"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "माइक्रोफ़ोन की अनुमति दें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Izinkan mikrofon"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Consenti il microfono"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permitir microfone"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Permitir microfone"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mikrofona izin ver"
-          }
-        }
-      }
-    },
-    "onb.permissions.microphone.text" : {
-      "comment" : "Permission page: microphone explanation.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "يستمع Bello Hub فقط أثناء تسجيلك لخدمة، ثم ينظّم ما قلته. تراجع كل شيء قبل أن يُحفظ."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub hört nur zu, während du eine Behandlung aufnimmst, und ordnet dann, was du gesagt hast. Du prüfst alles, bevor es gespeichert wird."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bello Hub listens only while you record a treatment, then organizes what you said. You review everything before it is saved."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub listens only while you record a treatment, then organises what you said. You review everything before it is saved."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub solo escucha mientras grabas un tratamiento y luego organiza lo que dijiste. Lo revisas todo antes de guardarlo."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub solo escucha mientras grabas un tratamiento y luego organiza lo que dijiste. Revisas todo antes de guardarlo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub solo escucha mientras grabas un tratamiento y luego organiza lo que dijiste. Revisas todo antes de guardarlo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub n'écoute que pendant que vous enregistrez un soin, puis organise ce que vous avez dit. Vous relisez tout avant que rien ne soit enregistré."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub केवल तब सुनता है जब आप कोई उपचार रिकॉर्ड करते हैं, फिर आपकी बात को व्यवस्थित करता है। सेव होने से पहले आप सब कुछ देखते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub hanya mendengarkan saat kamu merekam perawatan, lalu mengatur apa yang kamu katakan. Kamu meninjau semuanya sebelum disimpan."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub ascolta solo mentre registri un trattamento, poi organizza ciò che hai detto. Rivedi tutto prima di salvare."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O Bello Hub só escuta enquanto você grava um atendimento e depois organiza o que você disse. Você revisa tudo antes de salvar."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O Bello Hub só ouve enquanto grava um atendimento e depois organiza o que disse. Revê tudo antes de guardar."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub yalnızca bir işlemi kaydederken dinler, sonra söylediklerinizi düzenler. Kaydedilmeden önce her şeyi siz gözden geçirirsiniz."
-          }
-        }
-      }
-    },
-    "onb.permissions.microphone.title" : {
-      "comment" : "Permission page: microphone.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تحدّث، ويُكتب السجل من تلقاء نفسه."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sprich, und die Akte schreibt sich selbst."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Talk, and the record writes itself."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Talk, and the record writes itself."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Habla, y la ficha se escribe sola."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Habla, y el registro se escribe solo."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Habla, y el registro se escribe solo."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parlez, et la fiche s'écrit toute seule."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "बोलिए, और रिकॉर्ड अपने आप लिख जाता है।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bicara, dan catatan tertulis sendiri."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Parla, e la scheda si scrive da sola."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fale, e o registro se escreve sozinho."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fale, e o registo escreve-se sozinho."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Konuşun, kayıt kendiliğinden yazılsın."
-          }
-        }
-      }
-    },
-    "onb.permissions.notNow" : {
-      "comment" : "Skips one permission.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ليس الآن"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nicht jetzt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Not now"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Not now"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ahora no"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ahora no"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ahora no"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pas maintenant"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अभी नहीं"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nanti saja"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Non ora"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Agora não"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Agora não"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Şimdi değil"
+            "value" : "İlk hizmetiniz"
           }
         }
       }
@@ -130551,6 +129921,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ana sayfaya git"
+          }
+        }
+      }
+    },
+    "onb.ready.later" : {
+      "comment" : "Setup, Ready: quiet line saying where the deferred choices live (tags, record fields, the word for clients).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تبدأ التصنيفات وحقول السجل وتسمية العملاء من المهنة المختارة. يمكن تغييرها في أي وقت من المزيد."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Markierungen, Felder der Akte und wie du die Menschen nennst, die zu dir kommen, richten sich nach deinem Beruf. Ändere sie jederzeit unter Mehr."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tags, record fields and what you call the people you serve start from your profession. Change them anytime in More."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tags, record fields and what you call the people you serve start from your profession. Change them anytime in More."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las etiquetas, los campos de la ficha y cómo llamas a quienes atiendes parten de tu profesión. Cámbialos cuando quieras en Más."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las etiquetas, los campos de la ficha y cómo llamas a quienes atiendes parten de tu profesión. Cámbialos cuando quieras en Más."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Las etiquetas, los campos de la ficha y cómo llamas a quienes atiendes parten de tu profesión. Cámbialos cuando quieras en Más."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les étiquettes, les champs de la fiche et le nom donné aux personnes que vous recevez partent de votre métier. Modifiez-les quand vous voulez dans Plus."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "टैग, रिकॉर्ड फ़ील्ड और क्लाइंट के लिए शब्द आपके पेशे के अनुसार शुरू होते हैं। इन्हें कभी भी और में बदलें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Label, kolom catatan, dan sebutan untuk orang yang kamu layani dimulai dari profesimu. Ubah kapan saja di Lainnya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Etichette, campi della scheda e il nome che dai a chi segui partono dalla tua professione. Cambiali quando vuoi in Altro."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Etiquetas, campos da ficha e como você chama quem atende começam pela sua profissão. Mude quando quiser em Mais."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As etiquetas, os campos da ficha e o nome que dá a quem atende partem da sua profissão. Pode mudá-los quando quiser em Mais."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Etiketler, kayıt alanları ve hizmet verdiğiniz kişilere verdiğiniz ad mesleğinize göre başlar. İstediğiniz zaman Daha fazla bölümünden değiştirebilirsiniz."
           }
         }
       }
@@ -131905,186 +131365,6 @@
         }
       }
     },
-    "onb.record.subtitle" : {
-      "comment" : "Setup step: record fields subtitle.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "سجلّك مبني حول مهنتك. فعّل فقط ما تستخدمه."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Deine Akte ist auf dein Handwerk zugeschnitten. Schalte nur ein, was du nutzt."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your record is built around your craft. Switch on only what you use."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Your record is built around your craft. Switch on only what you use."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu ficha se adapta a tu oficio. Activa solo lo que uses."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu ficha se adapta a tu oficio. Activa solo lo que uses."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu ficha se adapta a tu oficio. Activa solo lo que uses."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Votre fiche est construite autour de votre métier. N'activez que ce que vous utilisez."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आपका रिकॉर्ड आपके काम के हिसाब से बनता है। सिर्फ़ वही चालू करें जो आप इस्तेमाल करते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Catatan kamu disusun sesuai keahlian kamu. Aktifkan hanya yang kamu pakai."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "La tua scheda è costruita sul tuo mestiere. Attiva solo ciò che usi."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sua ficha é feita sob medida para o seu ofício. Ative só o que você usa."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A sua ficha é feita à medida do seu ofício. Ative apenas o que usa."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kaydınız mesleğinize göre oluşturulur. Yalnızca kullandıklarınızı açın."
-          }
-        }
-      }
-    },
-    "onb.record.title" : {
-      "comment" : "Setup step: record fields. %@ is what she calls the people she serves, singular (\"client\"). The German sentence uses pro %@, which works with every term.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ماذا تريد أن تتذكر عن كل %@؟"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Was möchtest du pro %@ festhalten?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What do you want to remember about each %@?"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "What do you want to remember about each %@?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué quieres recordar de cada %@?"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué quieres recordar de cada %@?"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué quieres recordar de cada %@?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Que voulez-vous retenir de chaque %@ ?"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "हर %@ के बारे में आप क्या याद रखना चाहते हैं?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apa yang ingin kamu ingat tentang setiap %@?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cosa vuoi ricordare di ogni %@?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O que você quer lembrar sobre cada %@?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O que quer recordar sobre cada %@?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Her %@ hakkında neleri hatırlamak istersiniz?"
-          }
-        }
-      }
-    },
     "onb.service.add" : {
       "comment" : "Custom service primary button.",
       "extractionState" : "manual",
@@ -133431,186 +132711,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bu hizmeti kaldırmak için dokunun."
-          }
-        }
-      }
-    },
-    "onb.services.subtitle" : {
-      "comment" : "Setup step: services subtitle. %@ is the chosen professions, plural, as a list (\"estheticians and hair stylists\").",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اقتراحات لـ%@. يسهل تغيير الأسعار والمدد لاحقًا."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vorschläge für %@. Preise und Dauer lassen sich später leicht ändern."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suggested for %@. Prices and durations are easy to change later."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suggested for %@. Prices and durations are easy to change later."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugerencias para %@. Los precios y las duraciones se cambian fácilmente después."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugerencias para %@. Los precios y las duraciones se cambian fácilmente después."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugerencias para %@. Los precios y las duraciones se cambian fácilmente después."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suggestions pour %@. Les prix et les durées se modifient facilement plus tard."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ के लिए सुझाव। क़ीमतें और अवधि बाद में आसानी से बदली जा सकती हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Saran untuk %@. Harga dan durasi mudah diubah nanti."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suggerimenti per %@. Prezzi e durate si cambiano facilmente in seguito."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugestões para %@. Preços e durações são fáceis de mudar depois."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugestões para %@. Os preços e as durações são fáceis de alterar mais tarde."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ için öneriler. Fiyatlar ve süreler sonradan kolayca değiştirilebilir."
-          }
-        }
-      }
-    },
-    "onb.services.title" : {
-      "comment" : "Setup step: services.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ماذا تقدّم؟"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Was bietest du an?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What do you offer?"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "What do you offer?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué ofreces?"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué ofreces?"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Qué ofreces?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Que proposez-vous ?"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आप क्या सेवाएँ देते हैं?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apa yang kamu tawarkan?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cosa offri?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O que você oferece?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O que oferece?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Neler sunuyorsunuz?"
           }
         }
       }
@@ -136311,1356 +135411,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Yeni etiket"
-          }
-        }
-      }
-    },
-    "onb.tags.removeHint" : {
-      "comment" : "Accessibility hint on a tag she created.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اضغط لإزالة هذا التصنيف."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tippen, um diese Markierung zu entfernen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to remove this tag."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tap to remove this tag."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toca para quitar esta etiqueta."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toca para quitar esta etiqueta."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toca para quitar esta etiqueta."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Touchez pour retirer cette étiquette."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "इस टैग को हटाने के लिए टैप करें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ketuk untuk menghapus label ini."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tocca per rimuovere questa etichetta."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toque para remover esta etiqueta."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Toque para remover esta etiqueta."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu etiketi kaldırmak için dokunun."
-          }
-        }
-      }
-    },
-    "onb.tags.subtitle" : {
-      "comment" : "Setup step: tags subtitle.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تسهّل التصنيفات العثور على العملاء وتذكّرك بما يهم. اختر بعضها وأضف تصنيفاتك في أي وقت."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Markierungen helfen dir, deine Kundschaft zu finden, und erinnern dich an Wichtiges. Wähle einige aus und füge jederzeit eigene hinzu."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tags make clients easy to find and remind you what matters. Pick a few, add your own anytime."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tags make clients easy to find and remind you what matters. Pick a few, add your own anytime."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Las etiquetas facilitan encontrar a los clientes y te recuerdan lo importante. Elige algunas y añade las tuyas cuando quieras."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Las etiquetas facilitan encontrar a los clientes y te recuerdan lo importante. Elige algunas y añade las tuyas cuando quieras."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Las etiquetas facilitan encontrar a los clientes y te recuerdan lo importante. Elige algunas y añade las tuyas cuando quieras."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Les étiquettes aident à retrouver les clients et rappellent ce qui compte. Choisissez-en quelques-unes, ajoutez les vôtres à tout moment."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "टैग से क्लाइंट ढूँढना आसान होता है और ज़रूरी बातें याद रहती हैं। कुछ चुनें, अपने टैग कभी भी जोड़ें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Label memudahkan mencari klien dan mengingatkan hal penting. Pilih beberapa, tambahkan milik kamu kapan saja."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Le etichette rendono facile trovare i clienti e ti ricordano ciò che conta. Scegline alcune e aggiungi le tue quando vuoi."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "As etiquetas facilitam encontrar os clientes e lembram o que importa. Escolha algumas e adicione as suas quando quiser."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "As etiquetas facilitam encontrar os clientes e lembram o que importa. Escolha algumas e adicione as suas quando quiser."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiketler müşterileri bulmayı kolaylaştırır ve önemli olanı hatırlatır. Birkaçını seçin, kendinizinkileri istediğiniz zaman ekleyin."
-          }
-        }
-      }
-    },
-    "onb.tags.title" : {
-      "comment" : "Setup step: tags.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "صنّف بالطريقة التي تفكّر بها."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Markiere so, wie du denkst."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tag the way you think."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tag the way you think."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiqueta como piensas."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiqueta como piensas."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiqueta como piensas."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Étiquetez à votre façon."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अपनी सोच के हिसाब से टैग लगाएँ।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Beri label sesuai cara kamu berpikir."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etichetta come ragioni."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiquete do seu jeito."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Etiquete à sua maneira."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Düşündüğünüz gibi etiketleyin."
-          }
-        }
-      }
-    },
-    "onb.terminology.add" : {
-      "comment" : "Row that adds a name.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أضف اسمًا تستخدمه"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Eigenen Namen hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add a name you use"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Add a name you use"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir un nombre que usas"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir un nombre que usas"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir un nombre que usas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ajouter un nom que vous utilisez"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अपना इस्तेमाल किया हुआ नाम जोड़ें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tambah nama yang kamu pakai"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aggiungi un nome che usi"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Adicionar um nome que você usa"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Adicionar um nome que utiliza"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kullandığınız bir ad ekleyin"
-          }
-        }
-      }
-    },
-    "onb.terminology.addConfirm" : {
-      "comment" : "Add-name sheet button.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "إضافة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hinzufügen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Add"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Añadir"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ajouter"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "जोड़ें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tambah"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aggiungi"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Adicionar"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Adicionar"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ekle"
-          }
-        }
-      }
-    },
-    "onb.terminology.addName" : {
-      "comment" : "Add-name sheet field.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "الاسم"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Name"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nom"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "नाम"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nama"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ad"
-          }
-        }
-      }
-    },
-    "onb.terminology.addTitle" : {
-      "comment" : "Add-name sheet title.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اسم جديد"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Neuer Name"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New name"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "New name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nuevo nombre"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nuevo nombre"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nuevo nombre"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nouveau nom"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "नया नाम"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nama baru"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nuovo nome"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Novo nome"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Novo nome"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Yeni ad"
-          }
-        }
-      }
-    },
-    "onb.terminology.kind" : {
-      "comment" : "Accessibility label of the service/protocol picker.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "النوع"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Art"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Type"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Type"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "प्रकार"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jenis"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tipo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tür"
-          }
-        }
-      }
-    },
-    "onb.terminology.kind.protocol" : {
-      "comment" : "Kind of name: a protocol.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "بروتوكول"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokoll"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Protocol"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocol"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocole"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "प्रोटोकॉल"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokol"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocollo"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokol"
-          }
-        }
-      }
-    },
-    "onb.terminology.kind.service" : {
-      "comment" : "Kind of name: a service.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "خدمة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leistung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Service"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Service"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Servicio"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Servicio"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Servicio"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Prestation"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "सेवा"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Layanan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Servizio"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Serviço"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Serviço"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hizmet"
-          }
-        }
-      }
-    },
-    "onb.terminology.namePrompt" : {
-      "comment" : "Placeholder of the add-name field.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "بروتوكول 360"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokoll 360"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Protocol 360"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocol 360"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo 360"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo 360"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo 360"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocole 360"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "प्रोटोकॉल 360"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokol 360"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocollo 360"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo 360"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protocolo 360"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Protokol 360"
-          }
-        }
-      }
-    },
-    "onb.terminology.note" : {
-      "comment" : "Explains why names matter. The voice notes run on the phone.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "يتعلّم Bello Hub الأسماء التي تستخدمها لخدماتك وبروتوكولاتك، لتبدو الملاحظات الصوتية والسجلات كأنها منك."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub lernt die Namen, die du für deine Leistungen und Protokolle verwendest, damit Sprachnotizen und Akten nach dir klingen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bello Hub learns the names you use for your services and protocols, so voice notes and records sound like you."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub learns the names you use for your services and protocols, so voice notes and records sound like you."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub aprende los nombres que usas para tus servicios y protocolos, para que las notas de voz y las fichas suenen como tú."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub aprende los nombres que usas para tus servicios y protocolos, para que las notas de voz y las fichas suenen como tú."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub aprende los nombres que usas para tus servicios y protocolos, para que las notas de voz y las fichas suenen como tú."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub apprend les noms que vous utilisez pour vos prestations et protocoles, afin que les notes vocales et les fiches vous ressemblent."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub आपकी सेवाओं और प्रोटोकॉल के नाम सीखता है, ताकि वॉइस नोट और रिकॉर्ड आपकी तरह लगें।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub mempelajari nama yang kamu pakai untuk layanan dan protokol, sehingga catatan suara dan rekaman terdengar seperti kamu."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub impara i nomi che usi per i tuoi servizi e protocolli, così note vocali e schede suonano come te."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O Bello Hub aprende os nomes que você usa para seus serviços e protocolos, para que as notas de voz e os registros soem como você."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O Bello Hub aprende os nomes que utiliza para os seus serviços e protocolos, para que as notas de voz e os registos soem à sua maneira de falar."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bello Hub, hizmetleriniz ve protokolleriniz için kullandığınız adları öğrenir; böylece sesli notlar ve kayıtlar size benzer."
-          }
-        }
-      }
-    },
-    "onb.terminology.subtitle" : {
-      "comment" : "Setup step: terminology subtitle.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "سمِّ خدماتك وبروتوكولاتك كما تنطقها. ستظهر هكذا تمامًا في كل مكان."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Benenne deine Leistungen und Protokolle so, wie du sie aussprichst. Überall erscheinen sie genau so."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Name your services and protocols the way you say them. They show up exactly like this everywhere."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Name your services and protocols the way you say them. They show up exactly like this everywhere."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombra tus servicios y protocolos como los dices. Aparecen exactamente así en todas partes."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombra tus servicios y protocolos como los dices. Aparecen exactamente así en todas partes."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombra tus servicios y protocolos como los dices. Aparecen exactamente así en todas partes."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nommez vos prestations et vos protocoles comme vous les dites. Ils apparaissent tels quels partout."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अपनी सेवाओं और प्रोटोकॉल के नाम वैसे ही रखें जैसे आप बोलते हैं। वे हर जगह बिल्कुल ऐसे ही दिखेंगे।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Beri nama layanan dan protokol kamu sesuai cara kamu menyebutnya. Namanya tampil persis begitu di mana-mana."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dai ai tuoi servizi e protocolli i nomi che usi. Compaiono così ovunque."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dê nome aos seus serviços e protocolos do jeito que você fala. Eles aparecem assim em todo lugar."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dê nome aos seus serviços e protocolos como os diz. Aparecem assim em todo o lado."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hizmetlerinizi ve protokollerinizi söylediğiniz gibi adlandırın. Her yerde tam olarak böyle görünürler."
-          }
-        }
-      }
-    },
-    "onb.terminology.term" : {
-      "comment" : "Section label: what she calls the people she serves.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ماذا تسمّي الأشخاص الذين تخدمهم؟"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wie nennst du die Menschen, die du betreust?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What do you call the people you see?"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "What do you call the people you see?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Cómo llamas a las personas que atiendes?"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Cómo llamas a las personas que atiendes?"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Cómo llamas a las personas que atiendes?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Comment appelez-vous les personnes que vous recevez ?"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आप जिन लोगों को सेवा देते हैं उन्हें क्या कहते हैं?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apa sebutan kamu untuk orang yang kamu layani?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Come chiami le persone che segui?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Como você chama as pessoas que atende?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Como chama às pessoas que atende?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hizmet verdiğiniz kişilere ne diyorsunuz?"
-          }
-        }
-      }
-    },
-    "onb.terminology.title" : {
-      "comment" : "Setup step: terminology.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "استخدم اللغة التي تستخدمها أصلًا."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sprich deine eigene Sprache."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use the language you already use."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use the language you already use."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usa el lenguaje que ya usas."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usa el lenguaje que ya usas."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usa el lenguaje que ya usas."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gardez vos propres mots."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "वही भाषा इस्तेमाल करें जो आप पहले से करते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pakai bahasa yang sudah kamu pakai."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Usa le parole che già usi."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use as palavras que você já usa."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Use as palavras que já usa."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zaten kullandığınız dili kullanın."
           }
         }
       }

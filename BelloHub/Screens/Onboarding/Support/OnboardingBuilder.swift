@@ -38,11 +38,16 @@ enum OnboardingBuilder {
     // MARK: - Parts
 
     private static func services(draft: OnboardingDraft, catalog: ProfessionCatalog, makeID: () -> UUID) -> [Service] {
-        let suggested = OnboardingSuggestions.services(for: draft.professions, in: catalog)
+        // Her first service comes first; durations and prices she set replace the catalog's.
+        let chosen = OnboardingSuggestions.services(for: draft.professions, in: catalog)
             .filter { draft.selectedServiceKeys.contains($0.key) }
+        let ordered = chosen.filter { $0.key == draft.firstServiceKey } + chosen.filter { $0.key != draft.firstServiceKey }
+        let suggested = ordered
             .map { item in
-                Service(id: makeID(), name: item.name, category: item.category, durationMinutes: item.minutes,
-                        followUpWeeks: item.followUpWeeks, remindBeforeAfterPhotos: item.photos)
+                Service(id: makeID(), name: item.name, category: item.category,
+                        durationMinutes: draft.serviceMinutes[item.key] ?? item.minutes,
+                        priceAmount: draft.servicePrices[item.key], followUpWeeks: item.followUpWeeks,
+                        remindBeforeAfterPhotos: item.photos)
             }
         let custom = draft.customServices.map { item in
             Service(

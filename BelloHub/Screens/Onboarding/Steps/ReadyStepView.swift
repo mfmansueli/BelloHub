@@ -23,6 +23,8 @@ struct ReadyStepView: View {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 SuccessSeal(size: 64)
                 tiles
+                FooterNote(text: "onb.ready.later", icon: .info)
+                    .accessibilityIdentifier("onboarding.ready.later")
                 linkCard
                 importCard
                 if let message = viewModel.errorMessage {

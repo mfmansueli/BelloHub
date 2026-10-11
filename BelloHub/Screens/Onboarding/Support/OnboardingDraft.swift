@@ -7,7 +7,7 @@ import Foundation
 
 /// Everything she has chosen so far in the setup, as plain values. Nothing is saved until the end: the draft
 /// becomes a profile, services, tags and a record template in one step (`OnboardingBuilder`).
-struct OnboardingDraft: Equatable, Sendable {
+struct OnboardingDraft: Equatable, Codable, Sendable {
     var displayName = ""
     var businessName = ""
     var regionCode: String
@@ -19,6 +19,12 @@ struct OnboardingDraft: Equatable, Sendable {
     /// In the order she chose them; the first one names the workspace.
     var professions: [ProfessionID] = []
     var selectedServiceKeys: Set<String> = []
+    /// The service she starts with (a suggestion's key, always selected); nil only when her professions suggest none.
+    var firstServiceKey: String?
+    /// Durations she set for suggested services, by key (the catalog's duration otherwise).
+    var serviceMinutes: [String: Int] = [:]
+    /// Prices she typed for suggested services, by key (none otherwise: prices are optional).
+    var servicePrices: [String: Decimal] = [:]
     var customServices: [DraftService] = []
     var clientTerm: ClientTerm = .client
     var vocabulary: [VocabularyTerm] = []

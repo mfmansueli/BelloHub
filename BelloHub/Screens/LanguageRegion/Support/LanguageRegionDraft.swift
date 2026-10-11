@@ -16,6 +16,8 @@ struct LanguageRegionDraft: Equatable, Sendable {
     var firstWeekday: Int?
     var use24Hour: Bool?
     var bookingLocaleIDs: [String]
+    /// What she calls the people she serves (chosen here since the setup no longer asks, routine-a item 3).
+    var clientTerm: ClientTerm = .client
 
     init(profile: ProfessionalProfile) {
         regionCode = profile.regionCode
@@ -24,6 +26,7 @@ struct LanguageRegionDraft: Equatable, Sendable {
         firstWeekday = profile.firstWeekday
         use24Hour = profile.use24Hour
         bookingLocaleIDs = profile.bookingLocaleIDs
+        clientTerm = profile.clientTerm
     }
 
     init(
@@ -47,6 +50,7 @@ struct LanguageRegionDraft: Equatable, Sendable {
         updated.firstWeekday = firstWeekday
         updated.use24Hour = use24Hour
         updated.bookingLocaleIDs = bookingLocaleIDs
+        updated.clientTerm = clientTerm
         return updated
     }
 }

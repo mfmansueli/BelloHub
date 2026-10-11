@@ -25,29 +25,35 @@ struct OnboardingSuggestionsTests {
         #expect(OnboardingSuggestions.tags(for: [], in: catalog).isEmpty)
     }
 
-    @Test("Adding a profession brings its preselected services and keeps her picks")
+    @Test("The first service is the first preselected service of her first profession")
+    func firstService() {
+        #expect(OnboardingSuggestions.firstService(for: [.esthetician], in: catalog)?.key == "est.glow")
+        #expect(OnboardingSuggestions.firstService(for: [.hair, .esthetician], in: catalog)?.key == "hair.cut")
+        #expect(OnboardingSuggestions.firstService(for: [], in: catalog) == nil)
+    }
+
+    @Test("With nothing chosen yet, choosing a profession picks only its first service")
+    func firstProfession() {
+        let result = OnboardingSuggestions.reconciledServices(
+            selected: [], firstKey: nil, current: [.esthetician], in: catalog
+        )
+        #expect(result.selected == ["est.glow"] && result.firstKey == "est.glow")
+    }
+
+    @Test("Adding a profession keeps her picks and her first service and switches nothing else on")
     func addProfession() {
-        let result = OnboardingSuggestions.reconciledServiceKeys(
-            selected: ["est.peel"], previous: [.esthetician], current: [.esthetician, .hair], in: catalog
+        let result = OnboardingSuggestions.reconciledServices(
+            selected: ["est.glow", "est.peel"], firstKey: "est.glow", current: [.esthetician, .hair], in: catalog
         )
-        #expect(result == ["est.peel", "hair.cut", "shared.consult"])
+        #expect(result.selected == ["est.glow", "est.peel"] && result.firstKey == "est.glow")
     }
 
-    @Test("Removing a profession takes its picks with it, but not a service another one still offers")
+    @Test("Removing her first profession moves the first service on and takes its picks with it")
     func removeProfession() {
-        let result = OnboardingSuggestions.reconciledServiceKeys(
-            selected: ["est.glow", "hair.cut", "shared.consult"], previous: [.esthetician, .hair], current: [.hair],
-            in: catalog
+        let result = OnboardingSuggestions.reconciledServices(
+            selected: ["est.glow", "hair.cut", "shared.consult"], firstKey: "est.glow", current: [.hair], in: catalog
         )
-        #expect(result == ["hair.cut", "shared.consult"])
-    }
-
-    @Test("A service she switched off stays off when another profession is added")
-    func respectsDeselection() {
-        let result = OnboardingSuggestions.reconciledServiceKeys(
-            selected: [], previous: [.esthetician], current: [.esthetician, .other], in: catalog
-        )
-        #expect(result == ["other.session"])
+        #expect(result.selected == ["hair.cut", "shared.consult"] && result.firstKey == "hair.cut")
     }
 
     @Test("Tags follow the same rule")

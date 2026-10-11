@@ -92,6 +92,10 @@ final class LanguageRegionViewModel {
         draft.use24Hour = value
     }
 
+    func setClientTerm(_ term: ClientTerm) {
+        draft.clientTerm = term
+    }
+
     func togglePageLanguage(_ localization: AppLocalization) {
         draft = LanguageRegionRules.toggling(localization, in: draft)
     }
