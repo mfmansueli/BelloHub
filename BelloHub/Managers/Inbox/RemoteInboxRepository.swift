@@ -136,27 +136,6 @@ struct RemoteInboxRepository: InboxRepository {
         let _: CountAnswer = try await perform("markNoShow", NoShowRequest(phone: phone, action: "reset"))
     }
 
-    func cancelBookingByOwner(id: String) async throws {
-        let _: CancelAnswer = try await perform("cancelBookingByOwner", BookingIDRequest(bookingId: id))
-    }
-
-    func moveBookingByOwner(id: String, startsAt: Date) async throws {
-        let _: MoveAnswer = try await perform("moveBookingByOwner", MoveRequest(bookingId: id, startsAt: startsAt))
-    }
-
-    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
-        let request = NoShowRequest(
-            phone: phone, action: "mark", markId: markId.uuidString.lowercased(), markedAt: markedAt,
-            bookingId: bookingId
-        )
-        let _: CountAnswer = try await perform("markNoShow", request)
-    }
-
-    func forgiveNoShow(phone: String, markId: UUID) async throws {
-        let request = NoShowRequest(phone: phone, action: "forgive", markId: markId.uuidString.lowercased())
-        let _: CountAnswer = try await perform("markNoShow", request)
-    }
-
     func mailboxItem(id: String) async throws -> MailboxItem {
         let answer: MailboxItemAnswer = try await perform("getMailboxItem", ItemIDRequest(itemId: id))
         return MailboxItem(
@@ -338,4 +317,31 @@ struct RemoteInboxRepository: InboxRepository {
     private struct DeletedAnswer: Decodable { let deleted: [String: Int] }
 
     private struct Acknowledged: Decodable { let ok: Bool }
+}
+
+// MARK: - Her changes to link visits
+
+/// `cancelBookingByOwner`, `moveBookingByOwner` and `markNoShow` (API.md 6.3), sent by the `OutboundQueue` when she
+/// changes a link visit in the app, so the booking, the client's manage page and the waitlist follow.
+extension RemoteInboxRepository {
+    func cancelBookingByOwner(id: String) async throws {
+        let _: CancelAnswer = try await perform("cancelBookingByOwner", BookingIDRequest(bookingId: id))
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        let _: MoveAnswer = try await perform("moveBookingByOwner", MoveRequest(bookingId: id, startsAt: startsAt))
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        let request = NoShowRequest(
+            phone: phone, action: "mark", markId: markId.uuidString.lowercased(), markedAt: markedAt,
+            bookingId: bookingId
+        )
+        let _: CountAnswer = try await perform("markNoShow", request)
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {
+        let request = NoShowRequest(phone: phone, action: "forgive", markId: markId.uuidString.lowercased())
+        let _: CountAnswer = try await perform("markNoShow", request)
+    }
 }

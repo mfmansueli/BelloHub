@@ -41,9 +41,9 @@ final class BookingSyncService: LinkVisitChangeReporting {
     @ObservationIgnored let repository: any InboxRepository
     @ObservationIgnored let queue: OutboundQueue
     @ObservationIgnored private let appointments: AppointmentService
-    @ObservationIgnored private let vault: VaultService
+    @ObservationIgnored let vault: VaultService
     @ObservationIgnored private let defaults: UserDefaults
-    @ObservationIgnored private let now: @Sendable () -> Date
+    @ObservationIgnored let now: @Sendable () -> Date
     @ObservationIgnored private let pollInterval: Duration?
     @ObservationIgnored private let sleeper: @Sendable (Duration) async throws -> Void
     @ObservationIgnored private var userID: String?
@@ -52,12 +52,8 @@ final class BookingSyncService: LinkVisitChangeReporting {
     @ObservationIgnored private var observerToken: UUID?
     /// A sync was asked for while one ran (a push during the poll): one more pass follows, so the newer change is read.
     @ObservationIgnored private var needsAnotherPass = false
-    /// Counts her own link-visit changes and the server's answers to them, so an import can tell a server read that
-    /// started before one of them (stale for that booking) from one that started after.
-    @ObservationIgnored private var changeClock = 0
-    @ObservationIgnored private var lastLocalChange: [String: Int] = [:]
-    /// Bookings the server no longer has (purged, deleted): not looked up again in this session.
-    @ObservationIgnored private var goneBookingIDs: Set<String> = []
+    /// Her own link-visit changes, so a server read older than one of them never undoes it (+LinkVisits).
+    @ObservationIgnored var ledger = LinkChangeLedger()
 
     init(
         repository: any InboxRepository,
@@ -124,8 +120,7 @@ final class BookingSyncService: LinkVisitChangeReporting {
         isLoading = true
         isSyncing = false
         needsAnotherPass = false
-        lastLocalChange = [:]
-        goneBookingIDs = []
+        ledger = LinkChangeLedger()
     }
 
     /// Sign-out: the cache and the queue of that user leave the phone.
@@ -167,7 +162,7 @@ final class BookingSyncService: LinkVisitChangeReporting {
 
     private func syncPass(userID: String) async {
         let since = now().addingTimeInterval(-Self.lookBack)
-        let startedAt = changeClock
+        let startedAt = ledger.tick
         do {
             async let bookings = repository.bookings(uid: userID, since: since)
             async let requests = repository.rescheduleRequests(uid: userID)
@@ -229,75 +224,6 @@ final class BookingSyncService: LinkVisitChangeReporting {
         } catch {
             errorMessage = Self.text(for: error)
         }
-    }
-
-    /// The bookings of visits that still hold time but were not in the list: read one by one, a few per pass.
-    private func lookUpMissing(
-        linked: [Appointment], listed: [IncomingBooking], userID: String
-    ) async -> [IncomingBooking] {
-        let listedIDs = Set(listed.map(\.id))
-        let horizon = now().addingTimeInterval(-Self.lookBack)
-        let missing = Set(linked.compactMap { visit -> String? in
-            guard let id = visit.bookingID, visit.status.holdsTime, visit.endsAt > horizon,
-                  !listedIDs.contains(id), !goneBookingIDs.contains(id) else { return nil }
-            return id
-        })
-        var found: [IncomingBooking] = []
-        for id in missing.sorted().prefix(Self.lookUpLimit) {
-            // One read that fails (the network dropped) waits for the next pass; it never stops the import.
-            guard let answer = try? await repository.booking(uid: userID, id: id) else { continue }
-            if let booking = answer {
-                found.append(booking)
-            } else {
-                goneBookingIDs.insert(id)
-            }
-        }
-        return found
-    }
-
-    /// Bookings whose server state this read may not show yet: a change of hers still queued, or one whose answer
-    /// came after the read started.
-    private func heldLocally(since readStartedAt: Int) -> Set<String> {
-        let queued = queue.pending.compactMap(\.kind.changedBookingID)
-        let newer = lastLocalChange.filter { $0.value > readStartedAt }.keys
-        return Set(queued).union(newer)
-    }
-
-    // MARK: - Her changes to link visits
-
-    /// Sends a change she made to a link visit to the server, through the queue (so it also leaves when the network
-    /// comes back, and after a relaunch).
-    func linkVisitChanged(_ change: LinkVisitChange) {
-        noteLocalChange(change.bookingID)
-        switch change {
-        case .cancelled(let bookingID):
-            queue.enqueue(.cancelBookingByOwner(bookingId: bookingID))
-        case .moved(let bookingID, let startsAt):
-            queue.enqueue(.moveBookingByOwner(bookingId: bookingID, startsAt: startsAt))
-        case .noShow(let bookingID, let clientID, let markID, let markedAt, let forgiven):
-            Task {
-                guard let phone = await phone(bookingID: bookingID, clientID: clientID) else { return }
-                queue.enqueue(.markNoShow(bookingId: bookingID, phone: phone, markId: markID, markedAt: markedAt))
-                if forgiven { queue.enqueue(.forgiveNoShow(bookingId: bookingID, phone: phone, markId: markID)) }
-            }
-        case .noShowForgiven(let bookingID, let clientID, let markID):
-            Task {
-                guard let phone = await phone(bookingID: bookingID, clientID: clientID) else { return }
-                queue.enqueue(.forgiveNoShow(bookingId: bookingID, phone: phone, markId: markID))
-            }
-        }
-    }
-
-    /// The phone the server counts no-shows by: the booking's, else the one on her client record.
-    private func phone(bookingID: String, clientID: UUID) async -> String? {
-        if let phone = snapshot.booking(id: bookingID)?.client.phone, !phone.isEmpty { return phone }
-        let client = try? await vault.repository?.client(id: clientID)
-        return client?.phoneE164.flatMap { $0.isEmpty ? nil : $0 }
-    }
-
-    private func noteLocalChange(_ bookingID: String) {
-        changeClock += 1
-        lastLocalChange[bookingID] = changeClock
     }
 
     // MARK: - Answers
@@ -377,7 +303,7 @@ final class BookingSyncService: LinkVisitChangeReporting {
         case (let kind, let outcome) where kind.changedBookingID != nil:
             // Taken, or refused for good (the booking had already changed there): the server now holds the truth.
             // Read it, and do not trust a read that started before this answer.
-            if let bookingID = kind.changedBookingID { noteLocalChange(bookingID) }
+            if let bookingID = kind.changedBookingID { ledger.noteChange(of: bookingID) }
             if case .failed(let failure) = outcome { lastFailure = failure }
             syncNow()
         case (_, .failed(let failure)):
@@ -421,9 +347,11 @@ final class BookingSyncService: LinkVisitChangeReporting {
         change(&snapshot.rescheduleRequests[index])
         persist()
     }
+}
 
-    // MARK: - Cache
+// MARK: - Cache
 
+extension BookingSyncService {
     private func persist() {
         guard let userID else { return }
         defaults.set(try? JSONEncoder().encode(snapshot), forKey: Self.key(userID))

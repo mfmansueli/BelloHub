@@ -28,10 +28,10 @@ struct RemoteInboxRepositoryTests {
         return FakeFirestoreClient.Row(id: id, startsAt: startsAt, json: json)
     }
 
-    private func make() -> (RemoteInboxRepository, FakeCallableClient, FakeFirestoreClient) {
+    private struct Rig {
         let client = FakeCallableClient()
         let firestore = FakeFirestoreClient()
-        return (RemoteInboxRepository(client: client, firestore: firestore), client, firestore)
+        var repository: RemoteInboxRepository { RemoteInboxRepository(client: client, firestore: firestore) }
     }
 
     @Test("More bookings than one page all arrive, each once, even when several share a start")
