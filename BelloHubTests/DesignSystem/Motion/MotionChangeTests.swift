@@ -65,63 +65,61 @@ struct MotionChangeTests {
 
     @Test("The change between two lists counts what came, what went and a pure reorder")
     func rowChange() {
-        #expect(MotionChange.rowChange(from: [1, 2, 3], to: [1, 2, 3]).isNone)
-        #expect(MotionChange.rowChange(from: [1, 2, 3], to: [1, 2, 3, 4]) == .init(inserted: 1, removed: 0, isReorder: false))
-        #expect(MotionChange.rowChange(from: [1, 2, 3], to: [1, 3]) == .init(inserted: 0, removed: 1, isReorder: false))
-        #expect(MotionChange.rowChange(from: [1, 2, 3], to: [3, 2, 1]) == .init(inserted: 0, removed: 0, isReorder: true))
-        #expect(MotionChange.rowChange(from: [1, 2], to: [3, 4]) == .init(inserted: 2, removed: 2, isReorder: false))
+        typealias Change = MotionChange.RowChange
+        func change(_ old: [Int], _ new: [Int]) -> Change { MotionChange.rowChange(from: old, to: new) }
+        #expect(change([1, 2, 3], [1, 2, 3]).isNone)
+        #expect(change([1, 2, 3], [1, 2, 3, 4]) == Change(inserted: 1, removed: 0, isReorder: false))
+        #expect(change([1, 2, 3], [1, 3]) == Change(inserted: 0, removed: 1, isReorder: false))
+        #expect(change([1, 2, 3], [3, 2, 1]) == Change(inserted: 0, removed: 0, isReorder: true))
+        #expect(change([1, 2], [3, 4]) == Change(inserted: 2, removed: 2, isReorder: false))
     }
 
-    private func snapshot(_ ids: [Int], context: Int = 0) -> MotionChange.RowSnapshot<Int> {
-        MotionChange.RowSnapshot(ids: ids, context: context)
+    /// Whether going from `old` to `new` plays an animation, as `motionRows` asks.
+    private func animates(
+        _ old: [Int]?, _ new: [Int], oldContext: Int = 0, newContext: Int = 0, ready: Bool = true,
+        policy: MotionPolicy? = nil
+    ) -> Bool {
+        let before = old.map { MotionChange.RowSnapshot(ids: $0, context: oldContext) }
+        let after = MotionChange.RowSnapshot(ids: new, context: newContext)
+        return MotionChange.rowsAnimation(before: before, after: after, isReady: ready, policy: policy ?? normal) != nil
     }
 
     @Test("A row that is added or removed animates")
     func insertAndRemove() {
-        let before = snapshot([1, 2, 3])
-        #expect(MotionChange.rowsAnimation(before: before, after: snapshot([1, 2, 3, 4]), isReady: true, policy: normal) != nil)
-        #expect(MotionChange.rowsAnimation(before: before, after: snapshot([1, 3]), isReady: true, policy: normal) != nil)
+        #expect(animates([1, 2, 3], [1, 2, 3, 4]))
+        #expect(animates([1, 2, 3], [1, 3]))
     }
 
     @Test("A load never animates: not ready, or the first list the view sees")
     func loadNeverAnimates() {
-        let after = snapshot(Array(1...5))
-        #expect(MotionChange.rowsAnimation(before: nil, after: after, isReady: true, policy: normal) == nil)
-        #expect(MotionChange.rowsAnimation(before: snapshot([]), after: after, isReady: false, policy: normal) == nil)
+        #expect(!animates(nil, Array(1...5)))
+        #expect(!animates([], Array(1...5), ready: false))
     }
 
     @Test("A different context (another day, another filter) is another list and does not animate")
     func contextChange() {
-        let before = snapshot([1, 2, 3], context: 1)
-        #expect(MotionChange.rowsAnimation(before: before, after: snapshot([1, 2], context: 2), isReady: true, policy: normal) == nil)
+        #expect(!animates([1, 2, 3], [1, 2], oldContext: 1, newContext: 2))
     }
 
     @Test("Too many changes at once (a sync, an import) do not animate")
     func bulkChangeDoesNotAnimate() {
-        let before = snapshot(Array(1...30))
-        let after = snapshot(Array(1...30) + Array(100...120))
-        #expect(MotionChange.rowsAnimation(before: before, after: after, isReady: true, policy: normal) == nil)
-        let atTheLimit = snapshot(Array(1...30) + Array(100..<(100 + MotionChange.maxAnimatedRowChanges)))
-        #expect(MotionChange.rowsAnimation(before: before, after: atTheLimit, isReady: true, policy: normal) != nil)
+        let old = Array(1...30)
+        #expect(!animates(old, old + Array(100...120)))
+        #expect(animates(old, old + Array(100..<(100 + MotionChange.maxAnimatedRowChanges))))
     }
 
     @Test("Nothing changed means nothing animates, and a reorder animates only in a short list")
     func reorderAndNoChange() {
-        let before = snapshot([1, 2, 3])
-        #expect(MotionChange.rowsAnimation(before: before, after: before, isReady: true, policy: normal) == nil)
-        #expect(MotionChange.rowsAnimation(before: before, after: snapshot([3, 2, 1]), isReady: true, policy: normal) != nil)
+        #expect(!animates([1, 2, 3], [1, 2, 3]))
+        #expect(animates([1, 2, 3], [3, 2, 1]))
         let long = Array(1...(MotionChange.maxAnimatedReorderCount + 1))
-        #expect(MotionChange.rowsAnimation(
-            before: snapshot(long), after: snapshot(long.reversed()), isReady: true, policy: normal
-        ) == nil)
+        #expect(!animates(long, long.reversed()))
     }
 
     @Test("UI testing keeps rows instant, Reduce Motion fades them")
     func rowsUnderPolicies() {
-        let before = snapshot([1, 2])
-        let after = snapshot([1])
-        #expect(MotionChange.rowsAnimation(before: before, after: after, isReady: true, policy: testing) == nil)
-        #expect(MotionChange.rowsAnimation(before: before, after: after, isReady: true, policy: reduced) != nil)
+        #expect(!animates([1, 2], [1], policy: testing))
+        #expect(animates([1, 2], [1], policy: reduced))
         #expect(MotionChange.rowStyle(policy: normal) == .slideAndFade)
         #expect(MotionChange.rowStyle(policy: reduced) == .fade)
         #expect(MotionChange.rowStyle(policy: testing) == .none)

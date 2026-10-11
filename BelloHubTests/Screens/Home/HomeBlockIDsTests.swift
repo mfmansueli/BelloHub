@@ -59,7 +59,7 @@ struct HomeBlockIDsTests {
             digest: digest([first, second], clients: [ana]), pending: noPending, reachOut: noReachOut
         )
         var cancelled = second
-        cancelled.status = .cancelledByPro
+        cancelled.status = .cancelled
         let after = HomeBlockIDs.make(
             digest: digest([first, cancelled], clients: [ana]), pending: noPending, reachOut: noReachOut
         )

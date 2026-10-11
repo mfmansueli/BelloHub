@@ -30,6 +30,15 @@ struct LaunchOptions: Equatable {
     /// `-uiReduceMotion` runs the app as with Reduce Motion on: the design system's motion kit stands still (the same
     /// switch `-uiTesting` sets) and SwiftUI animations are off.
     var uiReduceMotion = false
+    /// `-uiAnimate` (with `-uiTesting`) keeps the app's animations on, so a UI test can walk the animated paths (rows
+    /// entering and leaving, the day sliding, the capture flash) and see that nothing blocks or breaks. Without it a
+    /// UI test never races an animation.
+    var keepsAnimations = false
+
+    /// Whether the motion kit stands still: every UI test launch, unless it asked to animate, and `-uiReduceMotion`.
+    var isMotionOff: Bool {
+        (isUITesting && !keepsAnimations) || uiReduceMotion
+    }
     /// A UI test launch starts from nothing (a fresh vault in memory, empty defaults) unless it asks to keep what
     /// the previous launch left, which is how a test relaunches the app.
     var keepsState = false
@@ -81,6 +90,7 @@ struct LaunchOptions: Equatable {
         uiDark = arguments.contains("-uiDark")
         uiIncreaseContrast = arguments.contains("-uiIncreaseContrast")
         uiReduceMotion = arguments.contains("-uiReduceMotion")
+        keepsAnimations = arguments.contains("-uiAnimate")
         keepsState = arguments.contains("-uiKeepState")
         seed = Self.value(after: "-uiSeed", in: arguments)
         biometricsMode = Self.value(after: "-uiBiometrics", in: arguments)

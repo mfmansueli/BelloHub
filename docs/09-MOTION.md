@@ -99,3 +99,69 @@ The client web app has the same motion language (CSS custom properties `--ease`,
 ## 7. Tests
 
 Unit-test the pure parts (stagger delay function, phase timing table, "should animate" decision matrix with Reduce Motion/Low Power/UI testing). A UI test with Reduce Motion enabled confirms the final state is present immediately (`waitForExistence` with a 1 s timeout). A Previews file in the Design Catalog replays each motion with a button.
+
+## 8. Added 2026-10-12 (owner approved, "Motion 1 to 5")
+
+Five additions to the kit, all through the same tokens and `MotionPolicy` (`DesignSystem/Motion/MotionChange.swift` holds
+every decision, pure and tested; the modifiers only read it). Values added to `Motion`: `Duration.change` 0.3 s,
+`Duration.reducedFade` 0.2 s, `Duration.flash` 0.12 s, `slideOffset` 24 pt, `flashOpacity` 0.2. The soft overshoot is
+still used only by the success circle.
+
+| Setting | What these additions do |
+|---|---|
+| Normal | `ease(0.3)` for changes in place, rows and settles; `ease(0.28)` for fades |
+| Reduce Motion | numbers and rows crossfade (≤ 0.2 s); a block that changes place just is there; no slide, no flash; haptics stay |
+| `-uiTesting`, `-uiReduceMotion` | no animation at all (the root also sets `isMotionDisabled`); `-uiAnimate` (DEBUG) keeps them on in a UI test so the animated paths can be exercised |
+
+### 8.1 Numbers and times that change flow
+`.motionNumber(value, countsDown:)`: `.contentTransition(.numericText(countsDown:))` plus `.animation(ease(0.3), value:)`.
+It animates only when the value changes: the first text a view shows is never animated from zero (the arrival handles
+that) and an unchanged value stays still. Reduce Motion: `.contentTransition(.opacity)` with `easeOut(0.2)`. Used on the
+Home counters (`HomeCountRow`), the "in 1 h 20 min" countdown (counts down) and the time of the next-visit card, "x left"
+of the rest of today, the week-glance tiles (`InsightTile`) and day counts (the bar glides with `motionSettle`), the Clients
+count and the "not back" strip, the follow-up filter counts and "set aside" count, the registration counter, the import
+plan figures, the session-plan steppers, the duration of New appointment and the Continue button of the Plan screen
+(monthly to yearly). Not in the treatment flow's steps.
+
+### 8.2 Rows that enter and leave
+`.motionRows(ids:context:isReady:)` on the container and `.motionRow()` on each row: a row enters from above with a fade
+and leaves with a fade and a slide (`.opacity` combined with `.move(edge: .top)`), the others close the gap, all with
+`ease(0.3)`. Only inserted and removed identities animate (`MotionChange.rowsAnimation`): never while loading (`isReady`),
+never for the first list a view sees, never when the `context` changes (another day, another filter: it is another
+list), never when more than 12 identities change at once (a sync or an import), and a reorder alone only in a list of at
+most 60. Reduce Motion: a 0.2 s crossfade; UI tests: instant. VoiceOver: when rows left, a `LayoutChanged` notification
+is posted so the focus never stays on a row that is gone. Where: Home (hero, Today, rest of today, reach-out), Alerts and
+inbox cards, the follow-up queue (snooze, dismiss, mark as sent, restore), the waitlist, the calendar day (timeline and
+agenda list), the week (grid and list), and the Clients `List` (add and delete, with the list's own row animation under
+the same curve; search, filters and loads are other contexts).
+
+### 8.3 Confirmations you can feel
+`SuccessSeal` (unchanged: pop 0.62 s with the soft overshoot after 0.1 s, check drawn in 0.5 s after 0.38 s, one ring,
+`.success` haptic at the peak) now also confirms: the saved step of the treatment flow (size 56 above the badge). A brief
+seal (`.confirmationSeal(whenIncreases:)`, `.confirmationSeal(whenTrue:)`, 56 pt, top of the screen, 1.5 s, fades in 0.28 s,
+never takes a touch, hidden from VoiceOver) confirms a photo saved (the photos step), a message marked as sent (the
+follow-up queue), an offer sent (the waitlist), and a booking or reschedule request accepted. The smaller inline
+variant, `InlineCheck` (a check that draws in 0.5 s beside a label, `.success` haptic once), is next to "opened WhatsApp"
+in the client message sheet and in the Save button of New client as it closes; Edit client has the haptic. Finishing the
+closing path gives a `.success` haptic (the flow closes at once, so no seal). `ConfirmationCue` decides when (a count
+that goes up, a flag that turns on, never the value a screen starts with). Reduce Motion: the check shows drawn at once,
+no pop, no ring; haptics stay.
+
+### 8.4 Camera and before/after
+`.captureFlash(trigger:)`: 20 % white over the whole camera screen, fading out in 0.12 s (`easeOut`), with `.impact(.medium)`
+at the shot. Reduce Motion and UI tests: no flash, the haptic stays. The framing reference fades in and out with its
+switch (`ease(0.28)`, a 0.2 s crossfade with Reduce Motion), and so do its guide text and the opacity slider. The
+before/after handle is the system slider (1:1 with the finger, adjustable and spoken by VoiceOver); on release it settles
+with `ease(0.3)` on an end or on the middle when it is within 6 % of an end or 4 % of 0.5 (`BeforeAfterSnap`), and stays
+where she left it otherwise.
+
+### 8.5 Calendar
+Changing the day or the week (arrows, strip, "Today", the date picker) brings the new content in from the side of travel:
+24 pt and a fade in 0.3 s, the old content fades (`DaySlide`, `.motionDaySlide(travel:)`; forward comes from the
+trailing edge, backward from the leading one, so Arabic mirrors through `Directional`; a mode switch has no direction and
+only crossfades). The skeleton to content swap crossfades (0.28 s). The selected-day chip is one indicator that slides
+between the days (`matchedGeometryEffect`, `ease(0.3)`); the "now" line (day and week) glides to its new place each minute; a visit
+that is rescheduled glides to its new slot and a visit whose neighbour left widens (`motionSettle`, `ease(0.3)`, the
+soft overshoot is not used). There is no drag-to-move gesture in the app (moving is the Reschedule sheet), so there is
+nothing to follow the finger; if one is added it must call the same settle. Time-of-day rules and business-zone logic are
+untouched (`docs/agent-notes/fix-reschedule-day.md`): only presentation changed.
