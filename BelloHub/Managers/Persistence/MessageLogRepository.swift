@@ -10,5 +10,7 @@ import Foundation
 protocol MessageLogRepository: Sendable {
     /// A client's entries, newest first.
     func messageLogs(for clientID: UUID) async throws -> [MessageLog]
+    /// Every client's entries opened at or after `since`, newest first (the follow-up queue's "conversation opened").
+    func messageLogs(since: Date) async throws -> [MessageLog]
     func save(_ log: MessageLog) async throws
 }

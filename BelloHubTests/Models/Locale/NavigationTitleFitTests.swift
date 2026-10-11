@@ -21,11 +21,10 @@ struct NavigationTitleFitTests {
 
     /// Screens whose title is large (explicitly, or by default in their navigation stack).
     static let largeTitleKeys = [
-        "account.title", "addOns.title", "aiSettings.title", "availability.title", "followUps.title",
+        "account.title", "addOns.title", "aiSettings.title", "availability.title", "followUpQueue.title",
         "integrations.title", "languageRegion.title", "main.tab.alerts", "main.tab.calendar", "main.tab.more",
         "notificationSettings.title", "plan.title", "products.title", "quickReplies.title", "recordTemplate.title",
-        "services.title", "shareLink.title", "tags.title", "team.title", "waitlist.title", "weekGlance.title",
-        "winBack.title"
+        "services.title", "shareLink.title", "tags.title", "team.title", "waitlist.title", "weekGlance.title"
     ]
 
     /// Screens and sheets with an inline title.

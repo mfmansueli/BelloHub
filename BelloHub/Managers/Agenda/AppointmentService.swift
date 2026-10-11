@@ -90,6 +90,18 @@ final class AppointmentService {
         }
     }
 
+    /// Records that she says she sent the reminder herself (routine-a item 6). The app never sees WhatsApp, so this is
+    /// her statement, kept apart from `reminderSentAt` (the chat was opened) and shown as "marked as sent by you".
+    @discardableResult
+    func markReminderSentByHer(id: UUID, now: Date = Date()) async throws -> Appointment {
+        try await change(id) {
+            var visit = $0
+            visit.reminderMarkedSentAt = now
+            visit.updatedAt = now
+            return visit
+        }
+    }
+
     // MARK: - Private
 
     private func change(_ id: UUID, _ transition: (Appointment) -> Appointment) async throws -> Appointment {

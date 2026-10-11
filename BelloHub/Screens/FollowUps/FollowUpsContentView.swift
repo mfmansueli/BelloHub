@@ -5,13 +5,17 @@
 
 import SwiftUI
 
-/// The body of Follow-ups: one card per client whose return date has arrived (Message, Book) and the birthdays of the
-/// week (Send wishes). Every message opens as a sheet with the text ready; nothing is sent by the app (D14).
+/// The body of the follow-up queue (routine-a items 5, 6 and 12): booking requests kept apart with the way to Alerts,
+/// the filters, one card per client with every reason she is here, the suggestions she set aside, and a footer that
+/// says where the suggestions come from and that she decides. Every message opens as a sheet with the text ready;
+/// nothing is sent by the app (D14). Empty, loading and error states are `ScreenStateView`'s.
 struct FollowUpsContentView: View {
     @State private var viewModel: FollowUpsViewModel
     @State private var agendaSheet: AgendaSheet?
+    @State private var treatment: TreatmentFlowRequest?
+    @Environment(MessageService.self) private var messages
+    @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
-    @Environment(\.dynamicTypeSize) private var typeSize
 
     init(viewModel: FollowUpsViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -23,9 +27,10 @@ struct FollowUpsContentView: View {
         ScrollView {
             TimelineView(.everyMinute) { context in
                 VStack(alignment: .leading, spacing: Spacing.row) {
-                    Text("followUps.subtitle")
+                    Text("followUpQueue.subtitle")
                         .font(Typography.body).foregroundStyle(Palette.ink2)
                         .accessibilityIdentifier("followUps.subtitle")
+                    requests(count: viewModel.requestCount(now: context.date))
                     ScreenStateView(
                         phase: viewModel.phase(now: context.date), prefix: "followUps", retry: viewModel.retry
                     ) {
@@ -34,7 +39,7 @@ struct FollowUpsContentView: View {
                         )
                         .accessibilityIdentifier("followUps.empty")
                     } content: {
-                        sections(viewModel.list(now: context.date), now: context.date)
+                        sections(viewModel.queue(now: context.date))
                     }
                 }
             }
@@ -42,100 +47,101 @@ struct FollowUpsContentView: View {
             .padding(.bottom, Spacing.lg)
         }
         .background(Palette.bg)
-        .navigationTitle(Text("followUps.title"))
+        .navigationTitle(Text("followUpQueue.title"))
         .navigationBarTitleDisplayMode(.large)
         .refreshable { await viewModel.refreshAsync() }
         .task { viewModel.start() }
+        .onChange(of: messages.recentlyOpened) { viewModel.chatsChanged() }
         .agendaSheet(item: $agendaSheet)
+        .treatmentFlow(item: $treatment)
     }
 
     // MARK: - Sections
 
     @ViewBuilder
-    private func sections(_ list: FollowUpsList, now: Date) -> some View {
-        ForEach(list.due) { row in dueCard(row) }
-        if !list.birthdays.isEmpty {
-            SectionHeader(title: "followUps.birthdays.title")
-            ListCard(dividerInset: Spacing.md) {
-                ForEach(list.birthdays) { row in birthdayRow(row) }
+    private func sections(_ queue: FollowUpQueue) -> some View {
+        filters(queue)
+        if let message = viewModel.errorMessage {
+            ErrorNotice(message: message).accessibilityIdentifier("followUps.error")
+        }
+        let rows = queue.rows(viewModel.filter)
+        if rows.isEmpty {
+            Text("followUpQueue.filterEmpty")
+                .font(Typography.body).foregroundStyle(Palette.ink2)
+                .padding(.vertical, Spacing.md)
+                .accessibilityIdentifier("followUps.filterEmpty")
+        }
+        ForEach(rows) { row in card(row) }
+        let aside = queue.setAside(viewModel.filter)
+        if !aside.isEmpty { setAside(aside) }
+        FooterNote(text: "followUpQueue.footer", icon: .info).padding(.top, Spacing.xs)
+    }
+
+    /// Booking requests need a decision about the agenda, so they are never mixed into the queue: one labelled line
+    /// that opens Alerts, where they are answered.
+    @ViewBuilder
+    private func requests(count: Int) -> some View {
+        if count > 0 {
+            ListCard(dividerInset: 72) {
+                Button { navigation?.selection = .alerts } label: {
+                    HomeCountRow(
+                        icon: .calendar, tone: .sage, title: Text("home.today.requests"),
+                        subtitle: Text("home.today.requests.subtitle"), count: formatters.number(count)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("followUps.requests")
             }
         }
     }
 
-    private func dueCard(_ row: FollowUpsList.DueRow) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.row) {
-            HStack(spacing: Spacing.row) {
-                Avatar(name: row.client.name, id: row.client.id.uuidString, size: 52)
-                VStack(alignment: .leading, spacing: Spacing.xxs) {
-                    Text(verbatim: row.client.name)
-                        .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-                    Text(verbatim: "\(row.followUp.serviceName) · "
-                         + formatters.daysAgo(row.followUp.daysSinceLastVisit))
-                        .font(Typography.meta).foregroundStyle(Palette.ink2)
+    private func filters(_ queue: FollowUpQueue) -> some View {
+        FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm) {
+            ForEach(FollowUpFilter.allCases) { filter in
+                let count = queue.count(filter)
+                Button { viewModel.filter = filter } label: {
+                    HStack(spacing: Spacing.xs) {
+                        Text(filter.label)
+                        Text(verbatim: formatters.number(count))
+                    }
                 }
-                Spacer(minLength: 0)
+                .buttonStyle(.belloChip(selected: viewModel.filter == filter))
+                .accessibilityAddTraits(viewModel.filter == filter ? .isSelected : [])
+                .accessibilityIdentifier("followUps.filter.\(filter.rawValue)")
             }
-            .accessibilityElement(children: .combine)
-            .accessibilityIdentifier("followUps.row.\(row.client.id.uuidString)")
-            Text(LocalizedStringResource(
-                "followUps.row.dueSince",
-                defaultValue: "Return due since \(formatters.weekdayDayMonth(row.followUp.dueSince))"
-            ).localized(in: locale))
-                .font(Typography.footnote).foregroundStyle(Palette.ink2)
-            actions(row)
-        }
-        .padding(Spacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .belloCard()
-    }
-
-    private func actions(_ row: FollowUpsList.DueRow) -> some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return layout {
-            Button { agendaSheet = .clientMessage(viewModel.message(for: row)) } label: {
-                if viewModel.wasOpened(row.client.id) {
-                    Label { Text("followUps.message.opened") } icon: { Image(icon: .check) }
-                } else {
-                    Text("followUps.message")
-                }
-            }
-            .buttonStyle(.belloSecondary)
-            .accessibilityIdentifier("followUps.message.\(row.client.id.uuidString)")
-            Button { agendaSheet = .newAppointment(clientID: row.client.id, startsAt: nil) } label: {
-                Text("followUps.book")
-            }
-            .buttonStyle(.belloPrimary)
-            .accessibilityIdentifier("followUps.book.\(row.client.id.uuidString)")
         }
     }
 
-    private func birthdayRow(_ row: FollowUpsList.BirthdayRow) -> some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.row))
-        return layout {
-            HStack(spacing: Spacing.row) {
-                Avatar(name: row.client.name, id: row.client.id.uuidString, size: 44)
-                VStack(alignment: .leading, spacing: Spacing.xxs) {
-                    Text(verbatim: row.client.name)
-                        .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
-                    Text(verbatim: row.birthday.isToday
-                         ? LocalizedStringResource("appointment.today").resolved(in: locale)
-                         : formatters.weekdayDayMonth(row.birthday.date))
-                        .font(Typography.footnote).foregroundStyle(Palette.ink2)
-                }
-                if !typeSize.isAccessibilitySize { Spacer(minLength: Spacing.sm) }
+    private func card(_ row: FollowUpQueue.Row, isSetAside: Bool = false) -> some View {
+        FollowUpRowCard(
+            row: row, formatters: formatters, isSetAside: isSetAside,
+            onAction: perform, onBook: { agendaSheet = .newAppointment(clientID: $0, startsAt: nil) },
+            onMarkSent: viewModel.markSent, onSnooze: viewModel.snooze, onDismiss: viewModel.dismiss,
+            onRestore: viewModel.restore, onFinishClosing: viewModel.finishClosing
+        )
+    }
+
+    private func setAside(_ rows: [FollowUpQueue.Row]) -> some View {
+        DisclosureGroup(isExpanded: $viewModel.showsSetAside) {
+            VStack(spacing: Spacing.row) {
+                ForEach(rows) { row in card(row, isSetAside: true) }
             }
-            .accessibilityElement(children: .combine)
-            Button { agendaSheet = .clientMessage(viewModel.wishes(for: row)) } label: {
-                Text("followUps.wishes")
+            .padding(.top, Spacing.sm)
+        } label: {
+            HStack(spacing: Spacing.xs) {
+                Text("followUpQueue.setAside").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                Text(verbatim: formatters.number(rows.count)).font(Typography.meta).foregroundStyle(Palette.ink2)
             }
-            .buttonStyle(.belloChip(selected: false))
-            .accessibilityIdentifier("followUps.wishes.\(row.client.id.uuidString)")
         }
-        .padding(Spacing.md)
-        .frame(minHeight: 64)
+        .tint(Palette.ink)
+        .padding(.top, Spacing.sm)
+        .accessibilityIdentifier("followUps.setAside")
+    }
+
+    private func perform(_ action: FollowUpAction) {
+        switch action {
+        case .sheet(let sheet): agendaSheet = sheet
+        case .resumeVisit(let request): treatment = request
+        }
     }
 }

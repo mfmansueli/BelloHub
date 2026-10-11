@@ -34,6 +34,7 @@ struct RootView: View {
     @State private var clientDeletion: ClientDataDeletionService
     @State private var language: InterfaceLanguageService
     @State private var navigation = MainNavigation()
+    @State private var followUpQueue: FollowUpQueueService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -68,6 +69,9 @@ struct RootView: View {
         _push = State(initialValue: dependencies.inbox.push)
         _clientDeletion = State(initialValue: dependencies.inbox.clientDeletion)
         _language = State(initialValue: dependencies.language)
+        _followUpQueue = State(initialValue: FollowUpQueueService(
+            defaults: dependencies.defaults, vault: dependencies.vault
+        ))
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -107,6 +111,7 @@ struct RootView: View {
         .environment(export)
         .environment(language)
         .environment(navigation)
+        .environment(followUpQueue)
         .belloLocaleTypography()
         // The interface language, above every stage, the privacy cover and the lock screen: sheets, alerts, menus and
         // full-screen covers inherit it, and a change re-renders what is open without losing its place.
@@ -136,7 +141,9 @@ struct RootView: View {
                 bookingSync.startListening(userId: userID)
                 mailbox.startListening(userId: userID)
                 push.startListening(userId: userID)
+                followUpQueue.start(userID: userID)
             } else if stage != .app {
+                followUpQueue.stop()
                 bookingSetup.clear()
                 publishing.clear()
                 agendaDigest.stopListening()

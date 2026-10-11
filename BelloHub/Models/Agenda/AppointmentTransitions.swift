@@ -19,6 +19,7 @@ enum AppointmentTransitions {
         moved.status = .booked
         moved.clientConfirmedAt = nil
         moved.reminderSentAt = nil
+        moved.reminderMarkedSentAt = nil
         moved.lateByMinutes = nil
         moved.updatedAt = now
         return moved

@@ -7,8 +7,8 @@
 import Foundation
 import Testing
 
-/// The ViewModels of Follow-ups, Win back and Alerts, with fakes for the phone's permission, settings and chats.
-@Suite("Follow-ups, Win back and Alerts view models")
+/// The ViewModels of the follow-up queue and Alerts, with fakes for the phone's permission, settings and chats.
+@Suite("Follow-up queue and Alerts view models")
 @MainActor
 struct ListViewModelsTests {
     private let settings = CalendarSettings(profile: nil, fallbackTimeZoneID: "America/Sao_Paulo")
@@ -32,62 +32,82 @@ struct ListViewModelsTests {
         return (world, digest)
     }
 
-    // MARK: - Follow-ups
+    // MARK: - Follow-up queue
 
-    @Test("Follow-ups builds its list and tells which clients she already wrote to")
-    func followUps() async throws {
-        let (world, digest) = try await makeWorld()
-        let messages = MessageService(vault: world.vault, sender: FakeMessageSender())
-        let model = FollowUpsViewModel(
-            settings: settings, digest: digest, bookingSetup: world.bookingSetup, messages: messages,
-            prefs: FixedNotificationPrefsStore()
-        )
-        let list = model.list(now: TestClock.now)
-        let row = try #require(list.due.first)
-
-        #expect(list.due.map(\.client.id) == [world.ana.id])
-        #expect(model.phase(now: TestClock.now) == .content)
-        let expected = ClientMessageRequest(clientID: world.ana.id, kind: .followUp(serviceName: "Glow Facial"))
-        #expect(model.message(for: row) == expected)
-        #expect(!model.wasOpened(world.ana.id))
-
-        await messages.send(text: "Hi", to: world.ana.id, phoneE164: "+5511981234410", template: "followUp")
-        #expect(model.wasOpened(world.ana.id))
-        digest.stopListening()
+    private func makeQueue(_ world: CalendarWorld) -> (FollowUpQueueService, String) {
+        let suite = "queue-vm-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite) ?? .standard
+        let queue = FollowUpQueueService(defaults: defaults, vault: world.vault, now: { TestClock.now })
+        queue.start(userID: "user-1")
+        return (queue, suite)
     }
 
-    @Test("Follow-ups is empty when nobody is due")
-    func followUpsEmpty() async throws {
-        let world = try await CalendarWorld.make()
-        let digest = AgendaDigestService(
-            appointments: world.appointments, timeBlocks: world.timeBlocks, vault: world.vault, now: { TestClock.now }
+    private func makeFollowUps(
+        _ world: CalendarWorld, digest: AgendaDigestService, queue: FollowUpQueueService, filter: FollowUpFilter = .all
+    ) -> FollowUpsViewModel {
+        FollowUpsViewModel(
+            settings: settings, digest: digest, bookingSetup: world.bookingSetup, queue: queue,
+            appointments: world.appointments, filter: filter, prefs: FixedNotificationPrefsStore(),
+            now: { TestClock.now }
         )
-        digest.startListening()
-        await Wait.untilMain { !digest.isLoading }
-        let model = FollowUpsViewModel(
-            settings: settings, digest: digest, bookingSetup: world.bookingSetup,
-            messages: MessageService(vault: world.vault, sender: FakeMessageSender()),
-            prefs: FixedNotificationPrefsStore()
-        )
-
-        #expect(model.phase(now: TestClock.now) == .empty)
-        digest.stopListening()
     }
 
-    // MARK: - Win back
-
-    @Test("Win back lists whoever is away and builds the win-back message request")
-    func winBack() async throws {
+    @Test("The queue keeps a client's return and win back on one row, the return first")
+    func queueGroups() async throws {
         let (world, digest) = try await makeWorld()
-        let model = WinBackViewModel(
-            settings: settings, digest: digest, bookingSetup: world.bookingSetup,
-            messages: MessageService(vault: world.vault, sender: FakeMessageSender()),
-            prefs: FixedNotificationPrefsStore()
-        )
-        let row = try #require(model.list(now: TestClock.now).rows.first)
+        let (queue, suite) = makeQueue(world)
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let model = makeFollowUps(world, digest: digest, queue: queue)
+        let row = try #require(model.queue(now: TestClock.now).rows.first)
 
         #expect(row.client.id == world.ana.id)
-        #expect(model.message(for: row) == ClientMessageRequest(clientID: world.ana.id, kind: .winBack))
+        #expect(row.items.map(\.kind) == [.returnDue, .notBack])
+        #expect(model.phase(now: TestClock.now) == .content)
+        #expect(FollowUpAction.primary(for: row.primary)
+                == .sheet(.clientMessage(ClientMessageRequest(clientID: world.ana.id,
+                                                              kind: .followUp(serviceName: "Glow Facial")))))
+        digest.stopListening()
+    }
+
+    @Test("Later, dismiss and her own mark of sending set a suggestion aside; bringing it back restores it")
+    func queueDecisions() async throws {
+        let (world, digest) = try await makeWorld()
+        let (queue, suite) = makeQueue(world)
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let model = makeFollowUps(world, digest: digest, queue: queue)
+        let row = try #require(model.queue(now: TestClock.now).rows.first)
+        let returnDue = row.items[0]
+        let notBack = row.items[1]
+
+        model.snooze(returnDue)
+        model.markSent(notBack)
+        let after = model.queue(now: TestClock.now)
+
+        #expect(after.rows.isEmpty)
+        #expect(after.setAside.first?.items.map(\.kind) == [.returnDue, .notBack])
+        #expect(after.setAside.first?.items[1].delivery == .markedSentByHer(at: TestClock.now))
+
+        model.restore(returnDue)
+        #expect(model.queue(now: TestClock.now).rows.first?.items.map(\.kind) == [.returnDue])
+        digest.stopListening()
+    }
+
+    @Test("A chat opened from the queue shows as opened, never as sent")
+    func queueOpened() async throws {
+        let (world, digest) = try await makeWorld()
+        let (queue, suite) = makeQueue(world)
+        defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
+        let messages = MessageService(vault: world.vault, sender: FakeMessageSender())
+        let model = makeFollowUps(world, digest: digest, queue: queue, filter: .notBack)
+
+        await messages.send(
+            text: "Hi", to: world.ana.id, phoneE164: "+5511981234410", template: "winBack", now: TestClock.now
+        )
+        await queue.refreshLogs()
+
+        let item = try #require(model.queue(now: TestClock.now).rows(.notBack).first?.primary)
+        #expect(item.delivery == .conversationOpened(at: TestClock.now))
+        #expect(FollowUpAction.offersMarkSent(item))
         digest.stopListening()
     }
 
@@ -108,14 +128,12 @@ struct ListViewModelsTests {
         )
     }
 
-    @Test("Alerts says what the phone knows: the follow-up and the win-back counts")
+    @Test("Without the queue, Alerts has nothing local to say about a client away for months")
     func alertsList() async throws {
         let (world, digest) = try await makeWorld()
         let model = await makeAlerts(world, digest: digest, status: .granted)
-        let list = model.list(now: TestClock.now)
-
-        #expect(list.followUpCount == 1 && list.winBackCount == 1)
-        #expect(model.phase(now: TestClock.now) == .content)
+        #expect(model.list(now: TestClock.now).isEmpty)
+        #expect(model.phase(now: TestClock.now) == .empty)
         digest.stopListening()
     }
 

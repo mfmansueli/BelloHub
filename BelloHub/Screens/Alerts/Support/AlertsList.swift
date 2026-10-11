@@ -5,28 +5,17 @@
 
 import Foundation
 
-/// What the local part of the Alerts tab (2.4) lists, worked out from the day's digest: the reminders ready to send
-/// (D31), the visit that starts soon, the birthdays of the week and how many clients wait in Follow-ups and Win back.
-/// Booking requests, cancellations, check-ins and forms come from the server (S8) and join this list then. Pure.
+/// What the local part of the Alerts tab (2.4) shows from the day's digest: the visit that starts soon. Reminders,
+/// follow-ups, returns, clients not back and birthdays are one summary card that opens the follow-up queue
+/// (routine-a item 5), so Alerts no longer repeats them. Booking requests, reschedules, the waitlist and the mailbox
+/// come from the server (S8). Pure.
 struct AlertsList: Equatable, Sendable {
-    struct Birthday: Equatable, Identifiable, Sendable {
-        let client: Client
-        let upcoming: UpcomingBirthday
-        var id: UUID { client.id }
-    }
-
     /// A visit that starts within this many minutes is worth an alert ("Review what matters before you start").
     static let upcomingVisitMinutes = 120
 
-    let remindersReady: [RemindersReady.Item]
     let upcomingVisit: AgendaDigest.Visit?
-    let birthdays: [Birthday]
-    let followUpCount: Int
-    let winBackCount: Int
 
-    var isEmpty: Bool {
-        remindersReady.isEmpty && upcomingVisit == nil && birthdays.isEmpty && followUpCount == 0 && winBackCount == 0
-    }
+    var isEmpty: Bool { upcomingVisit == nil }
 
     static func make(from digest: AgendaDigest) -> AlertsList {
         let soon = digest.nextVisit.flatMap { visit -> AgendaDigest.Visit? in
@@ -34,14 +23,6 @@ struct AlertsList: Equatable, Sendable {
                   digest.minutesUntilNext <= upcomingVisitMinutes else { return nil }
             return visit
         }
-        return AlertsList(
-            remindersReady: digest.remindersReady,
-            upcomingVisit: soon,
-            birthdays: digest.birthdays.compactMap { birthday in
-                digest.client(birthday.clientID).map { Birthday(client: $0, upcoming: birthday) }
-            },
-            followUpCount: digest.followUps.count,
-            winBackCount: digest.winBack.count
-        )
+        return AlertsList(upcomingVisit: soon)
     }
 }

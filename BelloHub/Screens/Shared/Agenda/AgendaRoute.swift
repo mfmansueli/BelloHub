@@ -12,9 +12,9 @@ enum AgendaRoute: Hashable, Sendable {
     case appointment(id: UUID)
     /// 2.6 WeekGlance.
     case weekGlance
-    /// 2.7 FollowUps.
-    case followUps
-    /// 2.8 WinBack.
+    /// 2.7 The follow-up queue (routine-a item 5), on one of its filters.
+    case followUps(FollowUpFilter)
+    /// 2.8 Win back: the queue on "Not back".
     case winBack
     /// 4.8 SessionPlan of one client.
     case sessionPlan(clientID: UUID)

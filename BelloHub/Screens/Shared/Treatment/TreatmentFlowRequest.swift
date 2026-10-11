@@ -12,4 +12,7 @@ struct TreatmentFlowRequest: Identifiable, Hashable, Sendable {
     let clientID: UUID
     var appointmentID: UUID?
     var serviceID: UUID?
+    /// A record already saved whose closing she is resuming (routine-a item 7): the flow opens on it, at the first
+    /// step still open, and never makes a second record.
+    var resumeRecordID: UUID?
 }

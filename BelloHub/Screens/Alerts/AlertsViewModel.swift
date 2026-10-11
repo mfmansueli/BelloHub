@@ -24,6 +24,8 @@ final class AlertsViewModel {
 
     let settings: CalendarSettings
     private let source: AgendaDigestSource
+    /// The follow-up queue, summarized in one card; nil in tests that only check the rest.
+    private let queueSource: FollowUpQueueSource?
     /// What arrives through her link (S8); nil in tests that only check the local part.
     private let inbox: BookingSyncService?
     /// The sealed mailbox (S8); nil in tests that only check the local part.
@@ -38,7 +40,8 @@ final class AlertsViewModel {
         settingsOpener: any SettingsOpening = SystemSettingsOpener(),
         prefs: any NotificationPrefsStoring = DefaultsNotificationPrefsStore(),
         inbox: BookingSyncService? = nil,
-        mailbox: MailboxService? = nil
+        mailbox: MailboxService? = nil,
+        queue: FollowUpQueueService? = nil
     ) {
         self.settings = settings
         self.inbox = inbox
@@ -46,13 +49,21 @@ final class AlertsViewModel {
         self.permissions = permissions
         self.notifications = notifications
         self.settingsOpener = settingsOpener
-        source = AgendaDigestSource(service: digest, bookingSetup: bookingSetup, settings: settings, prefs: prefs)
+        let source = AgendaDigestSource(service: digest, bookingSetup: bookingSetup, settings: settings, prefs: prefs)
+        self.source = source
+        queueSource = queue.map { FollowUpQueueSource(digest: source, queue: $0) }
     }
 
     // MARK: - Reading
 
     func list(now: Date) -> AlertsList {
         AlertsList.make(from: source.digest(now: now))
+    }
+
+    /// Clients with something in the follow-up queue (reminders, visits to close, check-ins, returns, not back,
+    /// birthdays).
+    func reachOutCount(now: Date) -> Int {
+        queueSource?.make(now: now).count(.all) ?? 0
     }
 
     /// Requests and the waitlist from the server; empty when there is no inbox.
@@ -72,7 +83,10 @@ final class AlertsViewModel {
     }
 
     func phase(now: Date) -> ScreenPhase {
-        source.phase(isEmpty: list(now: now).isEmpty && inboxAlerts(now: now).isEmpty && mailboxAlerts.isEmpty)
+        source.phase(
+            isEmpty: list(now: now).isEmpty && reachOutCount(now: now) == 0 && inboxAlerts(now: now).isEmpty
+                && mailboxAlerts.isEmpty
+        )
     }
 
     var notice: PermissionNotice {

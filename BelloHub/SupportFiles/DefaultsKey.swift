@@ -43,6 +43,9 @@ enum DefaultsKey {
         setupCompletedUserID, localDevUser, recoveryKeySavedAt, notificationPrefs, hideNamesOnLockScreen,
         appleCalendarEnabled, aiPreferences, publishingOnlineUserID, accountDeletionConfirmed
     ]
+    /// Per-user keys (`<prefix>.<userID>`) that go with the account: the setup in progress and the follow-up queue's
+    /// decisions and visit closings (they name clients by id).
+    static let prefixesClearedOnAccountDeletion = [onboardingProgress, followUpDecisions, visitClosings]
     /// The server already deleted this account (`"<userID>|<outcome>"`, `AccountService`): a retry after a wipe that
     /// failed or an app killed mid-way goes straight to the wipe instead of asking a server that no longer knows her.
     static let accountDeletionConfirmed = "account.deletionConfirmed"
@@ -55,6 +58,11 @@ enum DefaultsKey {
     static let mailboxUndecryptable = "mailbox.undecryptable"
     /// Prefix of the per-user unfinished workspace setup (`OnboardingProgress`, JSON): `<prefix>.<userID>`.
     static let onboardingProgress = "onboarding.progress"
+    /// Prefix of the per-user decisions about follow-up suggestions (`FollowUpDecision` by occurrence, JSON):
+    /// `<prefix>.<userID>`.
+    static let followUpDecisions = "followUps.decisions"
+    /// Prefix of the per-user visits being closed in steps (`VisitClosing`, JSON): `<prefix>.<userID>`.
+    static let visitClosings = "followUps.visitClosings"
     /// Prefix of the per-user FCM token the server knows (`PushService`): `<prefix>.<userID>`.
     static let pushRegisteredToken = "push.registeredToken"
 }

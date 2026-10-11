@@ -27,7 +27,8 @@ enum FollowUpPlanner {
                                           to: calendar.startOfDay(for: last.startsAt)),
                   due <= now else { return nil }
             return FollowUp(clientID: client.id, serviceName: last.serviceName, lastVisit: last.startsAt, dueSince: due,
-                            daysSinceLastVisit: days(from: last.startsAt, to: now, calendar: calendar))
+                            daysSinceLastVisit: days(from: last.startsAt, to: now, calendar: calendar),
+                            intervalWeeks: weeks)
         }
         .sorted { $0.dueSince < $1.dueSince }
     }

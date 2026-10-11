@@ -30,6 +30,8 @@ struct HomePreviewHost<Content: View>: View {
                     .environment(digest)
                     .environment(inbox)
                     .environment(mailbox)
+                    .environment(FollowUpQueueService(defaults: .standard, vault: world.vault))
+                    .environment(MainNavigation())
             } else {
                 ProgressView()
             }

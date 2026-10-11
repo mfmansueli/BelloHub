@@ -12,8 +12,8 @@ extension View {
             switch route {
             case .appointment(let id): AppointmentView(appointmentID: id)
             case .weekGlance: WeekGlanceView()
-            case .followUps: FollowUpsView()
-            case .winBack: WinBackView()
+            case .followUps(let filter): FollowUpsView(filter: filter)
+            case .winBack: FollowUpsView(filter: .notBack)
             case .sessionPlan(let clientID): SessionPlanView(clientID: clientID)
             case .noShowHistory(let clientID): NoShowHistoryView(clientID: clientID)
             case .bookingRequest(let id): BookingRequestView(bookingID: id)

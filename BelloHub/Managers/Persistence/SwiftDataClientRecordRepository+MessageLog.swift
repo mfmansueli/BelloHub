@@ -11,6 +11,12 @@ extension SwiftDataClientRecordRepository {
             .sorted { ($0.openedAt, $0.id.uuidString) > ($1.openedAt, $1.id.uuidString) }
     }
 
+    func messageLogs(since: Date) throws -> [MessageLog] {
+        try values(MessageLog.self, from: items(kind: .messageLog))
+            .filter { $0.openedAt >= since }
+            .sorted { ($0.openedAt, $0.id.uuidString) > ($1.openedAt, $1.id.uuidString) }
+    }
+
     func save(_ log: MessageLog) throws {
         try upsert(log)
         try commit()

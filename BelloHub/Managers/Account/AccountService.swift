@@ -85,5 +85,9 @@ final class AccountService {
         for key in DefaultsKey.clearedOnAccountDeletion {
             defaults.removeObject(forKey: key)
         }
+        let prefixes = DefaultsKey.prefixesClearedOnAccountDeletion.map { $0 + "." }
+        for key in defaults.dictionaryRepresentation().keys where prefixes.contains(where: key.hasPrefix) {
+            defaults.removeObject(forKey: key)
+        }
     }
 }

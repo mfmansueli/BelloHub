@@ -12,6 +12,11 @@ extension InMemoryClientRecordRepository {
             .sorted { ($0.openedAt, $0.id.uuidString) > ($1.openedAt, $1.id.uuidString) }
     }
 
+    func messageLogs(since: Date) -> [MessageLog] {
+        bookingSetupMemory.messageLogsByID.values.filter { $0.openedAt >= since }
+            .sorted { ($0.openedAt, $0.id.uuidString) > ($1.openedAt, $1.id.uuidString) }
+    }
+
     func save(_ log: MessageLog) {
         bookingSetupMemory.messageLogsByID[log.id] = log
         changes.notify()

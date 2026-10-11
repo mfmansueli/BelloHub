@@ -5,14 +5,18 @@
 
 import SwiftUI
 
-/// The body of Home (2.1). The digest is rebuilt every minute (`TimelineView`), so "in 1 h 20 min" and the visits that
-/// have already passed stay true while the screen is open. Empty, loading and error states are `ScreenStateView`'s.
+/// The body of Home (2.1, routine-a item 4). "New appointment" sits in the navigation bar, so it is one tap away on
+/// every day without scrolling. Then the next visit (or the clear day), today's pending items, the rest of today, one
+/// secondary card for everyone to reach out to, and the week. The digest is rebuilt every minute (`TimelineView`), so
+/// "in 1 h 20 min" and the visits that have already passed stay true while the screen is open. Empty, loading and
+/// error states are `ScreenStateView`'s.
 struct HomeContentView: View {
     @State private var viewModel: HomeViewModel
     private let settings: CalendarSettings
 
     @State private var agendaSheet: AgendaSheet?
     @Environment(ProfileService.self) private var profile
+    @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var typeSize
 
@@ -42,6 +46,15 @@ struct HomeContentView: View {
         .background(Palette.bg)
         .navigationTitle(Text("home.title"))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
+                    Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
+                        .labelStyle(.titleAndIcon)
+                }
+                .accessibilityIdentifier("home.quick.newAppointment")
+            }
+        }
         .refreshable { await viewModel.refreshAsync() }
         .task { viewModel.start() }
         .agendaSheet(item: $agendaSheet)
@@ -88,31 +101,32 @@ struct HomeContentView: View {
 
     // MARK: - Sections
 
+    /// A clear day leads with the empty state and keeps the pending items and the queue right under it; a busy day
+    /// leads with the next visit, today's pending items and the agenda, and the queue waits below.
     @ViewBuilder
     private func sections(_ digest: AgendaDigest, now: Date) -> some View {
+        let pending = viewModel.pending(digest: digest, now: now)
         if digest.isDayClear {
-            EmptyState(
-                icon: .calendar, title: "home.empty.title", message: "home.empty.message",
-                actionTitle: "home.empty.action"
-            ) { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) }
+            EmptyState(icon: .calendar, title: "home.empty.title", message: "home.empty.message")
                 .accessibilityIdentifier("home.empty")
-        } else {
-            if let next = digest.nextVisit {
-                HomeNextVisitCard(
-                    digest: digest, visit: next, formatters: formatters,
-                    onBeforeYouStart: { agendaSheet = .beforeYouStart(appointmentID: next.appointment.id) },
-                    onRunningLate: { agendaSheet = .runningLate(appointmentID: next.appointment.id) }
-                )
-            }
-            if !digest.restOfToday.isEmpty { restOfToday(digest) }
+        } else if let next = digest.nextVisit {
+            HomeNextVisitCard(
+                digest: digest, visit: next, formatters: formatters,
+                onBeforeYouStart: { agendaSheet = .beforeYouStart(appointmentID: next.appointment.id) },
+                onRunningLate: { agendaSheet = .runningLate(appointmentID: next.appointment.id) }
+            )
         }
-        if !digest.remindersReady.isEmpty { reminders(digest) }
-        tiles(digest)
-        if !digest.followUps.isEmpty { followUps(digest) }
-        if !digest.winBack.isEmpty {
-            HomeWinBackLink(counted: profile.clientTerm.countText(digest.winBack.count, in: locale))
+        if !pending.isEmpty {
+            HomeTodayCard(
+                pending: pending, formatters: formatters,
+                onBookingRequests: { navigation?.selection = .alerts },
+                onTurnOnNotifications: viewModel.turnOnNotifications
+            )
         }
-        quickActions(isDayClear: digest.isDayClear)
+        if !digest.restOfToday.isEmpty { restOfToday(digest) }
+        let reachOut = viewModel.reachOut(now: now)
+        if !reachOut.isEmpty { HomeReachOutCard(reachOut: reachOut, formatters: formatters) }
+        weekRow(digest)
     }
 
     private func restOfToday(_ digest: AgendaDigest) -> some View {
@@ -139,74 +153,17 @@ struct HomeContentView: View {
         digest.restOfToday.filter { $0.appointment.status.holdsTime }.count
     }
 
-    private func reminders(_ digest: AgendaDigest) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("home.reminders.title")
-                .font(Typography.section).foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-                .padding(.bottom, Spacing.xs)
-            Text("home.reminders.subtitle")
-                .font(Typography.meta).foregroundStyle(Palette.ink2)
-                .padding(.bottom, Spacing.row)
-            RemindersReadyCard(items: digest.remindersReady, formatters: formatters) { item in
-                agendaSheet = .message(appointmentID: item.appointment.id)
-            }
-        }
-    }
-
-    private func tiles(_ digest: AgendaDigest) -> some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.row))
-            : AnyLayout(HStackLayout(spacing: Spacing.row))
-        return layout {
-            InsightTile(icon: .clock, value: formatters.number(digest.leftToday),
-                        label: "weekGlance.tile.leftToday", tone: .sage)
-                .accessibilityIdentifier("home.tile.leftToday")
+    /// The week in one row: its open slots, and the way into Week at a glance (the tiles that repeated the agenda and
+    /// the queue are gone).
+    private func weekRow(_ digest: AgendaDigest) -> some View {
+        ListCard(dividerInset: 72) {
             NavigationLink(value: AgendaRoute.weekGlance) {
-                InsightTile(icon: .calendar, value: formatters.number(digest.week.openSlotCount),
-                            label: "weekGlance.tile.openSlots", tone: .peach)
+                HomeCountRow(
+                    icon: .calendar, tone: .sage, title: Text("home.quick.weekGlance"),
+                    subtitle: Text("weekGlance.tile.openSlots"), count: formatters.number(digest.week.openSlotCount)
+                )
             }
             .buttonStyle(.plain)
-            .accessibilityIdentifier("home.tile.openSlots")
-            NavigationLink(value: AgendaRoute.winBack) {
-                InsightTile(icon: .repeatArrows, value: formatters.number(digest.winBack.count),
-                            label: "weekGlance.tile.notReturned", tone: .rose)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("home.tile.notReturned")
-        }
-        .fixedSize(horizontal: false, vertical: true)
-    }
-
-    private func followUps(_ digest: AgendaDigest) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("home.followUps.title")
-                .font(Typography.section).foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-                .padding(.bottom, Spacing.row)
-            HomeFollowUpsCard(
-                digest: digest, counted: profile.clientTerm.countText(digest.followUps.count, in: locale),
-                formatters: formatters
-            )
-        }
-    }
-
-    /// "New appointment" is Home's primary action. On a clear day the empty state already shows it as the primary
-    /// button, so the quick action steps down to secondary there (one primary per screen).
-    private func quickActions(isDayClear: Bool) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.row) {
-            Text("home.quick.title")
-                .font(Typography.section).foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-            Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
-                Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
-            }
-            .buttonStyle(isDayClear ? .belloSecondary : .belloPrimary)
-            .accessibilityIdentifier("home.quick.newAppointment")
-            NavigationLink(value: AgendaRoute.weekGlance) {
-                Label { Text("home.quick.weekGlance") } icon: { Image(icon: .calendar) }
-            }
-            .buttonStyle(.belloSecondary)
             .accessibilityIdentifier("home.quick.weekGlance")
         }
     }

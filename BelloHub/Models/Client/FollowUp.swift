@@ -14,4 +14,6 @@ struct FollowUp: Equatable, Identifiable, Sendable {
     /// The day the follow-up became due.
     let dueSince: Date
     let daysSinceLastVisit: Int
+    /// The service's follow-up interval that made it due, in weeks (the reason she reads, routine-a item 12).
+    var intervalWeeks: Int?
 }

@@ -63,21 +63,14 @@ struct AlertsContentView: View {
         if !mailbox.isEmpty {
             MailboxAlertCards(alerts: mailbox, onResolve: viewModel.resolve, onImportsSeen: viewModel.markImportsSeen)
         }
-        if !list.remindersReady.isEmpty {
-            SectionHeader(title: "alerts.section.reminders")
-            RemindersReadyCard(items: list.remindersReady, formatters: formatters) { item in
-                agendaSheet = .message(appointmentID: item.appointment.id)
-            }
-        }
-        if list.upcomingVisit != nil || !list.birthdays.isEmpty {
+        if let visit = list.upcomingVisit {
             SectionHeader(title: "alerts.section.comingUp")
-            if let visit = list.upcomingVisit { upcomingCard(visit) }
-            if !list.birthdays.isEmpty { birthdaysCard(list.birthdays) }
+            upcomingCard(visit)
         }
-        if list.followUpCount > 0 || list.winBackCount > 0 {
+        let count = viewModel.reachOutCount(now: now)
+        if count > 0 {
             SectionHeader(title: "alerts.section.reachOut")
-            if list.followUpCount > 0 { followUpsCard(list.followUpCount) }
-            if list.winBackCount > 0 { winBackCard(list.winBackCount) }
+            reachOutCard(count)
         }
     }
 
@@ -165,51 +158,20 @@ struct AlertsContentView: View {
         }
     }
 
-    private func birthdaysCard(_ birthdays: [AlertsList.Birthday]) -> some View {
-        let items = birthdays.map { birthday -> String in
-            let when = birthday.upcoming.isToday
-                ? LocalizedStringResource("appointment.today").resolved(in: locale)
-                : formatters.weekdayDayMonth(birthday.upcoming.date)
-            return "\(BidiIsolate.wrap(birthday.client.name)) (\(when))"
-        }
-        return AlertCard(
-            icon: .gift, tone: .rose, title: Text("alerts.birthdays.title"),
-            message: Text(verbatim: formatters.list(items)),
-            identifier: "alerts.birthdays"
-        ) {
-            NavigationLink(value: AgendaRoute.followUps) { Text("alerts.birthdays.action") }
-                .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("alerts.birthdays.action")
-        }
-    }
-
-    private func followUpsCard(_ count: Int) -> some View {
+    /// One card for the whole follow-up queue: reminders, visits to close, check-ins, returns, clients not back and
+    /// birthdays are listed there, once.
+    private func reachOutCard(_ count: Int) -> some View {
         let counted = BidiIsolate.wrap(profile.clientTerm.countText(count, in: locale))
         return AlertCard(
-            icon: .repeatArrows, tone: .peach, title: Text("alerts.followUps.title"),
+            icon: .repeatArrows, tone: .peach, title: Text("home.reachOut.title"),
             message: Text(LocalizedStringResource(
-                "alerts.followUps.due", defaultValue: "Ready for a follow-up: \(counted)"
+                "alerts.reachOut.message", defaultValue: "Waiting for a message or a decision: \(counted)"
             ).localized(in: locale)),
-            identifier: "alerts.followUps"
+            identifier: "alerts.reachOut"
         ) {
-            NavigationLink(value: AgendaRoute.followUps) { Text("home.followUps.view") }
+            NavigationLink(value: AgendaRoute.followUps(.all)) { Text("home.reachOut.open") }
                 .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("alerts.followUps.action")
-        }
-    }
-
-    private func winBackCard(_ count: Int) -> some View {
-        let counted = BidiIsolate.wrap(profile.clientTerm.countText(count, in: locale))
-        return AlertCard(
-            icon: .clients, tone: .rose, title: Text("alerts.winBack.title"),
-            message: Text(LocalizedStringResource(
-                "clients.winBack.due", defaultValue: "Not back in 2+ months: \(counted)"
-            ).localized(in: locale)),
-            identifier: "alerts.winBack"
-        ) {
-            NavigationLink(value: AgendaRoute.winBack) { Text("alerts.winBack.action") }
-                .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("alerts.winBack.action")
+                .accessibilityIdentifier("alerts.reachOut.action")
         }
     }
 }

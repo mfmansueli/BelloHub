@@ -33,7 +33,11 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
     var guests: [String]
     var sessionPlanID: UUID?
     var rescheduleCount: Int
+    /// When she opened the reminder chat with the text ready (D31). It proves neither sending nor delivery.
     var reminderSentAt: Date?
+    /// When she said she sent the reminder herself (routine-a item 6): her own statement, shown as "marked as sent by
+    /// you". Optional and added later, so visits stored before it read as nil.
+    var reminderMarkedSentAt: Date?
     var clientConfirmedAt: Date?
     var lateByMinutes: Int?
     /// A no-show the professional chose not to count (D13).
@@ -65,6 +69,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         sessionPlanID: UUID? = nil,
         rescheduleCount: Int = 0,
         reminderSentAt: Date? = nil,
+        reminderMarkedSentAt: Date? = nil,
         clientConfirmedAt: Date? = nil,
         lateByMinutes: Int? = nil,
         noShowForgiven: Bool = false,
@@ -92,6 +97,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         self.sessionPlanID = sessionPlanID
         self.rescheduleCount = rescheduleCount
         self.reminderSentAt = reminderSentAt
+        self.reminderMarkedSentAt = reminderMarkedSentAt
         self.clientConfirmedAt = clientConfirmedAt
         self.lateByMinutes = lateByMinutes
         self.noShowForgiven = noShowForgiven
