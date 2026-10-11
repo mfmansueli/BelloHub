@@ -26,11 +26,7 @@ final class AppleSignInUITests: XCTestCase {
         app.tapButton("onboarding.about.continueButton")
         app.tapButton("onboarding.profession.choice.esthetician")
         app.tapButton("onboarding.profession.continueButton")
-        for step in ["services", "terminology", "tags", "record"] {
-            app.tapButton("onboarding.\(step).continueButton")
-        }
-        for _ in 0..<4 { app.tapButton("onboarding.permissions.allowButton") }
-        app.tapButton("onboarding.permissions.continueButton")
+        app.tapButton("onboarding.services.continueButton")
         app.tapButton("onboarding.ready.continueButton")
 
         XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 5))

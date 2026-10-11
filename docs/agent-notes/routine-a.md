@@ -265,3 +265,14 @@ screen and AI settings are not touched). Item 12 stays (rules, no AI wording). R
   `LastVisitPrefill` ("Same as last visit, <date>", only empty fields, never notes, result or aftercare).
 - Not done, on purpose (owner decision): any change to the voice or AI presentation (`UnavailableVoiceCapture`,
   `UnavailableRecordStructuring` and the AI settings stay as they are; they are still the v1 defaults in every build).
+
+## For the routine-b merge (coordinator)
+
+- The Ready screen's import entry is unchanged: `onboarding.ready.importButton` (Ready is still the last setup step).
+  `XCUIApplication.completeSetup()` now walks About, Profession and "Your first service"
+  (`onboarding.services.continueButton`) and lands on Ready; B's import tests that call it need no change. The
+  `onboarding.permissions.continueButton` fallback in `ImportAuditUITests` is dead code now (the step is gone) and can
+  be removed.
+- After the merge, convert the six files listed in `PENDING_ROUTINE_B` of `scripts/check-localization-sources.py`
+  (`String(localized: "key")` -> `String(interface: LocalizedStringResource(...))` outside views,
+  `.resolved(in: locale)` inside) and empty the list.
