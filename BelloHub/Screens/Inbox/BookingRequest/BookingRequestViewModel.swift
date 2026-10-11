@@ -59,6 +59,13 @@ final class BookingRequestViewModel {
     /// Only a request held by the no-show limit offers to start the count again.
     var offersCountReset: Bool { booking?.pendingReason == .noShowLimit }
 
+    /// "Not verified": the client confirmed on WhatsApp because the e-mail code never came (verify-fallback). nil for a
+    /// verified request. Approving works the same; the badge asks her to check the message first.
+    var unverifiedBadge: UnverifiedRequestBadge? { booking.flatMap(UnverifiedRequestBadge.make) }
+
+    /// Whether the "why it waits" notice shows (an unverified request without a server reason shows only the badge).
+    var showsReason: Bool { booking.map(UnverifiedRequestBadge.showsReason) ?? true }
+
     /// The answer is saved but the server cannot be reached: it goes out once she is online.
     var isWaitingForNetwork: Bool { sync.queue.waitingOn != nil }
 

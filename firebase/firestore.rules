@@ -95,7 +95,7 @@ service cloud.firestore {
     }
 
     // No client access, ever: slugs, availability, intakeForms, holds, portal, contacts, calendarLocks, emailCodes,
-    // emailProofs, idempotency, rate, audit. They fall under the default deny above and are listed here so a
+    // emailProofs, trustedDevices, idempotency, rate, audit. They fall under the default deny above and are listed here so a
     // reader (and the test) sees that the omission is on purpose.
   }
 }

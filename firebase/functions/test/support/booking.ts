@@ -19,6 +19,10 @@ export interface BookingResult {
   timeZoneID: string;
   serviceName: string;
   emailSent: boolean;
+  reference?: string;
+  requestExpiresAt?: string;
+  deviceToken?: string;
+  deviceTokenExpiresAt?: string;
 }
 
 export type Outcome = BookingResult | { status: 'slotTaken'; alternatives: string[] } | { status: 'paused'; pausedUntil?: string };
@@ -33,7 +37,11 @@ export interface BookOptions {
   holdKey?: string;
   note?: string;
   slug?: string;
-  verification?: { method: 'phone'; idToken: string } | { method: 'email'; proof: string };
+  verification?:
+    | { method: 'phone'; idToken: string }
+    | { method: 'email'; proof: string }
+    | { method: 'device'; token: string }
+    | { method: 'whatsapp' };
   ip?: string;
 }
 

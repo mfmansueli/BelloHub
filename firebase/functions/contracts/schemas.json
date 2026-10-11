@@ -298,6 +298,37 @@
                 "proof"
               ],
               "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "whatsapp"
+                }
+              },
+              "required": [
+                "method"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "const": "device"
+                },
+                "token": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]{22}$"
+                }
+              },
+              "required": [
+                "method",
+                "token"
+              ],
+              "additionalProperties": false
             }
           ]
         },
@@ -357,6 +388,22 @@
             },
             "emailSent": {
               "type": "boolean"
+            },
+            "reference": {
+              "type": "string",
+              "pattern": "^[2-9A-HJKMNP-Z]{5}$"
+            },
+            "requestExpiresAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "deviceToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{22}$"
+            },
+            "deviceTokenExpiresAt": {
+              "type": "string",
+              "format": "date-time"
             }
           },
           "required": [
@@ -767,6 +814,37 @@
       },
       "required": [
         "bookings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "forgetDevice": {
+    "access": "public",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{22}$"
+        }
+      },
+      "required": [
+        "token"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "ok"
       ],
       "additionalProperties": false
     }
@@ -3583,6 +3661,22 @@
             },
             "emailSent": {
               "type": "boolean"
+            },
+            "reference": {
+              "type": "string",
+              "pattern": "^[2-9A-HJKMNP-Z]{5}$"
+            },
+            "requestExpiresAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "deviceToken": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{22}$"
+            },
+            "deviceTokenExpiresAt": {
+              "type": "string",
+              "format": "date-time"
             }
           },
           "required": [
@@ -4191,6 +4285,10 @@
             "booking",
             "find"
           ]
+        },
+        "holdKey": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{16,64}$"
         }
       },
       "required": [

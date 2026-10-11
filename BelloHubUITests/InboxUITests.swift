@@ -34,6 +34,24 @@ final class InboxUITests: XCTestCase {
         )
     }
 
+    /// verify-fallback: a request made with "Confirm on WhatsApp" carries the "Not verified" badge with its reference,
+    /// no guessed reason, and approving works as for any request.
+    func testAnUnverifiedRequestShowsItsBadgeAndCanBeApproved() {
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "onboarded", "-uiInbox", "unverified"])
+        app.openAlertsTab()
+        XCTAssertTrue(app.element("alerts.request.req-ana").waitForExistence(timeout: 10), "the inbox did not sync")
+        app.scrollToAndTap(prefix: "alerts.request.req-ana.action")
+
+        XCTAssertTrue(app.element("bookingRequest.unverified").waitForExistence(timeout: 5), "the badge is missing")
+        XCTAssertTrue(app.element("bookingRequest.unverified").label.contains("K7M2P"), "the reference is missing")
+        XCTAssertTrue(app.element("bookingRequest.unverified.releases").exists, "the release time is missing")
+        XCTAssertFalse(app.element("bookingRequest.reason").exists, "a reason was guessed")
+
+        app.tapButton("bookingRequest.acceptButton")
+        XCTAssertTrue(app.element("bookingRequest.outcome").waitForExistence(timeout: 10), "no outcome")
+        XCTAssertFalse(app.element("bookingRequest.unverified").exists, "the badge stayed after the answer")
+    }
+
     func testAcceptingARescheduleRequest() {
         let app = launchedOnAlerts()
         app.scrollToAndTap(prefix: "alerts.reschedule.rr-camila.action")

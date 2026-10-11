@@ -97,6 +97,7 @@ const ERROR_KEYS: Readonly<Record<ApiErrorCode, string>> = {
   paused: 'err.generic',
   codeInvalid: 'err.generic',
   codeExpired: 'err.generic',
+  verificationRequired: 'err.generic',
   tooManyAttempts: 'err.rateLimited',
   notAllowed: 'err.notAllowed',
   tooLarge: 'err.tooLarge',

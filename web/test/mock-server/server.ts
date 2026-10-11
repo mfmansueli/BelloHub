@@ -101,6 +101,8 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return api.verifyEmailCode(data);
       case 'createBooking':
         return api.createBooking(data);
+      case 'forgetDevice':
+        return api.forgetDevice(data);
       case 'joinWaitlist':
         return api.joinWaitlist(data);
       case 'findBookings':
@@ -142,6 +144,10 @@ export async function startMock(port: number, distDirectory: string | null): Pro
         return send(response, 200, { portalToken: api.seedPortal(String(body['slug']), String(body['name'] ?? 'Ana'), String(body['phone'] ?? '+5511987654321'), (body['mode'] as 'direct' | 'approval' | 'paused' | undefined) ?? 'direct') });
       case '/__test/seed-offer':
         return send(response, 200, api.seedOffer(String(body['slug']), { expired: body['expired'] === true }));
+      case '/__test/seed-device':
+        return send(response, 200, api.seedDevice(String(body['slug']), String(body['email'])));
+      case '/__test/code-holds':
+        return send(response, 200, { items: api.codeHolds });
       case '/__test/seed-expired':
         return send(response, 200, { token: api.seedExpired(String(body['slug'])) });
       case '/__test/config':

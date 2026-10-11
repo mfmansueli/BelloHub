@@ -28,6 +28,7 @@ import { unregisterDevice } from '../owner/unregisterDevice.js';
 import { updateInboxKey } from '../owner/updateInboxKey.js';
 import { createBooking } from '../public/createBooking.js';
 import { findBookings } from '../public/findBookings.js';
+import { forgetDevice } from '../public/forgetDevice.js';
 import { getFormContext } from '../public/getFormContext.js';
 import { getHold } from '../public/getHold.js';
 import { getPortal } from '../public/getPortal.js';
@@ -51,7 +52,7 @@ export const USE_CASES: readonly AnyUseCase[] = [
   // public and token (the web booking app)
   getPublicPage, getSlots, holdSlot, getHold, sendEmailCode, verifyEmailCode, createBooking, findBookings, joinWaitlist,
   getBooking, confirmPresence, reportLate, cancelBooking, rescheduleBooking, requestReschedule, rebook,
-  getFormContext, submitSealed, getPortal,
+  getFormContext, submitSealed, getPortal, forgetDevice,
   // owner (the iPhone app)
   ensureAccount, reserveRegistration, reserveRegistrations, syncPlan, isSlugAvailable, claimSlug, publishProfile,
   publishAvailability, updateInboxKey, respondBookingRequest, respondRescheduleRequest, cancelBookingByOwner,

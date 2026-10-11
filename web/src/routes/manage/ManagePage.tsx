@@ -22,6 +22,7 @@ import { BookingRules } from '../../components/BookingRules';
 import { useI18n } from '../../i18n';
 import { pageUrl } from '../../lib/config';
 import { freeUntil, reschedulesLeft } from '../../lib/policy';
+import { forgetDeviceLocally, storedDeviceToken } from '../../lib/trustedDevice';
 import { whatsAppUrl } from '../../lib/whatsapp';
 
 const LATE_MINUTES = [10, 15, 20, 30] as const;
@@ -316,6 +317,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
           {t('bk9.myData')}
         </Link>
       </p>
+      <ForgetDevice slug={booking.slug} />
       <Footer />
       <CalendarSheet
         open={calendarOpen}
@@ -324,5 +326,40 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         pageUrl={pageUrl(pro.slug)}
       />
     </Screen>
+  );
+}
+
+/**
+ * "Forget this device" (API.md 5.18): shown only when this browser keeps a trusted-device token for her page. The token
+ * is dropped here at once and on the server as well as the network allows; either way the next booking asks for a code.
+ */
+function ForgetDevice({ slug }: { slug: string }): JSX.Element | null {
+  const { t } = useI18n();
+  const [stored] = useState(() => storedDeviceToken(slug));
+  const [forgotten, setForgotten] = useState(false);
+  if (stored === null) return null;
+  if (forgotten) {
+    return (
+      <Notice kind="quiet" icon="check" live="polite" testId="device-forgotten">
+        {t('bk9.device.forgotten')}
+      </Notice>
+    );
+  }
+  return (
+    <p class="center stack-sm" data-testid="forget-device-row">
+      <span class="meta">{t('bk9.device.text')}</span>
+      <button
+        type="button"
+        class="link-button"
+        data-testid="forget-device"
+        onClick={() => {
+          forgetDeviceLocally(slug);
+          setForgotten(true);
+          api.forgetDevice(stored).catch(() => undefined);
+        }}
+      >
+        {t('bk9.device.forget')}
+      </button>
+    </p>
   );
 }

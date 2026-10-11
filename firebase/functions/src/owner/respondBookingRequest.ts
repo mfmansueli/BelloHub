@@ -4,6 +4,7 @@ import { defineUseCase, ownerUid } from '../app/UseCase.js';
 import { RATE } from '../config/limits.js';
 import * as contract from '../contracts/owner.js';
 import { ensureAccountExists } from '../lib/account.js';
+import { tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { sendBookingEmail } from '../lib/bookingEmails.js';
 import { bumpCalendarLock, readCalendarLock } from '../lib/calendar.js';
 import { writeContact, writeRegistration } from '../lib/contacts.js';
@@ -19,6 +20,10 @@ import { runTransaction } from '../lib/tx.js';
  * Approve or decline a booking that waited for her (D13, D15, D42). Approving a NEW client is what adds the client, so it
  * is where the free registrations are enforced: with them used and no plan the answer is `needsSubscription`, the
  * booking stays pending, and the app shows the paywall. Declining frees the time.
+ *
+ * An unverified request (verify-fallback, `verification: 'whatsapp'`) was never e-mailed when it was made, so approving
+ * it mints a new manage token and e-mails her the full confirmation with the personal link (the address she typed; she confirmed the
+ * request with the professional on WhatsApp).
  */
 export const respondBookingRequest = defineUseCase({
   name: 'respondBookingRequest',
@@ -30,6 +35,7 @@ export const respondBookingRequest = defineUseCase({
     await ensureAccountExists(deps, uid, ctx);
     const r = refs(deps.db);
     const now = deps.now();
+    const manageToken = deps.random.token();
 
     const outcome = await runTransaction(deps.db, async (tx) => {
       const reader = txReader(tx);
@@ -44,7 +50,12 @@ export const respondBookingRequest = defineUseCase({
       if (!account) throw new AppError('NOT_FOUND');
 
       if (input.decision === 'decline') {
-        tx.update(booking.ref, { status: 'declined', pendingReason: FieldValue.delete(), updatedAt: ts(now) });
+        tx.update(booking.ref, {
+          status: 'declined',
+          pendingReason: FieldValue.delete(),
+          pendingExpiresAt: FieldValue.delete(),
+          updatedAt: ts(now)
+        });
         return { status: 'declined' as const, booking: { ...booking.data, status: 'declined' as const }, profile };
       }
 
@@ -67,17 +78,36 @@ export const respondBookingRequest = defineUseCase({
         { registered: true, ...(registrationId ? { registrationId } : {}), bookingCount: (contact?.bookingCount ?? 0) + 1 },
         now
       );
-      tx.update(booking.ref, { status: 'confirmed', pendingReason: FieldValue.delete(), updatedAt: ts(now) });
+      const unverified = booking.data.verification === 'whatsapp';
+      const hashes = unverified ? withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) : undefined;
+      tx.update(booking.ref, {
+        status: 'confirmed',
+        pendingReason: FieldValue.delete(),
+        pendingExpiresAt: FieldValue.delete(),
+        ...(hashes ? { manageTokenHashes: hashes } : {}),
+        updatedAt: ts(now)
+      });
       bumpCalendarLock(tx, deps.db, uid);
-      return { status: 'confirmed' as const, booking: { ...booking.data, status: 'confirmed' as const }, profile };
+      return {
+        status: 'confirmed' as const,
+        booking: { ...booking.data, status: 'confirmed' as const },
+        profile,
+        ...(unverified ? { manageToken } : {})
+      };
     });
 
     if (outcome.status !== 'needsSubscription') {
       await sendBookingEmail(deps, {
-        template: outcome.status === 'confirmed' ? 'bookingApproved' : 'bookingDeclined',
+        // An approved unverified request gets the full confirmation (it carries the personal link): she never had one.
+        template:
+          outcome.status === 'confirmed'
+            ? 'manageToken' in outcome && outcome.manageToken
+              ? 'bookingConfirmed'
+              : 'bookingApproved'
+            : 'bookingDeclined',
         booking: outcome.booking,
         professionalName: outcome.profile?.displayName ?? '',
-        linkToPage: true
+        ...('manageToken' in outcome && outcome.manageToken ? { manageToken: outcome.manageToken } : { linkToPage: true })
       });
     }
     deps.log.info('booking.responded', { uid, bookingId: input.bookingId, decision: outcome.status });

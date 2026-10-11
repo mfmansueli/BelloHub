@@ -34,6 +34,8 @@ export function refs(db: Firestore) {
     calendarLock: (uid: string) => db.collection(C.calendarLocks).doc(uid),
     emailCode: (emailHash: string) => db.collection(C.emailCodes).doc(emailHash),
     emailProof: (proofHash: string) => db.collection(C.emailProofs).doc(proofHash),
+    trustedDevices: () => db.collection(C.trustedDevices),
+    trustedDevice: (tokenHash: string) => db.collection(C.trustedDevices).doc(tokenHash),
     idempotency: (keyHash: string) => db.collection(C.idempotency).doc(keyHash),
     rate: (key: string) => db.collection(C.rate).doc(key),
     audits: () => db.collection(C.audit)

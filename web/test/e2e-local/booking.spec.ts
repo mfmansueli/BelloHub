@@ -72,6 +72,8 @@ test.describe('a client and the real functions', () => {
     // D46: the e-mail code is the only verification; the emulator fixes it.
     await expect(page.getByTestId('code')).toBeVisible();
     await expect.poll(() => apiCalls(requests, 'sendEmailCode').length).toBeGreaterThan(0);
+    // The countdown starts when the server answered: only then does the code exist (a person cannot be faster).
+    await expect(page.getByTestId('resend-timer')).toBeVisible();
     await page.getByTestId('code').fill(EMAIL_CODE);
     await page.getByTestId('verify').click();
 

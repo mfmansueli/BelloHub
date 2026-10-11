@@ -112,7 +112,8 @@ per professional, listed on each function. The numbers are in `functions/src/con
 | `NOT_FOUND` | 404 | Unknown slug, token, id | |
 | `TOKEN_EXPIRED` | 404 | The token exists but its time is over (booking + 7 days; portal after 180 idle days; revoked) | |
 | `RATE_LIMITED` | 429 | Too many calls | `{ retryAfterSeconds }` |
-| `VERIFICATION_FAILED` | 403 | The phone ID token or the email proof is missing, wrong, used, expired or for another contact | |
+| `VERIFICATION_FAILED` | 403 | The phone ID token, the email proof or the trusted-device token is missing, wrong, used, expired or for another contact or page | |
+| `VERIFICATION_REQUIRED` | 400 | `createBooking` with a trusted-device token (`device`) for a booking that would not be confirmed at once (approval needed, no-show limit): verify by e-mail code instead | |
 | `INVALID_CODE` | 400 | Wrong or expired email code (also after 5 wrong tries) | |
 | `NOT_ALLOWED` | 400 | The professional's rules do not allow this action now | `{ action: "message" \| "request" \| "direct" }` the path that is allowed instead |
 | `CONFIRMATION_REQUIRED` | 400 | A late cancellation needs `acceptLateWarning: true` | |
@@ -277,9 +278,12 @@ Errors: `NOT_FOUND`, `TOKEN_EXPIRED`.
 Sends a 6-digit code (10 minutes, 5 tries). **The only verification the web page uses (D46):** the page keeps
 `connect-src 'self'` and loads no Firebase SDK. SMS (5.7) stays available for a later API-side SMS provider.
 ```ts
-req: { slug: Slug; email: string; locale: LocaleId; purpose: "booking" | "find" }
+req: { slug: Slug; email: string; locale: LocaleId; purpose: "booking" | "find"; holdKey?: string }
 res: { resendAfterSeconds: 30; expiresInSeconds: 600 }
 ```
+With `purpose: "booking"` and the browser's `holdKey`, a live soft hold under that key is extended to the code's
+10 minutes (never shortened, never revived once expired, offer holds untouched), so waiting for the e-mail does not
+lose the time.
 Errors: `RATE_LIMITED` (resend before 30 s; 5/hour per email; 10/hour per IP; a daily cap per professional),
 `NOT_CONFIGURED` (no email provider in this environment: show SMS only). The response is identical whether or not the
 email is known. In the emulator the code is the fixed `123456`.
@@ -306,12 +310,18 @@ req: {
   client: { name: string /* <= 80 */; phone: E164; email?: string; locale: LocaleId };   // nothing else about her: no first-visit answers (D45)
   guests?: 0 | 1 | 2;                             // a COUNT; guest names are never sent or stored (D48)
   note?: string;                                  // <= 300, shown only to the professional; the only free text
-  verification: { method: "phone"; idToken: string } | { method: "email"; proof: string };   // "email" requires client.email = the verified one
+  verification: { method: "phone"; idToken: string }
+              | { method: "email"; proof: string }         // requires client.email = the verified one
+              | { method: "device"; token: Token }         // trusted device: same page, same client.email (below)
+              | { method: "whatsapp" };                    // no proof: an unverified request (below); needs client.email
   idempotencyKey: Uuid;                           // new for each attempt the user starts; reuse it only to retry the SAME request
   holdKey?: string;                               // converts your hold
 }
 res: { status: "confirmed" | "pendingApproval"; bookingId: string; manageToken: Token; startsAt: Instant; endsAt: Instant;
-       timeZoneID: string; serviceName: string; emailSent: boolean }
+       timeZoneID: string; serviceName: string; emailSent: boolean;
+       reference?: string;                 // "whatsapp" only: 5 characters from 23456789ABCDEFGHJKMNPQRSTUVWXYZ
+       requestExpiresAt?: Instant;         // "whatsapp" only: when the request is released if she has not answered
+       deviceToken?: Token; deviceTokenExpiresAt?: Instant }   // confirmed + "email" only: a trusted-device token
    | { status: "slotTaken"; alternatives: Instant[] }          // -> Bk-4 with "That time was just taken. Here are the next ones"
    | { status: "paused"; pausedUntil?: Instant }               // -> Bk-1 notice, or Bk-10 "online booking is paused for now" when it is about her
 ```
@@ -329,7 +339,25 @@ res: { status: "confirmed" | "pendingApproval"; bookingId: string; manageToken: 
 - The request is **closed** (D45, D48): any field not listed (`heardFrom`, `hadBefore`, guest names, anything inside
   `client` beyond the four fields) is `INVALID_ARGUMENT` with its path. The server stores the note and the guest count only.
 - Limits: 10/hour per IP, 5/hour per phone, 300/day per professional.
-Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `VERIFICATION_FAILED`, `CONFLICT` (idempotency key reused with a different request), `RATE_LIMITED`.
+- **Unverified request (`whatsapp`, "I didn't get the code").** Allowed only when her public page has `whatsappE164`
+  (else `NOT_ALLOWED`). The booking is always `pendingApproval` (whatever else applies), stored with
+  `verification: "whatsapp"`, a `reference` and `pendingExpiresAt` = the earlier of 24 hours from now and the visit's
+  start; the response carries both so the page can prefill the WhatsApp message. No e-mail is sent when it is made (the
+  address is not proven); approving it (6.3 `respondBookingRequest`) mints a new manage token and e-mails the personal
+  link. If she does not answer, `cleanupJob` sets it to `declined` with `expiredAt` and the time is free again. Extra
+  limits: 5/day per IP, 3/day per e-mail, 3/day per phone, 50/day per professional, and at most 2 waiting unverified
+  requests per phone and per e-mail with one professional (`RATE_LIMITED` with `retryAfterSeconds` until the earliest
+  one is released). A replay with the same `idempotencyKey` must use the same kind of verification.
+- **Trusted device (`device`).** A booking confirmed with a fresh `email` proof returns `deviceToken` (90 days, never
+  renewed, only its SHA-256 is stored, at most 5 per e-mail and page; a sixth replaces the oldest). The token stands in
+  for the proof on a later booking on the **same page** with the **same `client.email`**; any other page, address,
+  an expired or forgotten token is `VERIFICATION_FAILED`. It never skips a look by the professional: when the booking
+  would wait for approval (her new-client switch, the free registrations, the no-show limit) or the client is at the
+  no-show limit, the answer is `VERIFICATION_REQUIRED` and the page asks for the code. A pause still answers `paused`.
+  Revocation: 5.18 `forgetDevice`, a client data delete (6.7) and an account delete remove it; it is never issued for
+  `whatsapp`, `device` or `phone` bookings.
+Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `NOT_ALLOWED` (`whatsapp` without her number), `VERIFICATION_FAILED`,
+`VERIFICATION_REQUIRED` (`device` only), `CONFLICT` (idempotency key reused with a different request), `RATE_LIMITED`.
 
 ### 5.9 `findBookings`  (public)  -> Bk-11
 The web page calls it with `email` and an e-mail proof from 5.6 (D46); the phone form is kept for a later SMS provider.
@@ -467,6 +495,14 @@ Errors: `NOT_FOUND`, `TOKEN_EXPIRED` (a revoked or idle portal; once the cleanup
 `SUMMARY`/`DESCRIPTION` in the client's locale (bidi isolates in Arabic), reminder 24 h before. Errors are plain
 `404`/`410`/`429` with an empty body.
 
+### 5.18 `forgetDevice`  (public)
+"Forget this device" on the management page: the browser sends its trusted-device token (5.8) and the server deletes it.
+```ts
+req: { token: Token }
+res: { ok: true }        // the same whether or not the token existed
+```
+Limits: 20/hour per IP.
+
 ---
 
 ## 6. Owner functions (the iOS app)  (owner: Auth + App Check)
@@ -563,7 +599,9 @@ respondBookingRequest: req { bookingId: string; decision: "approve" | "decline" 
 ```
 `pendingApproval` -> `confirmed` or `declined`. Approving a **new** phone registers the client (D42): with the free
 registrations used and no plan the answer is `needsSubscription` and the booking **stays pending** (show the paywall,
-then call again). The client gets an email when she gave one.
+then call again). The client gets an email when she gave one. Approving an **unverified** request (`verification:
+"whatsapp"`, 5.8) adds a new manage token and the email carries her personal link (no email went out when it was made);
+the app shows such a request with a "Not verified" badge and its `reference` so she checks the WhatsApp message first.
 
 ```ts
 respondRescheduleRequest: req { requestId: string; decision: "accept" | "decline" }
@@ -684,14 +722,14 @@ Authenticated owner, own data only; **no client write anywhere except `devices` 
 | `accounts/{uid}` | owner | `phone?` (phone sign-in only; absent for Sign in with Apple, D44), `slug`, `countryCode`, `locale`, `dataRegion`, `registrations {count, freeLimit}`, `plan {state, expiresAt, source}`, `inboxKeyring[] {keyId, pub, createdAt, retiredAt?, compromisedAt?}`, `inboxKeyringPruneAt?`, `deletion {requestedAt}` |
 | `accounts/{uid}/registrations/{clientId}` | owner | `registeredAt` (the ledger, ids and dates only) |
 | `publicProfiles/{slug}` | anyone | the published profile (section 4) |
-| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `rulesText?`, `noShowPolicy? {isOn, limit, lateCancelCounts}` (D47 snapshot), `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `createdAt`, `updatedAt`, `purgeAt` |
+| `bookings/{id}` | owner (query `ownerUid == uid`) | `status`, `serviceId`, `serviceName`, `durationMinutes`, `addOns`, `guestCount`, `startsAt`, `endsAt`, `timeZoneID`, `client {name, phone, email?, locale}`, `note?`, `pendingReason? ("newClient" \| "freeRegistrationsUsed" \| "noShowLimit")`, `origin`, `policy`, `rulesText?`, `noShowPolicy? {isOn, limit, lateCancelCounts}` (D47 snapshot), `clientConfirmedAt?`, `lateByMinutes?`, `rescheduleCount`, `isLateCancellation?`, `cancelReason?`, `intakeSubmittedAt?`, `verification? ("whatsapp": the client's contact is NOT verified, 5.8)`, `reference?`, `pendingExpiresAt?`, `expiredAt?` (an unverified request released unanswered), `createdAt`, `updatedAt`, `purgeAt` |
 | `inbox/{uid}/items/{itemId}` | owner | `kind`, `bookingId`, `createdAt`, `expiresAt`, `sizeBytes`, `keyId`, `envelope?` (inline when <= 200 KB) or `storagePath` |
 | `rescheduleRequests/{id}` | owner (query `ownerUid == uid`) | `bookingId`, `clientName`, `serviceName`, `currentStart`, `currentEnd`, `requestedStart`, `requestedEnd`, `note?`, `status`, `createdAt` |
 | `waitlist/{id}` | owner (query `ownerUid == uid`) | `name`, `phone`, `serviceId?`, `serviceName?`, `dayFrom`, `dayTo`, `status` (`waiting` \| `offered` \| `booked`), `createdAt`, `offeredAt?` |
 | `devices/{uid}/tokens/{id}` | owner, **and she may write** | `fcmToken`, `platform`, `locale`, `lastSeenAt` |
 
 Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readable: `availability`, `holds`, `portal`,
-`contacts`, `rate`, `audit`, `slugs`, `calendarLocks`, `emailCodes`, `emailProofs`, `idempotency`, `intakeForms` and every counter are function-only.
+`contacts`, `rate`, `audit`, `slugs`, `calendarLocks`, `emailCodes`, `emailProofs`, `trustedDevices`, `idempotency`, `intakeForms` and every counter are function-only.
 
 ## 9. Retention (what the legal texts promise, D30)
 
@@ -701,6 +739,8 @@ Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readabl
 | Sealed envelope | when the app acknowledges it, and in any case 30 days after it arrived |
 | Hold | 5 minutes (offers: their own length) |
 | Email code, email proof | 10 min, 30 min |
+| Unverified request (`verification: "whatsapp"`) not answered | released (`declined`) 24 hours after it was made, or at the visit's start; then as any booking |
+| Trusted-device token (hash) | 90 days, or "Forget this device", or with her data |
 | Waitlist entry | 7 days after its last day |
 | Reschedule request | with its booking |
 | Portal | revoked, or 180 days without use |
@@ -712,8 +752,8 @@ Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readabl
 ## 10. Functions that are not callable by apps
 
 `onBookingWritten`, `onInboxItemCreated` (Firestore triggers: generic push to the owner's devices, contact bookkeeping),
-`cleanupJob` (every 10 minutes: holds, envelopes, bookings, codes, portals, waitlist, audit, unfinished deletions, dead
-retired inbox keys),
+`cleanupJob` (every 10 minutes: unanswered unverified requests, holds, envelopes, bookings, codes, trusted devices,
+portals, waitlist, audit, unfinished deletions, dead retired inbox keys),
 `sendReminders` (every 5 minutes, only when `WHATSAPP_AUTOMATION` is on), `appStoreNotifications` (HTTPS POST from Apple,
 App Store Server Notifications V2: verifies the signed payload and updates `accounts.plan`).
 
@@ -721,7 +761,7 @@ App Store Server Notifications V2: verifies the signed payload and updates `acco
 
 Public / token: `getPublicPage` `getSlots` `holdSlot` `getHold` `sendEmailCode` `verifyEmailCode` `createBooking`
 `findBookings` `joinWaitlist` `getBooking` `confirmPresence` `reportLate` `cancelBooking` `rescheduleBooking`
-`requestReschedule` `rebook` `getFormContext` `submitSealed` `getPortal` `getIcs`
+`requestReschedule` `rebook` `getFormContext` `submitSealed` `getPortal` `forgetDevice` `getIcs`
 
 Owner: `ensureAccount` `reserveRegistration` `reserveRegistrations` `syncPlan` `isSlugAvailable` `claimSlug`
 `publishProfile` `publishAvailability` `updateInboxKey` `respondBookingRequest` `respondRescheduleRequest`

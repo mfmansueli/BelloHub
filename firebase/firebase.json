@@ -225,6 +225,13 @@
         }
       },
       {
+        "source": "/api/forgetDevice",
+        "function": {
+          "functionId": "forgetDevice",
+          "region": "europe-west1"
+        }
+      },
+      {
         "source": "/api/getBooking",
         "function": {
           "functionId": "getBooking",

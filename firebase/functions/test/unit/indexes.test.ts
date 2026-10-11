@@ -33,7 +33,7 @@ describe('firestore.indexes.json', () => {
     const ttl = file.fieldOverrides.filter((override) => override.ttl).map((override) => `${override.collectionGroup}.${override.fieldPath}`);
 
     expect(ttl.sort()).toEqual(
-      [C.items, C.holds, C.emailCodes, C.emailProofs, C.rate, C.idempotency, C.audit, C.waitlist, C.portal].map((name) => `${name}.expiresAt`).sort()
+      [C.items, C.holds, C.emailCodes, C.emailProofs, C.trustedDevices, C.rate, C.idempotency, C.audit, C.waitlist, C.portal].map((name) => `${name}.expiresAt`).sort()
     );
   });
 

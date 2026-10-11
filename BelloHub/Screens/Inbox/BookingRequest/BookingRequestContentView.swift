@@ -7,6 +7,7 @@ import SwiftUI
 
 /// The body of 2.10: who asks, for what and when, why it waits for her (the request's reason), the "start the count
 /// from zero" switch for the no-show limit, and Decline / Approve. Approving that needs a plan (D42) opens the paywall.
+/// A request made without the e-mail code ("Confirm on WhatsApp") shows the "Not verified" badge with its reference.
 struct BookingRequestContentView: View {
     @State private var viewModel: BookingRequestViewModel
     let settings: CalendarSettings
@@ -74,7 +75,8 @@ struct BookingRequestContentView: View {
                 if let message = viewModel.errorMessage, viewModel.phase.canAnswer {
                     ErrorNotice(message: message).accessibilityIdentifier("bookingRequest.error")
                 }
-                if viewModel.phase.canAnswer { reason(booking, name: name) }
+                if viewModel.phase.canAnswer, let badge = viewModel.unverifiedBadge { unverified(badge) }
+                if viewModel.phase.canAnswer, viewModel.showsReason { reason(booking, name: name) }
                 if viewModel.phase == .needsPlan { needsPlan }
                 if viewModel.phase.canAnswer, viewModel.offersCountReset { resetCount }
                 if viewModel.phase.canAnswer {
@@ -154,6 +156,39 @@ struct BookingRequestContentView: View {
                 message: "bookingRequest.reason.newClient.message"
             )
             .accessibilityIdentifier("bookingRequest.reason")
+        }
+    }
+
+    /// Coral like a safety notice: she should look at the WhatsApp message before saying yes.
+    private func unverified(_ badge: UnverifiedRequestBadge) -> some View {
+        let phone = BidiIsolate.wrapLeftToRight(badge.phone)
+        let message: Text = if let reference = badge.reference.map(BidiIsolate.wrapLeftToRight) {
+            Text(LocalizedStringResource(
+                "bookingRequest.unverified.message",
+                defaultValue: """
+                The client could not receive the code. Check that the WhatsApp message came from \(phone) \
+                and quotes the reference \(reference).
+                """
+            ).localized(in: locale))
+        } else {
+            Text(LocalizedStringResource(
+                "bookingRequest.unverified.messageNoReference",
+                defaultValue: """
+                The client could not receive the code. Check that the WhatsApp message came from \(phone).
+                """
+            ).localized(in: locale))
+        }
+        return VStack(alignment: .leading, spacing: Spacing.sm) {
+            InlineNotice(style: .safety, title: Text("bookingRequest.unverified.title"), message: message)
+                .accessibilityIdentifier("bookingRequest.unverified")
+            if let releasedAt = badge.releasedAt {
+                Text(LocalizedStringResource(
+                    "bookingRequest.unverified.releases",
+                    defaultValue: "If you do not answer, the time opens up again on \(formatters.dateTime(releasedAt))."
+                ).localized(in: locale))
+                .font(Typography.meta).foregroundStyle(Palette.ink2)
+                .accessibilityIdentifier("bookingRequest.unverified.releases")
+            }
         }
     }
 

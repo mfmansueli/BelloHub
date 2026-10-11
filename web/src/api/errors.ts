@@ -28,6 +28,7 @@ const SERVER_CODES: Readonly<Record<string, ApiErrorCode>> = {
   RATE_LIMITED: 'rateLimited',
   // The proof is missing, wrong, used, expired or for another contact: she needs a new code.
   VERIFICATION_FAILED: 'codeExpired',
+  VERIFICATION_REQUIRED: 'verificationRequired',
   INVALID_CODE: 'codeInvalid',
   NOT_ALLOWED: 'notAllowed',
   // The page sends `acceptLateWarning` whenever its view says the cancellation is late; this only happens when the

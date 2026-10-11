@@ -12,7 +12,7 @@ export interface TemporaryCounts {
 }
 
 /**
- * Everything with a short life: soft holds (5 minutes), email codes and proofs, rate counters, idempotency keys, audit
+ * Everything with a short life: soft holds (5 minutes), email codes and proofs, trusted devices (90 days), rate counters, idempotency keys, audit
  * events past 400 days, waitlist entries 7 days after their last day, portals revoked or idle for 180 days.
  * Each has a Firestore TTL policy too; this is the guarantee that does not depend on it.
  */
@@ -21,7 +21,10 @@ export async function expireTemporary(deps: Deps, now: number): Promise<Temporar
   const expired = (collection: string, field = 'expiresAt') => deps.db.collection(collection).where(field, '<=', cutoff);
   return {
     holds: await sweep(deps, expired(C.holds)),
-    codes: (await sweep(deps, expired(C.emailCodes))) + (await sweep(deps, expired(C.emailProofs))),
+    codes:
+      (await sweep(deps, expired(C.emailCodes))) +
+      (await sweep(deps, expired(C.emailProofs))) +
+      (await sweep(deps, expired(C.trustedDevices))),
     rows:
       (await sweep(deps, expired(C.rate))) +
       (await sweep(deps, expired(C.idempotency))) +

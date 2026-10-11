@@ -8,7 +8,7 @@ import type { DocumentReference, Query } from 'firebase-admin/firestore';
 
 import type { Deps } from '../app/Deps.js';
 import { recordAudit } from './audit.js';
-import type { AccountDoc, InboxItemDoc } from './docs.js';
+import type { AccountDoc, BookingDoc, InboxItemDoc } from './docs.js';
 import { C } from './docs.js';
 import { dataOf, refs, ts } from './store.js';
 
@@ -51,14 +51,29 @@ export async function deleteClientData(deps: Deps, ownerUid: string, target: Cli
   const counts: ClientDataCounts = { bookings: 0, mailboxItems: 0, requests: 0, waitlist: 0, portals: 0, contacts: 0 };
 
   const bookingIds = new Set<string>();
+  // Her trusted devices (verify-fallback) go too: by the e-mail of any booking removed here, and by her phone.
+  const emailHashes = new Set<string>();
   if (target.phoneHash) {
     const found = await r.bookings().where('ownerUid', '==', ownerUid).where('phoneHash', '==', target.phoneHash).get();
-    found.docs.forEach((doc) => bookingIds.add(doc.id));
+    found.docs.forEach((doc) => {
+      bookingIds.add(doc.id);
+      const emailHash = (doc.data() as BookingDoc).emailHash;
+      if (emailHash) emailHashes.add(emailHash);
+    });
   }
   for (const id of target.bookingIds ?? []) {
     const doc = await r.booking(id).get();
-    if (doc.exists && (doc.data() as { ownerUid?: string }).ownerUid === ownerUid) bookingIds.add(id);
+    const data = doc.data() as BookingDoc | undefined;
+    if (doc.exists && data?.ownerUid === ownerUid) {
+      bookingIds.add(id);
+      if (data.emailHash) emailHashes.add(data.emailHash);
+    }
   }
+  const devices = r.trustedDevices().where('ownerUid', '==', ownerUid);
+  for (const emailHash of emailHashes) {
+    await deleteRefs(deps, await refsOf(devices.where('emailHash', '==', emailHash)));
+  }
+  if (target.phoneHash) await deleteRefs(deps, await refsOf(devices.where('phoneHash', '==', target.phoneHash)));
 
   for (const id of bookingIds) {
     const items = await r.inboxItems(ownerUid).where('bookingId', '==', id).get();
@@ -125,7 +140,7 @@ export async function cascadeDeleteAccount(deps: Deps, uid: string): Promise<voi
     page = listed.next;
   } while (page);
 
-  for (const collection of ['bookings', 'holds', 'portal', 'rescheduleRequests', 'waitlist', 'contacts', 'idempotency']) {
+  for (const collection of ['bookings', 'holds', 'portal', 'rescheduleRequests', 'waitlist', 'contacts', 'idempotency', 'trustedDevices']) {
     await deleteRefs(deps, await refsOf(byOwner(collection)));
   }
   await deleteRefs(deps, [r.availability(uid), r.intakeForm(uid), r.calendarLock(uid)]);

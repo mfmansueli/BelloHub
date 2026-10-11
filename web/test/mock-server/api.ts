@@ -9,6 +9,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 
 import type {
+  BookedResult,
   BookingActions,
   BookingOutcome,
   BookingPhase,
@@ -47,6 +48,7 @@ const CODES: Readonly<Record<string, { http: number; status: string }>> = {
   TOKEN_EXPIRED: { http: 404, status: 'NOT_FOUND' },
   RATE_LIMITED: { http: 429, status: 'RESOURCE_EXHAUSTED' },
   VERIFICATION_FAILED: { http: 403, status: 'PERMISSION_DENIED' },
+  VERIFICATION_REQUIRED: { http: 400, status: 'FAILED_PRECONDITION' },
   INVALID_CODE: { http: 400, status: 'INVALID_ARGUMENT' },
   NOT_ALLOWED: { http: 400, status: 'FAILED_PRECONDITION' },
   CONFIRMATION_REQUIRED: { http: 400, status: 'FAILED_PRECONDITION' },
@@ -94,6 +96,16 @@ interface StoredBooking {
   lateByMinutes?: number;
   pendingReschedule?: { requestedStart: string; status: 'pending' | 'declined' };
   intakeSubmittedAt?: string;
+  /** "Confirm on WhatsApp" (API.md 5.8): an unverified request and the reference she quotes. */
+  verification?: 'whatsapp';
+  reference?: string;
+}
+
+/** A trusted-device token (API.md 5.8 `device`): one page, one address, 90 days. */
+interface Device {
+  slug: string;
+  email: string;
+  expiresAt: number;
 }
 
 interface Hold {
@@ -125,6 +137,8 @@ export interface InboxItem {
 }
 
 const token = (): string => randomBytes(16).toString('base64url');
+/** API.md 5.8: five characters without look-alikes (no 0/O, 1/I/L). */
+const referenceCode = (): string => [...randomBytes(5)].map((byte) => '23456789ABCDEFGHJKMNPQRSTUVWXYZ'[byte % 31] ?? '2').join('');
 const sha = (text: string): Buffer => createHash('sha256').update(text).digest();
 const iso = (ms: number): string => new Date(ms).toISOString();
 
@@ -202,6 +216,9 @@ export class MockApi {
   private readonly idempotent = new Map<string, { request: string; result: BookingOutcome }>();
   private readonly attempts = new Map<string, number>();
   private readonly items = new Map<string, string>();
+  private readonly devices = new Map<string, Device>();
+  /** Every `holdKey` a booking code was sent with (API.md 5.5), so a test can see the hold was stretched. */
+  readonly codeHolds: string[] = [];
   readonly inbox: InboxItem[] = [];
   readonly waitlist: Json[] = [];
   readonly rescheduleRequests: Json[] = [];
@@ -227,6 +244,8 @@ export class MockApi {
     this.idempotent.clear();
     this.attempts.clear();
     this.items.clear();
+    this.devices.clear();
+    this.codeHolds.length = 0;
     this.inbox.length = 0;
     this.waitlist.length = 0;
     this.rescheduleRequests.length = 0;
@@ -381,7 +400,9 @@ export class MockApi {
       endsAt: iso(booking.endsAt),
       timeZoneID: profile.timeZoneID,
       serviceName: service?.name ?? '',
-      emailSent: booking.client.email !== undefined,
+      // An unverified request is never e-mailed when it is made (the address is not proven).
+      emailSent: booking.client.email !== undefined && booking.verification === undefined,
+      ...(booking.reference === undefined ? {} : { reference: booking.reference, requestExpiresAt: iso(Math.min(booking.startsAt, Date.now() + DAY)) }),
     };
   }
 
@@ -477,11 +498,20 @@ export class MockApi {
     return { holdKey, startsAt: iso(startsAt), serviceId: service.id };
   }
 
-  sendEmailCode(input: Json): Json {
+  sendEmailCode(input: Json, now = Date.now()): Json {
     this.maybeFail('sendEmailCode');
-    this.scenario(str(input['slug'], 'slug'));
+    const slug = str(input['slug'], 'slug');
+    this.scenario(slug);
     const target = str(input['email'], 'email').trim().toLowerCase();
     this.attempts.set(`email:${target}`, 0);
+    const holdKey = input['holdKey'];
+    if (input['purpose'] === 'booking' && typeof holdKey === 'string') {
+      // 5.5: a live soft hold under the key is stretched to the code's 10 minutes, never revived, never shortened.
+      this.codeHolds.push(holdKey);
+      for (const hold of this.holds.values()) {
+        if (hold.slug === slug && hold.holdKey === holdKey && hold.offer === undefined && hold.expiresAt > now) hold.expiresAt = Math.max(hold.expiresAt, now + 10 * MINUTE);
+      }
+    }
     return { resendAfterSeconds: this.resendAfterSeconds, expiresInSeconds: 600 };
   }
 
@@ -504,6 +534,35 @@ export class MockApi {
     const [kind, ...rest] = proof.proof.split(':');
     if (kind !== 'email' || rest.length === 0) throw new MockError('VERIFICATION_FAILED');
     return rest.join(':');
+  }
+
+  /** How createBooking was verified (API.md 5.8): an e-mail proof, a trusted device, or nothing (`whatsapp`). */
+  private bookingVerification(value: unknown, slug: string, email: string | undefined, now: number): 'email' | 'device' | 'whatsapp' {
+    const method = typeof value === 'object' && value !== null ? (value as { method?: unknown }).method : undefined;
+    if (method === 'whatsapp' || method === 'device') {
+      if (email === undefined || email === '') throw new MockError('INVALID_ARGUMENT', { fields: ['client.email'] });
+      if (method === 'whatsapp') return 'whatsapp';
+      const device = this.devices.get(String((value as { token?: unknown }).token));
+      if (device === undefined || device.slug !== slug || device.email !== email || device.expiresAt <= now) throw new MockError('VERIFICATION_FAILED');
+      return 'device';
+    }
+    if (this.verified(value) !== email) throw new MockError('VERIFICATION_FAILED');
+    return 'email';
+  }
+
+  /** 5.18: removes a trusted-device token; the same answer whether or not it existed. */
+  forgetDevice(input: Json): Json {
+    this.maybeFail('forgetDevice');
+    this.devices.delete(str(input['token'], 'token'));
+    return { ok: true };
+  }
+
+  /** Test control: a trusted device for `email` on `slug`, as if an earlier code-verified booking had made it. */
+  seedDevice(slug: string, email: string, now = Date.now()): { token: string; expiresAt: string } {
+    this.profile(slug);
+    const value = token().slice(0, 22);
+    this.devices.set(value, { slug, email: email.trim().toLowerCase(), expiresAt: now + 90 * DAY });
+    return { token: value, expiresAt: iso(now + 90 * DAY) };
   }
 
   createBooking(input: Json, now = Date.now()): BookingOutcome {
@@ -530,7 +589,8 @@ export class MockApi {
     for (const forbidden of ['firstVisit', 'heardFrom', 'hadBefore', 'guestNames', 'holdId', 'sessionKey']) {
       if (forbidden in input) throw new MockError('INVALID_ARGUMENT', { fields: [forbidden] });
     }
-    if (this.verified(input['verification']) !== email) throw new MockError('VERIFICATION_FAILED');
+    const verification = this.bookingVerification(input['verification'], slug, email, now);
+    if (verification === 'whatsapp' && profile.whatsappE164 === undefined) throw new MockError('NOT_ALLOWED');
 
     let result: BookingOutcome;
     const noShow = scenario.noShow[phone];
@@ -550,10 +610,14 @@ export class MockApi {
       } else {
         const isKnown = scenario.knownClients.includes(phone) || [...this.bookings.values()].some((b) => b.slug === slug && b.client.phone === phone);
         const needsApproval = (profile.booking.requiresApproval && !isKnown) || noShow === 'approveNewBookings';
+        // A trusted device never skips a look by the professional: the page goes back to the code.
+        if (verification === 'device' && needsApproval) throw new MockError('VERIFICATION_REQUIRED');
+        const unverified = verification === 'whatsapp';
         const stored: StoredBooking = {
           id: `bk_${token()}`,
           slug,
-          status: needsApproval ? 'pendingApproval' : 'confirmed',
+          status: needsApproval || unverified ? 'pendingApproval' : 'confirmed',
+          ...(unverified ? { verification: 'whatsapp' as const, reference: referenceCode() } : {}),
           serviceId,
           addOnIds,
           guests,
@@ -569,7 +633,13 @@ export class MockApi {
         if (holdKey !== undefined) for (const hold of [...this.holds.values()]) if (hold.holdKey === holdKey) this.holds.delete(hold.id);
         const manageToken = token();
         this.manageTokens.set(manageToken, stored.id);
-        result = this.booked(stored, manageToken, profile);
+        const booked = this.booked(stored, manageToken, profile) as BookedResult;
+        if (verification === 'email' && stored.status === 'confirmed' && email !== undefined) {
+          const device = this.seedDevice(slug, email, now);
+          result = { ...booked, deviceToken: device.token, deviceTokenExpiresAt: device.expiresAt };
+        } else {
+          result = booked;
+        }
       }
     }
     if (result.status !== 'slotTaken') this.idempotent.set(idempotencyKey, { request: fingerprint, result });
@@ -886,6 +956,8 @@ export class MockApi {
         durationMinutes: booking.durationMinutes,
         client: booking.client,
         note: booking.note ?? null,
+        verification: booking.verification ?? null,
+        reference: booking.reference ?? null,
         rescheduleCount: booking.rescheduleCount,
         clientConfirmedAt: booking.clientConfirmedAt ?? null,
         lateByMinutes: booking.lateByMinutes ?? null,

@@ -6,7 +6,7 @@ Every modeling decision starts with one question: **does this datum need to be o
 |---|---|---|---|
 | **A. The record (vault)** | SwiftData synced by CloudKit private database, sensitive fields encrypted by the app | Clients, health and consent, treatment records, photos, plans, incidents, services, availability, tags, quick replies, settings | Only the professional |
 | **B. Operations (server)** | Firebase: Firestore, Functions, Storage, Auth | The minimum the public page and the client's management page need to work; sealed envelopes (opaque) | The professional through the app; each client her own booking through a secret link; nobody can read envelopes |
-| **C. Browser (client)** | Memory only. Health answers are **never persisted** in the browser. Only non-clinical booking fields (service, chosen time, name, phone) may sit in `sessionStorage` so a refresh does not lose the booking | The client's in-progress booking | The client |
+| **C. Browser (client)** | Memory only. Health answers are **never persisted** in the browser. Only non-clinical booking fields (service, chosen time, name, phone) may sit in `sessionStorage` so a refresh does not lose the booking; `localStorage` holds the chosen language and, per page, a trusted-device token with the e-mail it was issued for (returning clients skip the code, `10-WEB-BOOKING.md` section 3) | The client's in-progress booking | The client |
 
 Layer A is reached **only** through `ClientRecordRepository`; layer B **only** through `BookingRepository` (`04-ARCHITECTURE.md` §3). Domain types in `Models/` are plain `Sendable` structs; the SwiftData `@Model` classes live in `Managers/Persistence/Schema/` and are mapped at the boundary.
 

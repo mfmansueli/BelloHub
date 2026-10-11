@@ -19,6 +19,8 @@ import {
   TimeZoneId,
   Token,
   Uuid,
+  BookingVerificationSchema,
+  ReferenceCode,
   VerificationSchema,
   looseText,
   text
@@ -91,7 +93,14 @@ export const getHold = {
 // MARK: - Verification
 
 export const sendEmailCode = {
-  input: z.strictObject({ slug: SlugSchema, email: Email, locale: LocaleSchema, purpose: z.enum(['booking', 'find']) }),
+  input: z.strictObject({
+    slug: SlugSchema,
+    email: Email,
+    locale: LocaleSchema,
+    purpose: z.enum(['booking', 'find']),
+    /** The browser's hold key: a soft hold under it is extended to cover the code's 10 minutes. */
+    holdKey: HoldKey.optional()
+  }),
   output: z.strictObject({ resendAfterSeconds: z.literal(30), expiresInSeconds: z.literal(600) })
 };
 
@@ -110,7 +119,7 @@ export const createBooking = {
     startsAt: Instant,
     client: ClientSchema,
     note: looseText(300, true).optional(),
-    verification: VerificationSchema,
+    verification: BookingVerificationSchema,
     idempotencyKey: Uuid,
     holdKey: HoldKey.optional()
   }),
@@ -123,11 +132,24 @@ export const createBooking = {
       endsAt: Instant,
       timeZoneID: TimeZoneId,
       serviceName: z.string(),
-      emailSent: z.boolean()
+      emailSent: z.boolean(),
+      /** Only for `verification.method == 'whatsapp'`: the code the client sends the professional on WhatsApp. */
+      reference: ReferenceCode.optional(),
+      /** Only for `whatsapp`: when the request is released if she has not answered (24 hours, or the visit's start). */
+      requestExpiresAt: Instant.optional(),
+      /** Only on a confirmed booking verified by an e-mail code: a trusted-device token for this page and this e-mail. */
+      deviceToken: Token.optional(),
+      deviceTokenExpiresAt: Instant.optional()
     }),
     SlotResultAlternatives,
     z.strictObject({ status: z.literal('paused'), pausedUntil: Instant.optional() })
   ])
+};
+
+/** Revokes a trusted-device token ("Forget this device"). Always `ok`, whether or not the token existed. */
+export const forgetDevice = {
+  input: z.strictObject({ token: Token }),
+  output: OkSchema
 };
 
 export const findBookings = {

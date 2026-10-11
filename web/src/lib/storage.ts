@@ -2,13 +2,15 @@
 // can make it throw or come back empty. Every read and write is guarded, and the page works without it.
 //
 // What may be stored (docs/05-DATA-MODEL.md layer C, docs/06 section 3.5):
-//   localStorage    the chosen page language, nothing else
+//   localStorage    the chosen page language, and per page a trusted-device token with the address it was issued for
+//                   (lib/trustedDevice.ts; returning clients skip the code, API.md 5.8)
 //   sessionStorage  non-clinical booking fields (service, time, name, phone) so a refresh does not lose them
-// A health answer, a code or a token is never stored. The routes that handle them import nothing from here.
+// A health answer, a code, a proof or a manage token is never stored. The routes that handle them import nothing from here.
 
 export const STORAGE_KEYS = {
   language: 'bh.lang',
   bookingDraft: (slug: string): string => `bh.draft.${slug}`,
+  trustedDevice: (slug: string): string => `bh.device.${slug}`,
 } as const;
 
 function safe<T>(action: () => T, fallback: T): T {
@@ -26,6 +28,12 @@ export function readLocal(key: string): string | null {
 export function writeLocal(key: string, value: string): void {
   safe(() => {
     window.localStorage.setItem(key, value);
+  }, undefined);
+}
+
+export function removeLocal(key: string): void {
+  safe(() => {
+    window.localStorage.removeItem(key);
   }, undefined);
 }
 

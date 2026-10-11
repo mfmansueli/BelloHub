@@ -11,13 +11,15 @@ import Foundation
 /// health form for Helena, sealed at first read to the test key (`InMemoryKeyStore` seed), so the whole
 /// open-and-import path runs on the simulator. Answers change the data like the server would. DEBUG only.
 ///
-/// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42).
+/// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42). `-uiInbox unverified` makes Ana's request
+/// one made without the e-mail code ("Confirm on WhatsApp", verify-fallback).
 ///
 /// An actor, not a @MainActor class: `InboxRepository` is Sendable and the services call it from nonisolated tasks.
 actor UITestInboxRepository: InboxRepository {
     enum Scenario: String {
         case fixtures
         case paywall
+        case unverified
     }
 
     private let scenario: Scenario
@@ -38,7 +40,7 @@ actor UITestInboxRepository: InboxRepository {
         self.scenario = scenario
         self.publicKey = publicKey
         self.now = now
-        bookings = UITestInboxFixtures.bookings(now: now)
+        bookings = UITestInboxFixtures.bookings(now: now, unverified: scenario == .unverified)
         requests = UITestInboxFixtures.requests(now: now)
         waitlist = UITestInboxFixtures.waitlist(now: now)
     }

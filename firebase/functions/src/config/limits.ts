@@ -21,6 +21,13 @@ export const RATE = {
   createBookingIp: perHour(10),
   createBookingPhone: perHour(5),
   createBookingOwnerDay: perDay(300),
+  /** "I didn't get the code": unverified requests confirmed on WhatsApp (no proof, so tighter than createBooking). */
+  unverifiedIp: perDay(5),
+  unverifiedEmail: perDay(3),
+  unverifiedPhone: perDay(3),
+  unverifiedOwnerDay: perDay(50),
+  /** "Forget this device". */
+  forgetDeviceIp: perHour(20),
   /** Emails about bookings (confirmation, approval, change) per professional, to protect cost and sender reputation. */
   bookingEmailOwnerDay: perDay(500),
   findBookingsIp: perHour(10),
@@ -49,6 +56,14 @@ export const EMAIL_PROOF_TTL_SECONDS = 1800;
 export const PHONE_AUTH_MAX_AGE_SECONDS = 600;
 
 export const MAX_MANAGE_TOKENS_PER_BOOKING = 5;
+/** An unverified (WhatsApp) request waits at most this long for her answer, then the time is released. */
+export const UNVERIFIED_REQUEST_HOURS = 24;
+/** Unverified requests one phone or one e-mail may have waiting with one professional at the same time. */
+export const MAX_PENDING_UNVERIFIED_PER_CONTACT = 2;
+/** A trusted-device token (returning clients skip the code) lives this long and is never renewed. */
+export const TRUSTED_DEVICE_DAYS = 90;
+/** Trusted devices kept per e-mail and page; a new one replaces the oldest. */
+export const MAX_TRUSTED_DEVICES = 5;
 /** Sealed items one booking may leave in the mailbox before the app acknowledges them (a cap on what one link can cost). */
 export const MAX_SEALED_PER_BOOKING = 20;
 export const MAX_RANGE_DAYS = 42;

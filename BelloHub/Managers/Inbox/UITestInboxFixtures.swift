@@ -19,17 +19,23 @@ enum UITestInboxFixtures {
     static let glowServiceID = "11111111-1111-4111-8111-111111111111"
     static let zone = TimeZone(identifier: "America/Sao_Paulo") ?? .current
 
-    static func bookings(now: Date) -> [IncomingBooking] {
+    /// The reference of Ana's request in the `unverified` scenario (verify-fallback).
+    static let unverifiedReference = "K7M2P"
+
+    /// `unverified`: Ana's request was made with "Confirm on WhatsApp" (no e-mail code), with no other reason to wait.
+    static func bookings(now: Date, unverified: Bool = false) -> [IncomingBooking] {
         let policy = CancellationPolicy.standard
         return [
             IncomingBooking(
-                id: requestID, status: .pendingApproval, pendingReason: .noShowLimit,
+                id: requestID, status: .pendingApproval, pendingReason: unverified ? nil : .noShowLimit,
                 serviceId: glowServiceID, serviceName: "Brazilian Glow", durationMinutes: 90,
                 startsAt: at(days: 6, hour: 10, now: now), endsAt: at(days: 6, hour: 11, minutes: 30, now: now),
                 timeZoneID: zone.identifier,
                 client: .init(name: "Ana Costa", phone: "+5511981234410", email: nil, locale: "pt-BR"),
                 note: "Hi Maria! I can make it this time. I set two reminders.", policy: policy,
                 noShowPolicy: .init(isOn: true, limit: 2, lateCancelCounts: true),
+                verification: unverified ? "whatsapp" : nil, reference: unverified ? unverifiedReference : nil,
+                pendingExpiresAt: unverified ? now.addingTimeInterval(22 * 3_600) : nil,
                 createdAt: now.addingTimeInterval(-1_800)
             ),
             IncomingBooking(
