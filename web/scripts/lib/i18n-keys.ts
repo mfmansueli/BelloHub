@@ -15,7 +15,7 @@ export interface KeyUse {
 
 /** The first segment of every key. A literal that looks like `ns.word` with another prefix is not a key. */
 export const NAMESPACES = [
-  'common', 'lang', 'err', 'state', 'landing', 'price', 'cal', 'wait', 'wa', 'ics', 'legal',
+  'common', 'lang', 'err', 'state', 'landing', 'price', 'cal', 'wait', 'wa', 'ics', 'legal', 'loc',
   'br', 'bk1', 'bk2', 'bk4', 'bk5', 'bk6', 'bk7', 'bk8', 'bk9', 'bk10', 'bk11',
   'cl2', 'cl3', 'cl4', 'cl5', 'cl6', 'cl7', 'cl9',
 ] as const;

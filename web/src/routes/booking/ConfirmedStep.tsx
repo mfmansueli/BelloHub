@@ -8,7 +8,7 @@ import type { JSX } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
 import { api } from '../../api/client';
-import type { PublicProfile } from '../../api/types';
+import type { PublicLocation, PublicProfile } from '../../api/types';
 import { useFormatter } from '../../app/context';
 import { navigate, slugRoute, manageRoute } from '../../app/router';
 import { allowedStep } from '../../app/booking/machine';
@@ -22,6 +22,7 @@ import { Icon } from '../../components/Icon';
 import { Avatar, Footer, Screen, Title, useDocumentTitle } from '../../components/Layout';
 import { Notice, Seal } from '../../components/Feedback';
 import { PersonalLink } from '../../components/PersonalLink';
+import { PlaceCard } from '../../components/PlaceCard';
 import { useI18n } from '../../i18n';
 import { linkBase, pageUrl } from '../../lib/config';
 import type { PolicyValues } from '../../lib/policy';
@@ -37,6 +38,8 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
   // docs/10 section 3: the health-form card is for a first visit or after 12 months; the server's `intakeRequired`
   // says which (a flag, no content). Until the booking is read back the card is not shown rather than guessed.
   const [intakeRequired, setIntakeRequired] = useState(false);
+  // Where she works comes back with the booking (a confirmed booking may see it); a public address is on the page anyway.
+  const [place, setPlace] = useState<PublicLocation | undefined>(profile.location);
   const bookedToken = state.result?.status === 'confirmed' ? state.result.manageToken : null;
   useEffect(() => {
     if (bookedToken === null) return;
@@ -46,6 +49,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         if (!current) return;
         setSnapshot(booking.policy);
         setIntakeRequired(booking.intakeRequired);
+        if (booking.location !== undefined) setPlace(booking.location);
       },
       () => {
         if (current) setSnapshot(null);
@@ -120,6 +124,8 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
         </div>
       </section>
 
+      {place === undefined ? null : <PlaceCard location={place} />}
+
       <div class="stack-sm">
         <LinkButton to={manageRoute(manageToken)} testId="view-appointment">
           {t('bk8.view')}
@@ -171,7 +177,7 @@ export function ConfirmedStep({ profile }: { profile: PublicProfile }): JSX.Elem
       <CalendarSheet
         open={calendarOpen}
         onClose={() => { setCalendarOpen(false); }}
-        booking={{ bookingId: result.bookingId, startsAt: result.startsAt, endsAt: result.endsAt, serviceNames, professional: { displayName: profile.displayName, city: profile.city } }}
+        booking={{ bookingId: result.bookingId, startsAt: result.startsAt, endsAt: result.endsAt, serviceNames, professional: { displayName: profile.displayName, city: profile.city }, place }}
         pageUrl={pageUrl(profile.slug)}
       />
     </Screen>

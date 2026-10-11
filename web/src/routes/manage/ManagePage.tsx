@@ -19,6 +19,7 @@ import { ErrorNotice, Notice, StatusChip, type StatusKind } from '../../componen
 import { Chip } from '../../components/Choices';
 import { Icon } from '../../components/Icon';
 import { Footer, Screen, Title, TopBar, Avatar, useDocumentTitle } from '../../components/Layout';
+import { PlaceCard } from '../../components/PlaceCard';
 import { BookingRules } from '../../components/BookingRules';
 import { useI18n } from '../../i18n';
 import { pageUrl } from '../../lib/config';
@@ -219,6 +220,8 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         </section>
       ) : null}
 
+      {booking.location === undefined || gone ? null : <PlaceCard location={booking.location} />}
+
       {booking.status === 'pendingApproval' ? (
         <Notice kind="warning" icon="clock" title={t('bk10.title', { name: pro.firstName })} testId="pending">
           {t('bk9.pending.text', { name: pro.firstName })}
@@ -330,7 +333,7 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
       <CalendarSheet
         open={calendarOpen}
         onClose={() => { setCalendarOpen(false); }}
-        booking={{ bookingId: booking.bookingId, startsAt: booking.startsAt, endsAt: booking.endsAt, serviceNames: [booking.service.name, ...booking.addOns.map((addOn) => addOn.name)], professional: { displayName: pro.displayName, city: pro.city } }}
+        booking={{ bookingId: booking.bookingId, startsAt: booking.startsAt, endsAt: booking.endsAt, serviceNames: [booking.service.name, ...booking.addOns.map((addOn) => addOn.name)], professional: { displayName: pro.displayName, city: pro.city }, place: booking.location }}
         pageUrl={pageUrl(pro.slug)}
       />
     </Screen>

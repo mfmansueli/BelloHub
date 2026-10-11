@@ -8,6 +8,7 @@ import type {
   BookedResult,
   BookingOutcome,
   BookingView,
+  PublicLocation,
   FormContext,
   FormQuestion,
   FoundBooking,
@@ -73,6 +74,26 @@ export function rulesFromText(rulesText: unknown): RulesByLocale {
   return out;
 }
 
+const APPLE_MAPS = /^https:\/\/maps\.apple\.com\/\?address=[A-Za-z0-9%._~-]+$/;
+const GOOGLE_MAPS = /^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=[A-Za-z0-9%._~-]+$/;
+
+/**
+ * Where she works, only when it has the shape the server allows: one to three lines and both map links on the two
+ * map hosts. Anything else is dropped rather than shown, so the page never links anywhere else.
+ */
+export function parseLocation(raw: unknown): PublicLocation | undefined {
+  if (typeof raw !== 'object' || raw === null) return undefined;
+  const value = raw as Record<string, unknown>;
+  const lines = Array.isArray(value['lines']) ? value['lines'].filter((line): line is string => typeof line === 'string' && line.trim() !== '') : [];
+  const maps = typeof value['maps'] === 'object' && value['maps'] !== null ? (value['maps'] as Record<string, unknown>) : {};
+  const apple = maps['apple'];
+  const google = maps['google'];
+  if (lines.length === 0 || lines.length > 3 || typeof apple !== 'string' || typeof google !== 'string') return undefined;
+  if (!APPLE_MAPS.test(apple) || !GOOGLE_MAPS.test(google)) return undefined;
+  const directions = typeof value['directions'] === 'string' && value['directions'].trim() !== '' ? value['directions'] : undefined;
+  return { lines, ...(directions === undefined ? {} : { directions }), maps: { apple, google } };
+}
+
 export function professionalLite(profile: WireProfile): ProfessionalLite {
   const offered = profile.locales.filter(isLocaleId);
   const locales: readonly LocaleId[] = offered.length > 0 ? offered : [DEFAULT_LOCALE];
@@ -113,6 +134,7 @@ export function parsePublicPage(raw: unknown): PublicProfile {
   const features = record(value['features']);
   const wire = profile as unknown as WireProfile;
   const { bio, legalNotice } = wire;
+  const location = parseLocation(profile['location']);
   return {
     ...professionalLite(wire),
     ...(bio === undefined ? {} : { bio }),
@@ -124,6 +146,7 @@ export function parsePublicPage(raw: unknown): PublicProfile {
     booking: wire.booking,
     ...(legalNotice === undefined ? {} : { legalNotice }),
     inboxKey: wire.inboxKey,
+    ...(location === undefined ? {} : { location }),
     intakeAvailable: value['intakeAvailable'] === true,
     features: {
       whatsAppAutomation: features['whatsAppAutomation'] === true,
@@ -238,10 +261,12 @@ export function parseWireBooking(raw: unknown): WireBooking {
 
 /** The booking with the professional's public profile beside it (one `getPublicPage` per token page). */
 export function bookingView(wire: WireBooking, professional: ProfessionalLite): BookingView {
-  const { professional: header, rulesText, client, ...rest } = wire;
+  const { professional: header, rulesText, client, location: rawLocation, ...rest } = wire;
   const businessName = header.businessName ?? professional.businessName;
+  const location = parseLocation(rawLocation);
   return {
     ...rest,
+    ...(location === undefined ? {} : { location }),
     professional: { ...professional, ...(businessName === undefined ? {} : { businessName }) },
     client: { name: client.name, firstName: firstNameOf(client.name) },
     rules: rulesFromText(rulesText),

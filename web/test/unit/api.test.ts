@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 import { createApi } from '../../src/api/client';
 import { ApiError } from '../../src/api/errors';
-import { bookingView, parseHold, parsePublicPage, parseSlots, questionsOf, rulesFromText } from '../../src/api/parse';
+import { bookingView, parseHold, parseLocation, parsePublicPage, parseSlots, questionsOf, rulesFromText } from '../../src/api/parse';
 import { createTransport, toError } from '../../src/api/transport';
 import type { WireBooking, WireProfile } from '../../src/api/types';
 
@@ -211,5 +211,26 @@ describe('client composition', () => {
     expect(context.checkIn).toEqual({ available: true, serviceName: 'Glow' });
     expect(context.client.firstName).toBe('Ana');
     expect(calls.filter((name) => name === 'getPublicPage')).toHaveLength(1);
+  });
+});
+
+describe('where she works (parseLocation)', () => {
+  const good = {
+    lines: ['Rua Augusta 1200', 'São Paulo 01304-001'],
+    directions: '2º andar',
+    maps: { apple: 'https://maps.apple.com/?address=Rua%20Augusta', google: 'https://www.google.com/maps/search/?api=1&query=Rua%20Augusta' },
+  };
+
+  it('keeps an address with the server shape', () => {
+    expect(parseLocation(good)).toEqual(good);
+    expect(parseLocation({ ...good, directions: ' ' })).toEqual({ lines: good.lines, maps: good.maps });
+  });
+
+  it('drops anything that would link elsewhere or has no lines, rather than showing it', () => {
+    expect(parseLocation({ ...good, maps: { ...good.maps, google: 'https://evil.example/?q=x' } })).toBeUndefined();
+    expect(parseLocation({ ...good, maps: { ...good.maps, apple: 'javascript:alert(1)' } })).toBeUndefined();
+    expect(parseLocation({ ...good, lines: [] })).toBeUndefined();
+    expect(parseLocation(undefined)).toBeUndefined();
+    expect(parseLocation('Rua Augusta')).toBeUndefined();
   });
 });

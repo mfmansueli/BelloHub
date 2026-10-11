@@ -12,6 +12,7 @@ import { priceText } from '../../app/booking/priceText';
 import { servicePrice } from '../../app/booking/summary';
 import { Button, ExternalLink, Link } from '../../components/Button';
 import { Icon } from '../../components/Icon';
+import { PlaceCard } from '../../components/PlaceCard';
 import { Avatar, Footer, Screen, useDocumentTitle } from '../../components/Layout';
 import { Notice } from '../../components/Feedback';
 import { LanguageChooser } from '../../components/LanguageSheet';
@@ -92,6 +93,8 @@ export function BookingHome({ profile }: { profile: PublicProfile }): JSX.Elemen
           <Icon name="chevron" class="icon-quiet" />
         </button>
       )}
+
+      {profile.location === undefined ? null : <PlaceCard location={profile.location} />}
 
       <section aria-labelledby="services-title">
         <h2 id="services-title" class="section">

@@ -1,6 +1,8 @@
 // "Add to calendar": an iCalendar file (RFC 5545) and a Google Calendar link, built in the browser from what
 // the page already shows. No request is made; the file is a Blob the browser saves.
 
+import type { PublicLocation } from '../api/types';
+
 export interface CalendarEvent {
   /** Opaque, stable id of the booking (never the manage token). */
   readonly uid: string;
@@ -98,6 +100,8 @@ export interface CalendarDetails {
   readonly endsAt: string;
   readonly serviceNames: readonly string[];
   readonly professional: { readonly displayName: string; readonly city?: string | undefined };
+  /** Where she works, when this booking may see it: LOCATION and a map link in the description. */
+  readonly place?: PublicLocation | undefined;
 }
 
 /**
@@ -105,13 +109,16 @@ export interface CalendarDetails {
  * portal link, so a shared calendar or a synced device cannot hand the booking to someone else.
  */
 export function calendarEvent(booking: CalendarDetails, pageUrl: string, t: (key: string, params?: Record<string, string>) => string, language: string): CalendarEvent {
+  const place = booking.place;
+  const location = place === undefined ? booking.professional.city : place.lines.join(', ');
+  const description = [t('ics.page', { link: pageUrl }), ...(place === undefined ? [] : [t('ics.map', { link: place.maps.google })])].join('\n');
   return {
     uid: booking.bookingId,
     startMs: Date.parse(booking.startsAt),
     endMs: Date.parse(booking.endsAt),
     summary: t('ics.summary', { service: booking.serviceNames.join(' + '), name: booking.professional.displayName }),
-    description: t('ics.page', { link: pageUrl }),
-    ...(booking.professional.city === undefined ? {} : { location: booking.professional.city }),
+    description,
+    ...(location === undefined ? {} : { location }),
     language,
   };
 }

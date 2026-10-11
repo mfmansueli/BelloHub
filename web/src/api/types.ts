@@ -57,6 +57,13 @@ export interface BookingSettings {
   readonly maxDaysAhead: number;
 }
 
+/** Where she works (API.md section 4): the lines and both map links exactly as her app wrote them. */
+export interface PublicLocation {
+  readonly lines: readonly string[];
+  readonly directions?: string;
+  readonly maps: { readonly apple: string; readonly google: string };
+}
+
 /** `PublicProfile` of API.md section 4, as published by her app. */
 export interface WireProfile {
   readonly schemaVersion: 1;
@@ -81,6 +88,8 @@ export interface WireProfile {
   readonly rulesText: Readonly<Partial<Record<string, string>>>;
   readonly legalNotice?: string;
   readonly inboxKey: InboxKey;
+  /** Only when she chose to show her address on the page. */
+  readonly location?: PublicLocation;
   readonly updatedAt: string;
 }
 
@@ -275,6 +284,8 @@ export interface WireBooking {
   readonly pendingReschedule?: { readonly requestedStart: string; readonly status: 'pending' | 'declined' };
   /** First visit, or the last sealed form is older than 12 months. */
   readonly intakeRequired: boolean;
+  /** Where she works: for a confirmed booking, or always when she put it on her page. */
+  readonly location?: PublicLocation;
   readonly tokenExpiresAt: string;
 }
 
@@ -396,6 +407,7 @@ export interface PublicProfile extends ProfessionalLite {
   readonly booking: BookingSettings;
   readonly legalNotice?: string;
   readonly inboxKey: InboxKey;
+  readonly location?: PublicLocation;
   /** The professional published a health form. */
   readonly intakeAvailable: boolean;
   readonly features: PublicPageResponse['features'];

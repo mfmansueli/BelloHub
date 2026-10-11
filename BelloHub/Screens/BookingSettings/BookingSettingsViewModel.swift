@@ -70,7 +70,7 @@ final class BookingSettingsViewModel {
         businessName = profile?.businessName ?? ""
         timeZone = profile.map { TimeZone(identifier: $0.timeZoneID) ?? .current } ?? .current
         localization = profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
-        regionCode = profile?.regionCode ?? Locale.current.region?.identifier ?? "US"
+        regionCode = profile?.regionCode ?? ""
         firstWeekday = profile?.weekConfig.firstWeekday ?? Calendar.current.firstWeekday
         professions = profile?.professions ?? []
         let catalog = try? ProfessionCatalog.loadBundled(localization: localization)

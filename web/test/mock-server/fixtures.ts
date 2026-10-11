@@ -2,7 +2,7 @@
 // touching each other's state: the slug picks the behavior (approval, pause, no-show limit, strict policy...).
 // Profiles are the `PublicProfile` of API.md section 4, exactly as the app would publish them.
 
-import type { InboxKey, WireProfile } from '../../src/api/types';
+import type { InboxKey, PublicLocation, WireProfile } from '../../src/api/types';
 import type { PolicyValues } from '../../src/lib/policy';
 import { LOCALE_IDS } from '../../src/lib/locales';
 
@@ -54,7 +54,18 @@ export interface Scenario {
   readonly whatsAppAutomation?: boolean;
   /** Whether she published a health form. */
   readonly intakeAvailable?: boolean;
+  /** Where she works and who may see it (API.md 6.2): `confirmed` only through a confirmed booking, `public` also on the page. */
+  readonly place?: { readonly location: PublicLocation; readonly visibility: 'confirmed' | 'public' };
 }
+
+export const PLACE: PublicLocation = {
+  lines: ['Rua Augusta 1200, sala 4', 'São Paulo 01304-001'],
+  directions: '2º andar, interfone 4',
+  maps: {
+    apple: 'https://maps.apple.com/?address=Rua%20Augusta%201200%2C%20sala%204%2C%20S%C3%A3o%20Paulo%2001304-001%2C%20Brazil',
+    google: 'https://www.google.com/maps/search/?api=1&query=Rua%20Augusta%201200%2C%20sala%204%2C%20S%C3%A3o%20Paulo%2001304-001%2C%20Brazil',
+  },
+};
 
 function base(slug: string, inboxKey: InboxKey, overrides: Partial<WireProfile> = {}, policy: PolicyValues = DEFAULT_POLICY): WireProfile {
   return {
@@ -102,6 +113,14 @@ export function scenarios(): Scenario[] {
   const known = ['+5511900000099'];
   return [
     { slug: 'maria', profile: (key) => base('maria', key), knownClients: known, noShow: {} },
+    { slug: 'maria-place', profile: (key) => base('maria-place', key), knownClients: known, noShow: {}, place: { location: PLACE, visibility: 'confirmed' } },
+    {
+      slug: 'maria-place-public',
+      profile: (key) => base('maria-place-public', key, { location: PLACE }),
+      knownClients: known,
+      noShow: {},
+      place: { location: PLACE, visibility: 'public' },
+    },
     {
       slug: 'maria-approval',
       profile: (key) => base('maria-approval', key, { booking: { acceptingBookings: true, requiresApproval: true, maxGuests: 1, maxDaysAhead: 60 } }),

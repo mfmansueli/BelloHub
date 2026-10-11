@@ -80,6 +80,17 @@ describe('what a calendar entry carries (D50)', () => {
     expect(file).not.toContain('/m/');
     expect(url).not.toContain('%2Fm%2F');
   });
+
+  it('adds where she works: the address as LOCATION and its map link on a line of its own', () => {
+    const place = {
+      lines: ['Rua Augusta 1200', 'São Paulo 01304-001'],
+      maps: { apple: 'https://maps.apple.com/?address=x', google: 'https://www.google.com/maps/search/?api=1&query=x' },
+    };
+    const entry = calendarEvent({ ...booking, place }, 'https://bellohub.app/maria', t, 'en');
+    expect(entry.location).toBe('Rua Augusta 1200, São Paulo 01304-001');
+    expect(entry.description).toBe('ics.page|https://bellohub.app/maria\nics.map|https://www.google.com/maps/search/?api=1&query=x');
+    expect(calendarEvent(booking, 'https://bellohub.app/maria', t, 'en').location).toBe('São Paulo');
+  });
 });
 
 // S11: the calendar entry in each of the fourteen localizations, built with the real locale files: the summary and

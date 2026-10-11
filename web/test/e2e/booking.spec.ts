@@ -28,6 +28,19 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     expect(new Date(booking?.startsAt ?? '').toISOString()).toBe(startsAt);
   });
 
+  test('the confirmation says where she works, and the calendar file carries the address and the map', async ({ page, slugFor }) => {
+    await bookEverything(page, slugFor('maria-place'));
+    await expect(page.getByTestId('place')).toContainText('Rua Augusta 1200, sala 4');
+    await page.getByTestId('add-calendar').click();
+    const download = page.waitForEvent('download');
+    await page.getByTestId('ics-download').click();
+    const ics = readFileSync(await (await download).path(), 'utf8').replace(/\r\n /g, '');
+    expect(ics).toContain('LOCATION');
+    expect(ics).toContain('Rua Augusta 1200\\, sala 4\\, São Paulo 01304-001');
+    expect(ics).toContain('https://www.google.com/maps/search/?api=1&query=Rua%20Augusta');
+    expect(ics).not.toContain('/m/');
+  });
+
   test('the confirmation links to the appointment and offers a calendar file', async ({ page, slugFor }) => {
     const slug = slugFor('maria');
     await bookEverything(page, slug);

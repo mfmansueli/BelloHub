@@ -194,3 +194,31 @@ for (const [app, userAgent] of IN_APP_BROWSERS) {
     });
   });
 }
+
+test.describe('where she works (owner, 2026-10-11)', () => {
+  test('a confirmed booking shows the address and both map links on its page; the public page does not', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria-place');
+    const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
+    await open(page, `/m/${token}`);
+    const place = page.getByTestId('place');
+    await expect(place.getByTestId('place-lines')).toContainText('Rua Augusta 1200, sala 4');
+    await expect(place.getByTestId('place-directions')).toContainText('interfone 4');
+    await expect(place.getByTestId('map-apple')).toHaveAttribute('href', /^https:\/\/maps\.apple\.com\/\?address=Rua%20Augusta/);
+    await expect(place.getByTestId('map-google')).toHaveAttribute('href', /^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=Rua%20Augusta/);
+    await open(page, `/${slug}`);
+    await expect(page.getByTestId('services')).toBeVisible();
+    await expect(page.getByTestId('place')).toHaveCount(0);
+  });
+
+  test('a request still waiting for her does not see a confirmed-only address', async ({ page, mock, slugFor }) => {
+    const { token } = await mock.seed({ slug: slugFor('maria-place'), startsInMinutes: 50 * HOUR, status: 'pendingApproval' });
+    await open(page, `/m/${token}`);
+    await expect(page.getByTestId('pending')).toBeVisible();
+    await expect(page.getByTestId('place')).toHaveCount(0);
+  });
+
+  test('a public address is on the booking page', async ({ page, slugFor }) => {
+    await open(page, `/${slugFor('maria-place-public')}`);
+    await expect(page.getByTestId('place')).toContainText('Rua Augusta 1200, sala 4');
+  });
+});

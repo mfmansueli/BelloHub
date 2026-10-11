@@ -386,6 +386,8 @@ export class MockApi {
       rescheduleCount: booking.rescheduleCount,
       ...(booking.pendingReschedule === undefined ? {} : { pendingReschedule: booking.pendingReschedule }),
       intakeRequired: booking.intakeSubmittedAt === undefined && scenario.intakeCompleted !== true,
+      // Where she works, by the server's rule: a confirmed booking, or anyone when it is public.
+      ...(scenario.place !== undefined && (scenario.place.visibility === 'public' || booking.status === 'confirmed') ? { location: scenario.place.location } : {}),
       tokenExpiresAt: iso(booking.endsAt + 7 * DAY),
     };
   }
