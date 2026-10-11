@@ -126,6 +126,7 @@ struct NewAppointmentContent: View {
                 Spacer(minLength: Spacing.sm)
                 Text(verbatim: formatters.duration(minutes: viewModel.totalMinutes))
                     .font(Typography.body).foregroundStyle(Palette.ink2)
+                    .motionNumber(viewModel.totalMinutes)
                     .accessibilityIdentifier("newAppointment.durationValue")
             }
             if viewModel.exceedsMaximumDuration {

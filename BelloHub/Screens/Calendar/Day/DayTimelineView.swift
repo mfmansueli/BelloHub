@@ -40,6 +40,9 @@ struct DayTimelineView: View {
                     ForEach(layout.visits) { placed in visitView(placed, width: proxy.size.width) }
                     if layout.window.contains(now) { nowMarker }
                 }
+                // A visit that is booked, confirmed, cancelled or removed enters from above or leaves; one that is
+                // moved glides to its slot. The first day shown never animates (docs/09-MOTION.md section 3.10).
+                .motionRows(ids: layout.visits.map { $0.id.uuidString } + layout.bands.map(\.id), context: layout.day)
             }
             .frame(height: totalHeight)
         }
@@ -103,6 +106,8 @@ struct DayTimelineView: View {
         }
         .frame(width: max(width - Self.columnGap, 0), height: height, alignment: .topLeading)
         .offset(x: 0, y: y(band.interval.start))
+        .motionSettle([y(band.interval.start), height])
+        .motionRow()
     }
 
     private func bandBody(_ label: Text, fill: Color, foreground: Color = Palette.ink2) -> some View {
@@ -138,6 +143,8 @@ struct DayTimelineView: View {
             )
             .frame(width: max(columnWidth - Self.columnGap, 0), height: height)
             .offset(x: columnWidth * CGFloat(placed.column), y: y(placed.interval.start))
+            .motionSettle([columnWidth * CGFloat(placed.column), y(placed.interval.start), columnWidth, height])
+            .motionRow()
         }
     }
 
@@ -147,6 +154,7 @@ struct DayTimelineView: View {
             Rectangle().fill(Palette.roseText).frame(height: 2)
         }
         .offset(x: -5, y: y(now) - 5)
+        .motionSettle(y(now))
         .allowsHitTesting(false)
         .accessibilityHidden(true)
         .accessibilityIdentifier("calendar.nowMarker")

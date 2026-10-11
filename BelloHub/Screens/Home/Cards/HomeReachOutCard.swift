@@ -21,7 +21,7 @@ struct HomeReachOutCard: View {
                 .font(Typography.meta).foregroundStyle(Palette.ink2)
                 .padding(.bottom, Spacing.row)
             ListCard(dividerInset: Spacing.md) {
-                ForEach(reachOut.preview) { row in preview(row) }
+                ForEach(reachOut.preview) { row in preview(row).motionRow() }
                 NavigationLink(value: AgendaRoute.followUps(.all)) {
                     HomeCountRow(
                         icon: .repeatArrows, tone: .peach, title: Text("home.reachOut.open"),

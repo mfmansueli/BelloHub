@@ -68,6 +68,9 @@ struct ClientEditView: View {
                 }
             }
             .task { await viewModel.load() }
+            .sensoryFeedback(.success, trigger: viewModel.finish) { _, new in
+                if case .updated = new { true } else { false }
+            }
             .sheet(isPresented: $showsMerge) {
                 ClientMergeSheet(keptID: clientID, vault: vault, profile: profile, onMerged: {
                     showsMerge = false

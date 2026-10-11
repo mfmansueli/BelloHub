@@ -115,8 +115,10 @@ struct WeekGlanceContent: View {
                 }
                 Spacer(minLength: Spacing.sm)
                 Text(verbatim: label).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                    .motionNumber(label)
             }
             ProgressView(value: row.fraction).tint(Palette.sage).accessibilityHidden(true)
+                .motionSettle(row.fraction)
         }
         .padding(Spacing.md)
         .accessibilityElement(children: .combine)

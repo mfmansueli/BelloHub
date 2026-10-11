@@ -139,6 +139,13 @@ struct ClientsView: View {
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
+        // A client who is added or deleted slides in or out (the list's own row animation, under our curve); search,
+        // a filter, a load or an import change the list as a whole and never animate. At most a few rows at once, so
+        // the 2,000-client list stays at full speed (docs/09-MOTION.md section 3.10).
+        .motionRows(
+            ids: viewModel.visible.map(\.id),
+            context: [AnyHashable(viewModel.filter), AnyHashable(viewModel.searchText)]
+        )
         .refreshable { await viewModel.refreshAsync() }
         .searchable(text: searchText, prompt: Text(searchPrompt))
         .accessibilityIdentifier("clients.list")
@@ -160,6 +167,7 @@ struct ClientsView: View {
             .font(Typography.meta)
             .foregroundStyle(Palette.ink2)
             .textCase(nil)
+            .motionNumber(viewModel.count)
             .accessibilityIdentifier("clients.count")
     }
 

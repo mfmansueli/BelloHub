@@ -30,6 +30,12 @@ enum Motion {
         static let glow = 14.0
         static let pulse = 2.6
         static let bar = 0.5
+        /// A value or a row that changes in place (docs/09-MOTION.md section 3.10, added 2026-10-12).
+        static let change = 0.3
+        /// The longest a change takes with Reduce Motion: a crossfade, never a movement.
+        static let reducedFade = 0.2
+        /// The white flash when a photo is taken.
+        static let flash = 0.12
     }
 
     /// How far a block travels while it fades in.
@@ -43,6 +49,10 @@ enum Motion {
     static let barDelay = 0.18
     static let pressScale: CGFloat = 0.97
     static let pressScaleRow: CGFloat = 0.985
+    /// How far the content of a new day travels while it slides in (the direction of travel; mirrors in Arabic).
+    static let slideOffset: CGFloat = 24
+    /// Peak opacity of the white capture flash.
+    static let flashOpacity = 0.2
 
     /// Delay for the block at `index` of a screen's top-level blocks.
     static func arrivalDelay(index: Int) -> Double {

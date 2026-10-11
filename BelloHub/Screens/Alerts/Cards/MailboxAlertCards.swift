@@ -17,9 +17,9 @@ struct MailboxAlertCards: View {
     @Environment(\.locale) private var locale
 
     var body: some View {
-        SectionHeader(title: "alerts.section.fromClients")
-        if alerts.importedCount > 0 { importsCard }
-        ForEach(alerts.items) { item in card(item) }
+        SectionHeader(title: "alerts.section.fromClients").motionRow()
+        if alerts.importedCount > 0 { importsCard.motionRow() }
+        ForEach(alerts.items) { item in card(item).motionRow() }
     }
 
     private var importsCard: some View {

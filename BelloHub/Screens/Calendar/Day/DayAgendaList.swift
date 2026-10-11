@@ -53,13 +53,15 @@ struct DayAgendaList: View {
                         appointment: appointment, clientName: clientName(appointment), text: text,
                         onReschedule: { onReschedule(appointment.id) }, onCancel: { onCancel(appointment.id) }
                     )
+                    .motionRow()
                 case .band(let band):
-                    bandRow(band)
+                    bandRow(band).motionRow()
                 }
             }
             Button(action: onAdd) { AddRowLabel(title: "calendar.agenda.add") }
                 .accessibilityIdentifier("calendar.agenda.add")
         }
+        .motionRows(ids: items.map(\.id), context: layout.day)
         .padding(.horizontal, Spacing.gutter)
     }
 

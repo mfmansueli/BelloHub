@@ -36,6 +36,7 @@ struct WeekGridView: View {
                 gutter
                 ForEach(layouts, id: \.day) { layout in column(layout) }
             }
+            .motionRows(ids: layouts.flatMap { $0.visits.map(\.id) }, context: layouts.first?.day ?? Date.distantPast)
             .padding(.top, Spacing.sm)
         }
         .padding(.horizontal, Spacing.sm)
@@ -108,7 +109,8 @@ struct WeekGridView: View {
                 ForEach(layout.visits) { placed in visit(placed, in: layout, width: proxy.size.width) }
                 if layout.window.contains(now) {
                     Rectangle().fill(Palette.roseText).frame(height: 2)
-                        .offset(y: y(now, in: layout)).allowsHitTesting(false).accessibilityHidden(true)
+                        .offset(y: y(now, in: layout)).motionSettle(y(now, in: layout))
+                        .allowsHitTesting(false).accessibilityHidden(true)
                 }
             }
         }
@@ -126,6 +128,9 @@ struct WeekGridView: View {
             )
             .frame(width: max(columnWidth - 2, 0), height: max(height(of: placed.interval, in: layout), 22))
             .offset(x: columnWidth * CGFloat(placed.column) + 1, y: y(placed.interval.start, in: layout))
+            .motionSettle([columnWidth * CGFloat(placed.column), y(placed.interval.start, in: layout), columnWidth,
+                           height(of: placed.interval, in: layout)])
+            .motionRow()
         }
     }
 

@@ -19,6 +19,7 @@ struct CalendarContentView: View {
     @ScaledMetric(relativeTo: .caption) private var weekHourHeight: CGFloat = 36
     @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.locale) private var locale
+    @Environment(\.motionPolicy) private var policy
     @Environment(TimeBlockService.self) private var timeBlocks
 
     init(viewModel: CalendarViewModel, settings: CalendarSettings) {
@@ -65,7 +66,16 @@ struct CalendarContentView: View {
                         header(now: now)
                         timeZoneNotice(now: now)
                     }
-                    content(now: now)
+                    // The content slides in the direction of travel when the day or the week changes, and crossfades
+                    // when the visits replace the skeleton (docs/09-MOTION.md section 3.10). Stacked, so the old and
+                    // the new content share one place while they cross.
+                    ZStack(alignment: .top) {
+                        content(now: now)
+                            .id(viewModel.contentKey)
+                            .motionDaySlide(travel: viewModel.travel)
+                    }
+                    .animation(MotionChange.animation(.slide, policy: policy), value: viewModel.contentKey)
+                    .animation(MotionChange.animation(.fade, policy: policy), value: viewModel.isLoading)
                 }
                 .padding(.bottom, Spacing.lg)
             }

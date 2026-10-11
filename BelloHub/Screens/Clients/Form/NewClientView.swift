@@ -109,7 +109,13 @@ struct NewClientView: View {
     }
 
     private var saveBar: some View {
-        Button { viewModel.save() } label: { Text("clientForm.save") }
+        Button { viewModel.save() } label: {
+            HStack(spacing: Spacing.sm) {
+                // The check draws beside the label as the sheet closes: saved, with a success haptic.
+                if case .registered = viewModel.finish { InlineCheck(color: Palette.onAction) }
+                Text("clientForm.save")
+            }
+        }
             .buttonStyle(.belloPrimary)
             .disabled(!viewModel.canSave)
             .padding(.horizontal, Spacing.gutter)

@@ -108,27 +108,35 @@ struct HomeContentView: View {
     @ViewBuilder
     private func sections(_ digest: AgendaDigest, now: Date) -> some View {
         let pending = viewModel.pending(digest: digest, now: now)
-        if digest.isDayClear {
-            EmptyState(icon: .calendar, title: "home.empty.title", message: "home.empty.message")
-                .accessibilityIdentifier("home.empty")
-        } else if let next = digest.nextVisit {
-            HomeNextVisitCard(
-                digest: digest, visit: next, formatters: formatters,
-                onBeforeYouStart: { agendaSheet = .beforeYouStart(appointmentID: next.appointment.id) },
-                onRunningLate: { agendaSheet = .runningLate(appointmentID: next.appointment.id) }
-            )
-        }
-        if !pending.isEmpty {
-            HomeTodayCard(
-                pending: pending, formatters: formatters,
-                onBookingRequests: { navigation?.selection = .alerts },
-                onTurnOnNotifications: viewModel.turnOnNotifications
-            )
-        }
-        if !digest.restOfToday.isEmpty { restOfToday(digest) }
         let reachOut = viewModel.reachOut(now: now)
-        if !reachOut.isEmpty { HomeReachOutCard(reachOut: reachOut, formatters: formatters) }
-        weekRow(digest)
+        // One container for the blocks that come and go, so a visit that is confirmed, moved or cancelled enters or
+        // leaves where she can see it (docs/09-MOTION.md section 3.10). The loading and the first list never animate.
+        VStack(alignment: .leading, spacing: Spacing.lg) {
+            if digest.isDayClear {
+                EmptyState(icon: .calendar, title: "home.empty.title", message: "home.empty.message")
+                    .accessibilityIdentifier("home.empty")
+                    .motionRow()
+            } else if let next = digest.nextVisit {
+                HomeNextVisitCard(
+                    digest: digest, visit: next, formatters: formatters,
+                    onBeforeYouStart: { agendaSheet = .beforeYouStart(appointmentID: next.appointment.id) },
+                    onRunningLate: { agendaSheet = .runningLate(appointmentID: next.appointment.id) }
+                )
+                .motionRow()
+            }
+            if !pending.isEmpty {
+                HomeTodayCard(
+                    pending: pending, formatters: formatters,
+                    onBookingRequests: { navigation?.selection = .alerts },
+                    onTurnOnNotifications: viewModel.turnOnNotifications
+                )
+                .motionRow()
+            }
+            if !digest.restOfToday.isEmpty { restOfToday(digest).motionRow() }
+            if !reachOut.isEmpty { HomeReachOutCard(reachOut: reachOut, formatters: formatters).motionRow() }
+            weekRow(digest)
+        }
+        .motionRows(ids: HomeBlockIDs.make(digest: digest, pending: pending, reachOut: reachOut))
     }
 
     private func restOfToday(_ digest: AgendaDigest) -> some View {
@@ -141,11 +149,14 @@ struct HomeContentView: View {
                 Text(LocalizedStringResource("home.rest.left", defaultValue: "\(restLeft(digest)) left")
                     .localized(in: locale))
                     .font(Typography.metaStrong).foregroundStyle(Palette.roseDeepText)
+                    .motionNumber(restLeft(digest))
                     .accessibilityIdentifier("home.rest.left")
             }
             .padding(.bottom, Spacing.row)
             ListCard(dividerInset: 76) {
-                ForEach(digest.restOfToday) { visit in HomeVisitRow(visit: visit, formatters: formatters) }
+                ForEach(digest.restOfToday) { visit in
+                    HomeVisitRow(visit: visit, formatters: formatters).motionRow()
+                }
             }
         }
     }

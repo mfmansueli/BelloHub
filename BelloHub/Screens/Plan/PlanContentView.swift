@@ -141,7 +141,7 @@ struct PlanContentView: View {
                     if viewModel.isBusy {
                         ProgressView().tint(Palette.onAction)
                     } else {
-                        Text(buyTitle)
+                        Text(buyTitle).motionNumber(buyTitle)
                     }
                 }
                 .buttonStyle(.belloPrimary)

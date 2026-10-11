@@ -20,6 +20,7 @@ struct RegistrationLimitNote: View {
                     defaultValue: "\(usage.used) of \(usage.limit) free registrations used"
                 ).localized(in: locale))
                     .font(Typography.footnoteStrong).foregroundStyle(Palette.ink)
+                    .motionNumber(usage.used)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityElement(children: .combine)

@@ -56,11 +56,13 @@ struct HomeNextVisitCard: View {
                 label
                     .font(Typography.metaStrong)
                     .foregroundStyle(HeroPalette.ink2)
+                    .motionNumber(digest.minutesUntilNext, countsDown: true)
             }
             Spacer(minLength: Spacing.sm)
             Text(verbatim: formatters.time(appointment.startsAt))
                 .font(Typography.title)
                 .foregroundStyle(HeroPalette.ink)
+                .motionNumber(appointment.startsAt)
                 .accessibilityIdentifier("home.next.time")
         }
     }

@@ -99,7 +99,7 @@ struct SessionPlanContentView: View {
     private func labeled(_ title: LocalizedStringKey, value: String) -> some View {
         VStack(alignment: .leading, spacing: Spacing.xxs) {
             Text(title).font(Typography.meta).foregroundStyle(Palette.ink2)
-            Text(verbatim: value).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+            Text(verbatim: value).font(Typography.bodyStrong).foregroundStyle(Palette.ink).motionNumber(value)
         }
     }
 

@@ -18,7 +18,12 @@ final class CalendarViewModel {
         var id: String { rawValue }
     }
 
-    var mode = Mode.day
+    var mode = Mode.day {
+        didSet { if oldValue != mode { travel = .none } }
+    }
+    /// Which way the last change of day or week went, so the content slides in from that side. A mode switch has no
+    /// direction. Presentation only: it never decides which day is shown.
+    private(set) var travel = DaySlide.Travel.none
     /// The start of the day she looks at, in the business time zone.
     private(set) var selectedDay: Date
     private(set) var appointments: [Appointment] = []
@@ -96,6 +101,13 @@ final class CalendarViewModel {
         clients[appointment.clientID]?.name ?? ""
     }
 
+    /// What the content below the header shows: the day in the day mode, the week in the week mode. When it changes
+    /// the content slides; while it stays the same (the visits of the day arriving) nothing slides.
+    var contentKey: String {
+        let anchor = mode == .day ? selectedDay : days.weekInterval(containing: selectedDay).start
+        return "\(mode.rawValue).\(Int(anchor.timeIntervalSince1970))"
+    }
+
     func isToday(_ day: Date, now: Date) -> Bool {
         days.isSameDay(day, now)
     }
@@ -109,6 +121,7 @@ final class CalendarViewModel {
     func select(day: Date) {
         let newDay = days.start(of: day)
         guard newDay != selectedDay else { return }
+        travel = DaySlide.travel(from: selectedDay, to: newDay)
         selectedDay = newDay
         startListeningIfNeeded()
     }

@@ -32,6 +32,7 @@ struct WinBackStrip: View {
             ).localized(in: locale))
                 .font(Typography.meta)
                 .foregroundStyle(Palette.peachText)
+                .motionNumber(counted)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(Spacing.md)

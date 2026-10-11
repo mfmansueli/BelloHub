@@ -17,6 +17,9 @@ struct CalendarHeader: View {
     let onStep: (Bool) -> Void
     let onToday: () -> Void
 
+    @Namespace private var selection
+    @Environment(\.motionPolicy) private var policy
+
     private var isOnToday: Bool {
         formatters.calendar.isDate(selectedDay, inSameDayAs: now)
             && (mode == .day || weekDays.contains { formatters.calendar.isDate($0, inSameDayAs: now) })
@@ -94,9 +97,21 @@ struct CalendarHeader: View {
                             .font(Typography.bodyStrong)
                             .foregroundStyle(numberColor(isSelected: isSelected, isToday: isToday))
                             .frame(minWidth: 36, minHeight: 36)
-                            .background(isSelected ? Palette.selectionFill : Color.clear, in: Circle())
+                            // One indicator that slides from the old day to the new one (matched geometry), instead
+                            // of a fill that switches off in one place and on in another.
+                            .background {
+                                if isSelected {
+                                    Circle().fill(Palette.selectionFill)
+                                        .matchedGeometryEffect(id: "fill", in: selection)
+                                }
+                            }
                             // The ring carries the state: the selection fill alone is 1.4:1 on the page in light.
-                            .overlay { if isSelected { Circle().strokeBorder(Palette.selectionInk, lineWidth: 1.5) } }
+                            .overlay {
+                                if isSelected {
+                                    Circle().strokeBorder(Palette.selectionInk, lineWidth: 1.5)
+                                        .matchedGeometryEffect(id: "ring", in: selection)
+                                }
+                            }
                     }
                     .frame(maxWidth: .infinity, minHeight: Spacing.touchTarget)
                     .contentShape(Rectangle())
@@ -107,6 +122,7 @@ struct CalendarHeader: View {
                 .accessibilityIdentifier("calendar.stripDay.\(formatters.calendar.component(.day, from: day))")
             }
         }
+        .animation(MotionChange.animation(.settle, policy: policy), value: selectedDay)
     }
 
     private func numberColor(isSelected: Bool, isToday: Bool) -> Color {

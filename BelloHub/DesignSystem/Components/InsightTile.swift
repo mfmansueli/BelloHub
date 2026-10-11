@@ -57,7 +57,7 @@ struct InsightTile: View {
                 .font(.custom(FontRegistry.serifFamily, size: 30, relativeTo: .title).weight(.medium))
                 .foregroundStyle(Palette.onBrandCard)
                 .dynamicTypeSize(...DynamicTypeSize.accessibility2)
-                .contentTransition(.numericText())
+                .motionNumber(value)
             Text(label)
                 .font(Typography.footnote)
                 .foregroundStyle(Palette.onBrandCard)

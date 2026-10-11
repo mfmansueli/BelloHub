@@ -37,6 +37,11 @@ struct WaitlistContentView: View {
                     }
                     states(board)
                 }
+                // A person who is offered, sent or removed leaves the list where she can see it; the first list
+                // never animates (docs/09-MOTION.md section 3.10).
+                .motionRows(
+                    ids: (board.forThatDay + board.others).map(\.id), isReady: !viewModel.isLoading
+                )
                 .padding(.horizontal, Spacing.gutter)
                 .padding(.bottom, Spacing.lg)
             }
@@ -48,6 +53,7 @@ struct WaitlistContentView: View {
         .navigationTitle(Text("waitlist.title"))
         .navigationBarTitleDisplayMode(.large)
         .refreshable { await viewModel.refreshAsync() }
+        .confirmationSeal(whenIncreases: viewModel.sent.count)
         .task { await viewModel.loadHabits() }
     }
 
@@ -120,6 +126,7 @@ struct WaitlistContentView: View {
                     onOffer: { viewModel.offer(entry) }, onSend: { viewModel.send(entry) },
                     onRemove: { viewModel.remove(entry) }
                 )
+                .motionRow()
             }
         }
     }

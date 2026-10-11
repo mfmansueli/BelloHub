@@ -60,6 +60,7 @@ struct HomeCountRow: View {
                     .padding(.horizontal, Spacing.sm)
                     .frame(minWidth: 28, minHeight: 28)
                     .background(Palette.roseWash, in: Capsule())
+                    .motionNumber(count)
             }
             Image(icon: .forward)
                 .font(.system(size: 14, weight: .semibold))

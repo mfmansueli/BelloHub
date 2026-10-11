@@ -21,7 +21,7 @@ struct HomeTodayCard: View {
                 .accessibilityAddTraits(.isHeader)
                 .padding(.bottom, Spacing.row)
             ListCard(dividerInset: 72) {
-                ForEach(pending.items) { item in row(item) }
+                ForEach(pending.items) { item in row(item).motionRow() }
             }
         }
         .accessibilityElement(children: .contain)

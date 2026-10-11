@@ -154,4 +154,53 @@ struct CalendarViewModelTests {
         #expect(layout.workingWindows == [DateInterval(start: zones.at("09:00"), end: zones.at("18:00"))])
         #expect(model.visibleMinutes == CalendarDayLayout.VisibleMinutes(start: 9 * 60, end: 18 * 60))
     }
+
+    // MARK: - Direction of travel (motion)
+
+    @Test("Stepping forward travels forward, stepping back travels back, and a mode switch has no direction")
+    func travel() async throws {
+        let world = try await CalendarWorld.make()
+        let model = makeModel(world)
+        #expect(model.travel == .none)
+
+        model.step(forward: true)
+        #expect(model.travel == .forward)
+        model.step(forward: false)
+        model.step(forward: false)
+        #expect(model.travel == .backward)
+
+        model.mode = .week
+        #expect(model.travel == .none)
+    }
+
+    @Test("Choosing the same day again changes nothing, and a jump to a later day is forward")
+    func travelToADay() async throws {
+        let world = try await CalendarWorld.make()
+        let model = makeModel(world)
+
+        model.select(day: model.selectedDay)
+        #expect(model.travel == .none)
+
+        model.select(day: TestClock.date("2026-10-06 00:00"))
+        #expect(model.travel == .forward)
+        model.goToToday(now: TestClock.now)
+        #expect(model.travel == .backward)
+    }
+
+    @Test("The content key changes with the day in the day mode and with the week in the week mode only")
+    func contentKey() async throws {
+        let world = try await CalendarWorld.make()
+        let model = makeModel(world)
+        let thursday = model.contentKey
+
+        model.step(forward: true)
+        #expect(model.contentKey != thursday)
+
+        model.mode = .week
+        let week = model.contentKey
+        model.select(day: TestClock.date("2026-10-03 00:00"))
+        #expect(model.contentKey == week)
+        model.step(forward: true)
+        #expect(model.contentKey != week)
+    }
 }

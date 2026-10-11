@@ -56,32 +56,38 @@ struct AlertsContentView: View {
 
     // MARK: - Sections
 
-    @ViewBuilder
     private func sections(_ list: AlertsList, inbox: InboxAlerts, now: Date) -> some View {
-        if !inbox.isEmpty { inboxSection(inbox) }
         let mailbox = viewModel.mailboxAlerts
-        if !mailbox.isEmpty {
-            MailboxAlertCards(alerts: mailbox, onResolve: viewModel.resolve, onImportsSeen: viewModel.markImportsSeen)
-        }
-        if let visit = list.upcomingVisit {
-            SectionHeader(title: "alerts.section.comingUp")
-            upcomingCard(visit)
-        }
         let count = viewModel.reachOutCount(now: now)
-        if count > 0 {
-            SectionHeader(title: "alerts.section.reachOut")
-            reachOutCard(count)
+        // A request that is answered, a check-in that is handled: the card leaves where she can see it. The first
+        // list and a load never animate (`motionRows`).
+        return VStack(alignment: .leading, spacing: Spacing.row) {
+            if !inbox.isEmpty { inboxSection(inbox) }
+            if !mailbox.isEmpty {
+                MailboxAlertCards(
+                    alerts: mailbox, onResolve: viewModel.resolve, onImportsSeen: viewModel.markImportsSeen
+                )
+            }
+            if let visit = list.upcomingVisit {
+                SectionHeader(title: "alerts.section.comingUp").motionRow()
+                upcomingCard(visit).motionRow()
+            }
+            if count > 0 {
+                SectionHeader(title: "alerts.section.reachOut").motionRow()
+                reachOutCard(count).motionRow()
+            }
         }
+        .motionRows(ids: AlertBlockIDs.make(list: list, inbox: inbox, mailbox: mailbox, reachOut: count))
     }
 
     // MARK: - Inbox (S8)
 
     @ViewBuilder
     private func inboxSection(_ inbox: InboxAlerts) -> some View {
-        SectionHeader(title: "alerts.section.requests")
-        ForEach(inbox.bookingRequests) { booking in requestCard(booking) }
-        ForEach(inbox.reschedules) { request in rescheduleCard(request) }
-        if inbox.waitingCount > 0 { waitlistCard(inbox) }
+        SectionHeader(title: "alerts.section.requests").motionRow()
+        ForEach(inbox.bookingRequests) { booking in requestCard(booking).motionRow() }
+        ForEach(inbox.reschedules) { request in rescheduleCard(request).motionRow() }
+        if inbox.waitingCount > 0 { waitlistCard(inbox).motionRow() }
     }
 
     private func requestCard(_ booking: IncomingBooking) -> some View {

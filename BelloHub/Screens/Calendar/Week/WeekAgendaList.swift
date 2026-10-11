@@ -22,6 +22,7 @@ struct WeekAgendaList: View {
         LazyVStack(alignment: .leading, spacing: Spacing.md) {
             ForEach(days, id: \.self) { day in section(day) }
         }
+        .motionRows(ids: days.flatMap { visits($0).map(\.id) }, context: days.first ?? Date.distantPast)
         .padding(.horizontal, Spacing.gutter)
     }
 
@@ -57,6 +58,7 @@ struct WeekAgendaList: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(verbatim: text.accessibilityLabel(for: visit, clientName: clientName(visit))))
                 .accessibilityIdentifier("calendar.visit.\(visit.id.uuidString)")
+                .motionRow()
             }
             Button { onAdd(day) } label: { AddRowLabel(title: "calendar.agenda.add") }
                 .accessibilityIdentifier("calendar.agenda.add.\(formatters.calendar.component(.day, from: day))")

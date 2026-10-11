@@ -13,6 +13,8 @@ struct FollowUpsContentView: View {
     @State private var viewModel: FollowUpsViewModel
     @State private var agendaSheet: AgendaSheet?
     @State private var treatment: TreatmentFlowRequest?
+    /// How many messages she marked as sent while this screen was open; the confirmation watches it.
+    @State private var markedSent = 0
     @Environment(MessageService.self) private var messages
     @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
@@ -50,6 +52,7 @@ struct FollowUpsContentView: View {
         .navigationTitle(Text("followUpQueue.title"))
         .navigationBarTitleDisplayMode(.large)
         .refreshable { await viewModel.refreshAsync() }
+        .confirmationSeal(whenIncreases: markedSent)
         .task { viewModel.start() }
         .onChange(of: messages.recentlyOpened) { viewModel.chatsChanged() }
         .agendaSheet(item: $agendaSheet)
@@ -58,23 +61,30 @@ struct FollowUpsContentView: View {
 
     // MARK: - Sections
 
-    @ViewBuilder
     private func sections(_ queue: FollowUpQueue) -> some View {
-        filters(queue)
-        if let message = viewModel.errorMessage {
-            ErrorNotice(message: message).accessibilityIdentifier("followUps.error")
-        }
         let rows = queue.rows(viewModel.filter)
-        if rows.isEmpty {
-            Text("followUpQueue.filterEmpty")
-                .font(Typography.body).foregroundStyle(Palette.ink2)
-                .padding(.vertical, Spacing.md)
-                .accessibilityIdentifier("followUps.filterEmpty")
-        }
-        ForEach(rows) { row in card(row) }
         let aside = queue.setAside(viewModel.filter)
-        if !aside.isEmpty { setAside(aside) }
-        FooterNote(text: "followUpQueue.footer", icon: .info).padding(.top, Spacing.xs)
+        // The cards that come and go (snoozed, dismissed, sent, a new reason) are the only things that move; changing
+        // the filter is a different list, so it does not animate (the filter is the context).
+        return VStack(alignment: .leading, spacing: Spacing.row) {
+            filters(queue)
+            if let message = viewModel.errorMessage {
+                ErrorNotice(message: message).accessibilityIdentifier("followUps.error")
+            }
+            if rows.isEmpty {
+                Text("followUpQueue.filterEmpty")
+                    .font(Typography.body).foregroundStyle(Palette.ink2)
+                    .padding(.vertical, Spacing.md)
+                    .accessibilityIdentifier("followUps.filterEmpty")
+                    .motionRow()
+            }
+            ForEach(rows) { row in card(row).motionRow() }
+            if !aside.isEmpty { setAside(aside).motionRow() }
+            FooterNote(text: "followUpQueue.footer", icon: .info).padding(.top, Spacing.xs)
+        }
+        .motionRows(
+            ids: rows.map { "row.\($0.id)" } + aside.map { "aside.\($0.id)" }, context: viewModel.filter
+        )
     }
 
     /// Booking requests need a decision about the agenda, so they are never mixed into the queue: one labelled line
@@ -102,7 +112,7 @@ struct FollowUpsContentView: View {
                 Button { viewModel.filter = filter } label: {
                     HStack(spacing: Spacing.xs) {
                         Text(filter.label)
-                        Text(verbatim: formatters.number(count))
+                        Text(verbatim: formatters.number(count)).motionNumber(count)
                     }
                 }
                 .buttonStyle(.belloChip(selected: viewModel.filter == filter))
@@ -116,7 +126,8 @@ struct FollowUpsContentView: View {
         FollowUpRowCard(
             row: row, formatters: formatters, isSetAside: isSetAside,
             onAction: perform, onBook: { agendaSheet = .newAppointment(clientID: $0, startsAt: nil) },
-            onMarkSent: viewModel.markSent, onSnooze: viewModel.snooze, onDismiss: viewModel.dismiss,
+            onMarkSent: { markedSent += 1; viewModel.markSent($0) }, onSnooze: viewModel.snooze,
+            onDismiss: viewModel.dismiss,
             onRestore: viewModel.restore, onFinishClosing: viewModel.finishClosing
         )
     }
@@ -124,13 +135,14 @@ struct FollowUpsContentView: View {
     private func setAside(_ rows: [FollowUpQueue.Row]) -> some View {
         DisclosureGroup(isExpanded: $viewModel.showsSetAside) {
             VStack(spacing: Spacing.row) {
-                ForEach(rows) { row in card(row, isSetAside: true) }
+                ForEach(rows) { row in card(row, isSetAside: true).motionRow() }
             }
             .padding(.top, Spacing.sm)
         } label: {
             HStack(spacing: Spacing.xs) {
                 Text("followUpQueue.setAside").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 Text(verbatim: formatters.number(rows.count)).font(Typography.meta).foregroundStyle(Palette.ink2)
+                    .motionNumber(rows.count)
             }
             // On the label: an identifier on the group would replace the cards' own.
             .accessibilityIdentifier("followUps.setAside")

@@ -84,6 +84,7 @@ struct ImportPlanSummary: View {
     private func figureValue(_ value: String) -> some View {
         Text(verbatim: value).font(Typography.bodyStrong).foregroundStyle(Palette.ink).monospacedDigit()
             .fixedSize()
+            .motionNumber(value)
     }
 
     /// What confirming does, in one sentence. Amber when part of the group waits for a plan, so it is never missed.
