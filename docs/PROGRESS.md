@@ -117,13 +117,15 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `docs/agent-notes/s12-release.md`, acceptance `docs/13-TESTING-QUALITY.md` section 8 checked with evidence). Palette
 changed to graphite and orange by PR #1 after S11/S12 measurements; contrast and audits re-run on `9bb014f`.
 
-**2026-10-11: Routine simplification A in progress on `build/v1`** (task `docs/tasks/routine-simplification.md`, agent
-A: items 1 to 8 and 12; agent B does 9, 10, 11 on `routine-b`). Notes and live log: `docs/agent-notes/routine-a.md`;
-stage log block "Routine simplification A" below. Stage 1 (language, logo) done; next: stage 2 (onboarding, Home), stage
-3 (visit closing, follow-up queue, WhatsApp states, return reasons), stage 4 (manual record form only). **Post-v1 item
-(owner, 2026-10-11): "AI and voice: presentation to match real availability (deferred by the owner on 2026-10-11)"**:
-the voice and AI part of item 8 is dropped; nothing AI is touched. After merging `routine-b`: convert the six files in
-`PENDING_ROUTINE_B` of `scripts/check-localization-sources.py`.
+**2026-10-11: Routine simplification A done on `build/v1`** (task `docs/tasks/routine-simplification.md`, agent A:
+items 1 to 8 and 12; agent B did 9, 10, 11 on `routine-b`, merged by the coordinator). Notes, root causes and merge
+hints: `docs/agent-notes/routine-a.md`; stage log "Routine simplification A" below. App language chosen in the app and
+applied everywhere; the lock screen draws the official icon; the setup is name, profession and a first service (resumes
+after a relaunch); Home leads with the day and one "To reach out" card; one follow-up queue (reasons, filters,
+snooze/dismiss, honest WhatsApp states); visit closing as one path with Finish later; faster manual record. **Post-v1
+item (owner, 2026-10-11): "AI and voice: presentation to match real availability (deferred by the owner on
+2026-10-11)"**: the voice and AI part of item 8 was dropped; nothing AI was touched. After merging `routine-b`: convert
+the six files in `PENDING_ROUTINE_B` of `scripts/check-localization-sources.py`. Nothing deployed (no server change).
 
 **2026-10-11: verify-fallback merged and deployed (D58, tag `v1.0.0-rc2`).** When the e-mail code does not arrive, the client can correct her address on Bk-6 and, after the first wait, open "I didn't get the code" (spam advice, new code, change address, and "Confirm with <Name> on WhatsApp" when the professional has a public WhatsApp number). That last path creates an unverified request (`verification:'whatsapp'`, always pending, 5-character reference, released by `cleanupJob` after 24 h or at the visit start, no e-mail until approved, capped per IP, e-mail, phone, owner and waiting contact). The app shows it on 2.10 with a "Not verified" badge, the client's phone and the reference. A booking confirmed by code gives the browser a trusted-device token (page + e-mail, 90 days, hashed, 5 max), so a returning client skips the code; the server refuses it (`VERIFICATION_REQUIRED`) whenever approval or the no-show limit applies. "Forget this device" on Bk-9 calls the new `forgetDevice`. `sendEmailCode` stretches the soft hold to the code's 10 minutes. docs/10 is e-mail only, H7 requires SPF/DKIM/DMARC. Measured on the merged head: functions 947 unit / 311 integration / 66 rules / 19 transport, web full green (initial JS 49.8 KB gzip, Lighthouse 0.99/1.00), e2e-local 9, iOS fast green, zero warnings. **Deployed to dev**: functions first, then Hosting and indexes. Notes: `docs/agent-notes/verify-fallback.md`.
 
@@ -418,13 +420,25 @@ Deployed to dev: functions (all, `suggestBookingTime` created) and Hosting on 20
 `firebase/` or `web/` changed afterwards, so no redeploy at the end.
 Human tasks created: H19, H20, H21, H22; H13 rewritten (post-v1), H7 marked critical.
 
-### Routine simplification A · in progress 2026-10-11 (tag `routine-a-done` when finished)
-Stage 1 (items 1, 2): interface language chosen in Language and region and applied everywhere (root `\.locale`,
-`String(interface:)`, `AppleLanguages` for the next launch, tab view rebuilt with `MainNavigation` keeping her place);
-lock screen and privacy cover draw the official icon (`BrandMark` from `BelloHub.icon` paths). Root causes and the
-full map: `docs/agent-notes/routine-a.md`. Gate `scripts/check-localization-sources.sh`. Measured: fast 2117 tests in
-318 suites before the new suites; `InterfaceLanguageUITests` (3), `LockUITests`, `OnboardingUITests` green.
-Owner decision: AI and voice deferred (post-v1 item above); item 8 keeps the manual form only.
+### Routine simplification A · done 2026-10-11 · tag routine-a-done
+Done: item 1 interface language (`InterfaceLanguage`, `InterfaceLanguageService`, `InterfaceLocale`,
+`String(interface:)`, root `\.locale` and layout direction, `MainView` rebuilt on a change with `MainNavigation` keeping
+the tab and More stack, `AppleLanguages` for the next launch, notifications/push/record field and profession names in
+the interface language, 150 `String(localized:)` call sites converted, gate `scripts/check-localization-sources.sh`);
+item 2 `BrandMark` from the icon's SVG paths (`BrandPalette`); item 3 setup of three steps + Ready with the first
+service and saved progress, word for clients in 7.2; item 4 Home (toolbar New appointment, Today card, To reach out
+card, week row); items 5/6/12 `FollowUpQueue` + `FollowUpQueueService` + `MessageDeliveryState` +
+`Appointment.reminderMarkedSentAt` (optional) + `MessageLogRepository.messageLogs(since:)`; item 7 visit closing
+(`VisitClosing`, Aftercare step, Finish later, resume); item 8 manual form (More fields, Same as last visit).
+Decisions: ASSUMPTION-routine-a-1: interface language is a device setting (UserDefaults), not synced; ASSUMPTION-
+routine-a-2: "I sent it" rests a suggestion 14 days, "Later" 7; ASSUMPTION-routine-a-3: the aftercare message is the
+quick reply, never the record's text (docs/06 section 8); ASSUMPTION-routine-a-4: `RootView` builds
+`AppDependencies.shared` once (re-inits wiped UI-test defaults).
+Deviations from the prototype: 1.6 to 1.9 no longer in the setup; 2.8 is a filter of 2.7; Home tiles removed.
+Measured: fast 2259 tests in 327 suites; smoke 57 UI tests (6 skipped tools), the two failures of the first run fixed
+and rerun green (Apple sign-in walk updated; Account flaked once, green on rerun); check-warnings zero; audits in
+DESIGN/notes. Contrast: brand mark measured; no new text/background pair.
+Open questions: none. Human tasks created: none (real-iPhone checks listed in the notes).
 
 ## Assumptions
 | # | Assumption | Reason | Stage |
