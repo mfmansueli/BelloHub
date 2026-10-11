@@ -39,7 +39,7 @@ struct ServerConfigTests {
     @Test("This build is configured with the dev project's addresses (D54), not a hard-coded domain")
     func buildSettings() {
         let current = ServerConfig.current
-        #expect(current.webBaseURL.absoluteString == "https://bello-hub.web.app")
+        #expect(current.webBaseURL.absoluteString == "https://bellohub.app")
         #expect(current.functionsBaseURL.absoluteString == "https://europe-west1-bello-hub.cloudfunctions.net")
     }
 }

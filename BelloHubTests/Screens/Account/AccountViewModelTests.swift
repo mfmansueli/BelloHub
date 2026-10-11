@@ -73,7 +73,7 @@ struct AccountViewModelTests {
         defer { world.defaults.removePersistentDomain(forName: world.suite) }
 
         world.viewModel.copyBookingLink(BookingLink(slug: "maria-silva"))
-        #expect(world.clipboard.written == ["https://bello-hub.web.app/maria-silva"])
+        #expect(world.clipboard.written == ["https://bellohub.app/maria-silva"])
         #expect(world.viewModel.copiedLink)
         await Wait.untilMain { !world.viewModel.copiedLink }
         #expect(!world.viewModel.copiedLink)

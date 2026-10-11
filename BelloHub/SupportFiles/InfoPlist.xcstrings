@@ -91,6 +91,18 @@
         }
       }
     },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "BelloHub"
+          }
+        }
+      }
+    },
     "NSCalendarsFullAccessUsageDescription" : {
       "comment" : "Calendar: why the app asks (Integrations, Apple Calendar switch). The app keeps a Bello Hub calendar with her visits.",
       "extractionState" : "manual",

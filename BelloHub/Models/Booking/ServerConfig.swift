@@ -12,7 +12,7 @@ import Foundation
 struct ServerConfig: Equatable, Sendable {
     /// `https://europe-west1-<project>.cloudfunctions.net`: a function lives at `<base>/<name>`.
     let functionsBaseURL: URL
-    /// `https://bello-hub.web.app`: her link is `<base>/<slug>`.
+    /// `https://bellohub.app`: her link is `<base>/<slug>`.
     let webBaseURL: URL
     /// The Firebase project whose Firestore the inbox reads (`bookings`, `rescheduleRequests`, `waitlist`,
     /// `inbox/{uid}/items`), under the same rules as the SDK would.
@@ -26,7 +26,7 @@ struct ServerConfig: Equatable, Sendable {
     /// we do not own): the dev project of D43/D54.
     static let fallback = ServerConfig(
         functionsBaseURL: URL(string: "https://europe-west1-bello-hub.cloudfunctions.net") ?? URL(filePath: "/"),
-        webBaseURL: URL(string: "https://bello-hub.web.app") ?? URL(filePath: "/"),
+        webBaseURL: URL(string: "https://bellohub.app") ?? URL(filePath: "/"),
         projectID: "bello-hub"
     )
 

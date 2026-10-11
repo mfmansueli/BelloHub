@@ -20,12 +20,12 @@ struct BookingLink: Equatable, Sendable {
         self.baseURL = baseURL
     }
 
-    /// `https://bello-hub.web.app/maria`.
+    /// `https://bellohub.app/maria`.
     var url: URL {
         baseURL.appending(path: slug)
     }
 
-    /// `bello-hub.web.app/maria`: what is shown to people and typed into a bio.
+    /// `bellohub.app/maria`: what is shown to people and typed into a bio.
     var display: String {
         "\(baseURL.host() ?? baseURL.absoluteString)/\(slug)"
     }

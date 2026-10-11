@@ -143,7 +143,7 @@ struct ShareLinkViewModelTests {
         await Wait.untilMain { rig.model.status == .available }
         let saved = await rig.model.saveAddress()
         #expect(saved && rig.model.isAddressSaved)
-        #expect(rig.model.savedLink?.display == "bello-hub.web.app/maria-silva")
+        #expect(rig.model.savedLink?.display == "bellohub.app/maria-silva")
         #expect(try await rig.repository.bookingSetup()?.slug == "maria-silva")
         #expect(rig.model.qrImage != nil)
         #expect(!rig.model.canSaveAddress, "nothing new to save")
@@ -176,7 +176,7 @@ struct ShareLinkViewModelTests {
         await Wait.untilMain { rig.model.status != .checking }
         await rig.repository.setFailsWrites(true)
         #expect(await rig.model.saveAddress() == false)
-        #expect(rig.model.savedLink?.display == "bello-hub.web.app/old-address")
+        #expect(rig.model.savedLink?.display == "bellohub.app/old-address")
         #expect(rig.model.errorMessage != nil)
         rig.model.dismissError()
         #expect(rig.model.errorMessage == nil)
@@ -205,13 +205,13 @@ struct ShareLinkViewModelTests {
     func copying() async throws {
         let rig = try await make(slug: "maria-silva")
         rig.model.copyLink()
-        #expect(rig.clipboard.written.last == "https://bello-hub.web.app/maria-silva" && rig.model.copied == .link)
+        #expect(rig.clipboard.written.last == "https://bellohub.app/maria-silva" && rig.model.copied == .link)
         rig.model.copyInstagram()
-        #expect(rig.clipboard.written.last == "Book with me: bello-hub.web.app/maria-silva" && rig.model.copied
+        #expect(rig.clipboard.written.last == "Book with me: bellohub.app/maria-silva" && rig.model.copied
             == .instagram)
         rig.model.copyWhatsApp()
         #expect(rig.clipboard.written.last
-            == "Hi! Thanks for your message. You can book with Maria here: bello-hub.web.app/maria-silva")
+            == "Hi! Thanks for your message. You can book with Maria here: bellohub.app/maria-silva")
         #expect(rig.model.copied == .whatsApp)
         await Wait.untilMain { rig.model.copied == nil }
         #expect(rig.model.copied == nil)
@@ -220,6 +220,6 @@ struct ShareLinkViewModelTests {
     @Test("The host in front of the field is the base address")
     func host() async throws {
         let rig = try await make()
-        #expect(rig.model.host == "bello-hub.web.app")
+        #expect(rig.model.host == "bellohub.app")
     }
 }

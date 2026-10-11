@@ -209,7 +209,7 @@ struct BookingSettingsViewModelTests {
         let rig = try await make()
         #expect(rig.model.link == nil)
         await rig.model.editor.apply { $0.slug = "maria-silva" }
-        #expect(rig.model.link?.display == "bello-hub.web.app/maria-silva")
+        #expect(rig.model.link?.display == "bellohub.app/maria-silva")
     }
 
     @Test("Copying the link puts it on the clipboard and says so for a moment")
@@ -219,7 +219,7 @@ struct BookingSettingsViewModelTests {
         #expect(rig.clipboard.written.isEmpty, "nothing to copy before she chose an address")
         await rig.model.editor.apply { $0.slug = "maria-silva" }
         rig.model.copyLink()
-        #expect(rig.clipboard.written == ["https://bello-hub.web.app/maria-silva"])
+        #expect(rig.clipboard.written == ["https://bellohub.app/maria-silva"])
         #expect(rig.model.copiedLink)
         await Wait.untilMain { !rig.model.copiedLink }
         #expect(!rig.model.copiedLink)

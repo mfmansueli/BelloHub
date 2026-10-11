@@ -35,7 +35,7 @@ struct BookingLinkCard<Destination: View>: View {
                         .font(Typography.subtitle).foregroundStyle(HeroPalette.ink)
                         .environment(\.layoutDirection, .leftToRight)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        // A bare address ("bello-hub.web.app/maria-silva") is not a readable label for VoiceOver or
+                        // A bare address ("bellohub.app/maria-silva") is not a readable label for VoiceOver or
                         // the accessibility audit; the card's title says what it is.
                         .accessibilityLabel(Text(verbatim: "\(linkTitle), \(link.display)"))
                         .accessibilityIdentifier("bookingSettings.linkText")

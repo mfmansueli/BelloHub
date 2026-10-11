@@ -63,7 +63,7 @@ final class BookingSetupUITests: XCTestCase {
         XCTAssertTrue(waitUntilEnabled(save), "a valid address can be saved before it can be checked")
         save.tap()
         XCTAssertTrue(app.element("shareLink.qr").waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("shareLink.linkText").label.hasSuffix("bello-hub.web.app/maria-silva"))
+        XCTAssertTrue(app.element("shareLink.linkText").label.hasSuffix("bellohub.app/maria-silva"))
         XCTAssertTrue(app.element("shareLink.notOnline").exists, "the screen says the page is not online yet")
         XCTAssertTrue(app.buttons["shareLink.shareButton"].exists && app.buttons["shareLink.copyButton"].exists)
     }
