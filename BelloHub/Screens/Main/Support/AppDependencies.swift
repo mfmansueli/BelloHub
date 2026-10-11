@@ -206,8 +206,8 @@ struct AppDependencies {
         options: LaunchOptions, keyManager: KeyManager, vault: VaultService, appointments: AppointmentService,
         defaults: UserDefaults
     ) -> InboxServices {
-        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            scenario -> any InboxRepository in
+        let scenario = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:))
+        let inbox: any InboxRepository = scenario.map { scenario -> any InboxRepository in
             let server = UITestInboxRepository(
                 scenario: scenario, publicKey: { try keyManager.currentInboxPublicKey() }
             )

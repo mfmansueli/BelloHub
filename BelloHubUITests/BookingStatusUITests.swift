@@ -22,7 +22,7 @@ final class BookingStatusUITests: XCTestCase {
         leaveAndComeBack(app)
 
         let gone = NSPredicate { _, _ in
-            let next = app.staticTexts["home.next.client"]
+            let next = app.staticTexts.matching(identifier: "home.next.client").firstMatch
             return !next.exists || !next.label.contains("Bianca")
         }
         expectation(for: gone, evaluatedWith: nil)
@@ -40,7 +40,7 @@ final class BookingStatusUITests: XCTestCase {
         app.tapButton("cancelAppointment.confirmButton")
         XCTAssertTrue(app.element("cancelAppointment.done").waitForExistence(timeout: 10))
         app.tapButton("cancelAppointment.doneButton")
-        let chip = app.staticTexts["appointment.statusChip"]
+        let chip = app.staticTexts.matching(identifier: "appointment.statusChip").firstMatch
         XCTAssertTrue(chip.waitForExistence(timeout: 8))
         XCTAssertEqual(chip.label, "Cancelled")
 
@@ -67,7 +67,7 @@ final class BookingStatusUITests: XCTestCase {
         let app = XCUIApplication.launchedForUITests(
             locale: "en", arguments: ["-uiSeed", "onboarded", "-uiInbox", scenario]
         )
-        let next = app.staticTexts["home.next.client"]
+        let next = app.staticTexts.matching(identifier: "home.next.client").firstMatch
         XCTAssertTrue(next.waitForExistence(timeout: 20), "the link booking did not reach Home")
         XCTAssertTrue(next.label.contains("Bianca"), "the next visit is \(next.label)")
         return app
