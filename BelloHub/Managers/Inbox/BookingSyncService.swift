@@ -285,7 +285,6 @@ final class BookingSyncService: LinkVisitChangeReporting {
         for booking in snapshot.bookings { snapshot.seenUpdates[booking.id] = booking.updatedAt }
         persist()
     }
-
 }
 
 // MARK: - Outcomes
@@ -303,11 +302,11 @@ extension BookingSyncService {
              (.respondRescheduleRequest(let id, _), .failed(let failure)):
             answering.remove(id)
             lastFailure = failure
-        case (let kind, let outcome) where kind.changedBookingID != nil:
-            // Taken, or refused for good (the booking had already changed there): the server now holds the truth.
-            // Read it, and do not trust a read that started before this answer.
+        case (let kind, _) where kind.changedBookingID != nil:
+            // Taken, or refused for good (the booking had already changed there, BOOKING_NOT_ACTIVE): either way the
+            // server now holds the truth, and the visit shows it after this sync. A refusal is not `lastFailure`: that
+            // one is the request screens' error line, and this was no answer to a request.
             if let bookingID = kind.changedBookingID { ledger.noteChange(of: bookingID) }
-            if case .failed(let failure) = outcome { lastFailure = failure }
             syncNow()
         case (_, .failed(let failure)):
             lastFailure = failure

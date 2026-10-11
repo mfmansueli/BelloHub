@@ -207,6 +207,54 @@ struct BookingSyncServiceTests {
         #expect(settled.cancelledBy == .client, "what she recorded (the client called) stays")
     }
 
+    @Test("A cancel queued offline survives a relaunch: still hers after the first sync, then sent")
+    func pendingCancelSurvivesRelaunch() async throws {
+        let rig = await start(with: [makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)])
+        defer { rig.cleanUp() }
+        let visit = try #require(await rig.visits(bookingID: "bk-1").first)
+        await rig.repository.setWriteFailure(.unreachable)
+        try await rig.appointments.cancel(id: visit.id, by: .professional, policy: .standard, now: TestClock.now)
+        await Wait.untilMain(timeout: .seconds(5)) { rig.queue.pending.count == 1 }
+
+        // A relaunch: everything in memory is gone; the queue and the vault are on disk.
+        let readsBefore = await rig.repository.reads.count
+        rig.sync.stopListening()
+        rig.sync.startListening(userId: InboxRig.userID)
+        await Wait.until { await rig.repository.reads.count > readsBefore }
+        await Wait.untilMain { !rig.sync.isSyncing }
+
+        #expect(rig.queue.pending.map(\.kind) == [.cancelBookingByOwner(bookingId: "bk-1")])
+        let statuses = await rig.visits(bookingID: "bk-1").map(\.status)
+        #expect(statuses == [.cancelled], "the first sync after the relaunch does not undo her cancel")
+
+        await rig.repository.setWriteFailure(nil)
+        await rig.queue.flushAsync()
+        let serverStatus = await rig.repository.bookings.first?.status
+        #expect(serverStatus == .cancelledByPro)
+    }
+
+    @Test("Her cancel refused because the client had cancelled first: the visit shows the client's cancel")
+    func refusedCancelShowsTheTruth() async throws {
+        let original = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)
+        let rig = await start(with: [original])
+        defer { rig.cleanUp() }
+        let visit = try #require(await rig.visits(bookingID: "bk-1").first)
+        await rig.repository.setWriteFailure(.unreachable)
+        try await rig.appointments.cancel(id: visit.id, by: .professional, policy: .standard, now: TestClock.now)
+        await Wait.untilMain(timeout: .seconds(5)) { rig.queue.pending.count == 1 }
+
+        await rig.repository.replace(cancelledByClient(original))
+        await rig.repository.setWriteFailure(nil)
+        await rig.queue.flushAsync()
+        let settled = await Wait.until {
+            await rig.visits(bookingID: "bk-1").first?.cancelledBy == .client
+        }
+
+        #expect(settled, "the server's truth replaces her refused cancel")
+        #expect(rig.queue.pending.isEmpty, "a refusal is final: nothing is retried")
+        #expect(rig.sync.lastFailure == nil, "no error line on the request screens for it")
+    }
+
     @Test("Moving a link visit in the app moves the booking on the server, and a sync keeps the new time")
     func ownerMoveReachesServer() async throws {
         let rig = await start(with: [makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: Self.soon)])
