@@ -221,3 +221,47 @@ screen and AI settings are not touched). Item 12 stays (rules, no AI wording). R
 - `BrandMark` from the icon's SVG paths; `BrandPalette`; `BrandMarkContrastTests`.
 - Tests: `InterfaceLanguageTests`, `InterfaceLanguageServiceTests` (injected mirror, so the process locale is never
   changed under other tests), `InterfaceLanguageUITests` (pt-BR, pt-PT, de: switch on an open screen, lock, relaunch).
+
+## Stage 2 log (items 3 and 4)
+
+- Setup: `OnboardingStep` is about, profession, services ("Your first service"), ready. The profession's first preselected
+  service is the first service (`OnboardingSuggestions.firstService`, `reconciledServices`); duration and an optional
+  price per suggestion (`OnboardingDraft.serviceMinutes`, `servicePrices`, used by `OnboardingBuilder`, first service
+  first). Other suggestions are off by default. Tags and record fields keep the catalog's defaults; the word for clients
+  moved to 7.2 (`LanguageRegionDraft.clientTerm`, saved with Save). Progress: `OnboardingProgress` +
+  `OnboardingProgressStore` (per user, `DefaultsKey.onboardingProgress`), restored by `OnboardingViewModel.init`.
+  Removed views: Terminology, Tags, Record, Permissions steps and `AddNameSheet` (their strings pruned). Voice
+  vocabulary (the old Terminology names) is not asked anymore: it only fed voice, which is deferred.
+- Home: toolbar "New appointment" (`home.quick.newAppointment`, kept so existing tests and audits find it), next
+  visit or the clear day, `HomeTodayCard` (`HomePending`: booking requests apart, which switch the tab to Alerts through
+  `MainNavigation`; reminders; visits to finish; the notification offer), rest of today, `HomeReachOutCard`
+  (`HomeReachOut`), the week row. Tiles, follow-ups card, win-back link, reminders list and quick actions removed.
+- Found on the way: an `accessibilityIdentifier` on a container replaces its children's identifiers unless the
+  container is `.accessibilityElement(children: .contain)`; fixed on the new cards and the first-service card.
+
+## Stage 3 log (items 7, 5, 6, 12)
+
+- Queue: `Models/FollowUps/` (`FollowUpKind`, `FollowUpFilter`, `FollowUpReason`, `FollowUpReasonText`, `FollowUpItem`,
+  `FollowUpDecision`, `FollowUpQueue`), `FollowUpQueueSource` (shared by Home, Alerts and the queue),
+  `FollowUpQueueService` (decisions, visit closings, the chats opened in 120 days through the new
+  `MessageLogRepository.messageLogs(since:)`, with a contract test on both vault implementations). 2.7 is the queue;
+  `AgendaRoute.followUps(filter)`; `.winBack` opens it on "Not back"; the Win back screen and `RemindersReadyCard` were
+  removed. Alerts: one card.
+- WhatsApp states: `MessageDeliveryState`, `Appointment.reminderMarkedSentAt` (optional, no migration: old JSON decodes
+  as nil; a reschedule clears it), `AppointmentService.markReminderSentByHer`, the visit detail's line and "I sent it".
+- Decision: "I sent it" on a suggestion rests it for 14 days (`FollowUpDecision.afterSentDays`), "Later" for 7; a new
+  visit is a new occurrence, so an old decision never hides the next one. Reminders and unfinished visits cannot be
+  dismissed (an unfinished visit can be "marked as done").
+- Visit closing: `VisitClosing` (Models/Record), `VisitClosingRules`, `TreatmentFlowViewModel+Closing`, new
+  `AftercareStepView`, `ClosingProgress`; `TreatmentFlowRequest.resumeRecordID`; the record id is the request's when
+  resuming. Aftercare and the next-visit note are written only while the record is editable. The aftercare message is
+  the quick reply (docs/06 section 8), never the record's text.
+- New text/background pairs: none (the new rows use pairs already measured by `PaletteContrastTests`:
+  `roseDeepText` on `roseWash`, `ink2` on `surface`, `amberText` on `amberBg`, chip styles).
+
+## Stage 4 log (item 8, non-AI part)
+
+- `TreatmentFormLayout` (record's own fields and the first two of hers first, the rest under "More fields"),
+  `LastVisitPrefill` ("Same as last visit, <date>", only empty fields, never notes, result or aftercare).
+- Not done, on purpose (owner decision): any change to the voice or AI presentation (`UnavailableVoiceCapture`,
+  `UnavailableRecordStructuring` and the AI settings stay as they are; they are still the v1 defaults in every build).
