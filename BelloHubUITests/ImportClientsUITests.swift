@@ -85,7 +85,10 @@ final class ImportClientsUITests: XCTestCase {
         XCTAssertTrue(app.buttons["importClients.row.row-4"].exists, "the quoted name with a comma is one name")
         XCTAssertFalse(app.buttons["importClients.row.row-5"].exists, "a phone that is not valid is not offered")
 
-        // Everyone starts selected; Clear empties the choice and the button says why it is off.
+        // The new people start selected; the repeated phone is marked and unticked, so the first tap selects all,
+        // the second clears and the button says why it is off.
+        XCTAssertTrue(app.element("importClients.plan.new").exists, "the summary comes before the button")
+        app.tapButton("importClients.selectAllButton")
         app.tapButton("importClients.selectAllButton")
         XCTAssertFalse(app.buttons["importClients.importButton"].isEnabled)
         app.tapButton("importClients.selectAllButton")

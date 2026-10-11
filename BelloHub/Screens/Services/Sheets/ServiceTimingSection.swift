@@ -32,9 +32,10 @@ struct ServiceTimingSection: View {
             Text("services.timing.disclosure").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
                 .frame(minHeight: Spacing.touchTarget, alignment: .leading)
                 .accessibilityAddTraits(.isHeader)
+                // On the label: on the group it would also rename every menu inside it.
+                .accessibilityIdentifier("serviceEditor.timingDisclosure")
         }
         .tint(Palette.roseText)
-        .accessibilityIdentifier("serviceEditor.timingDisclosure")
         .onChange(of: draft.minutes) { draft = ServiceRules.fittingProcessing(draft) }
     }
 

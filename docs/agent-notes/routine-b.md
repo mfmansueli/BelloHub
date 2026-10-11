@@ -98,3 +98,86 @@ description where it fits the 4000-character limit (the 170-character promotiona
 
 New batch files `Config/Locale/strings/routine-b-*.json`, merged with `scripts/merge-strings.py`; keys that stop being
 used are removed from their old batch and pruned.
+
+## What changed (implementation)
+
+### Item 9: import and the free limit
+- `ImportPlan` (pure, `Screens/Clients/Import/Support/`) replaces `ImportBatchFit`: new clients after deduplication
+  (`ClientDuplicateRules.partition`, the gate's own rule), already in the list, free left now, registered now, waiting
+  for a plan, free left after, and a kind. Trial group: `trialSelection(size:from:existing:)` takes the first N *new*
+  rows; `trialChoices` offers 3, 5, 10 (smaller than the list) plus the free count when useful.
+- `ClientRegistering.knownClients()` (read only, for the preview). If it throws, the plan counts every row as new and
+  says duplicates were not checked (`import.plan.unchecked`).
+- Choose step: "Before you import" summary first in the list, rows already in her list marked and unticked, "Try a
+  small group" menu. Result: "They were not saved and nothing was charged…"; after the paywall closes with a plan,
+  "Import the rest (n)" re-runs the same selection through the gate (the clients registered the first time are
+  duplicates then, so nobody is counted twice).
+- **What happens to the rest when the import exceeds the free registrations (decision):** the gate registers the first
+  new rows in list order up to the free count; the rest are **not saved and not charged**, counted as "Waiting for a
+  plan" before confirming and as "n more need a plan" after; nothing is ever dropped silently or paid silently (a
+  subscription only happens through the App Store paywall she opens herself).
+- Unchanged: `RegistrationQuota` (the 10), the server reservation and offline queue, prices, existing data access.
+
+### Item 10: agenda setup
+- Booking page "Booking rules": profession suggestion card (`ProfessionAgendaDefaults`, "Use these", only while her
+  values differ), basics card with an example under each menu, "More options" disclosure (start times, compact day;
+  opens by itself when either is not at its default).
+- "What clients see": `SlotPreviewBuilder` + `SlotPreview` (pure) run `FreeSlotsCalculator.plan` locally on her next
+  working day with her settings and services, one sample booking of her shortest service an hour after opening,
+  notice/window/days off left out (said on screen). Service menu when she has two or more services.
+- Service editor: "Extra time (optional)" disclosure (closed unless the service has extra time) with the owner's
+  example. D56 logic, server, payloads: untouched.
+- Profession defaults are judgement (documented in the type), not catalog data: esthetician 15/15, hair 10/15,
+  lash 15/30, nail 10/15, makeup 15/30, tattoo 30/30, barber 5/15, massage 15/30, other 15/15 (buffer/start-time
+  grid), compact day on for all.
+
+### Item 11: photo framing
+- Implemented as a small change (evaluation `docs/agent-notes/photo-framing.md`): `FramingReferenceRules`,
+  `TreatmentFlowViewModel+FramingReference`, `FramingGuides`, camera controls. The old "Ghost" toggle and its key are
+  gone. Later-stage items (automatic position hints with Vision, edge overlay, same zoom/lens) are listed there and
+  should go to the PROGRESS post-v1 list.
+
+### Marketing
+- `docs/MARKETING.md` (phrases, use / don't use, 13 adaptations `needs_review`), linked from `docs/README.md` and
+  `docs/store/README.md`; the main phrase opens every store description draft (lengths recounted, all < 2,710 / 4000).
+
+### Strings
+- New batches `routine-b-import.json` (18 keys), `routine-b-agenda.json` (23), `routine-b-camera.json` (3); one en-GB
+  override (`services.timing.example`, colour/fringe). Removed: `import.choose.partial{,.detail}` (s4-import),
+  `treatmentFlow.camera.ghost` (s7-flow), `services.timing.title` (d56-smart-slots). `check-strings.sh --final` passes.
+
+## Needs a real iPhone
+- Camera framing reference: the overlay alignment with the real capture (preview layer vs processed photo), the
+  slider on the live preview, memory with a 2048 px reference (H19 camera check).
+- Import from real Contacts with duplicates against an iCloud-synced list; the server count (`reserveRegistrations`)
+  versus the local plan when another device registered clients while this one was offline.
+- "Import the rest" after a real (sandbox) subscription bought from the paywall inside the import sheet (H14).
+
+## Mocks versus production
+- All unit tests use fakes (`FakeClientRegistrar`, `FakeBookingSetupRepository`, `FakeAgendaRepository`, in-memory
+  vault); UI tests use the DEBUG fixtures (`-uiContacts`, `-uiRegisteredClients`, scripted camera). Nothing here
+  talks to Firebase; nothing was deployed.
+- The slot preview is the same Swift calculator the shared fixture checks against the server (`freeSlots.ts`), so
+  it matches production rules, but it is a sample day, not a server answer.
+
+## Open items
+- `onboarding.ready.importButton` is the entry the import UI tests use; agent A's onboarding change may move it (then
+  `ImportClientsUITests.openImport` needs the new entry).
+- The two Fast-plan failures seen under full load (`PublishingServiceTests` "picking the missing address publishes by
+  itself", `RescheduleRequestViewModelTests` "asked time is taken first") are `Wait` timeouts in suites this branch
+  does not touch; both pass when run alone.
+
+## Paragraph for PROGRESS (agent A pastes it)
+
+**2026-10-11: routine items 9, 10, 11 and the marketing phrases (branch `routine-b`, notes
+`docs/agent-notes/routine-b.md`).** Import: before confirming, "Before you import" shows new registrations after
+deduplication, free registrations left, registered now and waiting for a plan (`ImportPlan`, the gate's own rules);
+"Try a small group" selects the first 3/5/10 new rows; rows past the free registrations are never saved or charged and
+"Import the rest" re-runs them once a plan is active. Booking page: basics first, "More options" (start times, compact
+day), a profession suggestion with "Use these", an example under each rule and a live "What clients see" preview
+(`SlotPreviewBuilder` on `FreeSlotsCalculator`, no server call); the service editor's extra time is a disclosure with
+the owner's colour example. Camera: optional "Show previous photo" framing reference with opacity slider and
+thirds guides, decrypted in memory only (`docs/agent-notes/photo-framing.md`; automatic Vision hints, edge overlay and
+same zoom are post-v1). Marketing phrases in `docs/MARKETING.md` and the store descriptions. Strings in 14
+localizations; nothing deployed. Post-v1 list: photo framing later stage (Vision position/distance hints, edge-only
+overlay, same lens and zoom, exposure hints).

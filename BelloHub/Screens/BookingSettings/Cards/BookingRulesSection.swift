@@ -58,9 +58,10 @@ struct BookingRulesSection: View {
             Text("bookingSettings.rules.moreOptions")
                 .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 .frame(minHeight: Spacing.touchTarget, alignment: .leading)
+                // On the label: on the group it would also rename every row inside it.
+                .accessibilityIdentifier("bookingSettings.moreOptions")
         }
         .tint(Palette.roseText)
-        .accessibilityIdentifier("bookingSettings.moreOptions")
     }
 
     // MARK: - Rows
