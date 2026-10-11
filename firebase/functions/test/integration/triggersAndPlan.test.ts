@@ -63,7 +63,7 @@ describe('onBookingWritten: generic pushes to the professional', () => {
     await refs(env.deps.db).profile(pro.slug).update({ 'booking.requiresApproval': true });
     const request = asBooked(await book(env, pro, { startsAt: START }));
     const unverified = asBooked(
-      await book(env, pro, { startsAt: '2026-10-03T17:00:00.000Z', client: { name: 'Bia Lima', phone: '+5511976543210' }, verification: { method: 'whatsapp' } })
+      await book(env, pro, { startsAt: '2026-10-03T17:00:00.000Z', client: { name: 'Bia Lima', phone: '+5511976543210', email: 'bia@example.com' }, verification: { method: 'whatsapp' } })
     );
 
     await trigger(request.bookingId, undefined);
