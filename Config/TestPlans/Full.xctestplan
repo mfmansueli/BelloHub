@@ -9,7 +9,16 @@
     }
   ],
   "defaultOptions" : {
-
+    "environmentVariableEntries" : [
+      {
+        "key" : "BELLO_A11Y",
+        "value" : "1"
+      },
+      {
+        "key" : "AUDIT_PLAN_LOCALES",
+        "value" : "en"
+      }
+    ]
   },
   "testTargets" : [
     {

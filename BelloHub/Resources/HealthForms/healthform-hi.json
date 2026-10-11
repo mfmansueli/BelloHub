@@ -1,0 +1,330 @@
+{
+ "localization": "hi",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "एलर्जी",
+   "prompt": "क्या आपको कोई एलर्जी है?",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "खुशबू वाले उत्पाद"
+    },
+    {
+     "key": "latex",
+     "name": "लेटेक्स"
+    },
+    {
+     "key": "nuts",
+     "name": "मेवे"
+    },
+    {
+     "key": "retinol",
+     "name": "रेटिनॉल"
+    },
+    {
+     "key": "acids",
+     "name": "एसिड"
+    },
+    {
+     "key": "dyes",
+     "name": "हेयर डाई या मेहंदी"
+    },
+    {
+     "key": "adhesives",
+     "name": "चिपकाने वाले पदार्थ या गोंद"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "दवाइयाँ",
+   "prompt": "क्या कोई दवा नियमित रूप से ली जाती है?",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "गर्भावस्था या स्तनपान",
+   "prompt": "क्या गर्भावस्था या स्तनपान की स्थिति है?",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "त्वचा की समस्याएँ",
+   "prompt": "क्या त्वचा से जुड़ी कोई समस्या है?",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "संवेदनशील त्वचा"
+    },
+    {
+     "key": "eczema",
+     "name": "एक्ज़िमा"
+    },
+    {
+     "key": "rosacea",
+     "name": "रोसैसिया"
+    },
+    {
+     "key": "acne",
+     "name": "मुँहासे"
+    },
+    {
+     "key": "psoriasis",
+     "name": "सोरायसिस"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "स्वास्थ्य संबंधी स्थितियाँ",
+   "prompt": "क्या इनमें से कोई स्वास्थ्य स्थिति है?",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "मधुमेह"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "खून पतला करने की दवा"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "उच्च रक्तचाप"
+    },
+    {
+     "key": "epilepsy",
+     "name": "मिर्गी"
+    },
+    {
+     "key": "immune",
+     "name": "कमज़ोर रोग-प्रतिरोधक क्षमता"
+    },
+    {
+     "key": "keloids",
+     "name": "केलॉइड या उभरे हुए निशान"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "हाल की प्रक्रियाएँ",
+   "prompt": "क्या पिछले 6 महीनों में इनमें से कोई प्रक्रिया करवाई गई है?",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "आइसोट्रेटिनॉइन"
+    },
+    {
+     "key": "peel",
+     "name": "केमिकल पील"
+    },
+    {
+     "key": "laser",
+     "name": "लेज़र या लाइट ट्रीटमेंट"
+    },
+    {
+     "key": "injectables",
+     "name": "इंजेक्शन (फिलर या बोटुलिनम टॉक्सिन)"
+    },
+    {
+     "key": "microneedling",
+     "name": "माइक्रोनीडलिंग"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "धूप में संपर्क",
+   "prompt": "क्या पिछले 2 हफ़्तों में धूप से जलन हुई है या टैनिंग बेड का उपयोग किया गया है?",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "आँखों की समस्याएँ",
+   "prompt": "क्या आँखों से जुड़ी कोई समस्या है?",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "कॉन्टैक्ट लेंस"
+    },
+    {
+     "key": "dryEyes",
+     "name": "सूखी या संवेदनशील आँखें"
+    },
+    {
+     "key": "infection",
+     "name": "पिछले महीने आँखों में संक्रमण"
+    },
+    {
+     "key": "surgery",
+     "name": "पिछले 6 महीनों में आँखों की सर्जरी"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "नाखूनों की समस्याएँ",
+   "prompt": "क्या नाखूनों या हाथों से जुड़ी कोई समस्या है?",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "नाखूनों में फंगस"
+    },
+    {
+     "key": "brittle",
+     "name": "कमज़ोर या परतदार नाखून"
+    },
+    {
+     "key": "injury",
+     "name": "नाखून में हाल की चोट"
+    },
+    {
+     "key": "dermatitis",
+     "name": "हाथों में डर्मेटाइटिस या एक्ज़िमा"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "सिर की त्वचा की समस्याएँ",
+   "prompt": "क्या सिर की त्वचा की कोई समस्या है या बाल झड़ रहे हैं?",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "बालों के ट्रीटमेंट",
+   "prompt": "क्या पिछले 6 महीनों में बालों का इनमें से कोई ट्रीटमेंट करवाया गया है?",
+   "options": [
+    {
+     "key": "color",
+     "name": "कलर"
+    },
+    {
+     "key": "bleach",
+     "name": "ब्लीच"
+    },
+    {
+     "key": "relaxer",
+     "name": "स्ट्रेटनिंग या केराटिन"
+    },
+    {
+     "key": "perm",
+     "name": "पर्म"
+    },
+    {
+     "key": "henna",
+     "name": "मेहंदी"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "हेयर डाई से प्रतिक्रिया",
+   "prompt": "क्या कभी किसी हेयर डाई से प्रतिक्रिया हुई है?",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "और कुछ",
+   "prompt": "क्या अपॉइंटमेंट से पहले जानने लायक कोई और ज़रूरी बात है?",
+   "options": []
+  }
+ ]
+}

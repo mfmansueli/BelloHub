@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Import clients</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden;display:flex;flex-direction:column">
+
+<div style="padding:62px 20px 0;display:flex;align-items:center;justify-content:space-between;height:106px">
+<sc-if value="{{isSource}}" hint-placeholder-val="{{true}}"><a href="Clients.dc.html" style="min-width:64px;height:44px;display:flex;align-items:center;font-size:17px;color:#9A5A6C">Cancel</a></sc-if>
+<sc-if value="{{isPick}}" hint-placeholder-val="{{false}}"><button onClick="{{goSource}}" style="min-width:64px;height:44px;display:flex;align-items:center;font-size:17px;color:#9A5A6C">Back</button></sc-if>
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}"><span style="min-width:64px"></span></sc-if>
+<div style="font-size:17px;font-weight:600">Import clients</div>
+<span style="min-width:64px"></span>
+</div>
+
+<sc-if value="{{isSource}}" hint-placeholder-val="{{true}}">
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:8px 20px 24px">
+<div style="font-family:'Fraunces',Georgia,serif;font-size:34px;line-height:1.1;letter-spacing:-0.015em;font-weight:500">Bring your clients with you.</div>
+<div style="font-size:16px;color:#65625D;margin-top:8px;line-height:1.4">Start with names and phone numbers. Their history grows from the next visit on.</div>
+<div style="margin-top:22px;background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<button onClick="{{goPick}}" style="width:100%;display:flex;align-items:center;gap:14px;min-height:72px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<span style="width:44px;height:44px;border-radius:14px;background:linear-gradient(145deg,#F3E7DA,#E2CDB6);color:#4A4036;display:flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></span>
+<span style="flex:1"><span style="display:block;font-size:17px;font-weight:600">Phone contacts</span><span style="display:block;font-size:15px;color:#65625D">Choose who to bring over</span></span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8984" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg>
+</button>
+<button onClick="{{goPick}}" style="width:100%;display:flex;align-items:center;gap:14px;min-height:72px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<span style="width:44px;height:44px;border-radius:14px;background:#EEF2EA;color:#56684F;display:flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4.5" width="16" height="15" rx="2.5"/><path d="M4 10h16M10 10v9.5"/></svg></span>
+<span style="flex:1"><span style="display:block;font-size:17px;font-weight:600">Spreadsheet</span><span style="display:block;font-size:15px;color:#65625D">Excel or CSV with name and phone</span></span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8984" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg>
+</button>
+<div style="display:flex;align-items:center;gap:14px;min-height:72px;padding:0 16px;opacity:0.6">
+<span style="width:44px;height:44px;border-radius:14px;background:#ECE8E1;color:#5F5C57;display:flex;align-items:center;justify-content:center;flex:none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></svg></span>
+<span style="flex:1"><span style="display:block;font-size:17px;font-weight:600">Other booking apps</span><span style="display:block;font-size:15px;color:#65625D">Coming soon</span></span>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isPick}}" hint-placeholder-val="{{false}}">
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:4px 20px 16px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin:0 4px 10px"><div style="font-size:15px;font-weight:600;color:#65625D">Choose clients</div><button onClick="{{toggleAll}}" style="font-size:15px;font-weight:600;color:#9A5A6C">{{allLabel}}</button></div>
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<sc-for list="{{contacts}}" as="c" hint-placeholder-count="6">
+<button onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="width:100%;display:flex;align-items:center;gap:12px;min-height:60px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<span style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex:none;background:{{c.abg}};color:{{c.afg}}">{{c.ini}}</span>
+<span style="flex:1"><span style="display:block;font-size:16px;font-weight:600">{{c.name}}</span><span style="display:block;font-size:13px;color:#65625D">{{c.phone}}</span></span>
+<span style="width:24px;height:24px;border-radius:50%;border:1.5px solid {{c.bd}};background:{{c.bg}};color:#FFFCF8;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="opacity:{{c.ck}}"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+</button>
+</sc-for>
+</div>
+</div>
+<div style="padding:12px 20px 34px;background:#F8F6F2;border-top:1px solid #ECE7DF">
+<button onClick="{{doImport}}" style="width:100%;height:56px;border-radius:18px;background:{{btnBg}};color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">{{btnLabel}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+<div style="flex:1;padding:8px 24px 34px;display:flex;flex-direction:column">
+<div style="margin-top:24px;width:64px;height:64px;border-radius:50%;background:#EEF2EA;color:#56684F;display:flex;align-items:center;justify-content:center" class="m-pop"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="m-check"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+<div style="margin-top:22px;font-family:'Fraunces',Georgia,serif;font-size:34px;line-height:1.08;letter-spacing:-0.015em;font-weight:500">{{doneTitle}}</div>
+<div style="font-size:16px;color:#65625D;margin-top:8px;line-height:1.45">They are in your Clients list. Add tags and notes whenever you like.</div>
+<div style="margin-top:24px;background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:16px;display:flex;align-items:center;gap:12px">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">Send my booking link</div><div style="font-size:13px;color:#65625D;line-height:1.4">Invite them on WhatsApp so they can book on their own.</div></div>
+<button role="switch" aria-checked="{{send}}" aria-label="Send my booking link" onClick="{{toggleSend}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{sendBg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{sendLeft}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+<div style="flex:1"></div>
+<a href="Clients.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">View clients</a>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const step = st.step || 'source';
+    const data = [
+      ['Bianca Nunes', '+55 11 98123-4410', 'BN', 'linear-gradient(145deg,#F6E4E8,#E8C6CF)', '#7E4757'],
+      ['Carla Mendes', '+55 11 97766-2031', 'CM', 'linear-gradient(145deg,#E6ECE0,#C9D6C0)', '#45573F'],
+      ['Daniela Souza', '+55 11 99402-1187', 'DS', 'linear-gradient(145deg,#F3E7DA,#E2CDB6)', '#4A4036'],
+      ['Eduarda Pires', '+55 11 96655-7302', 'EP', 'linear-gradient(145deg,#F6E4E8,#E8C6CF)', '#7E4757'],
+      ['Fernanda Alves', '+55 11 98871-9046', 'FA', 'linear-gradient(145deg,#E6ECE0,#C9D6C0)', '#45573F'],
+      ['Gabriela Torres', '+55 11 97120-5588', 'GT', 'linear-gradient(145deg,#F3E7DA,#E2CDB6)', '#4A4036']
+    ];
+    const sel = st.sel || { 0: true, 1: true, 2: true, 3: true };
+    const n = data.filter((d, i) => sel[i]).length;
+    const send = st.send === undefined ? true : st.send;
+    const contacts = data.map((d, i) => {
+      const on = !!sel[i];
+      return {
+        name: d[0], phone: d[1], ini: d[2], abg: d[3], afg: d[4], on: on,
+        bg: on ? '#242321' : 'transparent', bd: on ? '#242321' : '#C9C4BB', ck: on ? 1 : 0,
+        pick: () => this.setState({ sel: { ...sel, [i]: !on } })
+      };
+    });
+    return {
+      isSource: step === 'source', isPick: step === 'pick', isDone: step === 'done',
+      goSource: () => this.setState({ step: 'source' }),
+      goPick: () => this.setState({ step: 'pick' }),
+      contacts: contacts,
+      allLabel: n === data.length ? 'Clear' : 'Select all',
+      toggleAll: () => { const all = {}; if (n !== data.length) data.forEach((d, i) => { all[i] = true; }); this.setState({ sel: all }); },
+      btnLabel: n === 0 ? 'Choose at least one' : 'Import ' + n + (n === 1 ? ' client' : ' clients'),
+      btnBg: n === 0 ? '#B9B4AB' : '#242321',
+      doImport: () => { if (n > 0) this.setState({ step: 'done' }); },
+      doneTitle: n + (n === 1 ? ' client imported.' : ' clients imported.'),
+      send: send, sendBg: send ? '#6E8266' : '#D5D0C7', sendLeft: send ? '22px' : '2px',
+      toggleSend: () => this.setState({ send: !send })
+    };
+  }
+}
+</script>
+</body>
+</html>

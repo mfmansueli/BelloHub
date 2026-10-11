@@ -1,0 +1,12 @@
+{
+  "keys": [
+    "push.booking.cancelled",
+    "push.booking.clientConfirmed",
+    "push.booking.late",
+    "push.booking.moved",
+    "push.booking.new",
+    "push.booking.request",
+    "push.reschedule.request",
+    "push.waitlist.new"
+  ]
+}

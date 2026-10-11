@@ -1,0 +1,20 @@
+# Emulator and CLI logs
+*-debug.log
+ui-debug.log
+firestore-debug.log
+pubsub-debug.log
+database-debug.log
+.firebase/
+
+# Functions
+functions/node_modules/
+functions/lib/
+functions/coverage/
+functions/.env.local
+functions/.secret.local
+functions/*.tsbuildinfo
+
+# Local emulator state
+emulator-data/
+.hosting-public/
+firebase.hosting-deploy.json

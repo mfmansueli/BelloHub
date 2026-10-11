@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New client</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input,textarea{border:0;outline:none;padding:0;width:100%;background:none}
+textarea{resize:none}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden;display:flex;flex-direction:column">
+
+<div style="padding:62px 20px 0;display:flex;align-items:center;justify-content:space-between;height:106px">
+<a href="Clients.dc.html" style="min-width:64px;height:44px;display:flex;align-items:center;font-size:17px;color:#9A5A6C">Cancel</a>
+<div style="font-size:17px;font-weight:600">New client</div>
+<span style="min-width:64px"></span>
+</div>
+
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:8px 20px 16px;display:flex;flex-direction:column;gap:22px">
+
+<a href="ImportClients.dc.html" style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:14px 16px;display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#F3E7DA,#E2CDB6);color:#4A4036;display:flex;align-items:center;justify-content:center;flex:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></svg></div><div style="flex:1"><div style="font-size:16px;font-weight:600">Import many at once</div><div style="font-size:13px;color:#65625D">From phone contacts or a spreadsheet</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8C8984" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 6 6 6-6 6"/></svg></a>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+<button onClick="{{addPhoto}}" aria-label="Add photo" style="width:88px;height:88px;border-radius:50%;background:#EEEAE3;color:#65625D;display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5a2 2 0 0 1 2-2h1.6l1.4-2h6l1.4 2H18a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.4"/></svg></button>
+<div style="font-size:15px;font-weight:600;color:#9A5A6C">{{photoLabel}}</div>
+</div>
+
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0ECE5"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Name</span><input placeholder="Full name" autocomplete="off" style="font-size:17px;font-weight:600"></label>
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0ECE5"><span style="width:96px;font-size:15px;color:#65625D;flex:none">WhatsApp</span><input placeholder="+55 11 90000 0000" inputmode="tel" style="font-size:17px"></label>
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Email</span><input placeholder="Optional" inputmode="email" style="font-size:17px"></label>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:600;color:#65625D;margin:0 4px 8px">Tags</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{tags}}" as="t" hint-placeholder-count="6">
+<button onClick="{{t.toggle}}" aria-pressed="{{t.on}}" style="height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;background:{{t.bg}};color:{{t.fg}};border:1.5px solid {{t.bd}}">{{t.label}}</button>
+</sc-for>
+<a href="Tags.dc.html" style="height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:600;border:1.5px dashed #BDB7AD;color:#9A5A6C;display:inline-flex;align-items:center">+ New tag</a>
+</div>
+</div>
+
+<div>
+<label for="know" style="display:block;font-size:15px;font-weight:600;color:#65625D;margin:0 4px 8px">Important to know</label>
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:14px 16px;height:96px"><textarea id="know" placeholder="Sensitivities, preferences, anything you never want to forget" style="font-size:16px;line-height:1.4;height:100%"></textarea></div>
+<div style="font-size:13px;color:#65625D;margin:8px 4px 0;line-height:1.4">Stays private. It appears at the top of Before you start.</div>
+</div>
+
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">Send my booking link</div><div style="font-size:13px;color:#65625D;margin-top:2px">So she can book herself next time.</div></div>
+<button role="switch" aria-checked="{{link.on}}" aria-label="Send my booking link" onClick="{{link.toggle}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{link.bg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{link.left}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+
+<div style="font-size:13px;line-height:1.45;color:#65625D;padding:0 4px">Clients who book through your link are added automatically. Use this for people you already know.</div>
+
+</div>
+
+<div style="padding:12px 20px 34px;background:#F8F6F2;border-top:1px solid #ECE7DF;display:flex;flex-direction:column;gap:8px">
+<a href="Clients.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Save client</a>
+<a href="NewAppointment.dc.html" style="height:44px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#9A5A6C">Save and book appointment</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const sel = st.sel || {};
+    const link = st.link === undefined ? true : st.link;
+    const opts = [['vip', 'VIP'], ['sensitive', 'Sensitive Skin'], ['bridal', 'Bridal'], ['acne', 'Acne Prone'], ['regular', 'Regular']];
+    const tags = opts.map((o) => {
+      const on = !!sel[o[0]];
+      return {
+        label: o[1], on: on,
+        bg: on ? '#242321' : '#FFFCF8', fg: on ? '#FFFCF8' : '#242321', bd: on ? '#242321' : '#E3DED5',
+        toggle: () => this.setState({ sel: { ...sel, [o[0]]: !sel[o[0]] } })
+      };
+    });
+    return { photoLabel: (this.state&&this.state.photo) ? "Photo added" : "Add photo", addPhoto: () => this.setState({ photo: true }), 
+      tags: tags,
+      link: { on: link, bg: link ? '#6E8266' : '#D5D0C7', left: link ? '22px' : '2px', toggle: () => this.setState({ link: !link }) }
+    };
+  }
+}
+</script>
+</body>
+</html>

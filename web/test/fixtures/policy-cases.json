@@ -1,0 +1,112 @@
+{
+  "description": "Table for what a client may do with a booking, from the policy stored on it (docs/10 section 4, D11, D12, docs/11 section 4). The page evaluates it to choose which buttons to show; the server evaluates the same table to refuse. Times are UTC ISO strings. `cancel` is free | allowLate | message; `reschedule` is direct | request | message.",
+  "defaults": {
+    "freeWindowHours": 24,
+    "clientCanReschedule": true,
+    "maxReschedules": 2,
+    "afterWindowCancel": "allow",
+    "afterWindowReschedule": "request",
+    "askConfirmation": true,
+    "graceMinutes": 15,
+    "lateCancelCounts": false,
+    "noShowLimit": 3
+  },
+  "cases": [
+    {
+      "name": "two days before: everything is free and direct",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-29T18:00:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "exactly at the deadline is still free",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-30T18:00:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "one second after the deadline is late: cancel with a warning, reschedule by request",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-30T18:00:01Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "allowLate", "reschedule": "request", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "late and she asks to be written to for both",
+      "policy": { "afterWindowCancel": "message", "afterWindowReschedule": "message" },
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-10-01T10:00:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "message", "reschedule": "message", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "the reschedule limit is reached: message, even inside the free window",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-25T12:00:00Z",
+      "rescheduleCount": 2,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "message", "reschedulesLeft": 0 }
+    },
+    {
+      "name": "one reschedule left",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-25T12:00:00Z",
+      "rescheduleCount": 1,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": 1 }
+    },
+    {
+      "name": "unlimited reschedules never run out",
+      "policy": { "maxReschedules": null },
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-25T12:00:00Z",
+      "rescheduleCount": 9,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": null }
+    },
+    {
+      "name": "she does not let clients reschedule: message, cancelling is still free",
+      "policy": { "clientCanReschedule": false },
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-09-25T12:00:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "free", "reschedule": "message", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "a 72-hour window",
+      "policy": { "freeWindowHours": 72 },
+      "startsAt": "2026-10-04T12:00:00Z",
+      "now": "2026-10-01T12:00:01Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-10-01T12:00:00Z", "cancel": "allowLate", "reschedule": "request", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "a 2-hour window the morning of the visit",
+      "policy": { "freeWindowHours": 2 },
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-10-01T15:30:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-10-01T16:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "after the visit started the window is long gone",
+      "policy": {},
+      "startsAt": "2026-10-01T18:00:00Z",
+      "now": "2026-10-01T18:20:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-09-30T18:00:00Z", "cancel": "allowLate", "reschedule": "request", "reschedulesLeft": 2 }
+    },
+    {
+      "name": "the window crosses a DST change in Lisbon: hours are elapsed hours, not wall-clock",
+      "policy": {},
+      "startsAt": "2026-03-29T10:00:00Z",
+      "now": "2026-03-28T10:00:00Z",
+      "rescheduleCount": 0,
+      "expect": { "freeUntil": "2026-03-28T10:00:00Z", "cancel": "free", "reschedule": "direct", "reschedulesLeft": 2 }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "bellohub-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Bello Hub client web app: booking, management, portal and sealed forms (docs/10-WEB-BOOKING.md).",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "gen": "tsx scripts/gen-regions.ts && tsx scripts/gen-tokens.ts && tsx scripts/build-legal.ts",
+    "dev": "npm run gen && vite",
+    "mock": "tsx test/mock-server/main.ts",
+    "build": "npm run gen && vite build && tsx scripts/check-size.ts",
+    "preview": "vite preview",
+    "i18n": "python3 scripts/derive-locales.py --check && tsx scripts/check-i18n.ts --quiet",
+    "contrast": "tsx scripts/check-contrast.ts",
+    "privacy": "tsx scripts/check-privacy.ts",
+    "typecheck": "npm run gen && tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "lint": "npm run gen && eslint . --max-warnings 0",
+    "test": "npm run gen && vitest run",
+    "build:e2e": "npm run gen && vite build --mode e2e --outDir dist-e2e",
+    "build:e2e-local": "npm run gen && vite build --mode e2e-local --outDir dist-e2e-local",
+    "mock:e2e": "tsx test/mock-server/main.ts --serve-dist dist-e2e",
+    "e2e": "npm run build:e2e && playwright test",
+    "lighthouse": "tsx scripts/lighthouse.ts"
+  },
+  "dependencies": {
+    "@hpke/chacha20poly1305": "1.8.0",
+    "@hpke/core": "1.9.0",
+    "@hpke/dhkem-x25519": "1.8.0",
+    "preact": "10.29.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@eslint/js": "9.39.5",
+    "@playwright/test": "1.64.0",
+    "@preact/preset-vite": "2.10.6",
+    "@types/node": "22.20.5",
+    "@vitest/coverage-v8": "4.1.11",
+    "axe-core": "4.14.0",
+    "eslint": "9.39.5",
+    "jsdom": "26.1.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "7.3.7",
+    "vitest": "4.1.11"
+  }
+}

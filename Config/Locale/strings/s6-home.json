@@ -1,0 +1,677 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "home.quick.newAppointment",
+   "Quick action on Home: open the new appointment sheet.",
+   "New appointment",
+   "Novo agendamento",
+   "Nova marcação",
+   "Nueva cita",
+   "Nueva cita",
+   "Nuovo appuntamento",
+   "Nouveau rendez-vous",
+   "Neuer Termin",
+   "Yeni randevu",
+   "Janji temu baru",
+   "नया अपॉइंटमेंट",
+   "موعد جديد"
+  ],
+  [
+   "home.next.in",
+   "Hero card of Home: the next visit starts in a time. %@ is a duration such as '1 h 20 min'.",
+   "Next up · in %@",
+   "A seguir · em %@",
+   "A seguir · daqui a %@",
+   "Sigue · en %@",
+   "Siguiente · en %@",
+   "Prossimo · tra %@",
+   "Prochain · dans %@",
+   "Als Nächstes · in %@",
+   "Sıradaki · %@ sonra",
+   "Berikutnya · dalam %@",
+   "अगला · %@ में",
+   "التالي · بعد %@"
+  ],
+  [
+   "home.next.on",
+   "Hero card of Home: the next visit is on another day. %@ is the day, e.g. 'Friday, October 2'.",
+   "Next up · %@",
+   "A seguir · %@",
+   "A seguir · %@",
+   "Sigue · %@",
+   "Siguiente · %@",
+   "Prossimo · %@",
+   "Prochain · %@",
+   "Als Nächstes · %@",
+   "Sıradaki · %@",
+   "Berikutnya · %@",
+   "अगला · %@",
+   "التالي · %@"
+  ],
+  [
+   "home.next.now",
+   "Hero card of Home: the visit has started and not ended.",
+   "Happening now",
+   "Acontecendo agora",
+   "A decorrer agora",
+   "En curso",
+   "En curso",
+   "In corso",
+   "En cours",
+   "Läuft gerade",
+   "Şu anda sürüyor",
+   "Sedang berlangsung",
+   "अभी चल रहा है",
+   "جارٍ الآن"
+  ],
+  [
+   "home.next.open",
+   "Button on the hero card of Home: open the visit.",
+   "Open",
+   "Abrir",
+   "Abrir",
+   "Abrir",
+   "Abrir",
+   "Apri",
+   "Ouvrir",
+   "Öffnen",
+   "Aç",
+   "Buka",
+   "खोलें",
+   "فتح"
+  ],
+  [
+   "home.next.runningLate",
+   "Link on the hero card of Home: tell the client she is running late. %@ is the first name.",
+   "Running late? Tell %@",
+   "Vai atrasar? Avise %@",
+   "Vai atrasar-se? Avise %@",
+   "¿Llegas tarde? Avisa a %@",
+   "¿Vas con retraso? Avisa a %@",
+   "In ritardo? Avvisa %@",
+   "En retard ? Prévenez %@",
+   "Verspätet? Sag %@ Bescheid",
+   "Geç mi kalacaksınız? %@ kişisine haber verin",
+   "Terlambat? Beri tahu %@",
+   "देर हो रही है? %@ को बताएँ",
+   "هل ستتأخر؟ أبلغ %@"
+  ],
+  [
+   "home.quick.weekGlance",
+   "Quick action on Home: open the week at a glance.",
+   "Week at a glance",
+   "Visão da semana",
+   "Resumo da semana",
+   "Resumen de la semana",
+   "Resumen de la semana",
+   "Settimana in breve",
+   "La semaine en un coup d'œil",
+   "Woche im Überblick",
+   "Haftaya bakış",
+   "Ringkasan minggu ini",
+   "इस हफ़्ते की झलक",
+   "نظرة على الأسبوع"
+  ],
+  [
+   "notification.remindersReady.title",
+   "Title of the local notification: reminders are ready to send.",
+   "Reminders ready",
+   "Lembretes prontos",
+   "Lembretes prontos",
+   "Recordatorios listos",
+   "Recordatorios listos",
+   "Promemoria pronti",
+   "Rappels prêts",
+   "Erinnerungen bereit",
+   "Hazır hatırlatmalar",
+   "Pengingat siap",
+   "तैयार रिमाइंडर",
+   "تذكيرات جاهزة"
+  ],
+  [
+   "home.rest.left",
+   "Home: how many of the other visits of today still wait. %lld is the count.",
+   {
+    "one": "%lld left",
+    "other": "%lld left"
+   },
+   {
+    "one": "%lld restante",
+    "other": "%lld restantes"
+   },
+   {
+    "one": "%lld restante",
+    "other": "%lld restantes"
+   },
+   {
+    "one": "%lld pendiente",
+    "other": "%lld pendientes"
+   },
+   {
+    "one": "%lld pendiente",
+    "other": "%lld pendientes"
+   },
+   {
+    "one": "Ancora %lld",
+    "other": "Ancora %lld"
+   },
+   {
+    "one": "%lld à venir",
+    "other": "%lld à venir"
+   },
+   {
+    "one": "Noch %lld",
+    "other": "Noch %lld"
+   },
+   {
+    "*": "%lld kaldı"
+   },
+   {
+    "*": "%lld lagi"
+   },
+   {
+    "one": "%lld बाकी",
+    "other": "%lld बाकी"
+   },
+   {
+    "*": "المتبقي: %lld"
+   }
+  ],
+  [
+   "home.rest.title",
+   "Section title on Home: the other visits of today.",
+   "The rest of today",
+   "O resto do dia",
+   "O resto do dia",
+   "El resto de hoy",
+   "El resto de hoy",
+   "Il resto di oggi",
+   "Le reste de la journée",
+   "Der Rest des Tages",
+   "Günün geri kalanı",
+   "Sisa hari ini",
+   "आज का बाकी दिन",
+   "بقية اليوم"
+  ],
+  [
+   "alerts.permission.ask.action",
+   "Alerts: button that shows the system notification dialog.",
+   "Turn on notifications",
+   "Ativar notificações",
+   "Ativar notificações",
+   "Activar notificaciones",
+   "Activar notificaciones",
+   "Attiva le notifiche",
+   "Activer les notifications",
+   "Mitteilungen aktivieren",
+   "Bildirimleri aç",
+   "Aktifkan notifikasi",
+   "सूचनाएँ चालू करें",
+   "تفعيل الإشعارات"
+  ],
+  [
+   "alerts.permission.ask.message",
+   "Alerts: why to turn notifications on, and that they never show a name.",
+   "Get a nudge before your visits and when reminders are ready. Notifications never show a name.",
+   "Receba um aviso antes dos atendimentos e quando os lembretes estiverem prontos. As notificações nunca mostram nomes.",
+   "Receba um aviso antes das marcações e quando os lembretes estiverem prontos. As notificações nunca mostram nomes.",
+   "Recibe un aviso antes de tus citas y cuando los recordatorios estén listos. Las notificaciones nunca muestran nombres.",
+   "Recibe un aviso antes de tus citas y cuando los recordatorios estén listos. Las notificaciones nunca muestran nombres.",
+   "Ricevi un avviso prima degli appuntamenti e quando i promemoria sono pronti. Le notifiche non mostrano mai nomi.",
+   "Recevez un rappel avant vos rendez-vous et quand les rappels sont prêts. Les notifications n'affichent jamais de nom.",
+   "Erhalte einen Hinweis vor deinen Terminen und wenn Erinnerungen bereit sind. Mitteilungen zeigen nie einen Namen.",
+   "Randevularınızdan önce ve hatırlatmalar hazır olduğunda bir uyarı alın. Bildirimlerde asla isim görünmez.",
+   "Dapatkan pemberitahuan sebelum janji temu dan saat pengingat siap. Notifikasi tidak pernah menampilkan nama.",
+   "अपॉइंटमेंट से पहले और रिमाइंडर तैयार होने पर सूचना पाएँ। सूचनाओं में कभी कोई नाम नहीं दिखता।",
+   "احصل على تنبيه قبل مواعيدك وعندما تصبح التذكيرات جاهزة. لا تعرض الإشعارات أي اسم أبدًا."
+  ],
+  [
+   "alerts.permission.ask.title",
+   "Alerts: title of the strip that asks for the notification permission.",
+   "Stay on top of your day",
+   "Acompanhe seu dia",
+   "Acompanhe o seu dia",
+   "No pierdas el hilo de tu día",
+   "Ten tu día bajo control",
+   "Tieni la giornata sotto controllo",
+   "Gardez votre journée sous contrôle",
+   "Behalte deinen Tag im Blick",
+   "Gününüzü kontrol altında tutun",
+   "Pantau harimu",
+   "अपने दिन पर नज़र रखें",
+   "ابقَ على اطلاع بيومك"
+  ],
+  [
+   "alerts.permission.denied.action",
+   "Alerts: button that opens the app's page in Settings.",
+   "Open Settings",
+   "Abrir Ajustes",
+   "Abrir Definições",
+   "Abrir Ajustes",
+   "Abrir Ajustes",
+   "Apri Impostazioni",
+   "Ouvrir les Réglages",
+   "Einstellungen öffnen",
+   "Ayarlar’ı aç",
+   "Buka Pengaturan",
+   "सेटिंग्स खोलें",
+   "فتح الإعدادات"
+  ],
+  [
+   "alerts.permission.denied.message",
+   "Alerts: notifications were refused; only Settings can change it.",
+   "Turn them on in Settings to get a nudge before your visits.",
+   "Ative nos Ajustes para receber um aviso antes dos atendimentos.",
+   "Ative nas Definições para receber um aviso antes das marcações.",
+   "Actívalas en Ajustes para recibir un aviso antes de tus citas.",
+   "Actívalas en Ajustes para recibir un aviso antes de tus citas.",
+   "Attivale in Impostazioni per ricevere un avviso prima degli appuntamenti.",
+   "Activez-les dans Réglages pour recevoir un rappel avant vos rendez-vous.",
+   "Aktiviere sie in den Einstellungen, um vor deinen Terminen einen Hinweis zu bekommen.",
+   "Randevularınızdan önce uyarı almak için Ayarlar’dan açın.",
+   "Aktifkan di Pengaturan untuk mendapat pemberitahuan sebelum janji temu.",
+   "अपॉइंटमेंट से पहले सूचना पाने के लिए सेटिंग्स में इन्हें चालू करें।",
+   "فعّلها من الإعدادات لتصلك تنبيهات قبل مواعيدك."
+  ],
+  [
+   "alerts.permission.denied.title",
+   "Alerts: title of the strip shown when notifications were refused.",
+   "Notifications are off",
+   "As notificações estão desativadas",
+   "As notificações estão desativadas",
+   "Las notificaciones están desactivadas",
+   "Las notificaciones están desactivadas",
+   "Le notifiche sono disattivate",
+   "Les notifications sont désactivées",
+   "Mitteilungen sind aus",
+   "Bildirimler kapalı",
+   "Notifikasi nonaktif",
+   "सूचनाएँ बंद हैं",
+   "الإشعارات متوقفة"
+  ],
+  [
+   "alerts.section.comingUp",
+   "Alerts: section with the visit that starts soon and the birthdays.",
+   "Coming up",
+   "Em breve",
+   "A seguir",
+   "Próximamente",
+   "Próximamente",
+   "In arrivo",
+   "À venir",
+   "Demnächst",
+   "Yaklaşanlar",
+   "Segera",
+   "जल्द ही",
+   "قريبًا"
+  ],
+  [
+   "alerts.section.reachOut",
+   "Alerts: section with the people she could write to (follow-ups, win back).",
+   "People to reach",
+   "Pessoas para contatar",
+   "Pessoas a contactar",
+   "Personas a las que escribir",
+   "Personas a las que escribir",
+   "Persone da contattare",
+   "Personnes à contacter",
+   "Wen du kontaktieren kannst",
+   "Ulaşılacak kişiler",
+   "Orang yang perlu dihubungi",
+   "संपर्क करने वाले लोग",
+   "أشخاص للتواصل معهم"
+  ],
+  [
+   "alerts.subtitle",
+   "Alerts: line under the title.",
+   "Reminders ready, visits starting soon and who to get in touch with.",
+   "Lembretes prontos, atendimentos chegando e quem contatar.",
+   "Lembretes prontos, marcações a chegar e quem contactar.",
+   "Recordatorios listos, citas que empiezan pronto y a quién escribir.",
+   "Recordatorios listos, citas que empiezan pronto y a quién escribir.",
+   "Promemoria pronti, appuntamenti in arrivo e chi contattare.",
+   "Rappels prêts, rendez-vous imminents et personnes à contacter.",
+   "Fertige Erinnerungen, bald beginnende Termine und wen du kontaktieren kannst.",
+   "Hazır hatırlatmalar, yaklaşan randevular ve ulaşılacak kişiler.",
+   "Pengingat siap, janji temu yang segera mulai, dan siapa yang perlu dihubungi.",
+   "तैयार रिमाइंडर, जल्द शुरू होने वाले अपॉइंटमेंट और किससे संपर्क करना है।",
+   "تذكيرات جاهزة ومواعيد قريبة ومن يجب التواصل معهم."
+  ],
+  [
+   "alerts.upcoming.message",
+   "Alerts: a visit starts soon. %1$@ is the client's name, %2$@ the time. Review what matters before starting.",
+   "%1$@ at %2$@. Review what matters before you start.",
+   "%1$@ às %2$@. Veja o que importa antes de começar.",
+   "%1$@ às %2$@. Veja o que importa antes de começar.",
+   "%1$@ a las %2$@. Revisa lo importante antes de empezar.",
+   "%1$@ a las %2$@. Revisa lo importante antes de empezar.",
+   "%1$@ alle %2$@. Controlla ciò che conta prima di iniziare.",
+   "%1$@ à %2$@. Vérifiez l'essentiel avant de commencer.",
+   "%1$@ um %2$@ Uhr. Prüfe das Wichtige, bevor du anfängst.",
+   "%1$@ saat %2$@. Başlamadan önce önemli noktalara göz atın.",
+   "%1$@ pukul %2$@. Tinjau hal penting sebelum mulai.",
+   "%1$@ %2$@ बजे। शुरू करने से पहले ज़रूरी बातें देख लें।",
+   "%1$@ في %2$@. راجع المهم قبل أن تبدأ."
+  ],
+  [
+   "alerts.upcoming.title",
+   "Alerts: title of the card for a visit that starts soon.",
+   "Upcoming appointment",
+   "Próximo agendamento",
+   "Próxima marcação",
+   "Próxima cita",
+   "Próxima cita",
+   "Prossimo appuntamento",
+   "Prochain rendez-vous",
+   "Nächster Termin",
+   "Yaklaşan randevu",
+   "Janji temu berikutnya",
+   "आगामी अपॉइंटमेंट",
+   "الموعد القادم"
+  ],
+  [
+   "clientMessage.birthday",
+   "Birthday message to a client, written in the business language. {name} is the client's first name.",
+   "Happy birthday, {name}! Wishing you a lovely day. Whenever you want a little care, I am here.",
+   "Feliz aniversário, {name}! Desejo um dia lindo. Quando quiser um cuidado especial, estou aqui.",
+   "Parabéns, {name}! Desejo-lhe um dia lindo. Quando quiser um momento de cuidado, estou cá.",
+   "¡Feliz cumpleaños, {name}! Te deseo un día precioso. Cuando quieras un poco de cuidado, aquí estoy.",
+   "¡Feliz cumpleaños, {name}! Te deseo un día precioso. Cuando quieras un poco de cuidado, aquí estoy.",
+   "Buon compleanno, {name}! Ti auguro una giornata splendida. Quando vorrai un po' di cura, io sono qui.",
+   "Joyeux anniversaire, {name} ! Je vous souhaite une belle journée. Quand vous voulez un moment de soin, je suis là.",
+   "Alles Gute zum Geburtstag, {name}! Ich wünsche Ihnen einen schönen Tag. Wenn Sie sich etwas Gutes tun möchten, bin ich für Sie da.",
+   "Doğum gününüz kutlu olsun {name}! Güzel bir gün geçirmenizi dilerim. Kendinize biraz bakım yaptırmak istediğinizde buradayım.",
+   "Selamat ulang tahun, {name}! Semoga hari Anda menyenangkan. Kapan pun Anda ingin dimanjakan dengan perawatan, saya siap membantu.",
+   "जन्मदिन मुबारक, {name}! आपका दिन बहुत सुंदर बीते। जब भी थोड़ी देखभाल चाहिए, मैं यहाँ हूँ।",
+   "عيد ميلاد سعيد، {name}! أتمنى لك يومًا جميلًا. متى احتجت إلى عناية، أنا هنا."
+  ],
+  [
+   "clientMessage.missing.message",
+   "Message sheet: the client was removed or merged.",
+   "This profile was removed, or merged into another one.",
+   "Este perfil foi removido ou unido a outro.",
+   "Este perfil foi removido ou fundido com outro.",
+   "Este perfil se eliminó o se fusionó con otro.",
+   "Este perfil se eliminó o se fusionó con otro.",
+   "Questo profilo è stato rimosso o unito a un altro.",
+   "Ce profil a été supprimé ou fusionné avec un autre.",
+   "Dieses Profil wurde entfernt oder mit einem anderen zusammengeführt.",
+   "Bu profil kaldırıldı veya başka bir profille birleştirildi.",
+   "Profil ini dihapus atau digabung dengan profil lain.",
+   "यह प्रोफ़ाइल हटा दी गई या किसी दूसरी प्रोफ़ाइल में मिला दी गई।",
+   "تمت إزالة هذا الملف أو دمجه مع ملف آخر."
+  ],
+  [
+   "clientMessage.missing.title",
+   "Message sheet: title when the client no longer exists.",
+   "This profile is gone",
+   "Este perfil não existe mais",
+   "Este perfil já não existe",
+   "Este perfil ya no existe",
+   "Este perfil ya no existe",
+   "Questo profilo non esiste più",
+   "Ce profil n'existe plus",
+   "Dieses Profil gibt es nicht mehr",
+   "Bu profil artık yok",
+   "Profil ini sudah tidak ada",
+   "यह प्रोफ़ाइल अब नहीं है",
+   "هذا الملف لم يعد موجودًا"
+  ],
+  [
+   "clientMessage.subtitle",
+   "Message sheet: she reads and may edit the text, then opens WhatsApp.",
+   "Read it, change it if you like, then open WhatsApp.",
+   "Leia, mude se quiser e abra o WhatsApp.",
+   "Leia, altere se quiser e abra o WhatsApp.",
+   "Léelo, cámbialo si quieres y abre WhatsApp.",
+   "Léelo, cámbialo si quieres y abre WhatsApp.",
+   "Leggilo, modificalo se vuoi, poi apri WhatsApp.",
+   "Relisez-le, modifiez-le si vous voulez, puis ouvrez WhatsApp.",
+   "Lies es, ändere es nach Wunsch und öffne dann WhatsApp.",
+   "Okuyun, isterseniz değiştirin, sonra WhatsApp’ı açın.",
+   "Baca, ubah jika perlu, lalu buka WhatsApp.",
+   "इसे पढ़ें, चाहें तो बदलें, फिर WhatsApp खोलें।",
+   "اقرأها وعدّلها إن شئت ثم افتح واتساب."
+  ],
+  [
+   "clientMessage.subtitle.noNumber",
+   "Message sheet: no phone number is on file, so she shares the text another way.",
+   "There is no number on file. Read it, change it if you like, then share it another way.",
+   "Não há número cadastrado. Leia, mude se quiser e compartilhe de outra forma.",
+   "Não há número registado. Leia, altere se quiser e partilhe de outra forma.",
+   "No hay número guardado. Léelo, cámbialo si quieres y compártelo de otra forma.",
+   "No hay número guardado. Léelo, cámbialo si quieres y compártelo de otra forma.",
+   "Non c'è un numero salvato. Leggilo, modificalo se vuoi e condividilo in un altro modo.",
+   "Aucun numéro enregistré. Relisez-le, modifiez-le si vous voulez, puis partagez-le autrement.",
+   "Es ist keine Nummer gespeichert. Lies es, ändere es nach Wunsch und teile es auf anderem Weg.",
+   "Kayıtlı numara yok. Okuyun, isterseniz değiştirin ve başka bir yolla paylaşın.",
+   "Tidak ada nomor tersimpan. Baca, ubah jika perlu, lalu bagikan dengan cara lain.",
+   "कोई नंबर सहेजा हुआ नहीं है। इसे पढ़ें, चाहें तो बदलें और किसी दूसरे तरीके से साझा करें।",
+   "لا يوجد رقم محفوظ. اقرأها وعدّلها إن شئت ثم شاركها بطريقة أخرى."
+  ],
+  [
+   "followUps.empty.message",
+   "Follow-ups: empty state.",
+   "People whose recommended return date has arrived will show up here.",
+   "Quem chegou na data de retorno recomendada aparece aqui.",
+   "Quem chegou à data de regresso recomendada aparece aqui.",
+   "Aquí aparecerán quienes ya han llegado a su fecha de regreso recomendada.",
+   "Aquí aparecerán quienes ya han llegado a su fecha de regreso recomendada.",
+   "Qui compaiono le persone arrivate alla data di ritorno consigliata.",
+   "Les personnes dont la date de retour conseillée est arrivée apparaissent ici.",
+   "Hier erscheinen alle, deren empfohlener Wiederkehrtermin erreicht ist.",
+   "Önerilen dönüş tarihi gelenler burada görünür.",
+   "Orang yang tanggal kunjungan ulang yang disarankan sudah tiba muncul di sini.",
+   "जिन लोगों की सुझाई गई वापसी की तारीख आ गई है, वे यहाँ दिखेंगे।",
+   "يظهر هنا من حان موعد عودته الموصى به."
+  ],
+  [
+   "followUps.empty.title",
+   "Follow-ups: empty state title.",
+   "No follow-ups due",
+   "Nenhum retorno pendente",
+   "Nenhum seguimento pendente",
+   "No hay seguimientos pendientes",
+   "No hay seguimientos pendientes",
+   "Nessun richiamo da fare",
+   "Aucun suivi à faire",
+   "Keine fälligen Folgetermine",
+   "Bekleyen takip yok",
+   "Tidak ada tindak lanjut tertunda",
+   "कोई फ़ॉलो-अप बाकी नहीं",
+   "لا توجد متابعات مستحقة"
+  ],
+  [
+   "notification.birthday.body",
+   "Local notification: birthdays tomorrow. Generic: no name.",
+   "Open Bello Hub to see who, and send your wishes.",
+   "Abra o Bello Hub para ver quem é e enviar parabéns.",
+   "Abra o Bello Hub para ver quem é e enviar os parabéns.",
+   "Abre Bello Hub para ver quién es y enviar tus felicitaciones.",
+   "Abre Bello Hub para ver quién es y enviar tus felicitaciones.",
+   "Apri Bello Hub per vedere chi è e inviare gli auguri.",
+   "Ouvrez Bello Hub pour voir qui et envoyer vos vœux.",
+   "Öffne Bello Hub, um zu sehen, wer es ist, und Glückwünsche zu senden.",
+   "Kimin olduğunu görmek ve tebrik göndermek için Bello Hub’ı açın.",
+   "Buka Bello Hub untuk melihat siapa dan mengirim ucapan.",
+   "कौन है यह देखने और बधाई भेजने के लिए Bello Hub खोलें।",
+   "افتح Bello Hub لترى من هو وترسل تهانيك."
+  ],
+  [
+   "notification.birthday.title",
+   "Local notification title: birthdays tomorrow. Generic: no name.",
+   "Birthdays tomorrow",
+   "Aniversários amanhã",
+   "Aniversários amanhã",
+   "Cumpleaños mañana",
+   "Cumpleaños mañana",
+   "Compleanni domani",
+   "Anniversaires demain",
+   "Morgen Geburtstage",
+   "Yarın doğum günleri",
+   "Ulang tahun besok",
+   "कल जन्मदिन",
+   "أعياد ميلاد غدًا"
+  ],
+  [
+   "notification.dailySummary.body",
+   "Local notification: the daily summary. %lld is how many visits today.",
+   {
+    "one": "You have %lld visit today.",
+    "other": "You have %lld visits today."
+   },
+   {
+    "one": "Você tem %lld atendimento hoje.",
+    "other": "Você tem %lld atendimentos hoje."
+   },
+   {
+    "one": "Tem %lld marcação hoje.",
+    "other": "Tem %lld marcações hoje."
+   },
+   {
+    "one": "Tienes %lld cita hoy.",
+    "other": "Tienes %lld citas hoy."
+   },
+   {
+    "one": "Tienes %lld cita hoy.",
+    "other": "Tienes %lld citas hoy."
+   },
+   {
+    "one": "Hai %lld appuntamento oggi.",
+    "other": "Hai %lld appuntamenti oggi."
+   },
+   {
+    "one": "Vous avez %lld rendez-vous aujourd'hui.",
+    "other": "Vous avez %lld rendez-vous aujourd'hui."
+   },
+   {
+    "one": "Du hast heute %lld Termin.",
+    "other": "Du hast heute %lld Termine."
+   },
+   {
+    "*": "Bugün %lld randevun var."
+   },
+   {
+    "*": "Hari ini kamu punya %lld janji temu."
+   },
+   {
+    "one": "आज आपके %lld अपॉइंटमेंट हैं।",
+    "other": "आज आपके %lld अपॉइंटमेंट हैं।"
+   },
+   {
+    "*": "عدد مواعيد اليوم: %lld"
+   }
+  ],
+  [
+   "notification.dailySummary.title",
+   "Local notification title: the daily summary.",
+   "Your day",
+   "Seu dia",
+   "O seu dia",
+   "Tu día",
+   "Tu día",
+   "La tua giornata",
+   "Votre journée",
+   "Dein Tag",
+   "Gününüz",
+   "Harimu",
+   "आपका दिन",
+   "يومك"
+  ],
+  [
+   "notification.nextVisit.body",
+   "Local notification: the next visit is about to start. Generic: no name.",
+   "Open Bello Hub to see what to prepare.",
+   "Abra o Bello Hub para ver o que preparar.",
+   "Abra o Bello Hub para ver o que preparar.",
+   "Abre Bello Hub para ver qué preparar.",
+   "Abre Bello Hub para ver qué preparar.",
+   "Apri Bello Hub per vedere cosa preparare.",
+   "Ouvrez Bello Hub pour voir quoi préparer.",
+   "Öffne Bello Hub, um zu sehen, was du vorbereiten musst.",
+   "Neleri hazırlayacağınızı görmek için Bello Hub’ı açın.",
+   "Buka Bello Hub untuk melihat apa yang perlu disiapkan.",
+   "क्या तैयार करना है यह देखने के लिए Bello Hub खोलें।",
+   "افتح Bello Hub لترى ما يجب تحضيره."
+  ],
+  [
+   "notification.nextVisit.title",
+   "Local notification title: the next visit is about to start.",
+   "Your next visit is about to start",
+   "Seu próximo atendimento já vai começar",
+   "A sua próxima marcação está prestes a começar",
+   "Tu próxima cita está por comenzar",
+   "Tu próxima cita está por comenzar",
+   "Il tuo prossimo appuntamento sta per iniziare",
+   "Votre prochain rendez-vous va bientôt commencer",
+   "Dein nächster Termin beginnt gleich",
+   "Sıradaki randevunuz birazdan başlıyor",
+   "Janji temu berikutnya akan segera dimulai",
+   "आपका अगला अपॉइंटमेंट जल्द शुरू होने वाला है",
+   "موعدك القادم على وشك البدء"
+  ],
+  [
+   "notification.remindersReady.body",
+   "Local notification: client reminders are ready. %lld is how many.",
+   {
+    "one": "%lld reminder is ready to send.",
+    "other": "%lld reminders are ready to send."
+   },
+   {
+    "one": "%lld lembrete está pronto para enviar.",
+    "other": "%lld lembretes estão prontos para enviar."
+   },
+   {
+    "one": "%lld lembrete está pronto a enviar.",
+    "other": "%lld lembretes estão prontos a enviar."
+   },
+   {
+    "one": "%lld recordatorio está listo para enviar.",
+    "other": "%lld recordatorios están listos para enviar."
+   },
+   {
+    "one": "%lld recordatorio está listo para enviar.",
+    "other": "%lld recordatorios están listos para enviar."
+   },
+   {
+    "one": "%lld promemoria è pronto da inviare.",
+    "other": "%lld promemoria sono pronti da inviare."
+   },
+   {
+    "one": "%lld rappel est prêt à envoyer.",
+    "other": "%lld rappels sont prêts à envoyer."
+   },
+   {
+    "one": "%lld Erinnerung ist versandbereit.",
+    "other": "%lld Erinnerungen sind versandbereit."
+   },
+   {
+    "*": "%lld hatırlatma göndermeye hazır."
+   },
+   {
+    "*": "%lld pengingat siap dikirim."
+   },
+   {
+    "one": "%lld रिमाइंडर भेजने के लिए तैयार है।",
+    "other": "%lld रिमाइंडर भेजने के लिए तैयार हैं।"
+   },
+   {
+    "*": "التذكيرات الجاهزة للإرسال: %lld"
+   }
+  ]
+ ]
+}

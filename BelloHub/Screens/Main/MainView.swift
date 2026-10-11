@@ -5,22 +5,104 @@
 
 import SwiftUI
 
-/// System `TabView`; every tab owns its `NavigationStack`.
-/// The signed-in user's Services are created here as `@State` and injected with `.environment(...)`.
+/// System `TabView` with five tabs; every tab owns its `NavigationStack`. On iOS 26 the system tab bar is the floating
+/// glass bar, so nothing is drawn by hand. The signed-in user's Services are created here as `@State` once they exist
+/// (clients in S4, the calendar in S6) and injected with `.environment(...)`.
 struct MainView: View {
+    let onSignOut: () -> Void
+
+    @Environment(ProfileService.self) private var profile
+    @Environment(NotificationService.self) private var notifications
+    @Environment(CalendarIntegrationService.self) private var calendar
+    @Environment(NotificationSettingsService.self) private var notificationSettings
+    @Environment(\.locale) private var locale
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(MainNavigation.self) private var navigation
+
     var body: some View {
-        TabView {
-            Tab("main.tab.home", systemImage: "house") {
-                NavigationStack {
-                    HomeView()
-                }
+        @Bindable var navigation = navigation
+        TabView(selection: $navigation.selection) {
+            Tab(value: MainTab.home) {
+                NavigationStack { HomeView().agendaDestinations() }
+            } label: {
+                Label("main.tab.home", systemImage: Icon.home.symbolName)
             }
             .accessibilityIdentifier("main.tab.home")
+
+            Tab(value: MainTab.clients) {
+                ClientsTabView()
+            } label: {
+                Label {
+                    Text(verbatim: profile.clientTerm.titlePlural(in: locale))
+                } icon: {
+                    Image(icon: .clients)
+                }
+            }
+            .accessibilityIdentifier("main.tab.clients")
+
+            Tab(value: MainTab.calendar) {
+                NavigationStack { CalendarView().agendaDestinations() }
+            } label: {
+                Label("main.tab.calendar", systemImage: Icon.calendar.symbolName)
+            }
+            .accessibilityIdentifier("main.tab.calendar")
+
+            Tab(value: MainTab.alerts) {
+                NavigationStack { AlertsView().agendaDestinations() }
+            } label: {
+                Label("main.tab.alerts", systemImage: Icon.bell.symbolName)
+            }
+            .accessibilityIdentifier("main.tab.alerts")
+
+            Tab(value: MainTab.more) {
+                MoreTab(onSignOut: onSignOut)
+            } label: {
+                Label("main.tab.more", systemImage: "ellipsis")
+            }
+            .accessibilityIdentifier("main.tab.more")
         }
-        .tint(Palette.accent)
+        // The glass bar draws its own selection pill; only the selected item's foreground takes the selection ink.
+        .tint(Palette.selectionInk)
+        // The phone's pending notifications follow her calendar for as long as she is signed in and unlocked.
+        .task { notifications.startListening() }
+        // Her "Bello Hub" calendar mirrors her visits the same way, when she switched Apple Calendar on (7.6).
+        .task { calendar.startListening() }
+        // Event titles carry names only while the lock screen may show them.
+        .onChange(of: notificationSettings.hideNamesOnLockScreen) { Task { await calendar.sync() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                Task { await notifications.permissionMayHaveChanged() }
+                // Calendar access may have changed in Settings while the app was away.
+                Task { await calendar.sync() }
+            }
+        }
     }
 }
 
+#if DEBUG
 #Preview {
-    MainView()
+    let vault = VaultService(repository: nil)
+    MainView(onSignOut: {})
+        .environment(ProfileService(vault: vault))
+        .environment(vault)
+        .environment(ClientRegistrationService(vault: vault))
+        .environment(AppLockService(keyManager: KeyManager()))
+        .environment(BookingSetupService(vault: VaultService(repository: nil)))
+        .environment(PublishingService.preview)
+        .environment(AppointmentService(vault: VaultService(repository: nil)))
+        .environment(TimeBlockService(vault: VaultService(repository: nil)))
+        .environment(MessageService(vault: VaultService(repository: nil)))
+        .environment(ClientLinkService(repository: OfflineInboxRepository()))
+        .environment(AgendaDigestService(
+            appointments: AppointmentService(vault: vault), timeBlocks: TimeBlockService(vault: vault), vault: vault
+        ))
+        .environment(NotificationService(
+            appointments: AppointmentService(vault: vault), vault: vault, permissions: PermissionService(),
+            profile: ProfileService(vault: vault)
+        ))
+        .environment(PermissionService())
+        .environment(CalendarIntegrationService(provider: UITestCalendarAccess(), writer: UITestCalendarWriter()))
+        .environment(NotificationSettingsService(permissions: PermissionService()))
+        .environment(MainNavigation())
 }
+#endif

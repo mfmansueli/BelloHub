@@ -1,0 +1,32 @@
+{
+  "fill": {
+    "solid": "extended-srgb:0.90980,0.29020,0.06275,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "Front.png",
+          "name": "Ivory b"
+        },
+        {
+          "image-name": "Relief.png",
+          "name": "Sage relief"
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      },
+      "lighting": "combined",
+      "specular": false
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}

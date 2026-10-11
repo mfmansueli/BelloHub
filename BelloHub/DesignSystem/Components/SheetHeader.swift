@@ -1,0 +1,45 @@
+//
+//  SheetHeader.swift
+//  BelloHub
+//
+
+import SwiftUI
+
+/// Title, optional subtitle and a close button for the content of a native sheet. The system draws
+/// the handle and the corner radius (`presentationDetents`, `presentationDragIndicator`).
+struct SheetHeader: View {
+    let title: LocalizedStringKey
+    var subtitle: LocalizedStringKey?
+    let closeLabel: LocalizedStringKey
+    /// Goes on the close button, so a UI test can find it without its translated label.
+    var closeIdentifier: String?
+    let onClose: () -> Void
+
+    var body: some View {
+        HStack(alignment: .top, spacing: Spacing.row) {
+            VStack(alignment: .leading, spacing: Spacing.xs) {
+                Text(title)
+                    .font(Typography.title)
+                    .foregroundStyle(Palette.ink)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("sheetHeader.title")
+                if let subtitle {
+                    Text(subtitle).font(Typography.meta).foregroundStyle(Palette.ink2)
+                        .accessibilityIdentifier("sheetHeader.subtitle")
+                }
+            }
+            Spacer(minLength: 0)
+            Button(action: onClose) {
+                Image(icon: .close)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(Palette.ink)
+                    .frame(width: Spacing.touchTarget, height: Spacing.touchTarget)
+                    .background(Palette.sunken, in: Circle())
+            }
+            .accessibilityLabel(closeLabel)
+            .accessibilityIdentifier(closeIdentifier ?? "")
+        }
+        .padding(.horizontal, Spacing.gutter)
+        .padding(.top, Spacing.md)
+    }
+}

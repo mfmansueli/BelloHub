@@ -1,0 +1,12 @@
+rules_version = '2';
+
+// Deny all client access, permanently: the sealed envelopes that do not fit in Firestore are written and read by
+// Cloud Functions with the Admin SDK, which bypasses these rules (docs/11-BACKEND-FIREBASE.md section 5).
+// The app receives large items through the `getMailboxItem` function, never through the Storage SDK.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

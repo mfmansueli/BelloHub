@@ -1,0 +1,101 @@
+rules_version = '2';
+
+// The real rules (dev target; tested on the emulators only, never deployed to the existing project `bello-hub`,
+// whose rules are firebase/rules/prod/firestore.rules: deny all).
+//
+// Principle (docs/06-PRIVACY-SECURITY.md section 7, docs/11-BACKEND-FIREBASE.md section 5):
+//   * deny by default; the Admin SDK in Cloud Functions bypasses these rules and does every write;
+//   * an authenticated professional reads only her own documents;
+//   * the public can fetch one published profile by slug, never list;
+//   * the only client writes are her push tokens and the language of her account.
+// The emulator tests in functions/test/rules are the specification of every line.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // A document that carries `ownerUid` (bookings, reschedule requests, waitlist).
+    function ownsDocument() {
+      return signedIn() && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // The fourteen localizations of docs/07-LOCALIZATION.md.
+    function isLocale(value) {
+      return value in ['pt-BR', 'pt-PT', 'es-MX', 'es-419', 'es', 'en', 'en-GB', 'it', 'fr', 'de', 'tr', 'id', 'hi', 'ar'];
+    }
+
+    // Everything not matched below is denied, including collectionGroup queries.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Public: one profile by its slug. No listing, so the set of professionals cannot be enumerated.
+    match /publicProfiles/{slug} {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // The account: read by its owner. The owner may change only her language. Plan, registration counter, slug,
+    // key ring, deletion state and any ban are written by functions only (the server is the source of truth).
+    match /accounts/{uid} {
+      allow get: if isOwner(uid);
+      allow list, create, delete: if false;
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['locale'])
+        && isLocale(request.resource.data.locale);
+
+      // The registration ledger (D42): client ids and dates, no personal data. Read-only for the owner.
+      match /registrations/{clientId} {
+        allow get, list: if isOwner(uid);
+        allow write: if false;
+      }
+    }
+
+    // Bookings are made by functions. The professional reads her own, with a query on ownerUid.
+    match /bookings/{bookingId} {
+      allow get, list: if ownsDocument();
+      allow write: if false;
+    }
+
+    // Sealed envelopes: opaque ciphertext. The owner reads; only functions write; the app deletes through
+    // acknowledgeMailboxItem so the Storage object goes with it.
+    match /inbox/{uid}/items/{itemId} {
+      allow get, list: if isOwner(uid);
+      allow write: if false;
+    }
+
+    match /rescheduleRequests/{requestId} {
+      allow get, list: if ownsDocument();
+      allow write: if false;
+    }
+
+    match /waitlist/{entryId} {
+      allow get, list: if ownsDocument();
+      allow write: if false;
+    }
+
+    // Push tokens: the app registers and removes her own devices; the shape is fixed.
+    match /devices/{uid}/tokens/{tokenId} {
+      allow get, list, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['fcmToken', 'platform', 'locale', 'lastSeenAt'])
+        && request.resource.data.keys().hasAll(['fcmToken', 'platform', 'lastSeenAt'])
+        && request.resource.data.fcmToken is string
+        && request.resource.data.fcmToken.size() >= 20
+        && request.resource.data.fcmToken.size() <= 4096
+        && request.resource.data.platform == 'ios'
+        && request.resource.data.lastSeenAt is timestamp
+        && (!('locale' in request.resource.data) || isLocale(request.resource.data.locale));
+    }
+
+    // No client access, ever: slugs, availability, intakeForms, businessLocations, holds, portal, contacts, calendarLocks, emailCodes,
+    // emailProofs, trustedDevices, idempotency, rate, audit. They fall under the default deny above and are listed here so a
+    // reader (and the test) sees that the omission is on purpose.
+  }
+}

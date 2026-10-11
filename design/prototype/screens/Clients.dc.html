@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Clients</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input,textarea{border:0;outline:none;padding:0;width:100%;background:none}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.ph{background:repeating-linear-gradient(135deg,#E9E3D9 0 8px,#EFEAE1 8px 16px)}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden"><div class="noscroll" style="position:absolute;inset:0;overflow-y:auto;padding:62px 20px 112px"><div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px"><div style="font-family:'Fraunces',Georgia,serif;font-size:34px;line-height:1.05;letter-spacing:-0.015em;font-weight:500;color:#242321;margin-top:0px">Clients</div><div style="display:flex;gap:10px"><a href="ImportClients.dc.html" aria-label="Import clients" style="width:44px;height:44px;border-radius:22px;background:#FFFCF8;border:1px solid #E3DED5;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></svg></a><a href="NewClient.dc.html" aria-label="Add client" style="width:44px;height:44px;border-radius:22px;background:#242321;color:#FFFCF8;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px -10px rgba(36,35,33,.5)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></a></div></div><sc-if value="{{hasClients}}" hint-placeholder-val="{{true}}"><label style="display:flex;align-items:center;gap:10px;height:48px;border-radius:16px;background:#EFEBE4;padding:0 14px;margin-top:16px;color:#65625D"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input placeholder="Search clients" aria-label="Search clients" onInput="{{onSearch}}" style="font-size:17px"></label><div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:14px -20px 0;padding:0 20px"><sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><button onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;background:{{f.bg}};color:{{f.fg}};border:1.5px solid {{f.bd}};flex:none">{{f.label}}</button></sc-for></div><a href="WinBack.dc.html" style="margin-top:14px;display:flex;align-items:center;gap:12px;min-height:56px;padding:0 14px;border-radius:18px;background:#FBEFE7"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A5238" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a6 6 0 0 1 10-4l3 3M19 13a6 6 0 0 1-10 4l-3-3"/><path d="M18 6v4h-4M6 18v-4h4"/></svg><span style="flex:1;font-size:15px;color:#5E3D2A"><b style="font-weight:600">3 clients</b> have not been back in 2+ months</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A5238" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></a><div style="font-size:13px;color:#65625D;margin:18px 4px 8px">{{count}}</div><div style="background:#FFFCF8;border:1px solid #ECE7DF;border-radius:24px;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);padding:0;overflow:hidden;"><sc-for list="{{rows}}" as="r" hint-placeholder-count="8"><a href="ClientProfile.dc.html" style="display:block"><span style="display:flex;align-items:center;gap:14px;padding:10px 16px;min-height:72px"><span style="width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,{{r.a}},{{r.b}});color:{{r.fg}};display:inline-flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex:none;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)">{{r.ini}}</span><span style="flex:1;min-width:0"><span style="display:block;font-size:16px;font-weight:600">{{r.name}}</span><span style="display:block;font-size:15px;color:#65625D">{{r.last}}</span></span><span style="text-align:right;font-size:13px;font-weight:600;color:{{r.tagFg}};display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:{{r.dot}}"></span>{{r.tag}}</span></span><div style="height:1px;background:#F0ECE5;margin-left:74px"></div></a></sc-for></div></sc-if><sc-if value="{{isEmpty}}" hint-placeholder-val="{{false}}"><div style="margin-top:90px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px"><div style="display:flex"><span style="width:60px;height:60px;border-radius:50%;background:#F7ECEE"></span><span style="width:60px;height:60px;border-radius:50%;background:#EEF2EA;margin-left:-16px"></span><span style="width:60px;height:60px;border-radius:50%;background:#F4EDE3;margin-left:-16px;display:flex;align-items:center;justify-content:center;color:#6B5A44"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.7 5.5-4.7s4.9 1.7 5.5 4.7"/><path d="M15.5 5.6a3 3 0 0 1 0 5.8M17.5 14.6c1.8.6 3 2.2 3.3 4.4"/></svg></span></div><div style="font-size:22px;font-weight:600;margin-top:10px">No clients yet</div><div style="font-size:16px;line-height:1.4;color:#65625D;max-width:270px">Clients appear when someone books with you. You can also add or import them yourself.</div><div style="display:flex;gap:10px;margin-top:10px"><a href="ShareLink.dc.html" style="height:52px;padding:0 20px;border-radius:16px;background:#242321;color:#FFFCF8;display:flex;align-items:center;font-size:16px;font-weight:600">Share your link</a><a href="ImportClients.dc.html" style="height:52px;padding:0 20px;border-radius:16px;border:1px solid #D9D4CB;background:#FFFCF8;display:flex;align-items:center;font-size:16px;font-weight:600">Import</a></div></div></sc-if></div><div style="position:absolute;left:0;right:0;bottom:0"><dc-import name="TabBar" active="clients" hint-size="390px,84px"></dc-import></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"fresh":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const sw = (on) => ({ on: on, bg: on ? '#6E8266' : '#D5D0C7', left: on ? '22px' : '2px' });
+    const cs = (on) => ({ on: on, bg: on ? '#242321' : '#FFFCF8', fg: on ? '#FFFCF8' : '#242321', bd: on ? '#242321' : '#E3DED5' });
+const P = { rose: ['#F6E4E8', '#E8C6CF', '#7E4757'], sage: ['#E6ECE0', '#C9D6C0', '#45573F'], sand: ['#F3E7DA', '#E2CDB6', '#4A4036'], peach: ['#FBE9DD', '#EDC7B2', '#7A4630'] };
+    const fresh = !!this.props.fresh;
+    const flt = st.flt || 'All'; const q = (st.q || '').toLowerCase();
+    const all = [
+      ['Ana Costa', 'AC', 'sand', 'Glow Facial · Aug 30', ['Sensitive Skin', 'Regular'], '', ''],
+      ['Beatriz Lima', 'BL', 'peach', 'Glow Facial · Sep 2', ['VIP', 'Due', 'Cancels'], 'Cancels often', 'coral'],
+      ['Camila Rocha', 'CR', 'sage', 'Glow Facial · Sep 11', ['Bridal'], '', ''],
+      ['Fernanda Lopes', 'FL', 'rose', 'Glow Facial · Jul 8', ['Regular'], '', ''],
+      ['Gisele Matos', 'GM', 'sage', 'Deep Cleansing · Jul 29', ['Regular'], '', ''],
+      ['Helena Duarte', 'HD', 'peach', 'Booked for Oct 1 · Brazilian Glow', ['New'], 'New', 'rose'],
+      ['Julia Mendes', 'JM', 'sage', 'Deep Cleansing · Today', ['Regular'], '', ''],
+      ['Larissa Souza', 'LS', 'sand', 'Acne Treatment · Sep 18', ['Regular'], '', ''],
+      ['Marina Alves', 'MA', 'rose', 'Deep Cleansing · Aug 26', ['Sensitive Skin', 'VIP', 'Due'], '', ''],
+      ['Paula Nunes', 'PN', 'sand', 'Glow Facial · Aug 19', ['Regular', 'Due'], '', ''],
+      ['Renata Alves', 'RA', 'rose', 'Glow Facial · Sep 29', ['Regular'], '', ''],
+      ['Tatiana Brandão', 'TB', 'sand', 'Acne Treatment · Jun 24', ['Regular'], '', '']
+    ];
+    const fnames = { 'Due to return': 'Due', 'Cancels often': 'Cancels' };
+    const match = (c) => flt === 'All' || c[4].indexOf(fnames[flt] || flt) >= 0;
+    const rows = all.filter((c) => match(c) && (!q || c[0].toLowerCase().indexOf(q) >= 0)).map((c) => ({ name: c[0], ini: c[1], a: P[c[2]][0], b: P[c[2]][1], fg: P[c[2]][2], last: c[3], tag: c[5] || c[4][0], dot: c[5] ? (c[6] === 'coral' ? '#C9654F' : '#C98F9F') : 'transparent', tagFg: c[6] === 'coral' ? '#9A4535' : (c[5] ? '#8A4C5F' : '#65625D') }));
+    const filters = ['All', 'Due to return', 'Cancels often', 'New', 'VIP', 'Sensitive Skin', 'Bridal', 'Regular'].map((f) => ({ label: f, ...cs(flt === f), pick: () => this.setState({ flt: f }) }));
+    return { hasClients: !fresh, isEmpty: fresh, rows: rows, filters: filters, count: rows.length + (rows.length === 1 ? ' client' : ' clients'), onSearch: (e) => this.setState({ q: e.target.value }) };
+  }
+}
+</script>
+</body>
+</html>

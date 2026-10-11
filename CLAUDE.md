@@ -1,19 +1,19 @@
 # Architecture and working rules for BelloHub
 
-You are starting a new iOS app, BelloHub (minimum iOS 26): [one-line description].
+You are building BelloHub (minimum iOS 26, iPhone only): an app for independent beauty and aesthetic-health professionals that runs their agenda and remembers each client in a private, living record, with a web booking link for the clients. Product, privacy, data, localization, motion and the build plan live in docs/ (index: docs/README.md).
 Follow this document from the first commit. If code and this document disagree, the document wins.
 When you touch a file that doesn't follow it, fix it in the same change.
 
 Concrete names: target `BelloHub`, Swift module `BelloHub` (for `@testable import BelloHub`),
 app type `BelloHubApp`, test targets `BelloHubTests` and `BelloHubUITests`.
 
-Before writing code: propose the folder tree and the first feature, list the open decisions
-(backend, auth, persistence), and wait for my answers. Then build.
+Before writing code, read docs/00-START-HERE.md. The open decisions (backend, auth, persistence, languages) are already answered in docs/02-DECISIONS.md; do not wait for answers, follow docs/03-BUILD-PLAN.md. Read docs/06-PRIVACY-SECURITY.md before touching persistence, networking, notifications, logging or AI: clinical data never leaves the iPhone vault or the sealed mailbox.
 
 ## 1. Stack
 
 - Pure SwiftUI. UIKit only through `UIViewRepresentable` / `UIApplicationDelegateAdaptor`.
 - Swift 6, strict concurrency on. Minimum OS: iOS 26 (Liquid Glass).
+- iPhone only (TARGETED_DEVICE_FAMILY = 1). Clients use a web page on any device (web/).
 - State: Observation (`@Observable`). No `ObservableObject`, `@Published` or Combine.
 - Xcode project with synchronized folders: the folder on disk is the group in Xcode.
 - Tests: Swift Testing for unit tests, XCUITest for UI.
@@ -106,6 +106,10 @@ BelloHub/
 ├── BelloHubUITests/         # XCUITest; one file per user flow
 ├── Config/                  # *.xcconfig
 ├── scripts/
+├── firebase/                # rules, functions, emulator tests
+├── web/                     # client booking web app
+├── docs/                    # handoff and progress
+├── design/                  # prototype sources and screenshots (read-only)
 └── DESIGN.md                # source of truth for design; updated with the UI
 ```
 Create a subfolder only when there is a file for it. A small feature can be just a View.
@@ -136,7 +140,7 @@ Create a subfolder only when there is a file for it. A small feature can be just
 
 ## 5. Strings, accessibility, contrast, debug flags
 
-- Every visible string is localized from day one (String Catalog + `String(localized:)`), including enum labels. Languages: [decide with me].
+- Every visible string is localized from day one (String Catalog + `String(localized:)`), including enum labels. Languages: ten languages in fourteen localizations: pt-BR, pt-PT, es-MX, es-419, es (Spain), en (US), en-GB, it, fr, de, tr, id, hi, ar (right-to-left). Every string exists in all of them in the same change (docs/07-LOCALIZATION.md); es-419 and en-GB are derived by scripts/derive-locales.py. Brazil and Europe are the first markets (docs/16-MARKETS.md).
 - Icon-only buttons have `accessibilityLabel`. Cards combine children into one element. 44×44 pt minimum touch target. Continuous animations respect Reduce Motion.
 - **Contrast (WCAG 2.2 AA):** text ≥ 4.5:1 against what is actually behind it (≥ 3:1 for large text); UI parts, informative icons and field borders ≥ 3:1.
   Measure on the worst point of the real surface (glass, gradients, video), not the average token.

@@ -1,0 +1,5 @@
+{
+  "catalog.sample.tertiary": "¿Vas tarde? Avísale a %@",
+  "catalog.sample.sectionAction": {"one": "Queda %lld", "other": "Quedan %lld"},
+  "catalog.sample.offline": "Sin conexión. Los cambios se sincronizarán cuando te reconectes."
+}

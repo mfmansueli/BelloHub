@@ -1,0 +1,330 @@
+{
+ "localization": "tr",
+ "status": "needs_review",
+ "questions": [
+  {
+   "key": "allergies",
+   "kind": "choices",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Alerjiler",
+   "prompt": "Herhangi bir alerjiniz var mı?",
+   "options": [
+    {
+     "key": "fragrance",
+     "name": "Parfüm"
+    },
+    {
+     "key": "latex",
+     "name": "Lateks"
+    },
+    {
+     "key": "nuts",
+     "name": "Kuruyemiş"
+    },
+    {
+     "key": "retinol",
+     "name": "Retinol"
+    },
+    {
+     "key": "acids",
+     "name": "Asitler"
+    },
+    {
+     "key": "dyes",
+     "name": "Saç boyası veya kına"
+    },
+    {
+     "key": "adhesives",
+     "name": "Yapıştırıcılar"
+    }
+   ]
+  },
+  {
+   "key": "medication",
+   "kind": "yesNo",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "İlaçlar",
+   "prompt": "Düzenli kullandığınız bir ilaç var mı?",
+   "options": []
+  },
+  {
+   "key": "pregnancy",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "hair",
+    "lash",
+    "nail",
+    "makeup",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Hamilelik veya emzirme",
+   "prompt": "Hamile misiniz ya da emziriyor musunuz?",
+   "options": []
+  },
+  {
+   "key": "skinConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "lash",
+    "makeup",
+    "tattoo",
+    "massage",
+    "barber",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Cilt sorunları",
+   "prompt": "Herhangi bir cilt sorununuz var mı?",
+   "options": [
+    {
+     "key": "sensitive",
+     "name": "Hassas cilt"
+    },
+    {
+     "key": "eczema",
+     "name": "Egzama"
+    },
+    {
+     "key": "rosacea",
+     "name": "Rozasea"
+    },
+    {
+     "key": "acne",
+     "name": "Akne"
+    },
+    {
+     "key": "psoriasis",
+     "name": "Sedef hastalığı"
+    }
+   ]
+  },
+  {
+   "key": "healthConditions",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "massage",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Sağlık sorunları",
+   "prompt": "Bu sağlık sorunlarından herhangi biri var mı?",
+   "options": [
+    {
+     "key": "diabetes",
+     "name": "Diyabet"
+    },
+    {
+     "key": "bloodThinners",
+     "name": "Kan sulandırıcılar"
+    },
+    {
+     "key": "bloodPressure",
+     "name": "Yüksek tansiyon"
+    },
+    {
+     "key": "epilepsy",
+     "name": "Epilepsi"
+    },
+    {
+     "key": "immune",
+     "name": "Zayıf bağışıklık sistemi"
+    },
+    {
+     "key": "keloids",
+     "name": "Keloid veya kabarık yara izi"
+    }
+   ]
+  },
+  {
+   "key": "recentProcedures",
+   "kind": "choices",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Son işlemler",
+   "prompt": "Son 6 ayda bunlardan herhangi birini yaptırdınız mı?",
+   "options": [
+    {
+     "key": "isotretinoin",
+     "name": "İzotretinoin"
+    },
+    {
+     "key": "peel",
+     "name": "Kimyasal peeling"
+    },
+    {
+     "key": "laser",
+     "name": "Lazer veya ışık tedavisi"
+    },
+    {
+     "key": "injectables",
+     "name": "Enjeksiyonlar (dolgu veya botulinum toksini)"
+    },
+    {
+     "key": "microneedling",
+     "name": "Mikroiğneleme"
+    }
+   ]
+  },
+  {
+   "key": "sunExposure",
+   "kind": "yesNo",
+   "professions": [
+    "esthetician",
+    "tattoo",
+    "other"
+   ],
+   "isOnByDefault": false,
+   "allowsNone": false,
+   "name": "Güneş maruziyeti",
+   "prompt": "Son 2 haftada güneş yanığı yaşadınız mı ya da solaryuma girdiniz mi?",
+   "options": []
+  },
+  {
+   "key": "eyeConditions",
+   "kind": "choices",
+   "professions": [
+    "lash",
+    "makeup"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Göz sorunları",
+   "prompt": "Herhangi bir göz sorununuz var mı?",
+   "options": [
+    {
+     "key": "contactLenses",
+     "name": "Kontakt lens"
+    },
+    {
+     "key": "dryEyes",
+     "name": "Kuru veya hassas gözler"
+    },
+    {
+     "key": "infection",
+     "name": "Son bir ayda göz enfeksiyonu"
+    },
+    {
+     "key": "surgery",
+     "name": "Son 6 ayda göz ameliyatı"
+    }
+   ]
+  },
+  {
+   "key": "nailConditions",
+   "kind": "choices",
+   "professions": [
+    "nail"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Tırnak sorunları",
+   "prompt": "Tırnaklarınızda veya ellerinizde herhangi bir sorun var mı?",
+   "options": [
+    {
+     "key": "fungus",
+     "name": "Tırnak mantarı"
+    },
+    {
+     "key": "brittle",
+     "name": "Kırılgan veya soyulan tırnaklar"
+    },
+    {
+     "key": "injury",
+     "name": "Yakın zamanda tırnak yaralanması"
+    },
+    {
+     "key": "dermatitis",
+     "name": "Ellerde dermatit veya egzama"
+    }
+   ]
+  },
+  {
+   "key": "scalpConditions",
+   "kind": "yesNo",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Saç derisi sorunları",
+   "prompt": "Saç derisi sorununuz veya saç dökülmeniz var mı?",
+   "options": []
+  },
+  {
+   "key": "hairTreatments",
+   "kind": "choices",
+   "professions": [
+    "hair",
+    "barber"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": true,
+   "name": "Saç işlemleri",
+   "prompt": "Son 6 ayda bu saç işlemlerinden herhangi birini yaptırdınız mı?",
+   "options": [
+    {
+     "key": "color",
+     "name": "Boya"
+    },
+    {
+     "key": "bleach",
+     "name": "Saç açma"
+    },
+    {
+     "key": "relaxer",
+     "name": "Düzleştirme veya keratin"
+    },
+    {
+     "key": "perm",
+     "name": "Perma"
+    },
+    {
+     "key": "henna",
+     "name": "Kına"
+    }
+   ]
+  },
+  {
+   "key": "dyeReaction",
+   "kind": "yesNo",
+   "professions": [
+    "hair"
+   ],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Saç boyasına tepki",
+   "prompt": "Daha önce bir saç boyasına tepki verdiniz mi?",
+   "options": []
+  },
+  {
+   "key": "notes",
+   "kind": "text",
+   "professions": [],
+   "isOnByDefault": true,
+   "allowsNone": false,
+   "name": "Başka bir şey",
+   "prompt": "Randevudan önce bilinmesi gereken başka önemli bir şey var mı?",
+   "options": []
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+{
+  "env": "staging",
+  "FUNCTIONS_REGION": "europe-west1",
+  "DATA_REGION": "eu",
+  "FIRESTORE_LOCATION": "eur3",
+  "STORAGE_LOCATION": "EU"
+}

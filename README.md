@@ -16,21 +16,28 @@ scripts/check-project-settings.sh     # fails if build settings leak into projec
 
 Needs SwiftLint (`brew install swiftlint`). Build settings live in `Config/*.xcconfig`.
 Set `SIM_NAME` or `SIM_UDID` to pick another simulator (default: iPhone 17 on the oldest iOS 26+ runtime).
+`ONLY_TESTING=BelloHubUITests/CalendarUITests scripts/test.sh full` runs one suite. Opt-in runs:
+`TEST_RUNNER_BELLO_PERF=1 ONLY_TESTING=BelloHubUITests/PerformanceUITests scripts/test.sh full` (performance budgets)
+and `TEST_RUNNER_BELLO_A11Y=1 TEST_RUNNER_AUDIT_LOCALES=en,pt-BR ONLY_TESTING=BelloHubUITests/AccessibilityAuditUITests
+scripts/test.sh full` (the full accessibility audit; the Full plan runs it in `en`).
 
-## Crashlytics
+## Server, web and end to end
 
-Reports are sent from Release builds only. Debug builds stay silent so simulator crashes and test runs
-never reach the dashboard. Symbols are uploaded by the "Upload Crashlytics dSYMs" build phase, and only
-when you archive.
+Needs Node 22+, Java 17+ and `firebase-tools`. Everything below runs on the local emulators with the demo project id
+`demo-bellohub`, which can never reach the cloud.
 
-To verify it end to end once (Crashlytics must be enabled in the Firebase console first):
+```
+scripts/test-firebase.sh [all|static|unit|emulator|transport]   # functions: lint, types, audit, unit, rules, use cases
+scripts/test-web.sh [quick|full]      # web app: lint, types, i18n, contrast, unit, Playwright, Lighthouse, bundle
+scripts/e2e-local.sh                  # the web app against the real functions on the emulators, end to end
+scripts/run-device.sh                 # Debug build installed and launched on the test iPhone
+```
 
-1. In Xcode, Edit Scheme > Run > Info, uncheck **Debug executable**. The debugger swallows crashes, so
-   Crashlytics never sees them while it is attached.
-2. In Run > Arguments, add `-crashlyticsEnableInDebug` and `-crashlyticsTestCrash`, then run. The app crashes
-   right after launch.
-3. Remove `-crashlyticsTestCrash`, keep `-crashlyticsEnableInDebug`, and run again. The saved report is sent
-   at startup and shows up in the Firebase console after a few minutes.
-4. Remove both arguments and check **Debug executable** again.
+Deploys go to the development project `bello-hub` only (D43): `scripts/deploy-hosting-dev.sh` for the web page and
+`cd firebase && firebase deploy --project dev --only functions` for the functions. Never turn on App Check
+enforcement from here (H5).
 
-Launching from the home screen sends nothing in a Debug build, because the arguments are what turn collection on.
+## Handoff
+
+The product brief, decisions, build plan and progress live in [docs/README.md](docs/README.md); the running log is
+`docs/PROGRESS.md`. Backend config (Firestore `eur3`, Functions `europe-west1`) is in `firebase/`.

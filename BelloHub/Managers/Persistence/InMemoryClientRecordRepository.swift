@@ -1,0 +1,355 @@
+//
+//  InMemoryClientRecordRepository.swift
+//  BelloHub
+//
+
+#if DEBUG
+import Foundation
+
+/// The vault in memory: SwiftUI previews, the Design Catalog and UI-test launches (`-uiSeed`), where a real store
+/// would be slow or shared. DEBUG only, so a Release build can never run without the real vault. It must behave
+/// exactly like `SwiftDataClientRecordRepository`: the contract tests run the same cases against both.
+actor InMemoryClientRecordRepository: ClientRecordRepository {
+    // None of the tables is private: the catalog, forms, booking-setup and wipe parts of the contract live in the
+    // `InMemoryClientRecordRepository+<Part>.swift` extensions.
+    var clientsByID: [UUID: Client] = [:]
+    var appointmentsByID: [UUID: Appointment] = [:]
+    var servicesByID: [UUID: Service] = [:]
+    var addOnsByID: [UUID: AddOn] = [:]
+    var productsByID: [UUID: Product] = [:]
+    var credentialsByID: [UUID: Credential] = [:]
+    var recordsByID: [UUID: TreatmentRecord] = [:]
+    var correctionsByID: [UUID: RecordCorrection] = [:]
+    var incidentsByID: [UUID: Incident] = [:]
+    var photosByID: [UUID: Photo] = [:]
+    var photoDataByID: [UUID: PhotoData] = [:]
+    var healthFormsByID: [UUID: HealthForm] = [:]
+    var consentsByID: [UUID: ConsentRecord] = [:]
+    var plansByID: [UUID: SessionPlan] = [:]
+    var ledger: [UUID: RegistrationLedgerEntry] = [:]
+    var storedProfile: ProfessionalProfile?
+    var tagsByID: [UUID: Tag] = [:]
+    var storedTemplate: RecordTemplate?
+    var healthFormTemplatesByVersion: [Int: HealthFormTemplate] = [:]
+    var patchTestsByID: [UUID: PatchTest] = [:]
+    let clock: @Sendable () -> Date
+    var bookingSetupMemory = BookingSetupMemory()
+    // Not private: the time blocks live in `InMemoryClientRecordRepository+TimeBlocks.swift`.
+    var timeBlocksByID: [UUID: TimeBlock] = [:]
+    let changes = VaultChangeBroadcaster()
+
+    init(clock: @escaping @Sendable () -> Date = { Date() }) {
+        self.clock = clock
+    }
+
+    // MARK: - ClientRepository
+
+    nonisolated func clients() -> AsyncStream<[Client]> {
+        changes.stream { [self] in await allClients() }
+    }
+
+    func allClients() -> [Client] {
+        clientsByID.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
+    func client(id: UUID) -> Client? {
+        clientsByID[id]
+    }
+
+    @discardableResult
+    func save(_ client: Client) -> Bool {
+        var stored = client
+        stored.updatedAt = clock()
+        clientsByID[client.id] = stored
+        let isNew = ledger[client.id] == nil
+        if isNew { ledger[client.id] = RegistrationLedgerEntry(clientID: client.id, registeredAt: clock()) }
+        changes.notify()
+        return isNew
+    }
+
+    func deleteClient(id: UUID) {
+        let recordIDs = recordsByID.values.filter { $0.clientID == id }.map(\.id)
+        correctionsByID = correctionsByID.filter { !recordIDs.contains($0.value.recordID) }
+        recordsByID = recordsByID.filter { $0.value.clientID != id }
+        appointmentsByID = appointmentsByID.filter { $0.value.clientID != id }
+        incidentsByID = incidentsByID.filter { $0.value.clientID != id }
+        let photoIDs = photosByID.values.filter { $0.clientID == id }.map(\.id)
+        photoIDs.forEach { photoDataByID[$0] = nil }
+        photosByID = photosByID.filter { $0.value.clientID != id }
+        healthFormsByID = healthFormsByID.filter { $0.value.clientID != id }
+        consentsByID = consentsByID.filter { $0.value.clientID != id }
+        patchTestsByID = patchTestsByID.filter { $0.value.clientID != id }
+        plansByID = plansByID.filter { $0.value.clientID != id }
+        bookingSetupMemory.messageLogsByID = bookingSetupMemory.messageLogsByID.filter { $0.value.clientID != id }
+        clientsByID[id] = nil
+        // The registration-ledger entry stays (D42).
+        changes.notify()
+    }
+
+    func registrationLedger() -> [RegistrationLedgerEntry] {
+        ledger.values.sorted { ($0.registeredAt, $0.clientID.uuidString) < ($1.registeredAt, $1.clientID.uuidString) }
+    }
+
+    func healthForms(for clientID: UUID) -> [HealthForm] {
+        healthFormsByID.values.filter { $0.clientID == clientID }
+            .sorted { ($0.signedAt ?? .distantPast) > ($1.signedAt ?? .distantPast) }
+    }
+
+    func save(_ form: HealthForm) {
+        healthFormsByID[form.id] = form
+        changes.notify()
+    }
+
+    func importHealthForm(_ form: HealthForm) -> Bool {
+        if let itemID = form.importedFromItemID,
+           healthFormsByID.values.contains(where: { $0.importedFromItemID == itemID }) {
+            return false
+        }
+        healthFormsByID[form.id] = form
+        changes.notify()
+        return true
+    }
+
+    func consents(for clientID: UUID) -> [ConsentRecord] {
+        ConsentRecord.newestFirst(consentsByID.values.filter { $0.clientID == clientID })
+    }
+
+    func save(_ consent: ConsentRecord) {
+        consentsByID[consent.id] = consent
+        changes.notify()
+    }
+
+    func deleteConsent(id: UUID) {
+        guard consentsByID.removeValue(forKey: id) != nil else { return }
+        changes.notify()
+    }
+
+    func sessionPlans(for clientID: UUID) -> [SessionPlan] {
+        plansByID.values.filter { $0.clientID == clientID }.sorted { $0.startDate < $1.startDate }
+    }
+
+    func save(_ plan: SessionPlan) {
+        plansByID[plan.id] = plan
+        changes.notify()
+    }
+
+    // MARK: - AgendaRepository
+
+    nonisolated func appointments(in range: DateInterval) -> AsyncStream<[Appointment]> {
+        changes.stream { [self] in await loadAppointments(in: range) }
+    }
+
+    func loadAppointments(in range: DateInterval) -> [Appointment] {
+        appointmentsByID.values.filter { $0.startsAt < range.end && $0.endsAt > range.start }
+            .sorted { $0.startsAt < $1.startsAt }
+    }
+
+    func appointments(for clientID: UUID) -> [Appointment] {
+        appointmentsByID.values.filter { $0.clientID == clientID }.sorted { $0.startsAt < $1.startsAt }
+    }
+
+    func appointment(id: UUID) -> Appointment? {
+        appointmentsByID[id]
+    }
+
+    func save(_ appointment: Appointment) {
+        var stored = appointment
+        stored.updatedAt = clock()
+        appointmentsByID[appointment.id] = stored
+        changes.notify()
+    }
+
+    func deleteAppointment(id: UUID) {
+        appointmentsByID[id] = nil
+        changes.notify()
+    }
+
+    func services() -> [Service] {
+        servicesByID.values.sorted { ($0.position, $0.name) < ($1.position, $1.name) }
+    }
+
+    func save(_ service: Service) {
+        servicesByID[service.id] = service
+        changes.notify()
+    }
+
+    func deleteService(id: UUID) {
+        servicesByID[id] = nil
+        changes.notify()
+    }
+
+    // MARK: - TreatmentRepository
+
+    func records(for clientID: UUID) -> [TreatmentRecord] {
+        recordsByID.values.filter { $0.clientID == clientID }.sorted { $0.createdAt > $1.createdAt }
+    }
+
+    func record(id: UUID) -> TreatmentRecord? {
+        recordsByID[id]
+    }
+
+    func save(_ record: TreatmentRecord) throws {
+        var stored = record
+        if let existing = recordsByID[record.id] {
+            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
+                throw VaultRepositoryError.recordLocked
+            }
+            stored.lockedAt = existing.lockedAt
+            stored.createdAt = existing.createdAt
+        }
+        recordsByID[record.id] = stored
+        changes.notify()
+    }
+
+    func addCorrection(_ correction: RecordCorrection) throws {
+        guard let record = recordsByID[correction.recordID] else { throw VaultRepositoryError.notFound }
+        guard RecordLockPolicy.isLocked(lockedAt: record.lockedAt, now: clock()) else {
+            throw VaultRepositoryError.recordNotLocked
+        }
+        guard correctionsByID[correction.id] == nil else { return }
+        correctionsByID[correction.id] = correction
+        changes.notify()
+    }
+
+    func corrections(for recordID: UUID) -> [RecordCorrection] {
+        correctionsByID.values.filter { $0.recordID == recordID }.sorted { $0.createdAt < $1.createdAt }
+    }
+
+    func incidents(for clientID: UUID) -> [Incident] {
+        incidentsByID.values.filter { $0.clientID == clientID }.sorted { $0.occurredAt > $1.occurredAt }
+    }
+
+    func save(_ incident: Incident) throws {
+        var stored = incident
+        if let existing = incidentsByID[incident.id] {
+            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
+                throw VaultRepositoryError.recordLocked
+            }
+            stored.lockedAt = existing.lockedAt
+        }
+        incidentsByID[incident.id] = stored
+        changes.notify()
+    }
+
+    func photos(for clientID: UUID) -> [Photo] {
+        photosByID.values.filter { $0.clientID == clientID }.sorted { $0.takenAt < $1.takenAt }
+    }
+
+    func save(_ photo: Photo, data: PhotoData) {
+        photosByID[photo.id] = photo
+        photoDataByID[photo.id] = data
+        changes.notify()
+    }
+
+    func photoData(id: UUID) throws -> PhotoData {
+        guard let data = photoDataByID[id] else { throw VaultRepositoryError.notFound }
+        return data
+    }
+
+    func deletePhoto(id: UUID) {
+        photosByID[id] = nil
+        photoDataByID[id] = nil
+        changes.notify()
+    }
+
+    // MARK: - BusinessRepository
+
+    func profile() -> ProfessionalProfile? {
+        storedProfile
+    }
+
+    func save(_ profile: ProfessionalProfile) {
+        var stored = profile
+        stored.updatedAt = clock()
+        storedProfile = stored
+        changes.notify()
+    }
+
+    func tags() -> [Tag] {
+        tagsByID.values.sorted { ($0.position, $0.name) < ($1.position, $1.name) }
+    }
+
+    func save(_ tag: Tag) {
+        tagsByID[tag.id] = tag
+        changes.notify()
+    }
+
+    func save(_ tags: [Tag]) {
+        tags.forEach { tagsByID[$0.id] = $0 }
+        changes.notify()
+    }
+
+    func deleteTag(id: UUID) {
+        tagsByID[id] = nil
+        changes.notify()
+    }
+
+    func deleteTagRemovingFromClients(id: UUID) -> Int {
+        var removed = 0
+        for var client in clientsByID.values where client.tagIDs.contains(id) {
+            client.tagIDs.removeAll { $0 == id }
+            client.updatedAt = clock()
+            clientsByID[client.id] = client
+            removed += 1
+        }
+        tagsByID[id] = nil
+        changes.notify()
+        return removed
+    }
+
+    func recordTemplate() -> RecordTemplate? {
+        storedTemplate
+    }
+
+    func save(_ template: RecordTemplate) {
+        var stored = template
+        stored.updatedAt = clock()
+        storedTemplate = stored
+        changes.notify()
+    }
+
+    func saveOnboarding(_ result: OnboardingResult) {
+        storedProfile = result.profile
+        result.services.forEach { servicesByID[$0.id] = $0 }
+        result.tags.forEach { tagsByID[$0.id] = $0 }
+        storedTemplate = result.template
+        changes.notify()
+    }
+}
+
+// MARK: - Merge
+
+extension InMemoryClientRecordRepository {
+    @discardableResult
+    func mergeClient(keeping keptID: UUID, merging mergedID: UUID) throws -> Client {
+        guard keptID != mergedID, let kept = clientsByID[keptID], let merged = clientsByID[mergedID] else {
+            throw VaultRepositoryError.notFound
+        }
+        var combined = ClientMerger.merged(keeping: kept, merging: merged)
+        combined.updatedAt = clock()
+        appointmentsByID = reassigned(appointmentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        recordsByID = reassigned(recordsByID, from: mergedID, to: keptID, owner: \.clientID)
+        incidentsByID = reassigned(incidentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        photosByID = reassigned(photosByID, from: mergedID, to: keptID, owner: \.clientID)
+        healthFormsByID = reassigned(healthFormsByID, from: mergedID, to: keptID, owner: \.clientID)
+        consentsByID = reassigned(consentsByID, from: mergedID, to: keptID, owner: \.clientID)
+        plansByID = reassigned(plansByID, from: mergedID, to: keptID, owner: \.clientID)
+        clientsByID[keptID] = combined
+        clientsByID[mergedID] = nil
+        // Neither ledger entry is touched (D42).
+        changes.notify()
+        return combined
+    }
+
+    private func reassigned<Value>(
+        _ items: [UUID: Value], from mergedID: UUID, to keptID: UUID, owner: WritableKeyPath<Value, UUID>
+    ) -> [UUID: Value] {
+        items.mapValues { item in
+            guard item[keyPath: owner] == mergedID else { return item }
+            var moved = item
+            moved[keyPath: owner] = keptID
+            return moved
+        }
+    }
+}
+#endif

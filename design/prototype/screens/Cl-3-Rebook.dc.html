@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Book again</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden">
+
+<sc-if value="{{picking}}" hint-placeholder-val="{{true}}">
+<div class="noscroll" style="position:absolute;inset:0;overflow-y:auto;padding:62px 20px 130px">
+<div style="display:flex;align-items:center;height:44px">
+<a href="Cl-2-Portal.dc.html" style="display:flex;align-items:center;height:44px;margin-left:-8px;padding-right:12px;font-size:17px;color:#9A5A6C"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg>My journey</a>
+</div>
+
+<div style="margin-top:12px;font-family:'Fraunces',Georgia,serif;font-size:34px;font-weight:500;letter-spacing:-0.015em;line-height:1.1">Welcome back, Ana.</div>
+<div style="font-size:16px;color:#65625D;margin-top:6px;line-height:1.45">Your details are saved. Just choose a time.</div>
+<sc-if value="{{hasGate}}" hint-placeholder-val="{{false}}"><div style="margin-top:14px;border-radius:18px;background:#F6ECD6;padding:12px 14px;font-size:15px;line-height:1.45;color:#5C4510">{{gateText}}</div></sc-if>
+
+<div style="margin-top:20px;background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:16px;display:flex;align-items:center;gap:14px">
+<div style="width:48px;height:48px;border-radius:50%;background:#242321;color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex:none">MB</div>
+<div style="flex:1"><div style="font-size:17px;font-weight:700">Brazilian Glow</div><div style="font-size:15px;color:#65625D">with Maria Beauty · 90 min · R$120</div></div>
+</div>
+
+<div style="margin-top:24px;font-size:17px;font-weight:600">Choose a day</div>
+<div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:12px -20px 0;padding:0 20px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="6">
+<button onClick="{{d.pick}}" aria-pressed="{{d.on}}" style="flex:none;width:62px;min-height:84px;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;background:{{d.bg}};color:{{d.fg}};border:1.5px solid {{d.bd}}">
+<span style="font-size:13px;font-weight:500;opacity:0.85">{{d.dow}}</span>
+<span style="font-size:22px;font-weight:700">{{d.num}}</span>
+<span style="font-size:12px;font-weight:700;opacity:{{d.recOp}}">Best</span>
+</button>
+</sc-for>
+</div>
+<div style="font-size:13px;color:#65625D;margin:8px 4px 0">BEST is Maria's recommended return date.</div>
+
+<div style="margin-top:22px;font-size:17px;font-weight:600">Choose a time</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+<sc-for list="{{times}}" as="t" hint-placeholder-count="4">
+<button onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="height:48px;min-width:96px;padding:0 20px;border-radius:14px;font-size:17px;font-weight:600;text-align:center;background:{{t.bg}};color:{{t.fg}};border:1.5px solid {{t.bd}}">{{t.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 34px;background:rgba(255,252,248,0.96);border-top:1px solid #ECE7DF">
+<button onClick="{{confirm}}" style="width:100%;height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600;text-align:center">{{ctaLabel}}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{done}}" hint-placeholder-val="{{false}}">
+<div style="position:absolute;inset:0;padding:62px 20px 34px;display:flex;flex-direction:column">
+<div style="height:44px"></div>
+<div style="margin-top:20px;width:64px;height:64px;border-radius:50%;background:#C98F9F;color:#242321;display:flex;align-items:center;justify-content:center" class="m-pop"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="m-check"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+<div style="font-family:'Fraunces',Georgia,serif;font-size:40px;line-height:1.02;letter-spacing:-0.015em;margin-top:20px;font-weight:500">{{doneTitle}}</div>
+<div style="font-size:16px;color:#65625D;margin-top:8px;line-height:1.45">{{doneText}}</div>
+<div style="margin-top:24px;background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;padding:20px">
+<div style="font-size:24px;font-weight:700;letter-spacing:-0.01em">Brazilian Glow</div>
+<div style="font-size:16px;color:#65625D;margin-top:2px">with Maria Beauty · 90 min</div>
+<div style="height:1px;background:#F0ECE5;margin:16px 0"></div>
+<div style="font-size:17px;font-weight:600">{{fullDay}}</div>
+<div style="font-size:15px;color:#65625D;margin-top:2px">{{time}}</div>
+</div>
+<div style="flex:1"></div>
+<a href="Cl-2-Portal.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">View my journey</a>
+<a href="Home.dc.html" style="height:48px;margin-top:6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#65625D">See it on Maria's side</a>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"limit":{"editor":"enum","options":["none","approve","block"],"default":"none"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const day = st.day || 28;
+    const time = st.time || '15:00';
+    const defs = [[27, 'Tue', 'Tuesday'], [28, 'Wed', 'Wednesday'], [29, 'Thu', 'Thursday'], [30, 'Fri', 'Friday'], [31, 'Sat', 'Saturday']];
+    const days = defs.map((d) => ({
+      dow: d[1], num: d[0], on: day === d[0],
+      bg: day === d[0] ? '#242321' : '#FFFCF8', fg: day === d[0] ? '#FFFCF8' : '#242321', bd: day === d[0] ? '#242321' : '#E3DED5',
+      recOp: d[0] === 28 ? 1 : 0,
+      pick: () => this.setState({ day: d[0] })
+    }));
+    const times = ['09:00', '10:30', '15:00', '16:30'].map((t) => ({
+      label: t, on: time === t,
+      bg: time === t ? '#242321' : '#FFFCF8', fg: time === t ? '#FFFCF8' : '#242321', bd: time === t ? '#242321' : '#E3DED5',
+      pick: () => this.setState({ time: t })
+    }));
+    const cur = defs.filter((d) => d[0] === day)[0];
+    const lim = this.props && this.props.limit;
+    const gate = lim === 'approve' || lim === 'block';
+    return {
+      hasGate: gate, gateText: lim === 'block' ? 'Online booking is paused for now. Message Maria and she will book you in.' : 'Maria confirms new bookings herself. Ask for a time and she answers on WhatsApp.',
+      ctaLabel: lim === 'block' ? (st.wa ? 'Opening WhatsApp' : 'Message Maria on WhatsApp') : (lim === 'approve' ? 'Ask Maria for ' : 'Rebook ') + (lim === 'block' ? '' : cur[1] + ', Oct ' + day + ' at ' + time),
+      doneTitle: lim === 'approve' ? 'Request sent.' : 'See you soon, Ana.', doneText: lim === 'approve' ? 'Maria will confirm your Brazilian Glow on WhatsApp. Nothing is booked until she does.' : 'Your next Brazilian Glow is confirmed.',
+      picking: !st.done, done: !!st.done, days, times, time,
+      dayLabel: cur[1] + ', Oct ' + day,
+      fullDay: cur[2] + ' · October ' + day,
+      confirm: lim === 'block' ? () => this.setState({ wa: true }) : () => this.setState({ done: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

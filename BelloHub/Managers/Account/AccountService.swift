@@ -1,0 +1,93 @@
+//
+//  AccountService.swift
+//  BelloHub
+//
+
+import Foundation
+import Observation
+
+/// Deleting her account (7.1), in the order the plan fixes: export first (the screen offers it), then the cascade.
+/// The server is asked first so a failure there never leaves her with an empty iPhone and a live account; then the
+/// vault is wiped, the seed leaves the Keychain, the local settings go, and the session ends. The vault is touched
+/// **only** after `confirmed` was passed, which the screen sets from the explicit confirmation.
+@MainActor
+@Observable
+final class AccountService {
+    private(set) var isDeleting = false
+    private(set) var errorMessage: String?
+
+    private let vault: VaultService
+    private let keyManager: KeyManager
+    private let keyStore: any KeyStoring
+    private let deleter: any AccountDeleting
+    private let defaults: UserDefaults
+
+    init(
+        vault: VaultService,
+        keyManager: KeyManager,
+        keyStore: any KeyStoring,
+        deleter: any AccountDeleting,
+        defaults: UserDefaults = .standard
+    ) {
+        self.vault = vault
+        self.keyManager = keyManager
+        self.keyStore = keyStore
+        self.deleter = deleter
+        self.defaults = defaults
+    }
+
+    /// Runs the cascade. Returns nil, with `errorMessage` set, when the server refused or the vault could not be
+    /// emptied; nothing local is touched before the server answered.
+    func deleteAccount(_ request: AccountDeletionRequest, confirmed: Bool) async -> AccountDeletionOutcome? {
+        guard confirmed, !isDeleting else { return nil }
+        isDeleting = true
+        errorMessage = nil
+        defer { isDeleting = false }
+        do {
+            let outcome = try await serverOutcome(for: request)
+            try await wipeDevice()
+            return outcome
+        } catch {
+            errorMessage = String(interface: LocalizedStringResource(
+                "account.delete.error",
+                defaultValue: "We could not delete your account. Check your connection and try again."
+            ))
+            return nil
+        }
+    }
+
+    func dismissError() {
+        errorMessage = nil
+    }
+
+    // MARK: - Private
+
+    /// The server's answer, asked once per account: after it confirmed, the answer is kept until the wipe finished, so
+    /// a second attempt never depends on a server account (and an Auth user) that no longer exist.
+    private func serverOutcome(for request: AccountDeletionRequest) async throws -> AccountDeletionOutcome {
+        if let stored = defaults.string(forKey: DefaultsKey.accountDeletionConfirmed),
+           let outcome = AccountDeletionConfirmation.outcome(stored, userID: request.userID) {
+            return outcome
+        }
+        let outcome = try await deleter.deleteAccount(request)
+        defaults.set(
+            AccountDeletionConfirmation.stored(outcome, userID: request.userID),
+            forKey: DefaultsKey.accountDeletionConfirmed
+        )
+        return outcome
+    }
+
+    private func wipeDevice() async throws {
+        guard let repository = vault.repository else { throw VaultRepositoryError.unavailable }
+        try await repository.wipeEverything()
+        keyManager.lock()
+        try keyStore.deleteSeed()
+        for key in DefaultsKey.clearedOnAccountDeletion {
+            defaults.removeObject(forKey: key)
+        }
+        let prefixes = DefaultsKey.prefixesClearedOnAccountDeletion.map { $0 + "." }
+        for key in defaults.dictionaryRepresentation().keys where prefixes.contains(where: key.hasPrefix) {
+            defaults.removeObject(forKey: key)
+        }
+    }
+}

@@ -1,0 +1,244 @@
+import { describe, expect, it } from 'vitest';
+
+import type { BookingResult, PublicAddOn, PublicService } from '../../src/api/types';
+import {
+  allowedStep,
+  emptyDraft,
+  initialState,
+  proofTarget,
+  reduce,
+  stepNumber,
+  type BookingEvent,
+  type BookingState,
+} from '../../src/app/booking/machine';
+import { parseDraft, serializeDraft } from '../../src/app/booking/store';
+import { offerKeyOf } from '../../src/app/router';
+import { selectedAddOns, servicePrice, totals } from '../../src/app/booking/summary';
+
+const KEY = 'fixed-key';
+
+function start(): BookingState {
+  return initialState(emptyDraft('maria', 'BR', KEY));
+}
+
+function run(events: BookingEvent[], from: BookingState = start()): BookingState {
+  return events.reduce(reduce, from);
+}
+
+const slot: BookingEvent = { type: 'chooseSlot', startsAt: '2026-10-01T18:00:00Z', holdExpiresAt: '2026-10-01T10:05:00Z' };
+const details: BookingEvent = { type: 'setDetails', name: 'Helena Duarte', phoneCountry: 'BR', phoneInput: '11 98765 4321', email: 'helena@example.com' };
+const proof = { method: 'email', proof: 'email:helena@example.com' } as const;
+const booked = { bookingId: 'bk1', manageToken: 'abc', startsAt: '2026-10-01T18:00:00Z', endsAt: '2026-10-01T19:30:00Z', timeZoneID: 'America/Sao_Paulo', serviceName: 'Brazilian Glow', emailSent: false } as const;
+
+describe('booking state machine (docs/10 section 3)', () => {
+  it('walks service -> time -> you -> verify -> questions -> confirmed', () => {
+    let state = run([{ type: 'chooseService', serviceId: 'brazilian', addOnIds: [] }]);
+    expect(state.phase).toBe('time');
+    state = run([slot], state);
+    expect(state.phase).toBe('you');
+    state = run([details], state);
+    expect(state.draft.name).toBe('Helena Duarte');
+    state = run([{ type: 'verified', proof, target: proofTarget(state.draft) }], state);
+    expect(state.phase).toBe('questions');
+    const confirmed: BookingResult = { status: 'confirmed', ...booked };
+    state = run([{ type: 'result', result: confirmed }], state);
+    expect(state.phase).toBe('confirmed');
+  });
+
+  it('keeps the chosen time when she re-picks the same service and add-ons', () => {
+    let state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: ['x', 'y'] }, slot]);
+    state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: ['y', 'x'] }], state);
+    expect(state.draft.startsAt).toBe('2026-10-01T18:00:00Z');
+    expect(state.draft.holdExpiresAt).toBe('2026-10-01T10:05:00Z');
+  });
+
+  it('drops the time and the hold when the service, the add-ons or the guests change (the duration changed)', () => {
+    const base = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot]);
+    for (const event of [
+      { type: 'chooseService', serviceId: 'b', addOnIds: [] },
+      { type: 'chooseService', serviceId: 'a', addOnIds: ['x'] },
+      { type: 'setGuests', guests: 1 },
+    ] as BookingEvent[]) {
+      const next = run([event], base);
+      expect(next.draft.startsAt).toBeNull();
+      expect(next.draft.holdExpiresAt).toBeNull();
+    }
+  });
+
+  it('keeps guests as a count only: no names are stored or sent (D48)', () => {
+    let state = run([{ type: 'setGuests', guests: 2 }]);
+    expect(state.draft.guests).toBe(2);
+    expect(Object.keys(state.draft)).not.toContain('guestNames');
+    state = run([{ type: 'setGuests', guests: 0 }], state);
+    expect(state.draft.guests).toBe(0);
+  });
+
+  it('collects no first-visit answers beyond the optional note (D45)', () => {
+    expect(Object.keys(start().firstVisit)).toEqual(['note']);
+    expect(serializeDraft(start().draft)).not.toMatch(/heardFrom|hadBefore|guestNames/);
+  });
+
+  it('a verification proof is void as soon as the phone or the email changes, but not the name', () => {
+    let state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, details]);
+    state = run([{ type: 'verified', proof, target: proofTarget(state.draft) }], state);
+    const renamed = run([{ ...details, name: 'Helena D.' }], state);
+    expect(renamed.proof).not.toBeNull();
+    const rephoned = run([{ ...details, phoneInput: '11 91111 2222' }], state);
+    expect(rephoned.proof).toBeNull();
+    const withEmail = run([{ ...details, email: 'h@example.com' }], state);
+    expect(withEmail.proof).toBeNull();
+  });
+
+  it('does not reach the verify step without an e-mail (D46: the e-mail is the only thing verified)', () => {
+    const noEmail = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, { ...details, email: '' }]);
+    expect(allowedStep('verify', noEmail)).toBe('you');
+    expect(allowedStep('verify', run([{ ...details }], noEmail))).toBe('verify');
+  });
+
+  it('maps each answer of the server to a screen', () => {
+    const base = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, details]);
+    expect(run([{ type: 'result', result: { status: 'pendingApproval', ...booked } }], base).phase).toBe('review');
+    expect(run([{ type: 'result', result: { status: 'paused', scope: 'client' } }], base).phase).toBe('blocked');
+    const taken = run([{ type: 'result', result: { status: 'slotTaken', alternatives: ['2026-10-01T19:00:00Z'] } }], base);
+    expect(taken.phase).toBe('time');
+    expect(taken.slotTaken?.alternatives).toEqual(['2026-10-01T19:00:00Z']);
+    expect(taken.draft.startsAt).toBeNull();
+    expect(taken.draft.holdExpiresAt).toBeNull();
+  });
+
+  it('clears the "just taken" notice once she chooses a time again', () => {
+    let state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, { type: 'slotTaken', alternatives: [] }]);
+    expect(state.slotTaken).not.toBeNull();
+    state = run([slot], state);
+    expect(state.slotTaken).toBeNull();
+  });
+
+  it('back goes one step and re-asks nothing already known', () => {
+    expect(run([{ type: 'back' }], { ...start(), phase: 'time' }).phase).toBe('service');
+    expect(run([{ type: 'back' }], { ...start(), phase: 'you' }).phase).toBe('time');
+    expect(run([{ type: 'back' }], { ...start(), phase: 'verify' }).phase).toBe('you');
+    expect(run([{ type: 'back' }], { ...start(), phase: 'questions' }).phase).toBe('you');
+  });
+
+  it('reset starts a clean attempt with a new idempotency key', () => {
+    const done = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, details]);
+    const fresh = run([{ type: 'reset' }], done);
+    expect(fresh.draft.serviceId).toBeNull();
+    expect(fresh.draft.name).toBe('');
+    expect(fresh.draft.idempotencyKey).not.toBe(KEY);
+    expect(fresh.draft.phoneCountry).toBe('BR');
+  });
+
+  it('numbers the five progress segments', () => {
+    expect(['service', 'time', 'you', 'verify', 'questions'].map((p) => stepNumber(p as never))).toEqual([1, 2, 3, 4, 5]);
+  });
+});
+
+describe('allowedStep: a refresh or a pasted link never lands past what she chose', () => {
+  it('sends her back to the first missing piece', () => {
+    expect(allowedStep('time', start())).toBe('service');
+    expect(allowedStep('you', start())).toBe('service');
+    const withService = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }]);
+    expect(allowedStep('you', withService)).toBe('time');
+    expect(allowedStep('verify', withService)).toBe('time');
+    const withSlot = run([slot], withService);
+    expect(allowedStep('verify', withSlot)).toBe('you');
+    const withDetails = run([details], withSlot);
+    expect(allowedStep('verify', withDetails)).toBe('verify');
+    expect(allowedStep('questions', withDetails)).toBe('verify');
+    expect(allowedStep('booked', withDetails)).toBe('service');
+    expect(allowedStep('review', withDetails)).toBe('service');
+  });
+
+  it('lets her into the questions only with a proof', () => {
+    let state = run([{ type: 'chooseService', serviceId: 'a', addOnIds: [] }, slot, details]);
+    state = run([{ type: 'verified', proof, target: proofTarget(state.draft) }], state);
+    expect(allowedStep('questions', state)).toBe('questions');
+  });
+
+  it('shows the review page only after the server asked for one', () => {
+    const state = run([{ type: 'result', result: { status: 'pendingApproval', ...booked } }]);
+    expect(allowedStep('review', state)).toBe('review');
+  });
+});
+
+describe('the stored draft', () => {
+  it('round-trips and never carries a proof, a code or an answer', () => {
+    const draft = run([{ type: 'chooseService', serviceId: 'a', addOnIds: ['x'] }, slot, details]).draft;
+    const text = serializeDraft(draft);
+    expect(parseDraft(text, 'maria', 'BR')).toEqual(draft);
+    for (const forbidden of ['proof', 'token', 'code', 'goals', 'note', 'answer']) expect(text).not.toContain(forbidden);
+  });
+
+  it('ignores garbage, another page, another version and wrong types', () => {
+    const fresh = (text: string | null): string | null => parseDraft(text, 'maria', 'BR').serviceId;
+    expect(fresh(null)).toBeNull();
+    expect(fresh('not json')).toBeNull();
+    expect(fresh('{"v":2,"draft":{"slug":"maria","serviceId":"a"}}')).toBeNull();
+    expect(fresh('{"v":1,"draft":{"slug":"other","serviceId":"a"}}')).toBeNull();
+    expect(fresh('{"v":1,"draft":{"slug":"maria","serviceId":42}}')).toBeNull();
+    expect(parseDraft('{"v":1,"draft":{"slug":"maria","guests":9,"addOnIds":[1,"x"]}}', 'maria', 'BR')).toMatchObject({ guests: 0, addOnIds: ['x'] });
+  });
+});
+
+describe('time and price of a booking (D19)', () => {
+  const glow: PublicService = { id: 'glow', name: 'Glow Facial', durationMinutes: 60, price: { display: 'show', amount: 70 } };
+  const brazilian: PublicService = { id: 'bg', name: 'Brazilian Glow', durationMinutes: 90, price: { display: 'show', amount: 120 } };
+  const deep: PublicService = { id: 'deep', name: 'Deep Cleansing', durationMinutes: 75, price: { display: 'startingFrom', amount: 80 } };
+  const p360: PublicService = { id: 'p360', name: 'Protocol 360', durationMinutes: 120, price: { display: 'onRequest' } };
+  const hidden: PublicService = { id: 'h', name: 'Hidden', durationMinutes: 30 };
+  const brow: PublicAddOn = { id: 'brow', name: 'Eyebrow tint', minutes: 15, priceText: '+ R$ 20' };
+  const led: PublicAddOn = { id: 'led', name: 'LED light', minutes: 15, priceText: '+ R$ 25' };
+  const mask: PublicAddOn = { id: 'mask', name: 'Hand mask', minutes: 10 };
+
+  it('adds the minutes of the add-ons but never their text prices (API.md: `priceText` is words)', () => {
+    expect(totals(brazilian, [], 0)).toEqual({ perPersonMinutes: 90, totalMinutes: 90, people: 1, price: { kind: 'amount', amount: 120 } });
+    expect(totals(brazilian, [brow], 0)).toMatchObject({ perPersonMinutes: 105, totalMinutes: 105, price: { kind: 'amount', amount: 120 } });
+    expect(totals(brazilian, [brow, led, mask], 0)).toMatchObject({ perPersonMinutes: 130, price: { kind: 'amount', amount: 120 } });
+  });
+
+  it('puts guests in sequence: the same visit again, back to back', () => {
+    const t = totals(brazilian, [brow], 1);
+    expect(t).toMatchObject({ perPersonMinutes: 105, totalMinutes: 210, people: 2, price: { kind: 'amount', amount: 240 } });
+    expect(totals(glow, [], 2)).toMatchObject({ totalMinutes: 180, people: 3, price: { kind: 'amount', amount: 210 } });
+  });
+
+  it('"from" prices stay "from", "on request" and absent prices never turn into a number', () => {
+    expect(totals(deep, [brow], 0).price).toEqual({ kind: 'startingFrom', amount: 80 });
+    expect(totals(p360, [brow], 1).price).toEqual({ kind: 'onRequest' });
+    expect(totals(hidden, [brow], 0).price).toBeNull();
+    expect(servicePrice({ id: 'x', name: 'x', durationMinutes: 10, price: { display: 'show' } })).toBeNull();
+    expect(servicePrice({ id: 'x', name: 'x', durationMinutes: 10, price: { display: 'startingFrom' } })).toEqual({ kind: 'onRequest' });
+  });
+
+  it('selects add-ons in the order she offers them and ignores ids that vanished', () => {
+    expect(selectedAddOns([brow, led, mask], ['mask', 'brow', 'gone']).map((a) => a.id)).toEqual(['brow', 'mask']);
+  });
+});
+
+describe('the waiting-list offer link (API.md 5.4)', () => {
+  const hold = { serviceId: 'glow', addOnIds: ['brow'], guests: 1, startsAt: '2026-10-02T13:00:00Z', endsAt: '2026-10-02T15:30:00Z', expiresAt: '2026-10-01T15:00:00Z' } as const;
+  const offerKey = 'offer_key_from_the_professional_1234';
+
+  it('fills the draft with what she kept, takes her key, and goes to "you"', () => {
+    const before = run([{ type: 'chooseService', serviceId: 'other', addOnIds: [] }, slot]);
+    const state = run([{ type: 'acceptOffer', hold, holdKey: offerKey }], before);
+    expect(state.phase).toBe('you');
+    expect(state.draft).toMatchObject({ serviceId: 'glow', addOnIds: ['brow'], guests: 1, startsAt: hold.startsAt, holdKey: offerKey, holdExpiresAt: hold.expiresAt });
+    expect(state.draft.idempotencyKey).not.toBe(before.draft.idempotencyKey);
+    expect(allowedStep('you', state)).toBe('you');
+  });
+
+  it('the stored draft keeps the offer key, so a refresh still converts her hold', () => {
+    const state = run([{ type: 'acceptOffer', hold, holdKey: offerKey }]);
+    expect(parseDraft(serializeDraft(state.draft), 'maria', 'BR').holdKey).toBe(offerKey);
+  });
+
+  it('reads the key only from a well-formed ?offer=', () => {
+    expect(offerKeyOf(`?offer=${offerKey}`)).toBe(offerKey);
+    expect(offerKeyOf('?offer=short')).toBeNull();
+    expect(offerKeyOf('?offer=has spaces in it but long enough')).toBeNull();
+    expect(offerKeyOf('?other=1')).toBeNull();
+    expect(offerKeyOf('')).toBeNull();
+  });
+});

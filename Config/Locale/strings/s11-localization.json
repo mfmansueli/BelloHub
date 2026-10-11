@@ -1,0 +1,270 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "import.button.importCount",
+   "Import button. %@ is a counted noun such as \"4 clients\" (term.*.count).",
+   "Import %@",
+   "Importar %@",
+   "Importar %@",
+   "Importar %@",
+   "Importar %@",
+   "Importa %@",
+   "Importer %@",
+   "%@ importieren",
+   "%@ içe aktar",
+   "Impor %@",
+   "%@ इम्पोर्ट करें",
+   "استيراد %@"
+  ],
+  [
+   "clients.winBack.due",
+   "Strip on Clients and Home, and the Alerts card: people who have not booked for over two months. %@ is a counted noun such as \"3 clients\" (term.*.count).",
+   "Not back in 2+ months: %@",
+   "Sem voltar há mais de 2 meses: %@",
+   "Sem regressar há mais de 2 meses: %@",
+   "Sin volver en más de 2 meses: %@",
+   "Sin volver desde hace más de 2 meses: %@",
+   "Non tornano da più di 2 mesi: %@",
+   "Sans retour depuis plus de 2 mois : %@",
+   "Seit über 2 Monaten nicht mehr da: %@",
+   "2 aydan uzun süredir gelmeyen: %@",
+   "Belum kembali dalam 2+ bulan: %@",
+   "2+ महीनों से वापसी नहीं: %@",
+   "بدون عودة منذ أكثر من شهرين: %@"
+  ],
+  [
+   "term.client.count",
+   "Number of people she serves, with the noun agreeing with the number (\"1 client\", \"12 clients\"). Used in counts and inside other sentences.",
+   {
+    "one": "%lld client",
+    "other": "%lld clients"
+   },
+   {
+    "one": "%lld cliente",
+    "other": "%lld clientes"
+   },
+   {
+    "one": "%lld cliente",
+    "other": "%lld clientes"
+   },
+   {
+    "one": "%lld cliente",
+    "other": "%lld clientes"
+   },
+   {
+    "one": "%lld cliente",
+    "other": "%lld clientes"
+   },
+   {
+    "one": "%lld cliente",
+    "other": "%lld clienti"
+   },
+   {
+    "one": "%lld client",
+    "other": "%lld clients"
+   },
+   {
+    "one": "%lld Person",
+    "other": "%lld Personen"
+   },
+   {
+    "one": "%lld müşteri",
+    "other": "%lld müşteri"
+   },
+   {
+    "other": "%lld klien"
+   },
+   {
+    "one": "%lld क्लाइंट",
+    "other": "%lld क्लाइंट"
+   },
+   {
+    "zero": "لا عملاء",
+    "one": "عميل واحد",
+    "two": "عميلان",
+    "few": "%lld عملاء",
+    "many": "%lld عميلًا",
+    "other": "%lld عميل"
+   }
+  ],
+  [
+   "term.patient.count",
+   "Number of patients, with the noun agreeing with the number. Used when she calls the people she serves patients.",
+   {
+    "one": "%lld patient",
+    "other": "%lld patients"
+   },
+   {
+    "one": "%lld paciente",
+    "other": "%lld pacientes"
+   },
+   {
+    "one": "%lld paciente",
+    "other": "%lld pacientes"
+   },
+   {
+    "one": "%lld paciente",
+    "other": "%lld pacientes"
+   },
+   {
+    "one": "%lld paciente",
+    "other": "%lld pacientes"
+   },
+   {
+    "one": "%lld paziente",
+    "other": "%lld pazienti"
+   },
+   {
+    "one": "%lld patient",
+    "other": "%lld patients"
+   },
+   {
+    "one": "%lld Person",
+    "other": "%lld Personen"
+   },
+   {
+    "one": "%lld hasta",
+    "other": "%lld hasta"
+   },
+   {
+    "other": "%lld pasien"
+   },
+   {
+    "one": "%lld मरीज़",
+    "other": "%lld मरीज़"
+   },
+   {
+    "zero": "لا مرضى",
+    "one": "مريض واحد",
+    "two": "مريضان",
+    "few": "%lld مرضى",
+    "many": "%lld مريضًا",
+    "other": "%lld مريض"
+   }
+  ],
+  [
+   "term.student.count",
+   "Number of students, with the noun agreeing with the number. Used when she calls the people she serves students.",
+   {
+    "one": "%lld student",
+    "other": "%lld students"
+   },
+   {
+    "one": "%lld aluno",
+    "other": "%lld alunos"
+   },
+   {
+    "one": "%lld aluno",
+    "other": "%lld alunos"
+   },
+   {
+    "one": "%lld alumno",
+    "other": "%lld alumnos"
+   },
+   {
+    "one": "%lld alumno",
+    "other": "%lld alumnos"
+   },
+   {
+    "one": "%lld allievo",
+    "other": "%lld allievi"
+   },
+   {
+    "one": "%lld élève",
+    "other": "%lld élèves"
+   },
+   {
+    "one": "%lld Person",
+    "other": "%lld Personen"
+   },
+   {
+    "one": "%lld öğrenci",
+    "other": "%lld öğrenci"
+   },
+   {
+    "other": "%lld murid"
+   },
+   {
+    "one": "%lld विद्यार्थी",
+    "other": "%lld विद्यार्थी"
+   },
+   {
+    "zero": "لا طلاب",
+    "one": "طالب واحد",
+    "two": "طالبان",
+    "few": "%lld طلاب",
+    "many": "%lld طالبًا",
+    "other": "%lld طالب"
+   }
+  ],
+  [
+   "term.guest.count",
+   "Number of guests, with the noun agreeing with the number. Used when she calls the people she serves guests.",
+   {
+    "one": "%lld guest",
+    "other": "%lld guests"
+   },
+   {
+    "one": "%lld convidado",
+    "other": "%lld convidados"
+   },
+   {
+    "one": "%lld convidado",
+    "other": "%lld convidados"
+   },
+   {
+    "one": "%lld invitado",
+    "other": "%lld invitados"
+   },
+   {
+    "one": "%lld invitado",
+    "other": "%lld invitados"
+   },
+   {
+    "one": "%lld ospite",
+    "other": "%lld ospiti"
+   },
+   {
+    "one": "%lld invité",
+    "other": "%lld invités"
+   },
+   {
+    "one": "%lld Gast",
+    "other": "%lld Gäste"
+   },
+   {
+    "one": "%lld misafir",
+    "other": "%lld misafir"
+   },
+   {
+    "other": "%lld tamu"
+   },
+   {
+    "one": "%lld मेहमान",
+    "other": "%lld मेहमान"
+   },
+   {
+    "zero": "لا ضيوف",
+    "one": "ضيف واحد",
+    "two": "ضيفان",
+    "few": "%lld ضيوف",
+    "many": "%lld ضيفًا",
+    "other": "%lld ضيف"
+   }
+  ]
+ ]
+}

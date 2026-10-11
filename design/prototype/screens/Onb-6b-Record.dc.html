@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your client record</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#F8F6F2;overflow:hidden;display:flex;flex-direction:column">
+
+<div style="padding:62px 24px 0">
+<div style="display:flex;align-items:center;gap:12px;height:44px">
+<a href="Onb-6-Tags.dc.html" aria-label="Back" style="width:44px;height:44px;margin-left:-12px;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m14.5 6-6 6 6 6"/></svg></a>
+<div style="flex:1;display:flex;gap:6px"><div style="flex:1;height:4px;border-radius:2px;background:#242321"></div><div style="flex:1;height:4px;border-radius:2px;background:#242321"></div><div style="flex:1;height:4px;border-radius:2px;background:#242321"></div><div style="flex:1;height:4px;border-radius:2px;background:#242321"></div></div>
+<span style="width:20px"></span>
+</div>
+<div style="margin-top:20px;font-family:'Fraunces',Georgia,serif;font-size:34px;font-weight:500;letter-spacing:-0.015em;line-height:1.1">What do you want to remember about each client?</div>
+<div style="font-size:16px;color:#65625D;margin-top:8px;line-height:1.4">Your client record is built around your craft. Switch on only what you use.</div>
+<div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:16px -24px 0;padding:0 24px">
+<sc-for list="{{profs}}" as="p" hint-placeholder-count="8">
+<button onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="flex:none;height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;background:{{p.bg}};color:{{p.fg}};border:1px solid {{p.bd}}">{{p.label}}</button>
+</sc-for>
+</div>
+</div>
+
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:16px 24px 12px;display:flex;flex-direction:column;gap:20px">
+
+<div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin:0 4px 8px"><div style="font-size:15px;font-weight:600;color:#65625D">Treatment record</div><div style="font-size:13px;color:#65625D">{{count}}</div></div>
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<sc-for list="{{fields}}" as="f" hint-placeholder-count="8">
+<div style="display:flex;align-items:center;gap:12px;min-height:52px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<div style="flex:1;font-size:16px;font-weight:{{f.weight}}">{{f.name}}</div>
+<button role="switch" aria-checked="{{f.on}}" aria-label="{{f.name}}" onClick="{{f.toggle}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{f.bg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{f.left}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+</sc-for>
+</div>
+<div style="font-size:13px;line-height:1.4;color:#65625D;margin:8px 4px 0">You only see these fields when you register a treatment. Voice notes fill them for you.</div>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:600;color:#65625D;margin:0 4px 8px">Before the first visit</div>
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<sc-for list="{{intake}}" as="i" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;min-height:64px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">{{i.name}}</div><div style="font-size:13px;color:#65625D">{{i.desc}}</div></div>
+<button role="switch" aria-checked="{{i.on}}" aria-label="{{i.name}}" onClick="{{i.toggle}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{i.bg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{i.left}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+<div style="padding:12px 24px 34px;background:#F8F6F2;border-top:1px solid #ECE7DF">
+<a href="Permissions.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Continue</a>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const prof = st.prof || 'est';
+    const off = st.off || {};
+    const profs = [['est', 'Esthetician'], ['hair', 'Hair stylist'], ['lash', 'Lash artist'], ['nail', 'Nail artist'], ['mua', 'Makeup artist'], ['tat', 'Tattoo / PMU'], ['bar', 'Barber'], ['mas', 'Massage']];
+    const F = {
+      est: [['Skin condition', 1], ['Areas', 1], ['Products and actives', 1], ['Protocol', 1], ['Technique', 0], ['Reaction', 1], ['Result', 1], ['Aftercare', 1]],
+      hair: [['Hair condition', 1], ['Previous color', 1], ['Formula', 1], ['Developer', 1], ['Technique', 1], ['Processing time', 1], ['Products', 0], ['Result', 1], ['Preferences', 1]],
+      lash: [['Set', 1], ['Curl', 1], ['Length', 1], ['Thickness', 1], ['Mapping', 1], ['Adhesive', 1], ['Retention', 1], ['Preferences', 0]],
+      nail: [['Nail condition', 1], ['Shape', 1], ['Length', 1], ['Color', 1], ['Product system', 1], ['Technique', 0], ['Durability', 1]],
+      mua: [['Event', 1], ['Look', 1], ['Skin preparation', 0], ['Foundation', 1], ['Shade', 1], ['Products', 1], ['Preferences', 1]],
+      tat: [['Design', 1], ['Placement', 1], ['Technique', 1], ['Pigments', 1], ['Tools and materials', 1], ['Session number', 1], ['Healing', 1], ['Follow-up', 1]],
+      bar: [['Cut', 1], ['Guard sizes', 1], ['Fade', 1], ['Beard', 1], ['Products', 0], ['Preferences', 1]],
+      mas: [['Focus areas', 1], ['Pressure', 1], ['Technique', 1], ['Oils and products', 0], ['Contraindications', 1], ['Result', 1], ['Home care', 0]]
+    };
+    const IN = { est: [1, 1, 0], hair: [0, 0, 1], lash: [1, 1, 1], nail: [0, 0, 0], mua: [1, 0, 0], tat: [1, 1, 1], bar: [0, 0, 0], mas: [1, 1, 0] };
+    const sw = (on) => ({ on: on, bg: on ? '#6E8266' : '#D5D0C7', left: on ? '22px' : '2px' });
+    let onCount = 0;
+    const fields = F[prof].map((f) => {
+      const k = prof + '|' + f[0];
+      const on = off[k] === undefined ? !!f[1] : off[k];
+      if (on) onCount += 1;
+      return { name: f[0], weight: on ? 600 : 400, ...sw(on), toggle: () => this.setState({ off: { ...off, [k]: !on } }) };
+    });
+    const defs = [['Health history', 'Allergies, medication and conditions, asked by link'], ['Consent form', 'Signed digitally before the first treatment'], ['Patch test log', 'Record date, product and result']];
+    const intake = defs.map((d, i) => {
+      const k = 'in|' + prof + '|' + i;
+      const on = off[k] === undefined ? !!IN[prof][i] : off[k];
+      return { name: d[0], desc: d[1], ...sw(on), toggle: () => this.setState({ off: { ...off, [k]: !on } }) };
+    });
+    return {
+      profs: profs.map((p) => ({
+        label: p[1], on: prof === p[0],
+        bg: prof === p[0] ? '#242321' : '#FFFCF8', fg: prof === p[0] ? '#FFFCF8' : '#242321', bd: prof === p[0] ? '#242321' : '#E3DED5',
+        pick: () => this.setState({ prof: p[0] })
+      })),
+      fields: fields, intake: intake, count: onCount + ' of ' + fields.length + ' on'
+    };
+  }
+}
+</script>
+</body>
+</html>

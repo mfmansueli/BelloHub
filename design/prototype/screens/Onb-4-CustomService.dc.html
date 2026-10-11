@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Custom service</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:#242321;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0;text-align:inherit}
+input{border:0;background:none;outline:none;padding:0;width:100%}
+a{color:inherit;text-decoration:none}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+.tn{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+a:focus-visible,button:focus-visible{outline:3px solid #9A5A6C;outline-offset:2px}
+/*motion v1*/
+@media (prefers-reduced-motion:no-preference){
+:root{--ease:cubic-bezier(.22,1,.36,1);--soft:cubic-bezier(.3,1.25,.5,1)}
+@keyframes mRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes mFade{from{opacity:0}to{opacity:1}}
+@keyframes mSheet{from{transform:translateY(100%)}to{transform:none}}
+@keyframes mPop{0%{transform:scale(.45);opacity:0}58%{transform:scale(1.09);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes mRing{0%{transform:scale(.9);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+@keyframes mDraw{to{stroke-dashoffset:0}}
+@keyframes mSheen{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(330%) skewX(-18deg)}}
+@keyframes mDrift{from{transform:translate3d(-6%,-4%,0) scale(1)}to{transform:translate3d(6%,5%,0) scale(1.12)}}
+@keyframes mDot{0%{box-shadow:0 0 0 0 rgba(201,143,159,.6)}70%{box-shadow:0 0 0 8px rgba(201,143,159,0)}100%{box-shadow:0 0 0 0 rgba(201,143,159,0)}}
+button,a{-webkit-tap-highlight-color:transparent;transition:transform .24s var(--ease),background-color .24s ease,color .24s ease,border-color .24s ease,box-shadow .3s ease,opacity .24s ease,filter .24s ease}
+button:active,a:active{transform:scale(.97)}
+button[style*="width:100%"]:active,a[style*="width:100%"]:active,a[style*="display:flex"]:active{transform:scale(.985)}
+.m-scrim:active{transform:none}
+@media (hover:hover){
+button:hover,a:hover{filter:brightness(.975)}
+button[style*="background:#242321"]:hover,a[style*="background:#242321"]:hover{filter:brightness(1.22)}
+}
+button[role="switch"]{transition:background-color .3s var(--ease),transform .2s var(--ease)}
+button[role="switch"]>span{transition:left .34s var(--soft),box-shadow .3s ease}
+button[role="switch"][aria-checked="true"]>span{box-shadow:0 1px 3px rgba(0,0,0,.25),0 0 0 3px rgba(255,255,255,.0)}
+.noscroll>*{animation:mRise .56s var(--ease) backwards}
+.noscroll>*:nth-child(2){animation-delay:0.040s}.noscroll>*:nth-child(3){animation-delay:0.080s}.noscroll>*:nth-child(4){animation-delay:0.120s}.noscroll>*:nth-child(5){animation-delay:0.160s}.noscroll>*:nth-child(6){animation-delay:0.200s}.noscroll>*:nth-child(7){animation-delay:0.240s}.noscroll>*:nth-child(8){animation-delay:0.280s}.noscroll>*:nth-child(9){animation-delay:0.320s}.noscroll>*:nth-child(n+10){animation-delay:.36s}
+.m-bar{animation:mRise .5s .18s var(--ease) backwards}
+.m-scrim{animation:mFade .28s ease backwards;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.m-sheet{animation:mSheet .46s var(--ease) backwards}
+.m-pop{position:relative;animation:mPop .62s .1s var(--soft) backwards}
+.m-pop::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;opacity:0;pointer-events:none;animation:mRing 1.1s .45s var(--ease) 1 both}
+.m-check path{stroke-dasharray:26;stroke-dashoffset:26;animation:mDraw .5s .38s var(--ease) forwards}
+.m-hero{position:relative;overflow:hidden;isolation:isolate}
+.m-hero::before{content:"";position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 36% at 74% 18%,rgba(232,180,196,.20),transparent 70%),radial-gradient(38% 34% at 16% 86%,rgba(169,181,161,.16),transparent 70%);animation:mDrift 14s ease-in-out infinite alternate}
+.m-hero::after{content:"";position:absolute;top:0;bottom:0;left:0;width:34%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,252,248,.11),transparent);animation:mSheen 1.5s .55s var(--ease) 1 backwards}
+.m-dot{animation:mDot 2.6s ease-out infinite}
+}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;background:#8E8B86;overflow:hidden">
+<div style="position:absolute;left:0;right:0;top:0;height:60px;background:#F8F6F2;opacity:0.55"></div>
+<div style="position:absolute;left:0;right:0;top:50px;bottom:0;background:#F8F6F2;border-radius:30px 30px 0 0;display:flex;flex-direction:column;box-shadow:0 -12px 40px -12px rgba(70,45,30,.25)" class="m-sheet">
+
+<div style="width:36px;height:5px;border-radius:3px;background:#D9D4CB;margin:8px auto 0"></div>
+<div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px">
+<a href="Onb-3-Services.dc.html" style="min-width:64px;height:44px;display:flex;align-items:center;font-size:17px;color:#9A5A6C">Cancel</a>
+<div style="font-size:17px;font-weight:600">New service</div>
+<span style="min-width:64px"></span>
+</div>
+
+<div class="noscroll" style="flex:1;overflow-y:auto;padding:8px 20px 12px;display:flex;flex-direction:column;gap:20px">
+
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0ECE5"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Name</span><input value="Brazilian Glow" aria-label="Service name" style="font-size:17px;font-weight:600"></label>
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0ECE5"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Category</span><input value="Facial" aria-label="Category" style="font-size:17px"></label>
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px;border-bottom:1px solid #F0ECE5"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Price</span><input value="R$ 120" aria-label="Price" style="font-size:17px"></label>
+<label style="display:flex;align-items:center;gap:12px;min-height:56px;padding:0 16px"><span style="width:96px;font-size:15px;color:#65625D;flex:none">Duration</span><input value="90 min" aria-label="Duration" style="font-size:17px"></label>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:600;color:#65625D;margin:0 4px 8px">Recommended follow-up</div>
+<div style="display:flex;gap:8px">
+<sc-for list="{{weeks}}" as="w" hint-placeholder-count="5">
+<button onClick="{{w.pick}}" aria-pressed="{{w.on}}" style="flex:1;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;background:{{w.bg}};color:{{w.fg}};border:1px solid {{w.bd}}">{{w.label}}</button>
+</sc-for>
+</div>
+<div style="font-size:13px;color:#65625D;margin:8px 4px 0;line-height:1.4">Clients become due for a follow-up this long after the service.</div>
+</div>
+
+<div style="background:#FFFCF8;border:1px solid #ECE7DF;box-shadow:0 1px 2px rgba(70,45,30,.05),0 8px 20px -10px rgba(70,45,30,.14);border-radius:24px;overflow:hidden">
+<div style="display:flex;align-items:center;gap:12px;min-height:60px;padding:0 16px;border-bottom:1px solid #F0ECE5">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">Before and after photos</div><div style="font-size:13px;color:#65625D">Remind me to take them</div></div>
+<button role="switch" aria-checked="{{photo.on}}" aria-label="Before and after photos" onClick="{{photo.toggle}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{photo.bg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{photo.left}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+<div style="display:flex;align-items:center;gap:12px;min-height:60px;padding:0 16px">
+<div style="flex:1"><div style="font-size:16px;font-weight:600">Aftercare</div><div style="font-size:13px;color:#65625D">Share a template with the client</div></div>
+<button role="switch" aria-checked="{{care.on}}" aria-label="Aftercare" onClick="{{care.toggle}}" style="width:65px;height:45px;border-radius:22.5px;border:7px solid transparent;margin:-7px;background:{{care.bg}};position:relative;flex:none;background-clip:padding-box"><span style="position:absolute;top:2px;left:{{care.left}};width:27px;height:27px;border-radius:50%;background:#FFFCF8;box-shadow:0 1px 3px rgba(0,0,0,0.25)"></span></button>
+</div>
+</div>
+
+</div>
+
+<div style="padding:8px 20px 34px"><a href="Onb-3-Services.dc.html" style="height:56px;border-radius:18px;background:#242321;box-shadow:0 10px 20px -10px rgba(36,35,33,.5);color:#FFFCF8;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">Add service</a></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const wk = st.wk || 4;
+    const photo = st.photo === undefined ? true : st.photo;
+    const care = st.care === undefined ? true : st.care;
+    const weeks = [2, 3, 4, 6, 8].map((n) => ({
+      label: n + ' wk',
+      on: wk === n,
+      bg: wk === n ? '#242321' : '#FFFCF8',
+      fg: wk === n ? '#FFFCF8' : '#242321',
+      bd: wk === n ? '#242321' : '#E3DED5',
+      pick: () => this.setState({ wk: n })
+    }));
+    const sw = (on, key) => ({
+      on: on,
+      bg: on ? '#6E8266' : '#D5D0C7',
+      left: on ? '22px' : '2px',
+      toggle: () => this.setState({ [key]: !on })
+    });
+    return { weeks, photo: sw(photo, 'photo'), care: sw(care, 'care') };
+  }
+}
+</script>
+</body>
+</html>

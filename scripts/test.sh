@@ -15,10 +15,40 @@ case "${1:-full}" in
         ;;
 esac
 
+# The cheap gates (strings, privacy, legal drafts, their bundled copies, profession and health form catalogs) run
+# before the simulator does (docs/13-TESTING-QUALITY.md).
+if [[ "$plan" != "UISmoke" ]]; then
+    "$ROOT/scripts/check-strings.sh" --final > /dev/null
+    "$ROOT/scripts/check-localization-sources.sh" --self-test > /dev/null
+    "$ROOT/scripts/check-localization-sources.sh" > /dev/null
+    "$ROOT/scripts/import-strings.sh" --self-test > /dev/null
+    "$ROOT/scripts/check-privacy.sh" > /dev/null
+    "$ROOT/scripts/check-legal-status.sh" > /dev/null
+    "$ROOT/scripts/check-legal-resources.sh" > /dev/null
+    "$ROOT/scripts/check-server-contract.sh" > /dev/null
+    "$ROOT/scripts/check-professions.sh" > /dev/null
+    "$ROOT/scripts/check-health-forms.sh" > /dev/null
+fi
+
+# The server suites (firebase/functions) need Java and the Firebase emulators and take minutes, so they never run by
+# default and the iOS plans stay fast. Opt in with RUN_FIREBASE=1, or run scripts/test-firebase.sh directly.
+if [[ "${RUN_FIREBASE:-0}" == "1" ]]; then
+    "$ROOT/scripts/test-firebase.sh" all
+fi
+
 # Assigned on its own line so a missing simulator stops the script (set -e ignores $(...) in arguments).
 destination="$(simulator_destination)"
+
+# ONLY_TESTING=BelloHubUITests/OnboardingAuditUITests runs one suite (or one test) of the plan, to iterate on a failure;
+# a comma-separated list runs several in one xcodebuild (one build, one simulator boot).
+only_testing=()
+if [[ -n "${ONLY_TESTING:-}" ]]; then
+    IFS=',' read -r -a only_list <<< "$ONLY_TESTING"
+    for item in "${only_list[@]}"; do only_testing+=(-only-testing:"$item"); done
+fi
 
 run_xcodebuild "test-$plan" test \
     -scheme BelloHub \
     -testPlan "$plan" \
-    -destination "$destination"
+    -destination "$destination" \
+    ${only_testing[@]+"${only_testing[@]}"}

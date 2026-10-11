@@ -1,0 +1,1202 @@
+{
+ "localization": "pt-PT",
+ "status": "needs_review",
+ "professions": [
+  {
+   "id": "esthetician",
+   "name": "Esteticista",
+   "plural": "esteticistas",
+   "services": [
+    {
+     "key": "esthetician.glow",
+     "name": "Glow Facial",
+     "category": "Facial",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.deep",
+     "name": "Limpeza de pele profunda",
+     "category": "Facial",
+     "minutes": 75,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "esthetician.hydra",
+     "name": "Hidratação facial",
+     "category": "Facial",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.acne",
+     "name": "Tratamento para acne",
+     "category": "Facial",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.peel",
+     "name": "Peeling químico",
+     "category": "Facial",
+     "minutes": 45,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "esthetician.needle",
+     "name": "Microagulhagem",
+     "category": "Facial",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "esthetician.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "esthetician.sensitiveSkin",
+     "name": "Pele sensível",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "esthetician.bridal",
+     "name": "Noiva",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "esthetician.acneProne",
+     "name": "Pele com acne",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "esthetician.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "esthetician.firstVisit",
+     "name": "Primeira visita",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "esthetician.skinCondition",
+     "name": "Estado da pele",
+     "on": true
+    },
+    {
+     "key": "esthetician.areas",
+     "name": "Zonas",
+     "on": true
+    },
+    {
+     "key": "esthetician.products",
+     "name": "Produtos e ativos",
+     "on": true
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Protocolo",
+     "on": true
+    },
+    {
+     "key": "esthetician.technique",
+     "name": "Técnica",
+     "on": false
+    },
+    {
+     "key": "esthetician.reaction",
+     "name": "Reação",
+     "on": true
+    },
+    {
+     "key": "esthetician.result",
+     "name": "Resultado",
+     "on": true
+    },
+    {
+     "key": "esthetician.aftercare",
+     "name": "Cuidados pós-tratamento",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "hair",
+   "name": "Cabelo",
+   "plural": "cabelo",
+   "services": [
+    {
+     "key": "hair.cut",
+     "name": "Corte",
+     "category": "Cabelo",
+     "minutes": 45,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "hair.color",
+     "name": "Coloração",
+     "category": "Cabelo",
+     "minutes": 120,
+     "followUpWeeks": 8,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "hair.highlights",
+     "name": "Madeixas",
+     "category": "Cabelo",
+     "minutes": 180,
+     "followUpWeeks": 10,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "hair.treatment",
+     "name": "Tratamento capilar",
+     "category": "Cabelo",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.blowdry",
+     "name": "Brushing",
+     "category": "Cabelo",
+     "minutes": 40,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "hair.styling",
+     "name": "Penteado",
+     "category": "Cabelo",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "hair.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "hair.sensitiveScalp",
+     "name": "Couro cabeludo sensível",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "hair.blonde",
+     "name": "Cabelo loiro",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "hair.curlyHair",
+     "name": "Cabelo encaracolado",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.bridal",
+     "name": "Noiva",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "hair.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    }
+   ],
+   "fields": [
+    {
+     "key": "hair.hairCondition",
+     "name": "Estado do cabelo",
+     "on": true
+    },
+    {
+     "key": "hair.previousColor",
+     "name": "Cor anterior",
+     "on": true
+    },
+    {
+     "key": "hair.formula",
+     "name": "Fórmula",
+     "on": true
+    },
+    {
+     "key": "hair.developer",
+     "name": "Oxidante",
+     "on": true
+    },
+    {
+     "key": "hair.technique",
+     "name": "Técnica",
+     "on": true
+    },
+    {
+     "key": "hair.processingTime",
+     "name": "Tempo de pausa",
+     "on": true
+    },
+    {
+     "key": "hair.products",
+     "name": "Produtos",
+     "on": false
+    },
+    {
+     "key": "hair.result",
+     "name": "Resultado",
+     "on": true
+    },
+    {
+     "key": "hair.preferences",
+     "name": "Preferências",
+     "on": true
+    }
+   ],
+   "intake": [
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "lash",
+   "name": "Técnica de pestanas",
+   "plural": "técnicas de pestanas",
+   "services": [
+    {
+     "key": "lash.classic",
+     "name": "Extensão fio a fio",
+     "category": "Pestanas",
+     "minutes": 120,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.hybrid",
+     "name": "Híbrida",
+     "category": "Pestanas",
+     "minutes": 135,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.volume",
+     "name": "Volume",
+     "category": "Pestanas",
+     "minutes": 150,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.lift",
+     "name": "Lifting de pestanas",
+     "category": "Pestanas",
+     "minutes": 60,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "lash.refill",
+     "name": "Manutenção",
+     "category": "Pestanas",
+     "minutes": 75,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "lash.removal",
+     "name": "Remoção",
+     "category": "Pestanas",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "lash.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "lash.sensitiveEyes",
+     "name": "Olhos sensíveis",
+     "color": "sage",
+     "selected": true
+    },
+    {
+     "key": "lash.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "lash.bridal",
+     "name": "Noiva",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "lash.contactLenses",
+     "name": "Usa lentes de contacto",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "lash.firstSet",
+     "name": "Primeiro conjunto",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "lash.set",
+     "name": "Modelo",
+     "on": true
+    },
+    {
+     "key": "lash.curl",
+     "name": "Curvatura",
+     "on": true
+    },
+    {
+     "key": "lash.length",
+     "name": "Comprimento",
+     "on": true
+    },
+    {
+     "key": "lash.thickness",
+     "name": "Espessura",
+     "on": true
+    },
+    {
+     "key": "lash.mapping",
+     "name": "Mapeamento",
+     "on": true
+    },
+    {
+     "key": "lash.adhesive",
+     "name": "Cola",
+     "on": true
+    },
+    {
+     "key": "lash.retention",
+     "name": "Retenção",
+     "on": true
+    },
+    {
+     "key": "lash.preferences",
+     "name": "Preferências",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "nail",
+   "name": "Manicure e pedicure",
+   "plural": "manicures e pedicures",
+   "services": [
+    {
+     "key": "nail.manicure",
+     "name": "Manicure",
+     "category": "Unhas",
+     "minutes": 45,
+     "followUpWeeks": 2,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.pedicure",
+     "name": "Pedicure",
+     "category": "Unhas",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "nail.gel",
+     "name": "Verniz gel",
+     "category": "Unhas",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "nail.extension",
+     "name": "Extensões de unhas",
+     "category": "Unhas",
+     "minutes": 90,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.art",
+     "name": "Nail art",
+     "category": "Unhas",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "nail.removal",
+     "name": "Remoção",
+     "category": "Unhas",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "nail.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "nail.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "nail.bridal",
+     "name": "Noiva",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "nail.gelLover",
+     "name": "Adora gel",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "nail.brittleNails",
+     "name": "Unhas quebradiças",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "nail.firstVisit",
+     "name": "Primeira visita",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "nail.nailCondition",
+     "name": "Estado das unhas",
+     "on": true
+    },
+    {
+     "key": "nail.shape",
+     "name": "Formato",
+     "on": true
+    },
+    {
+     "key": "nail.length",
+     "name": "Comprimento",
+     "on": true
+    },
+    {
+     "key": "nail.color",
+     "name": "Cor",
+     "on": true
+    },
+    {
+     "key": "nail.productSystem",
+     "name": "Sistema de produtos",
+     "on": true
+    },
+    {
+     "key": "nail.technique",
+     "name": "Técnica",
+     "on": false
+    },
+    {
+     "key": "nail.durability",
+     "name": "Durabilidade",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "makeup",
+   "name": "Maquilhagem",
+   "plural": "maquilhagem",
+   "services": [
+    {
+     "key": "makeup.social",
+     "name": "Maquilhagem social",
+     "category": "Maquilhagem",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Maquilhagem de noiva",
+     "category": "Maquilhagem",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "makeup.event",
+     "name": "Maquilhagem para evento",
+     "category": "Maquilhagem",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.editorial",
+     "name": "Maquilhagem editorial",
+     "category": "Maquilhagem",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.trial",
+     "name": "Teste de maquilhagem",
+     "category": "Maquilhagem",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "makeup.lesson",
+     "name": "Aula de maquilhagem",
+     "category": "Maquilhagem",
+     "minutes": 90,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "makeup.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "makeup.bridal",
+     "name": "Noiva",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "makeup.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "makeup.eventClient",
+     "name": "Eventos",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "makeup.sensitiveSkin",
+     "name": "Pele sensível",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "makeup.event",
+     "name": "Evento",
+     "on": true
+    },
+    {
+     "key": "makeup.look",
+     "name": "Look",
+     "on": true
+    },
+    {
+     "key": "makeup.skinPrep",
+     "name": "Preparação da pele",
+     "on": false
+    },
+    {
+     "key": "makeup.foundation",
+     "name": "Base",
+     "on": true
+    },
+    {
+     "key": "makeup.shade",
+     "name": "Tom",
+     "on": true
+    },
+    {
+     "key": "makeup.products",
+     "name": "Produtos",
+     "on": true
+    },
+    {
+     "key": "makeup.preferences",
+     "name": "Preferências",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  },
+  {
+   "id": "tattoo",
+   "name": "Tatuagem / Micropigmentação",
+   "plural": "tatuagem e micropigmentação",
+   "services": [
+    {
+     "key": "tattoo.brows",
+     "name": "Microblading",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.ombre",
+     "name": "Sobrancelhas shadow",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.lips",
+     "name": "Lip blush",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 120,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.eyeliner",
+     "name": "Eyeliner",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 90,
+     "followUpWeeks": 6,
+     "selected": false,
+     "photos": true
+    },
+    {
+     "key": "tattoo.touchup",
+     "name": "Retoque",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": true
+    },
+    {
+     "key": "tattoo.small",
+     "name": "Tatuagem pequena",
+     "category": "Tatuagem e micropigmentação",
+     "minutes": 120,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": true
+    }
+   ],
+   "tags": [
+    {
+     "key": "tattoo.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "tattoo.firstTime",
+     "name": "Primeira tatuagem",
+     "color": "peach",
+     "selected": true
+    },
+    {
+     "key": "tattoo.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "tattoo.sensitiveSkin",
+     "name": "Pele sensível",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "tattoo.referral",
+     "name": "Recomendação",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "tattoo.design",
+     "name": "Desenho",
+     "on": true
+    },
+    {
+     "key": "tattoo.placement",
+     "name": "Zona",
+     "on": true
+    },
+    {
+     "key": "tattoo.technique",
+     "name": "Técnica",
+     "on": true
+    },
+    {
+     "key": "tattoo.pigments",
+     "name": "Pigmentos",
+     "on": true
+    },
+    {
+     "key": "tattoo.tools",
+     "name": "Materiais",
+     "on": true
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Número da sessão",
+     "on": true
+    },
+    {
+     "key": "tattoo.healing",
+     "name": "Cicatrização",
+     "on": true
+    },
+    {
+     "key": "tattoo.followUp",
+     "name": "Seguimento",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm",
+    "patchTestLog"
+   ]
+  },
+  {
+   "id": "barber",
+   "name": "Barbearia",
+   "plural": "barbearia",
+   "services": [
+    {
+     "key": "barber.cut",
+     "name": "Corte masculino",
+     "category": "Barbearia",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.beard",
+     "name": "Barba",
+     "category": "Barbearia",
+     "minutes": 30,
+     "followUpWeeks": 3,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "barber.combo",
+     "name": "Corte e barba",
+     "category": "Barbearia",
+     "minutes": 60,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.fade",
+     "name": "Degradé",
+     "category": "Barbearia",
+     "minutes": 40,
+     "followUpWeeks": 3,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.shave",
+     "name": "Barba com toalha quente",
+     "category": "Barbearia",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Corte infantil",
+     "category": "Barbearia",
+     "minutes": 25,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "barber.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "barber.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "barber.beardCare",
+     "name": "Barba",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "barber.kids",
+     "name": "Infantil",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "barber.walkIn",
+     "name": "Sem marcação",
+     "color": "sand",
+     "selected": false
+    },
+    {
+     "key": "barber.sensitiveSkin",
+     "name": "Pele sensível",
+     "color": "sage",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "barber.cut",
+     "name": "Corte",
+     "on": true
+    },
+    {
+     "key": "barber.guards",
+     "name": "Medida da máquina",
+     "on": true
+    },
+    {
+     "key": "barber.fade",
+     "name": "Degradé",
+     "on": true
+    },
+    {
+     "key": "barber.beard",
+     "name": "Barba",
+     "on": true
+    },
+    {
+     "key": "barber.products",
+     "name": "Produtos",
+     "on": false
+    },
+    {
+     "key": "barber.preferences",
+     "name": "Preferências",
+     "on": true
+    }
+   ],
+   "intake": []
+  },
+  {
+   "id": "massage",
+   "name": "Massagem / Bem-estar",
+   "plural": "massagem e bem-estar",
+   "services": [
+    {
+     "key": "massage.relax",
+     "name": "Massagem relaxante",
+     "category": "Massagem",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.deep",
+     "name": "Massagem profunda",
+     "category": "Massagem",
+     "minutes": 60,
+     "followUpWeeks": 4,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "massage.lymph",
+     "name": "Drenagem linfática",
+     "category": "Massagem",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.hotstone",
+     "name": "Pedras quentes",
+     "category": "Massagem",
+     "minutes": 75,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.reflex",
+     "name": "Reflexologia podal",
+     "category": "Massagem",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    },
+    {
+     "key": "massage.sports",
+     "name": "Massagem desportiva",
+     "category": "Massagem",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "massage.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "massage.athlete",
+     "name": "Atleta",
+     "color": "sage",
+     "selected": false
+    },
+    {
+     "key": "massage.firstVisit",
+     "name": "Primeira visita",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "massage.lightPressure",
+     "name": "Pressão suave",
+     "color": "peach",
+     "selected": false
+    },
+    {
+     "key": "massage.firmPressure",
+     "name": "Pressão firme",
+     "color": "sand",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "massage.focusAreas",
+     "name": "Zonas de foco",
+     "on": true
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Pressão",
+     "on": true
+    },
+    {
+     "key": "massage.technique",
+     "name": "Técnica",
+     "on": true
+    },
+    {
+     "key": "massage.oils",
+     "name": "Óleos e produtos",
+     "on": false
+    },
+    {
+     "key": "massage.contraindications",
+     "name": "Contraindicações",
+     "on": true
+    },
+    {
+     "key": "massage.result",
+     "name": "Resultado",
+     "on": true
+    },
+    {
+     "key": "massage.homeCare",
+     "name": "Cuidados em casa",
+     "on": false
+    }
+   ],
+   "intake": [
+    "healthHistory",
+    "consentForm"
+   ]
+  },
+  {
+   "id": "other",
+   "name": "Outra",
+   "plural": "profissionais",
+   "services": [
+    {
+     "key": "other.consult",
+     "name": "Consulta",
+     "category": "Serviços",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.session",
+     "name": "Sessão",
+     "category": "Serviços",
+     "minutes": 60,
+     "followUpWeeks": null,
+     "selected": true,
+     "photos": false
+    },
+    {
+     "key": "other.followup",
+     "name": "Seguimento",
+     "category": "Serviços",
+     "minutes": 30,
+     "followUpWeeks": null,
+     "selected": false,
+     "photos": false
+    }
+   ],
+   "tags": [
+    {
+     "key": "other.vip",
+     "name": "VIP",
+     "color": "rose",
+     "selected": false
+    },
+    {
+     "key": "other.regular",
+     "name": "Habitual",
+     "color": "sand",
+     "selected": true
+    },
+    {
+     "key": "other.firstVisit",
+     "name": "Primeira visita",
+     "color": "rose",
+     "selected": false
+    }
+   ],
+   "fields": [
+    {
+     "key": "other.notes",
+     "name": "Notas",
+     "on": true
+    },
+    {
+     "key": "other.result",
+     "name": "Resultado",
+     "on": true
+    },
+    {
+     "key": "other.nextSteps",
+     "name": "Próximos passos",
+     "on": true
+    }
+   ],
+   "intake": [
+    "healthHistory"
+   ]
+  }
+ ]
+}
