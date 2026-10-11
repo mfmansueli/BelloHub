@@ -141,6 +141,14 @@ actor FakeInboxRepository: InboxRepository {
         return suggestionOutcome
     }
 
+    /// `https://bellohub.app/m/Link<bookingId>…`, valid a week; a write failure makes it fail like the server.
+    func mintManageLink(bookingId: String) async throws -> ClientManageLink {
+        try write("mintManageLink:\(bookingId)")
+        let token = String(("Link" + bookingId + String(repeating: "0", count: 22)).prefix(22))
+        let url = URL(string: "https://bellohub.app/m/\(token)") ?? URL(filePath: "/")
+        return ClientManageLink(url: url, expiresAt: TestClock.now.addingTimeInterval(7 * 86_400))
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         try write("removeWaitlistEntry:\(id)")
         waitlist.removeAll { $0.id == id }

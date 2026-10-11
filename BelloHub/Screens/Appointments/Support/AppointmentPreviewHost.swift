@@ -21,6 +21,7 @@ struct AppointmentPreviewHost<Content: View>: View {
                     .environment(world.appointments)
                     .environment(world.setup)
                     .environment(world.messages)
+                    .environment(ClientLinkService(repository: OfflineInboxRepository()))
             } else {
                 ProgressView()
             }

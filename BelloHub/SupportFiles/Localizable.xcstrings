@@ -114859,6 +114859,546 @@
         }
       }
     },
+    "messageClient.link.addedByHand" : {
+      "comment" : "Message sheet (3.6): the visit was added in the app, so the message carries her booking link.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تمت إضافة هذا الموعد يدويًا، لذلك تتضمن الرسالة رابط المواعيد الخاص بك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Du hast diesen Termin selbst eingetragen, deshalb enthält die Nachricht deinen Buchungslink."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You added this visit yourself, so the message has your booking link."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "You added this visit yourself, so the message has your booking link."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Has añadido tú esta cita, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agregaste esta cita tú, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agregaste esta cita tú, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous avez ajouté ce rendez-vous vous-même, le message contient donc votre lien de réservation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह अपॉइंटमेंट आपने खुद जोड़ा है, इसलिए मैसेज में आपका अपॉइंटमेंट लिंक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kamu menambahkan janji temu ini sendiri, jadi pesannya berisi tautan janji temu kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hai aggiunto tu questo appuntamento, quindi il messaggio contiene il tuo link di prenotazione."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Você adicionou este horário, então a mensagem leva seu link de agendamento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicionou esta marcação à mão, por isso a mensagem leva o seu link de marcação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu randevuyu kendiniz eklediniz, bu yüzden mesajda randevu bağlantınız var."
+          }
+        }
+      }
+    },
+    "messageClient.link.failed" : {
+      "comment" : "Message sheet (3.6): the server did not give the client's own link. %@ is the client's first name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تعذّر تجهيز رابط %@، لذلك تتضمن الرسالة رابط المواعيد الخاص بك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Link für %@ konnte nicht vorbereitet werden, deshalb enthält die Nachricht deinen Buchungslink."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@'s own link could not be prepared, so the message has your booking link."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@'s own link could not be prepared, so the message has your booking link."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se ha podido preparar el enlace de %@, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo preparar el enlace de %@, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se pudo preparar el enlace de %@, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le lien de %@ n'a pas pu être préparé, le message contient donc votre lien de réservation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ का निजी लिंक तैयार नहीं हो सका, इसलिए मैसेज में आपका अपॉइंटमेंट लिंक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tautan untuk %@ tidak bisa disiapkan, jadi pesannya berisi tautan janji temu kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non è stato possibile preparare il link di %@, quindi il messaggio contiene il tuo link di prenotazione."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não deu para preparar o link de %@, então a mensagem leva seu link de agendamento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível preparar o link de %@, por isso a mensagem leva o seu link de marcação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ için kişisel bağlantı hazırlanamadı, bu yüzden mesajda randevu bağlantınız var."
+          }
+        }
+      }
+    },
+    "messageClient.link.manage" : {
+      "comment" : "Message sheet (3.6): the message carries the client's own link. %@ is the client's first name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يتيح هذا الرابط لـ %@ تغيير هذا الموعد أو إلغاءه."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mit dem Link kann %@ diesen Termin verschieben oder absagen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The link lets %@ change or cancel this visit."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The link lets %@ change or cancel this visit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El enlace permite a %@ cambiar o cancelar esta cita."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El enlace le permite a %@ cambiar o cancelar esta cita."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El enlace le permite a %@ cambiar o cancelar esta cita."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le lien permet à %@ de déplacer ou d'annuler ce rendez-vous."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस लिंक से %@ यह अपॉइंटमेंट बदल या रद्द कर सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dengan tautan ini, %@ bisa menjadwalkan ulang atau membatalkan janji temu ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il link permette a %@ di spostare o annullare questo appuntamento."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O link permite que %@ remarque ou cancele este horário."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O link permite que %@ altere ou desmarque esta marcação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu bağlantıyla %@ randevuyu erteleyebilir veya iptal edebilir."
+          }
+        }
+      }
+    },
+    "messageClient.link.notActive" : {
+      "comment" : "Message sheet (3.6): the visit is over or cancelled, so the message carries her booking link.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "انتهى هذا الموعد أو أُلغي، لذلك تتضمن الرسالة رابط المواعيد الخاص بك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieser Termin ist vorbei oder abgesagt, deshalb enthält die Nachricht deinen Buchungslink."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This visit is no longer ahead, so the message has your booking link."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This visit is no longer ahead, so the message has your booking link."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita ya ha pasado o se ha cancelado, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita ya pasó o se canceló, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita ya pasó o se canceló, así que el mensaje lleva tu enlace de reserva."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce rendez-vous est passé ou annulé, le message contient donc votre lien de réservation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह अपॉइंटमेंट बीत चुका है या रद्द हो चुका है, इसलिए मैसेज में आपका अपॉइंटमेंट लिंक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janji temu ini sudah lewat atau dibatalkan, jadi pesannya berisi tautan janji temu kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Questo appuntamento è passato o annullato, quindi il messaggio contiene il tuo link di prenotazione."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este horário já passou ou foi cancelado, então a mensagem leva seu link de agendamento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta marcação já passou ou foi desmarcada, por isso a mensagem leva o seu link de marcação."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu randevu geçti veya iptal edildi, bu yüzden mesajda randevu bağlantınız var."
+          }
+        }
+      }
+    },
+    "messageClient.link.offline" : {
+      "comment" : "Message sheet (3.6): offline, the message carries her booking link; Open tries again. %@ is the client's first name.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا يوجد اتصال بالإنترنت، لذلك تتضمن الرسالة رابط المواعيد الخاص بك. عند الإرسال تُعاد محاولة الحصول على رابط %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Du bist offline, deshalb enthält die Nachricht deinen Buchungslink. Beim Senden wird der Link für %@ erneut angefragt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are offline, so the message has your booking link. Sending tries %@'s own link again."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "You are offline, so the message has your booking link. Sending tries %@'s own link again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No tienes conexión, así que el mensaje lleva tu enlace de reserva. Al enviar, se vuelve a intentar el enlace de %@."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No tienes conexión, así que el mensaje lleva tu enlace de reserva. Al enviar, se vuelve a intentar el enlace de %@."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No tienes conexión, así que el mensaje lleva tu enlace de reserva. Al enviar, se vuelve a intentar el enlace de %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vous êtes hors ligne, le message contient donc votre lien de réservation. À l'envoi, le lien de %@ sera de nouveau demandé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आप ऑफ़लाइन हैं, इसलिए मैसेज में आपका अपॉइंटमेंट लिंक है। भेजते समय %@ का निजी लिंक फिर से आज़माया जाएगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kamu sedang offline, jadi pesannya berisi tautan janji temu kamu. Saat dikirim, tautan untuk %@ dicoba lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sei offline, quindi il messaggio contiene il tuo link di prenotazione. All'invio si riprova con il link di %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Você está sem internet, então a mensagem leva seu link de agendamento. Ao enviar, o app tenta de novo o link de %@."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Está sem internet, por isso a mensagem leva o seu link de marcação. Ao enviar, a app volta a tentar o link de %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimdışısınız, bu yüzden mesajda randevu bağlantınız var. Gönderirken %@ için kişisel bağlantı yeniden denenir."
+          }
+        }
+      }
+    },
+    "messageClient.link.preparing" : {
+      "comment" : "Message sheet (3.6): quiet line while the server prepares the client's own link.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "جارٍ تجهيز الرابط…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Link wird vorbereitet…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing the link…"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparing the link…"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparando el enlace…"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparando el enlace…"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparando el enlace…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Préparation du lien…"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "लिंक तैयार हो रहा है…"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Menyiapkan tautan…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparo il link…"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preparando o link…"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A preparar o link…"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantı hazırlanıyor…"
+          }
+        }
+      }
+    },
     "messageClient.open" : {
       "comment" : "Button: open WhatsApp with the message ready.",
       "extractionState" : "manual",

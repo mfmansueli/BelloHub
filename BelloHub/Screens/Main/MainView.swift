@@ -92,6 +92,7 @@ struct MainView: View {
         .environment(AppointmentService(vault: VaultService(repository: nil)))
         .environment(TimeBlockService(vault: VaultService(repository: nil)))
         .environment(MessageService(vault: VaultService(repository: nil)))
+        .environment(ClientLinkService(repository: OfflineInboxRepository()))
         .environment(AgendaDigestService(
             appointments: AppointmentService(vault: vault), timeBlocks: TimeBlockService(vault: vault), vault: vault
         ))

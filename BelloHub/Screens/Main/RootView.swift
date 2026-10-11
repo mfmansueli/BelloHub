@@ -110,6 +110,7 @@ struct RootView: View {
         .environment(mailbox)
         .environment(push)
         .environment(clientDeletion)
+        .environment(dependencies.inbox.clientLinks)
         .treatmentTools(dependencies.treatmentTools)
         .environment(publishing)
         .environment(subscription)
@@ -164,6 +165,7 @@ struct RootView: View {
                 push.stopListening()
                 mailbox.stopListening()
                 bookingSync.stopListening()
+                dependencies.inbox.clientLinks.clear()
             }
             // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
             if stage.isSignedOut {

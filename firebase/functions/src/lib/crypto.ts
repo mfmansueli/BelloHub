@@ -13,6 +13,11 @@ export function keyedHash(pepper: string, label: string, value: string): string 
   return createHmac('sha256', pepper).update(`${label}\u0000${value}`, 'utf8').digest('hex');
 }
 
+/** A keyed digest as bytes (the keyed hash above is its hex form), domain-separated by `label`. */
+export function keyedDigest(pepper: string, label: string, value: string): Buffer {
+  return createHmac('sha256', pepper).update(`${label}\u0000${value}`, 'utf8').digest();
+}
+
 export function base64url(bytes: Uint8Array): string {
   return Buffer.from(bytes).toString('base64url');
 }

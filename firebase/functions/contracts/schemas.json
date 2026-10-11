@@ -2491,6 +2491,43 @@
       "additionalProperties": false
     }
   },
+  "mintManageLink": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        }
+      },
+      "required": [
+        "bookingId"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "maxLength": 300,
+          "format": "uri"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "url",
+        "expiresAt"
+      ],
+      "additionalProperties": false
+    }
+  },
   "moveBookingByOwner": {
     "access": "owner",
     "input": {

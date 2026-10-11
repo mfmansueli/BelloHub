@@ -9,6 +9,10 @@ import Observation
 /// State and actions of the message sheet (3.6): her quick replies, the one she picked filled in for this visit, and
 /// the button that opens the chat. The app never sends by itself (D14): it opens WhatsApp (or Messages, or the share
 /// sheet) with the text ready, and she presses send.
+///
+/// `{link}` is the client's own link to change or cancel when the visit came from her booking page (`ClientLinkService`
+/// asks the server when the sheet opens, and again on Open if that failed), otherwise her booking page; `linkChoice`
+/// says which, for the quiet line under the preview.
 @MainActor
 @Observable
 final class MessageClientViewModel {
@@ -23,17 +27,23 @@ final class MessageClientViewModel {
     private(set) var isWorking = false
     /// How the last "Open" ended; nil before she presses it.
     private(set) var outcome: MessageService.Outcome?
+    /// The link `{link}` carries and why; nil until it is prepared.
+    private(set) var linkChoice: ClientLinkChoice?
+    /// The server is preparing the client's own link: Open waits for it.
+    private(set) var isPreparingLink = false
 
     private let appointments: AppointmentService
     private let vault: VaultService
     private let profile: ProfileService
     private let setup: BookingSetupService
     private let messages: MessageService
+    private let links: ClientLinkService
     private let now: @Sendable () -> Date
 
     init(
         appointmentID: UUID, appointments: AppointmentService, vault: VaultService, profile: ProfileService,
-        setup: BookingSetupService, messages: MessageService, now: @escaping @Sendable () -> Date = { Date() }
+        setup: BookingSetupService, messages: MessageService, links: ClientLinkService,
+        now: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.appointmentID = appointmentID
         self.appointments = appointments
@@ -41,6 +51,7 @@ final class MessageClientViewModel {
         self.profile = profile
         self.setup = setup
         self.messages = messages
+        self.links = links
         self.now = now
         business = AgendaBusinessContext(profile: profile.profile)
     }
@@ -56,15 +67,25 @@ final class MessageClientViewModel {
         MessageLinks.digits(ofE164: visit?.client.phoneE164) != nil
     }
 
-    /// The text as it will open, filled in for this visit.
+    /// The selected message has a link in it, so the sheet says which one.
+    var showsLinkLine: Bool {
+        selectedReply?.text.contains(QuickReplyVariable.link.token) == true
+    }
+
+    /// The text as it will open, filled in for this visit. Until the client's own link is ready it shows her booking
+    /// page; Open waits for the link.
     var text: String? {
         guard let visit, let reply = selectedReply else { return nil }
-        let link = setup.setup.slug.map { BookingLink(slug: $0).messageText }
+        let link = linkChoice?.link ?? bookingPage?.messageText
         return AppointmentMessageComposer.text(
             for: .quickReply(reply),
             values: AppointmentMessageComposer.values(client: visit.client, appointment: visit.appointment, link: link),
             localization: business.localization, formatters: business.messageFormatters
         )
+    }
+
+    private var bookingPage: BookingLink? {
+        setup.setup.slug.map { BookingLink(slug: $0) }
     }
 
     // MARK: - Actions
@@ -91,6 +112,7 @@ final class MessageClientViewModel {
             }
             errorMessage = nil
             isLoading = false
+            await prepareLink(for: loaded.appointment)
         } catch {
             isLoading = false
             errorMessage = String(interface: LocalizedStringResource("messageClient.error.load"))
@@ -107,9 +129,12 @@ final class MessageClientViewModel {
     }
 
     func openAsync() async {
-        guard !isWorking, let visit, let reply = selectedReply, let text else { return }
+        guard !isWorking, !isPreparingLink, let visit, let reply = selectedReply else { return }
         isWorking = true
         defer { isWorking = false }
+        // The sheet opened offline or the server did not answer: one more try now that she is sending.
+        if showsLinkLine, linkChoice?.canRetry == true { await prepareLink(for: visit.appointment) }
+        guard let text else { return }
         outcome = await messages.send(
             text: text, to: visit.client.id, phoneE164: visit.client.phoneE164,
             template: AppointmentMessageKind.quickReply(reply).logTemplate, preferred: business.preferredChannel,
@@ -120,6 +145,14 @@ final class MessageClientViewModel {
            visit.appointment.status.holdsTime {
             _ = try? await appointments.markReminderSent(id: visit.appointment.id, now: now())
         }
+    }
+
+    /// Asks for the client's own link (or settles on her booking page) for this visit.
+    func prepareLink(for appointment: Appointment) async {
+        guard !isPreparingLink else { return }
+        isPreparingLink = true
+        defer { isPreparingLink = false }
+        linkChoice = await links.choice(for: appointment, bookingPage: bookingPage)
     }
 
     func dismissShare() {

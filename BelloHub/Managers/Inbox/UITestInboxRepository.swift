@@ -117,6 +117,17 @@ actor UITestInboxRepository: InboxRepository {
         return .suggested(holdKey: "suggest-\(bookingId)", expiresAt: Date().addingTimeInterval(3 * 3_600))
     }
 
+    /// A fixed 22-character token per booking, so a UI test can find the exact link in the message.
+    func mintManageLink(bookingId: String) async throws -> ClientManageLink {
+        guard let booking = bookings.first(where: { $0.id == bookingId }), booking.status.holdsTime else {
+            throw BookingRepositoryError.rejected
+        }
+        let letters = bookingId.filter { $0.isLetter || $0.isNumber }
+        let token = String(("UITest" + letters + String(repeating: "x", count: 22)).prefix(22))
+        let url = BookingLink.defaultBaseURL.appending(path: "m").appending(path: token)
+        return ClientManageLink(url: url, expiresAt: booking.endsAt.addingTimeInterval(7 * 86_400))
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         waitlist.removeAll { $0.id == id }
     }

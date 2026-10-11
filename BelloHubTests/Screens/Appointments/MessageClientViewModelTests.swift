@@ -13,7 +13,7 @@ struct MessageClientViewModelTests {
     private func makeModel(_ store: AppointmentTestStore, visitID: UUID) -> MessageClientViewModel {
         MessageClientViewModel(
             appointmentID: visitID, appointments: store.appointments, vault: store.vault, profile: store.profile,
-            setup: store.setup, messages: store.messages, now: { [now = store.now] in now }
+            setup: store.setup, messages: store.messages, links: store.links, now: { [now = store.now] in now }
         )
     }
 
@@ -102,5 +102,80 @@ struct MessageClientViewModelTests {
         await model.loadAsync()
         #expect(model.isMissing)
         #expect(model.text == nil)
+    }
+
+    // MARK: - The client's own link (mintManageLink)
+
+    private func withSlug(_ store: AppointmentTestStore) async throws {
+        var setup = store.setup.setup
+        setup.slug = "maria"
+        try await store.setup.saveSetup(setup)
+    }
+
+    @Test("A visit from the booking page carries the client's own link to change or cancel, on its own line")
+    func manageLinkForBookingPageVisit() async throws {
+        let store = await AppointmentTestStore()
+        try await withSlug(store)
+        let visit = await store.save(hoursFromNow: 48, bookingID: "bk-1")
+        let model = makeModel(store, visitID: visit.id)
+
+        await model.loadAsync()
+
+        let choice = try #require(model.linkChoice)
+        #expect(choice.source == .manageLink)
+        let link = try #require(choice.link)
+        #expect(link.hasPrefix("https://bellohub.app/m/"))
+        #expect(model.text?.contains("\n\(link)") == true)
+        #expect(model.text?.contains("bellohub.app/maria") == false)
+        #expect(model.showsLinkLine && !model.isPreparingLink)
+        #expect(await store.inbox.writes == ["mintManageLink:bk-1"])
+    }
+
+    @Test("A visit she added herself carries her booking page, and says why")
+    func bookingPageForManualVisit() async throws {
+        let store = await AppointmentTestStore()
+        try await withSlug(store)
+        let visit = await store.save(hoursFromNow: 48)
+        let model = makeModel(store, visitID: visit.id)
+
+        await model.loadAsync()
+
+        let expected = ClientLinkChoice(source: .bookingPage(.addedByHand), link: "https://bellohub.app/maria")
+        #expect(model.linkChoice == expected)
+        #expect(model.text?.contains("\nhttps://bellohub.app/maria") == true)
+        #expect(await store.inbox.writes.isEmpty, "no server call for a visit the server does not know")
+    }
+
+    @Test("Offline the booking page goes in; pressing Open tries the client's own link again")
+    func offlineThenRetryOnOpen() async throws {
+        let store = await AppointmentTestStore()
+        try await withSlug(store)
+        let visit = await store.save(hoursFromNow: 48, bookingID: "bk-1")
+        await store.inbox.setWriteFailure(.unreachable)
+        let model = makeModel(store, visitID: visit.id)
+
+        await model.loadAsync()
+        #expect(model.linkChoice?.source == .bookingPage(.offline))
+        #expect(model.text?.contains("https://bellohub.app/maria") == true)
+
+        await store.inbox.setWriteFailure(nil)
+        await model.openAsync()
+
+        #expect(model.linkChoice?.source == .manageLink)
+        let opened = try #require(store.sender.opened.first?.absoluteString)
+        #expect(opened.contains(MessageLinks.encoded("https://bellohub.app/m/")))
+    }
+
+    @Test("A server refusal falls back to the booking page as 'could not be prepared'")
+    func failedFallsBack() async throws {
+        let store = await AppointmentTestStore()
+        try await withSlug(store)
+        let visit = await store.save(hoursFromNow: 48, bookingID: "bk-1")
+        await store.inbox.setWriteFailure(.rejected)
+        let model = makeModel(store, visitID: visit.id)
+
+        await model.loadAsync()
+
+        #expect(model.linkChoice == ClientLinkChoice(source: .bookingPage(.failed), link: "https://bellohub.app/maria"))
     }
 }

@@ -14,11 +14,11 @@ struct MessageClientContentView: View {
 
     init(
         appointmentID: UUID, appointments: AppointmentService, vault: VaultService, profile: ProfileService,
-        setup: BookingSetupService, messages: MessageService
+        setup: BookingSetupService, messages: MessageService, links: ClientLinkService
     ) {
         _viewModel = State(initialValue: MessageClientViewModel(
             appointmentID: appointmentID, appointments: appointments, vault: vault, profile: profile, setup: setup,
-            messages: messages
+            messages: messages, links: links
         ))
     }
 
@@ -117,8 +117,71 @@ struct MessageClientContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Palette.sageWash, in: RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
                     .accessibilityIdentifier("messageClient.preview")
+                if viewModel.showsLinkLine { linkNote }
             }
         }
+    }
+
+    /// Which link the message carries, said quietly: her client's own link to change or cancel, or her booking page and
+    /// why.
+    @ViewBuilder
+    private var linkNote: some View {
+        if viewModel.isPreparingLink {
+            HStack(spacing: Spacing.sm) {
+                ProgressView()
+                Text("messageClient.link.preparing")
+            }
+            .font(Typography.meta).foregroundStyle(Palette.ink2)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("messageClient.linkNote.preparing")
+        } else if let choice = viewModel.linkChoice, choice.link != nil {
+            Label { Text(linkNoteText(choice)) } icon: { Image(icon: choice.source == .manageLink ? .check : .link) }
+                .font(Typography.meta).foregroundStyle(Palette.ink2)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("messageClient.linkNote.\(linkNoteID(choice))")
+        }
+    }
+
+    private func linkNoteText(_ choice: ClientLinkChoice) -> LocalizedStringResource {
+        let name = clientFirstName
+        switch choice.source {
+        case .manageLink:
+            return LocalizedStringResource(
+                "messageClient.link.manage", defaultValue: "The link lets \(name) change or cancel this visit."
+            ).localized(in: locale)
+        case .bookingPage(.addedByHand):
+            return LocalizedStringResource("messageClient.link.addedByHand").localized(in: locale)
+        case .bookingPage(.notActive):
+            return LocalizedStringResource("messageClient.link.notActive").localized(in: locale)
+        case .bookingPage(.offline):
+            return LocalizedStringResource(
+                "messageClient.link.offline",
+                defaultValue: """
+                You are offline, so the message has your booking link. Sending tries \(name)'s own link again.
+                """
+            ).localized(in: locale)
+        case .bookingPage(.failed):
+            return LocalizedStringResource(
+                "messageClient.link.failed",
+                defaultValue: "\(name)'s own link could not be prepared, so the message has your booking link."
+            ).localized(in: locale)
+        }
+    }
+
+    private func linkNoteID(_ choice: ClientLinkChoice) -> String {
+        switch choice.source {
+        case .manageLink: "manage"
+        case .bookingPage(.addedByHand): "addedByHand"
+        case .bookingPage(.notActive): "notActive"
+        case .bookingPage(.offline): "offline"
+        case .bookingPage(.failed): "failed"
+        }
+    }
+
+    private var clientFirstName: String {
+        let name = viewModel.visit?.client.name ?? ""
+        let first = name.split(separator: " ").first.map(String.init) ?? name
+        return BidiIsolate.wrap(first)
     }
 
     @ViewBuilder
@@ -144,7 +207,7 @@ struct MessageClientContentView: View {
             }
         }
         .buttonStyle(.belloPrimary)
-        .disabled(viewModel.selectedReply == nil || viewModel.isWorking)
+        .disabled(viewModel.selectedReply == nil || viewModel.isWorking || viewModel.isPreparingLink)
         .padding(.horizontal, Spacing.gutter)
         .padding(.vertical, Spacing.md)
         .background(Palette.bg)

@@ -44,6 +44,8 @@ export const RATE = {
   publishOwner: perMinute(30),
   mailboxOwner: perMinute(120),
   ownerCalls: perMinute(120),
+  /** "Message <client>" asks for the client's own manage link (`mintManageLink`). */
+  manageLinkOwner: perHour(60),
   deleteOwnerDay: perDay(20)
 } as const;
 
@@ -59,6 +61,8 @@ export const EMAIL_PROOF_TTL_SECONDS = 1800;
 export const PHONE_AUTH_MAX_AGE_SECONDS = 600;
 
 export const MAX_MANAGE_TOKENS_PER_BOOKING = 5;
+/** `mintManageLink` returns the same link for this long, so opening the message sheet twice does not use up a token. */
+export const MANAGE_LINK_REUSE_MINUTES = 30;
 /** An unverified (WhatsApp) request waits at most this long for her answer, then the time is released. */
 export const UNVERIFIED_REQUEST_HOURS = 24;
 /** Unverified requests one phone or one e-mail may have waiting with one professional at the same time. */

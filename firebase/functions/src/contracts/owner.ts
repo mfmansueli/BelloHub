@@ -133,6 +133,12 @@ export const moveBookingByOwner = {
   output: z.strictObject({ startsAt: Instant, endsAt: Instant })
 };
 
+/** "Message <client>" (3.6): the client's own link to change or cancel, for the message she sends herself. */
+export const mintManageLink = {
+  input: z.strictObject({ bookingId: DocId }),
+  output: z.strictObject({ url: z.url().max(300), expiresAt: Instant })
+};
+
 export const suggestBookingTime = {
   input: z.strictObject({
     bookingId: DocId,

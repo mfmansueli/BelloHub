@@ -632,6 +632,20 @@ The app sends the link on WhatsApp; no email is sent. Booking through the link f
 `bookingLink` origin (only an offer tied to a waitlist entry makes a `waitlist` booking).
 
 ```ts
+mintManageLink: req { bookingId: string }
+                res { url: string /* <web>/m/<token> */; expiresAt: Instant /* the token's end: visit end + 7 days */ }
+```
+"Message <client>" (3.6): the client's **own link to change or cancel**, for the WhatsApp message the professional sends
+herself (the app cannot build it: the server keeps only token hashes). Only her own booking (`NOT_FOUND` otherwise),
+only while it is `confirmed` or `pendingApproval` and has not ended (`BOOKING_NOT_ACTIVE` otherwise; the app then uses
+her booking page). It reuses the manage-token machinery: the new token's SHA-256 joins `manageTokenHashes` (at most five
+valid, the oldest dropped), nothing else is stored but `ownerLinkMintedAt`. **Idempotent for 30 minutes without keeping
+the token:** the token is `base64url(HMAC-SHA256(pepper, "ownerManageLink\0<bookingId>|<mintedAtMs>")[0..16])`, so a
+second call inside the window derives the same link from `ownerLinkMintedAt` (a fresh one when five newer links pushed it
+out). Limit: 60/hour per professional. Logs the uid, the booking id and whether the link was reused (`status`); never the token or
+the URL; no audit document.
+
+```ts
 markNoShow: req { phone: E164; action: "mark" | "forgive" | "reset"; markId?: Uuid; markedAt?: Instant; bookingId?: string }
             res { counted: number }
 setOnlineBookingStopped: req { phone: E164; stopped: boolean }   res { ok: true }
@@ -765,7 +779,7 @@ Public / token: `getPublicPage` `getSlots` `holdSlot` `getHold` `sendEmailCode` 
 
 Owner: `ensureAccount` `reserveRegistration` `reserveRegistrations` `syncPlan` `isSlugAvailable` `claimSlug`
 `publishProfile` `publishAvailability` `updateInboxKey` `respondBookingRequest` `respondRescheduleRequest`
-`cancelBookingByOwner` `moveBookingByOwner` `suggestBookingTime` `offerWaitlistSlot` `removeWaitlistEntry` `markNoShow`
+`cancelBookingByOwner` `moveBookingByOwner` `suggestBookingTime` `mintManageLink` `offerWaitlistSlot` `removeWaitlistEntry` `markNoShow`
 `setOnlineBookingStopped` `publishPortal` `getMailboxItem` `acknowledgeMailboxItem` `registerDevice` `unregisterDevice`
 `deleteClientServerData` `deleteAccount`
 

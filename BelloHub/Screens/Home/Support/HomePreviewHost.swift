@@ -26,6 +26,7 @@ struct HomePreviewHost<Content: View>: View {
                     .environment(world.timeBlocks)
                     .environment(world.bookingSetup)
                     .environment(MessageService(vault: world.vault))
+                    .environment(ClientLinkService(repository: OfflineInboxRepository()))
                     .environment(PermissionService(provider: UITestPermissionProvider()))
                     .environment(digest)
                     .environment(inbox)

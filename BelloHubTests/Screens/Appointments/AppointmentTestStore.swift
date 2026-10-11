@@ -18,6 +18,9 @@ struct AppointmentTestStore {
     let appointments: AppointmentService
     let messages: MessageService
     let sender: FakeMessageSender
+    /// The inbox server behind `links`: mints the client's own link (`FakeInboxRepository`).
+    let inbox: FakeInboxRepository
+    let links: ClientLinkService
     let client: Client
 
     init(now: Date = TestClock.now) async {
@@ -29,6 +32,8 @@ struct AppointmentTestStore {
         appointments = AppointmentService(repository: repository)
         sender = FakeMessageSender()
         messages = MessageService(repository: repository, sender: sender)
+        inbox = FakeInboxRepository()
+        links = ClientLinkService(repository: inbox, now: { now })
         client = Client(name: "Beatriz Lima", phoneE164: "+5511970001111", createdAt: now.addingTimeInterval(-86_400))
         await repository.save(client)
     }
@@ -37,14 +42,18 @@ struct AppointmentTestStore {
     @discardableResult
     func save(
         hoursFromNow: Double, status: AppointmentStatus = .booked, serviceName: String = "Facial",
-        clientID: UUID? = nil, forgiven: Bool = false
+        clientID: UUID? = nil, forgiven: Bool = false, bookingID: String? = nil
     ) async -> Appointment {
         let start = now.addingTimeInterval(hoursFromNow * 3600)
-        let visit = Appointment(
+        var visit = Appointment(
             clientID: clientID ?? client.id, serviceName: serviceName, startsAt: start,
             endsAt: start.addingTimeInterval(3600), totalMinutes: 60, status: status, noShowForgiven: forgiven,
             createdAt: start.addingTimeInterval(-86_400)
         )
+        if let bookingID {
+            visit.bookingID = bookingID
+            visit.origin = .bookingLink
+        }
         await repository.save(visit)
         return visit
     }

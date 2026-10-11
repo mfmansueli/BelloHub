@@ -14,6 +14,7 @@ struct MessageClientView: View {
     @Environment(ProfileService.self) private var profile
     @Environment(BookingSetupService.self) private var setup
     @Environment(MessageService.self) private var messages
+    @Environment(ClientLinkService.self) private var links
 
     init(appointmentID: UUID) {
         self.appointmentID = appointmentID
@@ -22,7 +23,7 @@ struct MessageClientView: View {
     var body: some View {
         MessageClientContentView(
             appointmentID: appointmentID, appointments: appointments, vault: vault, profile: profile, setup: setup,
-            messages: messages
+            messages: messages, links: links
         )
     }
 }

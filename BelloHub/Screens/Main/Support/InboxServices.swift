@@ -5,8 +5,9 @@
 
 import Foundation
 
-/// The four inbox Services (outbound queue, booking sync, mailbox, push) of one session. They depend on each other in
-/// a fixed order, so `AppDependencies` builds them together here instead of repeating the wiring in each factory.
+/// The inbox Services (outbound queue, booking sync, mailbox, push, client links) of one session. They depend on each
+/// other in a fixed order, so `AppDependencies` builds them together here instead of repeating the wiring in each
+/// factory.
 @MainActor
 struct InboxServices {
     let queue: OutboundQueue
@@ -15,6 +16,8 @@ struct InboxServices {
     let push: PushService
     /// Deleting a client's data on the phone and, through the queue, on the server.
     let clientDeletion: ClientDataDeletionService
+    /// The client's own link to change or cancel, for the messages she sends.
+    let clientLinks: ClientLinkService
 
     /// Wires the Services over one inbox server. The defaults are the live ones; UI tests pass short retry delays, no
     /// polling and a notifier that never asks iOS.
@@ -38,7 +41,8 @@ struct InboxServices {
         )
         return InboxServices(
             queue: queue, bookings: bookings, mailbox: mailbox, push: push,
-            clientDeletion: ClientDataDeletionService(vault: vault, queue: queue)
+            clientDeletion: ClientDataDeletionService(vault: vault, queue: queue),
+            clientLinks: ClientLinkService(repository: repository)
         )
     }
 }

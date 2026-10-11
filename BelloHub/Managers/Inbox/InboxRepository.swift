@@ -23,6 +23,9 @@ protocol InboxRepository: Sendable {
     func offerWaitlistSlot(_ offer: WaitlistOffer) async throws -> WaitlistOfferOutcome
     /// "Suggest another time": declines the request and holds `startsAt` for the client (`suggestBookingTime`).
     func suggestBookingTime(bookingId: String, startsAt: Date) async throws -> BookingSuggestionOutcome
+    /// The client's own link to change or cancel one booking (`mintManageLink`), for a message she sends herself. The
+    /// server returns the same link for 30 minutes and refuses a booking that no longer holds time.
+    func mintManageLink(bookingId: String) async throws -> ClientManageLink
     func removeWaitlistEntry(id: String) async throws
     /// `markNoShow` with `reset`: her count starts from zero and online booking opens again for her (2.10).
     func resetNoShowCount(phone: String) async throws

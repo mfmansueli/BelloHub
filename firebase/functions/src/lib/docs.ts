@@ -213,6 +213,12 @@ export interface BookingDoc extends TimingFields {
   intakeSubmittedAt?: Timestamp;
   reminderSentAt?: Timestamp;
   /**
+   * When the professional's app last asked for this booking's manage link (`mintManageLink`). The token itself is never
+   * stored: it is derived from the pepper, the booking id and this instant, so a second call within the reuse window
+   * returns the same link instead of using up one of the five.
+   */
+  ownerLinkMintedAt?: Timestamp;
+  /**
    * `whatsapp`: the client could not receive the e-mail code and confirms with the professional on WhatsApp. The booking
    * is a request (`pendingApproval`) whose contact details are NOT verified; `reference` is the code she quotes in her
    * message and `pendingExpiresAt` is when the time is released if nobody answers. Absent: verified (code or device).

@@ -92,6 +92,12 @@ struct RemoteInboxRepository: InboxRepository {
         return .slotTaken
     }
 
+    func mintManageLink(bookingId: String) async throws -> ClientManageLink {
+        let answer: ManageLinkAnswer = try await perform("mintManageLink", BookingIDRequest(bookingId: bookingId))
+        guard let url = URL(string: answer.url), url.scheme == "https" else { throw BookingRepositoryError.rejected }
+        return ClientManageLink(url: url, expiresAt: answer.expiresAt)
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         let _: Acknowledged = try await perform("removeWaitlistEntry", WaitlistIDRequest(waitlistId: id))
     }
@@ -199,6 +205,13 @@ struct RemoteInboxRepository: InboxRepository {
         let status: String
         let holdKey: String?
         let expiresAt: Date?
+    }
+
+    private struct BookingIDRequest: Encodable { let bookingId: String }
+
+    private struct ManageLinkAnswer: Decodable {
+        let url: String
+        let expiresAt: Date
     }
 
     private struct NoShowRequest: Encodable {

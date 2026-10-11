@@ -1,7 +1,7 @@
 import type { DocumentReference, Firestore } from 'firebase-admin/firestore';
 
 import { MAX_MANAGE_TOKENS_PER_BOOKING } from '../config/limits.js';
-import { sha256Hex } from './crypto.js';
+import { base64url, keyedDigest, sha256Hex } from './crypto.js';
 import type { BookingDoc } from './docs.js';
 import { AppError } from './errors.js';
 import type { Reader } from './store.js';
@@ -31,6 +31,16 @@ export async function findBookingByToken(reader: Reader, db: Firestore, token: s
   const data = snapshot.data() as BookingDoc;
   if (now >= ms(data.purgeAt)) throw new AppError('TOKEN_EXPIRED');
   return { id: snapshot.id, ref: snapshot.ref, data };
+}
+
+/**
+ * The manage token the professional's app gets for a booking (`mintManageLink`): 128 bits derived from the pepper, the
+ * booking id and the instant it was minted, in the same 22-character form as a random token. Only its hash is stored;
+ * deriving it again from `ownerLinkMintedAt` is what makes the call idempotent for a while without keeping the token.
+ * Unguessable without the pepper (Secret Manager, never rotated).
+ */
+export function ownerLinkToken(pepper: string, bookingId: string, mintedAtMs: number): string {
+  return base64url(keyedDigest(pepper, 'ownerManageLink', `${bookingId}|${mintedAtMs}`).subarray(0, 16));
 }
 
 /** The hashes after adding one: at most five tokens stay valid, the oldest is dropped (findBookings mints more). */
