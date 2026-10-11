@@ -11,6 +11,8 @@ import SwiftUI
 /// to it). Photos are private to her unless the client signed the photo consent.
 struct PhotosStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
+    /// Closes the flow when "Continue" leaves nothing open (routine-a item 7).
+    var onClose: () -> Void = {}
 
     @State private var picked: PhotosPickerItem?
     @Environment(\.locale) private var locale
@@ -18,6 +20,7 @@ struct PhotosStepView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
+                ClosingProgress(step: .photos)
                 VStack(alignment: .leading, spacing: Spacing.xs) {
                     Text("treatmentFlow.photos.title").font(Typography.title).foregroundStyle(Palette.ink)
                         .accessibilityAddTraits(.isHeader)
@@ -45,7 +48,10 @@ struct PhotosStepView: View {
                 PhotosPicker(selection: $picked, matching: .images) { Text("treatmentFlow.photos.library") }
                     .buttonStyle(.belloSecondary)
                     .accessibilityIdentifier("treatmentFlow.photos.libraryButton")
-                Button { viewModel.path.removeAll { $0 == .photos } } label: { Text("treatmentFlow.photos.continue") }
+                // Done or skipped, the photos step is settled and the next open step follows (routine-a item 7).
+                Button { if !viewModel.advance(from: .photos) { onClose() } } label: {
+                    Text("treatmentFlow.photos.continue")
+                }
                     .buttonStyle(.belloTertiary)
                     .accessibilityIdentifier("treatmentFlow.photos.continueButton")
             }

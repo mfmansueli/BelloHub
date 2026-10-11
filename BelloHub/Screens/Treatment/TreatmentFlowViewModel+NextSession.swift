@@ -27,6 +27,8 @@ extension TreatmentFlowViewModel {
     @discardableResult
     func saveSuggestion(formatters: Formatters) async -> Bool {
         guard let repository, var record = savedRecord else { return true }
+        // A locked record changes only through a correction (RecordLockPolicy).
+        guard isRecordEditable else { return false }
         record.nextSessionSuggestion = formatters.weeks(nextWeeks)
         do {
             try await repository.save(record)

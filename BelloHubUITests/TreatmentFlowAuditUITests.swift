@@ -67,13 +67,7 @@ final class TreatmentFlowAuditUITests: XCTestCase {
         XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15), "\(tag) saved")
         try audit(app, "\(tag) saved")
 
-        app.tapButton("treatmentFlow.saved.nextSessionButton")
-        XCTAssertTrue(app.element("treatmentFlow.next").waitForExistence(timeout: 10), "\(tag) next session")
-        try audit(app, "\(tag) next session")
-        app.tapButton("treatmentFlow.next.skipButton")
-
-        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 10))
-        app.tapButton("treatmentFlow.saved.photosButton")
+        app.tapButton("treatmentFlow.saved.continueButton")
         XCTAssertTrue(app.element("treatmentFlow.photos").waitForExistence(timeout: 10), "\(tag) photos")
         try audit(app, "\(tag) photos")
         app.tapButton("treatmentFlow.photos.takeButton")
@@ -82,6 +76,13 @@ final class TreatmentFlowAuditUITests: XCTestCase {
         app.tapButton("treatmentFlow.camera.captureButton")
         XCTAssertTrue(app.element("treatmentFlow.camera.reviewScreen").waitForExistence(timeout: 10), "\(tag) shot")
         try audit(app, "\(tag) review photo")
+        app.tapButton("treatmentFlow.camera.saveButton")
+        app.tapButton("treatmentFlow.photos.continueButton")
+        XCTAssertTrue(app.element("treatmentFlow.aftercare").waitForExistence(timeout: 10), "\(tag) aftercare")
+        try audit(app, "\(tag) aftercare")
+        app.tapButton("treatmentFlow.aftercare.nextButton")
+        XCTAssertTrue(app.element("treatmentFlow.next").waitForExistence(timeout: 10), "\(tag) next session")
+        try audit(app, "\(tag) next session")
         app.terminate()
     }
 

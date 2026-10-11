@@ -70,12 +70,16 @@ final class TreatmentFlowViewModel {
     var suggestionSaved = false
     /// The names in her product list, offered while she fills in the products used.
     private(set) var productNames: [String] = []
+    /// How far the closing of the saved visit went (routine-a item 7).
+    var closing: VisitClosing?
 
     let repository: (any ClientRecordRepository)?
     let profile: ProfileService
     let voice: any VoiceCapturing
     let structuring: any RecordStructuring
     let photoProcessing: any PhotoProcessing
+    /// Where the closing progress is kept (per user, on this iPhone); nil in tests that do not look at it.
+    let closings: FollowUpQueueService?
     let now: @Sendable () -> Date
     let makeID: @Sendable () -> UUID
     let fallbackServiceName: String
@@ -94,6 +98,7 @@ final class TreatmentFlowViewModel {
         voice: any VoiceCapturing = UnavailableVoiceCapture(),
         structuring: any RecordStructuring = UnavailableRecordStructuring(),
         photoProcessing: any PhotoProcessing = ImageIOPhotoProcessing(),
+        closings: FollowUpQueueService? = nil,
         fallbackServiceName: String,
         notesName: String,
         recommendationName: String,
@@ -106,12 +111,14 @@ final class TreatmentFlowViewModel {
         self.voice = voice
         self.structuring = structuring
         self.photoProcessing = photoProcessing
+        self.closings = closings
         self.fallbackServiceName = fallbackServiceName
         self.notesName = notesName
         self.recommendationName = recommendationName
         self.now = now
         self.makeID = makeID
-        self.recordID = makeID()
+        // A resumed closing works on the record it names, so it can never become a second record.
+        self.recordID = request.resumeRecordID ?? makeID()
     }
 
     // MARK: - Derived
@@ -183,6 +190,7 @@ final class TreatmentFlowViewModel {
             nextWeeks = NextSessionRules.suggestedWeeks(serviceFollowUpWeeks: service?.followUpWeeks)
             await refreshVoiceAvailability()
             loadState = .ready
+            await resumeIfRequested()
         } catch {
             loadState = .failed
         }
@@ -273,6 +281,7 @@ final class TreatmentFlowViewModel {
         do {
             try await repository.save(record)
             savedRecord = record
+            beginClosing()
             path = [.saved]
         } catch {
             failure = .save

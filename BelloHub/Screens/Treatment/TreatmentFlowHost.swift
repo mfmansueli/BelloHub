@@ -56,10 +56,12 @@ struct TreatmentFlowHost: View {
         case .review: ReviewStepView(viewModel: viewModel, onCancel: cancel)
         case .form: FormStepView(viewModel: viewModel)
         case .saved: SavedStepView(viewModel: viewModel, onDone: close)
-        case .photos: PhotosStepView(viewModel: viewModel)
+        case .photos: PhotosStepView(viewModel: viewModel, onClose: close)
+        case .aftercare:
+            AftercareStepView(viewModel: viewModel, onMessage: { agendaSheet = $0 }, onFinishLater: finishLater)
         case .camera(let kind): CameraStepView(viewModel: viewModel, kind: kind)
         case .nextSession:
-            NextSessionStepView(viewModel: viewModel, onBook: { agendaSheet = $0 })
+            NextSessionStepView(viewModel: viewModel, onBook: { agendaSheet = $0 }, onClose: close)
         case .history: RecordHistoryView(clientID: viewModel.clientID)
         }
     }
@@ -69,6 +71,12 @@ struct TreatmentFlowHost: View {
     /// Asks before throwing away what she typed or said; closes at once when there is nothing to lose.
     private func cancel() {
         if viewModel.hasUnsavedWork { confirmsDiscard = true } else { close() }
+    }
+
+    /// "Finish later": what is still open waits in the follow-up queue.
+    private func finishLater() {
+        viewModel.finishLater()
+        close()
     }
 
     private func close() {

@@ -15,7 +15,7 @@ final class TreatmentFlowUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testManualPathSavesTheRecordThenSetsTheNextSessionAndAddsAPhoto() {
+    func testManualPathSavesTheRecordThenWalksPhotosAftercareAndTheNextVisit() {
         let app = XCUIApplication.launchedOnTreatmentFlow()
 
         // Voice is not available in v1: the screen says so calmly and the form is the main action.
@@ -35,23 +35,42 @@ final class TreatmentFlowUITests: XCTestCase {
         XCTAssertTrue(app.element("treatmentFlow.saved.row.notes").label.contains("sensitive"))
         XCTAssertTrue(app.element("treatmentFlow.saved.lock").exists)
 
-        // Next session: pick six weeks and write it into the record.
-        app.tapButton("treatmentFlow.saved.nextSessionButton")
-        XCTAssertTrue(app.element("treatmentFlow.next").waitForExistence(timeout: 10))
-        app.tapButton("treatmentFlow.next.weeks.6")
-        app.tapButton("treatmentFlow.next.saveButton")
-        XCTAssertTrue(app.element("treatmentFlow.next.savedNotice").waitForExistence(timeout: 10))
-        app.tapButton("treatmentFlow.next.skipButton")
+        // The closing path (routine-a item 7): photos, aftercare, next visit, each with "Step n of 4".
+        XCTAssertTrue(app.element("treatmentFlow.closing.progress").exists)
+        app.tapButton("treatmentFlow.saved.continueButton")
 
         // Photos: take one with the (scripted) camera and keep it.
-        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 10))
-        app.tapButton("treatmentFlow.saved.photosButton")
         XCTAssertTrue(app.element("treatmentFlow.photos.consent").waitForExistence(timeout: 10))
         app.tapButton("treatmentFlow.photos.takeButton")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         app.tapButton("treatmentFlow.camera.captureButton")
         app.tapButton("treatmentFlow.camera.saveButton")
         XCTAssertTrue(app.element(withPrefix: "treatmentFlow.photos.row.").waitForExistence(timeout: 20))
+        app.tapButton("treatmentFlow.photos.continueButton")
+
+        // Aftercare: the text goes into the record while it is open.
+        XCTAssertTrue(app.element("treatmentFlow.aftercare").waitForExistence(timeout: 10))
+        app.tapButton("treatmentFlow.aftercare.nextButton")
+
+        // Next session: pick six weeks and write it into the record, then Done closes the flow.
+        XCTAssertTrue(app.element("treatmentFlow.next").waitForExistence(timeout: 10))
+        app.tapButton("treatmentFlow.next.weeks.6")
+        app.tapButton("treatmentFlow.next.saveButton")
+        XCTAssertTrue(app.element("treatmentFlow.next.savedNotice").waitForExistence(timeout: 10))
+        app.tapButton("treatmentFlow.next.skipButton")
+        XCTAssertTrue(app.element("treatmentFlow.next").waitForNonExistence(timeout: 10))
+    }
+
+    func testFinishLaterClosesTheFlowAfterTheRecordIsSaved() {
+        let app = XCUIApplication.launchedOnTreatmentFlow()
+        XCTAssertTrue(app.element("treatmentFlow.register.reason").waitForExistence(timeout: 30))
+        app.tapButton("treatmentFlow.register.manualButton")
+        app.typeNotes("Calm skin.")
+        app.tapButton("treatmentFlow.form.saveButton")
+        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
+
+        app.tapButton("treatmentFlow.saved.doneButton")
+        XCTAssertTrue(app.element("treatmentFlow.saved").waitForNonExistence(timeout: 10))
     }
 
     func testVoicePathReviewsEveryFieldBeforeAnythingIsSaved() {

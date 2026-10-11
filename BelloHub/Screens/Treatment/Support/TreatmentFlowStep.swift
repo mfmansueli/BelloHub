@@ -21,6 +21,8 @@ enum TreatmentFlowStep: Hashable, Sendable {
     case photos
     /// 5.8 Camera, for a before, an after or a progress photo.
     case camera(PhotoKind)
+    /// The aftercare step of the visit's closing (routine-a item 7).
+    case aftercare
     /// 5.9 Tx-7-NextSession.
     case nextSession
     /// "See the full record": the client's record history (4.7).

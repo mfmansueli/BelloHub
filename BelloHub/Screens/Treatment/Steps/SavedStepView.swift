@@ -5,9 +5,10 @@
 
 import SwiftUI
 
-/// 5.6 Tx-5-Saved: the record is in the vault. A summary of this session (the first rows, the rest behind "Show all
-/// details"), the way to the full record, the 24-hour lock in plain words, and the two next things: the next session
-/// and the before and after photos. Done closes the flow.
+/// 5.6 Tx-5-Saved: the record is in the vault, step 1 of the visit's closing (routine-a item 7). A summary of this
+/// session (the first rows, the rest behind "Show all details"), the way to the full record, the 24-hour lock in plain
+/// words, and "Continue" into the optional photos, aftercare and next visit. "Finish later" closes the flow and leaves
+/// the visit in the follow-up queue; once every step is settled the button reads "Done".
 struct SavedStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
     let onDone: () -> Void
@@ -18,6 +19,7 @@ struct SavedStepView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
+                ClosingProgress(step: .saved)
                 header
                 summary
                 historyLink
@@ -35,23 +37,33 @@ struct SavedStepView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(action: onDone) { Text("treatmentFlow.saved.done") }
-                    .accessibilityIdentifier("treatmentFlow.saved.doneButton")
+                Button {
+                    viewModel.finishLater()
+                    onDone()
+                } label: {
+                    Text(hasOpenSteps ? "treatmentFlow.closing.later" : "treatmentFlow.saved.done")
+                }
+                .accessibilityIdentifier("treatmentFlow.saved.doneButton")
             }
         }
         .accessibilityIdentifier("treatmentFlow.saved")
         .safeAreaInset(edge: .bottom) {
-            FlowBottomBar {
-                Button { viewModel.path.append(.nextSession) } label: { Text("treatmentFlow.saved.nextSession") }
-                    .buttonStyle(.belloPrimary)
-                    .accessibilityIdentifier("treatmentFlow.saved.nextSessionButton")
-                Button { viewModel.path.append(.photos) } label: {
-                    Label { Text("treatmentFlow.saved.addPhotos") } icon: { Image(icon: .camera) }
+            if hasOpenSteps {
+                FlowBottomBar {
+                    Button(action: viewModel.continueClosing) { Text("treatmentFlow.closing.continue") }
+                        .buttonStyle(.belloPrimary)
+                        .accessibilityIdentifier("treatmentFlow.saved.continueButton")
+                    Text("treatmentFlow.closing.optional")
+                        .font(Typography.footnote).foregroundStyle(Palette.ink2)
+                        .multilineTextAlignment(.center)
                 }
-                .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("treatmentFlow.saved.photosButton")
             }
         }
+    }
+
+    /// Photos, aftercare or the next visit is still open.
+    private var hasOpenSteps: Bool {
+        !(viewModel.closing?.isComplete ?? true)
     }
 
     // MARK: - Parts

@@ -12,6 +12,8 @@ import SwiftUI
 struct NextSessionStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
     let onBook: (AgendaSheet) -> Void
+    /// Closes the flow: the last step of the visit's closing (routine-a item 7).
+    var onClose: () -> Void = {}
 
     @Environment(\.locale) private var locale
     @Environment(\.calendar) private var calendar
@@ -19,10 +21,15 @@ struct NextSessionStepView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
+                ClosingProgress(step: .nextSession)
                 Text(title).font(Typography.title).foregroundStyle(Palette.ink)
                     .accessibilityAddTraits(.isHeader)
                 weeks
                 dateCard
+                if !viewModel.isRecordEditable {
+                    Text("treatmentFlow.next.locked").font(Typography.meta).foregroundStyle(Palette.ink2)
+                        .accessibilityIdentifier("treatmentFlow.next.locked")
+                }
                 if viewModel.hasServiceDefault {
                     Text(defaultNote).font(Typography.meta).foregroundStyle(Palette.ink2)
                         .accessibilityIdentifier("treatmentFlow.next.defaultNote")
@@ -42,7 +49,10 @@ struct NextSessionStepView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button { viewModel.path.removeAll { $0 == .nextSession } } label: { Text("treatmentFlow.next.skip") }
+                Button {
+                    viewModel.advance(from: .nextVisit)
+                    onClose()
+                } label: { Text("treatmentFlow.saved.done") }
                     .accessibilityIdentifier("treatmentFlow.next.skipButton")
             }
         }
@@ -55,9 +65,12 @@ struct NextSessionStepView: View {
                 } label: { Text("treatmentFlow.next.book") }
                     .buttonStyle(.belloPrimary)
                     .accessibilityIdentifier("treatmentFlow.next.bookButton")
-                Button { Task { await save() } } label: { Text("treatmentFlow.next.save") }
-                    .buttonStyle(.belloSecondary)
-                    .accessibilityIdentifier("treatmentFlow.next.saveButton")
+                // The suggestion is a note in the record, written only while the record can be edited.
+                if viewModel.isRecordEditable {
+                    Button { Task { await save() } } label: { Text("treatmentFlow.next.save") }
+                        .buttonStyle(.belloSecondary)
+                        .accessibilityIdentifier("treatmentFlow.next.saveButton")
+                }
             }
         }
     }
