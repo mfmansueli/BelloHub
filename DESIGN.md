@@ -161,7 +161,7 @@ One motion layer (D20), in `DesignSystem/Motion/` and `Tokens/Motion.swift`; no 
   the first nine, 0.36 s for the rest, once per screen presentation. **Bottom bar:** `motionBar()`, last, after 0.18 s.
 - **Press:** `BelloButtonStyle` scales to 0.97 with a light haptic (`.selection` on chips, `.warning` on destructive).
 - **`SuccessSeal`:** circle pop with one overshoot, check drawn, one ring, success haptic.
-- **`HeroSurface`:** slow glow drift (28 s period), one sheen crossing; runs only while on screen and active, stops after 60 s.
+- **`HeroSurface`:** slow glow drift (28 s period), one sheen crossing, and on an animated hero (Home "next up") an orange "mist": a second fainter orange cloud (peak `HeroPalette.mistOpacity` 0.16) that roams on two periods (19 s across, 13 s up and down) and breathes (9 s). Runs only while on screen and active, stops after 60 s where it is, and never with Reduce Motion or Low Power Mode. Text on the hero is measured where the glow and the mist overlap (`HeroPalette.worstGlowOpacity`).
 - **`MotionPolicy`** (pure, tested): Reduce Motion removes movement, loops, overshoot, sheen and ring and keeps a
   0.2 s fade; Low Power Mode stops loops; `-uiTesting` stops everything (the root sets `isMotionDisabled`).
 - Horizontal motion goes through `Directional` so it flips in Arabic.

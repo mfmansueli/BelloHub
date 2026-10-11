@@ -21,7 +21,7 @@ struct HomeNextVisitCard: View {
     private var firstName: String { visit.client?.firstName ?? clientName }
 
     var body: some View {
-        HeroCard {
+        HeroCard(isAnimated: true) {
             VStack(alignment: .leading, spacing: Spacing.md) {
                 header
                 clientRow

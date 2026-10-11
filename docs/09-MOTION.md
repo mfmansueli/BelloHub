@@ -56,6 +56,7 @@ Screens that show it: `Bk-10-Review, Bk-8-Confirmed, BlockTime, BookingRequest, 
 ### 3.7 Hero ambient (`m-hero`): Home "next up", `Plan`, `Waitlist`
 The graphite hero card carries two slow-moving glows and one sheen.
 - Glow drift: two radial gradients (rose top right, sage bottom left) that translate between (−6 %, −4 %) and (+6 %, +5 %) while scaling 1 → 1.12 over **14 s**, `easeInOut`, autoreverse, repeating.
+- Mist (added 2026-10-11 at the owner's request): on the Home "next up" card a third, fainter orange radial cloud (16 % peak) wanders on its own path (19 s across, 13 s up and down, 9 s breathing, ±28 % and ±22 % of the card). Same limits as the drift; it freezes in place when the 60 s end. The text on the card is measured where the mist and the orange glow overlap.
 - Sheen: a 34 %-wide diagonal highlight (−18° skew, white at 11 % opacity in the middle) that crosses the card **once**, 1.5 s, delay 0.55 s, when the screen first appears.
 - Limits (deliberate refinements for battery and calm): run the glow only while the card is on screen and the scene is active; stop the drift after 60 s on screen; at most one hero animates at a time; no glow with Low Power Mode or Reduce Motion (static gradient instead).
 
