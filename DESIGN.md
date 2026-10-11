@@ -530,12 +530,13 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 
 ### Routine simplification, items 9 to 11 (2026-10-11, `routine-b`)
 
-- **4.6 Import, choose step**: "Before you import" (`ImportPlanSummary`) is the first section of the list, above the
-  people, at every text size: label/value rows in a `ListCard` ("New registrations", "Already in your list
+- **4.6 Import, choose step**: "Before you import" (`ImportPlanSummary`) is the first section of the list, under the
+  "Choose clients" header with its controls and above the people, at every text size: label/value rows in a `ListCard` ("New registrations", "Already in your list
   (skipped)", "Free registrations left: 3 of 10", and, when part of the group waits, "Registered now" and "Waiting
   for a plan"), then one `InlineNotice` sentence: `.info` when everyone new fits or she has a plan, `.warning` when
   part or all waits ("The rest are not saved and nothing is charged…") or nobody is new. Label/value rows avoid
-  plural agreement in fourteen languages; at accessibility sizes the value goes under its label. Rows already in her
+  plural agreement in fourteen languages; at accessibility sizes the value goes under its label; each row is one
+  VoiceOver element (label + value). Rows already in her
   list say so under the name (`footnoteStrong`, `ink2`) and start unticked. Header: a native `Menu` "Try a small
   group" ("First 3 / 5 / 10 new", plus the free count when smaller) beside Select all. The amber partial-import box
   of S4 and its accessibility-size footer are gone; the bottom bar is the count and the button. Identifiers

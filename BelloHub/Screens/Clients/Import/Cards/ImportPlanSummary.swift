@@ -50,19 +50,40 @@ struct ImportPlanSummary: View {
     /// One figure: the label on the leading side, the number on the trailing side; stacked at accessibility sizes so a
     /// long German label never squeezes the number.
     private func figure(_ label: LocalizedStringKey, value: String, identifier: String) -> some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.xxs))
-            : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Spacing.sm))
-        return layout {
-            Text(label).font(Typography.body).foregroundStyle(Palette.ink)
-            if !dynamicTypeSize.isAccessibilitySize { Spacer(minLength: Spacing.sm) }
-            Text(verbatim: value).font(Typography.bodyStrong).foregroundStyle(Palette.ink).monospacedDigit()
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                VStack(alignment: .leading, spacing: Spacing.xxs) {
+                    figureLabel(label)
+                    figureValue(value)
+                }
+            } else {
+                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                    figureLabel(label)
+                    Spacer(minLength: Spacing.sm)
+                    figureValue(value)
+                }
+            }
         }
         .padding(.horizontal, Spacing.md)
         .padding(.vertical, Spacing.row)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .combine)
+        // One element, "New registrations, 4": the label and the number as label and value, read together.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(label))
+        .accessibilityValue(Text(verbatim: value))
         .accessibilityIdentifier(identifier)
+    }
+
+    /// Wraps instead of truncating: a long German label takes a second line rather than losing its end.
+    private func figureLabel(_ label: LocalizedStringKey) -> some View {
+        Text(label).font(Typography.body).foregroundStyle(Palette.ink)
+            .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func figureValue(_ value: String) -> some View {
+        Text(verbatim: value).font(Typography.bodyStrong).foregroundStyle(Palette.ink).monospacedDigit()
+            .fixedSize()
     }
 
     /// What confirming does, in one sentence. Amber when part of the group waits for a plan, so it is never missed.

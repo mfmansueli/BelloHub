@@ -24,11 +24,14 @@ struct ImportChooseView: View {
             if viewModel.readyEntries.isEmpty {
                 emptyState
             } else {
+                // The title and the selection controls head the summary, so they stay at the top at every text size.
                 Section {
                     ImportPlanSummary(plan: viewModel.plan, limit: viewModel.usage.limit)
                         .listRowBackground(Color.clear)
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
+                } header: {
+                    chooseHeader
                 }
                 Section {
                     ForEach(viewModel.readyEntries) { entry in
@@ -40,8 +43,6 @@ struct ImportChooseView: View {
                         .listRowBackground(Palette.surface)
                         .listRowSeparatorTint(Palette.hairline)
                     }
-                } header: {
-                    chooseHeader
                 }
             }
             if !viewModel.skippedEntries.isEmpty { skippedSection }
