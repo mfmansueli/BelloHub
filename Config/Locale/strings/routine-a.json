@@ -1149,6 +1149,54 @@
    "Catatan terkunci, jadi saran tidak ditulis di dalamnya. Kamu tetap bisa memesan.",
    "रिकॉर्ड लॉक है, इसलिए सुझाव उसमें नहीं लिखा जाता। आप फिर भी बुक कर सकते हैं।",
    "السجل مقفل، لذلك لا يُكتب الاقتراح فيه. يبقى الحجز ممكنًا."
+  ],
+  [
+   "treatmentFlow.form.sameAsLast",
+   "Manual record: chip that fills technique, products and her fields from the client's last visit of this service. %@ = its date.",
+   "Same as last visit, %@",
+   "Igual ao último atendimento, %@",
+   "Igual ao último atendimento, %@",
+   "Igual que la última cita, %@",
+   "Igual que la última cita, %@",
+   "Come l’ultimo appuntamento, %@",
+   "Comme le dernier rendez-vous, %@",
+   "Wie beim letzten Termin, %@",
+   "Son randevudaki gibi, %@",
+   "Sama seperti kunjungan terakhir, %@",
+   "पिछले अपॉइंटमेंट जैसा, %@",
+   "مثل آخر موعد، %@"
+  ],
+  [
+   "treatmentFlow.form.sameAsLast.hint",
+   "Manual record: under the last-visit chip.",
+   "Fills only the empty fields: technique, products and your own fields. Nothing is saved until you save.",
+   "Preenche só os campos vazios: técnica, produtos e seus próprios campos. Nada é salvo até você salvar.",
+   "Preenche só os campos vazios: técnica, produtos e os seus próprios campos. Nada é guardado até guardar.",
+   "Solo llena los campos vacíos: técnica, productos y tus propios campos. No se guarda nada hasta que guardes.",
+   "Solo rellena los campos vacíos: técnica, productos y tus propios campos. No se guarda nada hasta que guardes.",
+   "Compila solo i campi vuoti: tecnica, prodotti e i tuoi campi. Non si salva nulla finché non salvi.",
+   "Remplit seulement les champs vides : technique, produits et vos propres champs. Rien n’est enregistré tant que vous n’enregistrez pas.",
+   "Füllt nur leere Felder: Technik, Produkte und deine eigenen Felder. Gespeichert wird erst, wenn du speicherst.",
+   "Yalnızca boş alanları doldurur: teknik, ürünler ve kendi alanlarınız. Siz kaydedene kadar hiçbir şey kaydedilmez.",
+   "Hanya mengisi kolom kosong: teknik, produk, dan kolommu sendiri. Tidak ada yang disimpan sampai kamu menyimpan.",
+   "सिर्फ़ खाली फ़ील्ड भरता है: तकनीक, प्रोडक्ट और आपकी अपनी फ़ील्ड। जब तक आप सेव नहीं करते, कुछ सेव नहीं होता।",
+   "يملأ الحقول الفارغة فقط: التقنية والمنتجات والحقول الخاصة. لا يُحفظ شيء قبل الحفظ."
+  ],
+  [
+   "treatmentFlow.form.moreFields",
+   "Manual record: folded section with the rest of her record fields. A count is shown beside it.",
+   "More fields",
+   "Mais campos",
+   "Mais campos",
+   "Más campos",
+   "Más campos",
+   "Altri campi",
+   "Autres champs",
+   "Weitere Felder",
+   "Diğer alanlar",
+   "Kolom lainnya",
+   "और फ़ील्ड",
+   "حقول أخرى"
   ]
  ]
 }

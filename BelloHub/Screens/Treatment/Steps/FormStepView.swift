@@ -13,6 +13,7 @@ struct FormStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
 
     @Environment(\.locale) private var locale
+    @State private var showsMore = false
 
     var body: some View {
         ScrollView {
@@ -21,12 +22,10 @@ struct FormStepView: View {
                     name: viewModel.client?.name ?? "", id: viewModel.clientID, subtitle: viewModel.visitSubtitle
                 )
                 header
-                ForEach(viewModel.fields) { field in
-                    TreatmentFieldInput(
-                        field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
-                        hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key)
-                    )
-                }
+                if !viewModel.lastVisitValues.isEmpty { sameAsLastVisit }
+                let layout = viewModel.formLayout
+                ForEach(layout.main) { field in input(field) }
+                if !layout.more.isEmpty { moreFields(layout.more) }
                 TreatmentResultPicker(result: $viewModel.draft.result)
                 InlineNotice(
                     style: .info, title: "treatmentFlow.lock.title", message: "treatmentFlow.lock.message"
@@ -66,6 +65,50 @@ struct FormStepView: View {
                 .accessibilityAddTraits(.isHeader)
             Text("treatmentFlow.form.hint").font(Typography.meta).foregroundStyle(Palette.ink2)
         }
+    }
+
+    /// Her own answers of the client's last visit for this service, one tap away; only empty fields are filled.
+    private var sameAsLastVisit: some View {
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Button(action: viewModel.applyLastVisit) {
+                Label { Text(lastVisitTitle) } icon: { Image(icon: .repeatArrows) }
+            }
+            .buttonStyle(.belloChip(selected: false))
+            .accessibilityIdentifier("treatmentFlow.form.sameAsLastButton")
+            Text("treatmentFlow.form.sameAsLast.hint").font(Typography.footnote).foregroundStyle(Palette.ink2)
+        }
+    }
+
+    private var lastVisitTitle: String {
+        let day = viewModel.lastVisit.map { viewModel.formatters.shortDate($0.createdAt) } ?? ""
+        return LocalizedStringResource("treatmentFlow.form.sameAsLast", defaultValue: "Same as last visit, \(day)")
+            .resolved(in: locale)
+    }
+
+    /// The rest of her template, folded: few questions at once, all of them reachable.
+    private func moreFields(_ fields: [TreatmentFormField]) -> some View {
+        DisclosureGroup(isExpanded: $showsMore) {
+            VStack(alignment: .leading, spacing: Spacing.lg) {
+                ForEach(fields) { field in input(field) }
+            }
+            .padding(.top, Spacing.md)
+        } label: {
+            HStack(spacing: Spacing.xs) {
+                Text("treatmentFlow.form.moreFields").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                Text(verbatim: viewModel.formatters.number(fields.count))
+                    .font(Typography.meta).foregroundStyle(Palette.ink2)
+            }
+            // On the label: an identifier on the group would replace the fields' own.
+            .accessibilityIdentifier("treatmentFlow.form.moreFields")
+        }
+        .tint(Palette.ink)
+    }
+
+    private func input(_ field: TreatmentFormField) -> some View {
+        TreatmentFieldInput(
+            field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
+            hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key)
+        )
     }
 
     private var saveLabel: Text {

@@ -132,11 +132,11 @@ struct FollowUpsContentView: View {
                 Text("followUpQueue.setAside").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 Text(verbatim: formatters.number(rows.count)).font(Typography.meta).foregroundStyle(Palette.ink2)
             }
+            // On the label: an identifier on the group would replace the cards' own.
+            .accessibilityIdentifier("followUps.setAside")
         }
         .tint(Palette.ink)
         .padding(.top, Spacing.sm)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("followUps.setAside")
     }
 
     private func perform(_ action: FollowUpAction) {

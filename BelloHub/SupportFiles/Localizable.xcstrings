@@ -199663,6 +199663,96 @@
         }
       }
     },
+    "treatmentFlow.form.moreFields" : {
+      "comment" : "Manual record: folded section with the rest of her record fields. A count is shown beside it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "حقول أخرى"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Weitere Felder"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More fields"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "More fields"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más campos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más campos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más campos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Autres champs"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "और फ़ील्ड"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kolom lainnya"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Altri campi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mais campos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mais campos"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diğer alanlar"
+          }
+        }
+      }
+    },
     "treatmentFlow.form.products.add" : {
       "comment" : "Form: add a product, VoiceOver label",
       "extractionState" : "manual",
@@ -199929,6 +200019,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ ürününü kaldır"
+          }
+        }
+      }
+    },
+    "treatmentFlow.form.sameAsLast" : {
+      "comment" : "Manual record: chip that fills technique, products and her fields from the client's last visit of this service. %@ = its date.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مثل آخر موعد، %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wie beim letzten Termin, %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as last visit, %@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Same as last visit, %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que la última cita, %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que la última cita, %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que la última cita, %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Comme le dernier rendez-vous, %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पिछले अपॉइंटमेंट जैसा, %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sama seperti kunjungan terakhir, %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Come l’ultimo appuntamento, %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual ao último atendimento, %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual ao último atendimento, %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Son randevudaki gibi, %@"
+          }
+        }
+      }
+    },
+    "treatmentFlow.form.sameAsLast.hint" : {
+      "comment" : "Manual record: under the last-visit chip.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يملأ الحقول الفارغة فقط: التقنية والمنتجات والحقول الخاصة. لا يُحفظ شيء قبل الحفظ."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füllt nur leere Felder: Technik, Produkte und deine eigenen Felder. Gespeichert wird erst, wenn du speicherst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fills only the empty fields: technique, products and your own fields. Nothing is saved until you save."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fills only the empty fields: technique, products and your own fields. Nothing is saved until you save."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo rellena los campos vacíos: técnica, productos y tus propios campos. No se guarda nada hasta que guardes."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo llena los campos vacíos: técnica, productos y tus propios campos. No se guarda nada hasta que guardes."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo llena los campos vacíos: técnica, productos y tus propios campos. No se guarda nada hasta que guardes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remplit seulement les champs vides : technique, produits et vos propres champs. Rien n’est enregistré tant que vous n’enregistrez pas."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सिर्फ़ खाली फ़ील्ड भरता है: तकनीक, प्रोडक्ट और आपकी अपनी फ़ील्ड। जब तक आप सेव नहीं करते, कुछ सेव नहीं होता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hanya mengisi kolom kosong: teknik, produk, dan kolommu sendiri. Tidak ada yang disimpan sampai kamu menyimpan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compila solo i campi vuoti: tecnica, prodotti e i tuoi campi. Non si salva nulla finché non salvi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preenche só os campos vazios: técnica, produtos e seus próprios campos. Nada é salvo até você salvar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preenche só os campos vazios: técnica, produtos e os seus próprios campos. Nada é guardado até guardar."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yalnızca boş alanları doldurur: teknik, ürünler ve kendi alanlarınız. Siz kaydedene kadar hiçbir şey kaydedilmez."
           }
         }
       }

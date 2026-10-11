@@ -72,6 +72,8 @@ final class TreatmentFlowViewModel {
     private(set) var productNames: [String] = []
     /// How far the closing of the saved visit went (routine-a item 7).
     var closing: VisitClosing?
+    /// Her latest record of this client and service, for "Same as last visit" (routine-a item 8).
+    private(set) var lastVisit: TreatmentRecord?
 
     let repository: (any ClientRecordRepository)?
     let profile: ProfileService
@@ -183,6 +185,11 @@ final class TreatmentFlowViewModel {
             if let serviceID { service = try await repository.services().first { $0.id == serviceID } }
             let consent = PhotoConsentRules.latestPhotoConsent(try await repository.consents(for: loaded.id))
             productNames = ((try? await repository.products()) ?? []).map(\.name)
+            lastVisit = LastVisitPrefill.source(
+                records: (try? await repository.records(for: loaded.id)) ?? [],
+                serviceID: request.serviceID ?? appointment?.serviceID, serviceName: serviceName,
+                excluding: request.resumeRecordID ?? recordID
+            )
             hasPhotoConsent = consent != nil
             photoConsentDate = consent?.signedAt
             if profile.template == nil { await profile.load() }
