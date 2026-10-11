@@ -14,7 +14,8 @@ import { ResendEmailProvider } from '../../src/messaging/ResendEmailProvider.js'
 import { WhatsAppCloudProvider } from '../../src/messaging/WhatsAppCloudProvider.js';
 import { WHATSAPP_LANGUAGE, WHATSAPP_TEMPLATES, whatsAppTemplateName } from '../../src/messaging/whatsAppTemplates.js';
 import { buildFcmMessage } from '../../src/push/fcmMessage.js';
-import { PUSH_ALERT_KEYS } from '../../src/push/PushSender.js';
+import { BOOKING_PUSH_EVENTS, PUSH_ALERT_KEYS, publishedPushKeys } from '../../src/push/PushSender.js';
+import type { PushMessage } from '../../src/push/PushSender.js';
 import { FakeEmailProvider } from '../support/fakes.js';
 
 const placeholders = (text: string): string[] => [...new Set([...text.matchAll(/\{(\w+)\}/g)].map((match) => match[1] ?? ''))].sort();
@@ -273,7 +274,7 @@ describe('push payloads (docs/11 section 7)', () => {
 
     expect(message).toEqual({
       token: 'token-123',
-      data: { kind: 'booking', id: 'abc' },
+      data: { kind: 'booking', id: 'abc', event: 'new' },
       apns: {
         headers: { 'apns-push-type': 'alert', 'apns-priority': '5' },
         payload: { aps: { alert: { locKey: 'push.booking.new' }, sound: 'default' } }
@@ -298,6 +299,43 @@ describe('push payloads (docs/11 section 7)', () => {
 
   it('has a localization key for every alert kind, all under push.*', () => {
     for (const key of Object.values(PUSH_ALERT_KEYS)) expect(key).toMatch(/^push\.[a-z]+\.[A-Za-z]+$/);
+  });
+
+  it.each([
+    [{ kind: 'booking', id: 'b1', event: 'new' }, 'push.booking.new'],
+    [{ kind: 'booking', id: 'b1', event: 'request' }, 'push.booking.request'],
+    [{ kind: 'booking', id: 'b1', event: 'moved' }, 'push.booking.moved'],
+    [{ kind: 'booking', id: 'b1', event: 'cancelled' }, 'push.booking.cancelled'],
+    [{ kind: 'bookingLate', id: 'b1' }, 'push.booking.late'],
+    [{ kind: 'bookingConfirmed', id: 'b1' }, 'push.booking.clientConfirmed'],
+    [{ kind: 'rescheduleRequest', id: 'r1' }, 'push.reschedule.request'],
+    [{ kind: 'waitlist', id: '' }, 'push.waitlist.new']
+  ] satisfies [PushMessage, string][])('says what happened: %j raises %s, with no text or argument', (input, key) => {
+    const message = buildFcmMessage('token-123', input);
+
+    expect(message.apns?.payload?.aps.alert).toEqual({ locKey: key });
+    expect(Object.keys(message.data ?? {}).sort()).toEqual(input.kind === 'booking' ? ['event', 'id', 'kind'] : ['id', 'kind']);
+    expect(message.data?.kind).toBe(input.kind);
+    expect(message.data?.id).toBe(input.id);
+    expect(JSON.stringify(message)).not.toMatch(/loc-?args|title|body/i);
+  });
+
+  it('keeps the old meaning for a booking push without an event', () => {
+    const message = buildFcmMessage('token-123', { kind: 'booking', id: 'b1' });
+
+    expect(message.data?.event).toBe('new');
+    expect(message.apns?.payload?.aps.alert).toEqual({ locKey: 'push.booking.new' });
+  });
+
+  it('has a key for every booking event, and only one per alert', () => {
+    for (const event of BOOKING_PUSH_EVENTS) expect(PUSH_ALERT_KEYS[`booking.${event}`]).toBe(`push.booking.${event}`);
+    expect(publishedPushKeys()).toHaveLength(Object.keys(PUSH_ALERT_KEYS).length);
+  });
+
+  it('publishes the key list the app checks its strings against (run npm run gen:push-keys)', () => {
+    const committed = JSON.parse(readFileSync(fileURLToPath(new URL('../../contracts/push-keys.json', import.meta.url)), 'utf8')) as unknown;
+
+    expect(committed).toEqual({ keys: publishedPushKeys() });
   });
 });
 

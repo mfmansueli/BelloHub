@@ -17,6 +17,7 @@ export class EmulatorPushSender implements PushSender {
       type: 'push',
       kind: message.kind,
       id: message.id,
+      ...(message.event ? { event: message.event } : {}),
       devices: targets.length,
       at: Timestamp.now()
     });

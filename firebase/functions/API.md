@@ -742,17 +742,28 @@ data is deleted in every case**; the app may tell her to revoke in Settings when
 
 ## 7. Push messages (FCM -> APNs), D31 and `docs/06` section 8
 
-Notification payloads contain **only a kind and ids** and a localization key; the app resolves the text, so no name or
-detail is ever on a lock screen. The server never sends arguments.
+Notification payloads contain **only a kind, ids, an event word and a localization key**; the app resolves the text,
+so no name, service or time is ever on a lock screen or in the payload (it travels through Google and Apple). The
+server never sends arguments (`loc-args`), a title or a body.
 
-| `data.kind` | `data.id` | alert (`loc-key`) | notes |
-|---|---|---|---|
-| `booking` | booking id | `push.booking.new` | new booking, request, change or cancellation |
-| `bookingLate` | booking id | `push.booking.late` | a client reported running late (urgent: ignores quiet hours) |
-| `bookingConfirmed` | booking id | `push.booking.clientConfirmed` | a client confirmed she is coming |
-| `rescheduleRequest` | request id | `push.reschedule.request` | |
-| `waitlist` | waitlist id or empty | `push.waitlist.new` | a new entry, or a freed slot matches waiting people |
-| `mailbox` | item id | none: **silent** (`content-available: 1`, background) | the app syncs the mailbox, imports, then raises its own alert |
+| `data.kind` | `data.event` | `data.id` | alert (`loc-key`) | notes |
+|---|---|---|---|---|
+| `booking` | `new` | booking id | `push.booking.new` | a new confirmed booking from the page |
+| `booking` | `request` | booking id | `push.booking.request` | a new booking waiting for her approval (`pendingApproval`, also the unverified WhatsApp requests of D58) |
+| `booking` | `moved` | booking id | `push.booking.moved` | the client moved the booking |
+| `booking` | `cancelled` | booking id | `push.booking.cancelled` | the client cancelled the booking |
+| `bookingLate` | none | booking id | `push.booking.late` | a client reported running late (urgent: ignores quiet hours) |
+| `bookingConfirmed` | none | booking id | `push.booking.clientConfirmed` | a client confirmed she is coming |
+| `rescheduleRequest` | none | request id | `push.reschedule.request` | |
+| `waitlist` | none | waitlist id or empty | `push.waitlist.new` | a new entry, or a freed slot matches waiting people |
+| `mailbox` | none | item id | none: **silent** (`content-available: 1`, background) | the app syncs the mailbox, imports, then raises its own alert |
+
+`data.event` is optional and only on `booking`: apps read `kind` and `id` to route a tap and ignore the event (an app
+that predates it still opens the booking). Every `loc-key` must exist in the app's string catalog in all fourteen
+localizations, or iOS shows the raw key: the list is published as `contracts/push-keys.json` (`npm run gen:push-keys`,
+a unit test fails when it drifts from `PUSH_ALERT_KEYS`), copied into the iOS test bundle by
+`scripts/sync-server-contract.sh`, and an iOS test checks the catalog against it. A new key ships in the app first,
+then on the server.
 
 Invalid tokens are removed from `devices/{uid}/tokens` automatically.
 

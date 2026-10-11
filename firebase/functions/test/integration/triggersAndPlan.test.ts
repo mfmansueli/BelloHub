@@ -54,9 +54,26 @@ describe('onBookingWritten: generic pushes to the professional', () => {
 
     expect(env.push.calls).toHaveLength(1);
     expect(env.push.calls[0]?.targets).toHaveLength(2);
-    expect(env.push.calls[0]?.message).toEqual({ kind: 'booking', id: booked.bookingId });
+    expect(env.push.calls[0]?.message).toEqual({ kind: 'booking', id: booked.bookingId, event: 'new' });
     expect(JSON.stringify(env.push.calls)).not.toContain('Ana');
     expect(JSON.stringify(env.push.calls)).not.toContain('Glow');
+  });
+
+  it('says "request" for a booking that waits for her approval, also the unverified WhatsApp request (D58)', async () => {
+    await refs(env.deps.db).profile(pro.slug).update({ 'booking.requiresApproval': true });
+    const request = asBooked(await book(env, pro, { startsAt: START }));
+    const unverified = asBooked(
+      await book(env, pro, { startsAt: '2026-10-03T17:00:00.000Z', client: { name: 'Bia Lima', phone: '+5511976543210', email: 'bia@example.com' }, verification: { method: 'whatsapp' } })
+    );
+
+    await trigger(request.bookingId, undefined);
+    await trigger(unverified.bookingId, undefined);
+
+    expect([request.status, unverified.status]).toEqual(['pendingApproval', 'pendingApproval']);
+    expect(env.push.messages()).toEqual([
+      { kind: 'booking', id: request.bookingId, event: 'request' },
+      { kind: 'booking', id: unverified.bookingId, event: 'request' }
+    ]);
   });
 
   it('pushes when the client confirms, runs late, reschedules or cancels, but not when nothing the client did changed', async () => {
@@ -80,7 +97,12 @@ describe('onBookingWritten: generic pushes to the professional', () => {
     await env.call(cancelBooking, { token: booked.manageToken, acceptLateWarning: true });
     await trigger(booked.bookingId, before);
 
-    expect(env.push.messages().map((message) => message.kind)).toEqual(['bookingConfirmed', 'booking', 'bookingLate', 'booking']);
+    expect(env.push.messages().map(({ kind, event }) => ({ kind, event }))).toEqual([
+      { kind: 'bookingConfirmed', event: undefined },
+      { kind: 'booking', event: 'moved' },
+      { kind: 'bookingLate', event: undefined },
+      { kind: 'booking', event: 'cancelled' }
+    ]);
   });
 
   it('pushes about the waitlist when a cancellation frees a time somebody waits for', async () => {
@@ -92,7 +114,10 @@ describe('onBookingWritten: generic pushes to the professional', () => {
 
     await trigger(booked.bookingId, before);
 
-    expect(env.push.messages().map((message) => message.kind)).toEqual(['booking', 'waitlist']);
+    expect(env.push.messages().map(({ kind, event }) => ({ kind, event }))).toEqual([
+      { kind: 'booking', event: 'cancelled' },
+      { kind: 'waitlist', event: undefined }
+    ]);
   });
 
   it('does not push about the waitlist when nobody waits, or for another day, or for a service that does not fit', async () => {

@@ -23,6 +23,8 @@
  "notificationSettings.cancellations.subtitle": "And a freed time for the waiting list",
  "onb.permissions.microphone.text": "Bello Hub listens only while you record a treatment, then organises what you said. You review everything before it is saved.",
  "plan.feature.followUps": "Follow-ups, waiting list and check-ins",
+ "push.booking.cancelled": "A client cancelled an appointment",
+ "push.waitlist.new": "Waiting list update",
  "recoveryKey.error.notRecognized.title": "Not recognised",
  "registration.limit.explainer": "Your first 10 client registrations are free. Deleted clients still count towards this limit.",
  "services.contra.pickerHint": "Tick everything that should warn you when you book this service.",
