@@ -6,6 +6,7 @@
 @testable import BelloHub
 import Foundation
 import Testing
+import UserNotifications
 
 /// The server sends only a `loc-key` (API.md section 7) and iOS resolves it from the app's bundle, also for a closed
 /// app; a key without a string reaches the lock screen as "push.booking.new". The keys come from the backend's
@@ -49,7 +50,8 @@ struct PushAlertStringsTests {
     @Test("A raw push key is hidden in the foreground, a resolved text is shown")
     func foregroundPresentation() {
         #expect(PushPresentation.options(forBody: "push.booking.new").isEmpty)
-        #expect(PushPresentation.options(forBody: "New booking confirmed through your page") == [.banner, .list, .sound])
+        let readable = PushPresentation.options(forBody: "New booking confirmed through your page")
+        #expect(readable == [.banner, .list, .sound])
         #expect(!PushPresentation.isUnresolvedKey("push. Something readable"))
     }
 

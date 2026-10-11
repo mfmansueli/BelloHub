@@ -39,7 +39,10 @@ struct HeroContrastTests {
 
     private static let worstPoints: [(name: String, color: UIColor)] = [
         ("rose glow peak", worstCase(glow: HeroPalette.glowRose, opacity: HeroPalette.glowRoseOpacity)),
-        ("rose glow and mist overlapping", worstCase(glow: HeroPalette.glowRose, opacity: HeroPalette.worstGlowOpacity)),
+        (
+            "rose glow and mist overlapping",
+            worstCase(glow: HeroPalette.glowRose, opacity: HeroPalette.worstGlowOpacity)
+        ),
         ("sage glow peak", worstCase(glow: HeroPalette.glowSage, opacity: HeroPalette.glowSageOpacity)),
         ("gradient start", UIColor(HeroPalette.gradientStart)),
         ("gradient end", UIColor(HeroPalette.gradientEnd))
