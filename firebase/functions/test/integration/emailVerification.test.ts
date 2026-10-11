@@ -135,8 +135,15 @@ describe('verifyEmailCode', () => {
 
     await expect(verify(code === '000000' ? '111111' : '000000')).rejects.toMatchObject({ code: 'INVALID_CODE' });
     await expect(verify(code, 'someone@else.com')).rejects.toMatchObject({ code: 'INVALID_CODE' });
-    env.clock.advance(601_000);
+    env.clock.advance(1_801_000);
     await expect(verify(code)).rejects.toMatchObject({ code: 'INVALID_CODE' });
+  });
+
+  it('still accepts the right code after 29 minutes: a slow e-mail is not a lost code', async () => {
+    await send();
+    const code = lastCode();
+    env.clock.advance(29 * 60_000);
+    await expect(verify(code)).resolves.toMatchObject({ expiresInSeconds: 1800 });
   });
 
   it('invalidates the code after five wrong tries, even for the right code', async () => {

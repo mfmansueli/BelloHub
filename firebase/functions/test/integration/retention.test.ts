@@ -149,12 +149,12 @@ describe('short-lived data', () => {
     expect((await refs(env.deps.db).hold('live').get()).exists).toBe(true);
   });
 
-  it('removes email codes after ten minutes and rate counters after their window', async () => {
+  it('removes email codes after thirty minutes and rate counters after their window', async () => {
     await env.call(sendEmailCode, { slug: pro.slug, email: 'ana@example.com', locale: 'en', purpose: 'booking' });
     expect(await count(C.emailCodes)).toBe(1);
     expect(await count(C.rate)).toBeGreaterThan(0);
 
-    const report = await runCleanup(env.deps, env.clock.now() + 11 * 60_000);
+    const report = await runCleanup(env.deps, env.clock.now() + 31 * 60_000);
     expect(report.codes).toBe(1);
 
     await runCleanup(env.deps, env.clock.now() + 25 * 60 * 60_000);
