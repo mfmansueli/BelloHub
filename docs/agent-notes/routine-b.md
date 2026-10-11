@@ -146,6 +146,20 @@ used are removed from their old batch and pruned.
   override (`services.timing.example`, colour/fringe). Removed: `import.choose.partial{,.detail}` (s4-import),
   `treatmentFlow.camera.ghost` (s7-flow), `services.timing.title` (d56-smart-slots). `check-strings.sh --final` passes.
 
+## Checks run (simulator iPhone 17 Pro Max, 1D7CD4D7)
+- `scripts/test.sh fast`: **2248 tests in 320 suites passed** (strings `--final`, privacy, legal, professions gates
+  included). Earlier runs under heavy machine load had `Wait` timeouts in `PublishingServiceTests` and
+  `RescheduleRequestViewModelTests` (untouched suites); both pass alone and in the last full Fast run.
+- UI: `ImportClientsUITests` (3, incl. the new small-group test), `ServicesUITests.testExtraAndProcessingTime`,
+  `BookingSetupUITests.testSlotIntervalAndCompactDay`, `PhotoFramingUITests` (new): all pass.
+- Audits: `ImportAuditUITests` (default + AX5, en/pt-BR/de/ar/hi) pass after making the summary rows one
+  label+value element and moving the title and controls above the summary; `ServicesAuditUITests` and
+  `TreatmentFlowAuditUITests` (camera included) pass at both sizes; `BookingSetupAuditUITests` booking page,
+  policies and publish tests pass at both sizes. `testAvailabilityAtDefaultSize` fails twice on
+  "availability.addBreakButton" hittability in the Availability screen, which this branch does not change (the test
+  already carries workarounds for that row); left open.
+- `scripts/check-warnings.sh`: zero warnings on simulator, device, Release and the test targets.
+
 ## Needs a real iPhone
 - Camera framing reference: the overlay alignment with the real capture (preview layer vs processed photo), the
   slider on the live preview, memory with a 2048 px reference (H19 camera check).
@@ -163,6 +177,8 @@ used are removed from their old batch and pruned.
 ## Open items
 - `onboarding.ready.importButton` is the entry the import UI tests use; agent A's onboarding change may move it (then
   `ImportClientsUITests.openImport` needs the new entry).
+- `BookingSetupAuditUITests.testAvailabilityAtDefaultSize` hittability failure on the Availability screen (not
+  touched here); worth a look on `build/v1`.
 - The two Fast-plan failures seen under full load (`PublishingServiceTests` "picking the missing address publishes by
   itself", `RescheduleRequestViewModelTests` "asked time is taken first") are `Wait` timeouts in suites this branch
   does not touch; both pass when run alone.
