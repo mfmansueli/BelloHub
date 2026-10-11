@@ -41,7 +41,7 @@ struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
-        let dependencies = AppDependencies.make()
+        let dependencies = AppDependencies.shared
         self.dependencies = dependencies
         _session = State(initialValue: dependencies.session)
         _keyManager = State(initialValue: dependencies.keyManager)

@@ -34,6 +34,11 @@ struct AppDependencies {
     let language: InterfaceLanguageService
     let defaults: UserDefaults
 
+    /// The app's one set, built on first use. `RootView.init` can run more than once (SwiftUI re-creates the view
+    /// value when the scene re-evaluates, which a change of the interface language does), and building again would
+    /// make throwaway services and, in a UI-test launch, wipe the defaults the test just wrote.
+    static let shared = make()
+
     static func make(options: LaunchOptions = .current) -> AppDependencies {
         #if DEBUG
         if options.isUITesting { return makeForUITests(options: options) }
