@@ -113,9 +113,9 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
-**2026-10-11: v1 COMPLETE. S12 done on `build/v1`, tags `stage-S12` and `v1.0.0-rc1` at HEADPLACEHOLDER** (stage log "S12", notes
+**2026-10-11: v1 COMPLETE. S12 done on `build/v1`, tags `stage-S12` and `v1.0.0-rc1` at `9bb014f`** (stage log "S12", notes
 `docs/agent-notes/s12-release.md`, acceptance `docs/13-TESTING-QUALITY.md` section 8 checked with evidence). Palette
-changed to graphite and orange by PR #1 after S11/S12 measurements; contrast and audits re-run on HEADPLACEHOLDER.
+changed to graphite and orange by PR #1 after S11/S12 measurements; contrast and audits re-run on `9bb014f`.
 
 **Before the first real client** (full steps: top of `docs/14-HUMAN-TASKS.md`, "Minimum to run v1 in production"):
 1. Domain (H6) → `BELLO_WEB_BASE_URL`, store URLs. 2. **E-mail sender, critical (H7)**: Resend EU account, DPA, SPF/DKIM/DMARC at
@@ -395,7 +395,15 @@ More record fields, Services catalog); the walks were fixed and the suites re-ru
 (150), peak memory with 200 photos 96 MB (250); hitches, week render, photo save, vault timing: device (H19).
 `check-warnings.sh` zero warnings; `test-firebase.sh` unit 943, rules 66, use cases 289, transport 19; `test-web.sh full`
 unit 248, Playwright 191 + 15 skipped, Lighthouse 0.99/1.00, JS 48.4 KB gzip; `e2e-local.sh` 7 passed.
-POSTPRPLACEHOLDER
+After PR #1 (graphite and orange palette) and the `link-copy` merge, on head `9bb014f`: `scripts/test.sh fast` 2,206
+tests in 314 suites (contrast tests included); `check-warnings.sh` zero warnings (simulator, device, Release, test
+targets); re-run UI suites all green: `LocalizationScreenshotUITests` (3 tests, 14 localizations, 32 min, 234 PNGs in
+`build/screenshots/s12/`, not committed), `ColorReviewUITests` (light and dark), `AccessibilityAuditUITests` (en +
+pt-BR, default and AX5, Increase Contrast, Reduce Motion), `BookingSetupAuditUITests` (8), `MoreAuditUITests` (2),
+`ServicesAuditUITests` (2), `AccountUITests` (incl. the link copy), `AppleSignInUITests`, `CalendarUITests`,
+`ClientDataDeletionUITests`, `MoreUITests`, `OnboardingUITests`, `LaunchUITests`. The three audit-walk failures of the old-palette
+Full run were test navigation (a row a person reaches by scrolling: the audit re-lays lazy lists out at AX5, and a
+drag past the top of the service form pulled the sheet closed), not app defects. **Final `scripts/test.sh full` on `9bb014f` (new palette): TEST SUCCEEDED in 5 h 50 min: unit 2,206 tests in 314 suites; UI 103 tests, 97 passed, 6 skipped (opt-in performance and color review), 0 failed.**
 Deployed to dev: functions (all, `suggestBookingTime` created) and Hosting on 2026-10-10, smoke OK; nothing under
 `firebase/` or `web/` changed afterwards, so no redeploy at the end.
 Human tasks created: H19, H20, H21, H22; H13 rewritten (post-v1), H7 marked critical.

@@ -67,4 +67,17 @@ for an unknown slug. The helper's PROGRESS paragraph is in the stage log ("S8 le
 
 ## 4. Final regression
 
-(see `docs/PROGRESS.md`, stage log "S12")
+Numbers in `docs/PROGRESS.md`, stage log "S12". Three audit walks failed in the old-palette Full run and were fixed as
+test navigation (no app defect: each row is reachable by scrolling): `BookingSetupAuditUITests` and `MoreAuditUITests`
+find their row again after an AX5 audit re-lays the lazy list out; `ServicesAuditUITests` backs up to the
+contraindications row in short drags at the default size (a drag past the top of the form pulled the sheet closed)
+and falls back to swiping to the top at AX5, where the form is several screens long. Each suite then passed alone.
+
+## 5. Merged during S12
+
+- PR #1 (co-owner, `dd29a5c`): graphite and orange palette. Measurements before it are on the old palette; fast,
+  check-warnings, screenshots, color review and every audit touched were re-run after it.
+- `origin/link-copy` (`89e6ee6`): press and hold the booking link on Account to copy it.
+- Owner decisions recorded: D57 (manual WhatsApp and e-mail code only in v1), H13 post-v1 (Cloud API provider built but
+  not wired in `createDeps`), H21 (automated WhatsApp and SMS options), H22, and "Minimum to run v1 in production" at
+  the top of `docs/14-HUMAN-TASKS.md`.

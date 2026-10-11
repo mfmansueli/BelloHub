@@ -90,3 +90,8 @@ Repeat with Increase Contrast, Reduce Motion and the largest text size.
 - Final run: **both tests pass** (testDefaultSize 424 s, testLargestSize 515 s, 16 min in all).
 - The Full plan now runs this audit in `en` (`BELLO_A11Y=1`, `AUDIT_PLAN_LOCALES=en` in `Full.xctestplan`), so
   Increase Contrast and Reduce Motion are exercised by every Full run; the per-feature audits keep pt-BR, de, ar, hi.
+
+After PR #1 (graphite and orange palette, 2026-10-11) the audit was re-run on `9bb014f`: both tests pass. The
+per-feature audits that failed in the old-palette Full run (BookingSetup availability at AX5, More record fields at
+AX5, Services catalog) were walk problems, fixed in the tests and green alone; the Services AX5 walk still audits the
+whole form (no scope was dropped). The VoiceOver pass and AX5 by hand on a real iPhone remain H19.
