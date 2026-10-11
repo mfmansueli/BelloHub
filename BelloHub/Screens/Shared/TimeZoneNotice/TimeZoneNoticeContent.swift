@@ -70,7 +70,9 @@ struct TimeZoneNoticeContent: View {
 
     /// The row opens a native menu with the same choices as the card. The menu's section titles carry the difference
     /// and, when it applies, the region note, so the row itself stays one quiet line.
-    private func choicesMenu(_ mismatch: TimeZoneMismatch, text: TimeZoneNoticeText, showsRegionNote: Bool) -> some View {
+    private func choicesMenu(
+        _ mismatch: TimeZoneMismatch, text: TimeZoneNoticeText, showsRegionNote: Bool
+    ) -> some View {
         Menu {
             Section {
                 Button { viewModel.usePhoneZone(mismatch) } label: { Text("timeZoneNotice.usePhone") }

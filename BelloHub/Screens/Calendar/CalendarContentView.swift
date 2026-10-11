@@ -61,15 +61,22 @@ struct CalendarContentView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    if typeSize.isAccessibilitySize { header(now: now) }
-                    // Which zone these times are in, when the iPhone is in another one (tz-mismatch-notice).
-                    TimeZoneNoticeView(placement: .row, formatters: formatters, now: now)
+                    if typeSize.isAccessibilitySize {
+                        header(now: now)
+                        timeZoneNotice(now: now)
+                    }
                     content(now: now)
                 }
                 .padding(.bottom, Spacing.lg)
             }
             .safeAreaInset(edge: .top, spacing: 0) {
-                if !typeSize.isAccessibilitySize { header(now: now).background(Palette.bg) }
+                if !typeSize.isAccessibilitySize {
+                    VStack(spacing: 0) {
+                        header(now: now)
+                        timeZoneNotice(now: now)
+                    }
+                    .background(Palette.bg)
+                }
             }
             .onChange(of: viewModel.selectedDay) { scroll(proxy, now: now) }
             .onChange(of: viewModel.isLoading) { scroll(proxy, now: now) }
@@ -83,6 +90,12 @@ struct CalendarContentView: View {
             formatters: formatters, onSelectDay: viewModel.select, onStep: viewModel.step,
             onToday: { viewModel.goToToday(now: now) }
         )
+    }
+
+    /// Which zone these times are in, when the iPhone is in another one (tz-mismatch-notice). It travels with the
+    /// header, so the day scrolled to the current hour never hides it.
+    private func timeZoneNotice(now: Date) -> some View {
+        TimeZoneNoticeView(placement: .row, formatters: formatters, now: now)
     }
 
     @ViewBuilder
