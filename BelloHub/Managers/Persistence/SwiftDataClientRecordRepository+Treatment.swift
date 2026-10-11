@@ -16,15 +16,8 @@ extension SwiftDataClientRecordRepository {
     }
 
     func save(_ record: TreatmentRecord) throws {
-        var stored = record
-        if let existing = try self.record(id: record.id) {
-            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
-                throw VaultRepositoryError.recordLocked
-            }
-            // The lock time is fixed at creation: an edit can never move it.
-            stored.lockedAt = existing.lockedAt
-            stored.createdAt = existing.createdAt
-        }
+        // The lock and draft rules live in one place for both repositories.
+        let stored = try TreatmentRecordSaveRule.stored(record, existing: try self.record(id: record.id), now: clock())
         try upsert(stored)
         try commit()
     }

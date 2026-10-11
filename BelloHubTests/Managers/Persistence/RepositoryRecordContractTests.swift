@@ -54,6 +54,49 @@ struct RepositoryRecordContractTests {
         #expect(try await repository.record(id: treatment.id)?.lockedAt == original)
     }
 
+    // MARK: - Drafts
+
+    @Test("A draft never locks, is never corrected, and its lock starts when it is finalized",
+          arguments: RepositoryFlavor.allCases)
+    func draftLifecycle(flavor: RepositoryFlavor) async throws {
+        let (repository, client) = try seeded(flavor)
+        var draft = TreatmentRecord(clientID: client.id, serviceName: "Glow", createdAt: clock.now, status: .draft,
+                                    notes: "Sentinel-DRAFT")
+        try await repository.save(draft)
+        let created = clock.now
+
+        clock.advance(by: 3 * 86_400)
+        draft.notes = "still a draft three days later"
+        try await repository.save(draft)
+        let correction = RecordCorrection(id: UUID(), recordID: draft.id, createdAt: clock.now, fieldKey: "notes",
+                                          oldValue: nil, newValue: "x", reason: "y")
+        await #expect(throws: VaultRepositoryError.recordNotLocked) { try await repository.addCorrection(correction) }
+
+        let finalizedAt = clock.now
+        draft.finalize(at: finalizedAt.addingTimeInterval(30 * 86_400))
+        try await repository.save(draft)
+        let stored = try #require(try await repository.record(id: draft.id))
+        #expect(stored.status == .finalized)
+        #expect(stored.createdAt == created)
+        #expect(stored.finalizedAt == finalizedAt, "the repository's clock, not the caller's, starts the lock")
+        #expect(stored.lockedAt == finalizedAt.addingTimeInterval(86_400))
+    }
+
+    @Test("A finalized record never goes back to being a draft", arguments: RepositoryFlavor.allCases)
+    func noReturnToDraft(flavor: RepositoryFlavor) async throws {
+        let (repository, client) = try seeded(flavor)
+        var treatment = record(client)
+        try await repository.save(treatment)
+        let lock = treatment.lockedAt
+        treatment.status = .draft
+        treatment.lockedAt = RecordLockPolicy.draftLockedAt
+        try await repository.save(treatment)
+
+        let stored = try #require(try await repository.record(id: treatment.id))
+        #expect(stored.status == .finalized)
+        #expect(stored.lockedAt == lock)
+    }
+
     @Test("Corrections need a locked record, are ordered, and the same one twice is a no-op",
           arguments: RepositoryFlavor.allCases)
     func corrections(flavor: RepositoryFlavor) async throws {

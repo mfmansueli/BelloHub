@@ -189,15 +189,8 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     }
 
     func save(_ record: TreatmentRecord) throws {
-        var stored = record
-        if let existing = recordsByID[record.id] {
-            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
-                throw VaultRepositoryError.recordLocked
-            }
-            stored.lockedAt = existing.lockedAt
-            stored.createdAt = existing.createdAt
-        }
-        recordsByID[record.id] = stored
+        recordsByID[record.id] = try TreatmentRecordSaveRule.stored(record, existing: recordsByID[record.id],
+                                                                    now: clock())
         changes.notify()
     }
 

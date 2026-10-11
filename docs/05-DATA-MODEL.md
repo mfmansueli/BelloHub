@@ -27,7 +27,7 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 |---|---|
 | `HealthForm` | all `answers`, `minorName` |
 | `ConsentRecord` | `label`, `note`, `document` (photo or file of the real signed paper) |
-| `TreatmentRecord` | `notes`, `technique`, `productsUsed`, `result` detail text, `aftercare`, `nextSessionSuggestion` |
+| `TreatmentRecord` | `notes`, `technique`, `productsUsed`, `result` detail text, `reaction`, `aftercare`, `nextSessionSuggestion`, `nextVisitReminder`, `fieldEntries` |
 | `RecordCorrection` | `oldValue`, `newValue`, `reason` |
 | `Incident` | `symptoms`, `actionTaken`, `followUp` |
 | `Client` | `importantNote`, `allergies`, `sensitivities`, `preferences`, `recurringRequests`, `stopReason` |
@@ -72,7 +72,9 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 - **MessageLog**: `client`, `channel`, `template`, `openedAt`. Records that the chat was **opened** with the text ready.
 
 ### Treatment record
-- **TreatmentRecord**: `client`, `appointment?`, `service`, `createdAt`, `lockedAt` (= `createdAt` + 24 h), `source` (`voice`, `manual`), `result` (`great`, `good`, `neutral`, `reaction`), `aiAssisted`, plus encrypted text fields. **After `lockedAt` it changes only through `RecordCorrection`.**
+- **TreatmentRecord**: `client`, `appointment?`, `service`, `createdAt`, `performedAt?` (the day the treatment happened, set by her; nil on records from before it existed), `status` (`draft`, `finalized`; missing reads as `finalized`), `finalizedAt?`, `lockedAt` (`.distantFuture` while a draft, `finalizedAt` + 24 h once finalized; records from before drafts keep `createdAt` + 24 h), `source` (`voice`, `manual`), `result` (`great`, `good`, `neutral`, `reaction`), `aiAssisted`, plus encrypted text fields. **After `lockedAt` it changes only through `RecordCorrection`.** A draft is never locked and is never corrected; a finalized record never returns to draft (`TreatmentRecordSaveRule`).
+  - **Visit date shown on screen** (`RecordVisitDate`): `performedAt`, else the linked appointment's start, else none (the screen says the visit day was not noted and shows when it was written). Nothing is backfilled into old records.
+  - **One record per appointment**: a new record for an appointment first looks for a record with that `appointmentID` and opens it instead (`RecordForAppointment`).
 - **RecordCorrection**: `record`, `createdAt`, `fieldKey`, encrypted old/new/reason. Never deleted.
 - **Incident**: `client`, `record?`, `occurredAt`, `severity`, encrypted text; locks like a record.
 - **Photo**: `client`, `record?`, `takenAt`, `kind` (`before`, `after`, `progress`), `visibility` (`professionalOnly`, `shareWithClient`, `portfolio`), encrypted `image` and `thumbnail`.

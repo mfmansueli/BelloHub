@@ -73,8 +73,9 @@ struct VaultEncryptionTests {
         let record = TreatmentRecord(clientID: client.id, serviceName: "Glow Facial", createdAt: start,
                                      notes: "SENTINEL-NOTES", technique: "SENTINEL-TECH",
                                      productsUsed: ["SENTINEL-PRODUCT"],
-                                     resultDetail: "SENTINEL-RESULT", aftercare: "SENTINEL-AFTER",
-                                     nextSessionSuggestion: "SENTINEL-NEXT")
+                                     resultDetail: "SENTINEL-RESULT", reaction: "SENTINEL-REACTION",
+                                     aftercare: "SENTINEL-AFTER", nextSessionSuggestion: "SENTINEL-NEXT",
+                                     nextVisitReminder: "SENTINEL-REMEMBER")
         try await repository.save(record)
         clock.set(record.lockedAt.addingTimeInterval(1))
         try await repository.addCorrection(RecordCorrection(id: UUID(), recordID: record.id, createdAt: clock.now,
@@ -113,7 +114,8 @@ struct VaultEncryptionTests {
         let sentinels = [
             "SENTINEL-CLIENT-NOTE", "SENTINEL-ALLERGY", "SENTINEL-SENS", "SENTINEL-PREF", "SENTINEL-REQUEST",
             "SENTINEL-STOP", "SENTINEL-APPT", "SENTINEL-NOTES", "SENTINEL-TECH", "SENTINEL-PRODUCT",
-            "SENTINEL-RESULT", "SENTINEL-AFTER", "SENTINEL-NEXT", "SENTINEL-OLD", "SENTINEL-NEW",
+            "SENTINEL-RESULT", "SENTINEL-REACTION", "SENTINEL-AFTER", "SENTINEL-NEXT", "SENTINEL-REMEMBER",
+            "SENTINEL-OLD", "SENTINEL-NEW",
             "SENTINEL-WHY", "SENTINEL-SYMPTOMS", "SENTINEL-AREA", "SENTINEL-ACTION", "SENTINEL-FOLLOW",
             "SENTINEL-ANSWER", "SENTINEL-MINOR", "SENTINEL-LABEL", "SENTINEL-CONSENTNOTE", "SENTINEL-FILENAME",
             "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB"
@@ -155,8 +157,9 @@ struct VaultEncryptionTests {
         #expect(Client.sensitiveKeys == ["importantNote", "allergies", "sensitivities", "preferences",
                                          "recurringRequests", "stopReason"])
         #expect(Appointment.sensitiveKeys == ["privateNote"])
-        #expect(TreatmentRecord.sensitiveKeys == ["notes", "technique", "productsUsed", "resultDetail", "aftercare",
-                                                  "nextSessionSuggestion", "fieldEntries"])
+        #expect(TreatmentRecord.sensitiveKeys == ["notes", "technique", "productsUsed", "resultDetail", "reaction",
+                                                  "aftercare", "nextSessionSuggestion", "nextVisitReminder",
+                                                  "fieldEntries"])
         #expect(RecordCorrection.sensitiveKeys == ["oldValue", "newValue", "reason"])
         #expect(Incident.sensitiveKeys == ["symptoms", "area", "actionTaken", "followUp"])
         #expect(HealthForm.sensitiveKeys == ["answers", "minorName"])
