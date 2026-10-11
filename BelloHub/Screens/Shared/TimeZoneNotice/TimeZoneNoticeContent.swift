@@ -6,7 +6,7 @@
 import SwiftUI
 
 /// Owns the notice's ViewModel and wires its actions: the card's buttons on Home, and on Calendar a row that opens the
-/// same three choices in a confirmation dialog (native, so the row stays one quiet line). Nothing changes without her
+/// same three choices in a native menu, so the row stays one quiet line. Nothing changes without her
 /// tap. "Language and region" opens that screen in the More tab.
 struct TimeZoneNoticeContent: View {
     enum Placement {
@@ -21,7 +21,6 @@ struct TimeZoneNoticeContent: View {
     let formatters: Formatters
     let now: Date
 
-    @State private var showsChoices = false
     @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
     @Environment(\.motionPolicy) private var motion
@@ -59,40 +58,44 @@ struct TimeZoneNoticeContent: View {
             )
         case .row:
             VStack(alignment: .leading, spacing: Spacing.sm) {
-                TimeZoneNoticeRow(text: text, isSaving: viewModel.isSaving) { showsChoices = true }
+                choicesMenu(mismatch, text: text, showsRegionNote: regionNote)
                 if let message = viewModel.errorMessage {
                     ErrorNotice(message: message)
                         .padding(.horizontal, Spacing.gutter)
                         .accessibilityIdentifier("calendar.timeZoneNotice.error")
                 }
             }
-            .confirmationDialog(
-                Text(text.headline.localized(in: locale)), isPresented: $showsChoices, titleVisibility: .visible
-            ) {
+        }
+    }
+
+    /// The row opens a native menu with the same choices as the card. The menu's section titles carry the difference
+    /// and, when it applies, the region note, so the row itself stays one quiet line.
+    private func choicesMenu(_ mismatch: TimeZoneMismatch, text: TimeZoneNoticeText, showsRegionNote: Bool) -> some View {
+        Menu {
+            Section {
                 Button { viewModel.usePhoneZone(mismatch) } label: { Text("timeZoneNotice.usePhone") }
                     .accessibilityIdentifier("calendar.timeZoneNotice.usePhone")
                 Button { keep(mismatch) } label: { Text("timeZoneNotice.keep") }
                     .accessibilityIdentifier("calendar.timeZoneNotice.keep")
+            } header: {
+                Text(text.difference.localized(in: locale))
+            }
+            Section {
                 Button { openLanguageRegion() } label: { Text("timeZoneNotice.languageRegion") }
                     .accessibilityIdentifier("calendar.timeZoneNotice.languageRegion")
-                Button(role: .cancel) { showsChoices = false } label: { Text("common.cancel") }
-            } message: {
-                Text(verbatim: dialogMessage(text, showsRegionNote: regionNote))
+            } header: {
+                if showsRegionNote { Text("timeZoneNotice.regionNote") }
             }
+        } label: {
+            TimeZoneNoticeRow(text: text, isSaving: viewModel.isSaving)
         }
+        .buttonStyle(.plain)
+        .disabled(viewModel.isSaving)
+        .accessibilityHint(Text("timeZoneNotice.row.hint"))
+        .accessibilityIdentifier("calendar.timeZoneNotice")
     }
 
     // MARK: - Private
-
-    /// The dialog's message: the difference, what follows the business zone and, when it applies, the region note.
-    private func dialogMessage(_ text: TimeZoneNoticeText, showsRegionNote: Bool) -> String {
-        var lines = [
-            text.difference.resolved(in: locale),
-            LocalizedStringResource("timeZoneNotice.follows").resolved(in: locale)
-        ]
-        if showsRegionNote { lines.append(LocalizedStringResource("timeZoneNotice.regionNote").resolved(in: locale)) }
-        return lines.joined(separator: "\n")
-    }
 
     /// A short crossfade as the notice leaves (kept under Reduce Motion, none in UI tests: `MotionPolicy`).
     private func keep(_ mismatch: TimeZoneMismatch) {

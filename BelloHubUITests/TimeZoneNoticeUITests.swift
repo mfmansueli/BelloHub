@@ -50,10 +50,10 @@ final class TimeZoneNoticeUITests: XCTestCase {
         XCTAssertTrue(row.label.contains("São Paulo") && row.label.contains("Rome"), row.label)
 
         row.tap()
-        let link = app.dialogButton("calendar.timeZoneNotice.languageRegion", englishLabel: "Language and region")
+        let link = app.menuItem("calendar.timeZoneNotice.languageRegion", englishLabel: "Language and region")
         XCTAssertTrue(link.waitForExistence(timeout: 5), "the choices did not open")
         XCTAssertTrue(
-            app.dialogButton("calendar.timeZoneNotice.usePhone", englishLabel: "Use my iPhone's time zone").exists
+            app.menuItem("calendar.timeZoneNotice.usePhone", englishLabel: "Use my iPhone's time zone").exists
         )
         link.tap()
 

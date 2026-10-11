@@ -22,10 +22,10 @@ extension XCUIApplication {
         return app
     }
 
-    /// A button of a confirmation dialog: iOS does not always pass a SwiftUI identifier to the buttons it draws for a
-    /// dialog, so the English label is the fallback (tests that use it run in English).
+    /// An item of a menu: iOS does not always pass a SwiftUI identifier to the buttons it draws for a menu, so the
+    /// English label is the fallback (tests that use it run in English).
     @MainActor
-    func dialogButton(_ identifier: String, englishLabel: String) -> XCUIElement {
+    func menuItem(_ identifier: String, englishLabel: String) -> XCUIElement {
         let byID = buttons[identifier].firstMatch
         if byID.waitForExistence(timeout: 3) { return byID }
         return buttons[englishLabel].firstMatch
