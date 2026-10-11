@@ -271,9 +271,11 @@ struct NewAppointmentViewModelTests {
         await model.clientWasAdded(helena.id)
         #expect(model.clientID == helena.id && model.clients.contains { $0.id == helena.id })
     }
+}
 
-    // MARK: - Business time zone (fix-reschedule-day)
+// MARK: - Business time zone (fix-reschedule-day)
 
+extension NewAppointmentViewModelTests {
     @Test("A day chosen in the calendar's zone offers that day's hours, whatever zone her hours were saved in",
           arguments: ZoneMismatch.all)
     func businessZone(_ zones: ZoneMismatch) async throws {
