@@ -12,8 +12,12 @@ import Observation
 @MainActor
 @Observable
 final class MainNavigation {
-    var selection: MainTab = .home
+    var selection: MainTab
     var morePath: [MoreRoute] = []
+
+    init(selection: MainTab = .home) {
+        self.selection = selection
+    }
 
     func reset() {
         selection = .home

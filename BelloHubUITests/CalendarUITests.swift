@@ -61,4 +61,96 @@ final class CalendarUITests: XCTestCase {
         XCTAssertTrue(app.calendarVisits.firstMatch.waitForExistence(timeout: 5), "the moved appointment is gone")
         XCTAssertEqual(app.calendarVisits.count, 1)
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    /// The phone twelve hours ahead of her business (São Paulo), as an iPhone in Japan for a Brazilian business (Italy
+    /// is five hours ahead: the same defect). The calendar is the tab on screen at the first frame, as after an unlock,
+    /// so it is built before her profile is read. A visit moved to a day must show under that day, and every visit
+    /// under its own day.
+    func testAMovedVisitShowsOnTheChosenDayWhenThePhoneIsAheadOfTheBusiness() {
+        checkMovedVisitShowsOnTheChosenDay(phoneTimeZone: "Asia/Tokyo")
+    }
+
+    /// The phone seven hours behind her business.
+    func testAMovedVisitShowsOnTheChosenDayWhenThePhoneIsBehindTheBusiness() {
+        checkMovedVisitShowsOnTheChosenDay(phoneTimeZone: "Pacific/Honolulu")
+    }
+
+    // MARK: - Helpers
+
+    private func checkMovedVisitShowsOnTheChosenDay(
+        phoneTimeZone: String, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let app = XCUIApplication.launchedForUITests(
+            arguments: ["-uiSeed", "clients", "-uiCalendar", "-uiCalendarVisits", "-uiTab", "calendar"],
+            environment: ["TZ": phoneTimeZone]
+        )
+        XCTAssertTrue(app.element("calendar.modePicker").waitForExistence(timeout: 10), file: file, line: line)
+        XCTAssertTrue(
+            app.calendarVisits.firstMatch.waitForExistence(timeout: 10), "no seeded visit today", file: file, line: line
+        )
+        assertVisitsAreUnderTheSelectedDay(app, file: file, line: line)
+
+        // Move today's first visit to the third day offered, at its first free time.
+        app.chooseVisitMenuItem(
+            "calendar.visit.menu.reschedule", englishLabel: "Reschedule", on: app.calendarVisits.firstMatch
+        )
+        XCTAssertTrue(app.element("reschedule.visit").waitForExistence(timeout: 5), file: file, line: line)
+        let offeredDays = app.chips(prefix: "reschedule.day.")
+        XCTAssertGreaterThan(offeredDays.count, 2, "too few days offered", file: file, line: line)
+        offeredDays[2].tap()
+        let times = app.chips(prefix: "reschedule.slot.")
+        XCTAssertFalse(times.isEmpty, "the chosen day has no free time", file: file, line: line)
+        times.first?.tap()
+        app.tapButton("reschedule.confirmButton")
+        let done = app.element("reschedule.done.time")
+        XCTAssertTrue(done.waitForExistence(timeout: 5), "the move was not confirmed", file: file, line: line)
+        let chosenDay = Self.day(of: done.label)
+        app.tapButton("reschedule.done.backButton")
+
+        // Go to the day she chose, by its label in the calendar, and find the visit there.
+        XCTAssertTrue(app.element("calendar.modePicker").waitForExistence(timeout: 5), file: file, line: line)
+        var steps = 0
+        while selectedStripDay(app) != chosenDay, steps < 10 {
+            app.tapButton("calendar.nextButton")
+            steps += 1
+        }
+        XCTAssertEqual(
+            selectedStripDay(app), chosenDay, "the calendar never reached the chosen day", file: file, line: line
+        )
+        let moved = app.calendarVisits.matching(NSPredicate(format: "label CONTAINS %@", chosenDay))
+        XCTAssertTrue(
+            moved.firstMatch.waitForExistence(timeout: 5), "the visit moved to \(chosenDay) is not under that day",
+            file: file, line: line
+        )
+        assertVisitsAreUnderTheSelectedDay(app, file: file, line: line)
+    }
+
+    /// "Tuesday, October 13, 9:00 AM" → "Tuesday, October 13": the day is everything before the time.
+    private static func day(of dateTime: String) -> String {
+        guard let comma = dateTime.range(of: ", ", options: .backwards) else { return dateTime }
+        return String(dateTime[..<comma.lowerBound])
+    }
+
+    /// The spoken label of the day selected in the week strip ("Tuesday, October 13").
+    private func selectedStripDay(_ app: XCUIApplication) -> String? {
+        app.descendants(matching: .any)
+            .matching(NSPredicate(format: "identifier BEGINSWITH 'calendar.stripDay.' AND selected == true"))
+            .allElementsBoundByIndex.first?.label
+    }
+
+    /// Every visit the day shows is spoken with that day's date: a calendar that cuts its days in another zone than
+    /// the one its labels are written in shows Tuesday's visits under Monday.
+    private func assertVisitsAreUnderTheSelectedDay(
+        _ app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        guard let day = selectedStripDay(app) else {
+            XCTFail("no day is selected in the week strip", file: file, line: line)
+            return
+        }
+        for visit in app.calendarVisits.allElementsBoundByIndex {
+            XCTAssertTrue(visit.label.contains(day), "\(visit.label) is shown under \(day)", file: file, line: line)
+        }
+    }
 }

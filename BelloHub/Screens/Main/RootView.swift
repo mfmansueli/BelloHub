@@ -33,7 +33,7 @@ struct RootView: View {
     @State private var push: PushService
     @State private var clientDeletion: ClientDataDeletionService
     @State private var language: InterfaceLanguageService
-    @State private var navigation = MainNavigation()
+    @State private var navigation: MainNavigation
     @State private var followUpQueue: FollowUpQueueService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
@@ -69,6 +69,12 @@ struct RootView: View {
         _push = State(initialValue: dependencies.inbox.push)
         _clientDeletion = State(initialValue: dependencies.inbox.clientDeletion)
         _language = State(initialValue: dependencies.language)
+        #if DEBUG
+        let initialTab = LaunchOptions.current.initialTab.flatMap(MainTab.init(rawValue:)) ?? .home
+        _navigation = State(initialValue: MainNavigation(selection: initialTab))
+        #else
+        _navigation = State(initialValue: MainNavigation())
+        #endif
         _followUpQueue = State(initialValue: FollowUpQueueService(
             defaults: dependencies.defaults, vault: dependencies.vault
         ))

@@ -47,6 +47,48 @@ struct ZoneDay: Sendable, CustomTestStringConvertible {
     ]
 }
 
+/// A calendar that reads days in `business` while her stored hours carry another zone (`stored`): the hours were
+/// saved before her business zone was known, or with the phone's zone. Every screen must still read her hours in the
+/// business zone, or a day chosen as Tuesday gets Monday's times (fix-reschedule-day). The cases cover a stored zone
+/// behind and ahead of the business one, and daylight-saving change days of the business zone.
+struct ZoneMismatch: Sendable, CustomTestStringConvertible {
+    let business: String
+    let stored: String
+    /// The working day the test chooses, "yyyy-MM-dd" in the business zone.
+    let date: String
+
+    var testDescription: String { "\(business) calendar, hours saved in \(stored), \(date)" }
+
+    var days: CalendarDays { CalendarDays(timeZone: TimeZone(identifier: business) ?? .gmt, firstWeekday: 2) }
+
+    /// The chosen day, 00:00 in the business zone.
+    var day: Date { at("00:00") }
+
+    /// A wall-clock time of the chosen day in the business zone ("09:00").
+    func at(_ time: String) -> Date {
+        TestClock.date("\(date) \(time)", zone: business)
+    }
+
+    /// Every day 09:00 to 18:00, no break, buffer or notice, saved with `stored`.
+    var availability: AvailabilitySettings {
+        makeAvailability(
+            timeZoneID: stored, weekdays: Array(1...7), startMinutes: 9 * 60, endMinutes: 18 * 60, breaks: [],
+            bufferMinutes: 0, minNoticeHours: 0
+        )
+    }
+
+    static let all: [ZoneMismatch] = [
+        // The report: a calendar in Italy, hours saved in São Paulo (behind): Tuesday got Monday's times.
+        ZoneMismatch(business: "Europe/Rome", stored: "America/Sao_Paulo", date: "2026-10-07"),
+        // Hours saved ahead of the business zone.
+        ZoneMismatch(business: "America/Sao_Paulo", stored: "Asia/Tokyo", date: "2026-10-07"),
+        ZoneMismatch(business: "America/Sao_Paulo", stored: "Europe/Lisbon", date: "2026-10-08"),
+        // Daylight-saving change days of the business zone (25-hour days).
+        ZoneMismatch(business: "Europe/Lisbon", stored: "America/Sao_Paulo", date: "2026-10-25"),
+        ZoneMismatch(business: "America/New_York", stored: "Europe/Madrid", date: "2026-11-01")
+    ]
+}
+
 /// An appointment from `start` for `minutes`, held (booked) by default.
 func makeVisit(
     id: UUID = UUID(), clientID: UUID = UUID(), start: Date, minutes: Int = 60,

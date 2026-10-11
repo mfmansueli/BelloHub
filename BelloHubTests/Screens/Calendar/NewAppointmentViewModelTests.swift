@@ -271,4 +271,27 @@ struct NewAppointmentViewModelTests {
         await model.clientWasAdded(helena.id)
         #expect(model.clientID == helena.id && model.clients.contains { $0.id == helena.id })
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    @Test("A day chosen in the calendar's zone offers that day's hours, whatever zone her hours were saved in",
+          arguments: ZoneMismatch.all)
+    func businessZone(_ zones: ZoneMismatch) async throws {
+        let world = try await CalendarWorld.make(availability: zones.availability)
+        let model = NewAppointmentViewModel(
+            clientID: nil, startsAt: nil, timeZoneID: zones.business, appointments: world.appointments,
+            timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup, vault: world.vault,
+            catalogProvider: FakeHealthFormCatalogProvider(), now: { TestClock.now }
+        )
+        await model.loadAsync()
+        model.selectService(world.glow.id)
+        model.selectDay(zones.day)
+        let times = model.slotPlan.all
+        #expect(times.first == zones.at("09:00"))
+        #expect(times.last == zones.at("17:00"))
+        #expect(times.allSatisfy { zones.days.isSameDay($0, zones.day) })
+        model.selectTime(minutes: 9 * 60)
+        #expect(model.start == zones.at("09:00"))
+        #expect(model.warnings.filter(\.isScheduleConflict).isEmpty, "09:00 is inside her hours")
+    }
 }

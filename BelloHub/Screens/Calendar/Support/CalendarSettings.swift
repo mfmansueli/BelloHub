@@ -7,7 +7,7 @@ import Foundation
 
 /// The profile's choices the calendar screens need, read in one place: the business time zone (never the phone's),
 /// the first day of the week of her region, and the formatters for dates and times.
-struct CalendarSettings: Equatable, Sendable {
+struct CalendarSettings: Hashable, Sendable {
     let timeZoneID: String
     let firstWeekday: Int
     let currencyCode: String
