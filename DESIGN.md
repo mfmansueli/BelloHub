@@ -237,6 +237,7 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
 | 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
 | 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeTodayCard`, `HomeVisitRow`, `HomeReachOutCard`, `HomeCountRow`) | `HomeViewModel` (reads `AgendaDigestService`, `FollowUpQueueService`; `HomePending`, `HomeReachOut`) | `home.*`, `home.quick.newAppointment` (toolbar) |
+| Time-zone notice (Home card, Calendar row) | `Screens/Shared/TimeZoneNotice/` (`TimeZoneNoticeView` -> `TimeZoneNoticeContent`, `TimeZoneNoticeCard`, `TimeZoneNoticeRow`, `Support/TimeZoneNoticeText`) | `TimeZoneNoticeViewModel` (reads `TimeZoneNoticeService`, `ProfileService`, `BookingSetupService`; rule `Models/Business/TimeZoneMismatch`) | `home.timeZoneNotice[.message, .regionNote, .usePhone, .keep, .languageRegion, .error]`, `calendar.timeZoneNotice[.usePhone, .keep, .languageRegion, .error]` |
 | 2.7 To reach out (2.8 Win back is its "Not back" filter) | `Screens/FollowUps/` (`FollowUpRowCard`) | `FollowUpsViewModel` (`FollowUpQueue`, `FollowUpAction`) | `followUps.*` (`followUps.filter.<filter>`, `followUps.row.<client>`, `followUps.reason.<occurrence>`, `followUps.action.<occurrence>`) |
 | Client message (sheet, `AgendaSheet.clientMessage`) | `Screens/Shared/ClientMessage/` | `ClientMessageViewModel` (`ClientMessageComposer` is pure; nothing is sent by the app, D14) | `clientMessage.*` |
 | 7.11 Shared states | `Screens/Shared/States/` (`ScreenPhase`, `ScreenStateView`, `ListLoadingView`) | none | caller-defined |
@@ -645,6 +646,29 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   fields" with the count, unless already answered. A chip "Same as last visit, <date>" fills only empty fields from the
   client's last record of the same service. The voice and AI presentation (Register screen, AI settings) is unchanged:
   deferred by the owner.
+
+### Time-zone notice (2026-10-11, `docs/agent-notes/tz-mismatch-notice.md`)
+- **When.** The iPhone's zone shows another hour than the business zone *right now* (`TimeZoneMismatch`: offsets at
+  `now`, not identifiers, so Rome and Paris, or São Paulo and Buenos Aires, say nothing). Never during setup (no
+  profile yet), never once she kept that pair of zones, and in UI tests only with `-uiTimeZoneNotice`.
+- **Home.** Under the greeting, before the day: a `belloCard()` with a decorative globe (`ink2`), the sentence "Your
+  iPhone is on Rome time, but your business uses São Paulo time." (`bodyStrong`, `ink`), then in `meta` / `ink2` the
+  difference ("Your iPhone is 5 hr ahead of your business."), "Your calendar and your booking page follow the business
+  time zone." and, when the iPhone's zone belongs to another region preset, "Your region and currency do not change
+  automatically.". The text is one VoiceOver element naming both zones. Then "Use my iPhone's time zone"
+  (`belloSecondary`, full width, a spinner while saving; Home's primary action stays the toolbar button) and two
+  `belloTertiary` buttons, "Keep it" and "Language and region" (side by side, stacked when they do not fit: AX sizes).
+  A failed save shows `ErrorNotice` inside the card. Every pair is on `surface`, already measured; no new color.
+- **Calendar.** A quiet line pinned under the header (it scrolls with the header at AX sizes): globe, "Times are in
+  São Paulo time. Your iPhone is on Rome time." in `meta` / `ink2`, a `chevronUpDown`. It is the label of a native
+  `Menu`: a section titled with the difference (use the iPhone's zone, keep it) and a section with "Language and
+  region", titled with the region note when it applies. 44 pt minimum height.
+- **Names.** Zones are named by their city in the interface language (`Formatters.zoneName`: CLDR exemplar city,
+  "Roma", "روما"); a zone without a city reads as its offset ("GMT-03:00"). Differences use `Formatters.duration`.
+- **Motion.** "Keep it" fades the notice out (`Motion.Duration.fade`, kept under Reduce Motion, none in UI tests).
+- **Nothing changes without her tap.** "Use my iPhone's time zone" saves the profile's zone and re-saves her stored
+  hours with that zone (same wall-clock hours, same day-off dates); the page republishes by itself if it is online.
+  "Language and region" opens 7.2 in the More tab.
 
 ## Empty, loading and error states
 
