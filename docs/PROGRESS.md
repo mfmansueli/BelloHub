@@ -103,7 +103,7 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `scripts/test.sh full`: `** TEST SUCCEEDED **`. 9 unit tests in 4 suites (Swift Testing) and 1 UI test (`LaunchUITests`), 0 failures.
 
 ## Current stage
-**v1 is being finished end to end without stopping between stages (owner's order, 2026-10-09).** Done and tagged: S0 to S6, S7 (front end, D53), S10 (`stage-S7`, `stage-S8`, `stage-S10` all at the 2026-10-10 integration head; S8 is tagged as "publish + inbox services", its inbox screens 2.9 to 2.11 are still open). Order of the rest: S8 inbox screens, S9 integration, S11, S12. **S9 done 2026-10-10 (tag `stage-S9`); S11 done 2026-10-10 (tag `stage-S11`); next S12.**
+**v1 is complete (S12 done 2026-10-11, tags `stage-S12` and `v1.0.0-rc1`).** Every stage S0 to S12 is tagged. What is left is human work only (RESUME HERE, "v1 complete", and `docs/14-HUMAN-TASKS.md`).
 
 **Owner rule 2026-10-09 (later): at most 2 agents at a time, only `model: fable` at `medium` effort** (replaces the 3 sonnet + 1 fable split). Order: s8-publish and s6-home first, then s7-record, s10-account, D55, S8 inbox. Worktree dirs under `.claude/worktrees/`: s6-home = `agent-a9c2564560a1e27e2`, s7-record = `agent-af16371e7560af324`, s8-publish = `agent-ae6aa117cf4712fe2`, s10-account = `agent-a498cf63dedef1f7d`.
 
@@ -113,6 +113,29 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-11: v1 COMPLETE. S12 done on `build/v1`, tags `stage-S12` and `v1.0.0-rc1` at HEADPLACEHOLDER** (stage log "S12", notes
+`docs/agent-notes/s12-release.md`, acceptance `docs/13-TESTING-QUALITY.md` section 8 checked with evidence). Palette
+changed to graphite and orange by PR #1 after S11/S12 measurements; contrast and audits re-run on HEADPLACEHOLDER.
+
+**Before the first real client** (full steps: top of `docs/14-HUMAN-TASKS.md`, "Minimum to run v1 in production"):
+1. Domain (H6) → `BELLO_WEB_BASE_URL`, store URLs. 2. **E-mail sender, critical (H7)**: Resend EU account, DPA, SPF/DKIM/DMARC at
+the registrar, `EMAIL_API_KEY` + `EMAIL_FROM`; without it no client can book (the e-mail code is the only verification,
+D46/D57). 3. App Store Connect (H14, H16). 4. Apple root certificates and the App Store Server Notifications URL (H14).
+5. Sign in with Apple key (H22). 6. Firebase production project or promotion (H4). 7. Real-iPhone checks (H3, H8, H19).
+
+**Open items, all HUMAN** (H-number in `docs/14-HUMAN-TASKS.md`):
+- H1 add Mateus to the Apple team; H2 CloudKit schema to Production; H3 two-iPhone checks (sync, recovery key restore,
+  voice matrix when voice ships); H4 `prod` project (or promote `bello-hub`), TTL policies; H5 App Check providers and
+  enforcement (not for v1, before scaling); H6 domain; H7 e-mail provider (critical); H8 in-app browser tests;
+  H9 Google Calendar (optional); H10 native readers (D41, optional); H11 legal review (after sales, D40);
+  H12 fonts (done unless offline); H13 WhatsApp Cloud API (post-v1: the provider is built and tested but **not wired** in
+  `createDeps`, which always uses `DisabledWhatsAppProvider`, so automation also needs a small code change: a phone
+  number id parameter and an access token secret); H14 App Store Connect, products, privacy labels, root certificates;
+  H15 open markets; H16 trader status, seller name, release Xcode; H17 `gh auth login`; H18 breach-plan duties;
+  H19 release-candidate checks on a real iPhone (VoiceOver pass, hitches, cold start, Apple Calendar, camera, Face ID);
+  H20 phone sign-in decision (v1 shows Apple only); H21 automated WhatsApp and SMS (post-v1, D57: v1 keeps manual
+  `wa.me` and the e-mail code; Meta onboarding needs a registered business); H22 Sign in with Apple key.
+
 **2026-10-10 17:45: S12 started on `build/v1` (single agent).** Step 0 done: the `s8-leftovers` merge (`cf9d249`) is green (fast 2179 / 309 suites, check-warnings zero, firebase and web full green) and functions (`suggestBookingTime`) and Hosting are deployed to dev (stage log "S8 leftovers + S12 prep"). Next in S12: calendar past-hour tap, per-client export under Edit, "Created by " on the record-history route, missing `NSCalendarsFullAccessUsageDescription` and the Apple Calendar write-through (the switch promised it, nothing wrote events), audits, performance, security table, final regression, tags `stage-S12` and `v1.0.0-rc1`.
 
 **2026-10-10 17:30: S11 done on `build/v1`, tag `stage-S11`** (stage log "S11", notes `docs/agent-notes/s11-localization.md`, market readiness table above). Green on the head: fast 2095 tests in 295 suites, smoke 48 (47 + 1 skipped tool), screenshots in 14 localizations, all audit suites (S6 to S8 pt-BR/de/hi runs finished), check-warnings zero, web full. Hosting deployed to dev. **Next: S12.** Open from S11: per-client export/delete under Edit (Help and Privacy describe it), a past hour on today's day view did not open New appointment (notes section 5), native readers for every localization (H10/H11).
@@ -351,6 +374,32 @@ the VoiceOver pass on a device, H14 before the server lifts the 10-client limit 
 
 Integration (S12 agent, 2026-10-10 17:10 to 17:45): merge `cf9d249` had no textual conflict; on the merged head `scripts/test.sh fast` 2179 tests in 309 suites passed, `scripts/check-warnings.sh` zero warnings (simulator, device, Release, test targets), `scripts/test-firebase.sh` green (unit 943, rules 66, use cases 289, transport 19), `scripts/test-web.sh full` green (i18n 401 keys, contrast 152/152, unit 248, Playwright 191 + 15 skipped, Lighthouse 0.99/1.00, initial JS 48.4 KB). The server contract changed on the helper's side only, so no regeneration was needed. **Deployed to dev:** all functions (new `suggestBookingTime` created) and Hosting; smoke: page 200, `/api/getSlots` answers (INVALID_ARGUMENT for a bad body), `/api/getPublicPage` NOT_FOUND for an unknown slug.
 
+### S12 · Hardening and release readiness · done 2026-10-11 · tags stage-S12, v1.0.0-rc1
+Done (`docs/agent-notes/s12-release.md`): the `s8-leftovers` merge stabilized and deployed (functions incl. `suggestBookingTime`,
+Hosting); S11 bugs: the "past hour jumps to Monday" was a UI-test tap under the pinned week strip (the app opens a past
+hour; helper fixed, hour-row rule unit-tested), per-client **Export data** under Edit (Help and Privacy now true, 14
+localizations), "Created by " name; found and fixed: **Apple Calendar write-through** (the switch promised it; nothing wrote
+events) and the missing **`NSCalendarsFullAccessUsageDescription`** (asking EventKit without it ends the app),
+`InfoPlistUsageTests`, "Continue with phone" hidden where the provider cannot send codes (H20), launch screen in the page
+colour, `BookingImporterTests`; accessibility audit in every Full run (en, Increase Contrast, Reduce Motion); security
+re-check table (`security-review.md` section 6); App Store metadata lengths re-checked; TestFlight notes; README; H19 to
+H22, D57 (v1 keeps manual WhatsApp and the e-mail code; no SMS, no Cloud API). Merged on the way: PR #1 (graphite and
+orange palette, by the co-owner) and `link-copy` (press and hold the booking link on Account to copy it).
+Measured on the old palette (head `7adf166`..`c642bdf`): `scripts/test.sh full` 5 h 43 min: unit 2,200 tests in 313
+suites passed; UI 103 tests: 94 passed, 6 skipped (5 opt-in performance, 1 opt-in color review), 3 failed, all audit
+walks losing a row after an AX5 audit re-laid a lazy list out or dragging a sheet closed (BookingSetup availability,
+More record fields, Services catalog); the walks were fixed and the suites re-run on the final head (below).
+`LocalizationScreenshotUITests` green (14 localizations 31 min, Arabic mirroring, double-length pseudolanguage).
+`AccessibilityAuditUITests` en + pt-BR, default and AX5, Increase Contrast and Reduce Motion: clean.
+`PerformanceUITests` (simulator, Debug): cold start 1.26 s to Welcome (budget 1.5), search over 2,000 clients 12 ms
+(150), peak memory with 200 photos 96 MB (250); hitches, week render, photo save, vault timing: device (H19).
+`check-warnings.sh` zero warnings; `test-firebase.sh` unit 943, rules 66, use cases 289, transport 19; `test-web.sh full`
+unit 248, Playwright 191 + 15 skipped, Lighthouse 0.99/1.00, JS 48.4 KB gzip; `e2e-local.sh` 7 passed.
+POSTPRPLACEHOLDER
+Deployed to dev: functions (all, `suggestBookingTime` created) and Hosting on 2026-10-10, smoke OK; nothing under
+`firebase/` or `web/` changed afterwards, so no redeploy at the end.
+Human tasks created: H19, H20, H21, H22; H13 rewritten (post-v1), H7 marked critical.
+
 ## Assumptions
 | # | Assumption | Reason | Stage |
 |---|---|---|---|
@@ -569,4 +618,4 @@ Generated from `docs/screens/SCREENS.md`; stage from `docs/03-BUILD-PLAN.md`.
 - `docs/spikes/VOICE-LANGUAGE-MATRIX.md`: (S7)
 
 ## Release checklist
-Mirror `docs/13-TESTING-QUALITY.md` section 8 and tick as achieved. Not started.
+Done: `docs/13-TESTING-QUALITY.md` section 8 is checked item by item with evidence (S12, 2026-10-11).
