@@ -135,6 +135,7 @@ struct FollowUpsContentView: View {
         }
         .tint(Palette.ink)
         .padding(.top, Spacing.sm)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("followUps.setAside")
     }
 

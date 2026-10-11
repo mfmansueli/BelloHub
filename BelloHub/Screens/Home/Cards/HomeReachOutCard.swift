@@ -32,6 +32,7 @@ struct HomeReachOutCard: View {
                 .accessibilityIdentifier("home.reachOut.open")
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home.reachOut")
     }
 

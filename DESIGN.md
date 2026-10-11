@@ -567,6 +567,28 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   the tab view is rebuilt on a change so navigation titles and tab names follow, and `MainNavigation` keeps the selected
   tab and the More stack (also across a lock). What she wrote is never translated.
 - **Lock screen logo (item 2).** `BrandMark` is the official icon (see Components).
+- **Setup (item 3).** Three counted steps and Ready: About you, Profession, **Your first service** (1.4: the
+  profession's most common service in a native menu, its duration menu, an optional price whose placeholder is zero
+  in the region's currency; other suggestions as optional `ChoiceCard`s; "Add your own"). Terminology, Tags, Record
+  and Permissions (1.6 to 1.9) are no longer steps: the catalog's defaults are stored, the word for clients is a menu
+  in 7.2 "Words the app uses", tags and record fields are in More; Ready says so in a quiet `FooterNote`. Progress is
+  saved after every change and the setup resumes on the same step after a relaunch.
+- **Home (item 4).** "New appointment" is a toolbar button (title and icon) in the navigation bar, one tap away on
+  every day. Order: greeting; next visit hero or the clear-day `EmptyState` (no button of its own now); **Today**
+  (`HomeTodayCard`: booking requests to answer, which switch to Alerts; reminders ready to send; visits to finish
+  closing; the notification offer, only while the system was never asked and a visit is coming); the rest of today;
+  **To reach out** (`HomeReachOutCard`: the first two clients with their reason, and "See everyone" with the count);
+  the week row (`HomeCountRow`, open slots). Removed: the three tiles, the follow-ups card, the win-back link, the
+  "Reminders ready" list and the quick actions section (every destination is still reachable).
+- **Follow-up queue (items 5, 6, 12).** 2.7 is now "To reach out" (`FollowUpsView`, large title): a subtitle, booking
+  requests kept apart in one labelled row that opens Alerts, filter chips (All, Reminders, After visits, Returns, Not
+  back, Birthdays, each with its count), one `FollowUpRowCard` per client with every reason (the plain sentence of
+  `FollowUpReasonText`, the message state line, the main action, "I sent it" once a chat was opened, "Book" for returns
+  and not back, and a native menu with "Later (one week)" and "Dismiss"), a collapsible "Set aside" section with "Bring
+  back", and a footer that says where the suggestions come from. 2.8 Win back is the queue on "Not back". Message
+  states: "Ready to send", "Conversation opened … Opening WhatsApp does not confirm the message was sent.", "Marked
+  as sent by you, …". Alerts (2.4) keeps requests, mailbox and the visit that starts soon, and replaces the reminders
+  list and the follow-up, win-back and birthday cards with one "To reach out" card.
 
 ## Empty, loading and error states
 

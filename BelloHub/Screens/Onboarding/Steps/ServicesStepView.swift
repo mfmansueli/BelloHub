@@ -71,6 +71,7 @@ struct ServicesStepView: View {
                 .accessibilityIdentifier("onboarding.services.priceField")
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("onboarding.services.firstCard")
     }
 

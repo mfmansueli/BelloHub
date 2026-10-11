@@ -24,6 +24,7 @@ struct HomeTodayCard: View {
                 ForEach(pending.items) { item in row(item) }
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home.today")
     }
 
@@ -72,6 +73,7 @@ struct HomeTodayCard: View {
         }
         .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("home.today.notifications")
     }
 }
