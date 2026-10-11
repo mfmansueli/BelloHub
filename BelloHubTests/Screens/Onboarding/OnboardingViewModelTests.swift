@@ -82,7 +82,8 @@ struct OnboardingViewModelTests {
         model.toggle(.esthetician)
         #expect(model.firstService?.key == "est.glow")
         #expect(model.isServiceSelected("est.glow") && !model.isServiceSelected("shared.consult"))
-        #expect(model.draft.selectedTagKeys.contains("est.sensitive") && !model.draft.selectedTagKeys.contains("est.vip"))
+        #expect(model.draft.selectedTagKeys.contains("est.sensitive"))
+        #expect(!model.draft.selectedTagKeys.contains("est.vip"))
 
         model.toggleService("est.peel")
         model.toggle(.hair)
@@ -125,7 +126,7 @@ struct OnboardingViewModelTests {
         #expect(model.draft.customServices.isEmpty)
     }
 
-    @Test("Progress is saved after every change and a new ViewModel resumes on the same step with the same choices")
+    @Test("Progress is saved after every change; a new ViewModel resumes on the same step with the same choices")
     func progressResumes() async throws {
         let suite = "onboarding-progress-\(UUID().uuidString)"
         let defaults = try #require(UserDefaults(suiteName: suite))
@@ -159,8 +160,7 @@ struct OnboardingViewModelTests {
     func finish() async throws {
         let rig = makeRig(professions: [.esthetician])
         rig.model.setDisplayName("Maria Silva")
-        rig.model.setClientTerm(.patient)
-        rig.model.toggleTag("est.vip")
+        rig.model.toggleService("shared.consult")
 
         await rig.model.finishAsync()
 
@@ -168,12 +168,13 @@ struct OnboardingViewModelTests {
         #expect(rig.model.errorMessage == nil)
         let repository = try #require(rig.vault.repository)
         let stored = try #require(try await repository.profile())
-        #expect(stored.displayName == "Maria Silva" && stored.clientTerm == .patient)
+        // The setup no longer asks for the word for clients or the tags: the defaults are stored.
+        #expect(stored.displayName == "Maria Silva" && stored.clientTerm == .client)
         #expect(try await repository.services().map(\.name) == ["Glow Facial", "Consultation"])
-        #expect(try await repository.tags().map(\.name) == ["VIP", "Sensitive Skin"])
+        #expect(try await repository.tags().map(\.name) == ["Sensitive Skin"])
         #expect(try await repository.recordTemplate()?.enabledKeys(for: .esthetician) == ["est.skin"])
         #expect(rig.profile.profile?.displayName == "Maria Silva")
-        #expect(rig.profile.clientTerm == .patient)
+        #expect(rig.profile.clientTerm == .client)
     }
 
     @Test("When the vault cannot be opened nothing is reported as finished and she can try again")

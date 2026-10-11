@@ -41,8 +41,8 @@ enum OnboardingBuilder {
         // Her first service comes first; durations and prices she set replace the catalog's.
         let chosen = OnboardingSuggestions.services(for: draft.professions, in: catalog)
             .filter { draft.selectedServiceKeys.contains($0.key) }
-        let ordered = chosen.filter { $0.key == draft.firstServiceKey } + chosen.filter { $0.key != draft.firstServiceKey }
-        let suggested = ordered
+        let first = draft.firstServiceKey
+        let suggested = (chosen.filter { $0.key == first } + chosen.filter { $0.key != first })
             .map { item in
                 Service(id: makeID(), name: item.name, category: item.category,
                         durationMinutes: draft.serviceMinutes[item.key] ?? item.minutes,

@@ -151,7 +151,8 @@ struct ServicesStepView: View {
 
     /// "Your service · R$120 · 90 min".
     private func customSubtitle(for service: DraftService) -> String {
-        var parts = [LocalizedStringResource("onb.services.yourService", defaultValue: "Your service").resolved(in: locale)]
+        let yours = LocalizedStringResource("onb.services.yourService", defaultValue: "Your service")
+        var parts = [yours.resolved(in: locale)]
         if let price = service.priceAmount { parts.append(formatters.money(price)) }
         parts.append(formatters.minutes(service.minutes))
         return parts.joined(separator: " · ")

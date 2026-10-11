@@ -77,7 +77,9 @@ final class OnboardingUITests: XCTestCase {
         first.terminate()
 
         let second = XCUIApplication.launchedForUITests(arguments: ["-uiKeepState", "-uiBiometrics", "cancelFirst"])
-        if second.buttons["locked.unlockButton"].waitForExistence(timeout: 3) { second.tapButton("locked.unlockButton") }
+        if second.buttons["locked.unlockButton"].waitForExistence(timeout: 3) {
+            second.tapButton("locked.unlockButton")
+        }
         XCTAssertTrue(second.staticTexts["onboarding.services.title"].waitForExistence(timeout: 5))
         second.tapButton("onboarding.backButton")
         second.tapButton("onboarding.backButton")

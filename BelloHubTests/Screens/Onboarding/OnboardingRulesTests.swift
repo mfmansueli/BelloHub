@@ -33,7 +33,7 @@ struct OnboardingRulesTests {
         #expect(!OnboardingRules.canContinue(from: .profession, draft: draft))
         draft.professions = [.hair]
         #expect(OnboardingRules.canContinue(from: .profession, draft: draft))
-        for step in [OnboardingStep.services, .terminology, .tags, .record, .permissions, .ready] {
+        for step in [OnboardingStep.services, .ready] {
             #expect(OnboardingRules.canContinue(from: step, draft: makeDraft(professions: [], name: "")))
         }
     }
@@ -87,12 +87,11 @@ struct PriceInputTests {
 
 @Suite("OnboardingStep")
 struct OnboardingStepTests {
-    @Test("Six steps show the progress bar, in order, and the last two do not")
+    @Test("Three steps show the progress bar, in order, and Ready does not")
     func progress() {
-        #expect(OnboardingStep.counted == [.about, .profession, .services, .terminology, .tags, .record])
+        #expect(OnboardingStep.counted == [.about, .profession, .services])
         #expect(OnboardingStep.about.progressPosition == 1)
-        #expect(OnboardingStep.record.progressPosition == 6)
-        #expect(OnboardingStep.permissions.progressPosition == nil)
+        #expect(OnboardingStep.services.progressPosition == 3)
         #expect(OnboardingStep.ready.progressPosition == nil)
     }
 
@@ -101,11 +100,13 @@ struct OnboardingStepTests {
         #expect(OnboardingStep.about.previous == nil)
         #expect(OnboardingStep.about.next == .profession)
         #expect(OnboardingStep.ready.next == nil)
-        #expect(OnboardingStep.ready.previous == .permissions)
+        #expect(OnboardingStep.ready.previous == .services)
     }
 
     @Test("Names are unique, for accessibility identifiers")
     func names() {
         #expect(Set(OnboardingStep.allCases.map(\.name)).count == OnboardingStep.allCases.count)
+        for step in OnboardingStep.allCases { #expect(OnboardingStep(name: step.name) == step) }
+        #expect(OnboardingStep(name: "permissions") == nil)
     }
 }
