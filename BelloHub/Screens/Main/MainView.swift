@@ -17,10 +17,11 @@ struct MainView: View {
     @Environment(NotificationSettingsService.self) private var notificationSettings
     @Environment(\.locale) private var locale
     @Environment(\.scenePhase) private var scenePhase
-    @State private var selection = MainTab.home
+    @Environment(MainNavigation.self) private var navigation
 
     var body: some View {
-        TabView(selection: $selection) {
+        @Bindable var navigation = navigation
+        TabView(selection: $navigation.selection) {
             Tab(value: MainTab.home) {
                 NavigationStack { HomeView().agendaDestinations() }
             } label: {
@@ -101,5 +102,6 @@ struct MainView: View {
         .environment(PermissionService())
         .environment(CalendarIntegrationService(provider: UITestCalendarAccess(), writer: UITestCalendarWriter()))
         .environment(NotificationSettingsService(permissions: PermissionService()))
+        .environment(MainNavigation())
 }
 #endif

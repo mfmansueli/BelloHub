@@ -55,6 +55,11 @@ enum AppLocalization: String, CaseIterable, Identifiable, Hashable, Sendable {
         }
     }
 
+    /// Portuguese, Spanish and English: the region of a locale decides which of the localizations Foundation reads.
+    var variantLivesInRegion: Bool {
+        ["pt", "es", "en"].contains(languageCode)
+    }
+
     /// The localization a locale speaks (the interface locale back to its localization), English for a language the
     /// product does not have.
     init(resolving locale: Locale) {

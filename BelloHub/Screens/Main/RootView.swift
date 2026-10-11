@@ -33,6 +33,7 @@ struct RootView: View {
     @State private var push: PushService
     @State private var clientDeletion: ClientDataDeletionService
     @State private var language: InterfaceLanguageService
+    @State private var navigation = MainNavigation()
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -105,6 +106,7 @@ struct RootView: View {
         .environment(calendar)
         .environment(export)
         .environment(language)
+        .environment(navigation)
         .belloLocaleTypography()
         // The interface language, above every stage, the privacy cover and the lock screen: sheets, alerts, menus and
         // full-screen covers inherit it, and a change re-renders what is open without losing its place.
@@ -146,6 +148,7 @@ struct RootView: View {
             }
             // Nothing of hers stays scheduled once she signs out (a lock only pauses the observation).
             if stage.isSignedOut {
+                navigation.reset()
                 Task { await notifications.removeAll() }
                 // Her visits leave the iPhone's calendar too; the switch is a device preference and stays.
                 Task { await calendar.removeMirror() }
@@ -229,11 +232,19 @@ struct RootView: View {
         if let route = LaunchOptions.current.route {
             if route == "appointments" { AppointmentDebugRoute() } else { HealthDebugRoute(route: route) }
         } else {
-            MainView(onSignOut: { Task { await model.signOut() } })
+            mainView
         }
         #else
-        MainView(onSignOut: { Task { await model.signOut() } })
+        mainView
         #endif
+    }
+
+    /// Built again when the interface language changes, so the parts iOS draws from SwiftUI (navigation titles, tab
+    /// names, toolbars) change with the content; `MainNavigation` keeps the tab and the More stack, so she stays where
+    /// she was.
+    private var mainView: some View {
+        MainView(onSignOut: { Task { await model.signOut() } })
+            .id(language.localization)
     }
 
     private var initialRegion: RegionPreset {

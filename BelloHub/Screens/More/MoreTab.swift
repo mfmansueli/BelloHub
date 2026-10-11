@@ -14,10 +14,11 @@ struct MoreTab: View {
     @Environment(ProfileService.self) private var profile
     /// Optional so a preview of the shell that does not inject a vault still builds; the app always provides one.
     @Environment(VaultService.self) private var vault: VaultService?
-    @State private var path: [MoreRoute] = []
+    @Environment(MainNavigation.self) private var navigation
 
     var body: some View {
-        NavigationStack(path: $path) {
+        @Bindable var navigation = navigation
+        NavigationStack(path: $navigation.morePath) {
             MoreView()
                 .navigationDestination(for: MoreRoute.self) { route in
                     destination(for: route)
@@ -92,5 +93,6 @@ struct MoreTab: View {
         .environment(SubscriptionService.preview())
         .environment(RecoveryKeyService(keyManager: keys))
         .environment(PublishingService.preview)
+        .environment(MainNavigation())
 }
 #endif

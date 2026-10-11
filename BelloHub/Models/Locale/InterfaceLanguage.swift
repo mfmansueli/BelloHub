@@ -47,22 +47,22 @@ enum InterfaceLanguage: Equatable, Hashable, Sendable {
         }
     }
 
-    /// The locale views and formatters use. It keeps the iPhone's own locale (her date and number habits) when that
-    /// locale already resolves to the interface localization; otherwise it is the localization's language with her
-    /// region, or with the localization's own region when the variant lives in the region (pt-BR and pt-PT, es-MX,
-    /// es-419 and es, en and en-GB). Without this, Portuguese (Brazil) on an iPhone in Portugal gave `pt_PT`, and every
-    /// string resolved with `\.locale` came out in pt-PT while the rest was pt-BR.
+    /// The locale views and formatters use. Portuguese, Spanish and English keep their variant in the region (pt-BR and
+    /// pt-PT, es-MX, es-419 and es, en and en-GB), and Foundation picks the text by that region (`pt_US` reads pt-BR,
+    /// `en_GB` reads en-GB), so for them the locale carries the localization's own region unless the iPhone's locale is
+    /// exactly that. Other languages keep her region (`fr_AT`), or the iPhone's locale itself when it already speaks
+    /// the language. Without this, Portuguese (Brazil) on an iPhone in Portugal gave `pt_PT`: every string resolved
+    /// with `\.locale` came out in pt-PT while the rest was pt-BR.
     static func locale(for localization: AppLocalization, device: Locale) -> Locale {
+        let deviceLanguage = device.language.languageCode?.identifier
         let deviceRegion = device.region?.identifier
-        if let language = device.language.languageCode?.identifier,
-           AppLocalization.resolve(languageCode: language, regionCode: deviceRegion) == localization {
-            return device
+        let language = localization.languageCode
+        if localization.variantLivesInRegion {
+            if deviceLanguage == language, deviceRegion == localization.homeRegion { return device }
+            return Locale(identifier: "\(language)_\(localization.homeRegion)")
         }
-        for region in [deviceRegion, localization.homeRegion].compactMap({ $0 })
-        where AppLocalization.resolve(languageCode: localization.languageCode, regionCode: region) == localization {
-            return Locale(identifier: "\(localization.languageCode)_\(region)")
-        }
-        return Locale(identifier: "\(localization.languageCode)_\(localization.homeRegion)")
+        if deviceLanguage == language { return device }
+        return Locale(identifier: "\(language)_\(deviceRegion ?? localization.homeRegion)")
     }
 
     /// The choice after looking at the per-app language iOS Settings keeps for the app (`AppleLanguages` in the app's
