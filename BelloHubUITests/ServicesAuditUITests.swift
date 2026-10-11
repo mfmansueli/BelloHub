@@ -73,9 +73,14 @@ final class ServicesAuditUITests: XCTestCase {
         try audit(app, "\(tag) service form, settings")
 
         // The picker, pushed inside the form.
-        // Back up only as far as the row: a drag that reaches the top of the form pulls the sheet down and closes it
-        // (the S12 Full run lost the form that way and waited 14 minutes for the row).
-        XCTAssertTrue(app.scrollUpUntilVisible(contraindications, limit: 40), "\(tag) contraindications row again")
+        // Back up only as far as the row: at the default size a drag that reaches the top of the form pulls the sheet
+        // down and closes it (the S12 Full run lost the form that way). At AX5 the short drags never bring the row
+        // back while the long form is re-laid out, and there the swipes to the top are safe (the form is several
+        // screens long), so that is the fallback.
+        if !app.scrollUpUntilVisible(contraindications) {
+            app.scrollToTop()
+            XCTAssertTrue(app.scrollUntilVisible(contraindications), "\(tag) contraindications row again")
+        }
         contraindications.tap()
         let latex = app.buttons["contraindications.option.allergies.latex"]
         XCTAssertTrue(latex.waitForExistence(timeout: 5), "\(tag) picker")
