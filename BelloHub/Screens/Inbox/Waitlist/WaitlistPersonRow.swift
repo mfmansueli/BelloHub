@@ -5,8 +5,9 @@
 
 import SwiftUI
 
-/// One person on the waitlist: name, when they asked and for what, and Offer (or "Offered until …" once sent). A swipe
-/// is not available inside a card, so Remove sits in the row's context menu and its VoiceOver actions.
+/// One person on the waitlist: name, when they asked and for what, and Offer; once the server holds the time, "Offered
+/// until …" and Send, which opens WhatsApp with the offer and its link. A swipe is not available inside a card, so
+/// Remove sits in the row's context menu and its VoiceOver actions.
 struct WaitlistPersonRow: View {
     let entry: WaitlistRequest
     let formatters: Formatters
@@ -14,7 +15,9 @@ struct WaitlistPersonRow: View {
     var cancelsOften = false
     let isOffering: Bool
     let result: WaitlistViewModel.OfferResult?
+    var isSent = false
     let onOffer: () -> Void
+    var onSend: () -> Void = {}
     let onRemove: () -> Void
 
     @Environment(\.locale) private var locale
@@ -38,6 +41,12 @@ struct WaitlistPersonRow: View {
                     .buttonStyle(.belloChip(selected: false))
                     .fixedSize()
                     .accessibilityIdentifier("waitlist.offer.\(entry.id)")
+            } else if case .offered? = result {
+                Button(action: onSend) { Text(isSent ? "waitlist.sendAgain" : "waitlist.send") }
+                    .buttonStyle(.belloChip(selected: false))
+                    .fixedSize()
+                    .accessibilityHint(Text("waitlist.send.hint"))
+                    .accessibilityIdentifier("waitlist.send.\(entry.id)")
             }
         }
         .padding(Spacing.md)
@@ -59,7 +68,7 @@ struct WaitlistPersonRow: View {
 
     private var status: LocalizedStringResource? {
         switch result {
-        case .offered(let until)?:
+        case .offered(let until, _)?:
             LocalizedStringResource(
                 "waitlist.offeredUntil",
                 defaultValue: "Offered until \(BidiIsolate.wrapLeftToRight(formatters.time(until)))"

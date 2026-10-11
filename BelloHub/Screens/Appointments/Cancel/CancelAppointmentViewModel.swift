@@ -140,7 +140,7 @@ final class CancelAppointmentViewModel {
     }
 
     private func messageText(for visit: VisitContext) -> String {
-        let link = setup.setup.slug.map { BookingLink(slug: $0).display }
+        let link = setup.setup.slug.map { BookingLink(slug: $0).messageText }
         return AppointmentMessageComposer.text(
             for: .cancelled,
             values: AppointmentMessageComposer.values(client: visit.client, appointment: visit.appointment, link: link),

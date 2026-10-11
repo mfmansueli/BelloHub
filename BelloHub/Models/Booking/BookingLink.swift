@@ -25,7 +25,13 @@ struct BookingLink: Equatable, Sendable {
         baseURL.appending(path: slug)
     }
 
-    /// `bellohub.app/maria`: what is shown to people and typed into a bio.
+    /// The link as it goes into a message to a client: the full address (`ClientLinkText`).
+    var messageText: String {
+        ClientLinkText.text(url)
+    }
+
+    /// `bellohub.app/maria`: what she reads herself (the link card, the QR caption, the printed card, a bio line).
+    /// Never put into a message: without its scheme a chat app may not make it a link.
     var display: String {
         "\(baseURL.host() ?? baseURL.absoluteString)/\(slug)"
     }

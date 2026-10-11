@@ -140,7 +140,7 @@ struct QuickRepliesViewModelTests {
         let rig = try await make()
         let text = rig.model.preview(of: "Hi {name}! {service} on {date} at {time}: {link}")
         #expect(text.replacingOccurrences(of: "\u{202F}", with: " ")
-            == "Hi Ana! Glow Facial on Saturday, October 3 at 3:00 PM: bellohub.app/maria")
+            == "Hi Ana! Glow Facial on Saturday, October 3 at 3:00 PM:\nhttps://bellohub.app/maria")
     }
 
     @Test("The preview uses her own address once she has one")
@@ -149,7 +149,7 @@ struct QuickRepliesViewModelTests {
         var setup = rig.service.setup
         setup.slug = "maria-silva"
         try await rig.service.saveSetup(setup)
-        #expect(rig.model.preview(of: "{link}") == "bellohub.app/maria-silva")
+        #expect(rig.model.preview(of: "{link}") == "https://bellohub.app/maria-silva")
     }
 
     @Test("The preview is in Portuguese for a Portuguese business, with a 24-hour clock")

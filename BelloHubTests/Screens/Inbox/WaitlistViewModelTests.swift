@@ -28,8 +28,32 @@ struct WaitlistViewModelTests {
         await model.offerAsync(entry, now: TestClock.now)
         let sent = try #require(await rig.repository.offers.first)
         #expect(sent.waitlistId == "a" && sent.serviceId == "svc-glow" && sent.startsAt == cancelled.startsAt)
-        #expect(model.results["a"] == .offered(until: TestClock.now))
+        #expect(model.results["a"] == .offered(until: TestClock.now, holdKey: "hold"))
         #expect(model.board(now: TestClock.now).offerable.map(\.id) == ["b"], "an offered person is not offerable")
+    }
+
+    @Test("Send opens WhatsApp with the offer and its one-time link, after the server held the time")
+    func sendOffer() async throws {
+        let repository = FakeInboxRepository(bookings: [cancelled], waitlist: [makeWaitlistRequest(id: "a")])
+        let rig = InboxRig(repository: repository)
+        await rig.start()
+        defer { rig.cleanUp() }
+        let sender = FakeMessageSender()
+        let log = InMemoryClientRecordRepository(clock: { TestClock.now })
+        let model = WaitlistViewModel(
+            sync: rig.sync, timeZone: TestClock.saoPaulo, messages: MessageService(repository: log, sender: sender),
+            link: BookingLink(slug: "maria"), business: AgendaBusinessContext(profile: nil), now: { TestClock.now }
+        )
+        let entry = try #require(model.board(now: TestClock.now).offerable.first)
+        #expect(model.offerText(for: entry, now: TestClock.now) == nil, "nothing to send before the server held it")
+        await model.offerAsync(entry, now: TestClock.now)
+        let text = try #require(model.offerText(for: entry, now: TestClock.now))
+        #expect(text.hasSuffix("\nhttps://bellohub.app/maria/time?offer=hold"))
+        await model.sendAsync(entry)
+        let opened = try #require(sender.opened.first?.absoluteString)
+        #expect(opened.hasPrefix("https://wa.me/551190001?text="))
+        #expect(opened.contains(MessageLinks.encoded("https://bellohub.app/maria/time?offer=hold")))
+        #expect(model.sent.contains("a") && model.shareText == nil)
     }
 
     @Test("Offer to everyone reaches everybody waiting for that day, oldest first")

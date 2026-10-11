@@ -14,6 +14,8 @@ struct BookingLinkTests {
         let link = BookingLink(slug: "maria")
         #expect(link.url.absoluteString == "https://bellohub.app/maria")
         #expect(link.display == "bellohub.app/maria")
+        // A message carries the full address, never the short form people read (ClientLinkText).
+        #expect(link.messageText == "https://bellohub.app/maria")
         #expect(link.host == "bellohub.app")
     }
 

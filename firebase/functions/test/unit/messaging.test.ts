@@ -97,6 +97,19 @@ describe('rendering', () => {
     expect(fillTemplate('{professional}', { professional: 'Maria' }, 'pt-BR')).toBe('Maria');
   });
 
+  it('never isolates the link: it stands on its own line, and an isolate next to it would join the detected link', () => {
+    expect(fillTemplate('رابطك:\n{link}', { link: 'https://bellohub.app/m/abc' }, 'ar')).toBe('رابطك:\nhttps://bellohub.app/m/abc');
+  });
+
+  it.each(LOCALES)('%s puts every link of every email body on a line of its own', (locale) => {
+    const texts = emailTextsFor(locale);
+    for (const id of EMAIL_TEMPLATE_IDS) {
+      const body = texts[id].body;
+      if (!body.includes('{link}')) continue;
+      expect(body).toMatch(/(^|\n)\{link\}(\n|$)/);
+    }
+  });
+
   it('formats the date in the reader\'s language and the professional\'s time zone', () => {
     const at = Date.parse('2026-10-03T13:00:00.000Z');
 
@@ -256,6 +269,12 @@ describe('emailHtml (the HTML part of every email)', () => {
     expect(html).toContain('<a href="https://bellohub.app/m/abc123"');
     expect(html).toContain('</a>.');
     expect(html).toContain('Friday 10:00.<br>Open');
+  });
+
+  it('keeps bidi isolates and marks out of the link (Arabic text puts one right after it)', () => {
+    const html = emailHtml('موعد', 'رابطك:\n\u2068https://bellohub.app/m/abc\u2069\u200f');
+    expect(html).toContain('<a href="https://bellohub.app/m/abc"');
+    expect(html).not.toMatch(/href="[^"]*[\u200e\u200f\u2066-\u2069]/);
   });
 
   it('shows a six-digit verification code large and leaves other numbers alone', () => {

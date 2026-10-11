@@ -17,7 +17,7 @@ struct QuickReplyRendererTests {
     }
 
     private var values: QuickReplyValues {
-        QuickReplyValues(name: "Ana", service: "Glow Facial", startsAt: visit, link: "bellohub.app/maria")
+        QuickReplyValues(name: "Ana", service: "Glow Facial", startsAt: visit, link: "https://bellohub.app/maria")
     }
 
     @Test("Every word is filled in, with the locale's date and time")
@@ -26,7 +26,19 @@ struct QuickReplyRendererTests {
         let result = QuickReplyRenderer.render(text, values: values, formatters: formatters())
         // The 12-hour clock puts a narrow no-break space before PM; compare with a plain one.
         #expect(result.replacingOccurrences(of: "\u{202F}", with: " ")
-            == "Hi Ana! Your Glow Facial is on Thursday, October 1 at 3:00 PM. Change it: bellohub.app/maria")
+            == "Hi Ana! Your Glow Facial is on Thursday, October 1 at 3:00 PM. Change it:\nhttps://bellohub.app/maria")
+    }
+
+    @Test("The link stands on its own line, whatever the text around it, so the chat makes it a link")
+    func linkOnItsOwnLine() {
+        let glued = QuickReplyRenderer.render(
+            "Reply YES to confirm or use {link} to change it.", values: values, formatters: formatters()
+        )
+        #expect(glued == "Reply YES to confirm or use\nhttps://bellohub.app/maria\nto change it.")
+        let last = QuickReplyRenderer.render("Book here: {link}.", values: values, formatters: formatters())
+        #expect(last == "Book here:\nhttps://bellohub.app/maria")
+        let alone = QuickReplyRenderer.render("Book here:\n{link}\nSee you!", values: values, formatters: formatters())
+        #expect(alone == "Book here:\nhttps://bellohub.app/maria\nSee you!")
     }
 
     @Test("Dates and times follow the business locale", arguments: [
@@ -81,7 +93,9 @@ struct QuickReplyRendererTests {
         )
         #expect(result.contains("\u{2068}Ana\u{2069}"))
         #expect(result.contains("\u{2068}Glow Facial\u{2069}"))
-        #expect(result.contains("\u{2066}bellohub.app/maria\u{2069}"))
+        // The link is never isolated: it stands on its own line (ClientLinkText).
+        #expect(result.contains("\nhttps://bellohub.app/maria"))
+        #expect(!result.contains("\u{2066}https://"))
         #expect(result.contains("\u{2066}"))
         let plain = QuickReplyRenderer.render("{name}", values: values, formatters: formatters("ar_SA"))
         #expect(plain == "Ana")

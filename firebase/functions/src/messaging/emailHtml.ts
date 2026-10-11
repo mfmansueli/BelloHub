@@ -11,7 +11,8 @@ export function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, (character) => ESCAPES[character] ?? character);
 }
 
-const URL_PATTERN = /https?:\/\/[^\s<>"']+/g;
+// Bidi isolates and marks are never part of an address: in Arabic text one may sit right after a link (docs/07 section 7).
+const URL_PATTERN = /https?:\/\/[^\s<>"'\u200e\u200f\u2066-\u2069]+/g;
 const TRAILING_PUNCTUATION = /[.,;:!?)\]]+$/;
 const CODE_PATTERN = /(?<![\w-])\d{6}(?![\w-])/g;
 

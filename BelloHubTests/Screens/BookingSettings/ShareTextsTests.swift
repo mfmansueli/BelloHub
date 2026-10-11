@@ -11,15 +11,19 @@ import Testing
 @Suite("ShareTexts and the QR code")
 struct ShareTextsTests {
     private func texts(_ localization: AppLocalization) -> ShareTexts {
-        ShareTexts(localization: localization, professionalName: "Maria", displayLink: "bellohub.app/maria")
+        ShareTexts(
+            localization: localization, professionalName: "Maria", displayLink: "bellohub.app/maria",
+            messageLink: "https://bellohub.app/maria"
+        )
     }
 
     @Test("The English texts")
     func english() {
         let english = texts(.en)
         #expect(english.instagramBio == "Book with me: bellohub.app/maria")
+        // The chat greeting carries the full address on its own line (ClientLinkText); the bio keeps the short one.
         #expect(english.whatsAppGreeting
-            == "Hi! Thanks for your message. You can book with Maria here: bellohub.app/maria")
+            == "Hi! Thanks for your message. You can book with Maria here:\nhttps://bellohub.app/maria")
         #expect(english.shareMessage == "Book with Maria")
         #expect(english.qrCaption == "Scan to book with Maria")
         #expect(english.cardTitle == "Book with Maria")
@@ -34,17 +38,19 @@ struct ShareTextsTests {
             #expect(text.contains("bellohub.app/maria"), "\(localization.rawValue): \(text)")
             #expect(!text.contains("shareLink") && !text.contains("%"))
         }
+        #expect(shared.whatsAppGreeting.hasSuffix("\nhttps://bellohub.app/maria"), "\(localization.rawValue)")
         for text in [shared.whatsAppGreeting, shared.shareMessage, shared.qrCaption, shared.cardTitle] {
             #expect(text.contains("Maria"), "\(localization.rawValue): \(text)")
         }
         #expect(!shared.cardSubtitle.isEmpty && !shared.cardSubtitle.contains("shareLink"))
     }
 
-    @Test("In Arabic the name and the link are isolated")
+    @Test("In Arabic the name is isolated; the chat link stands alone on its line, the bio link is isolated")
     func bidi() {
         let arabic = texts(.ar)
         #expect(arabic.whatsAppGreeting.contains("\u{2068}Maria\u{2069}"))
-        #expect(arabic.whatsAppGreeting.contains("\u{2066}bellohub.app/maria\u{2069}"))
+        #expect(arabic.whatsAppGreeting.hasSuffix("\nhttps://bellohub.app/maria"))
+        #expect(arabic.instagramBio.contains("\u{2066}bellohub.app/maria\u{2069}"))
     }
 
     // MARK: - QR code

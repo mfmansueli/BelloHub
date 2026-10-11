@@ -80,7 +80,10 @@ final class ShareLinkViewModel {
     /// The texts she shares, for the saved link; nil until she saved an address.
     var texts: ShareTexts? {
         savedLink.map {
-            ShareTexts(localization: localization, professionalName: professionalName, displayLink: $0.display)
+            ShareTexts(
+                localization: localization, professionalName: professionalName, displayLink: $0.display,
+                messageLink: $0.messageText
+            )
         }
     }
 

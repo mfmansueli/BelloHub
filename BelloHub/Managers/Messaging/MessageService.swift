@@ -43,10 +43,11 @@ final class MessageService {
 
     /// Opens the best chat available with `text` ready and logs it. `template` is the kind (`cancelled`, `noShow`,
     /// `late`, or a quick reply's key), never the text. A failed log write does not stop the message: the log is a
-    /// convenience, the message is the point.
+    /// convenience, the message is the point. Without a client (a person on the waitlist who is not one of hers yet)
+    /// nothing is logged.
     @discardableResult
     func send(
-        text: String, to clientID: UUID, phoneE164: String?, template: String,
+        text: String, to clientID: UUID?, phoneE164: String?, template: String,
         preferred: MessagingChannel = .whatsapp, now: Date = Date()
     ) async -> Outcome {
         let plan = MessageDispatchPlan.make(phoneE164: phoneE164, text: text, preferred: preferred)
@@ -54,11 +55,12 @@ final class MessageService {
             switch attempt {
             case .whatsApp(let url), .sms(let url):
                 guard await sender.openInApp(url) else { continue }
+                guard let clientID else { return .opened(attempt.channel) }
                 await log(clientID: clientID, channel: attempt.channel, template: template, now: now)
                 recentlyOpened[clientID] = now
                 return .opened(attempt.channel)
             case .share:
-                await log(clientID: clientID, channel: .share, template: template, now: now)
+                if let clientID { await log(clientID: clientID, channel: .share, template: template, now: now) }
                 return .needsShareSheet(text: text)
             }
         }

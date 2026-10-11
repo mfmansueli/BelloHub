@@ -11,11 +11,18 @@ struct WaitlistView: View {
     @Environment(BookingSyncService.self) private var sync
     @Environment(ProfileService.self) private var profile
     @Environment(VaultService.self) private var vault
+    @Environment(MessageService.self) private var messages
+    @Environment(BookingSetupService.self) private var setup
 
     var body: some View {
         let settings = CalendarSettings(profile: profile.profile)
         WaitlistContentView(
-            viewModel: WaitlistViewModel(sync: sync, timeZone: settings.timeZone, vault: vault), settings: settings
+            viewModel: WaitlistViewModel(
+                sync: sync, timeZone: settings.timeZone, vault: vault, messages: messages,
+                link: setup.setup.slug.map { BookingLink(slug: $0) },
+                business: AgendaBusinessContext(profile: profile.profile)
+            ),
+            settings: settings
         )
         // Her zone and week start are only known once her profile is read: new ones build a new ViewModel.
         .id(settings)

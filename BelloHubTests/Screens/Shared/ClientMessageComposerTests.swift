@@ -17,7 +17,7 @@ struct ClientMessageComposerTests {
 
     private func text(
         _ kind: ClientMessageRequest.Kind, comeBack: QuickReply? = nil, lastService: String? = nil,
-        link: String? = "bellohub.app/maria", localization: AppLocalization = .en
+        link: String? = "https://bellohub.app/maria", localization: AppLocalization = .en
     ) -> String {
         let values = ClientMessageComposer.values(for: kind, client: ana, lastServiceName: lastService, link: link)
         return ClientMessageComposer.text(
@@ -32,7 +32,7 @@ struct ClientMessageComposerTests {
 
         #expect(message.contains("Hi Ana!"))
         #expect(message.contains("Glow Facial"))
-        #expect(message.contains("bellohub.app/maria"))
+        #expect(message.contains("\nhttps://bellohub.app/maria"))
         #expect(!message.contains("{"))
     }
 
@@ -44,7 +44,7 @@ struct ClientMessageComposerTests {
         )
 
         let winBack = text(.winBack, comeBack: own, lastService: "Peeling")
-        #expect(winBack == "Ana, miss you! Peeling again? bellohub.app/maria")
+        #expect(winBack == "Ana, miss you! Peeling again?\nhttps://bellohub.app/maria")
     }
 
     @Test("A win-back message names the service of the last visit; without one the gap stays visible")

@@ -12,20 +12,26 @@ struct ShareTexts: Sendable {
     let localization: AppLocalization
     /// The professional's first name.
     let professionalName: String
-    /// The link as people read it: `bellohub.app/maria`.
+    /// The link as people read it: `bellohub.app/maria`. Only for the bio line (Instagram never makes a bio link
+    /// clickable; its own link field takes the full address from "Copy link").
     let displayLink: String
+    /// The full address for a chat (`https://bellohub.app/maria`, `ClientLinkText`); empty until she saved one.
+    var messageLink: String = ""
 
     /// "Book with me: bellohub.app/maria".
     var instagramBio: String {
         resolve(LocalizedStringResource("shareLink.instagram.text", defaultValue: "Book with me: \(isolatedLink)"))
     }
 
-    /// "Hi! Thanks for your message. You can book with Maria here: bellohub.app/maria".
+    /// "Hi! Thanks for your message. You can book with Maria here:" and the full link on its own line, so the chat
+    /// makes it a link (`ClientLinkText`).
     var whatsAppGreeting: String {
-        resolve(LocalizedStringResource(
+        let link = messageLink.isEmpty ? displayLink : messageLink
+        let sentence = resolve(LocalizedStringResource(
             "shareLink.whatsapp.text",
-            defaultValue: "Hi! Thanks for your message. You can book with \(isolatedName) here: \(isolatedLink)"
+            defaultValue: "Hi! Thanks for your message. You can book with \(isolatedName) here: \(link)"
         ))
+        return ClientLinkText.placeOnOwnLine(link, in: sentence)
     }
 
     /// "Book with Maria": the message of the share sheet.

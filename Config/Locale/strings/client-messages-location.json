@@ -1,0 +1,13 @@
+{
+ "languages": ["en", "pt-BR", "pt-PT", "es-MX", "es", "it", "fr", "de", "tr", "id", "hi", "ar"],
+ "strings": [
+  ["waitlist.send", "Waitlist row (2.9): button that opens WhatsApp with the offer once the time is held for this person.",
+   "Send", "Enviar", "Enviar", "Enviar", "Enviar", "Invia", "Envoyer", "Senden", "Gönder", "Kirim", "भेजें", "إرسال"],
+  ["waitlist.sendAgain", "Waitlist row (2.9): the same button after she already opened the chat once.",
+   "Send again", "Enviar de novo", "Enviar novamente", "Enviar otra vez", "Volver a enviar", "Invia di nuovo", "Renvoyer", "Erneut senden", "Tekrar gönder", "Kirim lagi", "फिर से भेजें", "إرسال مرة أخرى"],
+  ["waitlist.send.hint", "VoiceOver hint of the Send button on a waitlist row.",
+   "Opens WhatsApp with the offer and its link.", "Abre o WhatsApp com a oferta e o link.", "Abre o WhatsApp com a oferta e o link.", "Abre WhatsApp con la oferta y su enlace.", "Abre WhatsApp con la oferta y su enlace.", "Apre WhatsApp con l'offerta e il suo link.", "Ouvre WhatsApp avec l'offre et son lien.", "Öffnet WhatsApp mit dem Angebot und seinem Link.", "Teklifi ve bağlantısını içeren WhatsApp'ı açar.", "Membuka WhatsApp dengan tawaran dan tautannya.", "ऑफ़र और उसके लिंक के साथ WhatsApp खोलता है।", "يفتح واتساب مع العرض ورابطه."],
+  ["waitlist.offerMessage", "Message to a person on the waitlist (client-facing, polite address, neutral gender). %1$@ first name, %2$@ service, %3$@ day, %4$@ time, %5$@ day and time the hold ends. The link follows on its own line, added by the app.",
+   "Hi %1$@! A time just opened for %2$@ on %3$@ at %4$@. It is yours if you confirm by %5$@:", "Oi, %1$@! Abriu um horário de %2$@ em %3$@, às %4$@. É seu se confirmar até %5$@:", "Olá, %1$@! Abriu um horário de %2$@ no dia %3$@, às %4$@. É seu se confirmar até %5$@:", "¡Hola, %1$@! Se liberó un horario de %2$@ el %3$@ a las %4$@. Es tuyo si confirmas antes de %5$@:", "¡Hola, %1$@! Ha quedado libre una hora de %2$@ el %3$@ a las %4$@. Es tuya si confirmas antes de %5$@:", "Ciao %1$@! Si è liberato un orario per %2$@ il %3$@ alle %4$@. È tuo se confermi entro %5$@:", "Bonjour %1$@ ! Un créneau s'est libéré pour %2$@ le %3$@ à %4$@. Il est à vous si vous confirmez avant le %5$@ :", "Hallo %1$@! Für %2$@ ist am %3$@ um %4$@ eine Zeit frei geworden. Sie gehört Ihnen, wenn Sie bis %5$@ bestätigen:", "Merhaba %1$@! %3$@ günü saat %4$@ için %2$@ saati boşaldı. %5$@ tarihine kadar onaylarsanız sizin:", "Halo %1$@! Ada slot kosong untuk %2$@ pada %3$@ pukul %4$@. Slot ini untuk Anda jika dikonfirmasi sebelum %5$@:", "नमस्ते %1$@! %3$@ को %4$@ बजे %2$@ का एक समय खाली हुआ है। %5$@ तक कन्फ़र्म करें तो यह आपका है:", "مرحبًا %1$@! توفر وقت لـ %2$@ يوم %3$@ الساعة %4$@. الموعد لك إذا أكدته قبل %5$@:"]
+ ]
+}

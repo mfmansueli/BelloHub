@@ -157,7 +157,7 @@ final class QuickRepliesViewModel {
         calendar.timeZone = timeZone
         let day = calendar.date(byAdding: .day, value: 2, to: calendar.startOfDay(for: now())) ?? now()
         let visit = calendar.date(bySettingHour: 15, minute: 0, second: 0, of: day) ?? day
-        let link = service.setup.slug.map { BookingLink(slug: $0).display } ?? BookingLink(slug: "maria").display
+        let link = BookingLink(slug: service.setup.slug ?? "maria").messageText
         return QuickReplyValues(
             name: string("quickReplies.sample.name", default: "Ana"),
             service: string("quickReplies.sample.service", default: "Glow Facial"),

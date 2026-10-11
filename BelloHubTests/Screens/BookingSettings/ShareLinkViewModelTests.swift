@@ -211,7 +211,7 @@ struct ShareLinkViewModelTests {
             == .instagram)
         rig.model.copyWhatsApp()
         #expect(rig.clipboard.written.last
-            == "Hi! Thanks for your message. You can book with Maria here: bellohub.app/maria-silva")
+            == "Hi! Thanks for your message. You can book with Maria here:\nhttps://bellohub.app/maria-silva")
         #expect(rig.model.copied == .whatsApp)
         await Wait.untilMain { rig.model.copied == nil }
         #expect(rig.model.copied == nil)

@@ -47,7 +47,7 @@ struct LocalePreview: Equatable, Sendable {
         }
         let values = QuickReplyValues(
             name: "Ana", service: sampleService(in: draft.localization), startsAt: now.addingTimeInterval(86_400),
-            link: "bellohub.app/\(BookingSlug.make(from: professionalName) ?? "maria")"
+            link: BookingLink(slug: BookingSlug.make(from: professionalName) ?? "maria").messageText
         )
         let messages = [BuiltInQuickReply.confirm, .late].map {
             QuickReplyRenderer.render(

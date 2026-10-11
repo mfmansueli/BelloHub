@@ -215053,6 +215053,96 @@
         }
       }
     },
+    "waitlist.offerMessage" : {
+      "comment" : "Message to a person on the waitlist (client-facing, polite address, neutral gender). %1$@ first name, %2$@ service, %3$@ day, %4$@ time, %5$@ day and time the hold ends. The link follows on its own line, added by the app.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مرحبًا %1$@! توفر وقت لـ %2$@ يوم %3$@ الساعة %4$@. الموعد لك إذا أكدته قبل %5$@:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hallo %1$@! Für %2$@ ist am %3$@ um %4$@ eine Zeit frei geworden. Sie gehört Ihnen, wenn Sie bis %5$@ bestätigen:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi %1$@! A time just opened for %2$@ on %3$@ at %4$@. It is yours if you confirm by %5$@:"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hi %1$@! A time just opened for %2$@ on %3$@ at %4$@. It is yours if you confirm by %5$@:"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, %1$@! Ha quedado libre una hora de %2$@ el %3$@ a las %4$@. Es tuya si confirmas antes de %5$@:"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, %1$@! Se liberó un horario de %2$@ el %3$@ a las %4$@. Es tuyo si confirmas antes de %5$@:"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, %1$@! Se liberó un horario de %2$@ el %3$@ a las %4$@. Es tuyo si confirmas antes de %5$@:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bonjour %1$@ ! Un créneau s'est libéré pour %2$@ le %3$@ à %4$@. Il est à vous si vous confirmez avant le %5$@ :"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नमस्ते %1$@! %3$@ को %4$@ बजे %2$@ का एक समय खाली हुआ है। %5$@ तक कन्फ़र्म करें तो यह आपका है:"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Halo %1$@! Ada slot kosong untuk %2$@ pada %3$@ pukul %4$@. Slot ini untuk Anda jika dikonfirmasi sebelum %5$@:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ciao %1$@! Si è liberato un orario per %2$@ il %3$@ alle %4$@. È tuo se confermi entro %5$@:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Oi, %1$@! Abriu um horário de %2$@ em %3$@, às %4$@. É seu se confirmar até %5$@:"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Olá, %1$@! Abriu um horário de %2$@ no dia %3$@, às %4$@. É seu se confirmar até %5$@:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Merhaba %1$@! %3$@ günü saat %4$@ için %2$@ saati boşaldı. %5$@ tarihine kadar onaylarsanız sizin:"
+          }
+        }
+      }
+    },
     "waitlist.offered" : {
       "comment" : "2.9 row status: the time was offered (no end time known).",
       "extractionState" : "manual",
@@ -215589,6 +215679,276 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bekleyenler"
+          }
+        }
+      }
+    },
+    "waitlist.send" : {
+      "comment" : "Waitlist row (2.9): button that opens WhatsApp with the offer once the time is held for this person.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إرسال"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Send"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Envoyer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "भेजें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kirim"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Invia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gönder"
+          }
+        }
+      }
+    },
+    "waitlist.send.hint" : {
+      "comment" : "VoiceOver hint of the Send button on a waitlist row.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يفتح واتساب مع العرض ورابطه."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Öffnet WhatsApp mit dem Angebot und seinem Link."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens WhatsApp with the offer and its link."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opens WhatsApp with the offer and its link."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre WhatsApp con la oferta y su enlace."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre WhatsApp con la oferta y su enlace."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre WhatsApp con la oferta y su enlace."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ouvre WhatsApp avec l'offre et son lien."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑफ़र और उसके लिंक के साथ WhatsApp खोलता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Membuka WhatsApp dengan tawaran dan tautannya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apre WhatsApp con l'offerta e il suo link."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre o WhatsApp com a oferta e o link."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Abre o WhatsApp com a oferta e o link."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Teklifi ve bağlantısını içeren WhatsApp'ı açar."
+          }
+        }
+      }
+    },
+    "waitlist.sendAgain" : {
+      "comment" : "Waitlist row (2.9): the same button after she already opened the chat once.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إرسال مرة أخرى"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Erneut senden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send again"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Send again"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Volver a enviar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar otra vez"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar otra vez"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Renvoyer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "फिर से भेजें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kirim lagi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Invia di nuovo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar de novo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enviar novamente"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tekrar gönder"
           }
         }
       }

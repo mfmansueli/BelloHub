@@ -59,7 +59,7 @@ final class MessageClientViewModel {
     /// The text as it will open, filled in for this visit.
     var text: String? {
         guard let visit, let reply = selectedReply else { return nil }
-        let link = setup.setup.slug.map { BookingLink(slug: $0).display }
+        let link = setup.setup.slug.map { BookingLink(slug: $0).messageText }
         return AppointmentMessageComposer.text(
             for: .quickReply(reply),
             values: AppointmentMessageComposer.values(client: visit.client, appointment: visit.appointment, link: link),

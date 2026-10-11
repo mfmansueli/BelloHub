@@ -26,6 +26,9 @@ struct WaitlistContentView: View {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     Text(board.openTime == nil ? "waitlist.subtitle.none" : "waitlist.subtitle")
                         .font(Typography.body).foregroundStyle(Palette.ink2)
+                    if let text = viewModel.shareText {
+                        ShareFallbackCard(text: text, identifier: "waitlist.shareFallback")
+                    }
                     if let message = viewModel.errorMessage {
                         ErrorNotice(
                             message: message, actionTitle: "appointment.error.dismiss", action: viewModel.dismissError
@@ -113,7 +116,9 @@ struct WaitlistContentView: View {
                     entry: entry, formatters: formatters, canOffer: canOffer && !viewModel.isTimeTaken,
                     cancelsOften: viewModel.cancelsOften(entry),
                     isOffering: viewModel.offering.contains(entry.id), result: viewModel.results[entry.id],
-                    onOffer: { viewModel.offer(entry) }, onRemove: { viewModel.remove(entry) }
+                    isSent: viewModel.sent.contains(entry.id),
+                    onOffer: { viewModel.offer(entry) }, onSend: { viewModel.send(entry) },
+                    onRemove: { viewModel.remove(entry) }
                 )
             }
         }

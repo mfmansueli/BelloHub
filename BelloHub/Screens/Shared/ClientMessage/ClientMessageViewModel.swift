@@ -106,7 +106,7 @@ final class ClientMessageViewModel {
 
     private func text(for client: Client, history: [Appointment]) -> String {
         let comeBack = setup.quickReplies.first { $0.builtInKey == BuiltInQuickReply.comeBack.rawValue }
-        let link = setup.setup.slug.map { BookingLink(slug: $0).display }
+        let link = setup.setup.slug.map { BookingLink(slug: $0).messageText }
         let values = ClientMessageComposer.values(
             for: request.kind, client: client, lastServiceName: ClientMessageComposer.lastServiceName(in: history),
             link: link

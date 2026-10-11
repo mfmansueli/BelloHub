@@ -13,12 +13,16 @@ export function isolate(value: string): string {
   return `${FIRST_STRONG_ISOLATE}${value}${POP_ISOLATE}`;
 }
 
-/** Replaces `{name}` placeholders; an unknown or missing variable becomes an empty string, never "undefined". */
+/**
+ * Replaces `{name}` placeholders; an unknown or missing variable becomes an empty string, never "undefined". The link is
+ * never isolated: every template puts it on its own line (its own paragraph, so it cannot reorder Arabic text), and an
+ * isolate character next to an address can end up inside the link a mail app detects.
+ */
 export function fillTemplate(template: string, vars: TemplateVars, locale: LocaleId): string {
   const rtl = locale === 'ar';
   return template.replace(/\{(code|professional|service|when|link)\}/g, (_match, key: keyof TemplateVars) => {
     const value = vars[key] ?? '';
-    return rtl && value.length > 0 ? isolate(value) : value;
+    return rtl && key !== 'link' && value.length > 0 ? isolate(value) : value;
   });
 }
 
