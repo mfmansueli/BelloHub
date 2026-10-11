@@ -62,6 +62,8 @@ struct CalendarContentView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     if typeSize.isAccessibilitySize { header(now: now) }
+                    // Which zone these times are in, when the iPhone is in another one (tz-mismatch-notice).
+                    TimeZoneNoticeView(placement: .row, formatters: formatters, now: now)
                     content(now: now)
                 }
                 .padding(.bottom, Spacing.lg)

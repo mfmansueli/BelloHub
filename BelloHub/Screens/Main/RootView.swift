@@ -35,6 +35,7 @@ struct RootView: View {
     @State private var language: InterfaceLanguageService
     @State private var navigation: MainNavigation
     @State private var followUpQueue: FollowUpQueueService
+    @State private var timeZoneNotice: TimeZoneNoticeService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -78,11 +79,21 @@ struct RootView: View {
         _followUpQueue = State(initialValue: FollowUpQueueService(
             defaults: dependencies.defaults, vault: dependencies.vault
         ))
+        let regions = (try? RegionCatalog.loadBundled()) ?? RegionCatalog(presets: [])
+        #if DEBUG
+        let options = LaunchOptions.current
+        let showsTimeZoneNotice = !options.isUITesting || options.showsTimeZoneNotice
+        #else
+        let showsTimeZoneNotice = true
+        #endif
+        _timeZoneNotice = State(initialValue: TimeZoneNoticeService(
+            defaults: dependencies.defaults, regions: regions, isEnabled: showsTimeZoneNotice
+        ))
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
         ))
-        regions = (try? RegionCatalog.loadBundled()) ?? RegionCatalog(presets: [])
+        self.regions = regions
     }
 
     var body: some View {
@@ -118,6 +129,7 @@ struct RootView: View {
         .environment(language)
         .environment(navigation)
         .environment(followUpQueue)
+        .environment(timeZoneNotice)
         .belloLocaleTypography()
         // The interface language, above every stage, the privacy cover and the lock screen: sheets, alerts, menus and
         // full-screen covers inherit it, and a change re-renders what is open without losing its place.
@@ -148,8 +160,10 @@ struct RootView: View {
                 mailbox.startListening(userId: userID)
                 push.startListening(userId: userID)
                 followUpQueue.start(userID: userID)
+                timeZoneNotice.start(userID: userID)
             } else if stage != .app {
                 followUpQueue.stop()
+                timeZoneNotice.stop()
                 bookingSetup.clear()
                 publishing.clear()
                 agendaDigest.stopListening()
@@ -178,6 +192,8 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             // Coming back to the foreground: what arrived while the app was away.
             if phase == .active, model.stage == .app {
+                // She may have landed in another zone, or changed it in Settings, while the app was away.
+                timeZoneNotice.refreshPhoneZone()
                 bookingSync.syncNow()
                 mailbox.syncNow()
             }

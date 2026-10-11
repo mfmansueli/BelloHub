@@ -32,6 +32,8 @@ struct HomeContentView: View {
             TimelineView(.everyMinute) { context in
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     header(now: context.date)
+                    // The iPhone's zone differs from the business zone: say so before the day (tz-mismatch-notice).
+                    TimeZoneNoticeView(placement: .card, formatters: formatters, now: context.date)
                     ScreenStateView(phase: viewModel.phase, prefix: "home", rows: 3, retry: viewModel.retry) {
                         EmptyView()
                     } content: {
