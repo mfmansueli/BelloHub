@@ -66,7 +66,7 @@ struct RecordTrailRow: View {
         case .created(let source, let result, let products):
             createdDetail(source: source, result: result, products: products)
         case .locked:
-            String(localized: "recordHistory.trail.lockedDetail", locale: locale)
+            LocalizedStringResource("recordHistory.trail.lockedDetail").resolved(in: locale)
         case .correction(let correction):
             correctionDetail(correction)
         }
@@ -74,8 +74,8 @@ struct RecordTrailRow: View {
 
     private func createdDetail(source: RecordSource, result: RecordResult, products: [String]) -> String {
         var parts = [source == .voice
-            ? String(localized: "recordHistory.trail.fromVoice", locale: locale)
-            : String(localized: "recordHistory.trail.fromManual", locale: locale)]
+            ? LocalizedStringResource("recordHistory.trail.fromVoice").resolved(in: locale)
+            : LocalizedStringResource("recordHistory.trail.fromManual").resolved(in: locale)]
         if !products.isEmpty {
             let list = formatters.list(products)
             parts.append(LocalizedStringResource(

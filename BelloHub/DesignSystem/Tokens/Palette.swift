@@ -66,9 +66,8 @@ enum Palette {
     /// Switch on-track and success graphics: the confirmed green.
     static let sage = Color(light: 0x2F8F5A, dark: 0x4CC27A)
     static let ivory = Color(hex: 0xFAFAF9)
-    /// The mark's tile. Still the app icon's sage: `BelloHub.icon` has not been redrawn for the new palette, and the
-    /// mark in the app stays equal to the icon on the home screen until it is.
-    static let brandMark = Color(light: 0x6E8266, dark: 0x344B3C)
+    /// The mark's tile: the app icon's own (`BrandPalette.tile`), the icon's sage until the icon is redrawn.
+    static let brandMark = BrandPalette.tile
 
     // MARK: Brand families: card fills, text on them, badges
 

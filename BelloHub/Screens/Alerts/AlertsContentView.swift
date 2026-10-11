@@ -168,7 +168,7 @@ struct AlertsContentView: View {
     private func birthdaysCard(_ birthdays: [AlertsList.Birthday]) -> some View {
         let items = birthdays.map { birthday -> String in
             let when = birthday.upcoming.isToday
-                ? String(localized: "appointment.today", locale: locale)
+                ? LocalizedStringResource("appointment.today").resolved(in: locale)
                 : formatters.weekdayDayMonth(birthday.upcoming.date)
             return "\(BidiIsolate.wrap(birthday.client.name)) (\(when))"
         }

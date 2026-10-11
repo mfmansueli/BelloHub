@@ -37,7 +37,7 @@ final class IncidentViewModel {
     init(
         clientID: UUID, appointmentID: UUID?, vault: VaultService, now: @escaping @Sendable () -> Date = { Date() },
         makeID: @escaping @Sendable () -> UUID = { UUID() },
-        resolve: @escaping (LocalizedStringResource) -> String = { String(localized: $0) }
+        resolve: @escaping (LocalizedStringResource) -> String = { String(interface: $0) }
     ) {
         self.clientID = clientID
         self.appointmentID = appointmentID
@@ -59,7 +59,7 @@ final class IncidentViewModel {
 
     func loadAsync() async {
         guard let repository = vault.repository else {
-            phase = .failed(String(localized: "incident.error.load"))
+            phase = .failed(String(interface: LocalizedStringResource("incident.error.load")))
             return
         }
         do {
@@ -75,7 +75,7 @@ final class IncidentViewModel {
                 phase = .form
             }
         } catch {
-            phase = .failed(String(localized: "incident.error.load"))
+            phase = .failed(String(interface: LocalizedStringResource("incident.error.load")))
         }
     }
 
@@ -103,7 +103,7 @@ final class IncidentViewModel {
             saveErrorMessage = nil
             phase = .saved
         } catch {
-            saveErrorMessage = String(localized: "incident.error.save")
+            saveErrorMessage = String(interface: LocalizedStringResource("incident.error.save"))
         }
     }
 

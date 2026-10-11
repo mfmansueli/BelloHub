@@ -151,7 +151,7 @@ struct ExportBundleBuilder: Sendable {
     }
 
     private func text(_ key: String.LocalizationValue) -> String {
-        String(localized: key, locale: locale)
+        String(localized: LocalizedStringResource(key, locale: locale))
     }
 
     /// `1990-05-14` or `--05-14` when the year is unknown: ISO, so another app can read it back.

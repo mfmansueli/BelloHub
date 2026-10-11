@@ -75,7 +75,7 @@ final class ClientMergeViewModel {
             try await repository.mergeClient(keeping: keptID, merging: other.id)
             didMerge = true
         } catch {
-            errorMessage = String(localized: "clientMerge.error.merge")
+            errorMessage = String(interface: LocalizedStringResource("clientMerge.error.merge"))
         }
     }
 
@@ -85,6 +85,6 @@ final class ClientMergeViewModel {
 
     private func fail() {
         isLoading = false
-        errorMessage = String(localized: "clientMerge.error.load")
+        errorMessage = String(interface: LocalizedStringResource("clientMerge.error.load"))
     }
 }

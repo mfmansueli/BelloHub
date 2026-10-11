@@ -25,8 +25,8 @@ enum RecoveryWordsPresentation {
 
     /// The text file: a heading, the numbered words, the warning.
     static func fileText(_ phrase: RecoveryPhrase, businessName: String, locale: Locale) -> String {
-        let heading = String(localized: "recoveryKey.file.heading", locale: locale)
-        let warning = String(localized: "recoveryKey.file.warning", locale: locale)
+        let heading = LocalizedStringResource("recoveryKey.file.heading").resolved(in: locale)
+        let warning = LocalizedStringResource("recoveryKey.file.warning").resolved(in: locale)
         let lines = phrase.words.enumerated().map { "\($0.offset + 1). \($0.element)" }
         return ([heading, businessName, ""] + lines + ["", warning]).joined(separator: "\n") + "\n"
     }

@@ -122,7 +122,7 @@ struct FollowUpsContentView: View {
                     Text(verbatim: row.client.name)
                         .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                     Text(verbatim: row.birthday.isToday
-                         ? String(localized: "appointment.today", locale: locale)
+                         ? LocalizedStringResource("appointment.today").resolved(in: locale)
                          : formatters.weekdayDayMonth(row.birthday.date))
                         .font(Typography.footnote).foregroundStyle(Palette.ink2)
                 }

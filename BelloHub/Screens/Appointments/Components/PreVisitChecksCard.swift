@@ -155,7 +155,7 @@ struct PreVisitChecksCard: View {
         case .answer(let question, let option):
             option.map { "\(question): \($0)" } ?? question
         case .minor:
-            String(localized: "preVisit.contra.minor", locale: locale)
+            LocalizedStringResource("preVisit.contra.minor").resolved(in: locale)
         }
     }
 

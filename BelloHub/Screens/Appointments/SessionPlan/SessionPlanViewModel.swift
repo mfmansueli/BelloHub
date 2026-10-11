@@ -75,7 +75,7 @@ final class SessionPlanViewModel {
         business = AgendaBusinessContext(profile: profile.profile)
         guard let repository = vault.repository else {
             isLoading = false
-            errorMessage = String(localized: "sessionPlan.error.load")
+            errorMessage = String(interface: LocalizedStringResource("sessionPlan.error.load"))
             return
         }
         do {
@@ -96,7 +96,7 @@ final class SessionPlanViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "sessionPlan.error.load")
+            errorMessage = String(interface: LocalizedStringResource("sessionPlan.error.load"))
         }
     }
 
@@ -115,7 +115,7 @@ final class SessionPlanViewModel {
             didSave = true
             saveErrorMessage = nil
         } catch {
-            saveErrorMessage = String(localized: "sessionPlan.error.save")
+            saveErrorMessage = String(interface: LocalizedStringResource("sessionPlan.error.save"))
         }
     }
 

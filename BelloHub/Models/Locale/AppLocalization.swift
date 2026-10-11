@@ -34,6 +34,34 @@ enum AppLocalization: String, CaseIterable, Identifiable, Hashable, Sendable {
 
     var isRightToLeft: Bool { self == .ar }
 
+    /// The region the localization speaks for when nothing else says (the interface locale of a choice made in the
+    /// app, `InterfaceLanguage.locale`). Resolving the language with this region always gives the localization back.
+    var homeRegion: String {
+        switch self {
+        case .ptBR: "BR"
+        case .ptPT: "PT"
+        case .esMX: "MX"
+        case .es419: "419"
+        case .es: "ES"
+        case .en: "US"
+        case .enGB: "GB"
+        case .it: "IT"
+        case .fr: "FR"
+        case .de: "DE"
+        case .tr: "TR"
+        case .id: "ID"
+        case .hi: "IN"
+        case .ar: "SA"
+        }
+    }
+
+    /// The localization a locale speaks (the interface locale back to its localization), English for a language the
+    /// product does not have.
+    init(resolving locale: Locale) {
+        let language = locale.language.languageCode?.identifier ?? "en"
+        self = Self.resolve(languageCode: language, regionCode: locale.region?.identifier) ?? .en
+    }
+
     /// The language each person reads it in, written in itself (for language pickers).
     var nativeName: String {
         switch self {

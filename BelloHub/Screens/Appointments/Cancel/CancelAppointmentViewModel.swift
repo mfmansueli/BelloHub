@@ -94,7 +94,7 @@ final class CancelAppointmentViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "cancelAppointment.error.load")
+            errorMessage = String(interface: LocalizedStringResource("cancelAppointment.error.load"))
         }
     }
 
@@ -113,7 +113,7 @@ final class CancelAppointmentViewModel {
             )
             self.visit = VisitContext(appointment: changed, client: visit.client)
         } catch {
-            actionErrorMessage = String(localized: "cancelAppointment.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("cancelAppointment.error.save"))
             return
         }
         actionErrorMessage = nil

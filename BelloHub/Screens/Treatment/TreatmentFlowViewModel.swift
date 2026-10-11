@@ -188,13 +188,20 @@ final class TreatmentFlowViewModel {
         }
     }
 
+    /// She changed the interface language while the flow is open: the field names follow; what she typed stays.
+    func useLocale(_ new: Locale) {
+        locale = new
+        if loadState == .ready { buildFields() }
+    }
+
     func reload() {
         loadState = .loading
         Task { await load() }
     }
 
     private func buildFields() {
-        let localization = AppLocalization(rawValue: profile.profile?.appLocaleID ?? "") ?? .en
+        // Field names are interface text (she reads them), so they come in the interface language.
+        let localization = AppLocalization(resolving: locale)
         let catalog = (try? ProfessionCatalog.loadBundled(localization: localization))
             ?? ProfessionCatalog(localization: localization.rawValue, status: "needs_review", entries: [])
         fields = TreatmentFormFields.resolve(

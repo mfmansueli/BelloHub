@@ -47,7 +47,9 @@ final class RecoveryKeyService {
     /// Asks for Face ID or the passcode, then returns the words. `unavailable` (no passcode on the phone) counts as
     /// passed, as the app lock does: there is nothing stronger to ask for.
     func reveal() async -> RevealOutcome {
-        let reason = String(localized: "recoveryKey.reason", defaultValue: "Show your recovery key.")
+        let reason = String(interface: LocalizedStringResource(
+            "recoveryKey.reason", defaultValue: "Show your recovery key."
+        ))
         switch await biometrics.authenticate(reason: reason) {
         case .success, .unavailable:
             do {

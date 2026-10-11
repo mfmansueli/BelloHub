@@ -93,7 +93,7 @@ final class MessageClientViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "messageClient.error.load")
+            errorMessage = String(interface: LocalizedStringResource("messageClient.error.load"))
         }
     }
 

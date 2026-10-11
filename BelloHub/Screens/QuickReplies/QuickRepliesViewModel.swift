@@ -89,10 +89,10 @@ final class QuickRepliesViewModel {
             try await service.loadQuickReplies(localization: localization)
             replies = service.quickReplies
         } catch {
-            errorMessage = String(
-                localized: "quickReplies.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "quickReplies.error.load",
                 defaultValue: "We could not read your quick replies. Check that your iPhone is unlocked and try again."
-            )
+            ))
         }
     }
 
@@ -172,9 +172,9 @@ final class QuickRepliesViewModel {
     }
 
     private static var saveFailure: String {
-        String(
-            localized: "bookingSetup.error.save",
+        String(interface: LocalizedStringResource(
+            "bookingSetup.error.save",
             defaultValue: "We could not save this change. Check that your iPhone has space and try again."
-        )
+        ))
     }
 }

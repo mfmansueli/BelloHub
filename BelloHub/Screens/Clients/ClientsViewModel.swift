@@ -159,7 +159,7 @@ final class ClientsViewModel {
 
     private func fail() {
         isLoading = false
-        errorMessage = String(localized: "clients.error.message")
+        errorMessage = String(interface: LocalizedStringResource("clients.error.message"))
     }
 
     private func rebuild(reloadingServices: Bool) async {

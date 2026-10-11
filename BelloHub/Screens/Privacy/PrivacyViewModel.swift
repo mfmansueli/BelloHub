@@ -67,9 +67,9 @@ final class PrivacyViewModel {
             openedNotice = try legal.latest(notice, localization: localization)
             legalErrorMessage = nil
         } catch {
-            legalErrorMessage = String(
-                localized: "privacy.legal.error", defaultValue: "This text could not be opened right now."
-            )
+            legalErrorMessage = String(interface: LocalizedStringResource(
+                "privacy.legal.error", defaultValue: "This text could not be opened right now."
+            ))
         }
     }
 

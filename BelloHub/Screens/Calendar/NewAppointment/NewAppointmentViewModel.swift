@@ -180,10 +180,10 @@ final class NewAppointmentViewModel {
     }
 
     static var unavailableMessage: String {
-        String(
-            localized: "newAppointment.error.load",
+        String(interface: LocalizedStringResource(
+            "newAppointment.error.load",
             defaultValue: "We could not read your clients and services. Check that your iPhone is unlocked."
-        )
+        ))
     }
 
     // MARK: - Choosing
@@ -257,10 +257,10 @@ final class NewAppointmentViewModel {
             didBook = true
             return true
         } catch {
-            saveErrorMessage = String(
-                localized: "newAppointment.error.save",
+            saveErrorMessage = String(interface: LocalizedStringResource(
+                "newAppointment.error.save",
                 defaultValue: "We could not save this appointment. Nothing was changed. Try again."
-            )
+            ))
             return false
         }
     }

@@ -108,8 +108,8 @@ struct AppointmentContentView: View {
         return FlowLayout(spacing: Spacing.row, lineSpacing: Spacing.sm, wrapsLongChildren: true) {
             AppointmentStatusChip(status: appointment.status)
             Text(verbatim: formatters.visitWhen(
-                appointment, now: now, today: String(localized: "appointment.today", locale: locale),
-                tomorrow: String(localized: "appointment.tomorrow", locale: locale)
+                appointment, now: now, today: LocalizedStringResource("appointment.today").resolved(in: locale),
+                tomorrow: LocalizedStringResource("appointment.tomorrow").resolved(in: locale)
             ))
             .font(Typography.meta)
             .foregroundStyle(Palette.ink2)

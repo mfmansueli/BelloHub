@@ -105,7 +105,7 @@ final class HealthFormViewModel: Identifiable {
             try await repository.save(form)
             didSave = true
         } catch {
-            errorMessage = String(localized: "health.error.save")
+            errorMessage = String(interface: LocalizedStringResource("health.error.save"))
         }
     }
 }

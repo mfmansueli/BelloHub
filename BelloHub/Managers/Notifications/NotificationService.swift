@@ -129,7 +129,8 @@ final class NotificationService {
         let timeZone = profile.profile.flatMap { TimeZone(identifier: $0.timeZoneID) } ?? .current
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = timeZone
-        let locale = profile.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) }?.locale ?? .current
+        // She reads these, so they are in the interface language (not the business language of her messages).
+        let locale = InterfaceLocale.current
         let window = DateInterval(start: moment, duration: TimeInterval(NotificationPlanner.horizonDays * 86_400))
         do {
             let visits = try await appointments.appointments(in: window)

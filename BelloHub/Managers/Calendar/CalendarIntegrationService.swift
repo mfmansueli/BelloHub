@@ -142,7 +142,7 @@ final class CalendarIntegrationService {
             let drafts = CalendarEventPlanner.drafts(
                 appointments: visits, clientNames: names,
                 showsNames: !NotificationSettingsService.hidesNames(in: defaults),
-                genericTitle: String(localized: "integrations.apple.eventTitle")
+                genericTitle: String(interface: LocalizedStringResource("integrations.apple.eventTitle"))
             )
             let existing = try await writer.events(in: window)
             try await writer.apply(CalendarEventPlanner.changes(drafts: drafts, existing: existing))

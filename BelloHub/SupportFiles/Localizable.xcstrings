@@ -104059,6 +104059,186 @@
         }
       }
     },
+    "languageRegion.appLanguage.system" : {
+      "comment" : "Language and region: first option of the app language menu: the app follows the iPhone language.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مثل الـ iPhone"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wie das iPhone"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as iPhone"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Same as iPhone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que el iPhone"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que el iPhone"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual que el iPhone"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Comme l’iPhone"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "iPhone जैसी"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sama dengan iPhone"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Come l’iPhone"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual ao iPhone"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Igual ao iPhone"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "iPhone ile aynı"
+          }
+        }
+      }
+    },
+    "languageRegion.appLanguage.system.note" : {
+      "comment" : "Language and region: footnote under the app language menu. Texts drawn by iOS change at the next launch.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تتغير رسائل نظام iOS نفسه، مثل طلبات الإذن، عند فتح التطبيق في المرة القادمة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Meldungen von iOS selbst, etwa Berechtigungsanfragen, ändern sich beim nächsten Öffnen der App."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messages from iOS itself, such as permission requests, change the next time you open the app."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Messages from iOS itself, such as permission requests, change the next time you open the app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los mensajes del propio iOS, como las solicitudes de permiso, cambian la próxima vez que abras la app."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los mensajes del propio iOS, como las solicitudes de permiso, cambian la próxima vez que abras la app."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los mensajes del propio iOS, como las solicitudes de permiso, cambian la próxima vez que abras la app."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les messages d’iOS lui-même, comme les demandes d’autorisation, changent la prochaine fois que vous ouvrez l’app."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "iOS के अपने संदेश, जैसे अनुमति के अनुरोध, अगली बार ऐप खोलने पर बदलेंगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pesan dari iOS sendiri, seperti permintaan izin, berubah saat kamu membuka aplikasi lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I messaggi di iOS, come le richieste di autorizzazione, cambiano la prossima volta che apri l’app."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensagens do próprio iOS, como pedidos de permissão, mudam na próxima vez que você abrir o app."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As mensagens do próprio iOS, como os pedidos de autorização, mudam da próxima vez que abrir a app."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İzin istekleri gibi iOS’un kendi mesajları, uygulamayı bir sonraki açışınızda değişir."
+          }
+        }
+      }
+    },
     "languageRegion.channel.messages" : {
       "comment" : "Language and region: the messaging channel when it is the iPhone's Messages app rather than WhatsApp.",
       "extractionState" : "manual",
@@ -105139,6 +105319,186 @@
         }
       }
     },
+    "languageRegion.section.appLanguage" : {
+      "comment" : "Language and region: title of the section that sets the language of the app itself (not of her messages).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لغة التطبيق"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sprache der App"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App language"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "App language"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma de la app"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma de la app"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma de la app"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Langue de l’app"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऐप की भाषा"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bahasa aplikasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lingua dell’app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma do app"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Idioma da app"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uygulama dili"
+          }
+        }
+      }
+    },
+    "languageRegion.section.appLanguage.subtitle" : {
+      "comment" : "Language and region: under the app language title. Her own words are never translated.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كل شاشات Bello Hub على هذا الـ iPhone. تبقى الأسماء والملاحظات المكتوبة كما هي."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle Bildschirme von Bello Hub auf diesem iPhone. Namen und Notizen, die du geschrieben hast, bleiben, wie sie sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every screen of Bello Hub on this iPhone. Names and notes you wrote stay as you wrote them."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Every screen of Bello Hub on this iPhone. Names and notes you wrote stay as you wrote them."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todas las pantallas de Bello Hub en este iPhone. Los nombres y notas que has escrito se quedan como están."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todas las pantallas de Bello Hub en este iPhone. Los nombres y notas que escribiste quedan como están."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todas las pantallas de Bello Hub en este iPhone. Los nombres y notas que escribiste quedan como están."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tous les écrans de Bello Hub sur cet iPhone. Les noms et les notes que vous avez écrits restent tels quels."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस iPhone पर Bello Hub की सभी स्क्रीन। आपके लिखे नाम और नोट्स जैसे हैं वैसे ही रहते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Semua layar Bello Hub di iPhone ini. Nama dan catatan yang kamu tulis tetap seperti aslinya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutte le schermate di Bello Hub su questo iPhone. Nomi e note che hai scritto restano come sono."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todas as telas do Bello Hub neste iPhone. Nomes e anotações que você escreveu ficam como estão."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os ecrãs do Bello Hub neste iPhone. Os nomes e as notas que escreveu ficam como estão."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu iPhone’daki tüm Bello Hub ekranları. Yazdığınız adlar ve notlar olduğu gibi kalır."
+          }
+        }
+      }
+    },
     "languageRegion.section.currency" : {
       "comment" : "Language and region: header of the currency section.",
       "extractionState" : "manual",
@@ -105416,85 +105776,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "يتبع التطبيق نفسه لغة iPhone."
+            "value" : "تقرأ العميلات رسائلك وصفحتك بهذه اللغة. تُختار لغة التطبيق نفسه في الأعلى."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Die App selbst folgt der Sprache deines iPhones."
+            "value" : "Deine Kundschaft liest deine Nachrichten und deine Seite in dieser Sprache. Die Sprache der App stellst du oben ein."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The app itself follows your iPhone language."
+            "value" : "Clients read your messages and your page in this language. The language of the app itself is set above."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "The app itself follows your iPhone language."
+            "value" : "Clients read your messages and your page in this language. The language of the app itself is set above."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La app en sí sigue el idioma de tu iPhone."
+            "value" : "Tus clientes leen tus mensajes y tu página en este idioma. El idioma de la propia app se elige arriba."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La app en sí sigue el idioma de tu iPhone."
+            "value" : "Tus clientes leen tus mensajes y tu página en este idioma. El idioma de la app se elige arriba."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "La app en sí sigue el idioma de tu iPhone."
+            "value" : "Tus clientes leen tus mensajes y tu página en este idioma. El idioma de la app se elige arriba."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "L’app elle-même suit la langue de votre iPhone."
+            "value" : "Votre clientèle lit vos messages et votre page dans cette langue. La langue de l’app se règle plus haut."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ऐप खुद आपके iPhone की भाषा का पालन करता है।"
+            "value" : "आपके क्लाइंट आपके संदेश और आपका पेज इसी भाषा में पढ़ते हैं। ऐप की अपनी भाषा ऊपर चुनी जाती है।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Aplikasi sendiri mengikuti bahasa iPhone kamu."
+            "value" : "Klien membaca pesan dan halaman kamu dalam bahasa ini. Bahasa aplikasi diatur di atas."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "L’app segue la lingua del tuo iPhone."
+            "value" : "I tuoi clienti leggono i tuoi messaggi e la tua pagina in questa lingua. La lingua dell’app si sceglie sopra."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O app em si segue o idioma do iPhone."
+            "value" : "Seus clientes leem suas mensagens e sua página neste idioma. O idioma do próprio app fica acima."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "A app em si segue o idioma do iPhone."
+            "value" : "Os clientes leem as suas mensagens e a sua página neste idioma. O idioma da própria app define-se acima."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Uygulamanın kendisi iPhone’unuzun dilini izler."
+            "value" : "Müşterileriniz mesajlarınızı ve sayfanızı bu dilde okur. Uygulamanın kendi dili yukarıda seçilir."
           }
         }
       }

@@ -24,4 +24,5 @@ struct LanguageRegionView: View {
     NavigationStack { LanguageRegionView() }
         .environment(ProfileService(vault: vault))
         .environment(BookingSetupService(vault: vault))
+        .environment(InterfaceLanguageService(defaults: .standard, systemDefaults: nil))
 }

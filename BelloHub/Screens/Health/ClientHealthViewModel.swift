@@ -73,7 +73,7 @@ final class ClientHealthViewModel {
     func load() async {
         guard !isLoading else { return }
         guard let repository else {
-            errorMessage = String(localized: "health.error.load")
+            errorMessage = String(interface: LocalizedStringResource("health.error.load"))
             return
         }
         isLoading = true
@@ -81,7 +81,7 @@ final class ClientHealthViewModel {
         defer { isLoading = false }
         do {
             guard let loadedClient = try await repository.client(id: clientID) else {
-                errorMessage = String(localized: "health.error.load")
+                errorMessage = String(interface: LocalizedStringResource("health.error.load"))
                 return
             }
             let loadedCatalog = try catalogProvider.catalog(for: localization)
@@ -93,7 +93,7 @@ final class ClientHealthViewModel {
             catalog = loadedCatalog
             hasLoaded = true
         } catch {
-            errorMessage = String(localized: "health.error.load")
+            errorMessage = String(interface: LocalizedStringResource("health.error.load"))
         }
     }
 
@@ -162,7 +162,7 @@ final class ClientHealthViewModel {
                 client: client, template: template, catalog: catalog, repository: repository, now: now, makeID: makeID
             )
         } catch {
-            errorMessage = String(localized: "health.error.load")
+            errorMessage = String(interface: LocalizedStringResource("health.error.load"))
         }
     }
 

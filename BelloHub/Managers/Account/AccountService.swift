@@ -48,10 +48,10 @@ final class AccountService {
             try await wipeDevice()
             return outcome
         } catch {
-            errorMessage = String(
-                localized: "account.delete.error",
+            errorMessage = String(interface: LocalizedStringResource(
+                "account.delete.error",
                 defaultValue: "We could not delete your account. Check your connection and try again."
-            )
+            ))
             return nil
         }
     }

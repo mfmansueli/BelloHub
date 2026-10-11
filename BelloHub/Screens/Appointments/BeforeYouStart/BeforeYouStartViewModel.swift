@@ -74,7 +74,7 @@ final class BeforeYouStartViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "beforeYouStart.error.load")
+            errorMessage = String(interface: LocalizedStringResource("beforeYouStart.error.load"))
         }
     }
 
@@ -91,7 +91,7 @@ final class BeforeYouStartViewModel {
             didComplete = true
             actionErrorMessage = nil
         } catch {
-            actionErrorMessage = String(localized: "appointment.error.action")
+            actionErrorMessage = String(interface: LocalizedStringResource("appointment.error.action"))
         }
     }
 

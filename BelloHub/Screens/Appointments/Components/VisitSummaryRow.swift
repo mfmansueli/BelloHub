@@ -32,8 +32,8 @@ struct VisitSummaryRow: View {
 
     private var subtitle: String {
         let when = formatters.visitWhen(
-            visit.appointment, now: now, today: String(localized: "appointment.today", locale: locale),
-            tomorrow: String(localized: "appointment.tomorrow", locale: locale)
+            visit.appointment, now: now, today: LocalizedStringResource("appointment.today").resolved(in: locale),
+            tomorrow: LocalizedStringResource("appointment.tomorrow").resolved(in: locale)
         )
         return "\(visit.appointment.serviceName) · \(when)"
     }

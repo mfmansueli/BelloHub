@@ -115,10 +115,10 @@ final class LanguageRegionViewModel {
             try await profile.saveProfile(draft.applied(to: stored))
             saved = true
         } catch {
-            errorMessage = String(
-                localized: "languageRegion.error.save",
+            errorMessage = String(interface: LocalizedStringResource(
+                "languageRegion.error.save",
                 defaultValue: "We could not save your changes. Check that your iPhone has space and try again."
-            )
+            ))
         }
     }
 

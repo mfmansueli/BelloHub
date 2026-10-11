@@ -31,6 +31,7 @@ struct AppDependencies {
     let calendar: CalendarIntegrationService
     let export: DataExportService
     let inbox: InboxServices
+    let language: InterfaceLanguageService
     let defaults: UserDefaults
 
     static func make(options: LaunchOptions = .current) -> AppDependencies {
@@ -88,6 +89,7 @@ struct AppDependencies {
             calendar: CalendarIntegrationService(appointments: appointments, vault: vault, defaults: defaults),
             export: DataExportService(vault: vault),
             inbox: inbox,
+            language: .live(defaults: defaults),
             defaults: defaults
         )
     }
@@ -135,8 +137,7 @@ struct AppDependencies {
         let permissions = PermissionService(provider: UITestPermissionProvider())
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
-        let mode = options.biometricsMode.flatMap(UITestBiometrics.Mode.init(rawValue:)) ?? .success
-        let biometrics = UITestBiometrics(mode: mode)
+        let biometrics = UITestBiometrics(mode: options.biometricsMode.flatMap(UITestBiometrics.Mode.init) ?? .success)
         let subscription = SubscriptionService.preview(hasPlan: options.uiPlan == "active")
         let inbox = makeUITestInbox(
             options: options, keyManager: keyManager, vault: vault, appointments: appointments, defaults: defaults
@@ -174,6 +175,8 @@ struct AppDependencies {
             calendar: uiTestCalendar(appointments: appointments, vault: vault, defaults: defaults),
             export: DataExportService(vault: vault),
             inbox: inbox,
+            // The UI-test defaults suite; the simulator's own language list is never written by a test launch.
+            language: InterfaceLanguageService(defaults: defaults, systemDefaults: nil),
             defaults: defaults
         )
     }

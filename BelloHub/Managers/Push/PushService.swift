@@ -34,11 +34,8 @@ final class PushService {
         bookings: BookingSyncService,
         mailbox: MailboxService,
         defaults: UserDefaults = .standard,
-        locale: @escaping @Sendable () -> String? = {
-            AppLocalization.resolve(
-                preferredLanguages: Locale.preferredLanguages, regionCode: Locale.current.region?.identifier
-            )?.rawValue
-        }
+        // The server writes her pushes in the language she reads the app in (not the iPhone-wide language list).
+        locale: @escaping @Sendable () -> String? = { InterfaceLocale.localization.rawValue }
     ) {
         self.provider = provider
         self.queue = queue
@@ -98,6 +95,13 @@ final class PushService {
         case .mailbox: mailbox.syncNow()
         case .booking, .bookingLate, .bookingConfirmed, .rescheduleRequest, .waitlist: bookings.syncNow()
         }
+    }
+
+    /// She changed the interface language: the server is told again with the same token, so the pushes it writes
+    /// follow. Nothing to do before a token is known.
+    func interfaceLanguageDidChange() {
+        guard userID != nil, let token = registeredToken else { return }
+        queue.enqueue(.registerDevice(fcmToken: token, locale: locale()))
     }
 
     private func didReceive(token: String) {

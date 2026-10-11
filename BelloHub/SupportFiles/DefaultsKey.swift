@@ -29,6 +29,13 @@ enum DefaultsKey {
     static let hideNamesOnLockScreen = "notifications.hideNames"
     /// Apple Calendar write-through switched on.
     static let appleCalendarEnabled = "integrations.appleCalendar"
+    /// The language of the interface she chose in Language and region (`InterfaceLanguage.storageValue`): `"system"`
+    /// or a localization id. A device setting, read before the vault opens (lock screen, welcome), so it stays when the
+    /// account goes.
+    static let interfaceLanguage = "interface.language"
+    /// The `AppleLanguages` value the app itself last wrote, so a change made later in iOS Settings is recognized
+    /// (`InterfaceLanguage.reconciled`).
+    static let interfaceAppleLanguagesWritten = "interface.appleLanguagesWritten"
 
     /// Everything that belongs to the account and goes with it when the account is deleted. Device-wide settings
     /// (the lock) stay.

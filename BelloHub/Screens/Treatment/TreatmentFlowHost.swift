@@ -31,7 +31,7 @@ struct TreatmentFlowHost: View {
             viewModel.locale = locale
             await viewModel.load()
         }
-        .onChange(of: locale) { _, new in viewModel.locale = new }
+        .onChange(of: locale) { _, new in viewModel.useLocale(new) }
         .onDisappear { viewModel.tearDown() }
         .agendaSheet(item: $agendaSheet)
         .confirmationDialog(

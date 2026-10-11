@@ -95,14 +95,14 @@ struct CancelAppointmentContentView: View {
                 .font(Typography.metaStrong).foregroundStyle(Palette.ink2)
                 .accessibilityAddTraits(.isHeader)
             ChoiceCard(
-                title: String(localized: "cancelAppointment.who.me", locale: locale),
-                subtitle: String(localized: "cancelAppointment.who.me.detail", locale: locale),
+                title: LocalizedStringResource("cancelAppointment.who.me").resolved(in: locale),
+                subtitle: LocalizedStringResource("cancelAppointment.who.me.detail").resolved(in: locale),
                 isSelected: viewModel.cancelledBy == .professional, identifier: "cancelAppointment.who.professional"
             ) { viewModel.cancelledBy = .professional }
             ChoiceCard(
                 title: LocalizedStringResource("cancelAppointment.who.client", defaultValue: "\(name) is cancelling")
                     .resolved(in: locale),
-                subtitle: String(localized: "cancelAppointment.who.client.detail", locale: locale),
+                subtitle: LocalizedStringResource("cancelAppointment.who.client.detail").resolved(in: locale),
                 isSelected: viewModel.cancelledBy == .client, identifier: "cancelAppointment.who.client"
             ) { viewModel.cancelledBy = .client }
         }

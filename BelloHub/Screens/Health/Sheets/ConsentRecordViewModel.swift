@@ -76,7 +76,7 @@ final class ConsentRecordViewModel: Identifiable {
                 thumbnail: prepared.thumbnail
             )
         } catch {
-            errorMessage = String(localized: "consent.document.error")
+            errorMessage = String(interface: LocalizedStringResource("consent.document.error"))
         }
     }
 
@@ -105,9 +105,9 @@ final class ConsentRecordViewModel: Identifiable {
                 )
             }
         } catch ConsentDocumentError.tooLarge {
-            errorMessage = String(localized: "consent.document.tooLarge")
+            errorMessage = String(interface: LocalizedStringResource("consent.document.tooLarge"))
         } catch {
-            errorMessage = String(localized: "consent.document.error")
+            errorMessage = String(interface: LocalizedStringResource("consent.document.error"))
         }
     }
 
@@ -134,7 +134,7 @@ final class ConsentRecordViewModel: Identifiable {
             try await repository.save(record)
             didSave = true
         } catch {
-            errorMessage = String(localized: "health.error.save")
+            errorMessage = String(interface: LocalizedStringResource("health.error.save"))
         }
     }
 
@@ -154,7 +154,7 @@ final class ConsentRecordViewModel: Identifiable {
             try await repository.deleteConsent(id: existing.id)
             didSave = true
         } catch {
-            errorMessage = String(localized: "health.error.save")
+            errorMessage = String(interface: LocalizedStringResource("health.error.save"))
         }
     }
 }

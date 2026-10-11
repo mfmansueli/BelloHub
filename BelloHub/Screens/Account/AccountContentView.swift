@@ -213,7 +213,7 @@ struct AccountContentView: View {
 
     private var professionText: String {
         guard let current = viewModel.stored else { return "" }
-        let localization = AppLocalization(rawValue: current.appLocaleID) ?? .en
+        let localization = AppLocalization(resolving: locale)
         let catalog = try? ProfessionCatalog.loadBundled(localization: localization)
         return current.professions.compactMap { catalog?.entry(for: $0)?.name }.joined(separator: " · ")
     }

@@ -231,7 +231,7 @@ final class ClientFormViewModel {
                 showsPaywall = true
             }
         } catch {
-            errorMessage = String(localized: "clientForm.error.save")
+            errorMessage = String(interface: LocalizedStringResource("clientForm.error.save"))
         }
     }
 
@@ -265,7 +265,7 @@ final class ClientFormViewModel {
 
     private func fail() {
         isLoading = false
-        errorMessage = String(localized: "clientForm.error.load")
+        errorMessage = String(interface: LocalizedStringResource("clientForm.error.load"))
     }
 
     /// The business time zone decides which year is "this year" for a birthday (docs/07 section 2.4).

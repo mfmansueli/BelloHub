@@ -136,8 +136,8 @@ struct RecoveryKeyContentView: View {
         VStack(alignment: .leading, spacing: Spacing.row) {
             ListCard(dividerInset: Spacing.md) {
                 ToggleRow(
-                    title: String(localized: "recoveryKey.confirm.title"),
-                    subtitle: String(localized: "recoveryKey.confirm.subtitle"),
+                    title: String(interface: LocalizedStringResource("recoveryKey.confirm.title")),
+                    subtitle: String(interface: LocalizedStringResource("recoveryKey.confirm.subtitle")),
                     isOn: $viewModel.confirmsSafe, identifier: "recoveryKey.confirmSwitch"
                 )
                 .disabled(!viewModel.isRevealed)

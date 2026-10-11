@@ -51,10 +51,10 @@ final class DataExportService {
             file = written
             return written
         } catch {
-            errorMessage = String(
-                localized: "export.error",
+            errorMessage = String(interface: LocalizedStringResource(
+                "export.error",
                 defaultValue: "We could not prepare the export. Check that your iPhone has space and try again."
-            )
+            ))
             return nil
         }
     }

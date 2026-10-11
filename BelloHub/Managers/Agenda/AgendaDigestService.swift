@@ -47,10 +47,10 @@ final class AgendaDigestService {
     func startListening() {
         guard !isListening else { return }
         guard vault.isAvailable, let repository = vault.repository else {
-            errorMessage = String(
-                localized: "calendar.error.unavailable",
+            errorMessage = String(interface: LocalizedStringResource(
+                "calendar.error.unavailable",
                 defaultValue: "Your calendar is not available. Check that your iPhone is unlocked and try again."
-            )
+            ))
             isLoading = false
             return
         }

@@ -154,8 +154,8 @@ struct IncidentContentView: View {
 
     private var followUp: some View {
         ToggleRow(
-            title: String(localized: "incident.followUp", locale: locale),
-            subtitle: String(localized: "incident.followUp.detail", locale: locale),
+            title: LocalizedStringResource("incident.followUp").resolved(in: locale),
+            subtitle: LocalizedStringResource("incident.followUp.detail").resolved(in: locale),
             isOn: $viewModel.draft.followUp, identifier: "incident.followUpToggle"
         )
         .belloCard(cornerRadius: Radius.tile)

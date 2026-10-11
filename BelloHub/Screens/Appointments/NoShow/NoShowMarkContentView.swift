@@ -108,13 +108,13 @@ struct NoShowMarkContentView: View {
     private func kind(name: String) -> some View {
         VStack(spacing: Spacing.sm) {
             ChoiceCard(
-                title: String(localized: "noShowMark.kind.counts", locale: locale),
-                subtitle: String(localized: "noShowMark.kind.counts.detail", locale: locale),
+                title: LocalizedStringResource("noShowMark.kind.counts").resolved(in: locale),
+                subtitle: LocalizedStringResource("noShowMark.kind.counts.detail").resolved(in: locale),
                 isSelected: viewModel.countsAgainstClient, identifier: "noShowMark.kind.counts"
             ) { viewModel.countsAgainstClient = true }
             ChoiceCard(
-                title: String(localized: "noShowMark.kind.excused", locale: locale),
-                subtitle: String(localized: "noShowMark.kind.excused.detail", locale: locale),
+                title: LocalizedStringResource("noShowMark.kind.excused").resolved(in: locale),
+                subtitle: LocalizedStringResource("noShowMark.kind.excused.detail").resolved(in: locale),
                 isSelected: !viewModel.countsAgainstClient, identifier: "noShowMark.kind.excused"
             ) { viewModel.countsAgainstClient = false }
         }

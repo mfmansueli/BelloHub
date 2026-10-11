@@ -13,6 +13,7 @@ struct LanguageRegionContentView: View {
 
     @Environment(\.locale) private var locale
     @Environment(ProfileService.self) private var profile
+    @Environment(InterfaceLanguageService.self) private var interfaceLanguage
 
     init(profile: ProfileService, bookingSetup: BookingSetupService, regions: RegionCatalog) {
         _viewModel = State(initialValue: LanguageRegionViewModel(
@@ -27,6 +28,7 @@ struct LanguageRegionContentView: View {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 Text("languageRegion.subtitle").font(Typography.body).foregroundStyle(Palette.ink2)
                 notices
+                appLanguageSection
                 regionSection
                 languageSection
                 setsSection
@@ -67,6 +69,36 @@ struct LanguageRegionContentView: View {
                     try? await Task.sleep(for: .seconds(3))
                     viewModel.dismissSaved()
                 }
+        }
+    }
+
+    /// The language of the app itself (routine-a item 1). Applied at once, without Save: it is a setting of this
+    /// iPhone, not of the business, and every open screen follows it.
+    private var appLanguageSection: some View {
+        SettingsSection(
+            title: "languageRegion.section.appLanguage", subtitle: "languageRegion.section.appLanguage.subtitle"
+        ) {
+            ListCard(dividerInset: Spacing.md) {
+                HStack(spacing: Spacing.row) {
+                    Text("languageRegion.language").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Picker(selection: appLanguageBinding) {
+                        Text("languageRegion.appLanguage.system").tag(InterfaceLanguage.system)
+                        ForEach(AppLocalization.allCases) { localization in
+                            Text(verbatim: localization.nativeName).tag(InterfaceLanguage.fixed(localization))
+                        }
+                    } label: {
+                        Text("languageRegion.language")
+                    }
+                    .pickerStyle(.menu)
+                    .tint(Palette.roseText)
+                    .accessibilityIdentifier("languageRegion.appLanguageMenu")
+                }
+                .padding(.horizontal, Spacing.md)
+                .padding(.vertical, Spacing.sm)
+            }
+            FooterNote(text: "languageRegion.appLanguage.system.note", icon: .info)
+                .padding(.top, Spacing.xs)
         }
     }
 
@@ -215,7 +247,7 @@ struct LanguageRegionContentView: View {
                     ToggleRow(
                         title: localization.nativeName,
                         subtitle: localization == viewModel.draft.localization
-                            ? String(localized: "languageRegion.pageLanguage.business") : nil,
+                            ? String(interface: LocalizedStringResource("languageRegion.pageLanguage.business")) : nil,
                         isOn: Binding(
                             get: { viewModel.isOnPage(localization) },
                             set: { _ in viewModel.togglePageLanguage(localization) }
@@ -229,6 +261,10 @@ struct LanguageRegionContentView: View {
     }
 
     // MARK: - Bindings
+
+    private var appLanguageBinding: Binding<InterfaceLanguage> {
+        Binding(get: { interfaceLanguage.choice }, set: { interfaceLanguage.choose($0) })
+    }
 
     private var languageBinding: Binding<AppLocalization> {
         Binding(get: { viewModel.draft.localization }, set: { viewModel.choose($0) })

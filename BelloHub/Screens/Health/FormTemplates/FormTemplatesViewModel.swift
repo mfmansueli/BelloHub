@@ -61,7 +61,7 @@ final class FormTemplatesViewModel {
     func load() async {
         guard !isLoading else { return }
         guard let repository else {
-            errorMessage = String(localized: "formTemplates.error.load")
+            errorMessage = String(interface: LocalizedStringResource("formTemplates.error.load"))
             return
         }
         isLoading = true
@@ -81,7 +81,7 @@ final class FormTemplatesViewModel {
             didSave = false
             hasLoaded = true
         } catch {
-            errorMessage = String(localized: "formTemplates.error.load")
+            errorMessage = String(interface: LocalizedStringResource("formTemplates.error.load"))
         }
     }
 
@@ -140,7 +140,7 @@ final class FormTemplatesViewModel {
             reviewMonths = edited.reviewEveryMonths
             didSave = true
         } catch {
-            errorMessage = String(localized: "health.error.save")
+            errorMessage = String(interface: LocalizedStringResource("health.error.save"))
         }
     }
 }

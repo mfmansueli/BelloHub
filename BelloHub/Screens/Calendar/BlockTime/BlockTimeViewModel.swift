@@ -156,10 +156,10 @@ final class BlockTimeViewModel {
                 )
             }
         } catch {
-            errorMessage = String(
-                localized: "blockTime.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "blockTime.error.load",
                 defaultValue: "We could not read your calendar. Check that your iPhone is unlocked and try again."
-            )
+            ))
         }
     }
 
@@ -179,10 +179,9 @@ final class BlockTimeViewModel {
         do {
             try await timeBlocks.block(blocks)
         } catch {
-            saveErrorMessage = String(
-                localized: "blockTime.error.save",
-                defaultValue: "We could not block this time. Nothing was changed. Try again."
-            )
+            saveErrorMessage = String(interface: LocalizedStringResource(
+                "blockTime.error.save", defaultValue: "We could not block this time. Nothing was changed. Try again."
+            ))
             return false
         }
         var outcome = Outcome(blockedDays: blocks.count, cancelled: [], failedCancellations: 0, kept: affected)

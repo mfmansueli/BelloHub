@@ -49,7 +49,7 @@ final class PatchTestViewModel: Identifiable {
             try await repository.save(PatchTestRules.patchTest(from: draft, clientID: clientID, id: patchTestID))
             didSave = true
         } catch {
-            errorMessage = String(localized: "health.error.save")
+            errorMessage = String(interface: LocalizedStringResource("health.error.save"))
         }
     }
 }

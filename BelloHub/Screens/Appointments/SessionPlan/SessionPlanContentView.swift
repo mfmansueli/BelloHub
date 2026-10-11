@@ -58,8 +58,8 @@ struct SessionPlanContentView: View {
                 steppers
                 timeline
                 ToggleRow(
-                    title: String(localized: "sessionPlan.remind", locale: locale),
-                    subtitle: String(localized: "sessionPlan.remind.detail", locale: locale),
+                    title: LocalizedStringResource("sessionPlan.remind").resolved(in: locale),
+                    subtitle: LocalizedStringResource("sessionPlan.remind.detail").resolved(in: locale),
                     isOn: $viewModel.draft.remindToRebook, identifier: "sessionPlan.remindToggle"
                 )
                 .belloCard(cornerRadius: Radius.tile)

@@ -116,7 +116,9 @@ final class AppLockService {
         guard isLocked, !isAuthenticating else { return }
         isAuthenticating = true
         defer { isAuthenticating = false }
-        let reason = String(localized: "locked.reason", defaultValue: "Open your clients and records.")
+        let reason = String(interface: LocalizedStringResource(
+            "locked.reason", defaultValue: "Open your clients and records."
+        ))
         let result = await biometrics.authenticate(reason: reason)
         switch result {
         case .success, .unavailable:

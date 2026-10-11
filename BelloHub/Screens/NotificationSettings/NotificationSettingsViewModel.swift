@@ -76,10 +76,9 @@ final class NotificationSettingsViewModel {
             try service.save(updated)
             errorMessage = nil
         } catch {
-            errorMessage = String(
-                localized: "notificationSettings.error.save",
-                defaultValue: "We could not save this change. Try again."
-            )
+            errorMessage = String(interface: LocalizedStringResource(
+                "notificationSettings.error.save", defaultValue: "We could not save this change. Try again."
+            ))
         }
     }
 

@@ -120,10 +120,12 @@ final class ClientKnowledgeViewModel {
         do {
             switch try await registrar.register(client) {
             case .updated, .registered: isFinished = true
-            case .duplicate, .needsSubscription: errorMessage = String(localized: "clientKnowledge.error.save")
+            case .duplicate, .needsSubscription: errorMessage = String(interface: LocalizedStringResource(
+                "clientKnowledge.error.save"
+            ))
             }
         } catch {
-            errorMessage = String(localized: "clientKnowledge.error.save")
+            errorMessage = String(interface: LocalizedStringResource("clientKnowledge.error.save"))
         }
     }
 
@@ -144,6 +146,6 @@ final class ClientKnowledgeViewModel {
 
     private func fail() {
         isLoading = false
-        errorMessage = String(localized: "clientKnowledge.error.load")
+        errorMessage = String(interface: LocalizedStringResource("clientKnowledge.error.load"))
     }
 }

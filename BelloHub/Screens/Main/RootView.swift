@@ -32,6 +32,7 @@ struct RootView: View {
     @State private var mailbox: MailboxService
     @State private var push: PushService
     @State private var clientDeletion: ClientDataDeletionService
+    @State private var language: InterfaceLanguageService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
     private let dependencies: AppDependencies
@@ -65,6 +66,7 @@ struct RootView: View {
         _mailbox = State(initialValue: dependencies.inbox.mailbox)
         _push = State(initialValue: dependencies.inbox.push)
         _clientDeletion = State(initialValue: dependencies.inbox.clientDeletion)
+        _language = State(initialValue: dependencies.language)
         _model = State(initialValue: RootViewModel(
             session: dependencies.session, appLock: dependencies.appLock, keyManager: dependencies.keyManager,
             profile: dependencies.profile
@@ -102,7 +104,12 @@ struct RootView: View {
         .environment(notificationSettings)
         .environment(calendar)
         .environment(export)
+        .environment(language)
         .belloLocaleTypography()
+        // The interface language, above every stage, the privacy cover and the lock screen: sheets, alerts, menus and
+        // full-screen covers inherit it, and a change re-renders what is open without losing its place.
+        .environment(\.locale, language.locale)
+        .environment(\.layoutDirection, language.layoutDirection)
         .disablesAnimationsForUITests()
         .task {
             #if DEBUG
@@ -158,6 +165,11 @@ struct RootView: View {
                 bookingSync.syncNow()
                 mailbox.syncNow()
             }
+        }
+        .onChange(of: language.localization) {
+            // What she reads outside the app follows too: the local notifications and the pushes the server writes.
+            Task { await notifications.reschedule() }
+            push.interfaceLanguageDidChange()
         }
         .onChange(of: appLock.isLocked) { wasLocked, isLocked in
             if wasLocked && !isLocked { Task { await model.didUnlock() } }

@@ -89,9 +89,9 @@ struct RestoreKeySheet: View {
                 "restoreKey.error.unknownWord", defaultValue: "Word \(position) is not on the list. Check its spelling."
             ).localized(in: locale))
         case .checksum:
-            return String(localized: "restoreKey.error.checksum")
+            return String(interface: LocalizedStringResource("restoreKey.error.checksum"))
         case .failed:
-            return String(localized: "restoreKey.error.failed")
+            return String(interface: LocalizedStringResource("restoreKey.error.failed"))
         }
     }
 }

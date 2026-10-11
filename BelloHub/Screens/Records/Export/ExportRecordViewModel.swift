@@ -49,7 +49,7 @@ final class ExportRecordViewModel {
     init(
         clientID: UUID, vault: VaultService, profile: ProfileService, exporter: any RecordExporting,
         locale: Locale = .current, now: @escaping @Sendable () -> Date = { Date() },
-        resolve: @escaping (LocalizedStringResource) -> String = { String(localized: $0) }
+        resolve: @escaping (LocalizedStringResource) -> String = { String(interface: $0) }
     ) {
         self.clientID = clientID
         self.vault = vault
@@ -79,7 +79,7 @@ final class ExportRecordViewModel {
     func loadAsync() async {
         business = AgendaBusinessContext(profile: profile.profile)
         guard let repository = vault.repository else {
-            phase = .failed(String(localized: "exportRecord.error.load"))
+            phase = .failed(String(interface: LocalizedStringResource("exportRecord.error.load")))
             return
         }
         do {
@@ -96,7 +96,7 @@ final class ExportRecordViewModel {
             photoCount = try await repository.photos(for: clientID).count
             if phase == .loading { phase = .form } else if case .failed = phase { phase = .form }
         } catch {
-            phase = .failed(String(localized: "exportRecord.error.load"))
+            phase = .failed(String(interface: LocalizedStringResource("exportRecord.error.load")))
         }
     }
 
@@ -131,7 +131,7 @@ final class ExportRecordViewModel {
             exportErrorMessage = nil
             phase = .ready(file)
         } catch {
-            exportErrorMessage = String(localized: "exportRecord.error.export")
+            exportErrorMessage = String(interface: LocalizedStringResource("exportRecord.error.export"))
         }
     }
 

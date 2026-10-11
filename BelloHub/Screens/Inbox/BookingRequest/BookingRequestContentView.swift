@@ -206,8 +206,8 @@ struct BookingRequestContentView: View {
 
     private var resetCount: some View {
         ToggleRow(
-            title: String(localized: "bookingRequest.resetCount.title", locale: locale),
-            subtitle: String(localized: "bookingRequest.resetCount.detail", locale: locale),
+            title: LocalizedStringResource("bookingRequest.resetCount.title").resolved(in: locale),
+            subtitle: LocalizedStringResource("bookingRequest.resetCount.detail").resolved(in: locale),
             isOn: $viewModel.resetsCount, identifier: "bookingRequest.resetCountToggle"
         )
         .padding(Spacing.md)

@@ -279,7 +279,8 @@ struct MoreView: View {
     private var subtitle: String {
         guard let current = profile.profile else { return "" }
         let region = locale.localizedString(forRegionCode: current.regionCode)
-        let localization = AppLocalization(rawValue: current.appLocaleID) ?? .en
+        // The profession's name is interface text: the interface language, not the business one.
+        let localization = AppLocalization(resolving: locale)
         let profession = (try? ProfessionCatalog.loadBundled(localization: localization))
             .flatMap { catalog in current.professions.first.flatMap { catalog.entry(for: $0)?.name } }
         return [profession, region].compactMap { $0 }.joined(separator: " · ")

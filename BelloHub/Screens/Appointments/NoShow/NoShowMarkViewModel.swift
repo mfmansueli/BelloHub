@@ -104,7 +104,7 @@ final class NoShowMarkViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "noShowMark.error.load")
+            errorMessage = String(interface: LocalizedStringResource("noShowMark.error.load"))
         }
     }
 
@@ -122,7 +122,7 @@ final class NoShowMarkViewModel {
             let changed = try await appointments.markNoShow(id: appointmentID, forgive: forgive, now: moment)
             self.visit = VisitContext(appointment: changed, client: visit.client)
         } catch {
-            actionErrorMessage = String(localized: "noShowMark.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("noShowMark.error.save"))
             return
         }
         actionErrorMessage = nil

@@ -168,8 +168,10 @@ struct ClientProfileView: View {
                 service: next?.serviceName,
                 detail: next.map {
                     formatters.dayAndTime(
-                        $0.startsAt, now: now, today: String(localized: "clientProfile.today", locale: locale),
-                        tomorrow: String(localized: "clientProfile.tomorrow", locale: locale)
+                        $0.startsAt, now: now, today: LocalizedStringResource(
+                            "clientProfile.today"
+                        ).resolved(in: locale),
+                        tomorrow: LocalizedStringResource("clientProfile.tomorrow").resolved(in: locale)
                     )
                 },
                 emptyText: "clientProfile.next.empty",

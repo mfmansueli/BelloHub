@@ -77,10 +77,10 @@ final class TagsViewModel {
             tags = profile.tags
             clientCounts = TagUsage.counts(tags: tags, clients: everyone)
         } catch {
-            errorMessage = String(
-                localized: "tags.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "tags.error.load",
                 defaultValue: "We could not read your tags. Check that your iPhone is unlocked and try again."
-            )
+            ))
         }
     }
 
@@ -149,9 +149,9 @@ final class TagsViewModel {
     }
 
     private static var saveFailure: String {
-        String(
-            localized: "tags.error.save",
+        String(interface: LocalizedStringResource(
+            "tags.error.save",
             defaultValue: "We could not save this change. Check that your iPhone has space and try again."
-        )
+        ))
     }
 }

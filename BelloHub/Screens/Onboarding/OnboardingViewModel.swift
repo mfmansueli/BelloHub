@@ -231,10 +231,10 @@ final class OnboardingViewModel {
             result = built
             onFinished()
         } catch {
-            errorMessage = String(
-                localized: "onb.ready.saveError",
+            errorMessage = String(interface: LocalizedStringResource(
+                "onb.ready.saveError",
                 defaultValue: "We could not save your workspace. Check that your iPhone has space and try again."
-            )
+            ))
         }
     }
 

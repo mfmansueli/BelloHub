@@ -79,10 +79,10 @@ final class WeekGlanceViewModel {
                 clients: clients, appointments: everyone, now: now(), calendar: days.calendar
             ).count
         } catch {
-            errorMessage = String(
-                localized: "weekGlance.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "weekGlance.error.load",
                 defaultValue: "We could not read your week. Check that your iPhone is unlocked and try again."
-            )
+            ))
         }
     }
 }

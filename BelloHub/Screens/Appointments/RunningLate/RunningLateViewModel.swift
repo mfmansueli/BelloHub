@@ -94,7 +94,7 @@ final class RunningLateViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "runningLate.error.load")
+            errorMessage = String(interface: LocalizedStringResource("runningLate.error.load"))
         }
     }
 

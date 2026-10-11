@@ -126,10 +126,10 @@ final class CalendarViewModel {
     /// Starts watching the vault. Safe to call again (appearing, retrying): it only restarts what is not running.
     func startListening() {
         guard vault.isAvailable else {
-            errorMessage = String(
-                localized: "calendar.error.unavailable",
+            errorMessage = String(interface: LocalizedStringResource(
+                "calendar.error.unavailable",
                 defaultValue: "Your calendar is not available. Check that your iPhone is unlocked and try again."
-            )
+            ))
             isLoading = false
             return
         }

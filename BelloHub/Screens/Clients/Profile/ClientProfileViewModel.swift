@@ -159,7 +159,7 @@ final class ClientProfileViewModel {
 
     private func fail() {
         isLoading = false
-        errorMessage = String(localized: "clientProfile.error.message")
+        errorMessage = String(interface: LocalizedStringResource("clientProfile.error.message"))
     }
 
     private var calendar: Calendar {

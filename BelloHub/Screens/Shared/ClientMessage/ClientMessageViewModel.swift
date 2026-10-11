@@ -65,7 +65,7 @@ final class ClientMessageViewModel {
     func loadAsync() async {
         business = AgendaBusinessContext(profile: profile.profile)
         guard let repository = vault.repository else {
-            errorMessage = String(localized: "messageClient.error.load")
+            errorMessage = String(interface: LocalizedStringResource("messageClient.error.load"))
             isLoading = false
             return
         }
@@ -84,7 +84,7 @@ final class ClientMessageViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "messageClient.error.load")
+            errorMessage = String(interface: LocalizedStringResource("messageClient.error.load"))
         }
     }
 

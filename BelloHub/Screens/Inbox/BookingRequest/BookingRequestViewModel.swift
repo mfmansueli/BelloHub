@@ -137,9 +137,9 @@ final class BookingRequestViewModel {
     }
 
     private static var slotTakenMessage: String {
-        String(
-            localized: "bookingRequest.suggest.slotTaken", defaultValue: "That time is not free. Choose another one."
-        )
+        String(interface: LocalizedStringResource(
+            "bookingRequest.suggest.slotTaken", defaultValue: "That time is not free. Choose another one."
+        ))
     }
 
     func approve() {

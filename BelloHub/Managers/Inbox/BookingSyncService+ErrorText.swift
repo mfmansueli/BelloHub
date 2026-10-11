@@ -11,13 +11,21 @@ extension BookingSyncService {
     static func text(for error: any Error) -> String {
         switch error as? BookingRepositoryError {
         case .unreachable:
-            String(localized: "inbox.error.offline", defaultValue: "No connection. What you see is from the last sync.")
+            String(interface: LocalizedStringResource(
+                "inbox.error.offline", defaultValue: "No connection. What you see is from the last sync."
+            ))
         case .busy:
-            String(localized: "inbox.error.busy", defaultValue: "The server is busy. Try again in a moment.")
+            String(interface: LocalizedStringResource(
+                "inbox.error.busy", defaultValue: "The server is busy. Try again in a moment."
+            ))
         case .unauthenticated:
-            String(localized: "inbox.error.signIn", defaultValue: "Sign in again to see your bookings.")
+            String(interface: LocalizedStringResource(
+                "inbox.error.signIn", defaultValue: "Sign in again to see your bookings."
+            ))
         default:
-            String(localized: "inbox.error.generic", defaultValue: "Your bookings could not be read. Try again.")
+            String(interface: LocalizedStringResource(
+                "inbox.error.generic", defaultValue: "Your bookings could not be read. Try again."
+            ))
         }
     }
 }

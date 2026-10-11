@@ -129,16 +129,16 @@ final class ProductsViewModel {
     // MARK: - Messages
 
     private static var loadFailure: String {
-        String(
-            localized: "products.error.load",
+        String(interface: LocalizedStringResource(
+            "products.error.load",
             defaultValue: "We could not read your products. Check that your iPhone is unlocked and try again."
-        )
+        ))
     }
 
     private static var saveFailure: String {
-        String(
-            localized: "products.error.save",
+        String(interface: LocalizedStringResource(
+            "products.error.save",
             defaultValue: "We could not save this change. Check that your iPhone has space and try again."
-        )
+        ))
     }
 }

@@ -113,10 +113,10 @@ final class AccountViewModel {
             businessName = updated.businessName
             saved = true
         } catch {
-            errorMessage = String(
-                localized: "account.error.save",
+            errorMessage = String(interface: LocalizedStringResource(
+                "account.error.save",
                 defaultValue: "We could not save your changes. Check that your iPhone has space and try again."
-            )
+            ))
         }
     }
 
@@ -205,9 +205,8 @@ final class AccountViewModel {
     #endif
 
     private static var appleFailedMessage: String {
-        String(
-            localized: "account.delete.apple.error",
-            defaultValue: "Apple could not confirm it was you. Try again."
-        )
+        String(interface: LocalizedStringResource(
+            "account.delete.apple.error", defaultValue: "Apple could not confirm it was you. Try again."
+        ))
     }
 }

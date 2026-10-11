@@ -106,9 +106,9 @@ final class SubscriptionService: SubscriptionStatusProviding {
     }
 
     private static var unavailableMessage: String {
-        String(
-            localized: "plan.error.unavailable",
+        String(interface: LocalizedStringResource(
+            "plan.error.unavailable",
             defaultValue: "The App Store could not show the plans right now. Check your connection and try again."
-        )
+        ))
     }
 }

@@ -103,7 +103,7 @@ struct PrivacyContentView: View {
         SettingsSection(title: "privacy.section.lock") {
             ListCard(dividerInset: Spacing.md) {
                 ToggleRow(
-                    title: String(localized: lockTitle), subtitle: String(localized: lockSubtitle),
+                    title: lockTitle.resolved(in: locale), subtitle: lockSubtitle.resolved(in: locale),
                     isOn: Binding(get: { viewModel.lockEnabled }, set: viewModel.setLockEnabled),
                     identifier: "privacy.lockSwitch"
                 )
@@ -112,7 +112,10 @@ struct PrivacyContentView: View {
                         title: "privacy.lockAfter",
                         selection: Binding(get: { viewModel.graceSeconds }, set: viewModel.setGraceSeconds),
                         options: viewModel.graceOptions,
-                        label: { String(localized: String.LocalizationValue(PrivacySummary.graceKey($0))) },
+                        label: {
+                            LocalizedStringResource(String.LocalizationValue(PrivacySummary.graceKey($0)))
+                                .resolved(in: locale)
+                        },
                         identifier: "privacy.lockAfterMenu"
                     )
                 }
@@ -126,8 +129,8 @@ struct PrivacyContentView: View {
                 MoreRow(icon: .camera, tint: .peach, title: Text("privacy.photos"),
                         subtitle: Text("privacy.photos.subtitle"))
                 ToggleRow(
-                    title: String(localized: "privacy.hideNames"),
-                    subtitle: String(localized: "privacy.hideNames.subtitle"),
+                    title: String(interface: LocalizedStringResource("privacy.hideNames")),
+                    subtitle: String(interface: LocalizedStringResource("privacy.hideNames.subtitle")),
                     isOn: Binding(get: { viewModel.hideNames }, set: viewModel.setHideNames),
                     identifier: "privacy.hideNamesSwitch"
                 )

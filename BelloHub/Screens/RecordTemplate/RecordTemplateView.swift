@@ -17,11 +17,15 @@ struct RecordTemplateView: View {
     @Environment(\.dynamicTypeSize) private var typeSize
 
     init(profile: ProfileService) {
-        let localization = AppLocalization(rawValue: profile.profile?.appLocaleID ?? "") ?? .en
-        // A catalog that cannot be read leaves the standard fields showing their keys instead of blocking the screen.
-        let catalog = (try? ProfessionCatalog.loadBundled(localization: localization))
-            ?? ProfessionCatalog(localization: localization.rawValue, status: "needs_review", entries: [])
+        let catalog = Self.catalog(for: InterfaceLocale.localization)
         _viewModel = State(initialValue: RecordTemplateViewModel(profile: profile, catalog: catalog))
+    }
+
+    /// The field names of the interface language. A catalog that cannot be read leaves the standard fields showing
+    /// their keys instead of blocking the screen.
+    private static func catalog(for localization: AppLocalization) -> ProfessionCatalog {
+        (try? ProfessionCatalog.loadBundled(localization: localization))
+            ?? ProfessionCatalog(localization: localization.rawValue, status: "needs_review", entries: [])
     }
 
     var body: some View {
@@ -30,6 +34,7 @@ struct RecordTemplateView: View {
             .navigationTitle(Text("recordTemplate.title"))
             .navigationBarTitleDisplayMode(.large)
             .task { await viewModel.loadAsync() }
+            .onChange(of: locale) { _, new in viewModel.useCatalog(Self.catalog(for: AppLocalization(resolving: new))) }
             .sheet(item: $editor) { mode in
                 FieldEditorSheet(mode: mode, viewModel: viewModel)
             }

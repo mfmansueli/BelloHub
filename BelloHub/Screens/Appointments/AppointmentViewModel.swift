@@ -119,7 +119,7 @@ final class AppointmentViewModel {
             self.visit = VisitContext(appointment: changed, client: visit.client)
             actionErrorMessage = nil
         } catch {
-            actionErrorMessage = String(localized: "appointment.error.action")
+            actionErrorMessage = String(interface: LocalizedStringResource("appointment.error.action"))
         }
     }
 
@@ -170,7 +170,7 @@ final class AppointmentViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "appointment.error.load")
+            errorMessage = String(interface: LocalizedStringResource("appointment.error.load"))
         }
     }
 }

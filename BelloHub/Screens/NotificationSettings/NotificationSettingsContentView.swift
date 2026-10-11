@@ -10,6 +10,7 @@ import SwiftUI
 /// explained honestly at the top: ask once, then Settings.
 struct NotificationSettingsContentView: View {
     @State private var viewModel: NotificationSettingsViewModel
+    @Environment(\.locale) private var locale
 
     init(service: NotificationSettingsService) {
         _viewModel = State(initialValue: NotificationSettingsViewModel(service: service))
@@ -95,8 +96,8 @@ struct NotificationSettingsContentView: View {
         SettingsSection(title: "notificationSettings.section.quietHours") {
             ListCard(dividerInset: Spacing.md) {
                 ToggleRow(
-                    title: String(localized: "notificationSettings.quietHours"),
-                    subtitle: String(localized: "notificationSettings.quietHours.subtitle"),
+                    title: String(interface: LocalizedStringResource("notificationSettings.quietHours")),
+                    subtitle: String(interface: LocalizedStringResource("notificationSettings.quietHours.subtitle")),
                     isOn: Binding(get: { viewModel.quietHoursOn }, set: { viewModel.setQuietHours(on: $0) }),
                     identifier: "notificationSettings.quietHoursSwitch"
                 )
@@ -143,7 +144,7 @@ struct NotificationSettingsContentView: View {
         _ keyPath: WritableKeyPath<NotificationPrefs, Bool>, _ identifier: String
     ) -> some View {
         ToggleRow(
-            title: String(localized: title), subtitle: String(localized: subtitle),
+            title: title.resolved(in: locale), subtitle: subtitle.resolved(in: locale),
             isOn: Binding(
                 get: { viewModel.prefs[keyPath: keyPath] },
                 set: { value in viewModel.update { $0[keyPath: keyPath] = value } }

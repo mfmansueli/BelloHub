@@ -130,10 +130,10 @@ final class RescheduleViewModel {
             day = offeredDays.first?.day ?? today
             phase = .choosing
         } catch {
-            errorMessage = String(
-                localized: "reschedule.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "reschedule.error.load",
                 defaultValue: "We could not read this appointment. Check that your iPhone is unlocked and try again."
-            )
+            ))
             phase = .notFound
         }
     }
@@ -170,10 +170,10 @@ final class RescheduleViewModel {
             phase = .moved(moved)
             return true
         } catch {
-            saveErrorMessage = String(
-                localized: "reschedule.error.save",
+            saveErrorMessage = String(interface: LocalizedStringResource(
+                "reschedule.error.save",
                 defaultValue: "We could not move this appointment. Nothing was changed. Try again."
-            )
+            ))
             return false
         }
     }

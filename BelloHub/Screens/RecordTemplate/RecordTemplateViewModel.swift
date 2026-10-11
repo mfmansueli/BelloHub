@@ -21,7 +21,7 @@ final class RecordTemplateViewModel {
     private(set) var isLoading = false
     private(set) var isSaving = false
     private(set) var errorMessage: String?
-    let catalog: ProfessionCatalog
+    private(set) var catalog: ProfessionCatalog
 
     private var chosenProfession: ProfessionID?
     private var lastWrite: Task<Bool, Never>?
@@ -72,7 +72,13 @@ final class RecordTemplateViewModel {
         RecordTemplateEditor.customFields(in: template, for: profession)
     }
 
-    /// The name to show for a field: her own for a custom field, the catalog's in the business language otherwise. A
+    /// The catalog of another interface language: the standard fields take its names at once (her own fields keep
+    /// hers).
+    func useCatalog(_ other: ProfessionCatalog) {
+        catalog = other
+    }
+
+    /// The name to show for a field: her own for a custom field, the catalog's in the interface language otherwise. A
     /// field the catalog no longer lists shows its key rather than disappearing.
     func name(of field: RecordFieldSetting) -> String {
         if let custom = field.customName { return custom }
@@ -120,10 +126,10 @@ final class RecordTemplateViewModel {
             template = fresh
             stored = fresh
         } catch {
-            errorMessage = String(
-                localized: "recordTemplate.error.load",
+            errorMessage = String(interface: LocalizedStringResource(
+                "recordTemplate.error.load",
                 defaultValue: "We could not read your record fields. Check that your iPhone is unlocked and try again."
-            )
+            ))
         }
     }
 
@@ -217,10 +223,10 @@ final class RecordTemplateViewModel {
                 let revert = Self.completed(profile: profile, catalog: catalog, now: now())
                 template = revert
                 stored = revert
-                errorMessage = String(
-                    localized: "recordTemplate.error.save",
+                errorMessage = String(interface: LocalizedStringResource(
+                    "recordTemplate.error.save",
                     defaultValue: "We could not save this change. Check that your iPhone has space and try again."
-                )
+                ))
                 return false
             }
         }

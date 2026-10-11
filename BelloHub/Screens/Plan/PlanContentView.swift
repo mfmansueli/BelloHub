@@ -168,8 +168,8 @@ struct PlanContentView: View {
 
     private var heroSubtitle: String {
         switch viewModel.state {
-        case .unknown: return String(localized: "plan.status.checking.subtitle")
-        case .none: return String(localized: "plan.status.none.subtitle")
+        case .unknown: return String(interface: LocalizedStringResource("plan.status.checking.subtitle"))
+        case .none: return String(interface: LocalizedStringResource("plan.status.none.subtitle"))
         case .active(let period, let expiresAt, let willRenew):
             let formatters = Formatters(locale: locale, timeZone: .current, currencyCode: "EUR")
             let periodName = String(localized: period.label.localized(in: locale))
@@ -182,7 +182,7 @@ struct PlanContentView: View {
                 : String(localized: LocalizedStringResource(
                     "plan.status.endsOn", defaultValue: "\(periodName) · ends on \(day)"
                 ).localized(in: locale))
-        case .inGracePeriod: return String(localized: "plan.status.grace.subtitle")
+        case .inGracePeriod: return String(interface: LocalizedStringResource("plan.status.grace.subtitle"))
         }
     }
 
@@ -199,7 +199,9 @@ struct PlanContentView: View {
     }
 
     private var buyTitle: String {
-        guard let offer = viewModel.chosenOffer else { return String(localized: "plan.buy.choose") }
+        guard let offer = viewModel.chosenOffer else { return String(interface: LocalizedStringResource(
+            "plan.buy.choose"
+        )) }
         let period = String(localized: offer.period.label.localized(in: locale))
         return String(localized: LocalizedStringResource(
             "plan.buy", defaultValue: "Continue with \(period)"

@@ -50,8 +50,8 @@ struct ExportAllContentView: View {
                 staticRow("export.include.appointments", "export.include.appointments.subtitle")
                 staticRow("export.include.records", "export.include.records.subtitle")
                 ToggleRow(
-                    title: String(localized: "export.include.photos"),
-                    subtitle: String(localized: "export.include.photos.subtitle"),
+                    title: String(interface: LocalizedStringResource("export.include.photos")),
+                    subtitle: String(interface: LocalizedStringResource("export.include.photos.subtitle")),
                     isOn: $viewModel.contents.includesPhotos, identifier: "export.photosSwitch"
                 )
                 .disabled(viewModel.fileURL != nil)

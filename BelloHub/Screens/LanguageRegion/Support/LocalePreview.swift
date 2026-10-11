@@ -72,11 +72,11 @@ struct LocalePreview: Equatable, Sendable {
     static func channelName(_ channel: MessagingChannel, locale: Locale) -> String {
         switch channel {
         case .whatsapp: "WhatsApp"
-        case .messages: String(localized: "languageRegion.channel.messages", locale: locale)
+        case .messages: LocalizedStringResource("languageRegion.channel.messages").resolved(in: locale)
         }
     }
 
     private static func sampleService(in localization: AppLocalization) -> String {
-        String(localized: "languageRegion.sample.service", locale: localization.locale)
+        LocalizedStringResource("languageRegion.sample.service").resolved(in: localization.locale)
     }
 }

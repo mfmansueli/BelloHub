@@ -63,7 +63,7 @@ final class NoShowHistoryViewModel {
         business = AgendaBusinessContext(profile: profile.profile)
         guard let repository = vault.repository else {
             isLoading = false
-            errorMessage = String(localized: "noShowHistory.error.load")
+            errorMessage = String(interface: LocalizedStringResource("noShowHistory.error.load"))
             return
         }
         do {
@@ -79,7 +79,7 @@ final class NoShowHistoryViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "noShowHistory.error.load")
+            errorMessage = String(interface: LocalizedStringResource("noShowHistory.error.load"))
         }
     }
 
@@ -98,7 +98,7 @@ final class NoShowHistoryViewModel {
             await loadAsync()
             actionErrorMessage = nil
         } catch {
-            actionErrorMessage = String(localized: "noShowHistory.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("noShowHistory.error.save"))
         }
     }
 
@@ -120,7 +120,7 @@ final class NoShowHistoryViewModel {
             await loadAsync()
             actionErrorMessage = nil
         } catch {
-            actionErrorMessage = String(localized: "noShowHistory.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("noShowHistory.error.save"))
         }
     }
 

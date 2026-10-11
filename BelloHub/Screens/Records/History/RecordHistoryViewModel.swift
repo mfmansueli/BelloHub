@@ -82,7 +82,7 @@ final class RecordHistoryViewModel {
         business = AgendaBusinessContext(profile: profile.profile)
         guard let repository = vault.repository else {
             isLoading = false
-            errorMessage = String(localized: "recordHistory.error.load")
+            errorMessage = String(interface: LocalizedStringResource("recordHistory.error.load"))
             return
         }
         do {
@@ -103,7 +103,7 @@ final class RecordHistoryViewModel {
             isLoading = false
         } catch {
             isLoading = false
-            errorMessage = String(localized: "recordHistory.error.load")
+            errorMessage = String(interface: LocalizedStringResource("recordHistory.error.load"))
         }
     }
 
@@ -159,7 +159,7 @@ final class RecordHistoryViewModel {
             actionErrorMessage = nil
             await loadAsync()
         } catch {
-            actionErrorMessage = String(localized: "recordHistory.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("recordHistory.error.save"))
         }
     }
 
@@ -196,7 +196,7 @@ final class RecordHistoryViewModel {
         defer { isWorking = false }
         do {
             guard let data = await imageData(for: photo) else {
-                actionErrorMessage = String(localized: "recordHistory.error.save")
+                actionErrorMessage = String(interface: LocalizedStringResource("recordHistory.error.save"))
                 return
             }
             var changed = photo
@@ -205,7 +205,7 @@ final class RecordHistoryViewModel {
             actionErrorMessage = nil
             await loadAsync()
         } catch {
-            actionErrorMessage = String(localized: "recordHistory.error.save")
+            actionErrorMessage = String(interface: LocalizedStringResource("recordHistory.error.save"))
         }
     }
 

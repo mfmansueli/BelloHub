@@ -205,16 +205,16 @@ final class CredentialsViewModel {
     // MARK: - Messages
 
     private static var loadFailure: String {
-        String(
-            localized: "credentials.error.load",
+        String(interface: LocalizedStringResource(
+            "credentials.error.load",
             defaultValue: "We could not read your credentials. Check that your iPhone is unlocked and try again."
-        )
+        ))
     }
 
     private static var saveFailure: String {
-        String(
-            localized: "credentials.error.save",
+        String(interface: LocalizedStringResource(
+            "credentials.error.save",
             defaultValue: "We could not save this change. Check that your iPhone has space and try again."
-        )
+        ))
     }
 }

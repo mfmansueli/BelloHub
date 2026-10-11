@@ -77,12 +77,16 @@ struct HelpView: View {
     private var contact: some View {
         SettingsSection(title: "help.section.person") {
             ListCard(dividerInset: 72) {
-                Button { mail(subject: String(localized: "help.mail.supportSubject")) } label: {
+                Button { mail(subject: String(interface: LocalizedStringResource(
+                    "help.mail.supportSubject"
+                ))) } label: {
                     MoreRow(icon: .mail, tint: .rose, title: Text("help.contact"),
                             subtitle: Text(verbatim: HelpTopics.supportEmail), showsChevron: true)
                 }
                 .accessibilityIdentifier("help.contactButton")
-                Button { mail(subject: String(localized: "help.mail.feedbackSubject")) } label: {
+                Button { mail(subject: String(interface: LocalizedStringResource(
+                    "help.mail.feedbackSubject"
+                ))) } label: {
                     MoreRow(icon: .chat, tint: .sage, title: Text("help.feedback"),
                             subtitle: Text("help.feedback.subtitle"), showsChevron: true)
                 }

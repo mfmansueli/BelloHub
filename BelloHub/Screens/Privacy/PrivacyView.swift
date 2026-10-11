@@ -13,11 +13,13 @@ struct PrivacyView: View {
     @Environment(NotificationSettingsService.self) private var notifications
     @Environment(ProfileService.self) private var profile
     @Environment(KeyManager.self) private var keys
+    @Environment(\.locale) private var locale
 
     var body: some View {
         PrivacyContentView(
             lock: lock, recoveryKey: recoveryKey, notifications: notifications,
-            localization: profile.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en,
+            // The terms and the privacy policy she reads: the interface language.
+            localization: AppLocalization(resolving: locale),
             inboxKeyID: (try? keys.currentInboxPublicKey())?.keyId
         )
     }
