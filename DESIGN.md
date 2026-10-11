@@ -185,7 +185,7 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `BelloTextField` | 52 pt, radius 14, `sunken`, 1.5 pt `fieldBorder`, 3 pt `roseText` focus ring, error text; `isSensitive` turns off autocorrection; `identifier` goes on the text field itself |
 | `InlineNotice` | `.safety` (coral), `.info` (sage), `.warning` (amber) |
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
-| `BrandMark`, `BrandLockup` | The ivory "b" on the sage `brandMark` tile (as the app icon, until it is redrawn for graphite and orange) with the orange `rose` dot, drawn (not an image), and the two-line wordmark. The wordmark is the brand name, never localized, and always left-to-right |
+| `BrandMark`, `BrandLockup` | The app icon itself, drawn from its own SVG paths and colors (`BrandLetterShape`, `BrandEdgesShape`, `BrandPalette`: sage tile `#6E8266`, dark `#344B3C`; ivory "b" `#FAF5EB`; rose edges `#C98F9F`) in the rounded square of the icon mask (routine-a item 2; it replaced a typed "b" with an orange dot). Used on Locked (64 pt), the privacy cover (72 pt) and the lockup. The "b" on the tile is 3.8:1 (light) and 8.7:1 (dark); the tile against the page is 3.8:1 in light; in dark the tile is the icon's own dark green (2.0:1) and the "b" carries the logo (17.8:1). The wordmark is the brand name, never localized, and always left-to-right |
 | `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `selectionInk` outline and an `action` check disc, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
 | `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
 | `StepProgressBar` | One 4 pt segment per step, filled in `action` up to the current one (`hairline` after it); spoken as "Step n of m" |
@@ -558,6 +558,15 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   reach the lock screen; otherwise "Bello Hub appointment". Switching off or signing out removes the calendar.
 - **1.1 Welcome**: "Continue with phone" shows only when the build can send a code (`supportsPhoneSignIn`); the v1
   Firebase provider cannot, so Release shows Sign in with Apple alone.
+
+### Routine simplification A (2026-10-11, `docs/agent-notes/routine-a.md`)
+- **App language (item 1).** 7.2 Language and region opens with "App language": a native menu with "Same as iPhone"
+  and the fourteen localizations in their own names, applied at once (no Save) with a footnote that texts iOS draws
+  (permission requests) follow at the next launch. The old picker is the language of her messages and page. The
+  interface locale is injected at the root (every stage, sheet, alert, menu, the lock screen and the privacy cover);
+  the tab view is rebuilt on a change so navigation titles and tab names follow, and `MainNavigation` keeps the selected
+  tab and the More stack (also across a lock). What she wrote is never translated.
+- **Lock screen logo (item 2).** `BrandMark` is the official icon (see Components).
 
 ## Empty, loading and error states
 

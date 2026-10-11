@@ -196,3 +196,28 @@ a footer says she decides whether to contact. Strings in all 14 localizations; t
 ### Order of work
 Stage 1: items 1, 2. Stage 2: items 3, 4. Stage 3: items 7, 5, 6, 12. Stage 4: item 8. Each stage: fast tests, the
 relevant UI tests, `check-warnings.sh`, the strings gate, DESIGN.md, PROGRESS, push.
+
+## Owner decision during the work (2026-10-11)
+
+AI and voice are postponed to another day. Item 8 keeps only the faster manual record form (useful defaults, few
+essential fields, last-used values, quick chips); the presentation of voice capture, AI structuring, the AI settings
+row and any AI copy stay exactly as they are (`UnavailableVoiceCapture`, `UnavailableRecordStructuring`, the Register
+screen and AI settings are not touched). Item 12 stays (rules, no AI wording). Recorded in PROGRESS as the post-v1 item
+"AI and voice: presentation to match real availability (deferred by the owner on 2026-10-11)".
+
+## Stage 1 log (items 1 and 2)
+
+- `InterfaceLanguage`, `InterfaceLocale`, `String(interface:)` (Models/Locale); `InterfaceLanguageService`
+  (Managers/Locale); `MainNavigation` (Screens/Main/Support); App language section in 7.2; `RootView` injects locale and
+  layout direction and rebuilds `MainView` on a change; notifications, record field names, profession names, legal
+  texts and the push registration use the interface language; 150 `String(localized: "key")` calls converted (76
+  files), plus the `locale:`-argument and `resolve: { String(localized:) }` cases.
+- Found on the way: `RootView.init` built a new `AppDependencies` every time SwiftUI re-created the view value (a
+  language change does it); in a UI-test launch that wiped the defaults suite. Now `AppDependencies.shared`.
+- `scripts/check-localization-sources.py` (run by `test.sh fast`, with `--self-test`): a Swift unit test cannot read
+  the sources from the simulator (the repository is under Desktop, which the simulator may not read), so the scan is a
+  script gate. **Pending after the routine-b merge:** six files of agent B's area keep `String(localized: "key")`
+  (`PENDING_ROUTINE_B` in the script): convert them and empty the list.
+- `BrandMark` from the icon's SVG paths; `BrandPalette`; `BrandMarkContrastTests`.
+- Tests: `InterfaceLanguageTests`, `InterfaceLanguageServiceTests` (injected mirror, so the process locale is never
+  changed under other tests), `InterfaceLanguageUITests` (pt-BR, pt-PT, de: switch on an open screen, lock, relaunch).
