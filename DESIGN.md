@@ -508,14 +508,15 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 
 ### Smart slots (D56)
 
-- **6.2 ServiceEdit, "Time around the visit"** (`ServiceTimingSection`, right after the basics card): native menu rows
+- **6.2 ServiceEdit, "Time around the visit"** (`ServiceTimingSection`, right after the basics card; since routine
+  item 10 a disclosure "Extra time (optional)", see below): native menu rows
   "Prep before" and "Clean-up after" (None, 5 to 60 min; `serviceEditor.prepMenu`, `serviceEditor.cleanupMenu`), a
   "Processing time" switch with its hint ("You're free while it works…", `serviceEditor.processingToggle`) and, only
   while it is on, "Processing lasts" and "Starts after" (`serviceEditor.processingMenu`,
   `serviceEditor.processingStartMenu`; "Right away" for 0). The menus offer only processing that fits the visit, and
   shortening the visit moves processing earlier, then shortens it, then turns it off (`ServiceRules.fittingProcessing`),
   so the form can never hold a shape the server rejects. Footnote: clients never see this time in the length or price.
-- **Booking settings, "Booking rules"**: after the buffer, a "Start times" menu row (`bookingSettings.slotStepPicker`:
+- **Booking settings, "Booking rules"** (since routine item 10 both under "More options", see below): a "Start times" menu row (`bookingSettings.slotStepPicker`:
   Every 10, 15, 20, 30, 60 min, "Match the service" last) and a "Keep my day compact" switch with its hint
   (`bookingSettings.compactToggle`, on by default). Same `MenuPickerRow` and `ToggleRow` as the rows around them.
 - **New appointment and Reschedule** (`SchedulingTimeSection`): the chips are the suggested times (her slot interval,
@@ -526,6 +527,46 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   (`data-testid="show-all-times"`, `link-button` style, 44 px tall) under the time list; a time already picked from
   the hidden ones keeps the list open.
 - No new tokens.
+
+### Routine simplification, items 9 to 11 (2026-10-11, `routine-b`)
+
+- **4.6 Import, choose step**: "Before you import" (`ImportPlanSummary`) is the first section of the list, under the
+  "Choose clients" header with its controls and above the people, at every text size: label/value rows in a `ListCard` ("New registrations", "Already in your list
+  (skipped)", "Free registrations left: 3 of 10", and, when part of the group waits, "Registered now" and "Waiting
+  for a plan"), then one `InlineNotice` sentence: `.info` when everyone new fits or she has a plan, `.warning` when
+  part or all waits ("The rest are not saved and nothing is charged…") or nobody is new. Label/value rows avoid
+  plural agreement in fourteen languages; at accessibility sizes the value goes under its label; each row is one
+  VoiceOver element (label + value). Rows already in her
+  list say so under the name (`footnoteStrong`, `ink2`) and start unticked. Header: a native `Menu` "Try a small
+  group" ("First 3 / 5 / 10 new", plus the free count when smaller) beside Select all. The amber partial-import box
+  of S4 and its accessibility-size footer are gone; the bottom bar is the count and the button. Identifiers
+  `importClients.plan.{new,duplicates,freeLeft,now,waiting,outcome,unchecked}`, `importClients.trialMenu`,
+  `importClients.trial.<n>`.
+- **4.6 Import, result**: under "n more need a plan" a line says they were not saved and nothing was charged; after
+  the paywall closes with a plan, the "See plans" button becomes "Import the rest (n)"
+  (`importClients.result.importRestButton`, `.belloSecondary`).
+- **6.7 Booking page, "Booking rules"** is progressive: a "Suggested for: Hair stylist" card (`belloCard`, three
+  value lines, "Use these" `.belloSecondary`, `bookingSettings.suggestion.useButton`) only while her values differ
+  from her profession's; then the basics card (hours, time between clients, minimum notice, booking window,
+  cancellations, no-show); then a native `DisclosureGroup` "More options" (`bookingSettings.moreOptions`, rose
+  chevron) with "Start times" and "Keep my day compact", open by itself only when one is not at its default. Each
+  menu row has a footnote example from the routine (`MenuPickerRow.hint`, `footnote`, `ink2`).
+- **6.7 "What clients see"** (`SlotPreviewSection`, after the rules): a card with an optional native service menu
+  (`bookingSettings.preview.servicePicker`, only with two or more services), a caption (day, service, "Already
+  booked in this sample: Haircut at 10:00"), "Shown first" time chips (`selectionInk` on `selectionFill`, the
+  selected-chip pair; not buttons; one VoiceOver element reading the list), "Also bookable, one tap away: …" in
+  `ink2`, and a footnote that notice and window are not applied. Empty: "No free times…"; no hours: "Add your
+  working hours…". Recomputed on the phone at each change.
+- **6.2 Service editor**: "Extra time (optional)" is a native `DisclosureGroup` (`serviceEditor.timingDisclosure`),
+  closed unless the service has prep, clean-up or processing; under the card, the owner's example ("a 75-minute
+  color with 30 minutes of processing lets you fit a 20-minute bangs trim inside it").
+- **5.8 Camera, framing reference**: when the client has an earlier photo, it lies over the preview (default 35 %)
+  with thin `ivory` rule-of-thirds lines (`FramingGuides`, decorative, VoiceOver-hidden; over a live picture no fixed
+  contrast can be measured, which is why they only help and never carry meaning). Under the "only saved in Bello"
+  note, a card with the native switch "Show previous photo" (`treatmentFlow.camera.referenceToggle`), a "How visible"
+  slider 15 to 60 % (`treatmentFlow.camera.referenceOpacity`, value spoken as a percentage) and a two-line guide. The
+  old "Ghost" bar button is gone. Evaluation: `docs/agent-notes/photo-framing.md`.
+- No new tokens and no new text/background pairs (every pair above is an existing measured one).
 
 ### Navigation titles and long text (S11, localization)
 

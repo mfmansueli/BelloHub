@@ -23,6 +23,8 @@ Rules the texts follow:
   check-ins are not claimed either.
 - Product rule 1: no payments, no invoices; the only charge is Bello Hub Pro, described with the auto-renewal sentence
   Apple expects (first 10 clients free, D42; no trial).
+- The description opens with the approved marketing phrase in that language (`docs/MARKETING.md`, 2026-10-11); it is a
+  line of tone, not a feature claim.
 - Terms in each language follow `docs/strings/glossary.csv` and the screen names the app shows (More > Booking page,
   More > Account > Delete account, Alerts).
 

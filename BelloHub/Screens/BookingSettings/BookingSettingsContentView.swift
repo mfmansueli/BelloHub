@@ -16,9 +16,14 @@ struct BookingSettingsContentView: View {
 
     @Environment(\.locale) private var locale
 
-    init(service: BookingSetupService, publishing: PublishingService, profile: ProfessionalProfile?) {
+    init(
+        service: BookingSetupService, publishing: PublishingService, profile: ProfessionalProfile?,
+        services: (any AgendaRepository)? = nil
+    ) {
         self.publishing = publishing
-        _viewModel = State(initialValue: BookingSettingsViewModel(service: service, profile: profile))
+        _viewModel = State(initialValue: BookingSettingsViewModel(
+            service: service, profile: profile, services: services
+        ))
     }
 
     // MARK: - Helpers
@@ -36,6 +41,7 @@ struct BookingSettingsContentView: View {
                 linkSection
                 takingBookings
                 BookingRulesSection(viewModel: viewModel)
+                SlotPreviewSection(viewModel: viewModel)
                 FooterNote(text: "bookingSetup.footer.autosave", icon: .lock)
             }
             .padding(.horizontal, Spacing.gutter)

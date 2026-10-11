@@ -8,16 +8,39 @@ import SwiftUI
 /// "Time around the visit" in the service form (D56): prep before and clean-up after, which her agenda keeps free but
 /// clients never see in the length or the price, and processing time inside the visit, while she is free for another
 /// client (colour developing, a mask setting). Native menus and a switch; the processing menus appear while it is on.
+/// Most services need none of it, so the section is a native disclosure (routine item 10), closed until she opens it
+/// or the service already has extra time, with an example from the routine under the card.
 struct ServiceTimingSection: View {
     @Binding var draft: ServiceDraft
     let formatters: Formatters
 
+    @State private var isExpanded: Bool
     @Environment(\.locale) private var locale
 
+    init(draft: Binding<ServiceDraft>, formatters: Formatters) {
+        _draft = draft
+        self.formatters = formatters
+        let current = draft.wrappedValue
+        let hasExtraTime = current.prepMinutes > 0 || current.cleanupMinutes > 0 || current.hasProcessing
+        _isExpanded = State(initialValue: hasExtraTime)
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text("services.timing.title").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
+        DisclosureGroup(isExpanded: $isExpanded) {
+            content.padding(.top, Spacing.sm)
+        } label: {
+            Text("services.timing.disclosure").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
+                .frame(minHeight: Spacing.touchTarget, alignment: .leading)
                 .accessibilityAddTraits(.isHeader)
+                // On the label: on the group it would also rename every menu inside it.
+                .accessibilityIdentifier("serviceEditor.timingDisclosure")
+        }
+        .tint(Palette.roseText)
+        .onChange(of: draft.minutes) { draft = ServiceRules.fittingProcessing(draft) }
+    }
+
+    private var content: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
             ListCard(dividerInset: Spacing.md) {
                 menuRow("services.timing.prep", selection: $draft.prepMinutes,
                         options: ServiceRules.extraMinuteOptions(including: draft.prepMinutes),
@@ -36,8 +59,8 @@ struct ServiceTimingSection: View {
                 if draft.hasProcessing { processingRows }
             }
             Text("services.timing.hint").font(Typography.footnote).foregroundStyle(Palette.ink2)
+            Text("services.timing.example").font(Typography.footnote).foregroundStyle(Palette.ink2)
         }
-        .onChange(of: draft.minutes) { draft = ServiceRules.fittingProcessing(draft) }
     }
 
     // MARK: - Parts

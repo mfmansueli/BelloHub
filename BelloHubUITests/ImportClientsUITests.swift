@@ -33,7 +33,11 @@ final class ImportClientsUITests: XCTestCase {
 
         app.tapButton("importClients.source.contacts")
         XCTAssertTrue(app.staticTexts["importClients.choose.title"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("importClients.limitNotice").exists, "four chosen, two free slots")
+        // Before confirming: four new, two free registrations left, two registered now, two waiting for a plan.
+        XCTAssertTrue((app.element("importClients.plan.new").value as? String) == "4", "four new")
+        XCTAssertTrue((app.element("importClients.plan.now").value as? String) == "2", "two go through now")
+        XCTAssertTrue((app.element("importClients.plan.waiting").value as? String) == "2", "two wait for a plan")
+        XCTAssertTrue(app.element("importClients.plan.outcome").exists, "what happens to the rest is said")
         app.tapButton("importClients.importButton")
 
         let title = app.staticTexts["importClients.result.title"]
@@ -47,6 +51,23 @@ final class ImportClientsUITests: XCTestCase {
 
         app.tapButton("importClients.result.viewClientsButton")
         XCTAssertTrue(app.staticTexts["onboarding.ready.title"].waitForExistence(timeout: 5), "the sheet closed")
+    }
+
+    func testASmallGroupCanBeTriedFirst() {
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiContacts", "four"])
+        openImport(app)
+
+        app.tapButton("importClients.source.contacts")
+        XCTAssertTrue(app.staticTexts["importClients.choose.title"].waitForExistence(timeout: 5))
+        app.tapButton("importClients.trialMenu")
+        app.tapButton("importClients.trial.3")
+        XCTAssertTrue((app.element("importClients.plan.new").value as? String) == "3", "only the first three")
+        app.tapButton("importClients.importButton")
+
+        let title = app.staticTexts["importClients.result.title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        XCTAssertTrue(title.label.contains("3"), "three registered: \(title.label)")
+        XCTAssertFalse(app.element("importClients.result.blocked").exists, "the trial fits the free registrations")
     }
 
     func testASpreadsheetIsMappedValidatedAndImported() {
@@ -64,7 +85,10 @@ final class ImportClientsUITests: XCTestCase {
         XCTAssertTrue(app.buttons["importClients.row.row-4"].exists, "the quoted name with a comma is one name")
         XCTAssertFalse(app.buttons["importClients.row.row-5"].exists, "a phone that is not valid is not offered")
 
-        // Everyone starts selected; Clear empties the choice and the button says why it is off.
+        // The new people start selected; the repeated phone is marked and unticked, so the first tap selects all,
+        // the second clears and the button says why it is off.
+        XCTAssertTrue(app.element("importClients.plan.new").exists, "the summary comes before the button")
+        app.tapButton("importClients.selectAllButton")
         app.tapButton("importClients.selectAllButton")
         XCTAssertFalse(app.buttons["importClients.importButton"].isEnabled)
         app.tapButton("importClients.selectAllButton")

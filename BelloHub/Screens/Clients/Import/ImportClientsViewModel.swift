@@ -30,6 +30,11 @@ final class ImportClientsViewModel {
     /// The rows that cannot, with the reason. Never selectable.
     private(set) var skippedEntries: [ImportEntry] = []
     private(set) var selection: Set<String> = []
+    /// Her list as it was when the choices were shown, for the preview of who is new. Nil when it could not be read:
+    /// the preview then counts every row as new and says duplicates were not checked.
+    private(set) var existingClients: [Client]?
+    /// The rows whose person is already in her list or repeated above, computed once when the choices are shown.
+    private(set) var alreadyInListIDs: Set<String> = []
 
     // Result
     private(set) var result: ClientImportResult?
@@ -74,8 +79,8 @@ final class ImportClientsViewModel {
     /// The free-registration counter, read from the gate so every screen shows the same number.
     var usage: RegistrationUsage { registrar.usage }
 
-    /// How much of the chosen batch the free registrations cover.
-    var fit: ImportBatchFit { ImportBatchFit(selected: selection.count, usage: usage) }
+    /// What confirming will do: new clients after deduplication, free registrations left, and what waits for a plan.
+    var plan: ImportPlan { ImportPlan(chosen: selectedClients, existing: existingClients, usage: usage) }
 
     /// Reads the counter when the screen opens.
     func start() async {
@@ -100,7 +105,7 @@ final class ImportClientsViewModel {
         guard !candidates.isEmpty else { return }
         source = .contacts
         let entries = makeMapper().entries(from: candidates, makeID: makeID)
-        showChoices(ImportClientMapper.sortedByName(entries))
+        await showChoices(ImportClientMapper.sortedByName(entries))
     }
 
     /// Spreadsheet: shows the file importer (or, in a UI-test launch, goes straight to the preset file).
@@ -192,7 +197,7 @@ final class ImportClientsViewModel {
         let entries = await Task.detached(priority: .userInitiated) {
             mapper.entries(from: ImportColumnMapper.candidates(from: table, mapping: mapping), makeID: makeID)
         }.value
-        showChoices(entries)
+        await showChoices(entries)
     }
 
     // MARK: - Choosing
@@ -201,6 +206,24 @@ final class ImportClientsViewModel {
     var canImport: Bool { !selection.isEmpty && !isWorking }
 
     func isSelected(_ id: String) -> Bool { selection.contains(id) }
+
+    /// Whether the client of a row is already in her list (or repeated above it): the row says so.
+    func isAlreadyInList(_ entry: ImportEntry) -> Bool {
+        alreadyInListIDs.contains(entry.id)
+    }
+
+    /// The sizes "Try a small group" offers for this list.
+    var trialChoices: [Int] {
+        let everyone = ImportPlan(chosen: readyEntries.compactMap(\.client), existing: existingClients, usage: usage)
+        return ImportPlan.trialChoices(
+            newCount: everyone.newClients, freeLeft: usage.remainingFree, isUnlimited: usage.isUnlimited
+        )
+    }
+
+    /// Selects only the first `size` new clients of the list, to try the import with a small group first.
+    func selectTrial(size: Int) {
+        selection = ImportPlan.trialSelection(size: size, from: readyEntries, existing: existingClients)
+    }
 
     func toggle(_ id: String) {
         if selection.contains(id) { selection.remove(id) } else { selection.insert(id) }
@@ -252,6 +275,36 @@ final class ImportClientsViewModel {
         isPaywallPresented = true
     }
 
+    /// The paywall closed: read the counter again, so a plan bought there unlocks "Import the other N".
+    func paywallClosed() {
+        Task { await registrar.refreshUsage() }
+    }
+
+    /// The rows the free registrations left out (never saved), now that a plan lets them through.
+    var canImportRest: Bool { (result?.blocked ?? 0) > 0 && usage.isUnlimited && !isWorking }
+
+    func importRestOfSelection() {
+        Task { await importRest() }
+    }
+
+    /// Runs the same selection through the gate again. The clients registered the first time are now duplicates and are
+    /// skipped, so only the ones that waited are registered; the result adds them to the first count.
+    func importRest() async {
+        guard step == .result, canImportRest, let first = result else { return }
+        isWorking = true
+        defer { isWorking = false }
+        problem = nil
+        do {
+            let second = try await registrar.importClients(selectedClients)
+            var merged = first
+            merged.registered += second.registered
+            merged.blocked = second.blocked
+            result = merged
+        } catch {
+            problem = .importFailed
+        }
+    }
+
     // MARK: - Display
 
     /// The phone of a ready entry as people write it (`+55 11 98123-4410`), kept left-to-right inside Arabic text.
@@ -266,10 +319,14 @@ final class ImportClientsViewModel {
         ImportClientMapper(region: region, phones: phones, now: now())
     }
 
-    private func showChoices(_ entries: [ImportEntry]) {
+    private func showChoices(_ entries: [ImportEntry]) async {
+        existingClients = try? await registrar.knownClients()
         readyEntries = entries.filter(\.isReady)
         skippedEntries = entries.filter { !$0.isReady }
-        selection = Set(readyEntries.map(\.id))
+        // Everyone new starts selected; people already in her list are listed but not ticked (they would be skipped).
+        let fresh = ImportPlan.trialSelection(size: readyEntries.count, from: readyEntries, existing: existingClients)
+        alreadyInListIDs = Set(readyEntries.map(\.id)).subtracting(fresh)
+        selection = fresh.isEmpty ? Set(readyEntries.map(\.id)) : fresh
         result = nil
         step = .choose
     }

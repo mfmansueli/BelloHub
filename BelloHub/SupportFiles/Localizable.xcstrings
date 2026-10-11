@@ -31795,6 +31795,906 @@
         }
       }
     },
+    "bookingSettings.preview.alsoBookable" : {
+      "comment" : "Booking page settings, preview: the other free times, one tap away on her page. %@ is a list of times.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "متاحة للحجز أيضًا بنقرة واحدة: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ebenfalls buchbar, einen Tipp entfernt: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Also bookable, one tap away: %@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Also bookable, one tap away: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "También disponibles, a un toque: %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "También disponibles, a un toque: %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "También disponibles, a un toque: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aussi réservables, à portée de main : %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "एक टैप पर ये भी बुक हो सकते हैं: %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Juga bisa dipesan, satu ketukan lagi: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prenotabili anche, a un tocco: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Também disponíveis, a um toque: %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Também disponíveis, a um toque: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bir dokunuşla alınabilecek diğer saatler: %@"
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.booked" : {
+      "comment" : "Booking page settings, preview: the sample visit already in the sample day. %1$@ is a service name, %2$@ a time.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "محجوز مسبقًا في هذه العيّنة: %1$@ الساعة %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "In diesem Beispiel schon gebucht: %1$@ um %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already booked in this sample: %1$@ at %2$@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Already booked in this sample: %1$@ at %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya reservado en esta muestra: %1$@ a las %2$@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya reservado en esta muestra: %1$@ a las %2$@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya reservado en esta muestra: %1$@ a las %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déjà réservé dans cet exemple : %1$@ à %2$@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस नमूने में पहले से बुक: %2$@ बजे %1$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sudah dipesan di contoh ini: %1$@ pukul %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Già prenotato in questo esempio: %1$@ alle %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já agendado nesta amostra: %1$@ às %2$@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já marcado nesta amostra: %1$@ às %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu örnekte zaten alınmış: %2$@ saatinde %1$@"
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.footnote" : {
+      "comment" : "Booking page settings, preview: what the sample leaves out on purpose.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا تُطبَّق المهلة الدنيا ولا أقصى مدة للحجز على هذه العيّنة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mindestvorlauf und maximaler Vorlauf gelten in diesem Beispiel nicht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum notice and the booking window are not applied to this sample."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Minimum notice and the booking window are not applied to this sample."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La antelación mínima y la máxima no se aplican en esta muestra."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La antelación mínima y la máxima no se aplican en esta muestra."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "La antelación mínima y la máxima no se aplican en esta muestra."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le préavis et le délai maximum ne sont pas appliqués à cet exemple."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस नमूने में न्यूनतम पूर्व सूचना और अधिकतम अग्रिम अवधि लागू नहीं हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pemberitahuan minimum dan batas pemesanan tidak diterapkan pada contoh ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il preavviso minimo e l'anticipo massimo non sono applicati a questo esempio."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A antecedência mínima e a máxima não são aplicadas nesta amostra."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As antecedências mínima e máxima não são aplicadas nesta amostra."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En az ön bildirim süresi ve ileri tarih sınırı bu örnekte uygulanmaz."
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.noHours" : {
+      "comment" : "Booking page settings, preview: she has no working hours yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أضيفي ساعات عملك لتري الأوقات التي تظهر للعميلات."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füge deine Arbeitszeiten hinzu, um zu sehen, welche Zeiten angeboten werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your working hours to see which times clients get."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add your working hours to see which times clients get."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añade tu horario de trabajo para ver qué horas reciben tus clientes."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega tu horario de trabajo para ver qué horarios reciben tus clientes."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega tu horario de trabajo para ver qué horarios reciben tus clientes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutez vos horaires de travail pour voir les heures proposées."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "क्लाइंट को कौन-से समय मिलते हैं, यह देखने के लिए अपने काम के घंटे जोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambahkan jam kerja kamu untuk melihat waktu yang didapat klien."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi i tuoi orari di lavoro per vedere quali orari ricevono i clienti."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione seus horários de trabalho para ver os horários que as clientes recebem."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione o seu horário de trabalho para ver as horas que as clientes recebem."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Müşterilere hangi saatlerin sunulduğunu görmek için çalışma saatlerinizi ekleyin."
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.noTimes" : {
+      "comment" : "Booking page settings, preview: the sample day has no free time for this service.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا توجد أوقات متاحة في هذا اليوم لهذه الخدمة. راجعي ساعات عملك واستراحاتك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "An diesem Tag gibt es für diese Leistung keine freie Zeit. Prüfe deine Zeiten und Pausen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No free times on this day for this service. Check your hours and breaks."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No free times on this day for this service. Check your hours and breaks."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No hay horas libres este día para este servicio. Revisa tu horario y tus descansos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No hay horarios libres este día para este servicio. Revisa tu horario y tus descansos."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No hay horarios libres este día para este servicio. Revisa tu horario y tus descansos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucune heure libre ce jour-là pour cette prestation. Vérifiez vos horaires et vos pauses."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इस दिन इस सेवा के लिए कोई ख़ाली समय नहीं है। अपने घंटे और ब्रेक जाँचें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tidak ada waktu kosong di hari ini untuk layanan ini. Cek jam kerja dan jeda kamu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessun orario libero in questo giorno per questo servizio. Controlla orari e pause."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhum horário livre neste dia para este serviço. Confira seus horários e intervalos."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhuma hora livre neste dia para este serviço. Verifique o seu horário e as pausas."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu gün bu hizmet için boş saat yok. Çalışma saatlerinizi ve aralarınızı kontrol edin."
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.sampleService" : {
+      "comment" : "Booking page settings, preview: stands in for a service when she has none. %@ is a length (60 min).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موعد مدته %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Termin von %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A %@ visit"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A %@ visit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una cita de %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una cita de %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una cita de %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un rendez-vous de %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ का अपॉइंटमेंट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janji temu %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un appuntamento di %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Um atendimento de %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uma marcação de %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%@ sürecek bir randevu"
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.service" : {
+      "comment" : "Booking page settings, preview: label of the menu that picks which service the preview shows.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخدمة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Leistung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Service"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicio"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prestation"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सेवा"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servizio"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviço"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviço"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hizmet"
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.shownFirst" : {
+      "comment" : "Booking page settings, preview: label above the times her page shows first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تظهر أولًا"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zuerst angezeigt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shown first"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Shown first"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se muestran primero"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se muestran primero"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se muestran primero"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Proposées en premier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले दिखते हैं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ditampilkan lebih dulu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrati per primi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aparecem primeiro"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aparecem primeiro"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Önce gösterilenler"
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.subtitle" : {
+      "comment" : "Booking page settings: subtitle of the preview section.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "عيّنة من يوم عملك التالي، تتحدّث كلما غيّرت القواعد أعلاه."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Beispiel deines nächsten Arbeitstags, aktualisiert, wenn du die Regeln oben änderst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sample of your next working day, updated as you change the rules above."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A sample of your next working day, updated as you change the rules above."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una muestra de tu próximo día de trabajo, que cambia cuando ajustas las reglas de arriba."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una muestra de tu próximo día de trabajo, que cambia cuando ajustas las reglas de arriba."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una muestra de tu próximo día de trabajo, que cambia cuando ajustas las reglas de arriba."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un exemple de votre prochain jour de travail, mis à jour quand vous changez les règles ci-dessus."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके अगले काम के दिन का एक नमूना, ऊपर के नियम बदलने पर अपडेट होता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Contoh hari kerja kamu berikutnya, diperbarui saat kamu mengubah aturan di atas."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un esempio del tuo prossimo giorno di lavoro, aggiornato mentre cambi le regole qui sopra."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uma amostra do seu próximo dia de trabalho, atualizada conforme você muda as regras acima."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uma amostra do seu próximo dia de trabalho, atualizada à medida que muda as regras acima."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bir sonraki iş gününüzden bir örnek; yukarıdaki kuralları değiştirdikçe güncellenir."
+          }
+        }
+      }
+    },
+    "bookingSettings.preview.title" : {
+      "comment" : "Booking page settings: section with a sample of the times her booking page offers.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ما تراه العميلات"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Was deine Kundschaft sieht"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What clients see"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "What clients see"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lo que ven tus clientes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lo que ven tus clientes"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lo que ven tus clientes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce que voient vos clients"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "क्लाइंट क्या देखती हैं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yang dilihat klien"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cosa vedono i clienti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O que as clientes veem"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O que as clientes veem"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Müşterilerin gördüğü"
+          }
+        }
+      }
+    },
     "bookingSettings.resume" : {
       "comment" : "Button that ends a pause and opens bookings again.",
       "extractionState" : "manual",
@@ -32061,6 +32961,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Müşteriler arası ara"
+          }
+        }
+      }
+    },
+    "bookingSettings.rules.bufferExample" : {
+      "comment" : "Booking page settings: example under 'Buffer between clients'.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "وقت للترتيب وكتابة الملاحظات. مع 10 دقائق، إذا انتهت جلسة عناية بالبشرة الساعة 10:00 تبدأ العميلة التالية الساعة 10:10."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zeit zum Aufräumen und für Notizen. Mit 10 Minuten kann nach einer Gesichtsbehandlung bis 10:00 der nächste Termin um 10:10 beginnen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time to tidy up and write notes. With 10 minutes, a facial that ends at 10:00 lets the next client start at 10:10."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Time to tidy up and write notes. With 10 minutes, a facial that ends at 10:00 lets the next client start at 10:10."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo para ordenar y tomar notas. Con 10 minutos, un facial que termina a las 10:00 deja que la siguiente clienta empiece a las 10:10."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo para ordenar y anotar. Con 10 minutos, un facial que termina a las 10:00 deja que la siguiente clienta empiece a las 10:10."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo para ordenar y anotar. Con 10 minutos, un facial que termina a las 10:00 deja que la siguiente clienta empiece a las 10:10."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le temps de ranger et de prendre des notes. Avec 10 minutes, un soin du visage qui finit à 10 h 00 permet au rendez-vous suivant de commencer à 10 h 10."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "समेटने और नोट्स लिखने का समय। 10 मिनट रखने पर, 10:00 बजे ख़त्म होने वाले फ़ेशियल के बाद अगली क्लाइंट 10:10 बजे शुरू कर सकती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Waktu untuk merapikan dan mencatat. Dengan 10 menit, facial yang selesai pukul 10.00 membuat klien berikutnya bisa mulai pukul 10.10."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo per riordinare e prendere appunti. Con 10 minuti, un trattamento viso che finisce alle 10:00 fa iniziare la cliente successiva alle 10:10."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo para arrumar e anotar. Com 10 minutos, uma limpeza de pele que termina às 10:00 deixa a próxima cliente começar às 10:10."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo para arrumar e tomar notas. Com 10 minutos, uma limpeza de pele que termina às 10:00 deixa a cliente seguinte começar às 10:10."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toparlanmak ve not almak için süre. 10 dakikayla, 10:00'da biten bir cilt bakımından sonra sıradaki müşteri 10:10'da başlayabilir."
           }
         }
       }
@@ -32335,6 +33325,96 @@
         }
       }
     },
+    "bookingSettings.rules.moreOptions" : {
+      "comment" : "Booking page settings: disclosure that opens the advanced rules (start times, keep my day compact).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "خيارات أخرى"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Weitere Optionen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More options"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "More options"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más opciones"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más opciones"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Más opciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plus d'options"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "और विकल्प"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opsi lainnya"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Altre opzioni"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mais opções"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mais opções"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diğer seçenekler"
+          }
+        }
+      }
+    },
     "bookingSettings.rules.noShow" : {
       "comment" : "Row that opens the no-show protection.",
       "extractionState" : "manual",
@@ -32515,6 +33595,96 @@
         }
       }
     },
+    "bookingSettings.rules.noticeExample" : {
+      "comment" : "Booking page settings: example under 'Minimum notice'.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يتجنب المفاجآت في اللحظة الأخيرة. مع ساعتين، يمكن للعميلة في الساعة 9:00 أن تحجز ابتداءً من 11:00."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vermeidet Überraschungen in letzter Minute. Mit 2 Stunden kann man um 9:00 ab 11:00 buchen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avoids last-minute surprises. With 2 hours, at 9:00 a client can book from 11:00 on."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avoids last-minute surprises. With 2 hours, at 9:00 a client can book from 11:00 on."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita sorpresas de última hora. Con 2 horas, a las 9:00 una clienta puede reservar desde las 11:00."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita sorpresas de último momento. Con 2 horas, a las 9:00 una clienta puede reservar desde las 11:00."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita sorpresas de último momento. Con 2 horas, a las 9:00 una clienta puede reservar desde las 11:00."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Évite les surprises de dernière minute. Avec 2 heures, à 9 h 00 on peut réserver à partir de 11 h 00."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आख़िरी समय की हैरानी से बचाता है। 2 घंटे रखने पर, 9:00 बजे क्लाइंट 11:00 बजे से बुक कर सकती है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mencegah kejutan mendadak. Dengan 2 jam, pada pukul 9.00 klien bisa memesan mulai pukul 11.00."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita sorprese all'ultimo minuto. Con 2 ore, alle 9:00 una cliente può prenotare dalle 11:00 in poi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita surpresas de última hora. Com 2 horas, às 9:00 uma cliente pode agendar a partir das 11:00."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Evita surpresas de última hora. Com 2 horas, às 9:00 uma cliente pode marcar a partir das 11:00."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Son dakika sürprizlerini önler. 2 saatle, saat 9:00'da bir müşteri 11:00'den itibaren randevu alabilir."
+          }
+        }
+      }
+    },
     "bookingSettings.rules.slotStep" : {
       "comment" : "Row title in Booking settings: how often start times are offered (D56).",
       "extractionState" : "manual",
@@ -32605,6 +33775,96 @@
         }
       }
     },
+    "bookingSettings.rules.slotStepExample" : {
+      "comment" : "Booking page settings: example under 'Start times' (the slot interval, D56).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كل 15 دقيقة: يمكن للعميلات اختيار 9:00 و9:15 و9:30… وتُعرض أيضًا الأوقات التي تلي مواعيدك مباشرة، فلا تبقى فجوات."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle 15 Min.: Gebucht werden kann 9:00, 9:15, 9:30 … Zeiten direkt nach deinen Terminen werden auch angeboten, damit keine Lücke bleibt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every 15 min: clients can pick 9:00, 9:15, 9:30… Times right after your visits are offered too, so no gap is left."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Every 15 min: clients can pick 9:00, 9:15, 9:30… Times right after your visits are offered too, so no gap is left."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cada 15 min: tus clientes pueden elegir 9:00, 9:15, 9:30… Las horas justo después de tus citas también se ofrecen, para no dejar huecos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cada 15 min: tus clientes pueden elegir 9:00, 9:15, 9:30… Los horarios justo después de tus citas también se ofrecen, para no dejar huecos."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cada 15 min: tus clientes pueden elegir 9:00, 9:15, 9:30… Los horarios justo después de tus citas también se ofrecen, para no dejar huecos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toutes les 15 min : on peut choisir 9 h 00, 9 h 15, 9 h 30… Les heures juste après vos rendez-vous sont aussi proposées, pour ne laisser aucun trou."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "हर 15 मिनट: क्लाइंट 9:00, 9:15, 9:30… चुन सकती हैं। आपके अपॉइंटमेंट के ठीक बाद के समय भी दिए जाते हैं, ताकि कोई ख़ाली जगह न बचे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Setiap 15 menit: klien bisa memilih 9.00, 9.15, 9.30… Waktu tepat setelah janji kamu juga ditawarkan, jadi tidak ada celah."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ogni 15 min: i clienti possono scegliere 9:00, 9:15, 9:30… Anche gli orari subito dopo i tuoi appuntamenti vengono offerti, così non restano buchi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A cada 15 min: as clientes podem escolher 9:00, 9:15, 9:30… Os horários logo depois dos seus atendimentos também aparecem, para não sobrar buraco."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A cada 15 min: as clientes podem escolher 9:00, 9:15, 9:30… As horas logo a seguir às suas marcações também aparecem, para não sobrar intervalo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "15 dakikada bir: müşteriler 9:00, 9:15, 9:30… seçebilir. Randevularınızın hemen sonrasındaki saatler de sunulur, böylece boşluk kalmaz."
+          }
+        }
+      }
+    },
     "bookingSettings.rules.window" : {
       "comment" : "Row title: how far ahead clients can book.",
       "extractionState" : "manual",
@@ -32691,6 +33951,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "İleri tarih sınırı"
+          }
+        }
+      }
+    },
+    "bookingSettings.rules.windowExample" : {
+      "comment" : "Booking page settings: example under 'Booking window'.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إلى أي مدى مسبقًا يمكن الحجز. مع 60 يومًا، لا يحجز أحد تواريخ لم تخططي لها بعد."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wie weit im Voraus gebucht werden kann. Mit 60 Tagen bucht niemand Tage, die du noch nicht geplant hast."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How far ahead clients can book. With 60 days, nobody books dates you have not planned yet."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "How far ahead clients can book. With 60 days, nobody books dates you have not planned yet."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con cuánta antelación se puede reservar. Con 60 días, nadie reserva fechas que aún no has planificado."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con cuánta anticipación se puede reservar. Con 60 días, nadie reserva fechas que todavía no planeaste."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con cuánta anticipación se puede reservar. Con 60 días, nadie reserva fechas que todavía no planeaste."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jusqu'où on peut réserver à l'avance. Avec 60 jours, personne ne réserve des dates que vous n'avez pas encore prévues."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "क्लाइंट कितने दिन आगे तक बुक कर सकती हैं। 60 दिन रखने पर कोई ऐसी तारीख़ बुक नहीं करता जिसकी आपने अभी योजना नहीं बनाई।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seberapa jauh ke depan klien bisa memesan. Dengan 60 hari, tidak ada yang memesan tanggal yang belum kamu rencanakan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fino a quando si può prenotare. Con 60 giorni, nessuno prenota date che non hai ancora pianificato."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Até quando as clientes podem agendar. Com 60 dias, ninguém agenda datas que você ainda não planejou."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Até quando as clientes podem marcar. Com 60 dias, ninguém marca datas que ainda não planeou."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ne kadar ileri tarihe randevu alınabileceği. 60 günle, henüz planlamadığınız tarihlere kimse randevu almaz."
           }
         }
       }
@@ -33051,6 +34401,546 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hizmete göre"
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.line" : {
+      "comment" : "Booking page settings, suggestion card: one value. %1$@ is the setting name, %2$@ its suggested value.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@ : %2$@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.note" : {
+      "comment" : "Booking page settings, suggestion card: says what the button does not change.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تبقى ساعات عملك والمهلة الدنيا وأقصى مدة للحجز كما هي."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Zeiten, der Mindestvorlauf und der maximale Vorlauf bleiben, wie sie sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your hours, notice and booking window stay as they are."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your hours, notice and booking window stay as they are."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu horario y tus antelaciones mínima y máxima se quedan como están."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu horario y tus antelaciones mínima y máxima se quedan como están."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu horario y tus antelaciones mínima y máxima se quedan como están."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vos horaires, le préavis et le délai maximum restent inchangés."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके घंटे, पूर्व सूचना और अग्रिम अवधि जैसे हैं वैसे ही रहेंगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jam kerja, pemberitahuan minimum, dan batas pemesanan kamu tetap sama."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I tuoi orari, il preavviso e l'anticipo massimo restano come sono."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seus horários, antecedência mínima e máxima continuam como estão."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O seu horário e as antecedências mínima e máxima ficam como estão."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çalışma saatleriniz, ön bildirim ve ileri tarih sınırı aynı kalır."
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.on" : {
+      "comment" : "Booking page settings, suggestion card: value of 'Keep my day compact' when it is on.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مفعّل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "An"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "On"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activado"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activado"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Activé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "चालू"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aktif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Attivo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ligado"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ligado"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Açık"
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.title" : {
+      "comment" : "Booking page settings: title of the card with the agenda values that suit her profession. %@ is the profession name (Esthetician).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مقترح لـ: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vorschlag für: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested for: %@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggested for: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para: %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para: %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggestion pour : %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सुझाव: %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saran untuk: %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consigliato per: %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugestão para: %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugestão para: %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Önerilen: %@"
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.titleGeneric" : {
+      "comment" : "Booking page settings: the same card when her profession has no name to show.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مقترح لمهنتك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vorschlag für deinen Beruf"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested for your profession"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggested for your profession"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para tu profesión"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para tu profesión"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerido para tu profesión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggestion pour votre métier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके पेशे के लिए सुझाव"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saran untuk profesimu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Consigliato per la tua professione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugestão para a sua profissão"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugestão para a sua profissão"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mesleğiniz için önerilen"
+          }
+        }
+      }
+    },
+    "bookingSettings.suggestion.use" : {
+      "comment" : "Booking page settings, suggestion card: button that applies the suggested values.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استخدمي هذه"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Übernehmen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use these"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Use these"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar estos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar estos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar estos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Utiliser ces réglages"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इन्हें अपनाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pakai ini"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usa questi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar estes"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usar estes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bunları kullanın"
           }
         }
       }
@@ -93961,186 +95851,6 @@
         }
       }
     },
-    "import.choose.partial" : {
-      "comment" : "Warning when she chose more people than her free registrations cover. %1$lld is what is covered, %2$lld what she chose.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اخترت %2$lld لكن التسجيلات المجانية تكفي لـ %1$lld فقط."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Du hast %2$lld ausgewählt, deine kostenlosen Registrierungen reichen aber nur für %1$lld."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You chose %2$lld, but your free registrations cover %1$lld."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "You chose %2$lld, but your free registrations cover %1$lld."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Has elegido %2$lld, pero tus registros gratuitos cubren %1$lld."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elegiste %2$lld, pero tus registros gratis cubren %1$lld."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elegiste %2$lld, pero tus registros gratis cubren %1$lld."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vous en avez choisi %2$lld, mais vos fiches gratuites en couvrent %1$lld."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "आपने %2$lld चुने, लेकिन मुफ़्त रजिस्ट्रेशन सिर्फ़ %1$lld के लिए काफ़ी हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kamu memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hai scelto %2$lld, ma le tue registrazioni gratuite ne coprono %1$lld."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Você escolheu %2$lld, mas seus cadastros grátis cobrem %1$lld."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escolheu %2$lld, mas os seus registos gratuitos cobrem %1$lld."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%2$lld seçtiniz ancak ücretsiz kayıtlarınız %1$lld için yetiyor."
-          }
-        }
-      }
-    },
-    "import.choose.partial.detail" : {
-      "comment" : "Second line of the warning above.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "يحتاج الباقون إلى خطة. يمكنك اختيار واحدة بعد هذا الاستيراد."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Für die übrigen brauchst du ein Abo. Du kannst es nach diesem Import wählen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The rest need a plan. You can choose one after this import."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "The rest need a plan. You can choose one after this import."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "El resto necesita un plan. Puedes elegir uno después de esta importación."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "El resto necesita un plan. Puedes elegir uno después de esta importación."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "El resto necesita un plan. Puedes elegir uno después de esta importación."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Les autres nécessitent un abonnement. Vous pourrez le choisir après cet import."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "बाक़ी के लिए प्लान चाहिए। आप इस इम्पोर्ट के बाद एक चुन सकते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sisanya memerlukan paket. Kamu bisa memilihnya setelah impor ini."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Per gli altri serve un piano. Puoi sceglierne uno dopo questa importazione."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O restante precisa de um plano. Você pode escolher um depois desta importação."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "O restante precisa de um plano. Pode escolher um depois desta importação."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Geri kalanlar için bir plan gerekir. Bu içe aktarmadan sonra seçebilirsiniz."
-          }
-        }
-      }
-    },
     "import.choose.title" : {
       "comment" : "Section heading above the list of people to import. %@ is her word for clients, plural.",
       "extractionState" : "manual",
@@ -96307,6 +98017,1356 @@
         }
       }
     },
+    "import.plan.duplicates" : {
+      "comment" : "Import summary: label of the number of chosen people already in her list; they are skipped and never counted.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موجودون في قائمتك (يُتخطَّون)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bereits in deiner Liste (übersprungen)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already in your list (skipped)"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Already in your list (skipped)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya en tu lista (se omiten)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya en tu lista (se omiten)"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya en tu lista (se omiten)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déjà dans votre liste (ignorées)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले से आपकी सूची में (छोड़े जाएँगे)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sudah ada di daftar kamu (dilewati)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Già nella tua lista (saltati)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já na sua lista (ignorados)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já na sua lista (ignorados)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaten listenizde (atlanır)"
+          }
+        }
+      }
+    },
+    "import.plan.freeLeft" : {
+      "comment" : "Import summary: label of how many of the free client registrations are left (D42: the first 10 are free).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "التسجيلات المجانية المتبقية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Verbleibende kostenlose Registrierungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free registrations left"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Free registrations left"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros gratuitos restantes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros gratis restantes"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros gratis restantes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fiches gratuites restantes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "बचे हुए मुफ़्त रजिस्ट्रेशन"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sisa pendaftaran gratis"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registrazioni gratuite rimaste"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cadastros grátis restantes"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registos gratuitos restantes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kalan ücretsiz kayıt"
+          }
+        }
+      }
+    },
+    "import.plan.freeLeftValue" : {
+      "comment" : "Import summary: value beside 'Free registrations left'. %1$lld is how many are left, %2$lld the free limit (10).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld من %2$lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld von %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld of %2$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld de %2$lld"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld de %2$lld"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld de %2$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld sur %2$lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%2$lld में से %1$lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld dari %2$lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld di %2$lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld de %2$lld"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld de %2$lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
+    "import.plan.new" : {
+      "comment" : "Import summary: label of the number of chosen people that are new (after skipping the ones already in her list). The number is shown beside it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تسجيلات جديدة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neue Registrierungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New registrations"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New registrations"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros nuevos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros nuevos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registros nuevos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nouvelles fiches"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नए रजिस्ट्रेशन"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pendaftaran baru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuove registrazioni"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cadastros novos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registos novos"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yeni kayıtlar"
+          }
+        }
+      }
+    },
+    "import.plan.now" : {
+      "comment" : "Import summary: label of how many new people will be registered now, when the free registrations do not cover everyone.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يُسجَّلون الآن"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jetzt registriert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registered now"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registered now"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se registran ahora"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se registran ahora"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Se registran ahora"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutées maintenant"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अभी रजिस्टर होंगे"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Didaftarkan sekarang"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registrati ora"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cadastrados agora"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registados agora"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Şimdi kaydedilecek"
+          }
+        }
+      }
+    },
+    "import.plan.outcome.allFree" : {
+      "comment" : "Import summary: every new person fits in the free registrations. %lld is how many free registrations remain after this import.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سيُسجَّل كل الجدد الآن. التسجيلات المجانية المتبقية بعد ذلك: %lld."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle Neuen werden jetzt registriert. Danach verbleibende kostenlose Registrierungen: %lld."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyone new is registered now. Free registrations left afterwards: %lld."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Everyone new is registered now. Free registrations left afterwards: %lld."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los nuevos se registran ahora. Registros gratuitos restantes después: %lld."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los nuevos se registran ahora. Registros gratis restantes después: %lld."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los nuevos se registran ahora. Registros gratis restantes después: %lld."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toutes les nouvelles personnes sont ajoutées maintenant. Fiches gratuites restantes ensuite : %lld."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सभी नए अभी रजिस्टर हो जाएँगे। इसके बाद बचे मुफ़्त रजिस्ट्रेशन: %lld।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Semua yang baru didaftarkan sekarang. Sisa pendaftaran gratis setelahnya: %lld."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutti i nuovi vengono registrati ora. Registrazioni gratuite rimaste dopo: %lld."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os novos são cadastrados agora. Cadastros grátis restantes depois: %lld."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os novos são registados agora. Registos gratuitos restantes depois: %lld."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yeni olanların hepsi şimdi kaydedilir. Sonrasında kalan ücretsiz kayıt: %lld."
+          }
+        }
+      }
+    },
+    "import.plan.outcome.needsPlan" : {
+      "comment" : "Import summary: the free registrations are all used. %lld is the free limit (10).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استُخدمت تسجيلاتك المجانية الـ %lld. لا يُحفظ أحد جديد دون خطة، ولا يُحتسب أي مبلغ ما لم تشترك."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine %lld kostenlosen Registrierungen sind aufgebraucht. Ohne Abo wird niemand neu gespeichert, und ohne Abschluss wird nichts berechnet."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your %lld free registrations are used. Nobody new is saved without a plan, and nothing is charged unless you subscribe."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your %lld free registrations are used. Nobody new is saved without a plan, and nothing is charged unless you subscribe."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya has usado tus %lld registros gratuitos. No se guarda a nadie nuevo sin un plan, y no se cobra nada si no te suscribes."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya usaste tus %lld registros gratis. No se guarda a nadie nuevo sin un plan, y no se cobra nada si no te suscribes."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya usaste tus %lld registros gratis. No se guarda a nadie nuevo sin un plan, y no se cobra nada si no te suscribes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vos %lld fiches gratuites sont utilisées. Aucune nouvelle personne n'est enregistrée sans abonnement, et rien n'est facturé si vous ne vous abonnez pas."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके %lld मुफ़्त रजिस्ट्रेशन इस्तेमाल हो चुके हैं। प्लान के बिना कोई नया सेव नहीं होगा, और सब्सक्राइब न करने पर कोई शुल्क नहीं लगेगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld pendaftaran gratis kamu sudah terpakai. Tanpa paket tidak ada yang baru disimpan, dan tidak ada biaya kalau kamu tidak berlangganan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hai già usato le tue %lld registrazioni gratuite. Nessun nuovo nome viene salvato senza un piano, e non paghi nulla se non ti abboni."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seus %lld cadastros grátis já foram usados. Ninguém novo é salvo sem um plano, e nada é cobrado se você não assinar."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os seus %lld registos gratuitos já foram usados. Ninguém novo é guardado sem um plano, e nada é cobrado se não subscrever."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld ücretsiz kaydınızın hepsi kullanıldı. Plan olmadan kimse yeni kaydedilmez ve abone olmazsanız ücret alınmaz."
+          }
+        }
+      }
+    },
+    "import.plan.outcome.nothingNew" : {
+      "comment" : "Import summary: everyone she chose is already in her list.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كل من اخترتهم موجودون في قائمتك. لن يُسجَّل أحد جديد."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle Ausgewählten sind bereits in deiner Liste. Es wird niemand neu registriert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everyone you chose is already in your list. Nothing new will be registered."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Everyone you chose is already in your list. Nothing new will be registered."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los que has elegido ya están en tu lista. No se registrará a nadie nuevo."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los que elegiste ya están en tu lista. No se registrará a nadie nuevo."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los que elegiste ya están en tu lista. No se registrará a nadie nuevo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toutes les personnes choisies sont déjà dans votre liste. Aucune nouvelle fiche ne sera créée."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपने जिन्हें चुना, वे सब पहले से आपकी सूची में हैं। कोई नया रजिस्ट्रेशन नहीं होगा।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Semua yang kamu pilih sudah ada di daftar kamu. Tidak ada pendaftaran baru."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutti quelli che hai scelto sono già nella tua lista. Non verrà registrato nessuno di nuovo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos que você escolheu já estão na sua lista. Nenhum cadastro novo será feito."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os que escolheu já estão na sua lista. Não será feito nenhum registo novo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seçtiğiniz herkes zaten listenizde. Yeni kayıt yapılmayacak."
+          }
+        }
+      }
+    },
+    "import.plan.outcome.partly" : {
+      "comment" : "Import summary: the free registrations cover only part of the group. Says clearly that the rest are not saved and nothing is charged.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تغطي تسجيلاتك المجانية جزءًا من هذه المجموعة. لا يُحفظ الباقون ولا يُحتسب أي مبلغ: بعد اختيار خطة، استوردهم مرة أخرى."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine kostenlosen Registrierungen reichen für einen Teil dieser Gruppe. Die übrigen werden nicht gespeichert und nichts wird berechnet: Wenn du ein Abo gewählt hast, importiere sie erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your free registrations cover part of this group. The rest are not saved and nothing is charged: after you choose a plan, import them again."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your free registrations cover part of this group. The rest are not saved and nothing is charged: after you choose a plan, import them again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus registros gratuitos cubren parte de este grupo. El resto no se guarda y no se cobra nada: después de elegir un plan, vuelve a importarlos."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus registros gratis cubren parte de este grupo. El resto no se guarda y no se cobra nada: después de elegir un plan, vuelve a importarlos."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus registros gratis cubren parte de este grupo. El resto no se guarda y no se cobra nada: después de elegir un plan, vuelve a importarlos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vos fiches gratuites couvrent une partie de ce groupe. Les autres ne sont pas enregistrées et rien n'est facturé : après avoir choisi un abonnement, importez-les à nouveau."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके मुफ़्त रजिस्ट्रेशन इस समूह के एक हिस्से के लिए काफ़ी हैं। बाक़ी सेव नहीं होंगे और कोई शुल्क नहीं लगेगा: प्लान चुनने के बाद उन्हें फिर से इम्पोर्ट करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pendaftaran gratis kamu mencakup sebagian grup ini. Sisanya tidak disimpan dan tidak ada biaya: setelah memilih paket, impor lagi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le tue registrazioni gratuite coprono parte di questo gruppo. Gli altri non vengono salvati e non paghi nulla: dopo aver scelto un piano, importali di nuovo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seus cadastros grátis cobrem parte deste grupo. O restante não é salvo e nada é cobrado: depois de escolher um plano, importe de novo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os seus registos gratuitos cobrem parte deste grupo. O restante não é guardado e nada é cobrado: depois de escolher um plano, importe novamente."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ücretsiz kayıtlarınız bu grubun bir kısmını karşılıyor. Geri kalanlar kaydedilmez ve ücret alınmaz: bir plan seçtikten sonra onları yeniden içe aktarın."
+          }
+        }
+      }
+    },
+    "import.plan.outcome.unlimited" : {
+      "comment" : "Import summary: she has a plan, so every new person is registered.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مع خطتك التسجيلات غير محدودة: سيُسجَّل كل الجدد الآن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mit deinem Abo sind Registrierungen unbegrenzt: Alle Neuen werden jetzt registriert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With your plan, registrations are unlimited: everyone new is registered now."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "With your plan, registrations are unlimited: everyone new is registered now."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con tu plan, los registros son ilimitados: todos los nuevos se registran ahora."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con tu plan, los registros son ilimitados: todos los nuevos se registran ahora."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con tu plan, los registros son ilimitados: todos los nuevos se registran ahora."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avec votre abonnement, les fiches sont illimitées : toutes les nouvelles personnes sont ajoutées maintenant."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके प्लान में रजिस्ट्रेशन असीमित हैं: सभी नए अभी रजिस्टर हो जाएँगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dengan paket kamu, pendaftaran tidak terbatas: semua yang baru didaftarkan sekarang."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Con il tuo piano le registrazioni sono illimitate: tutti i nuovi vengono registrati ora."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Com o seu plano, os cadastros são ilimitados: todos os novos são cadastrados agora."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Com o seu plano, os registos são ilimitados: todos os novos são registados agora."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Planınızla kayıtlar sınırsız: yeni olanların hepsi şimdi kaydedilir."
+          }
+        }
+      }
+    },
+    "import.plan.title" : {
+      "comment" : "Import, choose step: header of the summary shown before she confirms the import.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "قبل الاستيراد"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vor dem Import"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before you import"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Before you import"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de importar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de importar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de importar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Avant l'import"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इम्पोर्ट करने से पहले"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sebelum mengimpor"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prima di importare"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de importar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Antes de importar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İçe aktarmadan önce"
+          }
+        }
+      }
+    },
+    "import.plan.trial.first" : {
+      "comment" : "Import, 'Try a small group' menu: one choice. %lld is how many new people it selects from the top of the list.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أول %lld من الجدد"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Die ersten %lld neuen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First %lld new"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "First %lld new"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primeros %lld nuevos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primeros %lld nuevos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primeros %lld nuevos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les %lld premières nouvelles"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले %lld नए"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "%lld pertama yang baru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primi %lld nuovi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primeiros %lld novos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Primeiros %lld novos"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İlk %lld yeni"
+          }
+        }
+      }
+    },
+    "import.plan.trial.menu" : {
+      "comment" : "Import, choose step: menu button that selects only the first few new people, to try the import with a small group first.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "جرّب بمجموعة صغيرة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mit wenigen testen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try a small group"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Try a small group"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Probar con pocos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Probar con pocos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Probar con pocos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Essayer avec quelques-unes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कुछ से आज़माएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Coba beberapa dulu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prova con pochi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Testar com poucos"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Experimentar com poucos"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Birkaç kişiyle deneyin"
+          }
+        }
+      }
+    },
+    "import.plan.unchecked" : {
+      "comment" : "Import summary: her list could not be read, so the numbers do not subtract duplicates yet.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تعذّر التحقق من قائمتك الآن. سيُتخطّى المكرَّرون عند الاستيراد على أي حال، وستظهر في النتيجة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine Liste konnte gerade nicht geprüft werden. Doppelte werden beim Import trotzdem übersprungen, und das Ergebnis zeigt sie."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We could not check your list for duplicates now. They are still skipped when you import, and the result shows them."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "We could not check your list for duplicates now. They are still skipped when you import, and the result shows them."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No hemos podido revisar tu lista ahora. Los repetidos se omiten igualmente al importar, y el resultado los muestra."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No pudimos revisar tu lista ahora. Los repetidos se omiten igual al importar, y el resultado los muestra."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No pudimos revisar tu lista ahora. Los repetidos se omiten igual al importar, y el resultado los muestra."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impossible de vérifier votre liste pour le moment. Les doublons sont quand même ignorés à l'import, et le résultat les indique."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अभी आपकी सूची जाँची नहीं जा सकी। इम्पोर्ट में दोहराए गए फिर भी छोड़े जाएँगे, और नतीजे में दिखेंगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Daftar kamu belum bisa dicek sekarang. Yang ganda tetap dilewati saat impor, dan hasilnya akan menunjukkannya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non è stato possibile controllare ora la tua lista. I doppioni vengono comunque saltati durante l'importazione e il risultato li mostra."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível conferir sua lista agora. Os repetidos continuam sendo ignorados na importação, e o resultado mostra quais foram."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foi possível verificar a sua lista agora. Os repetidos continuam a ser ignorados na importação, e o resultado mostra quais foram."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Listeniz şu anda kontrol edilemedi. Tekrar edenler içe aktarmada yine atlanır ve sonuçta gösterilir."
+          }
+        }
+      }
+    },
+    "import.plan.waiting" : {
+      "comment" : "Import summary: label of how many new people the free registrations do not cover; they are not saved until she has a plan.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "بانتظار خطة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Warten auf ein Abo"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for a plan"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Waiting for a plan"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esperan un plan"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esperan un plan"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esperan un plan"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En attente d'un abonnement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "प्लान का इंतज़ार"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Menunggu paket"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "In attesa di un piano"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aguardando um plano"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "À espera de um plano"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Plan bekleyen"
+          }
+        }
+      }
+    },
     "import.problem.contactsRestricted.message" : {
       "comment" : "Notice message for the restricted-contacts state.",
       "extractionState" : "manual",
@@ -97387,6 +100447,96 @@
         }
       }
     },
+    "import.result.blocked.notSaved" : {
+      "comment" : "Import result: under 'N more need a plan'. Says the rows that waited were not saved and nothing was charged.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لم يُحفظوا ولم يُحتسب أي مبلغ. بعد اختيار خطة، استوردهم من هنا؛ ويُتخطّى من أُضيفوا من قبل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sie wurden nicht gespeichert und nichts wurde berechnet. Wenn du ein Abo gewählt hast, importiere sie hier; bereits Hinzugefügte werden übersprungen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "They were not saved and nothing was charged. After you choose a plan, import them here; the people already added are skipped."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "They were not saved and nothing was charged. After you choose a plan, import them here; the people already added are skipped."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se han guardado y no se ha cobrado nada. Después de elegir un plan, impórtalos aquí; quienes ya se añadieron se omiten."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se guardaron y no se cobró nada. Después de elegir un plan, impórtalos aquí; quienes ya se agregaron se omiten."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No se guardaron y no se cobró nada. Después de elegir un plan, impórtalos aquí; quienes ya se agregaron se omiten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elles n'ont pas été enregistrées et rien n'a été facturé. Après avoir choisi un abonnement, importez-les ici ; les personnes déjà ajoutées sont ignorées."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ये सेव नहीं हुए और कोई शुल्क नहीं लगा। प्लान चुनने के बाद इन्हें यहाँ इम्पोर्ट करें; जो पहले से जोड़े गए हैं, वे छोड़े जाएँगे।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mereka tidak disimpan dan tidak ada biaya. Setelah memilih paket, impor di sini; yang sudah ditambahkan akan dilewati."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non sono stati salvati e non hai pagato nulla. Dopo aver scelto un piano, importali qui; chi è già stato aggiunto viene saltato."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eles não foram salvos e nada foi cobrado. Depois de escolher um plano, importe aqui; quem já foi adicionado é ignorado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não foram guardados e nada foi cobrado. Depois de escolher um plano, importe-os aqui; quem já foi adicionado é ignorado."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kaydedilmediler ve ücret alınmadı. Bir plan seçtikten sonra onları buradan içe aktarın; zaten eklenenler atlanır."
+          }
+        }
+      }
+    },
     "import.result.duplicates" : {
       "comment" : "Result row. %lld is how many were already in her list.",
       "extractionState" : "manual",
@@ -97563,6 +100713,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Zaten kayıtlı biriyle aynı telefon numarası veya dosyada tekrar eden."
+          }
+        }
+      }
+    },
+    "import.result.importRest" : {
+      "comment" : "Import result: button shown once she has a plan. %lld is how many people waited for the plan.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استورد الباقين (%lld)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Übrige importieren (%lld)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import the rest (%lld)"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Import the rest (%lld)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importar el resto (%lld)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importar el resto (%lld)"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importar el resto (%lld)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importer les autres (%lld)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "बाक़ी इम्पोर्ट करें (%lld)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Impor sisanya (%lld)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importa gli altri (%lld)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importar o restante (%lld)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Importar o restante (%lld)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kalanları içe aktar (%lld)"
           }
         }
       }
@@ -98565,6 +101805,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@ listesini gör"
+          }
+        }
+      }
+    },
+    "import.row.alreadyInList" : {
+      "comment" : "Import, choose step: a row whose person (same phone) is already in her list; importing skips it.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موجود في قائمتك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bereits in deiner Liste"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already in your list"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Already in your list"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya está en tu lista"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya está en tu lista"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ya está en tu lista"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Déjà dans votre liste"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले से आपकी सूची में"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sudah ada di daftar kamu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Già nella tua lista"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já está na sua lista"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Já está na sua lista"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zaten listenizde"
           }
         }
       }
@@ -183247,6 +186577,186 @@
         }
       }
     },
+    "services.timing.disclosure" : {
+      "comment" : "Service editor: disclosure that opens prep, clean-up and processing time (closed when the service has none).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "وقت إضافي (اختياري)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Zusätzliche Zeit (optional)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extra time (optional)"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Extra time (optional)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo extra (opcional)"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo extra (opcional)"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tiempo extra (opcional)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Temps en plus (facultatif)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अतिरिक्त समय (वैकल्पिक)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Waktu tambahan (opsional)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo extra (facoltativo)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo extra (opcional)"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tempo extra (opcional)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ek süre (isteğe bağlı)"
+          }
+        }
+      }
+    },
+    "services.timing.example" : {
+      "comment" : "Service editor: example from the routine under the extra-time card (owner's example).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مثال: صبغة مدتها 75 دقيقة مع 30 دقيقة معالجة تتيح لكِ قصّ غرّة في 20 دقيقة خلالها."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Beispiel: Eine Farbe von 75 Minuten mit 30 Minuten Einwirkzeit lässt Platz für einen Ponyschnitt von 20 Minuten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example: a 75-minute color with 30 minutes of processing lets you fit a 20-minute bangs trim inside it."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Example: a 75-minute colour with 30 minutes of processing lets you fit a 20-minute fringe cut inside it."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ejemplo: un tinte de 75 minutos con 30 minutos de pose te deja hacer un corte de flequillo de 20 minutos en medio."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ejemplo: un tinte de 75 minutos con 30 minutos de pose te deja hacer un corte de fleco de 20 minutos en medio."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ejemplo: un tinte de 75 minutos con 30 minutos de pose te deja hacer un corte de fleco de 20 minutos en medio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exemple : une coloration de 75 minutes avec 30 minutes de pose vous laisse le temps d'une coupe de frange de 20 minutes."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "उदाहरण: 30 मिनट प्रोसेसिंग वाला 75 मिनट का कलर, बीच में 20 मिनट का फ्रिंज कट करने की जगह देता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Contoh: pewarnaan 75 menit dengan waktu tunggu 30 menit memberi ruang untuk potong poni 20 menit di sela-selanya."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esempio: un colore di 75 minuti con 30 minuti di posa ti lascia il tempo per un taglio della frangia di 20 minuti."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exemplo: uma coloração de 75 minutos com 30 minutos de pausa permite encaixar um corte de franja de 20 minutos nesse intervalo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Exemplo: uma coloração de 75 minutos com 30 minutos de pausa permite encaixar um corte de franja de 20 minutos nesse intervalo."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Örnek: 30 dakika bekleme süresi olan 75 dakikalık bir boya, araya 20 dakikalık bir kâkül kesimi sığdırmanızı sağlar."
+          }
+        }
+      }
+    },
     "services.timing.hint" : {
       "comment" : "Footnote under the extra-time card in the service form.",
       "extractionState" : "manual",
@@ -183963,96 +187473,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hemen"
-          }
-        }
-      }
-    },
-    "services.timing.title" : {
-      "comment" : "Section title in the service form (D56): extra time and processing time.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "الوقت حول الموعد"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Zeit rund um den Termin"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Time around the visit"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Time around the visit"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tiempo alrededor de la cita"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tiempo alrededor de la cita"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tiempo alrededor de la cita"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Temps autour du rendez-vous"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अपॉइंटमेंट के आसपास का समय"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Waktu di sekitar janji"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tempo intorno all’appuntamento"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tempo em torno do atendimento"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tempo à volta da marcação"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Randevu çevresindeki süre"
           }
         }
       }
@@ -197143,96 +200563,6 @@
         }
       }
     },
-    "treatmentFlow.camera.ghost" : {
-      "comment" : "Camera: toggle that overlays the earlier photo to line up the new one",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ظل"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Geisterbild"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ghost"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ghost"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantasma"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantasma"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantasma"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantôme"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "घोस्ट"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bayangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sagoma"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantasma"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fantasma"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gölge"
-          }
-        }
-      }
-    },
     "treatmentFlow.camera.needsConsent" : {
       "comment" : "Camera review: photo consent missing",
       "extractionState" : "manual",
@@ -197499,6 +200829,276 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Yalnızca Bello’da saklanır, film rulonuzda değil"
+          }
+        }
+      }
+    },
+    "treatmentFlow.camera.reference.guide" : {
+      "comment" : "Camera: short guide under the framing reference controls.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "طابقي الحدود مع الصورة السابقة: المكان نفسه على الخطوط، والمسافة نفسها، والإضاءة نفسها. ولا تصبح جزءًا من الصورة الجديدة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Richte den Umriss am vorherigen Foto aus: gleiche Stelle auf den Linien, gleicher Abstand, gleiches Licht. Es ist nicht Teil des neuen Fotos."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line up the outline with the previous photo: same spot on the lines, same distance, same light. It is not part of the new photo."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Line up the outline with the previous photo: same spot on the lines, same distance, same light. It is not part of the new photo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alinea el contorno con la foto anterior: mismo sitio en las líneas, misma distancia, misma luz. No forma parte de la foto nueva."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alinea el contorno con la foto anterior: mismo lugar en las líneas, misma distancia, misma luz. No forma parte de la foto nueva."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alinea el contorno con la foto anterior: mismo lugar en las líneas, misma distancia, misma luz. No forma parte de la foto nueva."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alignez le contour sur la photo précédente : même place sur les lignes, même distance, même lumière. Elle ne fait pas partie de la nouvelle photo."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आकृति को पिछली फ़ोटो से मिलाएँ: लाइनों पर वही जगह, वही दूरी, वही रोशनी। यह नई फ़ोटो का हिस्सा नहीं है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sejajarkan garis luar dengan foto sebelumnya: posisi sama di garis, jarak sama, cahaya sama. Foto ini tidak ikut tersimpan di foto baru."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Allinea il contorno con la foto precedente: stesso punto sulle linee, stessa distanza, stessa luce. Non fa parte della nuova foto."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alinhe o contorno com a foto anterior: mesmo lugar nas linhas, mesma distância, mesma luz. Ela não faz parte da foto nova."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alinhe o contorno com a fotografia anterior: mesmo sítio nas linhas, mesma distância, mesma luz. Não faz parte da fotografia nova."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hatları önceki fotoğrafla hizalayın: çizgilerde aynı yer, aynı mesafe, aynı ışık. Yeni fotoğrafın parçası değildir."
+          }
+        }
+      }
+    },
+    "treatmentFlow.camera.reference.opacity" : {
+      "comment" : "Camera: label of the slider that sets how visible the previous photo is over the preview.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "درجة الظهور"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deckkraft"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How visible"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "How visible"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensidad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensidad"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensité"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कितनी दिखे"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kejelasan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensità"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensidade"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Intensidade"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Görünürlük"
+          }
+        }
+      }
+    },
+    "treatmentFlow.camera.reference.toggle" : {
+      "comment" : "Camera: switch that lays the client's previous photo over the preview as a framing reference.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إظهار الصورة السابقة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vorheriges Foto zeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show previous photo"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Show previous photo"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar foto anterior"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar foto anterior"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar foto anterior"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Afficher la photo précédente"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पिछली फ़ोटो दिखाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tampilkan foto sebelumnya"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostra foto precedente"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar foto anterior"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mostrar fotografia anterior"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Önceki fotoğrafı göster"
           }
         }
       }

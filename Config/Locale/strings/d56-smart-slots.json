@@ -127,22 +127,6 @@
    "يضيف الأوقات المتاحة التي ستترك فجوة قصيرة"
   ],
   [
-   "services.timing.title",
-   "Section title in the service form (D56): extra time and processing time.",
-   "Time around the visit",
-   "Tempo em torno do atendimento",
-   "Tempo à volta da marcação",
-   "Tiempo alrededor de la cita",
-   "Tiempo alrededor de la cita",
-   "Tempo intorno all’appuntamento",
-   "Temps autour du rendez-vous",
-   "Zeit rund um den Termin",
-   "Randevu çevresindeki süre",
-   "Waktu di sekitar janji",
-   "अपॉइंटमेंट के आसपास का समय",
-   "الوقت حول الموعد"
-  ],
-  [
    "services.timing.prep",
    "Menu title: time blocked before the visit to prepare, not shown to clients.",
    "Prep before",

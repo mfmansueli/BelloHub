@@ -111,22 +111,6 @@
    "الفلاش"
   ],
   [
-   "treatmentFlow.camera.ghost",
-   "Camera: toggle that overlays the earlier photo to line up the new one",
-   "Ghost",
-   "Fantasma",
-   "Fantasma",
-   "Fantasma",
-   "Fantasma",
-   "Sagoma",
-   "Fantôme",
-   "Geisterbild",
-   "Gölge",
-   "Bayangan",
-   "घोस्ट",
-   "ظل"
-  ],
-  [
    "treatmentFlow.camera.needsConsent",
    "Camera review: photo consent missing",
    "Sharing with the client or using it in a portfolio needs the client’s photo consent, which is not signed yet.",

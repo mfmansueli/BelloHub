@@ -705,38 +705,6 @@
    "المحدد: %1$lld من %2$lld"
   ],
   [
-   "import.choose.partial",
-   "Warning when she chose more people than her free registrations cover. %1$lld is what is covered, %2$lld what she chose.",
-   "You chose %2$lld, but your free registrations cover %1$lld.",
-   "Você escolheu %2$lld, mas seus cadastros grátis cobrem %1$lld.",
-   "Escolheu %2$lld, mas os seus registos gratuitos cobrem %1$lld.",
-   "Elegiste %2$lld, pero tus registros gratis cubren %1$lld.",
-   "Has elegido %2$lld, pero tus registros gratuitos cubren %1$lld.",
-   "Hai scelto %2$lld, ma le tue registrazioni gratuite ne coprono %1$lld.",
-   "Vous en avez choisi %2$lld, mais vos fiches gratuites en couvrent %1$lld.",
-   "Du hast %2$lld ausgewählt, deine kostenlosen Registrierungen reichen aber nur für %1$lld.",
-   "%2$lld seçtiniz ancak ücretsiz kayıtlarınız %1$lld için yetiyor.",
-   "Kamu memilih %2$lld, tetapi pendaftaran gratis hanya cukup untuk %1$lld.",
-   "आपने %2$lld चुने, लेकिन मुफ़्त रजिस्ट्रेशन सिर्फ़ %1$lld के लिए काफ़ी हैं।",
-   "اخترت %2$lld لكن التسجيلات المجانية تكفي لـ %1$lld فقط."
-  ],
-  [
-   "import.choose.partial.detail",
-   "Second line of the warning above.",
-   "The rest need a plan. You can choose one after this import.",
-   "O restante precisa de um plano. Você pode escolher um depois desta importação.",
-   "O restante precisa de um plano. Pode escolher um depois desta importação.",
-   "El resto necesita un plan. Puedes elegir uno después de esta importación.",
-   "El resto necesita un plan. Puedes elegir uno después de esta importación.",
-   "Per gli altri serve un piano. Puoi sceglierne uno dopo questa importazione.",
-   "Les autres nécessitent un abonnement. Vous pourrez le choisir après cet import.",
-   "Für die übrigen brauchst du ein Abo. Du kannst es nach diesem Import wählen.",
-   "Geri kalanlar için bir plan gerekir. Bu içe aktarmadan sonra seçebilirsiniz.",
-   "Sisanya memerlukan paket. Kamu bisa memilihnya setelah impor ini.",
-   "बाक़ी के लिए प्लान चाहिए। आप इस इम्पोर्ट के बाद एक चुन सकते हैं।",
-   "يحتاج الباقون إلى خطة. يمكنك اختيار واحدة بعد هذا الاستيراد."
-  ],
-  [
    "import.choose.empty.title",
    "Empty state: nothing in the source can be imported.",
    "Nothing to import",

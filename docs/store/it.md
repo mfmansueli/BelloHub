@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | estetista,parrucchiera,unghie,ciglia,sopracciglia,barbiere,trucco permanente,prenotazioni | 89 / 100 |
 | Promotional text | Le tue clienti prenotano da un link, in qualsiasi browser. Tu conservi ogni visita, foto e scheda sanitaria in una scheda privata sul tuo iPhone. | 145 / 170 |
 
-## Description (2469 / 4000)
+## Description (2520 / 4000)
 
 ```text
+Non sei più sola. Bello Hub, con te in ogni fase.
+
 Bello Hub è l'agenda e la scheda clienti per chi lavora in proprio nella bellezza e nell'estetica: estetiste, parrucchiere, onicotecniche, lash e brow artist, barbieri, tatuatrici e artiste del trucco permanente, massaggiatrici.
 
 LA TUA AGENDA

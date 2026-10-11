@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | esteticista,salão,manicure,cílios,sobrancelha,barbeiro,micropigmentação,link de agendamento,anamnese | 100 / 100 |
 | Promotional text | Suas clientes agendam por um link, em qualquer navegador. Você guarda cada atendimento, foto e ficha de saúde num registro privado no seu iPhone. | 145 / 170 |
 
-## Description (2409 / 4000)
+## Description (2473 / 4000)
 
 ```text
+Você não está mais sozinha. Bello Hub, com você em cada etapa.
+
 Bello Hub é a agenda e a ficha de clientes da profissional independente de beleza e estética: esteticistas, cabeleireiras, manicures, lash designers, designers de sobrancelha, barbeiros, tatuadoras e micropigmentadoras, massoterapeutas.
 
 SUA AGENDA

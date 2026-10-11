@@ -12,6 +12,8 @@ final class FakeClientRegistrar: ClientRegistering {
     var usage = RegistrationUsage.unknown
     var outcome = RegistrationOutcome.registered
     var importResult = ClientImportResult()
+    /// The clients the fake says are already in her list; nil makes `knownClients()` throw.
+    var known: [Client]? = []
     private(set) var registered: [Client] = []
     private(set) var imported: [[Client]] = []
     private(set) var refreshCount = 0
@@ -23,6 +25,11 @@ final class FakeClientRegistrar: ClientRegistering {
     func register(_ client: Client) async throws -> RegistrationOutcome {
         registered.append(client)
         return outcome
+    }
+
+    func knownClients() async throws -> [Client] {
+        guard let known else { throw VaultRepositoryError.unavailable }
+        return known
     }
 
     func importClients(_ clients: [Client]) async throws -> ClientImportResult {

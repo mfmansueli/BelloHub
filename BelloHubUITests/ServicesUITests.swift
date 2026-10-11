@@ -85,6 +85,11 @@ final class ServicesUITests: XCTestCase {
         XCTAssertTrue(glow.waitForExistence(timeout: 5))
         glow.tap()
 
+        // Extra time is an advanced option: closed until she opens it (routine item 10).
+        XCTAssertFalse(app.buttons["serviceEditor.prepMenu"].exists, "closed while the service has no extra time")
+        let disclosure = app.buttons["serviceEditor.timingDisclosure"]
+        XCTAssertTrue(app.scrollUntilVisible(disclosure))
+        disclosure.tap()
         XCTAssertTrue(app.buttons["serviceEditor.prepMenu"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["serviceEditor.cleanupMenu"].exists)
         XCTAssertFalse(app.buttons["serviceEditor.processingMenu"].exists, "no processing menus while it is off")
@@ -99,6 +104,7 @@ final class ServicesUITests: XCTestCase {
         let again = app.button(prefix: "services.row.", containing: "Glow Facial")
         XCTAssertTrue(again.waitForExistence(timeout: 5))
         again.tap()
+        // A service with extra time opens the section by itself.
         let kept = app.switches["serviceEditor.processingToggle"]
         XCTAssertTrue(app.scrollUntilVisible(kept))
         XCTAssertEqual(kept.value as? String, "1", "the processing time was kept")

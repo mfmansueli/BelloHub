@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | estetisyen,kuaför,tırnak,kirpik,kaş,berber,kalıcı makyaj,randevu bağlantısı,sağlık formu | 88 / 100 |
 | Promotional text | Müşterileriniz bir bağlantıdan, her tarayıcıdan randevu alır. Siz her ziyareti, fotoğrafı ve sağlık formunu iPhone'unuzda özel bir kayıtta saklarsınız. | 151 / 170 |
 
-## Description (2367 / 4000)
+## Description (2426 / 4000)
 
 ```text
+Artık yalnız değilsiniz. Bello Hub, her adımda yanınızda.
+
 Bello Hub, güzellik ve estetik alanında bağımsız çalışan profesyoneller için ajanda ve müşteri kaydıdır: estetisyenler, kuaförler, tırnak teknisyenleri, kirpik ve kaş uzmanları, berberler, dövme ve kalıcı makyaj sanatçıları, masaj terapistleri.
 
 AJANDANIZ

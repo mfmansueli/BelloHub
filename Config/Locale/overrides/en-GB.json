@@ -26,6 +26,7 @@
  "recoveryKey.error.notRecognized.title": "Not recognised",
  "registration.limit.explainer": "Your first 10 client registrations are free. Deleted clients still count towards this limit.",
  "services.contra.pickerHint": "Tick everything that should warn you when you book this service.",
+ "services.timing.example": "Example: a 75-minute colour with 30 minutes of processing lets you fit a 20-minute fringe cut inside it.",
  "services.timing.processingHint": "You’re free while it works, like colour developing. Another client can be seen then.",
  "sessionPlan.subtitle": "A series of sessions towards one goal. No prices, just the rhythm.",
  "tags.editor.color": "Colour",

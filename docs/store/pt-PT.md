@@ -11,9 +11,11 @@ Generated and length-checked together with the other localizations (see `README.
 | Keywords | esteticista,cabeleireira,unhas,pestanas,sobrancelhas,barbeiro,link de marcação,ficha de saúde | 93 / 100 |
 | Promotional text | As suas clientes marcam por um link, em qualquer navegador. Guarda cada visita, fotografia e ficha de saúde num registo privado no seu iPhone. | 142 / 170 |
 
-## Description (2410 / 4000)
+## Description (2466 / 4000)
 
 ```text
+Já não está sozinha. Bello Hub, consigo em cada etapa.
+
 O Bello Hub é a agenda e o registo de clientes da profissional independente de beleza e estética: esteticistas, cabeleireiras, técnicas de unhas, de pestanas e de sobrancelhas, barbeiros, tatuadoras e micropigmentadoras, massagistas.
 
 A SUA AGENDA
