@@ -59,6 +59,15 @@ actor FakeInboxRepository: InboxRepository {
         readFailure = error
     }
 
+    /// The server changed a booking by itself (the client acted on her manage page): replaces it, or adds it.
+    func replace(_ booking: IncomingBooking) {
+        if let index = bookings.firstIndex(where: { $0.id == booking.id }) {
+            bookings[index] = booking
+        } else {
+            bookings.append(booking)
+        }
+    }
+
     /// The items the mailbox lists. An item listed without its envelope is served by `mailboxItem(id:)` with the
     /// envelope from `stored` (a large envelope kept in Storage).
     func setMailbox(_ items: [MailboxItem], stored: [String: SealedEnvelope] = [:]) {
