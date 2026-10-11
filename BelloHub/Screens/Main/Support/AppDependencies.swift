@@ -207,7 +207,12 @@ struct AppDependencies {
         defaults: UserDefaults
     ) -> InboxServices {
         let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.currentInboxPublicKey() })
+            scenario -> any InboxRepository in
+            let server = UITestInboxRepository(
+                scenario: scenario, publicKey: { try keyManager.currentInboxPublicKey() }
+            )
+            server.actOnTheWebWhenTheAppLeaves()
+            return server
         } ?? OfflineInboxRepository()
         return InboxServices.make(
             repository: inbox, keys: keyManager, vault: vault, appointments: appointments,
