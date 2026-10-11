@@ -42,14 +42,16 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
 
     // MARK: - UNUserNotificationCenterDelegate
 
-    /// A visible push while the app is open: show it (the text is generic) and sync.
+    /// A visible push while the app is open: show it (iOS already resolved the generic text from the catalog) and
+    /// sync. A key the app has no string for is not shown raw (`PushPresentation`).
     func userNotificationCenter(
         _ center: UNUserNotificationCenter, willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
-        if let event = PushEvent(userInfo: notification.request.content.userInfo, wasOpened: false) {
+        let content = notification.request.content
+        if let event = PushEvent(userInfo: content.userInfo, wasOpened: false) {
             await MainActor.run { event.post() }
         }
-        return [.banner, .list, .sound]
+        return PushPresentation.options(forBody: content.body)
     }
 
     /// She tapped a notification: the UI opens the inbox.

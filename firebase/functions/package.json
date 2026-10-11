@@ -18,6 +18,7 @@
     "test:rules": "vitest run --project rules",
     "test:transport": "vitest run --project transport",
     "gen:schemas": "tsx scripts/generate-schemas.ts",
+    "gen:push-keys": "tsx scripts/generate-push-keys.ts",
     "emulators": "npm run build && firebase emulators:start --project demo-bellohub",
     "seed": "tsx scripts/seed.ts",
     "audit": "npm audit --audit-level=high"
