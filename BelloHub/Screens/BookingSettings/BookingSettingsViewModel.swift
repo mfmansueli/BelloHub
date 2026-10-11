@@ -24,14 +24,23 @@ final class BookingSettingsViewModel {
     /// A change to her availability could not be saved.
     private(set) var availabilityErrorMessage: String?
     private(set) var copiedLink = false
+    /// Her services, for the "What clients see" preview. Empty when none or when they could not be read: the preview
+    /// then uses a plain 60-minute visit.
+    private(set) var services: [Service] = []
+    /// The service the preview shows; nil is her longest active service.
+    var previewServiceID: UUID?
 
     let displayName: String
     let businessName: String
     let timeZone: TimeZone
     let localization: AppLocalization
     let firstWeekday: Int
+    let professions: [ProfessionID]
+    /// Her first profession's name in the app's language ("Esthetician"), for the suggestion card.
+    let professionName: String?
 
     private let service: BookingSetupService
+    private let servicesSource: (any AgendaRepository)?
     private let clipboard: any ClipboardWriting
     private let now: @Sendable () -> Date
     private let baseURL: URL
@@ -41,12 +50,14 @@ final class BookingSettingsViewModel {
     init(
         service: BookingSetupService,
         profile: ProfessionalProfile?,
+        services: (any AgendaRepository)? = nil,
         clipboard: any ClipboardWriting = SystemClipboard(),
         baseURL: URL = BookingLink.defaultBaseURL,
         copiedDuration: Duration = .seconds(2),
         now: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.service = service
+        servicesSource = services
         editor = BookingSetupEditor(service: service)
         availability = service.availability
         self.clipboard = clipboard
@@ -59,6 +70,9 @@ final class BookingSettingsViewModel {
         localization = profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
         firstWeekday = profile.map { WeekConfig.defaults(forRegion: $0.regionCode).firstWeekday }
             ?? Calendar.current.firstWeekday
+        professions = profile?.professions ?? []
+        let catalog = try? ProfessionCatalog.loadBundled(localization: localization)
+        professionName = professions.first.flatMap { catalog?.entry(for: $0)?.name }
     }
 
     // MARK: - Reading
@@ -99,6 +113,38 @@ final class BookingSettingsViewModel {
         Set(standard + [current]).sorted()
     }
 
+    // MARK: - Preview and suggestions (routine item 10)
+
+    /// Her active services, in her order, for the preview's service menu.
+    var previewableServices: [Service] {
+        services.filter(\.isActive).sorted { $0.position < $1.position }
+    }
+
+    /// The sample day of "What clients see", from her current settings: recomputed on every change, on the phone.
+    var slotPreview: SlotPreview? {
+        SlotPreviewBuilder.preview(
+            settings: availability, services: services, previewing: previewServiceID, now: now()
+        )
+    }
+
+    /// The agenda values that suit her profession, when hers differ from them; nil once they match.
+    var professionSuggestion: (profession: ProfessionID, defaults: ProfessionAgendaDefaults)? {
+        guard let suggestion = ProfessionAgendaDefaults.suggestion(for: professions),
+              !suggestion.defaults.matches(availability) else { return nil }
+        return suggestion
+    }
+
+    /// Whether an advanced option (start times, compact day) is not at its default, so "More options" opens by itself.
+    var hasAdvancedChanges: Bool {
+        availability.effectiveSlotStep != FreeSlotsRequest.defaultStepMinutes || !availability.keepsDayCompact
+    }
+
+    /// "Use these": applies the suggested time between clients, start times and compact day. Hours stay hers.
+    func useSuggestedDefaults() async {
+        guard let suggestion = professionSuggestion else { return }
+        await changeAvailability { $0 = suggestion.defaults.applied(to: $0) }
+    }
+
     // MARK: - Loading
 
     /// Entry point for appearing and retrying; `loadAsync()` is what tests await.
@@ -118,6 +164,8 @@ final class BookingSettingsViewModel {
             try await service.load(timeZoneID: timeZone.identifier)
             editor.adoptStored()
             availability = service.availability
+            // The preview is a help, not the screen: services that cannot be read leave the 60-minute sample.
+            if let servicesSource { services = (try? await servicesSource.services()) ?? services }
         } catch {
             errorMessage = String(
                 localized: "bookingSetup.error.load",

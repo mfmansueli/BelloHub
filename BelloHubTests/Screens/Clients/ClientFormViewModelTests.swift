@@ -20,6 +20,10 @@ private final class FailingRegistrar: ClientRegistering {
         throw Failure()
     }
 
+    func knownClients() async throws -> [Client] {
+        throw Failure()
+    }
+
     func importClients(_ clients: [Client]) async throws -> ClientImportResult {
         throw Failure()
     }

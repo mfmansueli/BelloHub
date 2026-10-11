@@ -12,9 +12,12 @@ struct BookingSettingsView: View {
     @Environment(BookingSetupService.self) private var bookingSetup
     @Environment(ProfileService.self) private var profile
     @Environment(PublishingService.self) private var publishing
+    @Environment(VaultService.self) private var vault
 
     var body: some View {
-        BookingSettingsContentView(service: bookingSetup, publishing: publishing, profile: profile.profile)
+        BookingSettingsContentView(
+            service: bookingSetup, publishing: publishing, profile: profile.profile, services: vault.repository
+        )
     }
 }
 
@@ -23,4 +26,5 @@ struct BookingSettingsView: View {
         .environment(BookingSetupService(vault: VaultService(repository: nil)))
         .environment(ProfileService(vault: VaultService(repository: nil)))
         .environment(PublishingService.preview)
+        .environment(VaultService(repository: nil))
 }

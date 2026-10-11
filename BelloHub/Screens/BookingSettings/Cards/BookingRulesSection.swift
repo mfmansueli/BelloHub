@@ -5,13 +5,16 @@
 
 import SwiftUI
 
-/// "Booking rules" on the booking page settings: the door to her hours with their summary, the buffer, slot interval,
-/// minimum notice and booking window menus, the "Keep my day compact" switch (D56), and the doors to her cancellation
-/// rules and her no-show protection, each with its one-line summary. The menus and the switch change her
-/// availability; the two doors push the policy screens, handing them the editor the settings screen shares with them.
+/// "Booking rules" on the booking page settings, organized progressively (routine item 10): first the suggestion for
+/// her profession when her values differ from it, then the basics (her hours, time between clients, minimum notice,
+/// booking window, cancellation rules, no-show protection), then "More options", a native disclosure with the start
+/// times and "Keep my day compact" (D56), open by itself only when one of them is not at its default. Every menu
+/// explains itself with an example from her routine. The menus and the switch change her availability; the two doors
+/// push the policy screens, handing them the editor the settings screen shares with them.
 struct BookingRulesSection: View {
     let viewModel: BookingSettingsViewModel
 
+    @State private var showsMoreOptions = false
     @Environment(\.locale) private var locale
 
     private var formatters: Formatters {
@@ -22,17 +25,42 @@ struct BookingRulesSection: View {
 
     var body: some View {
         SettingsSection(title: "bookingSettings.section.rules") {
+            if let suggestion = viewModel.professionSuggestion {
+                ProfessionSuggestionCard(
+                    professionName: viewModel.professionName, defaults: suggestion.defaults,
+                    formatters: formatters, onUse: { Task { await viewModel.useSuggestedDefaults() } }
+                )
+            }
             ListCard(dividerInset: Spacing.md) {
                 availabilityRow
                 bufferRow
-                slotStepRow
-                compactRow
                 noticeRow
                 windowRow
                 cancelRow
                 noShowRow
             }
+            moreOptions
         }
+        .task(id: viewModel.hasLoaded) {
+            if viewModel.hasAdvancedChanges { showsMoreOptions = true }
+        }
+    }
+
+    /// The start times and the compact day: useful, but most people never need to touch them.
+    private var moreOptions: some View {
+        DisclosureGroup(isExpanded: $showsMoreOptions) {
+            ListCard(dividerInset: Spacing.md) {
+                slotStepRow
+                compactRow
+            }
+            .padding(.top, Spacing.sm)
+        } label: {
+            Text("bookingSettings.rules.moreOptions")
+                .font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+                .frame(minHeight: Spacing.touchTarget, alignment: .leading)
+        }
+        .tint(Palette.roseText)
+        .accessibilityIdentifier("bookingSettings.moreOptions")
     }
 
     // MARK: - Rows
@@ -55,7 +83,7 @@ struct BookingRulesSection: View {
                 get: { availability.bufferMinutes }, set: { value in Task { await viewModel.setBuffer(value) } }
             ),
             options: viewModel.options(AvailabilityEditor.bufferOptions, including: availability.bufferMinutes),
-            label: bufferLabel, identifier: "bookingSettings.bufferPicker"
+            label: bufferLabel, identifier: "bookingSettings.bufferPicker", hint: "bookingSettings.rules.bufferExample"
         )
     }
 
@@ -66,7 +94,8 @@ struct BookingRulesSection: View {
                 get: { availability.effectiveSlotStep }, set: { value in Task { await viewModel.setSlotStep(value) } }
             ),
             options: AvailabilitySettings.slotStepChoices(including: availability.effectiveSlotStep),
-            label: slotStepLabel, identifier: "bookingSettings.slotStepPicker"
+            label: slotStepLabel, identifier: "bookingSettings.slotStepPicker",
+            hint: "bookingSettings.rules.slotStepExample"
         )
     }
 
@@ -89,7 +118,7 @@ struct BookingRulesSection: View {
                 set: { value in Task { await viewModel.setMinNoticeHours(value) } }
             ),
             options: viewModel.options(AvailabilityEditor.minNoticeOptions, including: availability.minNoticeHours),
-            label: noticeLabel, identifier: "bookingSettings.noticePicker"
+            label: noticeLabel, identifier: "bookingSettings.noticePicker", hint: "bookingSettings.rules.noticeExample"
         )
     }
 
@@ -100,7 +129,7 @@ struct BookingRulesSection: View {
                 get: { availability.maxDaysAhead }, set: { value in Task { await viewModel.setMaxDaysAhead(value) } }
             ),
             options: viewModel.options(AvailabilityEditor.windowOptions, including: availability.maxDaysAhead),
-            label: windowLabel, identifier: "bookingSettings.windowPicker"
+            label: windowLabel, identifier: "bookingSettings.windowPicker", hint: "bookingSettings.rules.windowExample"
         )
     }
 

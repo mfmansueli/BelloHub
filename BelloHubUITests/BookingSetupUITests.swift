@@ -107,6 +107,11 @@ final class BookingSetupUITests: XCTestCase {
     func testSlotIntervalAndCompactDay() {
         let app = XCUIApplication.launchedOnBookingSetup()
         app.openMoreRow("more.bookingPageRow")
+        // Start times and the compact day sit under "More options" (routine item 10).
+        let moreOptions = app.buttons["bookingSettings.moreOptions"]
+        XCTAssertTrue(app.scrollUntilExists(moreOptions))
+        XCTAssertFalse(app.buttons["bookingSettings.slotStepPicker"].exists, "closed while both are at their default")
+        moreOptions.tap()
         XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.slotStepPicker"]))
         XCTAssertTrue(app.buttons["bookingSettings.slotStepPicker"].label.contains("15"),
                       app.buttons["bookingSettings.slotStepPicker"].label)
@@ -118,6 +123,7 @@ final class BookingSetupUITests: XCTestCase {
 
         app.navigationBars.buttons.element(boundBy: 0).tap()
         app.tapButton("more.bookingPageRow")
+        // A changed option opens "More options" by itself.
         let again = app.switches["bookingSettings.compactToggle"]
         XCTAssertTrue(app.scrollUntilExists(again))
         XCTAssertEqual(again.value as? String, "0", "her choice was kept")
