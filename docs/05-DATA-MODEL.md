@@ -49,6 +49,13 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 - **CancellationPolicy**: `freeWindowHours` (2, 12, 24, 48, 72), `clientCanReschedule`, `maxReschedules?`, `afterWindowCancel` (`allow`, `message`), `afterWindowReschedule` (`request`, `message`), `askConfirmation`, `graceMinutes` (5–20).
 - **NoShowPolicy**: `isOn`, `limit` (1–5), `action` (`tell`, `approveNewBookings`, `pauseOnline`), `lateCancelCounts`.
 - **BookingPageSettings**: `acceptingBookings`, `pausedUntil?`, `confirmNewClients`, `maxGuests` (0–2).
+- **BookingSetup.location: BusinessLocation?** (2026-10-11, "Where you work"; optional, absent in older setups):
+  `street` (street and number), `postalCode`, `city`, `countryCode` (starts as the business region), `directions`
+  (how to find us), `visibility` (`confirmedClients`, the default, or `bookingPage`). Not clinical; stored in the clear
+  with the booking setup. `BusinessLocationFormat` writes the lines and the Apple Maps / Google Maps links that are
+  published.
+- **QuickReply** text may use `{address}` besides `{name} {service} {date} {time} {link}`; built-ins she never edited
+  are upgraded once to the current wording (`QuickReplyUpgrade`).
 - **NotificationPrefs**: toggles per alert kind, `quietHours?` (`from`, `until`), `dailySummary`, `clientRemindersEnabled`, `birthdaysEnabled`. Urgent alerts (client running late, same-day cancellation) ignore quiet hours.
 - **LocalePrefs**: see `07-LOCALIZATION.md` §3 (`businessLocalizationID`, `regionCode`, `currencyCode`, `weekStart`, `use24Hour`, `bookingLocaleIDs`). **RegionPreset** is bundled data (`16-MARKETS.md` §1), not stored per user.
 
@@ -101,8 +108,9 @@ Region per D29. Collections (details, rules and functions in `11-BACKEND-FIREBAS
 | `accounts/{uid}` | phone, `slug`, country, `dataRegion` (`eu` in v1, D29), locale, mirrored plan state, **`registrations {count, freeLimit}` (D42)**, deletion state, `inboxKeyring` public keys | Function and the account owner (non-sensitive fields only) | Owner |
 | `accounts/{uid}/registrations/{clientId}` | `registeredAt` only (an opaque client id, no personal data); created once per client id by `reserveRegistration`, never deleted by a client delete | Function only | Owner |
 | `publicProfiles/{slug}` | what the public page shows: name, bio, city, photo, public credentials, services (name, duration, price text only if she chose to show it, and the extra and processing minutes of D56), add-ons, time zone, currency, locales, **rules text per locale**, policy values, `inboxKey` (public) | The app (publishes) | Anyone |
+| `businessLocations/{uid}` | where she works as the app formatted it (`lines`, `directions?`, both map links) and `visibility` (`confirmed` or `public`); a copy without `visibility` goes into `publicProfiles/{slug}.location` only with `public` | Function (from `publishProfile`) | Functions only (getBooking for a confirmed booking, e-mails, `getIcs`) |
 | `availability/{uid}` | weekly rules, breaks, days off, buffer, slot interval and compact day (D56), **busy blocks (start/end only and the visit's extra and processing minutes, no names, no reasons)** | The app | Functions |
-| `bookings/{id}` | `ownerUid`, service, add-ons, guests count, start, end, status, **client name, phone (E.164), optional email, locale**, `manageTokenHash`, timestamps | **Functions only** | The owner; the client through a function with her token |
+| `bookings/{id}` | `ownerUid`, service, add-ons, guests count, start, end, status, **client name, phone (E.164), optional email, locale**, `manageTokenHashes` (at most five), `ownerLinkMintedAt` (when her app last asked for the client's link, `mintManageLink`; the token is derived, never stored), timestamps | **Functions only** | The owner; the client through a function with her token |
 | `inbox/{uid}/items/{itemId}` | **sealed envelope** (opaque), `kind`, `bookingId`, `createdAt`, `expiresAt`, size | Function (client submits) | The owner |
 | `portal/{token}` | what the professional chose to publish to the client: upcoming visits, aftercare text, shared product names | The app | The client through a function |
 | `rescheduleRequests/{id}`, `waitlist/{id}` | request data (name, phone, requested time, note) | Functions only | The owner |

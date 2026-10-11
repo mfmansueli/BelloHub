@@ -253,7 +253,7 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 6.10 Credentials (+ preview sheet) | `Screens/Credentials/CredentialsView` | `CredentialsViewModel` | `credentials.*` |
 | 6.11 Team (static, D5) | `Screens/Team/TeamView` | none | `team.*` |
 | 6.5 Availability (+ hours, break, days-off sheets) | `Screens/Availability/AvailabilityView` | `AvailabilityViewModel` | `availability.*` |
-| 6.7 BookingSettings (+ pause sheet) with 6.8 ShareLink, 6.16 CancelPolicy, 6.15 NoShowPolicy | `Screens/BookingSettings/` | `BookingSettingsViewModel`, policy and share view models | `bookingSettings.*`, `shareLink.*`, `cancelPolicy.*`, `noShowPolicy.*` |
+| 6.7 BookingSettings (+ pause sheet) with 6.8 ShareLink, 6.16 CancelPolicy, 6.15 NoShowPolicy, Where you work (design addition, 2026-10-11) | `Screens/BookingSettings/` (`Workplace/`) | `BookingSettingsViewModel`, policy and share view models, `WorkplaceViewModel` (`BusinessLocationFormat`, `WorkplaceCountries` pure) | `bookingSettings.*` (`.workplaceRow`), `shareLink.*`, `cancelPolicy.*`, `noShowPolicy.*`, `workplace.*` (`.streetField`, `.postalCodeField`, `.cityField`, `.countryPicker`, `.directionsField`, `.tooLong`, `.visibility.<confirmedClients|bookingPage>`, `.preview.address`, `.preview.empty`, `.map.apple`, `.map.google`, `.saveButton`, `.removeButton`, `.removeConfirmButton`, `.saveError`) |
 | 6.9 QuickReplies (+ editor sheet) | `Screens/QuickReplies/QuickRepliesView` | `QuickRepliesViewModel` | `quickReplies.*` |
 | 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
 | 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
@@ -300,7 +300,7 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
     │                (sheets through `AgendaSheet`: NewAppointment, Reschedule, BlockTime, BeforeYouStart, Cancel,
     │                MessageClient, NoShowMark, RunningLate, ClientMessage)
     ├── Alerts    → AlertsView → BookingRequest (sheet: Paywall; → NoShowHistory) · RescheduleRequest · Waitlist
-    └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
+    └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Where you work · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
                      Clients (Record fields, Forms, Tags), Messages (Quick replies; S5),
                      Preferences (Plan, Notifications, Integrations, Privacy → Recovery key · Export all · Legal notice,
                      AI assistant, Help; S10), Account (profile card or row → Account → Language and region,
@@ -672,6 +672,41 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - **Nothing changes without her tap.** "Use my iPhone's time zone" saves the profile's zone and re-saves her stored
   hours with that zone (same wall-clock hours, same day-off dates); the page republishes by itself if it is online.
   "Language and region" opens 7.2 in the More tab.
+
+### Client messages and location (2026-10-11, `docs/agent-notes/client-messages-location.md`)
+- **Links in messages.** Every link a client reads is the full `https://` address on a line of its own, nothing glued
+  after it, never inside bidi isolates (`ClientLinkText`, applied by `QuickReplyRenderer`, so replies she wrote
+  earlier come out clickable too). The short `bellohub.app/maria` stays only where she reads it herself: the link card,
+  the QR caption, the printed table card and the Instagram bio line.
+- **3.6 Message <client>.** Under the preview, a quiet line in `meta` / `ink2` with an icon (`check` for her client's
+  own link, `link` otherwise) says which link the message carries: "The link lets Ana change or cancel this visit.",
+  or her booking link and why (added by hand, no longer ahead, offline: Open tries again, could not be prepared).
+  While the server prepares the client's own link the line is a `ProgressView` with "Preparing the link…" and Open
+  waits (disabled). Shown only when the selected message has `{link}`. Identifiers `messageClient.linkNote.<manage |
+  addedByHand | notActive | offline | failed | preparing>`.
+- **Quick replies.** A sixth word chip, `{address}`: her address lines, the "how to find us" note and a Google Maps
+  link on lines of their own; without an address the word and its line disappear. The built-in "Confirm appointment"
+  and "Reschedule" carry it and end with the link on its own line.
+- **2.9 Waitlist.** Once the server holds the time for a person, the row shows "Send" (`belloChip`, `waitlist.send.<id>`,
+  "Send again" after the chat opened) that opens WhatsApp with the offer and its one-time link; the share-sheet card
+  (`ShareFallbackCard`, `waitlist.shareFallback`) when no chat app opens.
+- **Where you work** (Booking settings, design addition). A "Where you work" `SettingsSection` with one `MoreRow`
+  (`mapPin` icon on the rose tile) whose subtitle is the saved address on one line and who sees it, or "Not added yet".
+  The pushed screen (inline title) stacks: the subtitle, the four `BelloTextField`s (street and number, postal code,
+  city) and a country row with the native menu `Picker` (her business region first), the `BelloNoteField` "How to find
+  us (optional)"; "Who sees it" as two `ChoiceCard`s (only clients with a confirmed booking, the default; also on my
+  booking page, with the warning that anyone sees it); "What clients see", a `surface` card with the lines
+  (`bodyStrong` / `ink`), the note (`meta` / `ink2`) and two `Link`s "Apple Maps" and "Google Maps" (`metaStrong` /
+  `roseText`, 44 pt, side by side or stacked by `ViewThatFits`); Save (`belloPrimary`, "Saved" when nothing changed) and
+  Remove address (`belloSecondary`, destructive, confirmation dialog); a lock `FooterNote`. Every pair is already
+  measured (`BookingSetupContrastTests`). Audited in en and pt-BR at the default size and AX5.
+- **Web.** The management page says "Change or cancel" right under the booking card (heading, then Reschedule and
+  Cancel and the policy note); "Add to calendar" moved to its own card below. A `PlaceCard` ("Where", the lines in
+  `<bdi>`, the note, "Open in Apple Maps" / "Open in Google Maps" as 44 px links) on the confirmation and the
+  management page when the booking may see it, and on the booking page when she made it public.
+- **E-mails.** The HTML part uses the web tokens (ivory page, graphite text, `rose-text` links, a `surface` place box,
+  an `action` button with `on-action` text, all at least 4.5:1, measured in `messaging.test.ts`) and `dir="rtl"` in
+  Arabic.
 
 ## Empty, loading and error states
 

@@ -55,7 +55,7 @@ State machine `service → time → you → verify → [questions] → (confirme
 
 ## 4. The management page (`Bk-9`) and its flows
 
-Shows: service, add-ons, guests, time (business zone), professional, status chip, the professional's **rules** (generated text), and actions depending on state and rules:
+Shows: service, add-ons, guests, time (business zone), professional, status chip, the professional's **rules** (generated text), and actions depending on state and rules. **Right under the booking card it says "Change or cancel"** (owner, 2026-10-11: the personal link also arrives in her WhatsApp messages, `mintManageLink`, so the page opens on what it is for): Reschedule and Cancel with the policy note; Add to calendar sits in its own card further down. **Where she works** (`PlaceCard`: the address lines, the "how to find us" note, "Open in Apple Maps" / "Open in Google Maps") shows when the server sends it: a confirmed booking, or any booking when she made the address public (the confirmation page shows it too, and the booking page when public). A Playwright test opens the page with WhatsApp's and Instagram's in-app user agents and storage blocked (real in-app browsers stay H8):
 
 - **Confirm I'm coming** (when the policy asks for confirmation): sets `clientConfirmedAt`.
 - **Running late**: 10/15/20/30 min buttons → notification to the professional; shows what she replied if she did.
@@ -99,6 +99,13 @@ Same tokens as the app (generated into CSS variables by a script that reads the 
 | Manual (human H8) | the in-app browser checklist on real phones; record failures with screenshots in `docs/PROGRESS.md` |
 
 ## 9. Client reminders prepared in the app (D31)
+
+Every link in a message she sends is the full `https://` address on its own line (`ClientLinkText`). A message about
+a visit booked through the page carries the client's own link to change or cancel (`mintManageLink`, API.md 6.3);
+a visit she added by hand, a cancelled or past one, or a failed call carries her booking page, and the sheet says
+which. The calendar file (browser and `getIcs`) has her address as `LOCATION` and its map link in the description when
+the booking may see it, and her booking page as the link (D50).
+
 
 Because v1 does not send WhatsApp automatically, the iPhone prepares reminders:
 - At the configured time (default **18:00 the day before**, setting in `NotificationSettings`) the app posts a **generic** local notification ("3 reminders are ready to send").
