@@ -57,8 +57,7 @@ final class BookingSettingsViewModel {
         businessName = profile?.businessName ?? ""
         timeZone = profile.map { TimeZone(identifier: $0.timeZoneID) ?? .current } ?? .current
         localization = profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
-        firstWeekday = profile.map { WeekConfig.defaults(forRegion: $0.regionCode).firstWeekday }
-            ?? Calendar.current.firstWeekday
+        firstWeekday = profile?.weekConfig.firstWeekday ?? Calendar.current.firstWeekday
     }
 
     // MARK: - Reading

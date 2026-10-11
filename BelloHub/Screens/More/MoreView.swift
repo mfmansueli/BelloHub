@@ -261,8 +261,7 @@ struct MoreView: View {
     private var availabilitySubtitle: Text? {
         guard bookingSetup.hasLoaded else { return nil }
         let formatters = Formatters(locale: locale, timeZone: bookingSetup.availability.timeZone, currencyCode: "EUR")
-        let firstWeekday = profile.profile.map { WeekConfig.defaults(forRegion: $0.regionCode).firstWeekday }
-            ?? Calendar.current.firstWeekday
+        let firstWeekday = profile.profile?.weekConfig.firstWeekday ?? Calendar.current.firstWeekday
         return Text(verbatim: AvailabilityText(formatters: formatters, firstWeekday: firstWeekday)
             .weekSummary(of: bookingSetup.availability))
     }

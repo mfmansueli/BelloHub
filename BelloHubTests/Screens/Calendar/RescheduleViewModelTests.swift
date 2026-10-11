@@ -150,4 +150,36 @@ struct RescheduleViewModelTests {
         #expect(model.saveErrorMessage != nil && model.phase == .choosing)
         #expect(try await world.appointments.appointment(id: visit.id)?.startsAt == friday("15:00"))
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    @Test(
+        "A day chosen in the calendar's zone offers that day's hours and the move lands on it",
+        arguments: ZoneMismatch.all
+    )
+    func businessZone(_ zones: ZoneMismatch) async throws {
+        let world = try await CalendarWorld.make(availability: zones.availability)
+        let visit = makeVisit(clientID: world.ana.id, start: friday("15:00"))
+        try await world.appointments.book(visit)
+        let model = RescheduleViewModel(
+            appointmentID: visit.id, timeZoneID: zones.business, appointments: world.appointments,
+            timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup, vault: world.vault,
+            now: { TestClock.now }
+        )
+        await model.loadAsync()
+        for offered in model.offeredDays {
+            #expect(offered.slots.allSatisfy { zones.days.isSameDay($0, offered.day) }, "a chip shows another day")
+        }
+        model.selectDay(zones.day)
+        let times = model.slotPlan.all
+        #expect(times.first == zones.at("09:00"))
+        #expect(times.last == zones.at("17:00"))
+        #expect(times.allSatisfy { zones.days.isSameDay($0, zones.day) })
+        model.selectStart(zones.at("09:00"))
+        #expect(model.warnings.filter(\.isScheduleConflict).isEmpty, "09:00 is inside her hours")
+        model.selectStart(try #require(times.first))
+        #expect(await model.confirmAsync())
+        let moved = try #require(try await world.appointments.appointment(id: visit.id))
+        #expect(zones.days.isSameDay(moved.startsAt, zones.day), "the visit moved to another day")
+    }
 }

@@ -62,6 +62,9 @@ struct LaunchOptions: Equatable {
     /// reschedule request, a waitlist and a sealed health form addressed to the test key, so the inbox screens can be
     /// walked without a network. Implies `-uiOnline fake`.
     var uiInbox: String?
+    /// `-uiTab calendar` opens the app on that tab (a `MainTab` raw value), built in the first frame as the tab she
+    /// was on is after an unlock: before her profile has been read.
+    var initialTab: String?
 
     init() {}
 
@@ -87,6 +90,7 @@ struct LaunchOptions: Equatable {
         uiCamera = Self.value(after: "-uiCamera", in: arguments)
         uiOnline = Self.value(after: "-uiOnline", in: arguments)
         uiInbox = Self.value(after: "-uiInbox", in: arguments)
+        initialTab = Self.value(after: "-uiTab", in: arguments)
     }
 
     private static func value(after flag: String, in arguments: [String]) -> String? {

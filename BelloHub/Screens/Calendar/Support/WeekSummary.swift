@@ -47,6 +47,9 @@ struct WeekSummary: Equatable, Sendable {
     }
 
     static func make(_ input: Input, days: CalendarDays) -> WeekSummary {
+        var input = input
+        // Her hours are read in the zone the days are cut in, whatever zone they were saved in.
+        input.settings = input.settings.inTimeZone(days.calendar.timeZone)
         let week = days.week(containing: input.now)
         let held = input.appointments.filter { $0.status.holdsTime || $0.status == .completed }
         let duration = max(input.shortestServiceMinutes, 15)

@@ -52,9 +52,9 @@ enum LanguageRegionRules {
 
     /// The week start in force: her override or the region's.
     static func effectiveWeekConfig(_ draft: LanguageRegionDraft) -> WeekConfig {
-        let defaults = WeekConfig.defaults(forRegion: draft.regionCode, languageCode: draft.localization.languageCode)
-        return WeekConfig(
-            firstWeekday: draft.firstWeekday ?? defaults.firstWeekday, use24Hour: draft.use24Hour ?? defaults.use24Hour
+        WeekConfig.effective(
+            regionCode: draft.regionCode, languageCode: draft.localization.languageCode,
+            firstWeekday: draft.firstWeekday, use24Hour: draft.use24Hour
         )
     }
 

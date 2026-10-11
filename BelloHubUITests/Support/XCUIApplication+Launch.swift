@@ -14,14 +14,18 @@ extension XCUIApplication {
     ///     region, so right-to-left, plural rules and formatting are the real ones.
     ///   - largestText: launches at the largest Dynamic Type size (AX5).
     ///   - arguments: extra launch arguments for one test.
+    ///   - environment: extra environment for one test, e.g. `TZ` to put the phone in another time zone than the
+    ///     business one.
     @MainActor
     static func launchedForUITests(
         locale: String? = nil,
         largestText: Bool = false,
-        arguments: [String] = []
+        arguments: [String] = [],
+        environment: [String: String] = [:]
     ) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-uiTesting"]
+        app.launchEnvironment.merge(environment) { _, new in new }
         if let locale {
             app.launchArguments += ["-AppleLanguages", "(\(locale))", "-AppleLocale", appleLocale(for: locale),
                                     "-uiLocale", locale]

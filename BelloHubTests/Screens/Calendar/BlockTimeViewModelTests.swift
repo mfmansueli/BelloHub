@@ -187,4 +187,24 @@ struct BlockTimeViewModelTests {
         await model.loadAsync()
         #expect(model.errorMessage != nil && !model.canSave)
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    @Test("Closing a day closes that day in the calendar's zone, whatever zone her hours were saved in",
+          arguments: ZoneMismatch.all)
+    func businessZone(_ zones: ZoneMismatch) async throws {
+        let world = try await CalendarWorld.make(availability: zones.availability)
+        try await world.appointments.book(makeVisit(clientID: world.ana.id, start: zones.at("10:00")))
+        let model = BlockTimeViewModel(
+            day: zones.day, timeZoneID: zones.business, appointments: world.appointments,
+            timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup, vault: world.vault,
+            now: { TestClock.now }
+        )
+        await model.loadAsync()
+        #expect(model.bookedCounts[zones.day] == 1, "the day's own visit is inside the closed day")
+        #expect(model.affectedVisits.count == 1)
+        #expect(await model.saveAsync(reasonText: nil))
+        let blocks = try await world.timeBlocks.blocks(in: zones.days.interval(of: zones.day))
+        #expect(blocks.map(\.interval) == [zones.days.interval(of: zones.day)])
+    }
 }

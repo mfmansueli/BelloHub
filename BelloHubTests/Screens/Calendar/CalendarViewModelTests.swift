@@ -138,4 +138,20 @@ struct CalendarViewModelTests {
         model.startListening()
         #expect(model.errorMessage != nil && !model.isLoading)
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    @Test("A day's open hours are drawn in the calendar's zone, whatever zone her hours were saved in",
+          arguments: ZoneMismatch.all)
+    func businessZone(_ zones: ZoneMismatch) async throws {
+        let world = try await CalendarWorld.make(availability: zones.availability)
+        let model = CalendarViewModel(
+            timeZoneID: zones.business, firstWeekday: 2, appointments: world.appointments,
+            timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup, vault: world.vault, now: TestClock.now
+        )
+        let layout = model.layout(for: zones.day)
+        #expect(layout.day == zones.day)
+        #expect(layout.workingWindows == [DateInterval(start: zones.at("09:00"), end: zones.at("18:00"))])
+        #expect(model.visibleMinutes == CalendarDayLayout.VisibleMinutes(start: 9 * 60, end: 18 * 60))
+    }
 }

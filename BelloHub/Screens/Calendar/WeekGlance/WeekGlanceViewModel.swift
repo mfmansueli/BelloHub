@@ -70,7 +70,8 @@ final class WeekGlanceViewModel {
             }
             summary = WeekSummary.make(
                 WeekSummary.Input(
-                    now: now(), settings: bookingSetup.availability, appointments: visits, blocks: blocks,
+                    now: now(), settings: bookingSetup.availability.inTimeZone(days.calendar.timeZone),
+                    appointments: visits, blocks: blocks,
                     shortestServiceMinutes: shortest
                 ),
                 days: days

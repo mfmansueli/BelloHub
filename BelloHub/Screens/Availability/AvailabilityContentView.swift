@@ -11,13 +11,14 @@ import SwiftUI
 struct AvailabilityContentView: View {
     @State private var viewModel: AvailabilityViewModel
     @State private var editor: AvailabilityEditorMode?
-    private let regionCode: String?
+    /// Her week start (`ProfessionalProfile.weekConfig`); the phone's until her profile is read.
+    private let weekStart: Int?
 
     @Environment(\.locale) private var locale
 
-    init(service: BookingSetupService, timeZoneID: String, regionCode: String?) {
+    init(service: BookingSetupService, timeZoneID: String, firstWeekday: Int?) {
         _viewModel = State(initialValue: AvailabilityViewModel(service: service, timeZoneID: timeZoneID))
-        self.regionCode = regionCode
+        weekStart = firstWeekday
     }
 
     // MARK: - Helpers
@@ -27,7 +28,7 @@ struct AvailabilityContentView: View {
     }
 
     private var firstWeekday: Int {
-        regionCode.map { WeekConfig.defaults(forRegion: $0).firstWeekday } ?? Calendar.current.firstWeekday
+        weekStart ?? Calendar.current.firstWeekday
     }
 
     private var text: AvailabilityText {
@@ -285,7 +286,7 @@ struct AvailabilityContentView: View {
     NavigationStack {
         AvailabilityContentView(
             service: BookingSetupService(vault: VaultService(repository: nil)),
-            timeZoneID: "America/Sao_Paulo", regionCode: "BR"
+            timeZoneID: "America/Sao_Paulo", firstWeekday: 1
         )
     }
 }

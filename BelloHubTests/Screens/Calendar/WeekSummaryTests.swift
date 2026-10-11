@@ -93,4 +93,23 @@ struct WeekSummaryTests {
         let long = summary(shortest: 120).openSlotCount
         #expect(short > long)
     }
+
+    // MARK: - Business time zone (fix-reschedule-day)
+
+    @Test("The week reads her hours in the calendar's zone, whatever zone they were saved in",
+          arguments: ZoneMismatch.all)
+    func businessZone(_ zones: ZoneMismatch) {
+        let result = WeekSummary.make(
+            WeekSummary.Input(
+                now: zones.at("08:00"), settings: zones.availability, appointments: [], blocks: [],
+                shortestServiceMinutes: 60
+            ),
+            days: zones.days
+        )
+        #expect(result.suggestions.first?.start == zones.at("09:00"))
+        let today = result.rows.first { $0.isToday }
+        #expect(today?.day == zones.day)
+        // 09:00 to 18:00 holds nine one-hour visits, also on a 25-hour day.
+        #expect(today?.capacity == 9)
+    }
 }
