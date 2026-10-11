@@ -10,6 +10,9 @@ import UIKit
 /// goes
 /// through `PermissionService`; a denied permission gets an explanation and the way to Settings (and the library stays
 /// available on the previous screen). After a shot she reviews it, chooses who can see it, and retakes or saves.
+/// When this client has an earlier photo, it can be laid over the preview as a framing reference (routine item 11,
+/// `FramingReferenceRules`): "Show previous photo" with an opacity slider and a short guide. The reference lives in
+/// memory only and is never part of the photo taken.
 struct CameraStepView: View {
     @Bindable var viewModel: TreatmentFlowViewModel
     let kind: PhotoKind
@@ -21,9 +24,16 @@ struct CameraStepView: View {
     @State private var shot: Data?
     @State private var visibility = PhotoVisibility.professionalOnly
     @State private var flashOn = false
-    @State private var showsGhost = true
+    /// The framing reference, decrypted in memory; nil when the client has no earlier photo.
+    @State private var reference: Data?
+    @State private var showsReference = true
+    @State private var referenceOpacity = Self.defaultReferenceOpacity
     @State private var isTaking = false
     @State private var isReady = false
+
+    /// Light enough to see the live picture through it, strong enough to find the outline.
+    private static let defaultReferenceOpacity = 0.35
+    private static let referenceOpacityRange = 0.15...0.6
 
     var body: some View {
         content
@@ -31,6 +41,7 @@ struct CameraStepView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(Text(kind.title))
             .task { await prepare() }
+            .task { reference = await viewModel.framingReference(for: kind) }
             .onDisappear { camera.stop() }
     }
 
@@ -58,8 +69,10 @@ struct CameraStepView: View {
             VStack(spacing: Spacing.md) {
                 ZStack {
                     CameraPreview(camera: camera)
-                    if showsGhost, let ghost = viewModel.ghostThumbnail(for: kind) {
-                        DataImage(data: ghost).opacity(0.35).allowsHitTesting(false).accessibilityHidden(true)
+                    if showsReference, let reference {
+                        DataImage(data: reference).opacity(referenceOpacity)
+                            .allowsHitTesting(false).accessibilityHidden(true)
+                        FramingGuides().allowsHitTesting(false)
                     }
                 }
                 .aspectRatio(3 / 4, contentMode: .fit)
@@ -69,6 +82,7 @@ struct CameraStepView: View {
                 .accessibilityIdentifier("treatmentFlow.camera.preview")
                 Text("treatmentFlow.camera.private").font(Typography.meta).foregroundStyle(Palette.ink2)
                     .multilineTextAlignment(.center).padding(.horizontal, Spacing.gutter)
+                if reference != nil { referenceControls }
             }
             .padding(.vertical, Spacing.md)
         }
@@ -87,18 +101,39 @@ struct CameraStepView: View {
                         .accessibilityIdentifier("treatmentFlow.camera.flashToggle")
                         .onChange(of: flashOn) { _, new in camera.setFlash(new) }
                 }
-                if viewModel.ghostThumbnail(for: kind) != nil {
-                    Toggle(isOn: $showsGhost) { Text("treatmentFlow.camera.ghost") }
-                        .toggleStyle(.button)
-                        .frame(minHeight: 44)
-                        .accessibilityIdentifier("treatmentFlow.camera.ghostToggle")
-                }
             }
             Button { Task { await take() } } label: { Text("treatmentFlow.camera.capture") }
                 .buttonStyle(.belloPrimary)
                 .disabled(isTaking || !isReady)
                 .accessibilityIdentifier("treatmentFlow.camera.captureButton")
         }
+    }
+
+    /// "Show previous photo", how strongly it shows, and how to line up with it. Native switch and slider.
+    private var referenceControls: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Toggle(isOn: $showsReference) {
+                Text("treatmentFlow.camera.reference.toggle").font(Typography.bodyStrong).foregroundStyle(Palette.ink)
+            }
+            .tint(Palette.action)
+            .frame(minHeight: Spacing.touchTarget)
+            .accessibilityIdentifier("treatmentFlow.camera.referenceToggle")
+            if showsReference {
+                Text("treatmentFlow.camera.reference.opacity").font(Typography.meta).foregroundStyle(Palette.ink2)
+                    .accessibilityHidden(true)
+                Slider(value: $referenceOpacity, in: Self.referenceOpacityRange) {
+                    Text("treatmentFlow.camera.reference.opacity")
+                }
+                .tint(Palette.action)
+                .accessibilityValue(Text(referenceOpacity.formatted(.percent.precision(.fractionLength(0)))))
+                .accessibilityIdentifier("treatmentFlow.camera.referenceOpacity")
+                Text("treatmentFlow.camera.reference.guide").font(Typography.footnote).foregroundStyle(Palette.ink2)
+            }
+        }
+        .padding(Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .belloCard()
+        .padding(.horizontal, Spacing.gutter)
     }
 
     // MARK: - Review
