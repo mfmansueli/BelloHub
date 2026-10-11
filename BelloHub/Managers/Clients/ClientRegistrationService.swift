@@ -74,6 +74,10 @@ final class ClientRegistrationService: ClientRegistering {
 
     // MARK: - Many clients
 
+    func knownClients() async throws -> [Client] {
+        try await openRepository().allClients()
+    }
+
     func importClients(_ clients: [Client]) async throws -> ClientImportResult {
         let repository = try openRepository()
         let (fresh, duplicates) = ClientDuplicateRules.partition(clients, existing: try await repository.allClients())

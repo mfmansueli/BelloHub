@@ -164,29 +164,92 @@ struct ImportClientsViewModelTests {
 
     // MARK: - The free registrations
 
-    @Test("A batch larger than the free slots says how many go through and that the rest need a plan")
-    func partialFit() async throws {
+    @Test("A batch larger than the free slots says how many go through now and how many wait for a plan")
+    func partialPlan() async throws {
         let rig = try ImportViewModelRig(contacts: (1...10).map { makeContact("Person \($0)") }, ledgerCount: 6)
         await rig.model.pickContacts()
 
-        let fit = rig.model.fit
+        let plan = rig.model.plan
 
-        #expect(fit == ImportBatchFit(selected: 10, usage: rig.model.usage))
-        #expect(fit.willImport == 4 && fit.waiting == 6 && fit.needsPlan)
+        #expect(plan.newClients == 10 && plan.registeredNow == 4 && plan.waiting == 6 && plan.kind == .partlyFree)
 
         rig.model.toggleAll()
         rig.model.toggle("contact-Person 1")
-        #expect(rig.model.fit.willImport == 1 && !rig.model.fit.needsPlan)
+        #expect(rig.model.plan.registeredNow == 1 && rig.model.plan.kind == .allFree)
     }
 
     @Test("With a plan nothing waits")
-    func planFit() async throws {
+    func planUnlimited() async throws {
         let rig = try ImportViewModelRig(
             contacts: (1...10).map { makeContact("Person \($0)") }, ledgerCount: 10, hasPlan: true
         )
         await rig.model.pickContacts()
 
-        #expect(rig.model.fit.willImport == 10 && !rig.model.fit.needsPlan)
+        #expect(rig.model.plan.registeredNow == 10 && !rig.model.plan.needsPlan && rig.model.plan.kind == .unlimited)
+    }
+
+    @Test("People already in her list are marked, start unticked and are not counted as new")
+    func duplicatesAreMarked() async throws {
+        let rig = try ImportViewModelRig(contacts: [
+            makeContact("Ana", phone: "+5511900000001"), makeContact("Bia", phone: "+5511900000002")
+        ])
+        rig.registrar.known = [Client(name: "Ana Costa", phoneE164: "+5511900000001", createdAt: TestClock.now)]
+
+        await rig.model.pickContacts()
+
+        let ana = try #require(rig.model.readyEntries.first { $0.displayName == "Ana" })
+        #expect(rig.model.isAlreadyInList(ana))
+        #expect(!rig.model.isSelected(ana.id), "a duplicate would be skipped, so it starts unticked")
+        #expect(rig.model.plan.newClients == 1 && rig.model.plan.alreadyInList == 0)
+
+        rig.model.toggle(ana.id)
+        #expect(rig.model.plan.newClients == 1 && rig.model.plan.alreadyInList == 1, "ticked, it shows as skipped")
+    }
+
+    @Test("When her list cannot be read every row counts as new and the plan says duplicates were not checked")
+    func unreadableList() async throws {
+        let rig = try ImportViewModelRig(contacts: [makeContact("Ana"), makeContact("Bia")])
+        rig.registrar.known = nil
+
+        await rig.model.pickContacts()
+
+        #expect(rig.model.selection.count == 2)
+        #expect(!rig.model.plan.checkedDuplicates && rig.model.plan.newClients == 2)
+    }
+
+    @Test("Trying a small group selects only the first new people, passing over the ones already in her list")
+    func trialGroup() async throws {
+        let rig = try ImportViewModelRig(contacts: (1...8).map {
+            makeContact("Person \($0)", phone: "+551190000000\($0)")
+        }, ledgerCount: 6)
+        rig.registrar.known = [Client(name: "Old", phoneE164: "+5511900000001", createdAt: TestClock.now)]
+        await rig.model.pickContacts()
+
+        #expect(rig.model.trialChoices == [3, 4, 5], "3 and 5 are smaller than the 7 new; 4 is what is free")
+
+        rig.model.selectTrial(size: 3)
+
+        #expect(rig.model.selection == ["contact-Person 2", "contact-Person 3", "contact-Person 4"])
+        #expect(rig.model.plan.kind == .allFree && rig.model.plan.freeLeftAfter == 1)
+    }
+
+    @Test("Once a plan is active, the rows that waited are imported again and added to the result")
+    func importRestAfterPlan() async throws {
+        let rig = try ImportViewModelRig(contacts: (1...5).map { makeContact("Person \($0)") }, ledgerCount: 8)
+        await rig.model.pickContacts()
+        rig.registrar.importResult = ClientImportResult(registered: 2, blocked: 3)
+        await rig.model.importSelected()
+        #expect(!rig.model.canImportRest, "without a plan the paywall is offered instead")
+
+        rig.registrar.usage = RegistrationUsage(quota: RegistrationQuota(ledgerCount: 10, hasActivePlan: true))
+        rig.registrar.importResult = ClientImportResult(registered: 3, duplicates: 2)
+        #expect(rig.model.canImportRest)
+        await rig.model.importRest()
+
+        #expect(rig.registrar.imported.count == 2)
+        #expect(rig.registrar.imported.last?.count == 5, "the same selection; the gate skips the two already added")
+        #expect(rig.model.result?.registered == 5 && rig.model.result?.blocked == 0)
+        #expect(!rig.model.canImportRest)
     }
 
     @Test("Opening the screen refreshes the counter")

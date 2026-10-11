@@ -16,6 +16,10 @@ protocol ClientRegistering: AnyObject {
     /// Saves one client. A new client is counted; an edit, or a client whose phone another client already has, is not.
     func register(_ client: Client) async throws -> RegistrationOutcome
 
+    /// The clients already in her list, read for the import preview only (who is new, who is a duplicate). It never
+    /// writes and never counts anything.
+    func knownClients() async throws -> [Client]
+
     /// Saves a batch, skipping duplicates and stopping at the free registrations that are left (the rest is `blocked`).
     func importClients(_ clients: [Client]) async throws -> ClientImportResult
 }

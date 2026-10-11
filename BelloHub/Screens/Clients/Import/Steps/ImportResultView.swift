@@ -129,9 +129,25 @@ struct ImportResultView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityIdentifier("importClients.result.blocked")
-            Button { viewModel.showPaywall() } label: { Text("import.result.seePlans") }
+            Text("import.result.blocked.notSaved").font(Typography.meta).foregroundStyle(Palette.sageText)
+                .accessibilityIdentifier("importClients.result.notSaved")
+            if let problem = viewModel.problem {
+                InlineNotice(style: .warning, title: problem.title, message: problem.message)
+                    .accessibilityIdentifier("importClients.problem")
+            }
+            if viewModel.canImportRest {
+                Button { viewModel.importRestOfSelection() } label: {
+                    Text(LocalizedStringResource(
+                        "import.result.importRest", defaultValue: "Import the rest (\(result.blocked))"
+                    ).localized(in: locale))
+                }
                 .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("importClients.result.seePlansButton")
+                .accessibilityIdentifier("importClients.result.importRestButton")
+            } else {
+                Button { viewModel.showPaywall() } label: { Text("import.result.seePlans") }
+                    .buttonStyle(.belloSecondary)
+                    .accessibilityIdentifier("importClients.result.seePlansButton")
+            }
         }
         .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)

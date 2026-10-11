@@ -33,7 +33,11 @@ final class ImportClientsUITests: XCTestCase {
 
         app.tapButton("importClients.source.contacts")
         XCTAssertTrue(app.staticTexts["importClients.choose.title"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.element("importClients.limitNotice").exists, "four chosen, two free slots")
+        // Before confirming: four new, two free registrations left, two registered now, two waiting for a plan.
+        XCTAssertTrue(app.element("importClients.plan.new").label.contains("4"), "four new")
+        XCTAssertTrue(app.element("importClients.plan.now").label.contains("2"), "two go through now")
+        XCTAssertTrue(app.element("importClients.plan.waiting").label.contains("2"), "two wait for a plan")
+        XCTAssertTrue(app.element("importClients.plan.outcome").exists, "what happens to the rest is said")
         app.tapButton("importClients.importButton")
 
         let title = app.staticTexts["importClients.result.title"]
@@ -47,6 +51,23 @@ final class ImportClientsUITests: XCTestCase {
 
         app.tapButton("importClients.result.viewClientsButton")
         XCTAssertTrue(app.staticTexts["onboarding.ready.title"].waitForExistence(timeout: 5), "the sheet closed")
+    }
+
+    func testASmallGroupCanBeTriedFirst() {
+        let app = XCUIApplication.launchedForUITests(arguments: ["-uiContacts", "four"])
+        openImport(app)
+
+        app.tapButton("importClients.source.contacts")
+        XCTAssertTrue(app.staticTexts["importClients.choose.title"].waitForExistence(timeout: 5))
+        app.tapButton("importClients.trialMenu")
+        app.tapButton("importClients.trial.3")
+        XCTAssertTrue(app.element("importClients.plan.new").label.contains("3"), "only the first three are chosen")
+        app.tapButton("importClients.importButton")
+
+        let title = app.staticTexts["importClients.result.title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 5))
+        XCTAssertTrue(title.label.contains("3"), "three registered: \(title.label)")
+        XCTAssertFalse(app.element("importClients.result.blocked").exists, "the trial fits the free registrations")
     }
 
     func testASpreadsheetIsMappedValidatedAndImported() {

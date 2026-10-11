@@ -14,6 +14,8 @@ struct ImportEntryRow: View {
     let entry: ImportEntry
     let phoneText: String?
     let isSelected: Bool
+    /// Her list already has this person (same phone): importing skips the row, so it says so.
+    var isAlreadyInList = false
     let action: () -> Void
 
     var body: some View {
@@ -42,6 +44,9 @@ struct ImportEntryRow: View {
 
     @ViewBuilder
     private var secondaryLine: some View {
+        if isAlreadyInList {
+            Text("import.row.alreadyInList").font(Typography.footnoteStrong).foregroundStyle(Palette.ink2)
+        }
         if let phoneText {
             Text(verbatim: phoneText).font(Typography.footnote).foregroundStyle(Palette.ink2)
         } else {

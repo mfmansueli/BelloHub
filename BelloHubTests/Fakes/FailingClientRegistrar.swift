@@ -17,6 +17,10 @@ final class FailingClientRegistrar: ClientRegistering {
         throw VaultRepositoryError.unavailable
     }
 
+    func knownClients() async throws -> [Client] {
+        throw VaultRepositoryError.unavailable
+    }
+
     func importClients(_ clients: [Client]) async throws -> ClientImportResult {
         importAttempts += 1
         throw VaultRepositoryError.unavailable

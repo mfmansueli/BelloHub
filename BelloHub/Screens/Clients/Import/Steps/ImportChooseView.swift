@@ -5,12 +5,12 @@
 
 import SwiftUI
 
-/// "Choose clients": every person the source found, all selected, in a native list (lazy, so 2,000 rows stay fast).
-/// She can untick anyone, select all or clear, and sees how many will be imported before she taps the button. Rows
-/// that cannot be imported are listed apart with the reason. The free-registration limit is explained here when the
-/// batch is larger than what is left (D42). At accessibility text sizes the notice and the count move from the bottom
-/// bar into the list (a plain footer under the people, not a box), so the bar stays one button and the people stay on
-/// screen.
+/// "Choose clients": every person the source found in a native list (lazy, so 2,000 rows stay fast), the new ones
+/// selected and the ones already in her list marked. Above them, "Before you import" (`ImportPlanSummary`) says how
+/// many are new, how many free registrations are left and what waits for a plan (D42, routine item 9). She can untick
+/// anyone, select all or clear, or "Try a small group" (the first 3, 5 or 10 new people) to see how the import works
+/// before bringing everyone. Rows that cannot be imported are listed apart with the reason. The summary scrolls with
+/// the list, so at accessibility sizes the bottom bar stays one count and one button.
 struct ImportChooseView: View {
     let viewModel: ImportClientsViewModel
     let term: ClientTerm
@@ -18,7 +18,6 @@ struct ImportChooseView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private var isLarge: Bool { dynamicTypeSize.isAccessibilitySize }
-    private var showsLimitNotice: Bool { viewModel.fit.needsPlan && !viewModel.readyEntries.isEmpty }
 
     var body: some View {
         List {
@@ -26,18 +25,23 @@ struct ImportChooseView: View {
                 emptyState
             } else {
                 Section {
+                    ImportPlanSummary(plan: viewModel.plan, limit: viewModel.usage.limit)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                }
+                Section {
                     ForEach(viewModel.readyEntries) { entry in
                         ImportEntryRow(
                             entry: entry, phoneText: viewModel.phoneText(for: entry),
-                            isSelected: viewModel.isSelected(entry.id), action: { viewModel.toggle(entry.id) }
+                            isSelected: viewModel.isSelected(entry.id),
+                            isAlreadyInList: viewModel.isAlreadyInList(entry), action: { viewModel.toggle(entry.id) }
                         )
                         .listRowBackground(Palette.surface)
                         .listRowSeparatorTint(Palette.hairline)
                     }
                 } header: {
                     chooseHeader
-                } footer: {
-                    if isLarge && showsLimitNotice { limitText }
                 }
             }
             if !viewModel.skippedEntries.isEmpty { skippedSection }
@@ -61,8 +65,8 @@ struct ImportChooseView: View {
                 .font(Typography.metaStrong).foregroundStyle(Palette.ink2)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("importClients.choose.title")
-            if isLarge { selectionCount }
             if !isLarge { Spacer(minLength: Spacing.sm) }
+            if !viewModel.trialChoices.isEmpty { trialMenu }
             Button { viewModel.toggleAll() } label: {
                 Text(viewModel.allSelected ? "import.clearAll" : "import.selectAll")
                     .font(Typography.metaStrong).foregroundStyle(Palette.roseText)
@@ -71,6 +75,28 @@ struct ImportChooseView: View {
             .accessibilityIdentifier("importClients.selectAllButton")
         }
         .textCase(nil)
+    }
+
+    /// "Try a small group": a native menu that selects only the first few new people, so she can see the import work
+    /// (and how many free registrations it uses) before bringing the whole list.
+    private var trialMenu: some View {
+        Menu {
+            ForEach(viewModel.trialChoices, id: \.self) { size in
+                Button {
+                    viewModel.selectTrial(size: size)
+                } label: {
+                    Text(LocalizedStringResource(
+                        "import.plan.trial.first", defaultValue: "First \(size) new"
+                    ).localized(in: locale))
+                }
+                .accessibilityIdentifier("importClients.trial.\(size)")
+            }
+        } label: {
+            Text("import.plan.trial.menu")
+                .font(Typography.metaStrong).foregroundStyle(Palette.roseText)
+                .frame(minHeight: Spacing.touchTarget)
+        }
+        .accessibilityIdentifier("importClients.trialMenu")
     }
 
     private var skippedSection: some View {
@@ -107,8 +133,7 @@ struct ImportChooseView: View {
                 InlineNotice(style: .warning, title: problem.title, message: problem.message)
                     .accessibilityIdentifier("importClients.problem")
             }
-            if !isLarge && showsLimitNotice { limitNotice }
-            if !isLarge && !viewModel.readyEntries.isEmpty { selectionCount }
+            if !viewModel.readyEntries.isEmpty { selectionCount }
             importButton
         }
         .padding(.horizontal, Spacing.gutter)
@@ -125,38 +150,6 @@ struct ImportChooseView: View {
         ).localized(in: locale))
             .font(Typography.footnoteStrong).foregroundStyle(Palette.ink2)
             .accessibilityIdentifier("importClients.selectionCount")
-    }
-
-    /// Fewer free registrations than chosen clients: says how many go through now and that a plan adds the rest.
-    private var limitNotice: some View {
-        VStack(alignment: .leading, spacing: Spacing.xs) {
-            limitHeadline.font(Typography.metaStrong).foregroundStyle(Palette.amberText)
-            Text("import.choose.partial.detail").font(Typography.footnote).foregroundStyle(Palette.amberText)
-        }
-        .padding(Spacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Palette.amberBg, in: RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
-        .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("importClients.limitNotice")
-    }
-
-    /// The same message at accessibility sizes: plain text under the list, where it scrolls with the people.
-    private var limitText: some View {
-        VStack(alignment: .leading, spacing: Spacing.xs) {
-            limitHeadline.font(Typography.metaStrong).foregroundStyle(Palette.ink)
-            Text("import.choose.partial.detail").font(Typography.footnote).foregroundStyle(Palette.ink2)
-        }
-        .textCase(nil)
-        .accessibilityIdentifier("importClients.limitNotice")
-    }
-
-    private var limitHeadline: Text {
-        let covered = viewModel.fit.willImport
-        let chosen = viewModel.selection.count
-        return Text(LocalizedStringResource(
-            "import.choose.partial",
-            defaultValue: "Your free registrations cover \(covered) of the \(chosen) you chose."
-        ).localized(in: locale))
     }
 
     private var importButton: some View {

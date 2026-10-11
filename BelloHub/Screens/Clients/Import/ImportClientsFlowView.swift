@@ -35,7 +35,7 @@ struct ImportClientsFlowView: View {
             viewModel.fileImporterFinished(outcome.map { [$0] })
         }
         .contactPicker(for: viewModel.contacts)
-        .sheet(isPresented: $viewModel.isPaywallPresented) { PaywallSheet() }
+        .sheet(isPresented: $viewModel.isPaywallPresented, onDismiss: viewModel.paywallClosed) { PaywallSheet() }
         .task { await viewModel.start() }
     }
 
