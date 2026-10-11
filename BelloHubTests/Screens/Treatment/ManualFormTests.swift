@@ -41,8 +41,12 @@ struct ManualFormTests {
     func source() {
         let client = UUID()
         let glow = UUID()
-        let older = TreatmentRecord(clientID: client, serviceID: glow, serviceName: "Glow", createdAt: TestClock.days(-60))
-        let newer = TreatmentRecord(clientID: client, serviceID: glow, serviceName: "Glow", createdAt: TestClock.days(-20))
+        let older = TreatmentRecord(
+            clientID: client, serviceID: glow, serviceName: "Glow", createdAt: TestClock.days(-60)
+        )
+        let newer = TreatmentRecord(
+            clientID: client, serviceID: glow, serviceName: "Glow", createdAt: TestClock.days(-20)
+        )
         let otherService = TreatmentRecord(
             clientID: client, serviceID: UUID(), serviceName: "Peel", createdAt: TestClock.days(-5)
         )
