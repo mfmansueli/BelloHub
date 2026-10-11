@@ -1,5 +1,6 @@
-// Bk-9: the management page, opened from the personal link (docs/10 section 4). It shows the booking and only
-// the actions her policy allows at this moment: confirm she is coming, tell the professional she is running late,
+// Bk-9: the management page, opened from the personal link (docs/10 section 4). Right under the booking it says
+// "Change or cancel" with the two actions (owner, 2026-10-11: the link must lead straight to changing or cancelling;
+// it arrives in her WhatsApp message and e-mails), then only the other actions her policy allows at this moment: confirm she is coming, tell the professional she is running late,
 // reschedule (directly, by request, or by message), cancel (free, or late with an honest warning, or by message),
 // add to calendar, read the rules, message her. Which actions show is the SERVER's verdict (`actions` of API.md
 // 5.11, evaluated from the policy stored on the booking and the server clock); lib/policy.ts only words the
@@ -192,6 +193,32 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         {booking.guestCount > 0 ? <p class="meta">{t('bk8.guest.unnamed', { count: booking.guestCount })}</p> : null}
       </section>
 
+      {active ? (
+        <section class="stack-sm" aria-labelledby="change-title" data-testid="change-or-cancel">
+          <h2 id="change-title" class="strong">
+            {t('bk9.changeOrCancel')}
+          </h2>
+          <ul class="card card-flush list" data-testid="actions">
+            {booking.status === 'confirmed' ? (
+              <li>
+                {row(
+                  t('bk9.reschedule'),
+                  resSub,
+                  resched === 'direct' || resched === 'request' ? { to: manageRoute(token, 'reschedule') } : { href: message('wa.reschedule') },
+                  { testId: 'reschedule' },
+                )}
+              </li>
+            ) : null}
+            <li>
+              {row(t('bk9.cancel'), cancelSub, cancel === 'free' || cancel === 'allowedWithWarning' ? { to: manageRoute(token, 'cancel') } : { href: message('wa.cancel') }, { danger: true, testId: 'cancel' })}
+            </li>
+          </ul>
+          <Notice kind={cancel === 'free' ? 'quiet' : 'warning'} testId="policy-note">
+            {cancel === 'free' ? t('bk9.note.free', { deadline }) : t('bk9.note.late', { deadline })}
+          </Notice>
+        </section>
+      ) : null}
+
       {booking.status === 'pendingApproval' ? (
         <Notice kind="warning" icon="clock" title={t('bk10.title', { name: pro.firstName })} testId="pending">
           {t('bk9.pending.text', { name: pro.firstName })}
@@ -252,28 +279,9 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
       ) : null}
 
       {active ? (
-        <ul class="card card-flush list" data-testid="actions">
+        <ul class="card card-flush list" data-testid="calendar-actions">
           <li>{row(t('cal.add'), null, { onClick: () => { setCalendarOpen(true); } }, { testId: 'add-calendar' })}</li>
-          {booking.status === 'confirmed' ? (
-            <li>
-              {row(
-                t('bk9.reschedule'),
-                resSub,
-                resched === 'direct' || resched === 'request' ? { to: manageRoute(token, 'reschedule') } : { href: message('wa.reschedule') },
-                { testId: 'reschedule' },
-              )}
-            </li>
-          ) : null}
-          <li>
-            {row(t('bk9.cancel'), cancelSub, cancel === 'free' || cancel === 'allowedWithWarning' ? { to: manageRoute(token, 'cancel') } : { href: message('wa.cancel') }, { danger: true, testId: 'cancel' })}
-          </li>
         </ul>
-      ) : null}
-
-      {active ? (
-        <Notice kind={cancel === 'free' ? 'quiet' : 'warning'} testId="policy-note">
-          {cancel === 'free' ? t('bk9.note.free', { deadline }) : t('bk9.note.late', { deadline })}
-        </Notice>
       ) : null}
 
       {isCompleted(booking) ? (

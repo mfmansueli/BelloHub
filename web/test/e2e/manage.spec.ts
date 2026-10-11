@@ -154,3 +154,43 @@ test.describe('cancelling (Cl-6)', () => {
     expect(JSON.parse(cancel?.body ?? '{}')).toMatchObject({ data: { token, acceptLateWarning: true } });
   });
 });
+
+// The personal link arrives in a WhatsApp message or an Instagram chat and opens in that app's own browser, which
+// often blocks storage (docs/10 section 8). The page must open on "Change or cancel" all the same. Real in-app
+// browsers stay a human check (H8); this covers the user agents and the blocked storage.
+const IN_APP_BROWSERS = [
+  ['WhatsApp', 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 WhatsApp/25.20.80'],
+  ['Instagram', 'Mozilla/5.0 (Linux; Android 14; SM-A145F) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/129.0.0.0 Mobile Safari/537.36 Instagram 350.0.0.37.97 Android'],
+] as const;
+
+for (const [app, userAgent] of IN_APP_BROWSERS) {
+  test.describe(`the personal link opened inside ${app}`, () => {
+    test.use({ userAgent });
+
+    test('opens straight on "Change or cancel" with storage blocked', async ({ page, mock, slugFor }) => {
+      await page.context().addInitScript(() => {
+        for (const name of ['localStorage', 'sessionStorage'] as const) {
+          Object.defineProperty(window, name, {
+            get() {
+              throw new DOMException('The operation is insecure.', 'SecurityError');
+            },
+          });
+        }
+      });
+      const { token } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: 50 * HOUR });
+      await open(page, `/m/${token}`);
+      const section = page.getByTestId('change-or-cancel');
+      await expect(section.getByRole('heading', { level: 2 })).toHaveText(/change or cancel/i);
+      await expect(section.getByTestId('reschedule')).toBeVisible();
+      await expect(section.getByTestId('cancel')).toBeVisible();
+      // It comes right after the booking itself, before anything else she might scroll past.
+      const order = await page.evaluate(() => {
+        const card = document.querySelector('[data-testid="booking-card"]');
+        const change = document.querySelector('[data-testid="change-or-cancel"]');
+        return card !== null && change !== null && Boolean(card.compareDocumentPosition(change) & Node.DOCUMENT_POSITION_FOLLOWING);
+      });
+      expect(order).toBe(true);
+      await noHorizontalScroll(page);
+    });
+  });
+}
