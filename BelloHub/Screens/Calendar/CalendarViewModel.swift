@@ -55,7 +55,9 @@ final class CalendarViewModel {
 
     // MARK: - Reading
 
-    var availability: AvailabilitySettings { bookingSetup.availability }
+    /// Her hours, read in the zone this screen cuts its days in: a day chosen here gets that day's hours even when
+    /// they were saved in another zone (`AvailabilitySettings.inTimeZone`).
+    var availability: AvailabilitySettings { bookingSetup.availability.inTimeZone(days.calendar.timeZone) }
 
     /// The seven days of the week she is in.
     var weekDays: [Date] { days.week(containing: selectedDay) }

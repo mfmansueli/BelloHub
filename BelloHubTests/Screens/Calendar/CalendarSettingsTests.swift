@@ -26,17 +26,17 @@ struct CalendarSettingsTests {
         #expect(settings.formatters(locale: Locale(identifier: "pt_BR")).timeZone.identifier == "America/Sao_Paulo")
     }
 
-    @Test("The week starts on her region's day: Sunday in Brazil, Monday in Portugal")
+    @Test("The week starts on her region's day: Sunday in Brazil, Monday in Italy")
     func regionWeekStart() {
         #expect(CalendarSettings(profile: profile(region: "BR", zone: "America/Sao_Paulo")).firstWeekday == 1)
-        #expect(CalendarSettings(profile: profile(region: "PT", zone: "Europe/Lisbon")).firstWeekday == 2)
+        #expect(CalendarSettings(profile: profile(region: "IT", zone: "Europe/Rome")).firstWeekday == 2)
     }
 
     @Test("Her own week start, chosen in Language and region, wins over her region's")
     func ownWeekStart() {
         let monday = CalendarSettings(profile: profile(region: "BR", zone: "America/Sao_Paulo", firstWeekday: 2))
         #expect(monday.firstWeekday == 2)
-        let sunday = CalendarSettings(profile: profile(region: "PT", zone: "Europe/Lisbon", firstWeekday: 1))
+        let sunday = CalendarSettings(profile: profile(region: "IT", zone: "Europe/Rome", firstWeekday: 1))
         #expect(sunday.firstWeekday == 1)
     }
 

@@ -82,4 +82,22 @@ struct BookingRequestSuggestionTests {
 
         #expect(await rig.repository.writes.isEmpty)
     }
+
+    @Test("The starting point is the same wall-clock time a day later, also across a daylight-saving change")
+    func dayLaterInBusinessZone() async throws {
+        var booking = makeIncomingBooking(reason: .newClient)
+        booking.timeZoneID = "Europe/Lisbon"
+        booking.startsAt = TestClock.date("2026-10-24 10:00", zone: "Europe/Lisbon")
+        booking.endsAt = booking.startsAt.addingTimeInterval(5_400)
+        let rig = InboxRig(repository: FakeInboxRepository(bookings: [booking]))
+        await rig.start()
+        defer { rig.cleanUp() }
+        let model = BookingRequestViewModel(
+            bookingID: booking.id, sync: rig.sync, vault: rig.vault, link: BookingLink(slug: "maria"),
+            now: { TestClock.now }
+        )
+        model.beginSuggestion()
+        // Sunday 25 October is 25 hours long in Lisbon: 24 hours later would be 09:00.
+        #expect(model.suggestedStart == TestClock.date("2026-10-25 10:00", zone: "Europe/Lisbon"))
+    }
 }

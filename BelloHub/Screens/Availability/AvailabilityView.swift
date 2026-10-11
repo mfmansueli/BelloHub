@@ -16,7 +16,7 @@ struct AvailabilityView: View {
         AvailabilityContentView(
             service: bookingSetup,
             timeZoneID: profile.profile?.timeZoneID ?? TimeZone.current.identifier,
-            regionCode: profile.profile?.regionCode
+            firstWeekday: profile.profile?.weekConfig.firstWeekday
         )
     }
 }

@@ -104,9 +104,10 @@ struct CalendarDayLayout: Equatable, Sendable {
     static func make(
         day: Date, appointments: [Appointment], blocks: [TimeBlock], scale: Scale
     ) -> CalendarDayLayout {
-        let settings = scale.settings
-        let visible = scale.visible
         let days = scale.days
+        // Her hours are read in the zone the days are cut in, whatever zone they were saved in.
+        let settings = scale.settings.inTimeZone(days.calendar.timeZone)
+        let visible = scale.visible
         let dayStart = days.start(of: day)
         let dayInterval = days.interval(of: dayStart)
         let windowStart = days.date(on: dayStart, minutes: visible.start)

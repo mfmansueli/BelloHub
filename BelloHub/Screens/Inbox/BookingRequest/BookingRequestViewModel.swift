@@ -106,10 +106,14 @@ final class BookingRequestViewModel {
         return BookingSuggestionOutcome.offerURL(link: link, holdKey: holdKey)
     }
 
-    /// Opens the sheet on the same time a day later, a starting point she changes.
+    /// Opens the sheet on the same time a day later, a starting point she changes. "A day later" is a calendar day in
+    /// the business zone, so the wall-clock time stays the same across a daylight-saving change.
     func beginSuggestion() {
         guard phase.canAnswer, let booking else { return }
-        suggestedStart = booking.startsAt.addingTimeInterval(86_400)
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: booking.timeZoneID) ?? .gmt
+        suggestedStart = calendar.date(byAdding: .day, value: 1, to: booking.startsAt)
+            ?? booking.startsAt.addingTimeInterval(86_400)
         suggestion = nil
         suggestionErrorMessage = nil
         isSuggestSheetPresented = true

@@ -24,4 +24,14 @@ struct WeekConfig: Equatable, Sendable {
         return WeekConfig(firstWeekday: localized.firstWeekday, use24Hour: locale.hourCycle == .zeroToTwentyThree
             || locale.hourCycle == .oneToTwentyFour)
     }
+
+    /// The week start and clock in force: her own choice (Language and region) where she made one, otherwise her
+    /// region's. The one owner of this rule: the calendar, Availability, Booking settings and Language and region all
+    /// read it, so the week can never start on one day in one screen and on another day in the next.
+    static func effective(
+        regionCode: String, languageCode: String, firstWeekday: Int?, use24Hour: Bool?
+    ) -> WeekConfig {
+        let region = defaults(forRegion: regionCode, languageCode: languageCode)
+        return WeekConfig(firstWeekday: firstWeekday ?? region.firstWeekday, use24Hour: use24Hour ?? region.use24Hour)
+    }
 }

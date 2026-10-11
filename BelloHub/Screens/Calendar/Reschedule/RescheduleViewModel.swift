@@ -69,7 +69,9 @@ final class RescheduleViewModel {
 
     // MARK: - Reading
 
-    var availability: AvailabilitySettings { bookingSetup.availability }
+    /// Her hours, read in the zone this screen cuts its days in: a day chosen here gets that day's hours even when
+    /// they were saved in another zone (`AvailabilitySettings.inTimeZone`).
+    var availability: AvailabilitySettings { bookingSetup.availability.inTimeZone(days.calendar.timeZone) }
 
     /// The free starts of the chosen day for this visit (D56: her slot interval, extra and processing time).
     var slotPlan: FreeSlotsPlan {

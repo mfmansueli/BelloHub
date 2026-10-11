@@ -29,7 +29,8 @@ struct AgendaDigestSource {
         AgendaDigest.make(
             AgendaDigest.Input(
                 appointments: service.appointments, clients: service.clients, services: service.services,
-                blocks: service.blocks, availability: bookingSetup.availability, prefs: prefs.load(), now: now
+                blocks: service.blocks, availability: bookingSetup.availability.inTimeZone(days.calendar.timeZone),
+                prefs: prefs.load(), now: now
             ),
             days: days
         )

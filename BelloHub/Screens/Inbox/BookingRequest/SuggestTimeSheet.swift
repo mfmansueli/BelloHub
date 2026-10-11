@@ -59,10 +59,19 @@ struct SuggestTimeSheet: View {
             Text("bookingRequest.suggest.when")
         }
         .datePickerStyle(.graphical)
+        // Both, so the days of the grid and the time are read in the business zone, never the phone's.
         .environment(\.timeZone, timeZone)
+        .environment(\.calendar, businessCalendar)
         .padding(Spacing.md)
         .belloCard(cornerRadius: Radius.tile)
         .accessibilityIdentifier("bookingRequest.suggest.picker")
+    }
+
+    private var businessCalendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = locale
+        calendar.timeZone = timeZone
+        return calendar
     }
 
     @ViewBuilder

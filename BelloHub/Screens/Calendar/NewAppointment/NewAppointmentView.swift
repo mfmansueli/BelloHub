@@ -29,6 +29,8 @@ struct NewAppointmentView: View {
             ),
             settings: settings
         )
+        // Her zone and week start are only known once her profile is read: new ones build a new ViewModel.
+        .id(settings)
     }
 }
 
