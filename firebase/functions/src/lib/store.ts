@@ -14,6 +14,7 @@ export function refs(db: Firestore) {
     slug: (slug: string) => db.collection(C.slugs).doc(slug),
     profile: (slug: string) => db.collection(C.publicProfiles).doc(slug),
     intakeForm: (uid: string) => db.collection(C.intakeForms).doc(uid),
+    businessLocation: (uid: string) => db.collection(C.businessLocations).doc(uid),
     availability: (uid: string) => db.collection(C.availability).doc(uid),
     bookings: () => db.collection(C.bookings),
     booking: (id: string) => db.collection(C.bookings).doc(id),

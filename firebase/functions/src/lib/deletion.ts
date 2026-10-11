@@ -143,7 +143,7 @@ export async function cascadeDeleteAccount(deps: Deps, uid: string): Promise<voi
   for (const collection of ['bookings', 'holds', 'portal', 'rescheduleRequests', 'waitlist', 'contacts', 'idempotency', 'trustedDevices']) {
     await deleteRefs(deps, await refsOf(byOwner(collection)));
   }
-  await deleteRefs(deps, [r.availability(uid), r.intakeForm(uid), r.calendarLock(uid)]);
+  await deleteRefs(deps, [r.availability(uid), r.intakeForm(uid), r.businessLocation(uid), r.calendarLock(uid)]);
   await deleteRefs(deps, [...slugNames].flatMap((slug) => [r.profile(slug), r.slug(slug)]));
   await db.recursiveDelete(db.collection('inbox').doc(uid));
   await db.recursiveDelete(db.collection('devices').doc(uid));

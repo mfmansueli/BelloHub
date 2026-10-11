@@ -1176,6 +1176,51 @@
         "intakeRequired": {
           "type": "boolean"
         },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lines": {
+              "minItems": 1,
+              "maxItems": 3,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              }
+            },
+            "directions": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 300
+            },
+            "maps": {
+              "type": "object",
+              "properties": {
+                "apple": {
+                  "type": "string",
+                  "maxLength": 2000,
+                  "pattern": "^https:\\/\\/maps\\.apple\\.com\\/\\?address=[A-Za-z0-9%._~-]+$"
+                },
+                "google": {
+                  "type": "string",
+                  "maxLength": 2000,
+                  "pattern": "^https:\\/\\/www\\.google\\.com\\/maps\\/search\\/\\?api=1&query=[A-Za-z0-9%._~-]+$"
+                }
+              },
+              "required": [
+                "apple",
+                "google"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "lines",
+            "maps"
+          ],
+          "additionalProperties": false
+        },
         "tokenExpiresAt": {
           "type": "string",
           "format": "date-time"
@@ -2029,6 +2074,51 @@
                 "keyId",
                 "alg",
                 "pub"
+              ],
+              "additionalProperties": false
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "lines": {
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  }
+                },
+                "directions": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 300
+                },
+                "maps": {
+                  "type": "object",
+                  "properties": {
+                    "apple": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^https:\\/\\/maps\\.apple\\.com\\/\\?address=[A-Za-z0-9%._~-]+$"
+                    },
+                    "google": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^https:\\/\\/www\\.google\\.com\\/maps\\/search\\/\\?api=1&query=[A-Za-z0-9%._~-]+$"
+                    }
+                  },
+                  "required": [
+                    "apple",
+                    "google"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "lines",
+                "maps"
               ],
               "additionalProperties": false
             },
@@ -3577,6 +3667,57 @@
               "required": [
                 "formVersion",
                 "template"
+              ],
+              "additionalProperties": false
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "lines": {
+                  "minItems": 1,
+                  "maxItems": 3,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "maxLength": 480
+                  }
+                },
+                "directions": {
+                  "type": "string",
+                  "maxLength": 1200
+                },
+                "maps": {
+                  "type": "object",
+                  "properties": {
+                    "apple": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^https:\\/\\/maps\\.apple\\.com\\/\\?address=[A-Za-z0-9%._~-]+$"
+                    },
+                    "google": {
+                      "type": "string",
+                      "maxLength": 2000,
+                      "pattern": "^https:\\/\\/www\\.google\\.com\\/maps\\/search\\/\\?api=1&query=[A-Za-z0-9%._~-]+$"
+                    }
+                  },
+                  "required": [
+                    "apple",
+                    "google"
+                  ],
+                  "additionalProperties": false
+                },
+                "visibility": {
+                  "type": "string",
+                  "enum": [
+                    "confirmed",
+                    "public"
+                  ]
+                }
+              },
+              "required": [
+                "lines",
+                "maps",
+                "visibility"
               ],
               "additionalProperties": false
             }

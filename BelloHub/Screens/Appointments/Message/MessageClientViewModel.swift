@@ -79,7 +79,9 @@ final class MessageClientViewModel {
         let link = linkChoice?.link ?? bookingPage?.messageText
         return AppointmentMessageComposer.text(
             for: .quickReply(reply),
-            values: AppointmentMessageComposer.values(client: visit.client, appointment: visit.appointment, link: link),
+            values: AppointmentMessageComposer.values(
+                client: visit.client, appointment: visit.appointment, link: link, location: setup.setup.location
+            ),
             localization: business.localization, formatters: business.messageFormatters
         )
     }

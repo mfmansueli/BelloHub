@@ -11,7 +11,7 @@ const base = {
   startsAt: Date.parse('2026-10-03T13:00:00.000Z'),
   endsAt: Date.parse('2026-10-03T14:30:00.000Z'),
   tentative: false,
-  link: 'https://bellohub.app/m/AbCdEfGhIjKlMnOpQrStUv',
+  link: 'https://bellohub.app/maria',
   now: Date.parse('2026-10-01T15:00:00.000Z'),
   locale: 'en' as const
 };
@@ -32,12 +32,23 @@ describe('buildIcs', () => {
     expect(lines(ics).filter((line) => line === 'BEGIN:VEVENT')).toHaveLength(1);
   });
 
-  it('carries the personal link and a reminder a day before, and nothing clinical', () => {
+  it('carries her booking page (D50: never the manage link) and a reminder a day before, and nothing clinical', () => {
     const ics = buildIcs(base);
 
-    expect(ics).toContain('URL:https://bellohub.app/m/AbCdEfGhIjKlMnOpQrStUv');
+    expect(ics).toContain('URL:https://bellohub.app/maria');
+    expect(ics).not.toContain('/m/');
     expect(ics).toContain('TRIGGER:-PT24H');
     expect(ics).not.toMatch(/allerg|health|consent/i);
+  });
+
+  it('puts her address in LOCATION and its map link in the description when the client may see it', () => {
+    const map = 'https://www.google.com/maps/search/?api=1&query=Rua%20Augusta%201200';
+    const ics = buildIcs({ ...base, address: 'Rua Augusta 1200, São Paulo 01304-001', mapUrl: map });
+    const unfolded = ics.replace(/\r\n /g, '');
+
+    expect(unfolded).toContain('LOCATION:Rua Augusta 1200\\, São Paulo 01304-001');
+    expect(unfolded).not.toContain('LOCATION:Sao Paulo');
+    expect(unfolded).toContain(`\\n${map}`);
   });
 
   it('marks a booking that waits for the professional as tentative', () => {

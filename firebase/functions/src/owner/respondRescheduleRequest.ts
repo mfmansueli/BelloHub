@@ -3,6 +3,7 @@ import { FieldValue } from 'firebase-admin/firestore';
 import { defineUseCase, ownerUid } from '../app/UseCase.js';
 import { RATE } from '../config/limits.js';
 import * as contract from '../contracts/owner.js';
+import { tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { sendBookingEmail } from '../lib/bookingEmails.js';
 import { bookingOffer, bumpCalendarLock, checkSlot, loadCalendar, readCalendarLock } from '../lib/calendar.js';
 import type { BookingDoc, PublicProfileDoc, RescheduleRequestDoc } from '../lib/docs.js';
@@ -16,7 +17,8 @@ import { runTransaction } from '../lib/tx.js';
 
 /**
  * Accept moves the booking to the requested time if it is still free by her rules (otherwise `slotTaken` and the request
- * stays open for her to decline or to use `moveBookingByOwner`). Decline leaves the booking where it was.
+ * stays open for her to decline or to use `moveBookingByOwner`). Decline leaves the booking where it was. An accepted
+ * move is e-mailed with one more manage token, so the e-mail carries her exact link (the same five-link cap).
  */
 export const respondRescheduleRequest = defineUseCase({
   name: 'respondRescheduleRequest',
@@ -27,6 +29,7 @@ export const respondRescheduleRequest = defineUseCase({
     await consumeRate(deps, 'ownerCalls', uid, RATE.ownerCalls);
     const r = refs(deps.db);
     const now = deps.now();
+    const manageToken = deps.random.token();
 
     const outcome = await runTransaction(deps.db, async (tx) => {
       const reader = txReader(tx);
@@ -55,7 +58,9 @@ export const respondRescheduleRequest = defineUseCase({
       if (!check.free) return { status: 'slotTaken' as const };
 
       const endsAt = startsAt + booking.data.durationMinutes * 60_000;
+      const mints = booking.data.client.email !== undefined;
       tx.update(booking.ref, {
+        ...(mints ? { manageTokenHashes: withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) } : {}),
         startsAt: ts(startsAt),
         endsAt: ts(endsAt),
         purgeAt: ts(purgeAtFor(endsAt)),
@@ -69,7 +74,7 @@ export const respondRescheduleRequest = defineUseCase({
       tx.update(requestRef, { status: 'accepted', respondedAt: ts(now), purgeAt: ts(purgeAtFor(endsAt)) });
       bumpCalendarLock(tx, deps.db, uid);
       const moved: BookingDoc = { ...booking.data, startsAt: ts(startsAt), endsAt: ts(endsAt) };
-      return { status: 'accepted' as const, moved, name: profile?.displayName ?? '' };
+      return { status: 'accepted' as const, moved, name: profile?.displayName ?? '', ...(mints ? { manageToken } : {}) };
     });
 
     if (outcome.status === 'accepted') {
@@ -77,7 +82,7 @@ export const respondRescheduleRequest = defineUseCase({
         template: 'bookingMoved',
         booking: outcome.moved,
         professionalName: outcome.name,
-        linkToPage: true
+        ...(outcome.manageToken ? { manageToken: outcome.manageToken } : { linkToPage: true })
       });
     }
     return { status: outcome.status };

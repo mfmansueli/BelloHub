@@ -79,6 +79,11 @@ final class BookingSetupService {
             try await repository.save(defaults)
             stored = try await repository.quickReplies()
         }
+        let upgraded = QuickReplyUpgrade.upgraded(stored, localization: localization, now: now())
+        if !upgraded.isEmpty {
+            try await repository.save(upgraded)
+            stored = try await repository.quickReplies()
+        }
         quickReplies = stored
     }
 

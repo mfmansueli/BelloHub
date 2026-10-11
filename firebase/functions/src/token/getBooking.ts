@@ -4,9 +4,10 @@ import { iso } from '../contracts/common.js';
 import * as contract from '../contracts/public.js';
 import { findBookingByToken, tokenHash } from '../lib/bookingAccess.js';
 import { clientActions } from '../lib/clientActions.js';
-import type { ContactDoc, IntakeFormDoc, PublicProfileDoc, RescheduleRequestDoc } from '../lib/docs.js';
+import type { BusinessLocationDoc, ContactDoc, IntakeFormDoc, PublicProfileDoc, RescheduleRequestDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { consumeRates } from '../lib/rateLimit.js';
+import { shownLocation } from '../lib/location.js';
 import { intakeIsCurrent } from '../lib/rules.js';
 import { dataOf, ms, msOpt, plainReader, refs } from '../lib/store.js';
 
@@ -26,11 +27,12 @@ export const getBooking = defineUseCase({
     const now = deps.now();
     const r = refs(deps.db);
     const { id, data: booking } = await findBookingByToken(plainReader, deps.db, input.token, now);
-    const [profileSnap, contactSnap, intakeSnap, requestSnap] = await Promise.all([
+    const [profileSnap, contactSnap, intakeSnap, requestSnap, locationSnap] = await Promise.all([
       r.profile(booking.slug).get(),
       r.contact(booking.ownerUid, booking.phoneHash).get(),
       r.intakeForm(booking.ownerUid).get(),
-      r.rescheduleRequest(id).get()
+      r.rescheduleRequest(id).get(),
+      r.businessLocation(booking.ownerUid).get()
     ]);
     const profile = dataOf<PublicProfileDoc>(profileSnap);
     if (!profile) throw new AppError('NOT_FOUND');
@@ -39,6 +41,8 @@ export const getBooking = defineUseCase({
     const actions = clientActions(booking, now);
     const confirmedAt = msOpt(booking.clientConfirmedAt);
     const intakePublished = dataOf<IntakeFormDoc>(intakeSnap) !== undefined;
+    // Where she works: for a confirmed booking, or for anyone when she put it on her page (lib/location.ts).
+    const location = shownLocation(dataOf<BusinessLocationDoc>(locationSnap), booking.status);
 
     return {
       bookingId: id,
@@ -79,6 +83,7 @@ export const getBooking = defineUseCase({
         ? { pendingReschedule: { requestedStart: iso(ms(request.requestedStart)), status: request.status } }
         : {}),
       intakeRequired: intakePublished && !intakeIsCurrent(msOpt(contact?.lastIntakeAt), now),
+      ...(location ? { location } : {}),
       tokenExpiresAt: iso(ms(booking.purgeAt))
     };
   }

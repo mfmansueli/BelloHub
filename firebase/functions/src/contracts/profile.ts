@@ -37,6 +37,28 @@ function processingInsideVisit(value: { durationMinutes?: number; processingStar
 
 const RulesText = z.partialRecord(LocaleSchema, looseText(2000, true));
 
+// Where she works (owner, 2026-10-11). The app formats the address and builds both map links from the text (no SDK, no
+// geocoding); the server only checks their shape so a link can never point anywhere else, and prints them as they are.
+const MapsSchema = z.strictObject({
+  apple: z.string().max(2000).regex(/^https:\/\/maps\.apple\.com\/\?address=[A-Za-z0-9%._~-]+$/),
+  google: z.string().max(2000).regex(/^https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=[A-Za-z0-9%._~-]+$/)
+});
+
+const locationFields = {
+  lines: z.array(text(120)).min(1).max(3),
+  directions: text(300).optional(),
+  maps: MapsSchema
+};
+
+/** The address as clients see it (`getPublicPage` with `public`, `getBooking` for a confirmed booking). */
+export const PublicLocationSchema = z.strictObject(locationFields);
+
+/** What the app publishes: the address and who may see it (`confirmed` is the default; `public` adds the page). */
+export const LocationPublishSchema = z.strictObject({
+  ...locationFields,
+  visibility: z.enum(['confirmed', 'public'])
+});
+
 export const ServicePublishSchema = z.strictObject({
   id: Uuid,
   name: text(80),
@@ -108,7 +130,8 @@ const profileFields = {
 /** What `publishProfile` accepts. */
 export const PublicProfileInputSchema = z.strictObject({
   ...profileFields,
-  intake: IntakePublishSchema.optional()
+  intake: IntakePublishSchema.optional(),
+  location: LocationPublishSchema.optional()
 });
 
 /** What `getPublicPage` returns. */
@@ -116,6 +139,8 @@ export const PublicProfileSchema = z.strictObject({
   schemaVersion: z.literal(1),
   slug: SlugSchema,
   ...profileFields,
+  /** Only when she chose to show her address on the booking page. */
+  location: PublicLocationSchema.optional(),
   updatedAt: Instant
 });
 

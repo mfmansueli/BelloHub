@@ -21,9 +21,9 @@ import { runTransaction } from '../lib/tx.js';
  * is where the free registrations are enforced: with them used and no plan the answer is `needsSubscription`, the
  * booking stays pending, and the app shows the paywall. Declining frees the time.
  *
- * An unverified request (verify-fallback, `verification: 'whatsapp'`) was never e-mailed when it was made, so approving
- * it mints a new manage token and e-mails her the full confirmation with the personal link (the address she typed; she confirmed the
- * request with the professional on WhatsApp).
+ * Approving mints one more manage token (the same five-link cap) when the client gave an e-mail, so the e-mail carries
+ * her exact link to change or cancel (owner, 2026-10-11). An unverified request (verify-fallback, `verification:
+ * 'whatsapp'`) was never e-mailed when it was made, so it gets the full confirmation instead of the short approval.
  */
 export const respondBookingRequest = defineUseCase({
   name: 'respondBookingRequest',
@@ -79,7 +79,8 @@ export const respondBookingRequest = defineUseCase({
         now
       );
       const unverified = booking.data.verification === 'whatsapp';
-      const hashes = unverified ? withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) : undefined;
+      const mints = booking.data.client.email !== undefined;
+      const hashes = mints ? withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) : undefined;
       tx.update(booking.ref, {
         status: 'confirmed',
         pendingReason: FieldValue.delete(),
@@ -92,7 +93,8 @@ export const respondBookingRequest = defineUseCase({
         status: 'confirmed' as const,
         booking: { ...booking.data, status: 'confirmed' as const },
         profile,
-        ...(unverified ? { manageToken } : {})
+        unverified,
+        ...(mints ? { manageToken } : {})
       };
     });
 
@@ -101,7 +103,7 @@ export const respondBookingRequest = defineUseCase({
         // An approved unverified request gets the full confirmation (it carries the personal link): she never had one.
         template:
           outcome.status === 'confirmed'
-            ? 'manageToken' in outcome && outcome.manageToken
+            ? 'unverified' in outcome && outcome.unverified
               ? 'bookingConfirmed'
               : 'bookingApproved'
             : 'bookingDeclined',

@@ -11,6 +11,9 @@ enum QuickReplyVariable: String, CaseIterable, Identifiable, Sendable {
     case date
     case time
     case link
+    /// Where she works ("Where you work"): the address lines, the "how to find us" note and a map link, on lines of
+    /// their own. Gone, with its line, when she has no address.
+    case address
 
     var id: String { rawValue }
 

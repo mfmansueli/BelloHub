@@ -46,6 +46,8 @@ enum Icon: String, CaseIterable {
     case repeatArrows = "arrow.triangle.2.circlepath"
     case mail = "envelope"
     case globe = "globe"
+    /// Where she works and the map links.
+    case mapPin = "mappin.and.ellipse"
     case faceID = "faceid"
     case star = "star"
     case bolt = "bolt"

@@ -3,7 +3,10 @@ import type { ClientMessenger, EmailRequest, WhatsAppRequest } from './ClientMes
 import { DisabledEmailProvider } from './DisabledEmailProvider.js';
 import { DisabledWhatsAppProvider } from './DisabledWhatsAppProvider.js';
 import type { EmailProvider } from './EmailProvider.js';
-import { emailTextsFor } from './emailTemplates.js';
+import { emailHtml } from './emailHtml.js';
+import type { EmailPlace } from './emailPlace.js';
+import { withPlace } from './emailPlace.js';
+import { emailLabelsFor, emailTextsFor } from './emailTemplates.js';
 import { fillTemplate } from './render.js';
 import type { WhatsAppProvider } from './WhatsAppProvider.js';
 import { WHATSAPP_LANGUAGE, WHATSAPP_TEMPLATES, whatsAppTemplateName } from './whatsAppTemplates.js';
@@ -26,10 +29,26 @@ export class ProviderClientMessenger implements ClientMessenger {
 
   async sendEmail(request: EmailRequest): Promise<void> {
     const text = emailTextsFor(request.locale)[request.template];
+    const labels = emailLabelsFor(request.locale);
+    const subject = fillTemplate(text.subject, request.vars, request.locale);
+    const body = fillTemplate(text.body, request.vars, request.locale);
+    const place: EmailPlace | undefined = request.place
+      ? {
+          title: labels.place,
+          lines: request.place.lines,
+          directions: request.place.directions,
+          links: [
+            { label: labels.appleMaps, url: request.place.maps.apple },
+            { label: labels.googleMaps, url: request.place.maps.google }
+          ]
+        }
+      : undefined;
+    const action = request.manageLink ? { label: labels.changeOrCancel, url: request.manageLink } : undefined;
     await this.email.send({
       to: request.to,
-      subject: fillTemplate(text.subject, request.vars, request.locale),
-      text: fillTemplate(text.body, request.vars, request.locale),
+      subject,
+      text: withPlace(body, place),
+      html: emailHtml(subject, body, request.locale, { place, action }),
       lang: request.locale
     });
   }

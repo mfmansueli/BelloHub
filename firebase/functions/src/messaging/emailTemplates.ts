@@ -54,7 +54,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} confirmou o seu horário',
-      body: '{service} com {professional}: {when}.\n\nPara remarcar ou cancelar, use seu link pessoal.'
+      body: '{service} com {professional}: {when}.\n\nPara remarcar ou cancelar, use seu link pessoal:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} não pôde confirmar o seu pedido',
@@ -66,7 +66,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Seu horário com {professional} mudou',
-      body: '{professional} mudou o seu horário de {service} para {when}.\n\nSe esse horário não funcionar, use seu link pessoal para remarcar ou cancelar.'
+      body: '{professional} mudou o seu horário de {service} para {when}.\n\nSe esse horário não funcionar, use seu link pessoal para remarcar ou cancelar:\n{link}'
     }
   },
   'pt-PT': {
@@ -84,7 +84,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} confirmou a sua marcação',
-      body: '{service} com {professional}: {when}.\n\nPara alterar ou desmarcar, use o seu link pessoal.'
+      body: '{service} com {professional}: {when}.\n\nPara alterar ou desmarcar, use o seu link pessoal:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} não pôde confirmar o seu pedido',
@@ -96,7 +96,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'A sua marcação com {professional} mudou',
-      body: '{professional} alterou a sua marcação de {service} para {when}.\n\nSe esta hora não lhe servir, use o seu link pessoal para alterar ou desmarcar.'
+      body: '{professional} alterou a sua marcação de {service} para {when}.\n\nSe esta hora não lhe servir, use o seu link pessoal para alterar ou desmarcar:\n{link}'
     }
   },
   'es-MX': {
@@ -114,7 +114,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} confirmó tu cita',
-      body: '{service} con {professional}: {when}.\n\nPara cambiarla o cancelarla, usa tu enlace personal.'
+      body: '{service} con {professional}: {when}.\n\nPara cambiarla o cancelarla, usa tu enlace personal:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} no pudo confirmar tu solicitud',
@@ -126,7 +126,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Tu cita con {professional} cambió',
-      body: '{professional} cambió tu cita de {service} a {when}.\n\nSi ese horario no te funciona, usa tu enlace personal para cambiarla o cancelarla.'
+      body: '{professional} cambió tu cita de {service} a {when}.\n\nSi ese horario no te funciona, usa tu enlace personal para cambiarla o cancelarla:\n{link}'
     }
   },
   es: {
@@ -144,7 +144,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} ha confirmado tu cita',
-      body: '{service} con {professional}: {when}.\n\nPara cambiarla o cancelarla, usa tu enlace personal.'
+      body: '{service} con {professional}: {when}.\n\nPara cambiarla o cancelarla, usa tu enlace personal:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} no ha podido confirmar tu solicitud',
@@ -156,7 +156,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Tu cita con {professional} ha cambiado',
-      body: '{professional} ha cambiado tu cita de {service} a {when}.\n\nSi esa hora no te va bien, usa tu enlace personal para cambiarla o cancelarla.'
+      body: '{professional} ha cambiado tu cita de {service} a {when}.\n\nSi esa hora no te va bien, usa tu enlace personal para cambiarla o cancelarla:\n{link}'
     }
   },
   en: {
@@ -174,7 +174,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} confirmed your appointment',
-      body: '{service} with {professional}: {when}.\n\nTo change or cancel, use your personal link.'
+      body: '{service} with {professional}: {when}.\n\nTo change or cancel, use your personal link:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} could not confirm your request',
@@ -186,7 +186,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Your appointment with {professional} was moved',
-      body: '{professional} moved your {service} appointment to {when}.\n\nIf that time does not work, use your personal link to change or cancel.'
+      body: '{professional} moved your {service} appointment to {when}.\n\nIf that time does not work, use your personal link to change or cancel:\n{link}'
     }
   },
   it: {
@@ -204,7 +204,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} ha confermato il tuo appuntamento',
-      body: '{service} con {professional}: {when}.\n\nPer modificarlo o annullarlo usa il tuo link personale.'
+      body: '{service} con {professional}: {when}.\n\nPer modificarlo o annullarlo usa il tuo link personale:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} non ha potuto confermare la tua richiesta',
@@ -216,7 +216,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Il tuo appuntamento con {professional} è stato spostato',
-      body: "{professional} ha spostato il tuo appuntamento di {service} a {when}.\n\nSe quell'orario non va bene, usa il tuo link personale per modificarlo o annullarlo."
+      body: "{professional} ha spostato il tuo appuntamento di {service} a {when}.\n\nSe quell'orario non va bene, usa il tuo link personale per modificarlo o annullarlo:\n{link}"
     }
   },
   fr: {
@@ -234,7 +234,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} a confirmé votre rendez-vous',
-      body: "{service} avec {professional} : {when}.\n\nPour le modifier ou l'annuler, utilisez votre lien personnel."
+      body: "{service} avec {professional} : {when}.\n\nPour le modifier ou l'annuler, utilisez votre lien personnel :\n{link}"
     },
     bookingDeclined: {
       subject: "{professional} n'a pas pu confirmer votre demande",
@@ -246,7 +246,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Votre rendez-vous avec {professional} a été déplacé',
-      body: "{professional} a déplacé votre rendez-vous de {service} à {when}.\n\nSi cet horaire ne vous convient pas, utilisez votre lien personnel pour le modifier ou l'annuler."
+      body: "{professional} a déplacé votre rendez-vous de {service} à {when}.\n\nSi cet horaire ne vous convient pas, utilisez votre lien personnel pour le modifier ou l'annuler :\n{link}"
     }
   },
   de: {
@@ -264,7 +264,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} hat Ihren Termin bestätigt',
-      body: '{service} bei {professional}: {when}.\n\nZum Ändern oder Absagen nutzen Sie Ihren persönlichen Link.'
+      body: '{service} bei {professional}: {when}.\n\nZum Ändern oder Absagen nutzen Sie Ihren persönlichen Link:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} konnte Ihre Anfrage nicht bestätigen',
@@ -276,7 +276,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Ihr Termin bei {professional} wurde verschoben',
-      body: '{professional} hat Ihren Termin für {service} auf {when} verschoben.\n\nWenn diese Zeit nicht passt, ändern oder sagen Sie den Termin über Ihren persönlichen Link ab.'
+      body: '{professional} hat Ihren Termin für {service} auf {when} verschoben.\n\nWenn diese Zeit nicht passt, ändern oder sagen Sie den Termin über Ihren persönlichen Link ab:\n{link}'
     }
   },
   tr: {
@@ -294,7 +294,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} randevunuzu onayladı',
-      body: '{service}, {professional}: {when}.\n\nDeğiştirmek veya iptal etmek için kişisel bağlantınızı kullanın.'
+      body: '{service}, {professional}: {when}.\n\nDeğiştirmek veya iptal etmek için kişisel bağlantınızı kullanın:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} talebinizi onaylayamadı',
@@ -306,7 +306,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: '{professional} ile randevunuz değişti',
-      body: '{professional}, {service} randevunuzu {when} olarak değiştirdi.\n\nBu zaman uygun değilse kişisel bağlantınızla değiştirebilir veya iptal edebilirsiniz.'
+      body: '{professional}, {service} randevunuzu {when} olarak değiştirdi.\n\nBu zaman uygun değilse kişisel bağlantınızla değiştirebilir veya iptal edebilirsiniz:\n{link}'
     }
   },
   id: {
@@ -324,7 +324,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} mengonfirmasi janji temu Anda',
-      body: '{service} dengan {professional}: {when}.\n\nUntuk mengubah atau membatalkan, gunakan tautan pribadi Anda.'
+      body: '{service} dengan {professional}: {when}.\n\nUntuk mengubah atau membatalkan, gunakan tautan pribadi Anda:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} belum bisa mengonfirmasi permintaan Anda',
@@ -336,7 +336,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'Janji temu Anda dengan {professional} diubah',
-      body: '{professional} memindahkan janji temu {service} Anda ke {when}.\n\nJika waktu itu tidak cocok, gunakan tautan pribadi Anda untuk mengubah atau membatalkan.'
+      body: '{professional} memindahkan janji temu {service} Anda ke {when}.\n\nJika waktu itu tidak cocok, gunakan tautan pribadi Anda untuk mengubah atau membatalkan:\n{link}'
     }
   },
   hi: {
@@ -354,7 +354,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: '{professional} ने आपकी अपॉइंटमेंट की पुष्टि की',
-      body: '{service}, {professional} के साथ: {when}।\n\nबदलने या रद्द करने के लिए अपना निजी लिंक इस्तेमाल करें।'
+      body: '{service}, {professional} के साथ: {when}।\n\nबदलने या रद्द करने के लिए अपना निजी लिंक इस्तेमाल करें:\n{link}'
     },
     bookingDeclined: {
       subject: '{professional} आपके अनुरोध की पुष्टि नहीं कर सके',
@@ -366,7 +366,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: '{professional} के साथ आपकी अपॉइंटमेंट बदल गई',
-      body: '{professional} ने आपकी {service} अपॉइंटमेंट {when} पर कर दी है।\n\nअगर यह समय ठीक न हो, तो अपने निजी लिंक से इसे बदलें या रद्द करें।'
+      body: '{professional} ने आपकी {service} अपॉइंटमेंट {when} पर कर दी है।\n\nअगर यह समय ठीक न हो, तो अपने निजी लिंक से इसे बदलें या रद्द करें:\n{link}'
     }
   },
   ar: {
@@ -384,7 +384,7 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingApproved: {
       subject: 'أكّد {professional} موعدك',
-      body: '{service} مع {professional}: {when}.\n\nلتغيير الموعد أو إلغائه، استخدم رابطك الشخصي.'
+      body: '{service} مع {professional}: {when}.\n\nلتغيير الموعد أو إلغائه، استخدم رابطك الشخصي:\n{link}'
     },
     bookingDeclined: {
       subject: 'تعذّر على {professional} تأكيد طلبك',
@@ -396,10 +396,42 @@ export const EMAIL_TEXTS: Record<WrittenLocale, EmailTexts> = {
     },
     bookingMoved: {
       subject: 'تم تغيير موعدك مع {professional}',
-      body: 'نقل {professional} موعد {service} الخاص بك إلى {when}.\n\nإذا لم يناسبك هذا الوقت، استخدم رابطك الشخصي لتغييره أو إلغائه.'
+      body: 'نقل {professional} موعد {service} الخاص بك إلى {when}.\n\nإذا لم يناسبك هذا الوقت، استخدم رابطك الشخصي لتغييره أو إلغائه:\n{link}'
     }
   }
 };
+
+/**
+ * The words around the parts every booking e-mail may add (owner, 2026-10-11): the heading of where she works, the
+ * names of the two map apps (each language's own name for Apple's), and the button to the personal link. Client-facing
+ * register, like the bodies above.
+ */
+export interface EmailLabels {
+  place: string;
+  appleMaps: string;
+  googleMaps: string;
+  changeOrCancel: string;
+}
+
+export const EMAIL_LABELS: Record<WrittenLocale, EmailLabels> = {
+  'pt-BR': { place: 'Onde', appleMaps: 'Mapas da Apple', googleMaps: 'Google Maps', changeOrCancel: 'Remarcar ou cancelar' },
+  'pt-PT': { place: 'Onde', appleMaps: 'Mapas da Apple', googleMaps: 'Google Maps', changeOrCancel: 'Alterar ou desmarcar' },
+  'es-MX': { place: 'Dónde', appleMaps: 'Mapas de Apple', googleMaps: 'Google Maps', changeOrCancel: 'Cambiar o cancelar' },
+  es: { place: 'Dónde', appleMaps: 'Mapas de Apple', googleMaps: 'Google Maps', changeOrCancel: 'Cambiar o cancelar' },
+  en: { place: 'Where', appleMaps: 'Apple Maps', googleMaps: 'Google Maps', changeOrCancel: 'Change or cancel' },
+  it: { place: 'Dove', appleMaps: 'Mappe di Apple', googleMaps: 'Google Maps', changeOrCancel: 'Sposta o annulla' },
+  fr: { place: 'Où', appleMaps: "Plans d'Apple", googleMaps: 'Google Maps', changeOrCancel: 'Déplacer ou annuler' },
+  de: { place: 'Wo', appleMaps: 'Apple Karten', googleMaps: 'Google Maps', changeOrCancel: 'Verschieben oder absagen' },
+  tr: { place: 'Nerede', appleMaps: 'Apple Haritalar', googleMaps: 'Google Haritalar', changeOrCancel: 'Ertele veya iptal et' },
+  id: { place: 'Lokasi', appleMaps: 'Apple Maps', googleMaps: 'Google Maps', changeOrCancel: 'Jadwalkan ulang atau batalkan' },
+  hi: { place: 'कहाँ', appleMaps: 'Apple Maps', googleMaps: 'Google Maps', changeOrCancel: 'बदलें या रद्द करें' },
+  ar: { place: 'المكان', appleMaps: 'خرائط Apple', googleMaps: 'خرائط Google', changeOrCancel: 'تغيير الموعد أو إلغاؤه' }
+};
+
+export function emailLabelsFor(locale: LocaleId): EmailLabels {
+  const written: WrittenLocale = locale === 'es-419' || locale === 'en-GB' ? EMAIL_LOCALE_FALLBACK[locale] : locale;
+  return EMAIL_LABELS[written];
+}
 
 export function emailTextsFor(locale: LocaleId): EmailTexts {
   const written: WrittenLocale = locale === 'es-419' || locale === 'en-GB' ? EMAIL_LOCALE_FALLBACK[locale] : locale;

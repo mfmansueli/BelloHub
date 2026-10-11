@@ -94,7 +94,7 @@ service cloud.firestore {
         && (!('locale' in request.resource.data) || isLocale(request.resource.data.locale));
     }
 
-    // No client access, ever: slugs, availability, intakeForms, holds, portal, contacts, calendarLocks, emailCodes,
+    // No client access, ever: slugs, availability, intakeForms, businessLocations, holds, portal, contacts, calendarLocks, emailCodes,
     // emailProofs, trustedDevices, idempotency, rate, audit. They fall under the default deny above and are listed here so a
     // reader (and the test) sees that the omission is on purpose.
   }

@@ -83,6 +83,7 @@ const FUNCTION_ONLY = [
   'slugs/alice',
   `availability/${ALICE}`,
   `intakeForms/${ALICE}`,
+  `businessLocations/${ALICE}`,
   'holds/hold-1',
   'portal/portal-1',
   `contacts/${ALICE}_abc`,

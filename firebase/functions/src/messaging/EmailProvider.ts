@@ -5,6 +5,8 @@ export interface EmailMessage {
   text: string;
   /** The language of the text, for the `lang` of the HTML part. */
   lang?: string;
+  /** The HTML part, when the sender built one with more than the text says (the place box, the button). */
+  html?: string;
 }
 
 /**

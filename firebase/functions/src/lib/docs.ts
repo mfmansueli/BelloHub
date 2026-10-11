@@ -12,6 +12,7 @@ export const C = {
   slugs: 'slugs',
   publicProfiles: 'publicProfiles',
   intakeForms: 'intakeForms',
+  businessLocations: 'businessLocations',
   availability: 'availability',
   bookings: 'bookings',
   holds: 'holds',
@@ -128,6 +129,27 @@ export interface PublicProfileDoc {
   rulesText: Partial<Record<LocaleId, string>>;
   legalNotice?: string;
   inboxKey: { keyId: string; alg: 'hpke-v1'; pub: string };
+  /** Where she works, only when she chose to show it on the booking page (`visibility: public`). */
+  location?: PublicLocation;
+  updatedAt: Timestamp;
+}
+
+/** Her address as the app wrote it: the lines, an optional "how to find us" note and the two map links. */
+export interface PublicLocation {
+  lines: string[];
+  directions?: string;
+  maps: { apple: string; google: string };
+}
+
+/**
+ * Function-only. Where she works and who may see it (owner, 2026-10-11). Kept out of the world-readable profile: with
+ * `confirmed` only a client with a confirmed booking gets it (getBooking, e-mails, the calendar file). Removed when she
+ * publishes without an address and when the account is deleted.
+ */
+export interface BusinessLocationDoc {
+  ownerUid: string;
+  location: PublicLocation;
+  visibility: 'confirmed' | 'public';
   updatedAt: Timestamp;
 }
 

@@ -34,6 +34,8 @@ final class BookingSettingsViewModel {
     let businessName: String
     let timeZone: TimeZone
     let localization: AppLocalization
+    /// The business region: the country "Where you work" starts with.
+    let regionCode: String
     let firstWeekday: Int
     let professions: [ProfessionID]
     /// Her first profession's name in the app's language ("Esthetician"), for the suggestion card.
@@ -68,6 +70,7 @@ final class BookingSettingsViewModel {
         businessName = profile?.businessName ?? ""
         timeZone = profile.map { TimeZone(identifier: $0.timeZoneID) ?? .current } ?? .current
         localization = profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
+        regionCode = profile?.regionCode ?? Locale.current.region?.identifier ?? "US"
         firstWeekday = profile?.weekConfig.firstWeekday ?? Calendar.current.firstWeekday
         professions = profile?.professions ?? []
         let catalog = try? ProfessionCatalog.loadBundled(localization: localization)
@@ -77,6 +80,11 @@ final class BookingSettingsViewModel {
     // MARK: - Reading
 
     var setup: BookingSetup { editor.setup }
+
+    /// Her saved address on one line, for the "Where you work" row; nil until she saved one.
+    var locationSummary: String? {
+        setup.location.map(BusinessLocationFormat.oneLine).flatMap { $0.isEmpty ? nil : $0 }
+    }
 
     var professionalName: String {
         displayName.split(separator: " ").first.map(String.init) ?? displayName

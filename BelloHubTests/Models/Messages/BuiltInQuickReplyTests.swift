@@ -24,13 +24,27 @@ struct BuiltInQuickReplyTests {
     @Test("The English defaults are the prototype's")
     func english() {
         #expect(BuiltInQuickReply.confirm.title(in: .en) == "Confirm appointment")
+        // 2026-10-11: the address on its own line, the link last and alone (ClientLinkText).
         #expect(BuiltInQuickReply.confirm.text(in: .en)
-            == "Hi {name}! Confirming your {service} on {date} at {time}. "
-            + "Reply YES to confirm or use {link} to change it.")
+            == "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\n"
+            + "Reply YES to confirm. To change or cancel:\n{link}")
         #expect(BuiltInQuickReply.late.text(in: .en)
             == "Hi {name}, I am running about 10 minutes behind. Thank you for your patience!")
         #expect(BuiltInQuickReply.reschedule.text(in: .en)
-            == "Hi {name}, I need to move your {service}. Here are new times: {link}")
+            == "Hi {name}, I need to move your {service}.\n{address}\nPlease choose a new time here:\n{link}")
+    }
+
+    @Test("Confirm and Reschedule end with the link alone on its line and carry the address, in every localization",
+          arguments: AppLocalization.allCases)
+    func linkLastAndAddress(localization: AppLocalization) {
+        for builtIn in [BuiltInQuickReply.confirm, .reschedule] {
+            let text = builtIn.text(in: localization)
+            #expect(text.hasSuffix("\n{link}"), "\(localization.rawValue) \(builtIn)")
+            #expect(text.contains("\n{address}\n"), "\(localization.rawValue) \(builtIn)")
+            let previous = builtIn.previousText(in: localization)
+            #expect(previous?.isEmpty == false && previous != text && previous?.contains("{address}") == false)
+        }
+        #expect(BuiltInQuickReply.late.previousText(in: localization) == nil)
     }
 
     @Test("Every default exists in every localization with the same words in braces as English",

@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { LOCALES } from '../../src/contracts/common.js';
 import { DisabledEmailProvider } from '../../src/messaging/DisabledEmailProvider.js';
 import { DisabledWhatsAppProvider } from '../../src/messaging/DisabledWhatsAppProvider.js';
-import { EMAIL_TEMPLATE_IDS, emailTextsFor } from '../../src/messaging/emailTemplates.js';
+import { EMAIL_TEMPLATE_IDS, emailLabelsFor, emailTextsFor } from '../../src/messaging/emailTemplates.js';
 import { ProviderClientMessenger } from '../../src/messaging/ProviderClientMessenger.js';
 import { fillTemplate, formatWhen, isolate } from '../../src/messaging/render.js';
 import { emailHtml } from '../../src/messaging/emailHtml.js';
@@ -131,6 +131,52 @@ describe('ClientMessenger', () => {
     expect(provider.sent).toHaveLength(1);
     expect(provider.sent[0]).toMatchObject({ to: 'ana@example.com', subject: 'Ihr Termin bei Maria ist bestätigt' });
     expect(provider.sent[0]?.text).toContain('https://x/m/t');
+  });
+
+  const place = {
+    lines: ['Rua Augusta 1200', 'São Paulo 01304-001'],
+    directions: '2º andar',
+    maps: {
+      apple: 'https://maps.apple.com/?address=Rua%20Augusta%201200',
+      google: 'https://www.google.com/maps/search/?api=1&query=Rua%20Augusta%201200'
+    }
+  };
+
+  it('adds where she works after the first paragraph, each map link alone on its line, and the button in the HTML', async () => {
+    const provider = new FakeEmailProvider();
+    const messenger = new ProviderClientMessenger(provider, new DisabledWhatsAppProvider(), true);
+    const link = 'https://bellohub.app/m/AbCdEfGhIjKlMnOpQrStUv';
+
+    await messenger.sendEmail({
+      template: 'bookingConfirmed', to: 'ana@example.com', locale: 'pt-BR',
+      vars: { professional: 'Maria', service: 'Facial', when: 'sábado', link }, place, manageLink: link
+    });
+
+    const sent = provider.sent[0];
+    const paragraphs = (sent?.text ?? '').split('\n\n');
+    expect(paragraphs[0]).toBe('Facial com Maria: sábado.');
+    expect(paragraphs[1]).toBe(
+      `Onde\nRua Augusta 1200\nSão Paulo 01304-001\n2º andar\nMapas da Apple:\n${place.maps.apple}\nGoogle Maps:\n${place.maps.google}`
+    );
+    expect(sent?.text).toContain(`\n${link}\n`);
+    expect(sent?.html).toContain(`<a href="${place.maps.apple}"`);
+    expect(sent?.html).toContain('>Remarcar ou cancelar</a>');
+    expect(sent?.html?.indexOf('Remarcar ou cancelar</a>')).toBeGreaterThan(sent?.html?.indexOf(`>${link}</a>`) ?? Infinity);
+  });
+
+  it('sends no place and no button when there is none to send', async () => {
+    const provider = new FakeEmailProvider();
+    const messenger = new ProviderClientMessenger(provider, new DisabledWhatsAppProvider(), true);
+
+    await messenger.sendEmail({ template: 'bookingDeclined', to: 'ana@example.com', locale: 'en', vars: { professional: 'Maria', service: 'Facial', when: 'Saturday', link: 'https://bellohub.app/maria' } });
+
+    expect(provider.sent[0]?.text).not.toMatch(/Where|Maps/);
+    expect(provider.sent[0]?.html).not.toContain('Change or cancel');
+  });
+
+  it.each(LOCALES)('%s has the place heading, both map names and the button label', (locale) => {
+    const labels = emailLabelsFor(locale);
+    for (const value of Object.values(labels)) expect(value.trim().length).toBeGreaterThan(0);
   });
 
   it('is unavailable by default: no email provider and no WhatsApp until a human sets them up', async () => {
@@ -284,6 +330,22 @@ describe('emailHtml (the HTML part of every email)', () => {
     expect(html).not.toContain('>1234567</strong>');
   });
 
+  it('writes Arabic right to left', () => {
+    expect(emailHtml('موعد', 'نص', 'ar')).toContain('<html lang="ar" dir="rtl">');
+    expect(emailHtml('Visit', 'Text', 'en')).not.toContain('dir=');
+  });
+
+  it('escapes the place and the button too', () => {
+    const html = emailHtml('Visit', 'Hi.\n\nYour link:\nhttps://x/m/t', 'en', {
+      place: { title: 'Where <b>', lines: ['Rua <i>1</i>'], links: [{ label: 'Maps "x"', url: 'https://maps.apple.com/?address=a' }] },
+      action: { label: 'Change & cancel', url: 'https://x/m/t' }
+    });
+    expect(html).not.toContain('<b>');
+    expect(html).not.toContain('<i>');
+    expect(html).toContain('Change &amp; cancel');
+    expect(html).toContain('Maps &quot;x&quot;');
+  });
+
   it('carries the language, no images and no remote styles', () => {
     const html = emailHtml('Código', 'Olá.', 'pt-BR');
     expect(html).toContain('<html lang="pt-BR">');
@@ -329,6 +391,20 @@ describe('ResendEmailProvider (mocked vendor, H7)', () => {
 
     expect(outcomes.map((error) => error.code)).toEqual(['TRY_AGAIN', 'TRY_AGAIN', 'INTERNAL', 'INTERNAL']);
     for (const error of outcomes) expect(error.message).not.toContain('ana@');
+  });
+
+  it('sends Reply-To only when EMAIL_REPLY_TO is set, and the HTML the messenger built', async () => {
+    const bodies: Record<string, unknown>[] = [];
+    const fetchFn = (_url: string, init: { body: string }) => {
+      bodies.push(JSON.parse(init.body) as Record<string, unknown>);
+      return Promise.resolve({ ok: true, status: 200 });
+    };
+    await ResendEmailProvider.ifConfigured({ ...config, replyTo: ' maria@studio.example ' }, fetchFn)?.send({ ...message, html: '<p>x</p>' });
+    await ResendEmailProvider.ifConfigured({ ...config, replyTo: '' }, fetchFn)?.send(message);
+
+    expect(bodies[0]?.reply_to).toBe('maria@studio.example');
+    expect(bodies[0]?.html).toBe('<p>x</p>');
+    expect(bodies[1]).not.toHaveProperty('reply_to');
   });
 
   it('exists only when both the key and the sender are set, so createDeps keeps email disabled otherwise', () => {

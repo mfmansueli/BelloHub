@@ -109,7 +109,7 @@ final class ClientMessageViewModel {
         let link = setup.setup.slug.map { BookingLink(slug: $0).messageText }
         let values = ClientMessageComposer.values(
             for: request.kind, client: client, lastServiceName: ClientMessageComposer.lastServiceName(in: history),
-            link: link
+            link: link, location: setup.setup.location
         )
         return ClientMessageComposer.text(
             for: request.kind, comeBack: comeBack, values: values, localization: business.localization,

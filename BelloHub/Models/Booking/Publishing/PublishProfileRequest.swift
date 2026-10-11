@@ -29,6 +29,24 @@ struct PublishProfileRequest: Encodable, Equatable, Sendable {
         var inboxKey: InboxPublicKey
         /// Her health form for the page (nil: the page offers no form, `getFormContext` answers NOT_FOUND).
         var intake: Intake?
+        /// Where she works (nil: no address anywhere). The server keeps it out of the public page unless `visibility`
+        /// is `public`.
+        var location: Location?
+    }
+
+    /// The address as `BusinessLocationFormat` writes it: the server and the page print these lines and links as they
+    /// are, so there is one way to write an address.
+    struct Location: Encodable, Equatable, Sendable {
+        var lines: [String]
+        var directions: String?
+        var maps: Maps
+        /// `confirmed` (only clients with a confirmed booking) or `public` (also the booking page).
+        var visibility: String
+    }
+
+    struct Maps: Encodable, Equatable, Sendable {
+        var apple: String
+        var google: String
     }
 
     struct Credential: Encodable, Equatable, Sendable {

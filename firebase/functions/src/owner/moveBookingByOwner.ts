@@ -2,6 +2,7 @@ import { defineUseCase, ownerUid } from '../app/UseCase.js';
 import { RATE } from '../config/limits.js';
 import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
+import { tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { sendBookingEmail } from '../lib/bookingEmails.js';
 import { bumpCalendarLock, readCalendarLock } from '../lib/calendar.js';
 import type { PublicProfileDoc } from '../lib/docs.js';
@@ -16,7 +17,8 @@ import { FieldValue } from 'firebase-admin/firestore';
 
 /**
  * She moves a booking that came from the link. Her own rules are not checked (she may work outside her hours when she
- * chooses to); the client is told by email. The move updates the retention date with the visit.
+ * chooses to); the client is told by email, with one more manage token (the same five-link cap) so the e-mail carries
+ * her exact link to change or cancel. The move updates the retention date with the visit.
  */
 export const moveBookingByOwner = defineUseCase({
   name: 'moveBookingByOwner',
@@ -27,6 +29,7 @@ export const moveBookingByOwner = defineUseCase({
     await consumeRate(deps, 'ownerCalls', uid, RATE.ownerCalls);
     const now = deps.now();
     const startsAt = instantMs(input.startsAt);
+    const manageToken = deps.random.token();
 
     const result = await runTransaction(deps.db, async (tx) => {
       const reader = txReader(tx);
@@ -38,7 +41,9 @@ export const moveBookingByOwner = defineUseCase({
       await readCalendarLock(tx, deps.db, uid);
 
       const endsAt = startsAt + booking.data.durationMinutes * 60_000;
+      const mints = booking.data.client.email !== undefined;
       tx.update(booking.ref, {
+        ...(mints ? { manageTokenHashes: withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) } : {}),
         startsAt: ts(startsAt),
         endsAt: ts(endsAt),
         purgeAt: ts(purgeAtFor(endsAt)),
@@ -49,10 +54,20 @@ export const moveBookingByOwner = defineUseCase({
         updatedAt: ts(now)
       });
       bumpCalendarLock(tx, deps.db, uid);
-      return { booking: { ...booking.data, startsAt: ts(startsAt), endsAt: ts(endsAt) }, name: profile?.displayName ?? '', endsAt };
+      return {
+        booking: { ...booking.data, startsAt: ts(startsAt), endsAt: ts(endsAt) },
+        name: profile?.displayName ?? '',
+        endsAt,
+        ...(mints ? { manageToken } : {})
+      };
     });
 
-    await sendBookingEmail(deps, { template: 'bookingMoved', booking: result.booking, professionalName: result.name, linkToPage: true });
+    await sendBookingEmail(deps, {
+      template: 'bookingMoved',
+      booking: result.booking,
+      professionalName: result.name,
+      ...(result.manageToken ? { manageToken: result.manageToken } : { linkToPage: true })
+    });
     return { startsAt: iso(startsAt), endsAt: iso(result.endsAt) };
   }
 });

@@ -34,6 +34,7 @@ struct NavigationTitleFitTests {
         "availability.dayOffSheet.editTitle", "beforeYouStart.title", "blockTime.title",
         "bookingRequest.suggest.title", "bookingRequest.title",
         "bookingSettings.pauseSheet.title", "bookingSettings.title", "cancelAppointment.title", "cancelPolicy.title",
+        "workplace.title",
         "clientKnowledge.title", "clientMerge.title", "credentials.preview.title", "credentials.title",
         "export.title", "exportRecord.title", "fieldEditor.addTitle", "fieldEditor.editTitle", "formTemplates.title",
         "health.title", "help.title", "home.title", "incident.title", "newAppointment.title", "noShowHistory.title",

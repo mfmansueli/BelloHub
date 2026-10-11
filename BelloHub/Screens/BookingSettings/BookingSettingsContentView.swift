@@ -40,6 +40,7 @@ struct BookingSettingsContentView: View {
                 notices
                 linkSection
                 takingBookings
+                workplaceSection
                 BookingRulesSection(viewModel: viewModel)
                 SlotPreviewSection(viewModel: viewModel)
                 FooterNote(text: "bookingSetup.footer.autosave", icon: .lock)
@@ -150,6 +151,32 @@ struct BookingSettingsContentView: View {
                 guestsRow
             }
         }
+    }
+
+    /// "Where you work": one row to the address screen, saying what is saved and who sees it.
+    private var workplaceSection: some View {
+        SettingsSection(title: "workplace.section.title") {
+            ListCard(dividerInset: 72) {
+                NavigationLink {
+                    WorkplaceView(editor: viewModel.editor, businessRegion: viewModel.regionCode)
+                } label: {
+                    MoreRow(
+                        icon: .mapPin, tint: .rose, title: Text("workplace.row.title"),
+                        subtitle: workplaceSubtitle, showsChevron: true
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("bookingSettings.workplaceRow")
+            }
+        }
+    }
+
+    private var workplaceSubtitle: Text {
+        guard let summary = viewModel.locationSummary, let location = viewModel.setup.location else {
+            return Text("workplace.row.none")
+        }
+        let who = String(localized: location.visibility.title.localized(in: locale))
+        return Text(verbatim: "\(summary) · \(who)")
     }
 
     /// While paused: the return date (or "not sure yet"), the way to change it and the way to open bookings again.

@@ -151,7 +151,7 @@ final class QuickRepliesViewModel {
         }
     }
 
-    /// An example client: her first name, a service, the day after tomorrow at 15:00 and her link.
+    /// An example client: her first name, a service, the day after tomorrow at 15:00, her link and her address.
     private var sampleValues: QuickReplyValues {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = timeZone
@@ -161,7 +161,7 @@ final class QuickRepliesViewModel {
         return QuickReplyValues(
             name: string("quickReplies.sample.name", default: "Ana"),
             service: string("quickReplies.sample.service", default: "Glow Facial"),
-            startsAt: visit, link: link
+            startsAt: visit, link: link, address: BusinessLocationFormat.messageBlock(service.setup.location)
         )
     }
 

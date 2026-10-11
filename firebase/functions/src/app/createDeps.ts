@@ -20,6 +20,7 @@ import {
   APPLE_SIGNIN_TEAM_ID,
   EMAIL_API_KEY,
   EMAIL_FROM,
+  EMAIL_REPLY_TO,
   ENFORCE_APP_CHECK,
   PHONE_HASH_PEPPER,
   PLAN_PRODUCT_IDS,
@@ -128,6 +129,8 @@ function createAppleRevoker(log: Logger): AppleTokenRevoker {
 /** TODO(HUMAN-H7): set `EMAIL_FROM` and the `EMAIL_API_KEY` secret once the vendor account (Resend, EU region) has a DPA. */
 function createMessenger(): ProviderClientMessenger {
   const from = EMAIL_FROM.value();
-  const email = from ? ResendEmailProvider.ifConfigured({ apiKey: EMAIL_API_KEY.value(), from }) : undefined;
+  const email = from
+    ? ResendEmailProvider.ifConfigured({ apiKey: EMAIL_API_KEY.value(), from, replyTo: EMAIL_REPLY_TO.value() })
+    : undefined;
   return new ProviderClientMessenger(email ?? new DisabledEmailProvider(), new DisabledWhatsAppProvider(), email !== undefined);
 }

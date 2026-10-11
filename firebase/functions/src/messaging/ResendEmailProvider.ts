@@ -7,6 +7,8 @@ export interface ResendConfig {
   apiKey: string;
   /** The verified sender, `Bello Hub <no-reply@bellohub.app>` (`EMAIL_FROM`). */
   from: string;
+  /** Where a client's reply goes (`EMAIL_REPLY_TO`); empty or absent sends none, and replies go to the sender. */
+  replyTo?: string | undefined;
   endpoint?: string | undefined;
 }
 
@@ -33,11 +35,15 @@ export class ResendEmailProvider implements EmailProvider {
   }
 
   /** The provider when both the key and the sender are set; otherwise nothing, and the caller keeps `DisabledEmailProvider`. */
-  static ifConfigured(config: { apiKey: string; from: string }, fetchFn?: FetchLike): ResendEmailProvider | undefined {
+  static ifConfigured(
+    config: { apiKey: string; from: string; replyTo?: string | undefined },
+    fetchFn?: FetchLike
+  ): ResendEmailProvider | undefined {
     const apiKey = config.apiKey.trim();
     const from = config.from.trim();
     if (!apiKey || !from) return undefined;
-    return new ResendEmailProvider({ apiKey, from }, fetchFn);
+    const replyTo = config.replyTo?.trim();
+    return new ResendEmailProvider({ apiKey, from, ...(replyTo ? { replyTo } : {}) }, fetchFn);
   }
 
   async send(message: EmailMessage): Promise<void> {
@@ -49,7 +55,8 @@ export class ResendEmailProvider implements EmailProvider {
         to: [message.to],
         subject: message.subject,
         text: message.text,
-        html: emailHtml(message.subject, message.text, message.lang)
+        html: message.html ?? emailHtml(message.subject, message.text, message.lang),
+        ...(this.config.replyTo ? { reply_to: this.config.replyTo } : {})
       })
     });
     if (!response.ok) throw new AppError(response.status === 429 || response.status >= 500 ? 'TRY_AGAIN' : 'INTERNAL');

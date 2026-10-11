@@ -6,7 +6,7 @@ import type { PublicProfileInput } from '../contracts/profile.js';
 import { ensureAccountExists } from '../lib/account.js';
 import { writeAudit } from '../lib/audit.js';
 import { inboxKeyId } from '../lib/crypto.js';
-import type { AccountDoc, IntakeFormDoc, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
+import type { AccountDoc, BusinessLocationDoc, IntakeFormDoc, PublicLocation, PublicProfileDoc, SlugDoc } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
 import { applyInboxKey } from '../lib/keyring.js';
 import { keyringUpdate } from '../lib/keyringUpdate.js';
@@ -60,17 +60,32 @@ export const publishProfile = defineUseCase({
       const claim = dataOf<SlugDoc>(await reader.doc(r.slug(slugName)));
       if (claim?.ownerUid !== uid) throw new AppError('FORBIDDEN');
 
-      const { intake, ...page } = profile;
+      const { intake, location, ...page } = profile;
       const { booking } = page;
       const { pausedUntil, ...bookingRest } = booking;
+      const { visibility, ...shown } = location ?? { visibility: 'confirmed' as const };
+      const publicLocation = location && visibility === 'public' ? (shown as PublicLocation) : undefined;
       const doc: PublicProfileDoc = {
         ...page,
         schemaVersion: 1,
         slug: slugName,
         booking: { ...bookingRest, ...(pausedUntil ? { pausedUntil: ts(instantMs(pausedUntil)) } : {}) },
+        ...(publicLocation ? { location: publicLocation } : {}),
         updatedAt: ts(now)
       };
       tx.set(r.profile(slugName), doc);
+
+      // The address lives in a function-only document whatever she chose; the public copy above only with `public`.
+      if (location) {
+        tx.set(r.businessLocation(uid), {
+          ownerUid: uid,
+          location: shown as PublicLocation,
+          visibility,
+          updatedAt: ts(now)
+        } satisfies BusinessLocationDoc);
+      } else {
+        tx.delete(r.businessLocation(uid));
+      }
 
       if (intake) {
         tx.set(r.intakeForm(uid), {

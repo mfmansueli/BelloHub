@@ -20,6 +20,9 @@ struct BookingSetup: Identifiable, Hashable, Codable, Sendable {
     var noShow: NoShowPolicy
     /// The address she picked (`bellohub.app/<slug>`), lowercase, already valid by `BookingSlug`. Nil until she picks.
     var slug: String?
+    /// Where she works ("Where you work"): nil until she saves an address. Optional and added later, so a setup stored
+    /// before it reads as nil.
+    var location: BusinessLocation?
     var updatedAt: Date
 
     init(
@@ -27,6 +30,7 @@ struct BookingSetup: Identifiable, Hashable, Codable, Sendable {
         cancellation: CancellationPolicy = .standard,
         noShow: NoShowPolicy = .standard,
         slug: String? = nil,
+        location: BusinessLocation? = nil,
         updatedAt: Date
     ) {
         self.id = Self.singletonID
@@ -34,6 +38,7 @@ struct BookingSetup: Identifiable, Hashable, Codable, Sendable {
         self.cancellation = cancellation
         self.noShow = noShow
         self.slug = slug
+        self.location = location
         self.updatedAt = updatedAt
     }
 

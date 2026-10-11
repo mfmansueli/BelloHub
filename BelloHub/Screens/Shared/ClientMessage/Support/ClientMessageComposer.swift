@@ -29,10 +29,14 @@ enum ClientMessageComposer {
     /// What fills the words: the client's first name, the service (the follow-up's own, or the one of her last visit)
     /// and her booking link when she has one.
     static func values(
-        for kind: ClientMessageRequest.Kind, client: Client, lastServiceName: String?, link: String?
+        for kind: ClientMessageRequest.Kind, client: Client, lastServiceName: String?, link: String?,
+        location: BusinessLocation? = nil
     ) -> QuickReplyValues {
         let service: String? = if case .followUp(let name) = kind { name } else { lastServiceName }
-        return QuickReplyValues(name: client.firstName, service: service, startsAt: nil, link: link)
+        return QuickReplyValues(
+            name: client.firstName, service: service, startsAt: nil, link: link,
+            address: BusinessLocationFormat.messageBlock(location)
+        )
     }
 
     /// The finished text for one client.

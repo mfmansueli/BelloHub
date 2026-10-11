@@ -1,6 +1,7 @@
 // The calendar file a client adds to her phone (docs/10 section 3). RFC 5545: CRLF lines folded at 75 octets, text
 // escaped, times in UTC (so a daylight-saving change can never move the event). Booking facts only: the service, the
-// professional's name, her city and the personal link, which the caller already holds. No health information.
+// professional's name, where she works (when the client may see it) and her public booking page: D50, never the
+// manage link, so a shared calendar cannot hand the booking to someone else. No health information.
 
 import type { LocaleId } from '../contracts/common.js';
 
@@ -9,10 +10,15 @@ export interface IcsInput {
   serviceName: string;
   professionalName: string;
   city?: string | undefined;
+  /** Her address on one line, when this client may see it; it wins over the city. */
+  address?: string | undefined;
+  /** A map link for the address, added to the description. */
+  mapUrl?: string | undefined;
   startsAt: number;
   endsAt: number;
   /** A booking still waiting for the professional is TENTATIVE. */
   tentative: boolean;
+  /** Her public booking page (D50). */
   link: string;
   /** The file's creation time (also its sequence), epoch ms. */
   now: number;
@@ -57,7 +63,8 @@ export function foldLine(line: string): string[] {
 export function buildIcs(input: IcsInput): string {
   const isolate = (value: string): string => (input.locale === 'ar' ? `${FSI}${value}${PDI}` : value);
   const summary = `${isolate(input.serviceName)} - ${isolate(input.professionalName)}`;
-  const description = `${summary}\n${input.link}`;
+  const description = [summary, input.link, ...(input.mapUrl ? [input.mapUrl] : [])].join('\n');
+  const place = input.address ?? input.city;
   const content: string[] = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -71,7 +78,7 @@ export function buildIcs(input: IcsInput): string {
     `DTEND:${utc(input.endsAt)}`,
     `SUMMARY:${escapeIcsText(summary)}`,
     `DESCRIPTION:${escapeIcsText(description)}`,
-    ...(input.city ? [`LOCATION:${escapeIcsText(isolate(input.city))}`] : []),
+    ...(place ? [`LOCATION:${escapeIcsText(isolate(place))}`] : []),
     `URL:${input.link}`,
     `STATUS:${input.tentative ? 'TENTATIVE' : 'CONFIRMED'}`,
     'TRANSP:OPAQUE',

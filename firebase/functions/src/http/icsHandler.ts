@@ -4,9 +4,10 @@ import { LocaleSchema } from '../contracts/common.js';
 import type { LocaleId } from '../contracts/common.js';
 import { findBookingByToken } from '../lib/bookingAccess.js';
 import { ACTIVE_BOOKING_STATUSES } from '../lib/docs.js';
-import type { PublicProfileDoc } from '../lib/docs.js';
+import type { BusinessLocationDoc, PublicProfileDoc } from '../lib/docs.js';
 import { isAppError } from '../lib/errors.js';
 import { buildIcs } from '../lib/ics.js';
+import { oneLine, shownLocation } from '../lib/location.js';
 import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, ms, plainReader, refs } from '../lib/store.js';
 
@@ -40,7 +41,9 @@ export async function handleIcs(
     const now = deps.now();
     const booking = await findBookingByToken(plainReader, deps.db, token, now);
     if (!ACTIVE_BOOKING_STATUSES.includes(booking.data.status)) return failure(410);
-    const profile = dataOf<PublicProfileDoc>(await refs(deps.db).profile(booking.data.slug).get());
+    const r = refs(deps.db);
+    const profile = dataOf<PublicProfileDoc>(await r.profile(booking.data.slug).get());
+    const place = shownLocation(dataOf<BusinessLocationDoc>(await r.businessLocation(booking.data.ownerUid).get()), booking.data.status);
     const parsed = LocaleSchema.safeParse(query.locale);
     const locale: LocaleId = parsed.success ? parsed.data : booking.data.client.locale;
     const body = buildIcs({
@@ -48,10 +51,12 @@ export async function handleIcs(
       serviceName: booking.data.serviceName,
       professionalName: profile?.displayName ?? '',
       city: profile?.city,
+      address: place ? oneLine(place) : undefined,
+      mapUrl: place?.maps.google,
       startsAt: ms(booking.data.startsAt),
       endsAt: ms(booking.data.endsAt),
       tentative: booking.data.status === 'pendingApproval',
-      link: `${deps.settings.webBaseUrl}/m/${token}`,
+      link: `${deps.settings.webBaseUrl}/${booking.data.slug}`,
       now,
       locale
     });

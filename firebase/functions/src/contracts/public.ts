@@ -25,7 +25,7 @@ import {
   looseText,
   text
 } from './common.js';
-import { PublicProfileSchema } from './profile.js';
+import { PublicLocationSchema, PublicProfileSchema } from './profile.js';
 
 const RulesText = z.partialRecord(LocaleSchema, z.string());
 const BookingStatus = z.enum(['confirmed', 'pendingApproval', 'cancelledByClient', 'cancelledByPro', 'declined', 'noShow']);
@@ -233,6 +233,8 @@ export const getBooking = {
       .strictObject({ requestedStart: Instant, status: z.enum(['pending', 'declined']) })
       .optional(),
     intakeRequired: z.boolean(),
+    /** Where she works: for a confirmed booking, or always when she put it on her booking page. */
+    location: PublicLocationSchema.optional(),
     tokenExpiresAt: Instant
   })
 };

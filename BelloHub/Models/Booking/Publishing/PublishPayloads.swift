@@ -61,8 +61,23 @@ enum PublishPayloads {
             policy: policy(inputs.setup.cancellation),
             rulesText: rules,
             inboxKey: inputs.inboxKey,
-            intake: inputs.healthForm.flatMap { intake($0, locales: locales) }
+            intake: inputs.healthForm.flatMap { intake($0, locales: locales) },
+            location: inputs.setup.location.flatMap(location)
         ))
+    }
+
+    /// Her address for the server, only when it is complete and short enough to be accepted; anything else publishes no
+    /// address rather than a refused page.
+    static func location(_ location: BusinessLocation) -> PublishProfileRequest.Location? {
+        guard BusinessLocationFormat.isComplete(location), !BusinessLocationFormat.tooLong(location),
+              let apple = BusinessLocationFormat.appleMapsURL(location),
+              let google = BusinessLocationFormat.googleMapsURL(location) else { return nil }
+        let directions = BusinessLocationFormat.clean(location.directions)
+        return PublishProfileRequest.Location(
+            lines: BusinessLocationFormat.lines(location), directions: directions.isEmpty ? nil : directions,
+            maps: .init(apple: apple.absoluteString, google: google.absoluteString),
+            visibility: location.visibility.wireValue
+        )
     }
 
     /// The business language first, then the others she offers, each once, at most six, only ones the product speaks.

@@ -1,4 +1,5 @@
 import type { LocaleId } from '../contracts/common.js';
+import type { PublicLocation } from '../lib/docs.js';
 import type { EmailTemplateId } from './emailTemplates.js';
 import type { TemplateVars } from './render.js';
 import type { WhatsAppParameter, WhatsAppTemplateId } from './whatsAppTemplates.js';
@@ -8,6 +9,10 @@ export interface EmailRequest {
   to: string;
   locale: LocaleId;
   vars: TemplateVars;
+  /** Where she works, only when this client may see it (`lib/location.ts`). */
+  place?: PublicLocation | undefined;
+  /** The client's personal link to change or cancel, shown once more as a button in the HTML part. */
+  manageLink?: string | undefined;
 }
 
 export interface WhatsAppRequest {

@@ -15,11 +15,17 @@ struct QuickReplyValues: Equatable, Sendable {
     /// The full address of the link the message carries (`ClientLinkText.text`): her client's own link to change or
     /// cancel (`https://bellohub.app/m/…`) or her booking page (`https://bellohub.app/maria`). Never the short form.
     var link: String?
+    /// `BusinessLocationFormat.messageBlock`: a few lines ending with a map link; nil or empty when she has no address,
+    /// and then `{address}` disappears instead of staying as written.
+    var address: String?
 
-    init(name: String? = nil, service: String? = nil, startsAt: Date? = nil, link: String? = nil) {
+    init(
+        name: String? = nil, service: String? = nil, startsAt: Date? = nil, link: String? = nil, address: String? = nil
+    ) {
         self.name = name
         self.service = service
         self.startsAt = startsAt
         self.link = link
+        self.address = address
     }
 }

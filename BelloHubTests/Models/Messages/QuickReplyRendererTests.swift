@@ -111,6 +111,32 @@ struct QuickReplyRendererTests {
 
     @Test("The five variables are the ones the prototype lists, written in braces")
     func variables() {
-        #expect(QuickReplyVariable.allCases.map(\.token) == ["{name}", "{service}", "{date}", "{time}", "{link}"])
+        #expect(QuickReplyVariable.allCases.map(\.token)
+            == ["{name}", "{service}", "{date}", "{time}", "{link}", "{address}"])
+    }
+
+    // MARK: - {address}
+
+    private let addressBlock =
+        "Rua Augusta 1200\nSão Paulo 01304-001\nhttps://www.google.com/maps/search/?api=1&query=x"
+
+    @Test("The address block stands on lines of its own")
+    func addressOnItsOwnLines() {
+        var withAddress = values
+        withAddress.address = addressBlock
+        let result = QuickReplyRenderer.render(
+            "Hi {name}! See you {date}. {address} Reply YES.", values: withAddress, formatters: formatters()
+        )
+        #expect(result == "Hi Ana! See you Thursday, October 1.\n\(addressBlock)\nReply YES.")
+    }
+
+    @Test("Without an address the word disappears with its line, never left as written")
+    func noAddress() {
+        let template = "Hi {name}!\n{address}\nReply YES.\n{link}"
+        #expect(QuickReplyRenderer.render(template, values: values, formatters: formatters())
+            == "Hi Ana!\nReply YES.\nhttps://bellohub.app/maria")
+        #expect(QuickReplyRenderer.render("Come to {address} soon", values: values, formatters: formatters())
+            == "Come to soon")
+        #expect(QuickReplyRenderer.withoutAddress("No word here.") == "No word here.")
     }
 }

@@ -41,6 +41,8 @@ export const PHONE_HASH_PEPPER = defineSecret('PHONE_HASH_PEPPER');
  */
 export const EMAIL_API_KEY = defineSecret('EMAIL_API_KEY');
 export const EMAIL_FROM = defineString('EMAIL_FROM', { default: '' });
+/** Optional `Reply-To` of every e-mail (owner, 2026-10-11). Empty by default: then none is sent and replies go to the sender. */
+export const EMAIL_REPLY_TO = defineString('EMAIL_REPLY_TO', { default: '' });
 
 /**
  * Sign in with Apple (D44, H17): `deleteAccount` revokes the professional's Apple grant with a client secret signed by the

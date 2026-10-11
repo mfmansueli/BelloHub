@@ -7,7 +7,7 @@ import Foundation
 
 /// Builds the text of a message to a client, in the business language, from the wording of its kind and the visit's
 /// own day, time and service. **Never any clinical data** (docs/06-PRIVACY-SECURITY.md section 8): the only values it
-/// can fill are the client's first name, the service name, the day and time, and the booking link.
+/// can fill are the client's first name, the service name, the day and time, the link and her own address.
 enum AppointmentMessageComposer {
     /// The wording with its `{name}`-style words still in it, in the business language.
     static func template(
@@ -53,12 +53,16 @@ enum AppointmentMessageComposer {
         )
     }
 
-    /// What fills the words of the message for this visit: the client's first name, the service, the day and time, and
-    /// her booking link when she has one. Nothing else, so no message can carry clinical data.
-    static func values(client: Client, appointment: Appointment, link: String?) -> QuickReplyValues {
+    /// What fills the words of the message for this visit: the client's first name, the service, the day and time,
+    /// the link (her client's own or her booking page) and where she works. Nothing else, so no message can carry
+    /// clinical data.
+    static func values(
+        client: Client, appointment: Appointment, link: String?, location: BusinessLocation? = nil
+    ) -> QuickReplyValues {
         let first = client.name.split(separator: " ").first.map(String.init) ?? client.name
         return QuickReplyValues(
-            name: first, service: appointment.serviceName, startsAt: appointment.startsAt, link: link
+            name: first, service: appointment.serviceName, startsAt: appointment.startsAt, link: link,
+            address: BusinessLocationFormat.messageBlock(location)
         )
     }
 
