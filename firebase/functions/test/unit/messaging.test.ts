@@ -9,7 +9,7 @@ import { DisabledWhatsAppProvider } from '../../src/messaging/DisabledWhatsAppPr
 import { EMAIL_TEMPLATE_IDS, emailLabelsFor, emailTextsFor } from '../../src/messaging/emailTemplates.js';
 import { ProviderClientMessenger } from '../../src/messaging/ProviderClientMessenger.js';
 import { fillTemplate, formatWhen, isolate } from '../../src/messaging/render.js';
-import { emailHtml } from '../../src/messaging/emailHtml.js';
+import { EMAIL_COLORS, emailHtml } from '../../src/messaging/emailHtml.js';
 import { ResendEmailProvider } from '../../src/messaging/ResendEmailProvider.js';
 import { WhatsAppCloudProvider } from '../../src/messaging/WhatsAppCloudProvider.js';
 import { WHATSAPP_LANGUAGE, WHATSAPP_TEMPLATES, whatsAppTemplateName } from '../../src/messaging/whatsAppTemplates.js';
@@ -464,5 +464,30 @@ describe('ResendEmailProvider (mocked vendor, H7)', () => {
     expect(messenger.emailAvailable).toBe(true);
     expect(bodies[0]).toMatchObject({ to: ['ana@example.com'] });
     expect(JSON.stringify(bodies[0])).toContain('123456');
+  });
+});
+
+// WCAG 2.2 AA on the colors of the HTML part (the web tokens): text 4.5:1 on the page and on the place box.
+describe('email colors', () => {
+  const luminance = (hex: string): number => {
+    const channels = [1, 3, 5].map((index) => Number.parseInt(hex.slice(index, index + 2), 16) / 255);
+    const [r = 0, g = 0, b = 0] = channels.map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const ratio = (a: string, b: string): number => {
+    const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
+    return (light + 0.05) / (dark + 0.05);
+  };
+
+  it.each([
+    ['ink on the page', EMAIL_COLORS.ink, EMAIL_COLORS.page],
+    ['ink on the place box', EMAIL_COLORS.ink, EMAIL_COLORS.surface],
+    ['secondary text on the page', EMAIL_COLORS.ink2, EMAIL_COLORS.page],
+    ['secondary text on the place box', EMAIL_COLORS.ink2, EMAIL_COLORS.surface],
+    ['links on the page', EMAIL_COLORS.link, EMAIL_COLORS.page],
+    ['links on the place box', EMAIL_COLORS.link, EMAIL_COLORS.surface],
+    ['the button label on the button', EMAIL_COLORS.onAction, EMAIL_COLORS.action]
+  ])('%s is at least 4.5:1', (_name, foreground, background) => {
+    expect(ratio(foreground, background)).toBeGreaterThanOrEqual(4.5);
   });
 });

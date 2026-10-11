@@ -28,10 +28,11 @@ final class AccessibilityAuditUITests: XCTestCase {
     private static let settings: [String] = ProcessInfo.processInfo.environment["AUDIT_SETTINGS"] == "none"
         ? [] : ["-uiIncreaseContrast", "-uiReduceMotion"]
 
-    /// `TEST_RUNNER_AUDIT_WALKS=records,clients` runs some of the walks (onboarding, workspace, clients, records).
+    /// `TEST_RUNNER_AUDIT_WALKS=records,clients` runs some of the walks (onboarding, workspace, workplace, clients,
+    /// records).
     private static let walks: Set<String> = {
         let chosen = ProcessInfo.processInfo.environment["AUDIT_WALKS"]?.split(separator: ",").map(String.init)
-        return Set(chosen ?? ["onboarding", "workspace", "clients", "records"])
+        return Set(chosen ?? ["onboarding", "workspace", "workplace", "clients", "records"])
     }()
 
     override func setUp() async throws {
@@ -57,6 +58,7 @@ final class AccessibilityAuditUITests: XCTestCase {
             let size = largestText
             if Self.walks.contains("onboarding") { try walkOnboarding(locale: locale, largestText: size, tag: tag) }
             if Self.walks.contains("workspace") { try walkWorkspace(locale: locale, largestText: size, tag: tag) }
+            if Self.walks.contains("workplace") { try walkWorkplace(locale: locale, largestText: size, tag: tag) }
             if Self.walks.contains("clients") {
                 try walkClientsAndCalendar(locale: locale, largestText: size, tag: tag)
             }
@@ -116,6 +118,28 @@ final class AccessibilityAuditUITests: XCTestCase {
             app, row: "more.bookingPageRow", first: app.navigationBars.firstMatch, tag: "\(tag) booking page"
         )
         try walkMoreRow(app, row: "more.servicesRow", first: app.navigationBars.firstMatch, tag: "\(tag) services")
+        app.terminate()
+    }
+
+    /// "Where you work" (Booking settings): empty, then with an address typed, so the preview and both map links are
+    /// audited too.
+    private func walkWorkplace(locale: String, largestText: Bool, tag: String) throws {
+        let app = launch(locale: locale, largestText: largestText, arguments: ["-uiSeed", "onboarded"])
+        app.openMoreRow("more.bookingPageRow")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.workplaceRow"]), "\(tag) workplace row")
+        try audit(app, "\(tag) booking page, where you work row")
+        app.tapButton("bookingSettings.workplaceRow")
+        XCTAssertTrue(app.textFields["workplace.streetField"].waitForExistence(timeout: 8), "\(tag) workplace")
+        try audit(app, "\(tag) where you work")
+        app.type("Rua Augusta 1200", intoField: "workplace.streetField")
+        app.type("São Paulo", intoField: "workplace.cityField")
+        // Return ends editing: the keyboard's prediction bar is the system's, not this screen's.
+        app.typeText("\n")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForNonExistence(timeout: 5), "\(tag) keyboard still up")
+        XCTAssertTrue(app.scrollUntilExists(app.element("workplace.preview.address")), "\(tag) workplace preview")
+        try audit(app, "\(tag) where you work, preview")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["workplace.saveButton"]), "\(tag) workplace save")
+        try audit(app, "\(tag) where you work, lower half")
         app.terminate()
     }
 

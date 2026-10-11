@@ -68,6 +68,47 @@ final class BookingSetupUITests: XCTestCase {
         XCTAssertTrue(app.buttons["shareLink.shareButton"].exists && app.buttons["shareLink.copyButton"].exists)
     }
 
+    /// "Where you work" (owner, 2026-10-11): the address, who sees it, the live preview with both map links, saved and
+    /// shown on the Booking settings row, then removed.
+    func testWhereYouWork() {
+        let app = XCUIApplication.launchedOnBookingSetup()
+        app.openMoreRow("more.bookingPageRow")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.workplaceRow"]))
+        XCTAssertTrue(app.buttons["bookingSettings.workplaceRow"].label.contains("Not added yet"))
+        app.tapButton("bookingSettings.workplaceRow")
+
+        XCTAssertTrue(app.element("workplace.preview.empty").waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["workplace.saveButton"].isEnabled, "an empty address cannot be saved")
+        XCTAssertTrue(app.buttons["workplace.visibility.confirmedClients"].exists)
+        app.type("Rua Augusta 1200", intoField: "workplace.streetField")
+        app.type("01304-001", intoField: "workplace.postalCodeField")
+        app.type("São Paulo", intoField: "workplace.cityField")
+
+        XCTAssertTrue(app.scrollUntilExists(app.element("workplace.preview.address")))
+        XCTAssertTrue(app.element("workplace.preview.address").label.contains("Rua Augusta 1200"))
+        XCTAssertTrue(app.element("workplace.preview.address").label.contains("01304-001"))
+        XCTAssertTrue(app.links["workplace.map.apple"].exists || app.buttons["workplace.map.apple"].exists)
+        XCTAssertTrue(app.links["workplace.map.google"].exists || app.buttons["workplace.map.google"].exists)
+
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["workplace.saveButton"]))
+        let save = app.buttons["workplace.saveButton"]
+        XCTAssertTrue(waitUntilEnabled(save))
+        save.tap()
+        XCTAssertTrue(waitForLabel(app.buttons["workplace.saveButton"], containing: "Saved"))
+        XCTAssertTrue(app.buttons["workplace.removeButton"].exists)
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["bookingSettings.workplaceRow"]))
+        XCTAssertTrue(waitForLabel(app.buttons["bookingSettings.workplaceRow"], containing: "Rua Augusta 1200"))
+
+        app.tapButton("bookingSettings.workplaceRow")
+        XCTAssertTrue(app.scrollUntilExists(app.buttons["workplace.removeButton"]))
+        app.tapButton("workplace.removeButton")
+        app.tapButton("workplace.removeConfirmButton")
+        XCTAssertTrue(app.element("workplace.preview.empty").waitForExistence(timeout: 5)
+                      || app.scrollUntilExists(app.element("workplace.preview.empty")))
+    }
+
     func testPoliciesAndQuickReplies() {
         let app = XCUIApplication.launchedOnBookingSetup()
         app.openMoreRow("more.bookingPageRow")
