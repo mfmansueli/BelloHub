@@ -12,6 +12,7 @@ import Testing
 @MainActor
 @Suite("TimeZoneNoticeViewModel")
 struct TimeZoneNoticeViewModelTests {
+    @MainActor
     private struct World {
         let repository: InMemoryClientRecordRepository
         let profile: ProfileService
@@ -43,8 +44,8 @@ struct TimeZoneNoticeViewModelTests {
         phoneZone: String = "Europe/Rome", storesHours: Bool = true, enabled: Bool = true, seedsProfile: Bool = true
     ) async throws -> World {
         let repository = InMemoryClientRecordRepository()
-        if seedsProfile { try await repository.save(makeProfile()) }
-        if storesHours { try await repository.save(makeAvailability(daysOff: [Self.dayOff])) }
+        if seedsProfile { await repository.save(makeProfile()) }
+        if storesHours { await repository.save(makeAvailability(daysOff: [Self.dayOff])) }
         let profile = ProfileService(repository: repository)
         await profile.load()
         let bookingSetup = BookingSetupService(repository: repository, now: { TestClock.now })
@@ -109,8 +110,8 @@ struct TimeZoneNoticeViewModelTests {
         world.viewModel.keep(mismatch)
 
         #expect(world.viewModel.mismatch(now: TestClock.now) == nil)
-        #expect(try await world.repository.profile()?.timeZoneID == "America/Sao_Paulo")
-        #expect(try await world.repository.availability()?.timeZoneID == "America/Sao_Paulo")
+        #expect(await world.repository.profile()?.timeZoneID == "America/Sao_Paulo")
+        #expect(await world.repository.availability()?.timeZoneID == "America/Sao_Paulo")
     }
 
     // MARK: - Use my iPhone's time zone
@@ -119,7 +120,7 @@ struct TimeZoneNoticeViewModelTests {
     func usePhoneZone() async throws {
         let world = try await makeWorld()
         defer { world.cleanUp() }
-        let before = try #require(try await world.repository.availability())
+        let before = try #require(await world.repository.availability())
         let mismatch = try #require(world.viewModel.mismatch(now: TestClock.now))
 
         await world.viewModel.usePhoneZoneAsync(mismatch)
@@ -127,12 +128,12 @@ struct TimeZoneNoticeViewModelTests {
         #expect(world.viewModel.errorMessage == nil)
         #expect(!world.viewModel.isSaving)
         #expect(world.profile.profile?.timeZoneID == "Europe/Rome")
-        #expect(try await world.repository.profile()?.timeZoneID == "Europe/Rome")
+        #expect(await world.repository.profile()?.timeZoneID == "Europe/Rome")
         #expect(world.viewModel.mismatch(now: TestClock.now) == nil, "nothing left to say")
 
-        let after = try #require(try await world.repository.availability())
+        let after = try #require(await world.repository.availability())
         #expect(after.timeZoneID == "Europe/Rome")
-        #expect(after.weekly == before.weekly && after.breaks == before.breaks, "09:00 to 19:00 stays 09:00 to 19:00")
+        #expect(after.weekly == before.weekly && after.breaks == before.breaks, "09:00 to 19:00 stays as it is")
         #expect(after.daysOff.map(\.startDate) == [TestClock.date("2026-10-20 00:00", zone: "Europe/Rome")])
         #expect(world.bookingSetup.availability == after)
     }
@@ -142,14 +143,14 @@ struct TimeZoneNoticeViewModelTests {
         let world = try await makeWorld()
         defer { world.cleanUp() }
         var inputs = makePublishInputs()
-        inputs.profile = try #require(try await world.repository.profile())
-        inputs.availability = try #require(try await world.repository.availability())
+        inputs.profile = try #require(await world.repository.profile())
+        inputs.availability = try #require(await world.repository.availability())
         let before = PublishPayloads.availability(inputs, now: TestClock.now)
 
         await world.viewModel.usePhoneZoneAsync(try #require(world.viewModel.mismatch(now: TestClock.now)))
 
-        inputs.profile = try #require(try await world.repository.profile())
-        inputs.availability = try #require(try await world.repository.availability())
+        inputs.profile = try #require(await world.repository.profile())
+        inputs.availability = try #require(await world.repository.availability())
         let after = PublishPayloads.availability(inputs, now: TestClock.now)
         #expect(PublishPayloads.profile(inputs, now: TestClock.now).profile.timeZoneID == "Europe/Rome")
         #expect(after.timeZoneID == "Europe/Rome")
@@ -163,8 +164,8 @@ struct TimeZoneNoticeViewModelTests {
         let world = try await makeWorld(storesHours: false)
         defer { world.cleanUp() }
         await world.viewModel.usePhoneZoneAsync(try #require(world.viewModel.mismatch(now: TestClock.now)))
-        #expect(try await world.repository.profile()?.timeZoneID == "Europe/Rome")
-        #expect(try await world.repository.availability() == nil, "nothing is stored on her behalf")
+        #expect(await world.repository.profile()?.timeZoneID == "Europe/Rome")
+        #expect(await world.repository.availability() == nil, "nothing is stored on her behalf")
     }
 
     @Test("A failed save says so and leaves the business zone as it was")
@@ -178,7 +179,8 @@ struct TimeZoneNoticeViewModelTests {
         let defaults = UserDefaults(suiteName: suite) ?? .standard
         defer { defaults.removePersistentDomain(forName: suite) }
         let notice = TimeZoneNoticeService(
-            defaults: defaults, regions: RegionCatalog(presets: []), phoneZone: { TimeZone(identifier: "Europe/Rome") ?? .gmt }
+            defaults: defaults, regions: RegionCatalog(presets: []),
+            phoneZone: { TimeZone(identifier: "Europe/Rome") ?? .gmt }
         )
         let viewModel = TimeZoneNoticeViewModel(
             notice: notice, profile: profile,
@@ -198,6 +200,9 @@ struct TimeZoneNoticeViewModelTests {
         let world = try await makeWorld()
         defer { world.cleanUp() }
         world.viewModel.usePhoneZone(try #require(world.viewModel.mismatch(now: TestClock.now)))
-        #expect(await Wait.untilMain { world.profile.profile?.timeZoneID == "Europe/Rome" && !world.viewModel.isSaving })
+        let done = await Wait.untilMain {
+            world.profile.profile?.timeZoneID == "Europe/Rome" && !world.viewModel.isSaving
+        }
+        #expect(done)
     }
 }

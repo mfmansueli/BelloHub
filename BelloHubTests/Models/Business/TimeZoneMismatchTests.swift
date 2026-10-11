@@ -110,11 +110,12 @@ struct TimeZoneMismatchTests {
     @Test("The region note appears only when the iPhone's zone belongs to another preset's country")
     func regionNote() throws {
         let regions = try RegionCatalog.loadBundled()
-        #expect(TimeZoneMismatch.isInAnotherRegion(phoneZoneID: "Europe/Rome", businessRegionCode: "BR", regions: regions))
-        #expect(TimeZoneMismatch.isInAnotherRegion(phoneZoneID: "Europe/Rome", businessRegionCode: "br", regions: regions))
-        #expect(!TimeZoneMismatch.isInAnotherRegion(
-            phoneZoneID: "America/Manaus", businessRegionCode: "BR", regions: regions
-        ))
-        #expect(!TimeZoneMismatch.isInAnotherRegion(phoneZoneID: "Asia/Tokyo", businessRegionCode: "BR", regions: regions))
+        func another(_ zone: String, _ region: String) -> Bool {
+            TimeZoneMismatch.isInAnotherRegion(phoneZoneID: zone, businessRegionCode: region, regions: regions)
+        }
+        #expect(another("Europe/Rome", "BR"))
+        #expect(another("Europe/Rome", "br"))
+        #expect(!another("America/Manaus", "BR"))
+        #expect(!another("Asia/Tokyo", "BR"))
     }
 }
