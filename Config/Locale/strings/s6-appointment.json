@@ -335,22 +335,6 @@
    "أكّد العميل هذا الموعد."
   ],
   [
-   "appointment.reminder.waiting",
-   "Line on the visit: a reminder was sent and the client has not answered. %@ is the day it was sent.",
-   "Reminder sent %@. No reply yet.",
-   "Lembrete enviado %@. Ainda sem resposta.",
-   "Lembrete enviado %@. Ainda sem resposta.",
-   "Recordatorio enviado %@. Aún sin respuesta.",
-   "Recordatorio enviado %@. Todavía sin respuesta.",
-   "Promemoria inviato %@. Nessuna risposta per ora.",
-   "Rappel envoyé %@. Pas encore de réponse.",
-   "Erinnerung gesendet %@. Noch keine Antwort.",
-   "Hatırlatma gönderildi (%@). Henüz yanıt yok.",
-   "Pengingat dikirim %@. Belum ada balasan.",
-   "रिमाइंडर भेजा गया %@। अभी तक जवाब नहीं आया।",
-   "أُرسل التذكير %@. لا ردّ حتى الآن."
-  ],
-  [
    "appointment.reminder.remind",
    "Button: write to the client again about the visit.",
    "Remind again",

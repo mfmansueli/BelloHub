@@ -37,6 +37,21 @@ struct AppointmentServiceTests {
         #expect(try await service.appointment(id: booked.id)?.status == .cancelled)
     }
 
+    @Test("Opening the reminder chat and her own mark of sending are stored apart")
+    func reminderStates() async throws {
+        let service = AppointmentService(repository: InMemoryClientRecordRepository())
+        let booked = makeAppointment()
+        try await service.book(booked)
+
+        try await service.markReminderSent(id: booked.id, now: now)
+        var stored = try #require(try await service.appointment(id: booked.id))
+        #expect(stored.reminderSentAt == now && stored.reminderMarkedSentAt == nil)
+
+        try await service.markReminderSentByHer(id: booked.id, now: now.addingTimeInterval(60))
+        stored = try #require(try await service.appointment(id: booked.id))
+        #expect(stored.reminderSentAt == now && stored.reminderMarkedSentAt == now.addingTimeInterval(60))
+    }
+
     @Test("Changing a visit that does not exist says so")
     func missing() async {
         let service = AppointmentService(repository: InMemoryClientRecordRepository())

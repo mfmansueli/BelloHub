@@ -123,6 +123,19 @@ final class AppointmentViewModel {
         }
     }
 
+    /// She says she sent the reminder herself (routine-a item 6): kept on the visit as her statement.
+    func markReminderSent() {
+        Task {
+            do {
+                let changed = try await appointments.markReminderSentByHer(id: appointmentID, now: now())
+                if let visit { self.visit = VisitContext(appointment: changed, client: visit.client) }
+                actionErrorMessage = nil
+            } catch {
+                actionErrorMessage = String(interface: LocalizedStringResource("appointment.error.action"))
+            }
+        }
+    }
+
     func dismissActionError() {
         actionErrorMessage = nil
     }

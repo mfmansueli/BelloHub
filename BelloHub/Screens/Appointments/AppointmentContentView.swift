@@ -145,24 +145,38 @@ struct AppointmentContentView: View {
                 .font(Typography.meta)
                 .foregroundStyle(Palette.sageText)
                 .accessibilityIdentifier("appointment.reminderConfirmed")
-        case .waiting(let sentAt):
-            let when = formatters.recentDate(sentAt, now: now)
-            HStack(alignment: .center, spacing: Spacing.row) {
+        case .waiting(let state):
+            // Opening WhatsApp proves no sending (routine-a item 6): the line says what is known, her own mark is
+            // called hers, and "I sent it" is offered while only the chat was opened.
+            VStack(alignment: .leading, spacing: Spacing.sm) {
                 Label {
-                    Text(LocalizedStringResource(
-                        "appointment.reminder.waiting", defaultValue: "Reminder sent \(when). No reply yet."
-                    ).localized(in: locale))
+                    VStack(alignment: .leading, spacing: Spacing.xxs) {
+                        Text(verbatim: FollowUpReasonText(formatters: formatters).delivery(state))
+                        Text("appointment.reminder.noReply")
+                    }
                 } icon: { Image(icon: .clock) }
                 .font(Typography.meta)
                 .foregroundStyle(Palette.amberText)
-                Spacer(minLength: Spacing.sm)
-                Button { sheet = .message(appointmentID: visit.appointment.id) } label: {
-                    Text("appointment.reminder.remind")
-                        .font(Typography.metaStrong)
-                        .foregroundStyle(Palette.roseText)
-                        .frame(minHeight: Spacing.touchTarget)
+                .fixedSize(horizontal: false, vertical: true)
+                HStack(spacing: Spacing.row) {
+                    if state.isOpened {
+                        Button { viewModel.markReminderSent() } label: {
+                            Text("followUpQueue.action.sent")
+                                .font(Typography.metaStrong)
+                                .foregroundStyle(Palette.roseText)
+                                .frame(minHeight: Spacing.touchTarget)
+                        }
+                        .accessibilityIdentifier("appointment.reminderSentButton")
+                    }
+                    Spacer(minLength: Spacing.sm)
+                    Button { sheet = .message(appointmentID: visit.appointment.id) } label: {
+                        Text("appointment.reminder.remind")
+                            .font(Typography.metaStrong)
+                            .foregroundStyle(Palette.roseText)
+                            .frame(minHeight: Spacing.touchTarget)
+                    }
+                    .accessibilityIdentifier("appointment.remindAgainButton")
                 }
-                .accessibilityIdentifier("appointment.remindAgainButton")
             }
             .padding(Spacing.md)
             .background(Palette.amberBg, in: RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))

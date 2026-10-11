@@ -925,6 +925,22 @@
    "Menunggu pesan atau keputusan: %@",
    "संदेश या फ़ैसले का इंतज़ार: %@",
    "بانتظار رسالة أو قرار: %@"
+  ],
+  [
+   "appointment.reminder.noReply",
+   "Visit detail, under the reminder state: the client has not confirmed.",
+   "No answer from the client yet.",
+   "O cliente ainda não respondeu.",
+   "O cliente ainda não respondeu.",
+   "Aún no hay respuesta.",
+   "Todavía no hay respuesta.",
+   "Ancora nessuna risposta.",
+   "Pas encore de réponse.",
+   "Noch keine Antwort.",
+   "Henüz yanıt yok.",
+   "Belum ada balasan.",
+   "अभी तक कोई जवाब नहीं।",
+   "لا يوجد رد بعد."
   ]
  ]
 }
