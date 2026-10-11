@@ -96,9 +96,9 @@ extension XCUIApplication {
         byLabel.tap()
     }
 
-    /// Scrolls the day until the whole visit lies between the pinned header and the lower quarter of the screen. The day
-    /// view opens one hour before now, so late in the day a morning visit sits under the header, where it still reports
-    /// `isHittable` but a long press lands on the week strip (found at 18:50 São Paulo, 2026-10-11).
+    /// Scrolls the day until the whole visit lies between the pinned header and the lower quarter of the screen. The
+    /// day view opens one hour before now, so late in the day a morning visit sits under the header, where it still
+    /// reports `isHittable` but a long press lands on the week strip (found at 18:50 São Paulo, 2026-10-11).
     @MainActor
     func bringClearOfCalendarHeader(_ element: XCUIElement, attempts: Int = 8) {
         let window = windows.firstMatch.frame
