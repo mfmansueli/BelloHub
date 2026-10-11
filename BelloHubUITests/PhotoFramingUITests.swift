@@ -43,9 +43,14 @@ final class PhotoFramingUITests: XCTestCase {
         XCTAssertTrue(slider.exists)
         slider.adjust(toNormalizedSliderPosition: 0.9)
 
-        app.flipSwitch("treatmentFlow.camera.referenceToggle")
-        XCTAssertEqual(toggle.value as? String, "0")
-        XCTAssertFalse(slider.exists, "the slider goes away with the reference")
+        // The switch sits in the scrolling content above the pinned capture bar: keep it clear of the bar, so a tap
+        // meant for it never lands on the bar, and wait for the new value instead of reading it at once.
+        app.flipSwitch(
+            "treatmentFlow.camera.referenceToggle", clearOf: app.buttons["treatmentFlow.camera.captureButton"]
+        )
+        let off = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == '0'"), object: toggle)
+        XCTAssertEqual(XCTWaiter().wait(for: [off], timeout: 5), .completed, "the reference can be turned off")
+        XCTAssertTrue(app.waitUntilGone(slider), "the slider goes away with the reference")
 
         app.tapButton("treatmentFlow.camera.captureButton")
         XCTAssertTrue(app.element("treatmentFlow.camera.reviewScreen").waitForExistence(timeout: 10),
