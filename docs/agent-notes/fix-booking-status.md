@@ -106,7 +106,7 @@ passed, as expected (that path worked). After the fix all pass.
 
 ## Tests
 
-- `BookingSyncServiceTests` (13, new): both reports end to end over the fake server and the in-memory vault, plus the
+- `BookingSyncServiceTests` (15 cases, new): both reports end to end over the fake server and the in-memory vault, plus the
   queue surviving a relaunch, the look-up by id, a gone booking read once.
 - `BookingImporterTests` (+7): her decisions win, cancel details, held bookings, moved booking found wherever it is,
   duplicates with and without her note.
@@ -122,7 +122,16 @@ passed, as expected (that path worked). After the fix all pass.
 
 ## Gates
 
-See the final report of this branch for the measured numbers (Fast, check-warnings, firebase, UI suites).
+Measured on the branch head after merging `origin/build/v1` (c4669cd), simulator iPhone 17 Pro Max:
+
+- `scripts/test.sh fast`: 2450 tests in 358 suites, green.
+- `scripts/check-warnings.sh`: zero warnings on simulator, device, Release and the test targets (before the merge the
+  only warnings were three motion line lengths, fixed upstream by 93a3bfb).
+- `scripts/test-firebase.sh all`: lint, typecheck, build, audit, unit 1005, rules 67, use cases 332, transport 19, green.
+- UI: `BookingStatusUITests`, `InboxUITests`, `AppointmentUITests`, `HomeUITests`, `CalendarUITests`,
+  `SuggestTimeUITests`, `MailboxAlertsUITests`: 15 tests, green.
+- Not run: the whole Full plan and `scripts/test-web.sh` (no web change).
+
 Seen once during the work and not related: the Fast plan crashed in `VaultMigrationTests` ("A store written by an older
 schema …", `NSUnknownKeyException` for the key `thumbnail` on an older `VaultItem`); the next full Fast run was green.
 
