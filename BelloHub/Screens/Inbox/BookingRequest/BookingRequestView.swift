@@ -13,12 +13,13 @@ struct BookingRequestView: View {
     @Environment(VaultService.self) private var vault
     @Environment(ProfileService.self) private var profile
     @Environment(BookingSetupService.self) private var bookingSetup
+    @Environment(SubscriptionService.self) private var subscription
 
     var body: some View {
         BookingRequestContentView(
             viewModel: BookingRequestViewModel(
                 bookingID: bookingID, sync: sync, vault: vault,
-                link: bookingSetup.setup.slug.map { BookingLink(slug: $0) }
+                link: bookingSetup.setup.slug.map { BookingLink(slug: $0) }, subscription: subscription
             ),
             settings: CalendarSettings(profile: profile.profile)
         )

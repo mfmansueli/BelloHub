@@ -27643,6 +27643,186 @@
         }
       }
     },
+    "bookingRequest.planOnDevice.message" : {
+      "comment" : "Booking request: what to do when the server cannot approve a new client online although the plan is active",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا يمكن الموافقة على طلب هذه العميلة الجديدة عبر الإنترنت حاليًا. أضيفي العميلة والموعد يدويًا ثم أبلغيها."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Diese Anfrage einer neuen Person lässt sich gerade nicht online bestätigen. Leg die Person und den Termin von Hand an und gib ihr Bescheid."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This request from a new client cannot be approved online for now. Add the client and the visit by hand, then let them know."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This request from a new client cannot be approved online for now. Add the client and the visit by hand, then let them know."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta solicitud de una clienta nueva no se puede aprobar online por ahora. Añade a la clienta y la cita a mano y avísale."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta solicitud de una clienta nueva no se puede aprobar en línea por ahora. Agrega a la clienta y la cita a mano y avísale."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta solicitud de una clienta nueva no se puede aprobar en línea por ahora. Agrega a la clienta y la cita a mano y avísale."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cette demande d'un nouveau client ne peut pas être approuvée en ligne pour l'instant. Ajoutez le client et le rendez-vous à la main, puis prévenez-le."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नए क्लाइंट का यह अनुरोध अभी ऑनलाइन स्वीकार नहीं हो सकता। क्लाइंट और विज़िट को हाथ से जोड़ें, फिर उन्हें बता दें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Permintaan dari klien baru ini belum bisa disetujui secara online. Tambahkan klien dan jadwalnya secara manual, lalu kabari dia."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Questa richiesta di una nuova cliente per ora non si può approvare online. Aggiungi la cliente e l'appuntamento a mano e avvisala."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este pedido de uma cliente nova não pode ser aprovado online por enquanto. Cadastre a cliente e o horário à mão e avise a pessoa."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este pedido de um cliente novo não pode ser aprovado online por agora. Adicione o cliente e a marcação à mão e avise a pessoa."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yeni bir müşterinin bu talebi şimdilik çevrim içi onaylanamıyor. Müşteriyi ve randevuyu elle ekleyin, ardından kendisine haber verin."
+          }
+        }
+      }
+    },
+    "bookingRequest.planOnDevice.title" : {
+      "comment" : "Booking request: the plan is active on this iPhone but the server still holds a new client's request",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "خطتك مفعّلة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dein Abo ist aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your plan is active"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your plan is active"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu plan está activo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu plan está activo"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu plan está activo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre abonnement est actif"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपका प्लान सक्रिय है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Paketmu aktif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il tuo piano è attivo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seu plano está ativo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O seu plano está ativo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Planınız etkin"
+          }
+        }
+      }
+    },
     "bookingRequest.reason.freeRegistrations.message" : {
       "comment" : "2.10 notice under the free-registrations title.",
       "extractionState" : "manual",
@@ -157395,6 +157575,276 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Apple tarafından faturalandırılır. App Store aboneliklerinizden istediğiniz zaman iptal edebilirsiniz. Fiyatlar mağazanızın para birimindedir."
+          }
+        }
+      }
+    },
+    "plan.legal.privacy" : {
+      "comment" : "Plan and paywall: link to the Privacy Policy",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "سياسة الخصوصية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Datenschutzerklärung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Privacy Policy"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Política de privacidad"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Política de privacidad"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Política de privacidad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Politique de confidentialité"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "गोपनीयता नीति"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kebijakan Privasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Informativa sulla privacy"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Política de Privacidade"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Política de Privacidade"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gizlilik Politikası"
+          }
+        }
+      }
+    },
+    "plan.legal.renewal" : {
+      "comment" : "Plan and paywall: App Review 3.1.2 auto-renewal statement, under the purchase buttons",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يتجدد Bello Hub Pro تلقائيًا بالسعر المعروض، كل شهر أو كل سنة، حتى تلغي الاشتراك. ألغي الاشتراك قبل انتهاء الفترة بـ24 ساعة على الأقل من اشتراكات App Store."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro verlängert sich automatisch zum angezeigten Preis, jeden Monat oder jedes Jahr, bis du kündigst. Kündige mindestens 24 Stunden vor Ende des Zeitraums in deinen App-Store-Abos."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bello Hub Pro renews automatically at the price shown, every month or every year, until you cancel. Cancel at least 24 hours before the period ends in your App Store subscriptions."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro renews automatically at the price shown, every month or every year, until you cancel. Cancel at least 24 hours before the period ends in your App Store subscriptions."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro se renueva automáticamente al precio mostrado, cada mes o cada año, hasta que lo canceles. Cancela al menos 24 horas antes de que termine el periodo en tus suscripciones del App Store."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro se renueva automáticamente al precio mostrado, cada mes o cada año, hasta que lo canceles. Cancela al menos 24 horas antes de que termine el periodo en tus suscripciones del App Store."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro se renueva automáticamente al precio mostrado, cada mes o cada año, hasta que lo canceles. Cancela al menos 24 horas antes de que termine el periodo en tus suscripciones del App Store."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro se renouvelle automatiquement au prix indiqué, chaque mois ou chaque année, jusqu'à ce que vous annuliez. Annulez au moins 24 heures avant la fin de la période dans vos abonnements App Store."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro दिखाए गए मूल्य पर हर महीने या हर साल अपने आप रिन्यू होता है, जब तक आप रद्द न करें। अवधि खत्म होने से कम से कम 24 घंटे पहले App Store सदस्यताओं में रद्द करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro diperpanjang otomatis dengan harga yang ditampilkan, setiap bulan atau setiap tahun, sampai kamu membatalkannya. Batalkan paling lambat 24 jam sebelum periode berakhir di langganan App Store."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro si rinnova automaticamente al prezzo indicato, ogni mese o ogni anno, finché non annulli. Annulla almeno 24 ore prima della fine del periodo negli abbonamenti dell'App Store."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Bello Hub Pro renova automaticamente pelo preço mostrado, todo mês ou todo ano, até você cancelar. Cancele pelo menos 24 horas antes do fim do período nas assinaturas da App Store."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Bello Hub Pro renova automaticamente pelo preço apresentado, todos os meses ou todos os anos, até cancelar. Cancele pelo menos 24 horas antes do fim do período nas subscrições da App Store."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bello Hub Pro, siz iptal edene kadar her ay veya her yıl gösterilen fiyattan otomatik olarak yenilenir. Dönem bitmeden en az 24 saat önce App Store aboneliklerinizden iptal edin."
+          }
+        }
+      }
+    },
+    "plan.legal.terms" : {
+      "comment" : "Plan and paywall: link to the Terms of Use",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "شروط الاستخدام"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nutzungsbedingungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Use"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Terms of Use"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Términos de uso"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Términos de uso"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Términos de uso"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conditions d'utilisation"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "उपयोग की शर्तें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ketentuan Penggunaan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Termini d'uso"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Termos de Uso"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Termos de Utilização"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kullanım Koşulları"
           }
         }
       }

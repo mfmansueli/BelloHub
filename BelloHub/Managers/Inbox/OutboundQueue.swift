@@ -156,6 +156,36 @@ final class OutboundQueue {
             return .bookingRequest(try await repository.respondBookingRequest(id: bookingId, approve: approve))
         case .respondRescheduleRequest(let requestId, let accept):
             return .reschedule(try await repository.respondRescheduleRequest(id: requestId, accept: accept))
+        case .reserveRegistrations:
+            // D59: the free registrations are counted on the iPhone; an old entry is dropped, the server not called.
+            return .done
+        case .cancelBookingByOwner, .moveBookingByOwner, .markNoShow, .forgiveNoShow:
+            try await performLinkChange(action.kind)
+        default:
+            try await performWrite(action.kind)
+        }
+        return .done
+    }
+
+    /// Her own changes to link visits (`BookingSyncService` reads the outcome to sync again).
+    private func performLinkChange(_ kind: OutboundAction.Kind) async throws {
+        switch kind {
+        case .cancelBookingByOwner(let bookingId):
+            try await repository.cancelBookingByOwner(id: bookingId)
+        case .moveBookingByOwner(let bookingId, let startsAt):
+            try await repository.moveBookingByOwner(id: bookingId, startsAt: startsAt)
+        case .markNoShow(let bookingId, let phone, let markId, let markedAt):
+            try await repository.markNoShow(phone: phone, markId: markId, markedAt: markedAt, bookingId: bookingId)
+        case .forgiveNoShow(_, let phone, let markId):
+            try await repository.forgiveNoShow(phone: phone, markId: markId)
+        default:
+            break
+        }
+    }
+
+    /// The writes whose answer is only "done".
+    private func performWrite(_ kind: OutboundAction.Kind) async throws {
+        switch kind {
         case .acknowledgeMailboxItem(let itemId):
             try await repository.acknowledgeMailboxItem(id: itemId)
         case .removeWaitlistEntry(let waitlistId):
@@ -168,10 +198,9 @@ final class OutboundQueue {
             try await repository.unregisterDevice(fcmToken: fcmToken)
         case .deleteClientServerData(let phone, let bookingIds):
             try await repository.deleteClientServerData(phone: phone, bookingIds: bookingIds)
-        case .reserveRegistrations(let claims):
-            return .registrations(try await repository.reserveRegistrations(claims))
+        default:
+            break
         }
-        return .done
     }
 
     private func scheduleRetry() {

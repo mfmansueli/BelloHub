@@ -100,4 +100,119 @@ struct BookingImporterTests {
         #expect(visit.privateNote == "Prefers the window seat")
         #expect(plan.conflicts.isEmpty, "a cancelled visit holds no time")
     }
+
+    // MARK: - fix-booking-status
+
+    private func mirror(_ booking: IncomingBooking) throws -> Appointment {
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [], clients: [], services: [], now: TestClock.now
+        )
+        return try #require(plan.appointments.first)
+    }
+
+    @Test("A server 'confirmed' never reopens a visit she closed, cancelled or marked as a no-show", arguments: [
+        AppointmentStatus.completed, .cancelled, .noShow
+    ])
+    func herDecisionWins(local: AppointmentStatus) throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed)
+        var visit = try mirror(booking)
+        visit.status = local
+
+        let updated = BookingImporter.apply(booking, to: visit, now: TestClock.now)
+
+        #expect(updated.status == local)
+    }
+
+    @Test("A server cancel by her keeps what she recorded; a cancel by the client replaces it")
+    func cancelDetails() throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed)
+        var visit = try mirror(booking)
+        visit.status = .cancelled
+        visit.cancelledBy = .client
+        visit.cancelledAt = TestClock.days(-1)
+        var byPro = booking
+        byPro.status = .cancelledByPro
+        byPro.cancelledAt = TestClock.now
+        var byClient = booking
+        byClient.status = .cancelledByClient
+        byClient.cancelledAt = TestClock.now
+        byClient.isLateCancellation = true
+
+        let kept = BookingImporter.apply(byPro, to: visit, now: TestClock.now)
+        let replaced = BookingImporter.apply(byClient, to: visit, now: TestClock.now)
+
+        #expect(kept.cancelledBy == .client && kept.cancelledAt == TestClock.days(-1))
+        #expect(replaced.cancelledBy == .client && replaced.cancelledAt == TestClock.now && replaced.isLateCancellation)
+    }
+
+    @Test("A booking she changed here and the server has not taken yet is left alone")
+    func heldLocally() throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed)
+        var visit = try mirror(booking)
+        visit.startsAt = visit.startsAt.addingTimeInterval(86_400)
+        visit.endsAt = visit.endsAt.addingTimeInterval(86_400)
+        visit.status = .booked
+
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [visit], clients: [], services: [], now: TestClock.now,
+            heldLocally: ["bk-1"]
+        )
+
+        #expect(plan.isEmpty)
+    }
+
+    @Test("A visit mirrored at the old time follows its moved booking, wherever the times are")
+    func followsMovedBooking() throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed, daysAhead: 20)
+        let visit = try mirror(booking)
+        var moved = makeIncomingBooking(id: "bk-1", status: .cancelledByClient, daysAhead: 2)
+        moved.createdAt = booking.createdAt
+
+        let plan = BookingImporter.plan(
+            bookings: [moved], appointments: [visit], clients: [], services: [], now: TestClock.now
+        )
+
+        let updated = try #require(plan.appointments.first)
+        #expect(plan.appointments.count == 1)
+        #expect(updated.id == visit.id && updated.status == .cancelled && updated.startsAt == moved.startsAt)
+    }
+
+    @Test("Two mirrors of one booking become one: the oldest stays, an untouched later copy leaves")
+    func duplicates() throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed)
+        let first = try mirror(booking)
+        let copy = makeCopy(of: first, minutesEarlier: 60, createdLater: 60)
+
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [copy, first], clients: [], services: [], now: TestClock.now
+        )
+
+        #expect(plan.removals == [copy.id])
+        #expect(plan.appointments.isEmpty, "the first mirror already matches the server")
+    }
+
+    @Test("A copy with her note on it is never thrown away: it becomes the one that stays")
+    func duplicateWithHerNote() throws {
+        let booking = makeIncomingBooking(id: "bk-1", status: .confirmed)
+        let first = try mirror(booking)
+        var noted = makeCopy(of: first, minutesEarlier: 120, createdLater: 120)
+        noted.privateNote = "Allergic to latex"
+
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [first, noted], clients: [], services: [], now: TestClock.now
+        )
+
+        #expect(plan.removals == [first.id])
+        #expect(plan.appointments.map(\.id) == [noted.id])
+        #expect(plan.appointments.first?.startsAt == booking.startsAt, "and it follows the server")
+    }
+
+    private func makeCopy(of visit: Appointment, minutesEarlier: Int, createdLater seconds: Int) -> Appointment {
+        Appointment(
+            clientID: visit.clientID, serviceName: visit.serviceName,
+            startsAt: visit.startsAt.addingTimeInterval(TimeInterval(-minutesEarlier * 60)), endsAt: visit.endsAt,
+            status: .confirmed, origin: .bookingLink, bookingID: visit.bookingID,
+            createdAt: visit.createdAt.addingTimeInterval(TimeInterval(seconds))
+        )
+    }
 }

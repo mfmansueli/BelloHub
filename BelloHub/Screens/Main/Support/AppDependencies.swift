@@ -58,7 +58,7 @@ struct AppDependencies {
         let permissions = PermissionService()
         let appointments = AppointmentService(vault: vault)
         let timeBlocks = TimeBlockService(vault: vault)
-        let subscription = makeLiveSubscription(client: client, profile: profile)
+        let subscription = makeLiveSubscription(defaults: defaults)
         let server = RemoteInboxRepository(client: client, firestore: URLSessionFirestoreClient(tokens: tokens))
         let inbox = InboxServices.make(repository: server, keys: keyManager, vault: vault, appointments: appointments,
                                        pushProvider: makePushProvider())
@@ -69,7 +69,9 @@ struct AppDependencies {
             permissions: permissions,
             vault: vault,
             profile: profile,
-            registration: .init(vault: vault, subscription: subscription, server: server, queue: inbox.queue),
+            registration: .init(
+                vault: vault, subscription: subscription, allowance: KeychainRegistrationAllowanceStore()
+            ),
             bookingSetup: BookingSetupService(vault: vault),
             appointments: appointments,
             timeBlocks: timeBlocks,
@@ -99,15 +101,13 @@ struct AppDependencies {
         )
     }
 
-    /// StoreKit for the purchase, the server for the verdict (`ensureAccount` for the account token, `syncPlan` for the
-    /// plan); the profile gives the region and language of a server account created at the first purchase.
-    private static func makeLiveSubscription(
-        client: any CallableClient, profile: ProfileService
-    ) -> SubscriptionService {
-        let verifier = RemoteSubscriptionVerifier(
-            client: client, accounts: RemoteBookingRepository(client: client), profile: { await profile.profile }
+    /// StoreKit for the purchase and the signed facts, the iPhone for the verdict (D59): nothing about a purchase goes
+    /// to our server.
+    private static func makeLiveSubscription(defaults: UserDefaults) -> SubscriptionService {
+        SubscriptionService(
+            provider: StoreKitSubscriptionProvider(),
+            verifier: DeviceSubscriptionVerifier(store: DefaultsSubscriptionSnapshotStore(defaults: defaults))
         )
-        return SubscriptionService(provider: StoreKitSubscriptionProvider(), verifier: verifier)
     }
 
     /// The server deletes her account. A `-devLogin` run (DEBUG) carries a fake token the server rightly refuses, so it
@@ -206,8 +206,13 @@ struct AppDependencies {
         options: LaunchOptions, keyManager: KeyManager, vault: VaultService, appointments: AppointmentService,
         defaults: UserDefaults
     ) -> InboxServices {
-        let inbox: any InboxRepository = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:)).map {
-            UITestInboxRepository(scenario: $0, publicKey: { try keyManager.currentInboxPublicKey() })
+        let scenario = options.uiInbox.flatMap(UITestInboxRepository.Scenario.init(rawValue:))
+        let inbox: any InboxRepository = scenario.map { scenario -> any InboxRepository in
+            let server = UITestInboxRepository(
+                scenario: scenario, publicKey: { try keyManager.currentInboxPublicKey() }
+            )
+            server.actOnTheWebWhenTheAppLeaves()
+            return server
         } ?? OfflineInboxRepository()
         return InboxServices.make(
             repository: inbox, keys: keyManager, vault: vault, appointments: appointments,

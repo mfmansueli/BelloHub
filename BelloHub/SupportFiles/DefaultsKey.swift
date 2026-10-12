@@ -71,4 +71,7 @@ enum DefaultsKey {
     /// (`TimeZoneNoticeService`, JSON `TimeZoneMismatch.Pair`): `<prefix>.<userID>`. She is asked again only when one
     /// of the two zones changes.
     static let timeZoneNoticeKept = "timeZone.noticeKept"
+    /// The last plan state the App Store's signed data proved on this iPhone (`SubscriptionSnapshot`, JSON, D59): a
+    /// kind, a period, the signed end and the latest time seen. Not per user: a purchase belongs to the Apple ID.
+    static let subscriptionSnapshot = "subscription.snapshot"
 }

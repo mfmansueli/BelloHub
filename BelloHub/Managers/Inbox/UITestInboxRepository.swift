@@ -6,13 +6,16 @@
 #if DEBUG
 import CryptoKit
 import Foundation
+import UIKit
 
 /// An in-memory inbox server for UI tests (`-uiInbox fixtures`): the data of `UITestInboxFixtures` plus one sealed
 /// health form for Helena, sealed at first read to the test key (`InMemoryKeyStore` seed), so the whole
 /// open-and-import path runs on the simulator. Answers change the data like the server would. DEBUG only.
 ///
 /// `-uiInbox paywall` makes the approval answer `needsSubscription` (D42). `-uiInbox unverified` makes Ana's request
-/// one made without the e-mail code ("Confirm on WhatsApp", verify-fallback).
+/// one made without the e-mail code ("Confirm on WhatsApp", verify-fallback). `-uiInbox linkVisit` serves only Bianca's
+/// confirmed booking; `-uiInbox clientOnTheWeb` also moves and then cancels it on the server each time the app leaves
+/// the foreground, as the client did on her manage page while the owner was away (fix-booking-status).
 ///
 /// An actor, not a @MainActor class: `InboxRepository` is Sendable and the services call it from nonisolated tasks.
 actor UITestInboxRepository: InboxRepository {
@@ -20,6 +23,11 @@ actor UITestInboxRepository: InboxRepository {
         case fixtures
         case paywall
         case unverified
+        case linkVisit
+        case clientOnTheWeb
+
+        /// Only Bianca's booking: Home's next visit is hers, nothing else arrives.
+        var isLinkVisitOnly: Bool { self == .linkVisit || self == .clientOnTheWeb }
     }
 
     private let scenario: Scenario
@@ -40,9 +48,32 @@ actor UITestInboxRepository: InboxRepository {
         self.scenario = scenario
         self.publicKey = publicKey
         self.now = now
-        bookings = UITestInboxFixtures.bookings(now: now, unverified: scenario == .unverified)
-        requests = UITestInboxFixtures.requests(now: now)
-        waitlist = UITestInboxFixtures.waitlist(now: now)
+        if scenario.isLinkVisitOnly {
+            bookings = [UITestInboxFixtures.linkVisit(now: now)]
+            requests = []
+            waitlist = []
+        } else {
+            bookings = UITestInboxFixtures.bookings(now: now, unverified: scenario == .unverified)
+            requests = UITestInboxFixtures.requests(now: now)
+            waitlist = UITestInboxFixtures.waitlist(now: now)
+        }
+    }
+
+    /// `clientOnTheWeb`: whenever the app leaves the foreground, the client moves Bianca's booking and cancels it.
+    nonisolated func actOnTheWebWhenTheAppLeaves() {
+        guard scenario == .clientOnTheWeb else { return }
+        NotificationCenter.default.addObserver(
+            forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil
+        ) { [weak self] _ in
+            Task { await self?.clientMovesThenCancels() }
+        }
+    }
+
+    private func clientMovesThenCancels() {
+        guard let index = bookings.firstIndex(where: {
+            $0.id == UITestInboxFixtures.linkVisitBookingID && $0.status == .confirmed
+        }) else { return }
+        bookings[index] = UITestInboxFixtures.movedThenCancelledOnTheWeb(bookings[index], now: Date())
     }
 
     // MARK: - Reads
@@ -55,8 +86,12 @@ actor UITestInboxRepository: InboxRepository {
 
     func waitlist(uid: String) async throws -> [WaitlistRequest] { waitlist }
 
+    func booking(uid: String, id: String) async throws -> IncomingBooking? {
+        bookings.first { $0.id == id }
+    }
+
     func mailboxItems(uid: String) async throws -> [MailboxItem] {
-        if !sealed {
+        if !sealed, !scenario.isLinkVisitOnly {
             sealed = true
             let plaintext = UITestInboxFixtures.intakePlaintext(now: now)
             let itemID = UITestInboxFixtures.intakeItemID
@@ -134,9 +169,40 @@ actor UITestInboxRepository: InboxRepository {
 
     func resetNoShowCount(phone: String) async throws {}
 
-    /// Everything is allowed: UI tests drive the free limit through the vault's own count (`-uiPlan`).
-    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
-        RegistrationReservation(allowed: Set(claims.map(\.clientID)), refused: [], count: claims.count)
+    func cancelBookingByOwner(id: String) async throws {
+        try change(id) {
+            $0.status = .cancelledByPro
+            $0.cancelledBy = "professional"
+            $0.cancelledAt = Date()
+            $0.isLateCancellation = false
+        }
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        try change(id) {
+            $0.endsAt = startsAt.addingTimeInterval($0.endsAt.timeIntervalSince($0.startsAt))
+            $0.startsAt = startsAt
+            $0.clientConfirmedAt = nil
+            $0.lateByMinutes = nil
+        }
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        // The server counts the mark either way and changes only a booking still confirmed.
+        guard let index = bookings.firstIndex(where: { $0.id == bookingId && $0.status == .confirmed }) else { return }
+        bookings[index].status = .noShow
+        bookings[index].updatedAt = Date()
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {}
+
+    /// Like the server: only a booking that still holds time changes (`BOOKING_NOT_ACTIVE` otherwise).
+    private func change(_ id: String, _ update: (inout IncomingBooking) -> Void) throws {
+        guard let index = bookings.firstIndex(where: { $0.id == id }), bookings[index].status.holdsTime else {
+            throw BookingRepositoryError.rejected
+        }
+        update(&bookings[index])
+        bookings[index].updatedAt = Date()
     }
 
     func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {

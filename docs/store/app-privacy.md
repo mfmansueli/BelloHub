@@ -43,9 +43,9 @@ App Store Connect asks, for each type: collected? linked to the user? used for t
 | User Content · Customer Support | No | | | | Support is by email outside the app |
 | User Content · Other User Content | Yes | Yes | No | App Functionality | Her public booking page (`PublishProfileRequest`, `publishAvailability`): services she chose to publish (prices only if she shows them), hours and busy times without any detail, booking rules and policy texts, credentials, the health-form template (questions only), the inbox public key |
 | Browsing History, Search History | No | | | | |
-| Identifiers · User ID | Yes | Yes | No | App Functionality | Firebase Auth uid; the server's `appAccountToken` (a random UUID tied to the account) |
+| Identifiers · User ID | Yes | Yes | No | App Functionality | Firebase Auth uid |
 | Identifiers · Device ID | Yes | Yes | No | App Functionality | The Firebase Cloud Messaging token, for push about her bookings |
-| Purchases · Purchase History | Yes | Yes | No | App Functionality | The App Store's signed transaction of her Bello Hub Pro plan, re-verified on the server (`syncPlan`) and kept as a plan state with an end date |
+| Purchases · Purchase History | No | | | | Since D59 (2026-10-12) her plan is verified on the iPhone with StoreKit 2; no transaction, receipt or plan state is sent to our server. Apple handles the purchase itself |
 | Usage Data (all) | No | | | | No analytics |
 | Diagnostics · Crash Data, Performance Data, Other | No | | | | No crash SDK (Crashlytics was removed in S0); MetricKit, if added, stays on the device |
 | Other Data | No | | | | |
@@ -62,7 +62,7 @@ cannot read. Phone numbers are hashed with a server pepper for counters and bloc
 |---|---|---|
 | `NSPrivacyTracking` | `false` | No tracking of any kind |
 | `NSPrivacyTrackingDomains` | empty | No tracking domain is contacted |
-| `NSPrivacyCollectedDataTypes` | UserID, Name, EmailAddress, PhoneNumber, OtherUserContent, PurchaseHistory, DeviceID; each linked, not tracking, purpose App Functionality | Same as the table above |
+| `NSPrivacyCollectedDataTypes` | UserID, Name, EmailAddress, PhoneNumber, OtherUserContent, DeviceID; each linked, not tracking, purpose App Functionality (PurchaseHistory removed by D59) | Same as the table above |
 | `NSPrivacyAccessedAPITypes` | `NSPrivacyAccessedAPICategoryUserDefaults`, reason `CA92.1` | The app reads and writes its own settings (`DefaultsKey`, `@AppStorage`); nothing is shared with other apps (no app group) |
 
 Required-reason API categories the app's own code does **not** use (checked with `scripts/check-privacy.sh`, which

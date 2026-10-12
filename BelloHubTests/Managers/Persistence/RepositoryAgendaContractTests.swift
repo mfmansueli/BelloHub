@@ -39,6 +39,35 @@ struct RepositoryAgendaContractTests {
         #expect(try await repository.appointments(for: client.id).count == 4)
     }
 
+    @Test("Link visits are found by their booking whatever their time, among 2,000 visits, quickly",
+          arguments: RepositoryFlavor.allCases)
+    func linkedAppointments(flavor: RepositoryFlavor) async throws {
+        let (repository, client) = try seeded(flavor)
+        try await repository.save(client)
+        let first = TestClock.date("2025-01-01 09:00")
+        var expected: Set<String> = []
+        for index in 0..<2_000 {
+            // One in ten came from the link; the rest were booked by hand, spread over five years.
+            let start = first.addingTimeInterval(TimeInterval(index) * 86_400)
+            let bookingID = index.isMultiple(of: 10) ? "bk-\(index)" : nil
+            if let bookingID { expected.insert(bookingID) }
+            try await repository.save(Appointment(
+                clientID: client.id, serviceName: "Glow", startsAt: start, endsAt: start.addingTimeInterval(3_600),
+                origin: bookingID == nil ? .manual : .bookingLink, bookingID: bookingID, createdAt: start,
+                privateNote: bookingID == nil ? nil : "Sentinel-PRIV"
+            ))
+        }
+
+        let clock = ContinuousClock()
+        let started = clock.now
+        let linked = try await repository.linkedAppointments()
+        let elapsed = clock.now - started
+
+        #expect(Set(linked.compactMap(\.bookingID)) == expected)
+        #expect(linked.allSatisfy { $0.privateNote == "Sentinel-PRIV" }, "her sealed note comes back too")
+        #expect(elapsed < .seconds(2), "the sync runs this on every pass: \(elapsed)")
+    }
+
     @Test("An appointment can be updated and deleted", arguments: RepositoryFlavor.allCases)
     func appointmentUpdateAndDelete(flavor: RepositoryFlavor) async throws {
         let (repository, client) = try seeded(flavor)

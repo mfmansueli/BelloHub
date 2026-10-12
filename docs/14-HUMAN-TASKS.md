@@ -17,9 +17,10 @@ Who is who: **Iago** owns the Apple Developer account (Individual, team `X5392U6
 3. **Apple Developer / App Store Connect (H14, H16, Iago).** App record, the two subscription products with their
    prices (D42), privacy labels from `docs/store/app-privacy.md`, metadata from `docs/store/`, TestFlight group,
    seller and EU trader data. Claude Code checks the product ids against the app.
-4. **Purchase verification on the server (H14, Mateus).** Install Apple's root certificates for the functions and set
-   the App Store Server Notifications URL (`appStoreNotifications`). Until then a sandbox purchase does not lift the
-   server's 10-client limit. Claude Code redeploys and tests a sandbox purchase.
+4. **Subscription settings in App Store Connect (H14, Iago).** Since D59 the plan is verified on the iPhone: no Apple
+   root certificates, no App Store Server Notifications URL and no `APPLE_APP_ID` / `APPLE_ENVIRONMENT` for the
+   server. Turn on **Billing Grace Period**, give the Terms and Privacy Policy links, and write the App Review notes
+   (how to test the purchase and Restore purchases; see H14).
 5. **Sign in with Apple key (H22, Iago).** Create the .p8 key, give its key id; store them as
    `APPLE_SIGNIN_PRIVATE_KEY` and `APPLE_SIGNIN_KEY_ID`; enable the Apple provider in Firebase Auth. Claude Code
    redeploys; account deletion then also revokes the Apple token.
@@ -158,7 +159,25 @@ provider and its tests; then Remote Config `whatsAppAutomation = true` for the c
 costs, which differ by country. **Expected:** the web and app copy switch to the automated wording only after that.
 
 ### H14 · App Store Connect
-Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`) **with no free trial and no introductory offer** (D33, D42), set the prices per storefront (EUR 14.99 and 149.99 for the euro-zone storefronts, USD 14.99 and 149.99 for the United States, BRL 39.90 and 399.90 for Brazil; other storefronts take Apple's equalized price unless you set them), fill in **App Privacy** answers from `06-PRIVACY-SECURITY.md` §1–§2, add the privacy policy URL, add the metadata and screenshots per language from `docs/store/`, create the TestFlight group (internal first). **Expected:** the StoreKit product ids match D33; `PrivacyInfo.xcprivacy` matches the answers.
+Create the app record (bundle id `com.bellohub`), the subscription group "Bello Hub Pro" with monthly and yearly
+products (`com.bellohub.pro.monthly`, `com.bellohub.pro.yearly`, the ids in `Config/App.xcconfig` and
+`Config/BelloHub.storekit`) **with no free trial and no introductory offer** (D33, D42), and set the prices per
+storefront (EUR 14.99 and 149.99 for the euro-zone storefronts, USD 14.99 and 149.99 for the United States, BRL 39.90
+and 399.90 for Brazil; other storefronts take Apple's equalized price unless you set them). Then:
+1. **Billing Grace Period**: App Store Connect → the app → Subscriptions → Billing Grace Period → on (16 days is a good
+   default). The app keeps the plan during the grace period (D59).
+2. **Terms and Privacy Policy links**: in the app's metadata give the Privacy Policy URL `https://bellohub.app/privacy`
+   and, in the subscription's description or the License Agreement field, the Terms of Use (the site has no `/terms`
+   page yet: either publish `legal/terms-dpa` there or use Apple's standard EULA). The app already shows both texts on
+   the Plan screen and the paywall.
+3. **App Review notes**: "Bello Hub lets you register 10 clients for free. To see the paywall, add an 11th client in
+   Clients → +, or open More → Plan. Buy with a sandbox account; Restore purchases is on the same screen. Existing
+   clients stay editable without a plan."
+4. **App Privacy** answers from `docs/store/app-privacy.md` (Purchase History is no longer collected, D59), the
+   metadata and screenshots per language from `docs/store/`, and the TestFlight group (internal first).
+No Apple root certificates, no App Store Server Notifications URL and no `APPLE_APP_ID` / `APPLE_ENVIRONMENT` are
+needed any more (D59). **Expected:** the StoreKit product ids match `Config/App.xcconfig`; `PrivacyInfo.xcprivacy`
+matches the answers.
 
 ### H15 · Open markets
 > **Owner decision D40 (2026-10-08): open every market possible, formalize later.** The conditions below are recommendations. Still required by Apple, whatever the market: a public privacy-policy URL and the App Privacy answers (H14), and for the EU the trader declaration (H16).

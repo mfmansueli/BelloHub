@@ -6,10 +6,11 @@
 import Foundation
 import Observation
 
-/// Her Bello Hub Pro plan (D33, D42): the one place the app reads the store. It answers the registration gate
-/// (`SubscriptionStatusProviding`) and the Plan screen, listens for the store's updates while the app runs, and hands
-/// every change to the server verifier before it believes it. Created once at the root and shared through the
-/// environment.
+/// Her Bello Hub Pro plan (D33, D59): the one place the app reads the store. It answers the registration gate
+/// (`SubscriptionStatusProviding`) and the Plan screen, listens for the store's updates for the whole session, and
+/// believes only what the on-device verifier proves from Apple's signed data. At launch, and whenever the store cannot
+/// be read, the last proven state stands (never past its signed end). Nothing about a purchase goes to our server.
+/// Created once at the root and shared through the environment.
 @MainActor
 @Observable
 final class SubscriptionService: SubscriptionStatusProviding {
@@ -21,27 +22,34 @@ final class SubscriptionService: SubscriptionStatusProviding {
 
     private let provider: any SubscriptionProviding
     private let verifier: any SubscriptionVerifying
+    private let now: @Sendable () -> Date
     private var updates: Task<Void, Never>?
 
-    /// The app passes `StoreKitSubscriptionProvider` and `RemoteSubscriptionVerifier`; DEBUG launches without a
-    /// server pass their stand-ins (`preview`, UI tests).
-    init(provider: any SubscriptionProviding, verifier: any SubscriptionVerifying) {
+    /// The app passes `StoreKitSubscriptionProvider` and `DeviceSubscriptionVerifier`; DEBUG launches pass a scripted
+    /// store (`preview`, UI tests).
+    init(
+        provider: any SubscriptionProviding, verifier: any SubscriptionVerifying,
+        now: @escaping @Sendable () -> Date = { Date() }
+    ) {
         self.provider = provider
         self.verifier = verifier
+        self.now = now
     }
 
     var hasActivePlan: Bool { state.hasActivePlan }
 
     // MARK: - Lifecycle
 
-    /// Reads the current entitlement and starts following the store's updates. Safe to call twice.
+    /// Shows the last proven state at once, reads the store, and starts following its updates for the session. Safe
+    /// to call twice.
     func start() async {
+        if state == .unknown, let cached = await verifier.cachedState(now: now()) { state = cached }
         await refreshState()
         guard updates == nil else { return }
         updates = Task { [weak self, provider] in
-            for await update in provider.stateUpdates() {
+            for await _ in provider.updates() {
                 guard let self else { return }
-                await self.adopt(update)
+                await self.refreshState()
             }
         }
     }
@@ -51,8 +59,15 @@ final class SubscriptionService: SubscriptionStatusProviding {
         updates = nil
     }
 
+    /// The store's verified entitlements through the verifier; when the store cannot be read, the last proven state
+    /// (or none).
     func refreshState() async {
-        await adopt(await provider.currentState())
+        do {
+            let entitlements = try await provider.entitlements()
+            state = await verifier.verify(entitlements, now: now())
+        } catch {
+            state = await verifier.cachedState(now: now()) ?? .none
+        }
     }
 
     // MARK: - Offers
@@ -77,18 +92,18 @@ final class SubscriptionService: SubscriptionStatusProviding {
 
     // MARK: - Buying
 
-    /// The server's account token goes into the transaction first; without it the store is not asked at all.
     func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
-        let token = try await verifier.purchaseToken()
-        let outcome = try await provider.purchase(period, appAccountToken: token)
+        let outcome = try await provider.purchase(period)
         if outcome == .purchased { await refreshState() }
         return outcome
     }
 
+    /// "Restore purchases": the App Store syncs her purchases, then the plan is read again. Whether a plan came back is
+    /// what the verified entitlements say, not what the sync call returned.
     func restorePurchases() async throws -> PurchaseOutcome {
-        let outcome = try await provider.restorePurchases()
+        try await provider.syncPurchases()
         await refreshState()
-        return outcome
+        return hasActivePlan ? .purchased : .nothingToRestore
     }
 
     func manageSubscription() async {
@@ -96,14 +111,6 @@ final class SubscriptionService: SubscriptionStatusProviding {
     }
 
     // MARK: - Private
-
-    /// The store's answer goes through the server first (with the signed transaction behind it); when the server
-    /// cannot be reached the store's answer is kept, because StoreKit 2 already checked Apple's signature on the
-    /// device.
-    private func adopt(_ storeState: SubscriptionState) async {
-        let signed = await provider.currentSignedTransaction()
-        state = (try? await verifier.verify(storeState, signedTransaction: signed)) ?? storeState
-    }
 
     private static var unavailableMessage: String {
         String(interface: LocalizedStringResource(

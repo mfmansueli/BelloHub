@@ -165,6 +165,22 @@ One motion layer (D20), in `DesignSystem/Motion/` and `Tokens/Motion.swift`; no 
 - **`MotionPolicy`** (pure, tested): Reduce Motion removes movement, loops, overshoot, sheen and ring and keeps a
   0.2 s fade; Low Power Mode stops loops; `-uiTesting` stops everything (the root sets `isMotionDisabled`).
 - Horizontal motion goes through `Directional` so it flips in Arabic.
+- **Changes in place (2026-10-12, `docs/09-MOTION.md` section 8; every decision is `MotionChange`, pure and tested):**
+  - **Numbers:** `.motionNumber(value, countsDown:)` rolls a count, a time or a duration to its new value with `ease(0.3)`;
+    only when the value changes, never from zero on first appearance; a crossfade with Reduce Motion. Home counters, the
+    next-visit countdown and time, week-glance tiles, Clients count, queue counts, registration counter, New appointment
+    duration, Plan button.
+  - **Rows:** `.motionRows(ids:context:isReady:)` on a container and `.motionRow()` on its rows: a row enters from above
+    with a fade and leaves with a fade and a slide, the rest close the gap, `ease(0.3)`; never on load, on a different
+    context (day, filter), or when more than 12 identities change at once. Home, Alerts and inbox, the follow-up queue,
+    the waitlist, the calendar (day, week) and the Clients list.
+  - **Confirmations:** `SuccessSeal` on the saved step, a brief `.confirmationSeal` (56 pt, 1.5 s, never takes a touch) for
+    a saved photo, a message marked as sent, an offer sent and a request accepted, `InlineCheck` (drawn in 0.5 s) beside
+    a label, always with the `.success` haptic; Reduce Motion shows the drawn check at once.
+  - **Camera:** `.captureFlash` (20 % white, 0.12 s, medium impact; none with Reduce Motion), the framing reference and
+    its controls fade with their switch (`ease(0.28)`), the before/after handle settles on an end or the middle.
+  - **Calendar:** the day or week slides in from the side of travel (24 pt, `DaySlide`, mirrors in Arabic), the selected
+    day chip slides between days, the now line and a moved visit glide (`motionSettle`).
 
 ## Components
 
@@ -275,7 +291,7 @@ Home's two starts, "New booking" and "Register visit", sit side by side under th
 | 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
 | 7.1 Account (+ Delete account sheet) | `Screens/Account/` | `AccountViewModel` (the sheet runs on it; `AccountDeletionFlow`, `AccountRules` pure) | `account.*` (`account.signOutButton`, `account.languageRegionRow`, `account.nameField`) |
 | 7.2 LanguageRegion | `Screens/LanguageRegion/` (`RegionPresetRow`, `WeekClockCard`) | `LanguageRegionViewModel` (`LanguageRegionRules`, `LanguageRegionDraft`) | `languageRegion.*` |
-| 7.3 Plan, and the paywall (same screen in `PaywallSheet`, D42) | `Screens/Plan/` | `PlanViewModel` (`PlanPresentation`) over `SubscriptionService` | `plan.*`, `paywall.*` |
+| 7.3 Plan, and the paywall (same screen in `PaywallSheet`, D42) | `Screens/Plan/` (`PlanLegalSection`; the Legal notice sheet is `Screens/Shared/Legal/LegalNoticeSheet`) | `PlanViewModel` (`PlanPresentation`) over `SubscriptionService` (plan verified on the iPhone, D59) | `plan.*` (`plan.legal.renewal`, `plan.legal.termsButton`, `plan.legal.privacyButton`, `plan.restoreButton`), `paywall.*` |
 | 7.4 NotificationSettings | `Screens/NotificationSettings/` | `NotificationSettingsViewModel` | `notificationSettings.*` |
 | 7.6 Integrations | `Screens/Integrations/` | `IntegrationsViewModel` over `CalendarIntegrationService` | `integrations.*` |
 | 7.7 Privacy (+ Legal notice sheet) | `Screens/Privacy/` | `PrivacyViewModel` (`LegalNoticeLibrary`) | `privacy.*`, `legalNotice.*` |
@@ -395,6 +411,9 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   offers the export first, then asks "Delete everything?", then shows a done screen (the server answers first, D44).
 - **7.3 Plan**: no trial lines (D33/D42); two price cards (yearly highlighted and chosen by default, the saving read
   from the store's prices). The paywall is this screen in a sheet with the D42 headline.
+  D59 (2026-10-12): under the buttons, the auto-renewal sentence and "Terms of Use" / "Privacy Policy" links
+  (`roseText`, 44 pt, side by side or stacked by `ViewThatFits`) that open the bundled texts in the Legal notice sheet
+  (App Review 3.1.2); Restore purchases stays on both screens.
 - **7.6 Integrations**: Google Calendar is "Coming soon" (H9); Apple Calendar is a switch, one way.
 - **7.7 Privacy**: the terms with the DPA and the privacy policy open in a Legal notice sheet read from the bundle;
   pending operator fields are visibly pending in DEBUG and absent in Release; the word "draft" never appears.
@@ -463,6 +482,8 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   zero" only for the no-show limit, sent before the approval. Approving when a plan is needed shows an amber notice
   with "See plans" (the paywall sheet, D42); she approves again after buying. **"Suggest another time" is not built**:
   the server has no counter-offer call; she can decline and message the client.
+  D59: when the server still answers "needs a plan" for a new client but the plan is active on this iPhone, an amber
+  notice (`bookingRequest.planOnDevice`) says to add the client and the visit by hand, instead of offering the plans.
 - **2.11 RescheduleRequest**: "Now" (struck through while the request is open) and "Asks for"; the primary button
   says "Move the visit" (not the weekday name, which needs grammar per language); the timing notice says how long
   before the visit the client asked and her free-change rule, shown only when the request came inside the window;

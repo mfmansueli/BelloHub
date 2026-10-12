@@ -6,15 +6,23 @@
 /// The free-registration rule (D42): the first 10 clients ever registered are free, the count is cumulative and a
 /// deleted client never gives a slot back. It is **the only place** that knows the number 10.
 ///
-/// `used` is the larger of the vault ledger (ids and dates in her iCloud, survives a delete and a reinstall) and the
-/// server's count when it is known, so deleting local data can never lower it. Existing clients are never touched:
-/// this type only answers whether a *new* client may be added.
+/// `used` is the larger of the vault ledger (ids and dates in her iCloud, survives a delete) and the count kept in this
+/// iPhone's Keychain (D59: `RegistrationAllowanceStoring`, survives deleting the app on this iPhone), so deleting
+/// local data can never lower it. Existing clients are never touched: this type only answers whether a *new* client
+/// may be added.
 struct RegistrationQuota: Equatable, Sendable {
     static let freeLimit = 10
 
     let used: Int
     let hasActivePlan: Bool
 
+    /// The app's count since D59: the vault ledger and this iPhone's Keychain allowance.
+    init(ledgerCount: Int, allowanceCount: Int, hasActivePlan: Bool) {
+        self.init(ledgerCount: ledgerCount, serverCount: allowanceCount, hasActivePlan: hasActivePlan)
+    }
+
+    /// The same rule with the server's count, as the server still applies it to online bookings (D42 item 8). Kept for
+    /// the shared rules fixture (`firebase/scripts/rules-fixtures`), which checks the Swift and TypeScript rules agree.
     init(ledgerCount: Int, serverCount: Int? = nil, hasActivePlan: Bool) {
         self.used = max(ledgerCount, serverCount ?? 0, 0)
         self.hasActivePlan = hasActivePlan

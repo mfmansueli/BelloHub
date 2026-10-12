@@ -3,30 +3,45 @@
 //  BelloHub
 //
 
+import os
 import StoreKit
 import UIKit
 
-/// StoreKit 2 as `SubscriptionProviding`: the only file that imports StoreKit. Prices are whatever the storefront
+/// StoreKit 2 as `SubscriptionProviding`: the only file that imports StoreKit (D59). Prices are whatever the storefront
 /// returns (`Product.displayPrice`, D33); the local `Config/BelloHub.storekit` file serves Xcode runs and tests.
+///
+/// Only transactions StoreKit verified against Apple's signature (`VerificationResult.verified`) leave this file. An
+/// unverified one is ignored and logged by product id only (no personal data). The subscription's state comes from
+/// `Product.SubscriptionInfo.status` (subscribed, expired, billing retry, grace period, revoked) with the signed
+/// renewal info; when that cannot be read (offline), the locally signed `Transaction.currentEntitlements` stand in.
 struct StoreKitSubscriptionProvider: SubscriptionProviding {
-    func offers() async throws -> [PlanOffer] {
-        let products = try await StoreKit.Product.products(for: PlanProduct.allCases.map(\.rawValue))
-        return products.compactMap { product in
-            PlanPeriod(productID: product.id).map {
-                PlanOffer(period: $0, displayPrice: product.displayPrice, price: product.price)
-            }
-        }
-        .sorted { $0.period == .monthly && $1.period == .yearly }
+    private let products: PlanProducts
+    private let logger = Logger(subsystem: "app.bellohub", category: "store")
+
+    init(products: PlanProducts = .current) {
+        self.products = products
     }
 
-    func purchase(_ period: PlanPeriod, appAccountToken: UUID?) async throws -> PurchaseOutcome {
-        guard let product = try await StoreKit.Product.products(for: [period.product.rawValue]).first else {
+    func offers() async throws -> [PlanOffer] {
+        try await StoreKit.Product.products(for: products.all)
+            .compactMap { product in
+                products.period(forProductID: product.id).map {
+                    PlanOffer(period: $0, displayPrice: product.displayPrice, price: product.price)
+                }
+            }
+            .sorted { $0.period == .monthly && $1.period == .yearly }
+    }
+
+    func purchase(_ period: PlanPeriod) async throws -> PurchaseOutcome {
+        guard let product = try await StoreKit.Product.products(for: [products.productID(for: period)]).first else {
             throw SubscriptionError.productUnavailable
         }
-        let options: Set<StoreKit.Product.PurchaseOption> = appAccountToken.map { [.appAccountToken($0)] } ?? []
-        switch try await product.purchase(options: options) {
+        switch try await product.purchase() {
         case .success(let verification):
-            let transaction = try Self.verified(verification)
+            guard case .verified(let transaction) = verification else {
+                logUnverified(productID: product.id)
+                throw SubscriptionError.unverified
+            }
             await transaction.finish()
             return .purchased
         case .userCancelled:
@@ -38,39 +53,26 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
         }
     }
 
-    func restorePurchases() async throws -> PurchaseOutcome {
+    func syncPurchases() async throws {
         try await AppStore.sync()
-        return await currentState().hasActivePlan ? .purchased : .nothingToRestore
     }
 
-    func currentState() async -> SubscriptionState {
-        for await result in Transaction.currentEntitlements {
-            guard let transaction = try? Self.verified(result),
-                  let period = PlanPeriod(productID: transaction.productID) else { continue }
-            let status = await transaction.subscriptionStatus
-            let willRenew = (try? status?.renewalInfo.payloadValue.willAutoRenew) ?? true
-            if status?.state == .inGracePeriod {
-                return .inGracePeriod(period: period, expiresAt: transaction.expirationDate)
-            }
-            return .active(period: period, expiresAt: transaction.expirationDate, willRenew: willRenew)
-        }
-        return .none
+    func entitlements() async throws -> [StoreEntitlement] {
+        if let fromStatus = try? await statusEntitlements() { return fromStatus }
+        return await localEntitlements()
     }
 
-    func currentSignedTransaction() async -> String? {
-        for await result in Transaction.currentEntitlements {
-            guard let transaction = try? Self.verified(result),
-                  PlanPeriod(productID: transaction.productID) != nil else { continue }
-            return result.jwsRepresentation
-        }
-        return nil
-    }
-
-    func stateUpdates() -> AsyncStream<SubscriptionState> {
-        AsyncStream { continuation in
+    func updates() -> AsyncStream<Void> {
+        let logger = logger
+        return AsyncStream { continuation in
             let task = Task {
-                for await _ in Transaction.updates {
-                    continuation.yield(await currentState())
+                for await result in Transaction.updates {
+                    switch result {
+                    case .verified(let transaction): await transaction.finish()
+                    case .unverified(let transaction, _):
+                        logger.error("unverified update ignored product=\(transaction.productID, privacy: .public)")
+                    }
+                    continuation.yield()
                 }
                 continuation.finish()
             }
@@ -86,10 +88,60 @@ struct StoreKitSubscriptionProvider: SubscriptionProviding {
         try? await AppStore.showManageSubscriptions(in: scene)
     }
 
-    private static func verified<Value>(_ result: VerificationResult<Value>) throws -> Value {
-        switch result {
-        case .verified(let value): return value
-        case .unverified: throw SubscriptionError.unverified
+    // MARK: - Private
+
+    /// The group's statuses (one per subscription the Apple ID has had in the group), with signed renewal info.
+    private func statusEntitlements() async throws -> [StoreEntitlement] {
+        guard let subscription = try await StoreKit.Product.products(for: products.all).first?.subscription else {
+            throw SubscriptionError.productUnavailable
         }
+        return try await subscription.status.compactMap { status -> StoreEntitlement? in
+            guard case .verified(let transaction) = status.transaction else {
+                logUnverified(productID: nil)
+                return nil
+            }
+            let renewal: StoreKit.Product.SubscriptionInfo.RenewalInfo? = switch status.renewalInfo {
+            case .verified(let info): info
+            case .unverified: nil
+            }
+            return StoreEntitlement(
+                productID: transaction.productID, renewal: Self.renewal(status.state),
+                expiresAt: transaction.expirationDate, revokedAt: transaction.revocationDate,
+                graceExpiresAt: renewal?.gracePeriodExpirationDate, willAutoRenew: renewal?.willAutoRenew ?? true
+            )
+        }
+    }
+
+    /// Offline: the transactions StoreKit keeps signed on the device. They carry no renewal state, so a transaction
+    /// past its expiry reads as expired.
+    private func localEntitlements() async -> [StoreEntitlement] {
+        var found: [StoreEntitlement] = []
+        for await result in Transaction.currentEntitlements {
+            guard case .verified(let transaction) = result else {
+                logUnverified(productID: nil)
+                continue
+            }
+            guard products.period(forProductID: transaction.productID) != nil else { continue }
+            let isPast = transaction.expirationDate.map { $0 <= Date() } ?? false
+            found.append(StoreEntitlement(
+                productID: transaction.productID, renewal: isPast ? .expired : .subscribed,
+                expiresAt: transaction.expirationDate, revokedAt: transaction.revocationDate
+            ))
+        }
+        return found
+    }
+
+    private static func renewal(_ state: StoreKit.Product.SubscriptionInfo.RenewalState) -> StoreEntitlement.Renewal {
+        switch state {
+        case .subscribed: .subscribed
+        case .inGracePeriod: .gracePeriod
+        case .inBillingRetryPeriod: .billingRetry
+        case .revoked: .revoked
+        default: .expired
+        }
+    }
+
+    private func logUnverified(productID: String?) {
+        logger.error("unverified transaction ignored product=\(productID ?? "unknown", privacy: .public)")
     }
 }

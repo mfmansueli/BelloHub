@@ -59,6 +59,15 @@ actor FakeInboxRepository: InboxRepository {
         readFailure = error
     }
 
+    /// The server changed a booking by itself (the client acted on her manage page): replaces it, or adds it.
+    func replace(_ booking: IncomingBooking) {
+        if let index = bookings.firstIndex(where: { $0.id == booking.id }) {
+            bookings[index] = booking
+        } else {
+            bookings.append(booking)
+        }
+    }
+
     /// The items the mailbox lists. An item listed without its envelope is served by `mailboxItem(id:)` with the
     /// envelope from `stored` (a large envelope kept in Storage).
     func setMailbox(_ items: [MailboxItem], stored: [String: SealedEnvelope] = [:]) {
@@ -70,7 +79,7 @@ actor FakeInboxRepository: InboxRepository {
 
     func bookings(uid: String, since: Date) async throws -> [IncomingBooking] {
         try read("bookings")
-        return bookings
+        return bookings.filter { !unlisted.contains($0.id) }
     }
 
     func rescheduleRequests(uid: String) async throws -> [RescheduleRequest] { requests }
@@ -158,39 +167,62 @@ actor FakeInboxRepository: InboxRepository {
         try write("resetNoShowCount:\(phone)")
     }
 
+    /// Bookings `bookings(uid:since:)` leaves out, as if they sat outside the window (still served by id).
+    private var unlisted: Set<String> = []
+
+    func setUnlisted(_ ids: Set<String>) {
+        unlisted = ids
+    }
+
+    func booking(uid: String, id: String) async throws -> IncomingBooking? {
+        try read("booking:\(id)")
+        return bookings.first { $0.id == id }
+    }
+
+    func cancelBookingByOwner(id: String) async throws {
+        try write("cancelBookingByOwner:\(id)")
+        try changeActive(id) {
+            $0.status = .cancelledByPro
+            $0.cancelledBy = "professional"
+            $0.cancelledAt = TestClock.now
+            $0.isLateCancellation = false
+        }
+    }
+
+    func moveBookingByOwner(id: String, startsAt: Date) async throws {
+        try write("moveBookingByOwner:\(id):\(CallableJSON.instant(startsAt))")
+        try changeActive(id) {
+            $0.endsAt = startsAt.addingTimeInterval($0.endsAt.timeIntervalSince($0.startsAt))
+            $0.startsAt = startsAt
+            $0.clientConfirmedAt = nil
+            $0.lateByMinutes = nil
+        }
+    }
+
+    func markNoShow(phone: String, markId: UUID, markedAt: Date, bookingId: String) async throws {
+        try write("markNoShow:mark:\(phone):\(bookingId)")
+        if let index = bookings.firstIndex(where: { $0.id == bookingId && $0.status == .confirmed }) {
+            bookings[index].status = .noShow
+            bookings[index].updatedAt = TestClock.now
+        }
+    }
+
+    func forgiveNoShow(phone: String, markId: UUID) async throws {
+        try write("markNoShow:forgive:\(phone)")
+    }
+
+    /// Like the server: a booking that no longer holds time is `BOOKING_NOT_ACTIVE` (`rejected`).
+    private func changeActive(_ id: String, _ change: (inout IncomingBooking) -> Void) throws {
+        guard let index = bookings.firstIndex(where: { $0.id == id }), bookings[index].status.holdsTime else {
+            throw BookingRepositoryError.rejected
+        }
+        change(&bookings[index])
+        bookings[index].updatedAt = TestClock.now
+    }
+
     func acknowledgeMailboxItem(id: String) async throws {
         try write("acknowledgeMailboxItem:\(id)")
         mailbox.removeAll { $0.id == id }
-    }
-
-    /// The server's registration counter (D42): counts each new id once, up to `freeLimit` unless `hasPlan`.
-    private(set) var registered: [UUID] = []
-    private var serverHasPlan = false
-
-    func setServerHasPlan(_ value: Bool) {
-        serverHasPlan = value
-    }
-
-    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
-        try write("reserveRegistrations:\(claims.count)")
-        var allowed = Set<UUID>()
-        var refused = Set<UUID>()
-        for claim in claims {
-            if registered.contains(claim.clientID) {
-                allowed.insert(claim.clientID)
-            } else if serverHasPlan || registered.count < RegistrationQuota.freeLimit {
-                registered.append(claim.clientID)
-                allowed.insert(claim.clientID)
-            } else {
-                refused.insert(claim.clientID)
-            }
-        }
-        return RegistrationReservation(allowed: allowed, refused: refused, count: registered.count)
-    }
-
-    /// Clients the server counted before this phone knew them (bookings from the link, another device).
-    func preRegister(_ ids: [UUID]) {
-        registered.append(contentsOf: ids)
     }
 
     func deleteClientServerData(phone: String?, bookingIds: [String]) async throws {

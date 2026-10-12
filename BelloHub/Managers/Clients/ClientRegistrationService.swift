@@ -6,41 +6,35 @@
 import Foundation
 import Observation
 
-/// The registration gate (D42). The **server is the authority** for the count (`reserveRegistrations`): a new client
-/// is saved only after the server counted her, or refused when the server says the free registrations are used and
-/// there is no plan. The vault ledger (every client id ever registered, deleted ones included) and the last count the
-/// server gave are the cache that answers at once and while offline:
-/// - the cache already says "paywall": nothing is asked of the server and nothing is saved;
-/// - the server cannot be reached: the client is saved on the cache's word and the claim waits in the
-///   `OutboundQueue`, which replays it when the server answers (it never undoes her work afterwards);
-/// - the server refused it for good (a phone with no server, a refused token): the cache's word stands.
+/// The registration gate (D42, D59): the only way a client is created in the app. The free allowance is counted on
+/// this iPhone, with no server call: the count is the larger of the vault ledger (every client id ever registered,
+/// deleted ones included, in her iCloud) and the count kept in this iPhone's Keychain (`RegistrationAllowanceStoring`),
+/// which survives deleting the app. A new, distinct client raises it by one; an edit or a duplicate (same id, or the
+/// same phone as an existing client) does not; deleting a client never lowers it. Up to 10 are free; with a plan
+/// (`SubscriptionStatusProviding`, proven on this iPhone) registrations are unlimited.
+///
+/// The first read after this version installs also raises the Keychain count to the ledger's, so accounts that already
+/// registered clients keep their count (the migration of D59).
 ///
 /// Created once at the root and read with `@Environment(ClientRegistrationService.self)`.
 @MainActor
 @Observable
 final class ClientRegistrationService: ClientRegistering {
     private(set) var usage = RegistrationUsage.unknown
-    /// The last count the server gave (cache; the vault ledger may be higher after an offline registration).
-    private(set) var serverCount: Int?
 
     @ObservationIgnored private let vault: VaultService
     @ObservationIgnored private let subscription: any SubscriptionStatusProviding
-    @ObservationIgnored private let server: (any InboxRepository)?
-    @ObservationIgnored private let queue: OutboundQueue?
+    @ObservationIgnored private let allowance: any RegistrationAllowanceStoring
 
-    /// `server` and `queue` are nil in UI-test launches and previews: the vault ledger is the only count then.
+    /// The app passes `KeychainRegistrationAllowanceStore`; UI-test launches, previews and tests keep the count in
+    /// memory.
     init(
         vault: VaultService, subscription: any SubscriptionStatusProviding = UnsubscribedStatus(),
-        server: (any InboxRepository)? = nil, queue: OutboundQueue? = nil
+        allowance: any RegistrationAllowanceStoring = InMemoryRegistrationAllowanceStore()
     ) {
         self.vault = vault
         self.subscription = subscription
-        self.server = server
-        self.queue = queue
-        queue?.observe { [weak self] _, outcome in
-            guard case .registrations(let reservation) = outcome else { return }
-            self?.adopt(serverCount: reservation.count)
-        }
+        self.allowance = allowance
     }
 
     // MARK: - Counter
@@ -62,12 +56,14 @@ final class ClientRegistrationService: ClientRegistering {
             return .updated
         }
         let ledger = try await repository.registrationLedger()
-        guard quota(ledgerCount: ledger.count).decision(forNewClients: 1) == .allowed,
-              await reserve([RegistrationClaim(client)]).contains(client.id) else {
-            usage = RegistrationUsage(quota: quota(ledgerCount: ledger.count))
+        let current = quota(ledgerCount: ledger.count)
+        guard current.decision(forNewClients: 1) == .allowed else {
+            usage = RegistrationUsage(quota: current)
             return .needsSubscription
         }
         try await repository.save(client)
+        // An id the ledger already holds (a deleted client's, coming back) was counted the first time.
+        count(newClients: ledger.contains { $0.clientID == client.id } ? 0 : 1, before: current.used)
         await refreshUsage()
         return .registered
     }
@@ -83,61 +79,42 @@ final class ClientRegistrationService: ClientRegistering {
         let (fresh, duplicates) = ClientDuplicateRules.partition(clients, existing: try await repository.allClients())
         var result = ClientImportResult(duplicates: duplicates.count)
         let ledger = try await repository.registrationLedger()
-        let allowedByCache: Int
-        switch quota(ledgerCount: ledger.count).decision(forNewClients: fresh.count) {
-        case .allowed: allowedByCache = fresh.count
-        case .allowedPartially(let count): allowedByCache = count
-        case .needsSubscription: allowedByCache = 0
+        let counted = Set(ledger.map(\.clientID))
+        let current = quota(ledgerCount: ledger.count)
+        let allowed: Int
+        switch current.decision(forNewClients: fresh.count) {
+        case .allowed: allowed = fresh.count
+        case .allowedPartially(let count): allowed = count
+        case .needsSubscription: allowed = 0
         }
-        let candidates = Array(fresh.prefix(allowedByCache))
-        let allowed = await reserve(candidates.map(RegistrationClaim.init))
-        for client in candidates where allowed.contains(client.id) {
+        var newlyCounted = 0
+        for client in fresh.prefix(allowed) {
             try await repository.save(client)
             result.registered += 1
+            if !counted.contains(client.id) { newlyCounted += 1 }
         }
+        count(newClients: newlyCounted, before: current.used)
         result.blocked = fresh.count - result.registered
         await refreshUsage()
         return result
     }
 
-    // MARK: - Server
-
-    /// The ids the server counted, in groups of 200. Offline, every claim is allowed on the cache's word and queued
-    /// for the server; with no server, or a permanent refusal of the call, the cache's word stands.
-    private func reserve(_ claims: [RegistrationClaim]) async -> Set<UUID> {
-        let everyone = Set(claims.map(\.clientID))
-        guard let server, !claims.isEmpty else { return everyone }
-        var allowed = Set<UUID>()
-        for start in stride(from: 0, to: claims.count, by: Self.maxClaimsPerCall) {
-            let chunk = Array(claims[start..<min(start + Self.maxClaimsPerCall, claims.count)])
-            do {
-                let reservation = try await server.reserveRegistrations(chunk)
-                adopt(serverCount: reservation.count)
-                allowed.formUnion(reservation.allowed)
-            } catch let error as BookingRepositoryError where error == .unreachable || error == .busy {
-                queue?.enqueue(.reserveRegistrations(claims: chunk))
-                allowed.formUnion(chunk.map(\.clientID))
-            } catch {
-                allowed.formUnion(chunk.map(\.clientID))
-            }
-        }
-        return allowed
-    }
-
-    /// The contract's cap for one `reserveRegistrations` call.
-    private static let maxClaimsPerCall = 200
-
-    private func adopt(serverCount count: Int) {
-        serverCount = max(serverCount ?? 0, count)
-        usage = RegistrationUsage(quota: RegistrationQuota(
-            ledgerCount: usage.used, serverCount: serverCount, hasActivePlan: subscription.hasActivePlan
-        ))
-    }
-
     // MARK: - Private
 
+    /// The count as this iPhone knows it: the Keychain is raised to the ledger whenever the ledger is ahead (the first
+    /// read after the update, or clients that arrived from the booking page), and never lowered.
     private func quota(ledgerCount: Int) -> RegistrationQuota {
-        RegistrationQuota(ledgerCount: ledgerCount, serverCount: serverCount, hasActivePlan: subscription.hasActivePlan)
+        let stored = allowance.load() ?? 0
+        if ledgerCount > stored { allowance.save(ledgerCount) }
+        return RegistrationQuota(
+            ledgerCount: ledgerCount, allowanceCount: stored, hasActivePlan: subscription.hasActivePlan
+        )
+    }
+
+    /// `newClients` were just saved: the Keychain count goes up by that many from what was counted before.
+    private func count(newClients: Int, before used: Int) {
+        guard newClients > 0 else { return }
+        allowance.save(max(allowance.load() ?? 0, used + newClients))
     }
 
     private func openRepository() throws -> any ClientRecordRepository {

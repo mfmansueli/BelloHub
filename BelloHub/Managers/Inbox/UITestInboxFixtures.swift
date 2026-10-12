@@ -112,6 +112,37 @@ enum UITestInboxFixtures {
         return (try? JSONSerialization.data(withJSONObject: payload)) ?? Data()
     }
 
+    // MARK: - fix-booking-status (`-uiInbox clientOnTheWeb` and `-uiInbox linkVisit`)
+
+    static let linkVisitBookingID = "bk-bianca"
+
+    /// Bianca's confirmed booking from the link, half an hour from now: the next visit on Home.
+    static func linkVisit(now: Date) -> IncomingBooking {
+        let start = now.addingTimeInterval(30 * 60)
+        return IncomingBooking(
+            id: linkVisitBookingID, status: .confirmed, serviceId: glowServiceID, serviceName: "Consultation",
+            durationMinutes: 30, startsAt: start, endsAt: start.addingTimeInterval(30 * 60),
+            timeZoneID: zone.identifier,
+            client: .init(name: "Bianca Lopes", phone: "+5511977770007", email: "bianca@example.com", locale: "pt-BR"),
+            policy: .standard, createdAt: now.addingTimeInterval(-2 * 86_400)
+        )
+    }
+
+    /// What the owner saw on 2026-10-12: on her manage page the client first moved the booking to another day, then
+    /// cancelled it.
+    static func movedThenCancelledOnTheWeb(_ booking: IncomingBooking, now: Date) -> IncomingBooking {
+        var changed = booking
+        changed.startsAt = booking.startsAt.addingTimeInterval(20 * 86_400)
+        changed.endsAt = booking.endsAt.addingTimeInterval(20 * 86_400)
+        changed.rescheduleCount += 1
+        changed.status = .cancelledByClient
+        changed.cancelledBy = "client"
+        changed.cancelledAt = now
+        changed.isLateCancellation = false
+        changed.updatedAt = now
+        return changed
+    }
+
     private static func at(days: Int, hour: Int, minutes: Int = 0, now: Date) -> Date {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = zone

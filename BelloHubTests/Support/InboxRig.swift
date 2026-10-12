@@ -14,6 +14,8 @@ struct InboxRig {
     let queue: OutboundQueue
     let repository: FakeInboxRepository
     let vault: VaultService
+    /// The calendar writes the screens make, wired to `sync` as in the app.
+    let appointments: AppointmentService
     let defaults: UserDefaults
     private let suite: String
 
@@ -28,8 +30,9 @@ struct InboxRig {
             repository: repository, defaults: defaults, now: { TestClock.now }, retryDelays: [.seconds(600)],
             sleeper: { try await Task.sleep(for: $0) }
         )
+        appointments = AppointmentService(vault: vault)
         sync = BookingSyncService(
-            repository: repository, queue: queue, appointments: AppointmentService(vault: vault), vault: vault,
+            repository: repository, queue: queue, appointments: appointments, vault: vault,
             defaults: defaults, now: { TestClock.now }, pollInterval: nil
         )
     }
@@ -40,6 +43,13 @@ struct InboxRig {
     func start() async {
         sync.startListening(userId: Self.userID)
         await Wait.untilMain(timeout: .seconds(20)) { !sync.isLoading && !sync.isSyncing }
+    }
+
+    /// Every visit in the vault mirrored from `bookingID`, whatever its time.
+    func visits(bookingID: String) async -> [Appointment] {
+        let all = DateInterval(start: .distantPast, end: .distantFuture)
+        let visits = (try? await vault.repository?.loadAppointments(in: all)) ?? []
+        return visits.filter { $0.bookingID == bookingID }
     }
 
     func cleanUp() {

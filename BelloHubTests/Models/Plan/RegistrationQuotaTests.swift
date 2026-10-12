@@ -48,6 +48,8 @@ struct RegistrationQuotaTests {
 
     @Test("The larger of the ledger and the server count wins, so clearing local data cannot lower it")
     func largerCountWins() {
+        #expect(RegistrationQuota(ledgerCount: 2, allowanceCount: 10, hasActivePlan: false).used == 10, "Keychain")
+        #expect(RegistrationQuota(ledgerCount: 7, allowanceCount: 3, hasActivePlan: false).used == 7, "ledger")
         #expect(RegistrationQuota(ledgerCount: 2, serverCount: 10, hasActivePlan: false).used == 10)
         #expect(RegistrationQuota(ledgerCount: 10, serverCount: 3, hasActivePlan: false).used == 10)
         #expect(RegistrationQuota(ledgerCount: 4, serverCount: nil, hasActivePlan: false).used == 4)

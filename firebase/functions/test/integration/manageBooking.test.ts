@@ -3,6 +3,7 @@ import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import type { AppError } from '../../src/lib/errors.js';
 import { refs, ts } from '../../src/lib/store.js';
 import type { BookingDoc, ContactDoc } from '../../src/lib/docs.js';
+import { cancelBookingByOwner } from '../../src/owner/cancelBookingByOwner.js';
 import { cancelBooking } from '../../src/token/cancelBooking.js';
 import { confirmPresence } from '../../src/token/confirmPresence.js';
 import { getPortal } from '../../src/public/getPortal.js';
@@ -13,7 +14,7 @@ import { requestReschedule } from '../../src/token/requestReschedule.js';
 import { rescheduleBooking } from '../../src/token/rescheduleBooking.js';
 import { ANA, asBooked, BIA, book, bookingDoc } from '../support/booking.js';
 import { createTestEnv, resetEmulators } from '../support/env.js';
-import { captureWorld, restoreWorld, SERVICE, seedProfessional } from '../support/seed.js';
+import { captureWorld, ownerContext, restoreWorld, SERVICE, seedProfessional } from '../support/seed.js';
 import type { Professional, World } from '../support/seed.js';
 
 const env = createTestEnv();
@@ -400,5 +401,32 @@ describe('rebook', () => {
     const result = await env.call(rebook, { token: first.manageToken, startsAt: '2026-10-03T17:00:00.000Z', idempotencyKey: crypto.randomUUID() });
     expect(result).toMatchObject({ status: 'paused' });
     await expect(env.call(rebook, { token: 'y'.repeat(22), startsAt: '2026-10-03T17:00:00.000Z', idempotencyKey: crypto.randomUUID() })).rejects.toMatchObject({ code: 'NOT_FOUND' });
+  });
+});
+
+describe('fix-booking-status: the app finds the same booking after the client moved and then cancelled it', () => {
+  it('keeps one document under the same id, at the new time, cancelled, with updatedAt and lastClientAction bumped', async () => {
+    const booked = await bookFriday();
+    const before = await bookingDoc(env, booked.bookingId);
+    env.clock.set(Date.UTC(2026, 9, 1, 16, 0));
+
+    await env.call(rescheduleBooking, { token: booked.manageToken, startsAt: '2026-10-03T17:00:00.000Z' });
+    env.clock.set(Date.UTC(2026, 9, 1, 16, 5));
+    await env.call(cancelBooking, { token: booked.manageToken });
+
+    const stored = await bookingDoc(env, booked.bookingId);
+    expect(stored).toMatchObject({ status: 'cancelledByClient', cancelledBy: 'client', rescheduleCount: 1 });
+    expect(stored.startsAt.toMillis()).toBe(Date.parse('2026-10-03T17:00:00.000Z'));
+    expect(stored.updatedAt.toMillis()).toBeGreaterThan(before.updatedAt.toMillis());
+    expect(stored.lastClientAction?.kind).toBe('cancelled');
+    // The owner's read (her bookings whose visit starts at or after "since") still returns it, under the same id.
+    const listed = await refs(env.deps.db).bookings().where('ownerUid', '==', pro.uid)
+      .where('startsAt', '>=', ts(Date.UTC(2026, 8, 17))).orderBy('startsAt').get();
+    expect(listed.docs.map((doc) => doc.id)).toEqual([booked.bookingId]);
+    // The page shows the truth right after the action.
+    expect((await view(booked.manageToken)).status).toBe('cancelledByClient');
+    // A cancel she made in the app while offline arrives too late: refused for good, so the app reads the truth.
+    await expect(env.call(cancelBookingByOwner, { bookingId: booked.bookingId }, ownerContext(pro.uid)))
+      .rejects.toMatchObject({ code: 'BOOKING_NOT_ACTIVE' });
   });
 });

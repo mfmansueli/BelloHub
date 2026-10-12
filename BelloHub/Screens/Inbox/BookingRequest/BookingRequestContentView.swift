@@ -193,15 +193,25 @@ struct BookingRequestContentView: View {
         }
     }
 
+    @ViewBuilder
     private var needsPlan: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
+        if viewModel.serverMissesPlan {
             InlineNotice(
-                style: .warning, title: "bookingRequest.needsPlan.title", message: "bookingRequest.needsPlan.message"
+                style: .warning, title: "bookingRequest.planOnDevice.title",
+                message: "bookingRequest.planOnDevice.message"
             )
-            .accessibilityIdentifier("bookingRequest.needsPlan")
-            Button(action: viewModel.showPlans) { Text("bookingRequest.seePlans") }
-                .buttonStyle(.belloSecondary)
-                .accessibilityIdentifier("bookingRequest.seePlansButton")
+            .accessibilityIdentifier("bookingRequest.planOnDevice")
+        } else {
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                InlineNotice(
+                    style: .warning, title: "bookingRequest.needsPlan.title",
+                    message: "bookingRequest.needsPlan.message"
+                )
+                .accessibilityIdentifier("bookingRequest.needsPlan")
+                Button(action: viewModel.showPlans) { Text("bookingRequest.seePlans") }
+                    .buttonStyle(.belloSecondary)
+                    .accessibilityIdentifier("bookingRequest.seePlansButton")
+            }
         }
     }
 

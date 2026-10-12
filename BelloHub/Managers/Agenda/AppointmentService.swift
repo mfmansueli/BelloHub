@@ -15,6 +15,9 @@ import Observation
 final class AppointmentService {
     /// Looked up on each use, because the vault may be unavailable (nil) when the store could not be opened.
     private let source: @MainActor () -> (any AgendaRepository)?
+    /// Hears every change she makes to a visit that came from her link, so the server booking follows
+    /// (`BookingSyncService` sets itself here). Nil in previews and screens without a server.
+    @ObservationIgnored weak var linkChanges: (any LinkVisitChangeReporting)?
 
     init(vault: VaultService) {
         source = { vault.repository }
@@ -109,6 +112,8 @@ final class AppointmentService {
         guard let current = try await repository.appointment(id: id) else { throw VaultRepositoryError.notFound }
         let changed = transition(current)
         try await repository.save(changed)
+        // Only after the vault took it: a failed save changes nothing anywhere.
+        if let change = LinkVisitChange.change(from: current, to: changed) { linkChanges?.linkVisitChanged(change) }
         return changed
     }
 

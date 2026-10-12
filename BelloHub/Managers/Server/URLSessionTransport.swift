@@ -14,6 +14,10 @@ struct URLSessionTransport: HTTPTransport {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.timeoutIntervalForRequest = timeout
         configuration.waitsForConnectivity = false
+        // An ephemeral session still keeps an in-memory cache; a document read (GET) must always be the server's
+        // current answer, never an earlier one (a booking the client just cancelled).
+        configuration.urlCache = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         session = URLSession(configuration: configuration)
     }
 

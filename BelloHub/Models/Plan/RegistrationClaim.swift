@@ -5,8 +5,8 @@
 
 import Foundation
 
-/// One client the phone asks the server to count (`reserveRegistrations`, D42): her id and, when known, her phone, so
-/// the same person booked through the link and typed in the app never counts twice.
+/// One client the phone used to ask the server to count (`reserveRegistrations`, D42): her id and, when known, her
+/// phone. Since D59 nothing sends it; it stays only so an outbound queue saved by an older version still decodes.
 struct RegistrationClaim: Hashable, Codable, Sendable {
     let clientID: UUID
     let phone: String?

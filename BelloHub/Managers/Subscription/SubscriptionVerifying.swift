@@ -5,18 +5,12 @@
 
 import Foundation
 
-/// The server's word on a purchase (CLAUDE.md section 2: purchases are re-verified on the server before anything is
-/// unlocked; D33, D42). The app uses `RemoteSubscriptionVerifier` (`ensureAccount` + `syncPlan`); DEBUG launches
-/// without a server use `OfflineSubscriptionVerifier`, which trusts the store's own signed transaction.
+/// The verdict on her plan, decided on this iPhone (D59; it replaces the server verification of D33). The store's
+/// verified entitlements go in; the plan state comes out and is kept as the offline snapshot. The app uses
+/// `DeviceSubscriptionVerifier`; nothing about a purchase goes to our server.
 protocol SubscriptionVerifying: Sendable {
-    /// The account token the server issued for her (`ensureAccount.appAccountToken`), handed to the store at purchase
-    /// so the transaction is tied to her account and the server can match it (`syncPlan`, App Store Server
-    /// Notifications). Nil when the environment has no server. Throws when the server cannot be reached: a purchase
-    /// without the token could never be matched to her, so it is not started.
-    func purchaseToken() async throws -> UUID?
-
-    /// Hands the store's signed transaction (the StoreKit 2 JWS of her current entitlement, nil when there is none) to
-    /// the server and returns what the server now believes. A thrown error means the server could not be reached or is
-    /// not set up; the caller keeps the store's answer and tries again later.
-    func verify(_ state: SubscriptionState, signedTransaction: String?) async throws -> SubscriptionState
+    /// What the verified entitlements prove at `now`, saved as the last known state.
+    func verify(_ entitlements: [StoreEntitlement], now: Date) async -> SubscriptionState
+    /// The last proven state as it stands at `now` (offline, or before the store answers); nil when there is none.
+    func cachedState(now: Date) async -> SubscriptionState?
 }
