@@ -16,7 +16,8 @@ struct TreatmentFieldInput: View {
     var idPrefix = "treatmentFlow.form"
     /// The choices a choice field shows, when the caller adds ones used only on this record; nil for the template's.
     var choices: [String]?
-    /// Saved words offered over a text field (her techniques), one tap away.
+    /// Quick answers offered under a written field (her profession's, her template's and the ones she saved), one tap
+    /// away.
     var textSuggestions: [String] = []
     /// "+ Add": the name and whether to save it for reuse. Nil hides the chip (the review cards).
     var onAddOption: ((String, Bool) -> Void)?
@@ -64,13 +65,12 @@ struct TreatmentFieldInput: View {
         }
     }
 
-    /// Her saved words for this field, and "+ Add".
+    /// The field's quick answers, and "+ Add". One answer per line: a chip is on while its line is in the field.
     @ViewBuilder
     private var optionRow: some View {
         if onAddOption != nil {
             FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm, wrapsLongChildren: true) {
                 ForEach(textSuggestions, id: \.self) { word in
-                    // One technique per line: a chip is on when its line is in the field.
                     let isOn = OptionNameRules.match(word, in: TreatmentAnswerFormat.textLines(value)) != nil
                     Button { isOn ? onRemoveOption?(word) : onAddOption?(word, false) } label: { Text(verbatim: word) }
                         .buttonStyle(.belloChip(selected: isOn))
@@ -84,10 +84,11 @@ struct TreatmentFieldInput: View {
 
     // MARK: - Inputs
 
-    /// Observations, technique, result and aftercare are sentences; a field she made for a word or two is one line.
+    /// A field with quick answers is a note with its chips under it, so a tap or a few words both fit; a field she
+    /// made for a word or two, with no answers yet, is one line.
     @ViewBuilder
     private var textInput: some View {
-        if field.role == .generic {
+        if field.role == .generic, textSuggestions.isEmpty {
             BelloTextField(
                 titleText: Text(verbatim: field.name), text: $value, isSensitive: true, identifier: identifier
             )

@@ -24,8 +24,10 @@ enum TreatmentFormFields {
     }
 
     /// The form's fields: observations first, then every field of the template that is on for one of her
-    /// professions and asked for this visit's service. A catalog field the catalog no longer names is left out (there
-    /// is nothing to call it); a field she added always has her own name.
+    /// professions and asked for this visit's service, with its quick answers. A catalog field the catalog no longer
+    /// names is left out (there is nothing to call it); a field she added always has her own name. Fields the catalog
+    /// added in a newer version join her template as the catalog sets them (`RecordTemplate.completed`), so a new
+    /// field reaches a template she saved before it existed.
     static func resolve(
         template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String,
         serviceID: UUID? = nil, existingServiceIDs: Set<UUID>? = nil
@@ -33,35 +35,62 @@ enum TreatmentFormFields {
         var fields = [TreatmentFormField(key: TreatmentFormField.notesKey, name: notesName, input: .text, role: .notes)]
         var seenKeys: Set<String> = [TreatmentFormField.notesKey]
         var claimedRoles: Set<String> = []
+        let completed = template.map {
+            RecordTemplate.completed($0, professions: professions, catalog: catalog, now: $0.updatedAt)
+        }
         for profession in professions {
-            for setting in template?.fields(for: profession) ?? []
+            for setting in completed?.fields(for: profession) ?? []
             where setting.isOn && setting.applies(toService: serviceID, existing: existingServiceIDs) {
                 guard seenKeys.insert(setting.key).inserted,
                       let name = name(of: setting, in: catalog) else { continue }
                 var role = role(forKey: setting.key)
                 if role != .generic, !claimedRoles.insert("\(role)").inserted { role = .generic }
-                fields.append(TreatmentFormField(key: setting.key, name: name, input: input(of: setting, role: role),
-                                                 role: role, isRequired: setting.isRequired))
+                var field = TreatmentFormField(key: setting.key, name: name, input: input(of: setting, role: role),
+                                               role: role, isRequired: setting.isRequired)
+                field.tags = tags(of: setting, in: catalog)
+                fields.append(field)
             }
         }
         return fields
     }
 
     /// The form's fields plus the ones every visit offers: aftercare (when her template has none of its own), the
-    /// client's reaction and what to remember next time. They are optional like every other field.
+    /// client's reaction and what to remember next time. They are optional like every other field. The reaction and
+    /// the aftercare come with her professions' quick answers (`visitTags`).
     static func withVisitFields(
-        _ fields: [TreatmentFormField], aftercareName: String, reactionName: String, reminderName: String
+        _ fields: [TreatmentFormField], aftercareName: String, reactionName: String, reminderName: String,
+        tags: VisitTags = VisitTags()
     ) -> [TreatmentFormField] {
         var all = fields
         if !fields.contains(where: { $0.role == .aftercare }) {
-            all.append(TreatmentFormField(key: TreatmentFormField.aftercareKey, name: aftercareName, input: .text,
-                                          role: .aftercare))
+            var aftercare = TreatmentFormField(key: TreatmentFormField.aftercareKey, name: aftercareName, input: .text,
+                                               role: .aftercare)
+            aftercare.tags = tags.aftercare
+            all.append(aftercare)
         }
-        all.append(TreatmentFormField(key: TreatmentFormField.reactionKey, name: reactionName, input: .text,
-                                      role: .reaction))
+        var reaction = TreatmentFormField(key: TreatmentFormField.reactionKey, name: reactionName, input: .text,
+                                          role: .reaction)
+        reaction.tags = tags.reaction
+        all.append(reaction)
         all.append(TreatmentFormField(key: TreatmentFormField.reminderKey, name: reminderName, input: .text,
                                       role: .nextVisitReminder))
         return all
+    }
+
+    /// Quick answers of the fields every visit has, gathered over her professions in her order, each once.
+    struct VisitTags: Equatable, Sendable {
+        var reaction: [String] = []
+        var aftercare: [String] = []
+    }
+
+    /// The reaction and aftercare answers of her professions: a lash artist who also does brows gets both lists, with
+    /// a word they share ("None") once.
+    static func visitTags(professions: [ProfessionID], catalog: ProfessionCatalog) -> VisitTags {
+        let entries = professions.compactMap(catalog.entry(for:))
+        return VisitTags(
+            reaction: OptionNameRules.unique(entries.flatMap(\.reactionTags)),
+            aftercare: OptionNameRules.unique(entries.flatMap(\.aftercareTags))
+        )
     }
 
     /// The form's fields plus the recommendation for the next visit, which only the voice path proposes (the manual
@@ -87,6 +116,14 @@ enum TreatmentFormFields {
     }
 
     // MARK: - Private
+
+    /// A written field offers her template's own answers once she has added one, and her profession's until then.
+    /// A choice field's options are its choices, and a number is typed, so neither gets tags.
+    private static func tags(of setting: RecordFieldSetting, in catalog: ProfessionCatalog) -> [String] {
+        guard setting.kind == .text else { return [] }
+        guard setting.options.isEmpty else { return setting.options }
+        return catalog.entry(for: setting.profession)?.fields.first { $0.key == setting.key }?.tags ?? []
+    }
 
     private static func name(of setting: RecordFieldSetting, in catalog: ProfessionCatalog) -> String? {
         if let custom = setting.customName { return custom }

@@ -37,6 +37,17 @@ struct ManualFormTests {
         #expect(split.more.map(\.key) == ["est.spf"])
     }
 
+    @Test("A field with quick answers always shows: her profession's prepared questions never fold")
+    func taggedFieldsShow() {
+        var tagged = fields
+        tagged[6].tags = ["Dry", "Oily"]
+
+        let split = TreatmentFormLayout.split(tagged, draft: TreatmentDraft())
+
+        #expect(split.main.map(\.key).contains("est.hydration"))
+        #expect(split.more.map(\.key) == ["est.spf"])
+    }
+
     @Test("The last visit of the same service is found, never the record being written")
     func source() {
         let client = UUID()

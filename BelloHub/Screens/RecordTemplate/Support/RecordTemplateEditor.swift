@@ -213,33 +213,11 @@ enum RecordTemplateEditor {
 
     // MARK: - Completing
 
-    /// The template with what the catalog has and the template does not: the fields and intake items of a profession
-    /// she has but never saved (a profession added after the setup), and catalog fields added in a newer version. They
-    /// start as the catalog says. It is a view of what to show, not a write: the screen saves only when she changes
-    /// something, and a field that is already there is never changed.
+    /// The template completed with what the catalog added (`RecordTemplate.completed`, shared with the visit form).
     static func completed(
         _ template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, now: Date
     ) -> RecordTemplate {
-        var result = template ?? RecordTemplate(fields: [], intake: [], updatedAt: now)
-        for profession in professions {
-            guard let entry = catalog.entry(for: profession) else { continue }
-            let known = Set(result.fields(for: profession).map(\.key))
-            let missing = entry.fields.filter { !known.contains($0.key) }.map {
-                RecordFieldSetting(profession: profession, key: $0.key, isOn: $0.on)
-            }
-            if !missing.isEmpty {
-                let ofProfession = result.fields.indices.filter { result.fields[$0].profession == profession }
-                let lastStandard = ofProfession.last { !result.fields[$0].isCustom }
-                let position = lastStandard.map { $0 + 1 } ?? ofProfession.first ?? result.fields.count
-                result.fields.insert(contentsOf: missing, at: position)
-            }
-            for item in IntakeItem.allCases
-            where !result.intake.contains(where: { $0.profession == profession && $0.item == item }) {
-                let isOn = entry.intake.contains(item)
-                result.intake.append(IntakeSetting(profession: profession, item: item, isOn: isOn))
-            }
-        }
-        return result
+        RecordTemplate.completed(template, professions: professions, catalog: catalog, now: now)
     }
 
     // MARK: - Helpers

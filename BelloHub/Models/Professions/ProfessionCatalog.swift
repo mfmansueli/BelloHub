@@ -43,6 +43,8 @@ struct ProfessionCatalog: Sendable, Equatable {
             let tags: [SuggestedTag]
             let fields: [SuggestedField]
             let intake: [String]
+            let reactionTags: [String]?
+            let aftercareTags: [String]?
         }
         let file: File
         do {
@@ -54,7 +56,8 @@ struct ProfessionCatalog: Sendable, Equatable {
             guard let id = ProfessionID(rawValue: raw.id) else { return nil }
             return ProfessionEntry(
                 id: id, name: raw.name, plural: raw.plural, services: raw.services, tags: raw.tags,
-                fields: raw.fields, intake: raw.intake.compactMap(IntakeItem.init(rawValue:))
+                fields: raw.fields, intake: raw.intake.compactMap(IntakeItem.init(rawValue:)),
+                reactionTags: raw.reactionTags ?? [], aftercareTags: raw.aftercareTags ?? []
             )
         }
         guard !entries.isEmpty else { throw LoadError.empty }

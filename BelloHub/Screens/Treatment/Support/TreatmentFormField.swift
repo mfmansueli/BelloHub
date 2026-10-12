@@ -49,6 +49,9 @@ struct TreatmentFormField: Identifiable, Equatable, Sendable {
     let role: Role
     /// Her template says this field is needed to finalize the record (never to save a draft).
     var isRequired = false
+    /// Quick answers for a written field, one tap each (her template's, or her profession's from the catalog until she
+    /// adds her own). Empty for the other inputs: a choice field's options are its choices.
+    var tags: [String] = []
 
     var id: String { key }
 

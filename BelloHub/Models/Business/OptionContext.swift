@@ -14,6 +14,10 @@ enum OptionContext: String, PersistedEnum, Identifiable {
     case preference
     case sensitivity
     case recurringRequest
+    /// How a client reacted, in her words, offered on every visit's reaction field next to her profession's answers.
+    case reaction
+    /// Aftercare she gives, offered on the aftercare field next to her profession's answers.
+    case aftercare
 
     static let fallback = OptionContext.technique
 

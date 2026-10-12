@@ -294,8 +294,10 @@ final class TreatmentFlowViewModel {
             template: profile.template, professions: profile.profile?.professions ?? [], catalog: catalog,
             notesName: names.notes, serviceID: service?.id, existingServiceIDs: Set(services.map(\.id))
         )
+        let professions = profile.profile?.professions ?? []
         fields = TreatmentFormFields.withVisitFields(
-            template, aftercareName: names.aftercare, reactionName: names.reaction, reminderName: names.reminder
+            template, aftercareName: names.aftercare, reactionName: names.reaction, reminderName: names.reminder,
+            tags: TreatmentFormFields.visitTags(professions: professions, catalog: catalog)
         )
         reviewFields = TreatmentFormFields.withRecommendation(fields, name: names.recommendation)
         prefillAftercare()
