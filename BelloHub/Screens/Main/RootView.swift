@@ -139,7 +139,10 @@ struct RootView: View {
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .background: appLock.sceneDidLeave()
-            case .active: appLock.sceneDidReturn()
+            case .active:
+                appLock.sceneDidReturn()
+                // A period may have ended (or renewed) while the app was away: the plan is read again (D59).
+                Task { await subscription.refreshState() }
             default: break
             }
         }
@@ -201,9 +204,11 @@ struct RootView: View {
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
         }
     }
+}
 
-    // MARK: - Stages
+// MARK: - Stages
 
+extension RootView {
     @ViewBuilder
     private var content: some View {
         #if DEBUG
