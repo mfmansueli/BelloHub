@@ -405,6 +405,15 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
 
+### Quick access (Home avatar)
+
+- Her avatar on Home is a button (44 pt at accessibility sizes, never hidden) that opens the **Quick access** sheet:
+  her profile card (avatar, name, profession · region, "Open account"), the booking link card shared with the booking
+  page settings (`BookingLinkCard`: link, status, Copy and Share, or "Choose your address"), "Business" (booking page,
+  services, availability, products, record fields), "Preferences" (plan, notifications, language and region), then
+  Lock now and All settings. A row closes the sheet and opens the same screen on the More tab (`QuickAccessItem.path`),
+  so each setting has one screen. The row subtitles come from `SettingsSubtitles`, shared with More.
+
 ### Changes from D60 (health forms are her own papers too)
 
 - **4.5** is a folder. First section "Health forms": the same list card as the consents (label or "Health form",

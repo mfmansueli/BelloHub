@@ -17,6 +17,7 @@ struct HomeContentView: View {
     @State private var agendaSheet: AgendaSheet?
     @State private var visitFlow: TreatmentFlowRequest?
     @State private var picksClient = false
+    @State private var showsQuickAccess = false
     @Environment(ProfileService.self) private var profile
     @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
@@ -55,6 +56,7 @@ struct HomeContentView: View {
         .task { viewModel.start() }
         .agendaSheet(item: $agendaSheet)
         .treatmentFlow(item: $visitFlow)
+        .sheet(isPresented: $showsQuickAccess) { QuickAccessSheet() }
         .sheet(isPresented: $picksClient) {
             ClientPickerSheet { client in visitFlow = TreatmentFlowRequest(clientID: client.id) }
         }
@@ -97,10 +99,22 @@ struct HomeContentView: View {
                     .accessibilityIdentifier("home.date")
             }
             Spacer(minLength: Spacing.sm)
-            if let person = profile.profile, !typeSize.isAccessibilitySize {
-                Avatar(name: person.displayName, id: person.id.uuidString, size: 48)
-            }
+            if let person = profile.profile { quickAccessButton(person) }
         }
+    }
+
+    /// Her avatar opens the quick access sheet: profile, booking link and the settings she reaches for most. Smaller
+    /// at the largest text sizes, never hidden, so the sheet is always one tap away.
+    private func quickAccessButton(_ person: ProfessionalProfile) -> some View {
+        Button { showsQuickAccess = true } label: {
+            Avatar(name: person.displayName, id: person.id.uuidString, size: typeSize.isAccessibilitySize ? 44 : 48)
+                .frame(minWidth: Spacing.touchTarget, minHeight: Spacing.touchTarget)
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("quickAccess.title"))
+        .accessibilityHint(Text("quickAccess.hint"))
+        .accessibilityIdentifier("home.avatarButton")
     }
 
     private func greeting(now: Date) -> Text {

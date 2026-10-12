@@ -71,4 +71,22 @@ final class HomeUITests: XCTestCase {
 
     /// Julia Mendes in `HomeUITestSeeding`.
     private static let julia = "A9902200-0000-4000-8000-000000000001"
+
+    func testTheAvatarOpensQuickAccessAndARowOpensItsScreenInMore() {
+        let app = XCUIApplication.launchedOnHome()
+        XCTAssertTrue(app.buttons["home.avatarButton"].waitForExistence(timeout: 10), "the avatar is not a button")
+        app.tapButton("home.avatarButton")
+
+        // The sheet holds her profile, her link and the settings she uses most.
+        let services = app.buttons["home.quickAccess.services"]
+        XCTAssertTrue(services.waitForExistence(timeout: 5), "quick access did not open")
+        XCTAssertTrue(app.buttons["home.quickAccess.profile"].exists)
+        XCTAssertTrue(app.element("bookingSettings.linkText").exists, "the booking link card is missing")
+        XCTAssertTrue(app.buttons["home.quickAccess.allSettings"].exists, "All settings is missing")
+
+        // A row closes the sheet and opens the same screen as in More.
+        app.tapButton("home.quickAccess.services")
+        XCTAssertTrue(app.buttons["services.addButton"].waitForExistence(timeout: 5), "Services did not open in More")
+        XCTAssertFalse(app.buttons["home.quickAccess.services"].exists, "the sheet stayed open")
+    }
 }
