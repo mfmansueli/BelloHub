@@ -229,15 +229,34 @@ struct TreatmentFlowViewModelTests {
         #expect(stored?.nextSessionSuggestion == world.model.formatters.weeks(6))
     }
 
-    @Test("A saved technique chip adds its line once and a second tap takes only that line out")
-    func techniqueChips() async throws {
+    @Test("A quick answer adds its line once and a second tap takes only that line out")
+    func quickAnswerChips() async throws {
         let world = try await TreatmentFlowWorld.make()
-        let key = "technique"
-        world.model.set("Soft pressure", for: key)
-        world.model.addTechnique("Classic lift", save: false, fieldKey: key)
-        world.model.addTechnique("classic LIFT", save: false, fieldKey: key)
-        #expect(world.model.draft.value(for: key) == "Soft pressure\nClassic lift")
-        world.model.removeTechnique("Classic lift", fieldKey: key)
-        #expect(world.model.draft.value(for: key) == "Soft pressure")
+        let field = TreatmentFormField(key: "technique", name: "Technique", input: .text, role: .technique)
+        world.model.set("Soft pressure", for: field.key)
+        world.model.addTag("Classic lift", save: false, field: field)
+        world.model.addTag("classic LIFT", save: false, field: field)
+        #expect(world.model.draft.value(for: field.key) == "Soft pressure\nClassic lift")
+        world.model.removeTag("Classic lift", field: field)
+        #expect(world.model.draft.value(for: field.key) == "Soft pressure")
+    }
+
+    @Test("Saving a quick answer keeps it in her template, after her profession's answers")
+    func savesQuickAnswerInTemplate() async throws {
+        let world = try await TreatmentFlowWorld.make()
+        let setting = RecordFieldSetting(profession: .esthetician, key: "esthetician.skinCondition", isOn: true)
+        try await world.model.profile.saveTemplate(
+            RecordTemplate(fields: [setting], intake: [], updatedAt: TestClock.now)
+        )
+        var field = TreatmentFormField(key: setting.key, name: "Skin condition", input: .text, role: .generic)
+        field.tags = ["Oily", "Dry"]
+
+        world.model.addTag("Couperose", save: true, field: field)
+
+        #expect(world.model.draft.value(for: field.key) == "Couperose")
+        #expect(await Wait.untilMain {
+            world.model.profile.template?.fields.first?.options == ["Oily", "Dry", "Couperose"]
+        })
+        #expect(world.model.quickTags(for: field) == ["Oily", "Dry"], "the field keeps what it was built with")
     }
 }

@@ -205,13 +205,10 @@ struct VisitFormStepView: View {
     private func input(_ field: TreatmentFormField) -> some View {
         VStack(alignment: .leading, spacing: Spacing.xs) {
             TreatmentFieldInput(
-                field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
+                field: field, value: binding(for: field.key), suggestions: viewModel.productSuggestions(for: field),
                 hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key),
-                choices: viewModel.choices(for: field),
-                textSuggestions: field.role == .technique ? viewModel.techniqueSuggestions : [],
-                onAddOption: addOption(for: field),
-                onRemoveOption: field.role == .technique
-                    ? { viewModel.removeTechnique($0, fieldKey: field.key) } : nil
+                choices: viewModel.choices(for: field), textSuggestions: viewModel.quickTags(for: field),
+                onAddOption: addOption(for: field), onRemoveOption: removeOption(for: field)
             )
             if field.isRequired, !viewModel.isFinalized { requiredNote(field) }
         }
@@ -231,16 +228,23 @@ struct VisitFormStepView: View {
         }
     }
 
-    /// "+ Add" for the lists that take new options: techniques, products and her fields' choices. Fixed answers
-    /// (yes or no, the result) and free notes get none.
+    /// Quick answers and "+ Add" for every list: a written field's answers (one line each), products and her fields'
+    /// choices. Fixed answers (yes or no, a number), the quick note and what to remember next time get none.
     private func addOption(for field: TreatmentFormField) -> ((String, Bool) -> Void)? {
         guard !viewModel.isLocked else { return nil }
         switch (field.role, field.input) {
-        case (.technique, _): return { viewModel.addTechnique($0, save: $1, fieldKey: field.key) }
+        case (.notes, _), (.nextVisitReminder, _), (_, .number), (_, .yesNo): return nil
         case (_, .products): return { viewModel.addProduct($0, save: $1, fieldKey: field.key) }
         case (_, .choice), (_, .multiChoice): return { viewModel.addChoice($0, save: $1, field: field) }
-        default: return nil
+        case (_, .text): return { viewModel.addTag($0, save: $1, field: field) }
         }
+    }
+
+    /// A quick answer tapped again takes its line out of a written field.
+    private func removeOption(for field: TreatmentFormField) -> ((String) -> Void)? {
+        guard !viewModel.isLocked, case .text = field.input, field.role != .notes, field.role != .nextVisitReminder
+        else { return nil }
+        return { viewModel.removeTag($0, field: field) }
     }
 
     @ViewBuilder

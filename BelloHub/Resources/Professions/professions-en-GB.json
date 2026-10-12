@@ -102,49 +102,163 @@
    ],
    "fields": [
     {
+     "key": "esthetician.healthCheck",
+     "name": "Health check today",
+     "on": true,
+     "tags": [
+      "No changes",
+      "Pregnant or breastfeeding",
+      "Isotretinoin",
+      "Retinoid use",
+      "Recent sun or tan",
+      "Antibiotics",
+      "Cold sores",
+      "Active lesion",
+      "New medication"
+     ]
+    },
+    {
      "key": "esthetician.skinCondition",
      "name": "Skin condition",
-     "on": true
+     "on": true,
+     "tags": [
+      "Oily",
+      "Dry",
+      "Combination",
+      "Dehydrated",
+      "Sensitive",
+      "Acne-prone",
+      "Rosacea",
+      "Melasma",
+      "Hyperpigmentation",
+      "Fine lines",
+      "Enlarged pores",
+      "Blackheads"
+     ]
+    },
+    {
+     "key": "esthetician.phototype",
+     "name": "Phototype",
+     "on": true,
+     "tags": [
+      "Type I",
+      "Type II",
+      "Type III",
+      "Type IV",
+      "Type V",
+      "Type VI"
+     ]
     },
     {
      "key": "esthetician.areas",
      "name": "Areas",
-     "on": true
+     "on": true,
+     "tags": [
+      "Full face",
+      "Forehead",
+      "T-zone",
+      "Cheeks",
+      "Jawline",
+      "Under-eyes",
+      "Upper lip",
+      "Neck",
+      "Décolleté",
+      "Back"
+     ]
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Treatment",
+     "on": true,
+     "tags": [
+      "Deep cleansing",
+      "Chemical peel",
+      "Microneedling",
+      "Extractions",
+      "Hydrafacial",
+      "Dermaplaning",
+      "LED",
+      "Radiofrequency",
+      "Hydrating facial",
+      "Lymphatic facial"
+     ]
     },
     {
      "key": "esthetician.products",
      "name": "Products and actives",
-     "on": true
-    },
-    {
-     "key": "esthetician.protocol",
-     "name": "Protocol",
-     "on": true
+     "on": true,
+     "tags": [
+      "Glycolic acid",
+      "Salicylic acid",
+      "Mandelic acid",
+      "Lactic acid",
+      "TCA",
+      "Retinol",
+      "Vitamin C",
+      "Niacinamide",
+      "Azelaic acid",
+      "Tranexamic acid",
+      "Hyaluronic acid"
+     ]
     },
     {
      "key": "esthetician.technique",
-     "name": "Technique",
-     "on": false
-    },
-    {
-     "key": "esthetician.reaction",
-     "name": "Reaction",
-     "on": true
+     "name": "Strength, depth and time",
+     "on": true,
+     "tags": [
+      "20%",
+      "35%",
+      "1 layer",
+      "2 layers",
+      "3 min",
+      "0.5 mm",
+      "1.0 mm",
+      "1.5 mm",
+      "2 passes",
+      "Even frost",
+      "Patchy frost",
+      "Neutralised"
+     ]
     },
     {
      "key": "esthetician.result",
      "name": "Result",
-     "on": true
-    },
-    {
-     "key": "esthetician.aftercare",
-     "name": "Aftercare",
-     "on": true
+     "on": true,
+     "tags": [
+      "Glowing",
+      "Calmer skin",
+      "Fewer breakouts",
+      "More even tone",
+      "Smoother texture",
+      "Well hydrated",
+      "Needs more sessions"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "None",
+    "Mild redness",
+    "Burning or stinging",
+    "Swelling",
+    "Breakout",
+    "Peeling",
+    "Frosting",
+    "Itching",
+    "Dark spots"
+   ],
+   "aftercareTags": [
+    "SPF 50 daily",
+    "No actives for 3 days",
+    "No sun for 7 days",
+    "Don't pick peeling skin",
+    "Gentle cleanser",
+    "Hydrating serum",
+    "No makeup for 24 h",
+    "No sauna or gym for 48 h"
    ]
   },
   {
@@ -248,52 +362,180 @@
    "fields": [
     {
      "key": "hair.hairCondition",
-     "name": "Hair condition",
-     "on": true
+     "name": "Hair and scalp",
+     "on": true,
+     "tags": [
+      "Virgin hair",
+      "Fine",
+      "Coarse",
+      "Curly or coily",
+      "Porous",
+      "Breakage",
+      "Dry ends",
+      "Oily scalp",
+      "Sensitive scalp",
+      "Dandruff",
+      "Thinning"
+     ]
+    },
+    {
+     "key": "hair.naturalBase",
+     "name": "Natural level and greys",
+     "on": true,
+     "tags": [
+      "Level 3–4",
+      "Level 5–6",
+      "Level 7–8",
+      "Level 9–10",
+      "Under 10% grey",
+      "25% grey",
+      "50% grey",
+      "75%+ grey",
+      "Resistant greys"
+     ]
     },
     {
      "key": "hair.previousColor",
-     "name": "Previous colour",
-     "on": true
+     "name": "Chemical history",
+     "on": true,
+     "tags": [
+      "Box dye",
+      "Henna",
+      "Permanent colour",
+      "Gloss or toner",
+      "Highlights",
+      "Bleach",
+      "Keratin or progressive",
+      "Relaxer",
+      "Perm",
+      "Colour remover"
+     ]
+    },
+    {
+     "key": "hair.allergyTest",
+     "name": "Patch and strand test",
+     "on": true,
+     "tags": [
+      "Patch test negative",
+      "Patch test positive",
+      "Not done",
+      "Client declined",
+      "Strand test OK",
+      "Strand test: adjust formula"
+     ]
     },
     {
      "key": "hair.formula",
      "name": "Formula",
-     "on": true
+     "on": true,
+     "tags": [
+      "Roots",
+      "Mid-lengths",
+      "Ends",
+      "Toner",
+      "1:1",
+      "1:1.5",
+      "1:2",
+      "Bond builder",
+      "Pre-pigment",
+      "Gloss"
+     ]
     },
     {
      "key": "hair.developer",
      "name": "Developer",
-     "on": true
-    },
-    {
-     "key": "hair.technique",
-     "name": "Technique",
-     "on": true
+     "on": true,
+     "tags": [
+      "1.5% (5 vol)",
+      "3% (10 vol)",
+      "6% (20 vol)",
+      "9% (30 vol)",
+      "12% (40 vol)",
+      "Demi activator"
+     ]
     },
     {
      "key": "hair.processingTime",
      "name": "Processing time",
-     "on": true
+     "on": true,
+     "tags": [
+      "10 min",
+      "20 min",
+      "30 min",
+      "35 min",
+      "45 min",
+      "With heat",
+      "Until lifted"
+     ]
     },
     {
-     "key": "hair.products",
-     "name": "Products",
-     "on": false
+     "key": "hair.technique",
+     "name": "Technique",
+     "on": true,
+     "tags": [
+      "Global colour",
+      "Root touch-up",
+      "Foils",
+      "Balayage",
+      "Babylights",
+      "Face frame",
+      "Root shadow",
+      "Colour correction",
+      "Toner only",
+      "Cut",
+      "Blow-dry"
+     ]
     },
     {
      "key": "hair.result",
      "name": "Result",
-     "on": true
+     "on": true,
+     "tags": [
+      "Even colour",
+      "Target tone reached",
+      "Warmer than planned",
+      "Cooler than planned",
+      "Banding",
+      "Needs toner",
+      "Healthy shine"
+     ]
     },
     {
      "key": "hair.preferences",
      "name": "Preferences",
-     "on": true
+     "on": true,
+     "tags": [
+      "No warmth",
+      "Low maintenance",
+      "Wants lighter",
+      "Keep the length",
+      "Dry cut",
+      "Curly cut",
+      "Growing out greys"
+     ]
     }
    ],
    "intake": [
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "None",
+    "Scalp itching",
+    "Burning",
+    "Redness",
+    "Scalp swelling",
+    "Hives",
+    "Breakage",
+    "Dryness"
+   ],
+   "aftercareTags": [
+    "Sulfate-free shampoo",
+    "Wait 48 h to wash",
+    "Purple shampoo",
+    "Bond repair at home",
+    "Heat protectant",
+    "Gloss in 6 weeks",
+    "Cool rinse"
    ]
   },
   {
@@ -397,49 +639,170 @@
    "fields": [
     {
      "key": "lash.set",
-     "name": "Set",
-     "on": true
+     "name": "Service",
+     "on": true,
+     "tags": [
+      "Classic",
+      "Hybrid",
+      "Volume",
+      "Mega volume",
+      "Wet look",
+      "Wispy",
+      "Refill",
+      "Removal",
+      "Lash lift",
+      "Lift and tint",
+      "Brow lamination"
+     ]
+    },
+    {
+     "key": "lash.naturalLashes",
+     "name": "Natural lashes and eyes",
+     "on": true,
+     "tags": [
+      "Healthy",
+      "Sparse",
+      "Fine",
+      "Short",
+      "Straight",
+      "Downward",
+      "Gaps",
+      "Oily lids",
+      "Hooded eyes",
+      "Monolid",
+      "Deep-set eyes"
+     ]
     },
     {
      "key": "lash.curl",
      "name": "Curl",
-     "on": true
-    },
-    {
-     "key": "lash.length",
-     "name": "Length",
-     "on": true
+     "on": true,
+     "tags": [
+      "J",
+      "B",
+      "C",
+      "CC",
+      "D",
+      "DD",
+      "L",
+      "L+",
+      "M"
+     ]
     },
     {
      "key": "lash.thickness",
      "name": "Thickness",
-     "on": true
+     "on": true,
+     "tags": [
+      "0.03 mm",
+      "0.05 mm",
+      "0.07 mm",
+      "0.10 mm",
+      "0.12 mm",
+      "0.15 mm"
+     ]
     },
     {
      "key": "lash.mapping",
-     "name": "Mapping",
-     "on": true
+     "name": "Mapping and lengths",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Cat eye",
+      "Doll eye",
+      "Squirrel",
+      "Open eye",
+      "Kim K",
+      "8-10-12",
+      "9-11-13",
+      "10-12-14",
+      "Short inner corner"
+     ]
     },
     {
      "key": "lash.adhesive",
-     "name": "Adhesive",
-     "on": true
+     "name": "Adhesive and room",
+     "on": true,
+     "tags": [
+      "Sensitive formula",
+      "0.5 s dry",
+      "1–2 s dry",
+      "Carbon-black free",
+      "Opened under 4 weeks ago",
+      "Humidity 40–50%",
+      "Humidity 50–65%",
+      "Patch test done"
+     ]
     },
     {
      "key": "lash.retention",
-     "name": "Retention",
-     "on": true
+     "name": "Retention at refill",
+     "on": true,
+     "tags": [
+      "75% or more",
+      "50–75%",
+      "Under 50%",
+      "Gaps at outer corner",
+      "Stuck or twisted",
+      "Grown out",
+      "Picked off"
+     ]
+    },
+    {
+     "key": "lash.liftSettings",
+     "name": "Lift settings",
+     "on": false,
+     "tags": [
+      "Shield S",
+      "Shield M",
+      "Shield L",
+      "Shield XL",
+      "Lift 6 min",
+      "Set 5 min",
+      "Black tint",
+      "Brown tint",
+      "Keratin serum"
+     ]
     },
     {
      "key": "lash.preferences",
      "name": "Preferences",
-     "on": false
+     "on": false,
+     "tags": [
+      "Natural look",
+      "Dramatic",
+      "No inner corner",
+      "Side sleeper",
+      "Contact lenses",
+      "Wears mascara",
+      "Allergy-prone"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "None",
+    "Watery eyes",
+    "Stinging",
+    "Itchy eyes",
+    "Swollen eyelids",
+    "Red eyes",
+    "Bloodshot eye",
+    "Sensitive to fumes"
+   ],
+   "aftercareTags": [
+    "Keep dry 24 h",
+    "No oil-based products",
+    "Brush daily",
+    "Lash cleanser",
+    "Don't rub or pull",
+    "No steam for 48 h",
+    "Sleep on your back",
+    "Refill in 2–3 weeks"
    ]
   },
   {
@@ -542,42 +905,147 @@
    ],
    "fields": [
     {
+     "key": "nail.service",
+     "name": "Service",
+     "on": true,
+     "tags": [
+      "Manicure",
+      "Pedicure",
+      "Gel polish",
+      "Builder gel",
+      "Acrylic",
+      "Polygel",
+      "Fibreglass",
+      "Tips",
+      "Maintenance",
+      "Removal",
+      "Spa pedicure"
+     ]
+    },
+    {
      "key": "nail.nailCondition",
      "name": "Nail condition",
-     "on": true
+     "on": true,
+     "tags": [
+      "Healthy",
+      "Thin",
+      "Brittle",
+      "Peeling",
+      "Bitten",
+      "Ridges",
+      "Lifting from the bed",
+      "Discoloured",
+      "Dry cuticles",
+      "Ingrown toenail",
+      "Thickened toenail"
+     ]
     },
     {
-     "key": "nail.shape",
-     "name": "Shape",
-     "on": true
-    },
-    {
-     "key": "nail.length",
-     "name": "Length",
-     "on": true
-    },
-    {
-     "key": "nail.color",
-     "name": "Colour",
-     "on": true
+     "key": "nail.technique",
+     "name": "Prep",
+     "on": true,
+     "tags": [
+      "E-file manicure",
+      "Dry manicure",
+      "Wet manicure",
+      "Push-back only",
+      "Dehydrator",
+      "Acid-free primer",
+      "Light buff"
+     ]
     },
     {
      "key": "nail.productSystem",
      "name": "Product system",
-     "on": true
+     "on": true,
+     "tags": [
+      "HEMA-free",
+      "Rubber base",
+      "Builder gel",
+      "No-wipe top coat",
+      "LED 60 s",
+      "UV/LED 30 s",
+      "Same brand base to top"
+     ]
     },
     {
-     "key": "nail.technique",
-     "name": "Technique",
-     "on": false
+     "key": "nail.shape",
+     "name": "Shape",
+     "on": true,
+     "tags": [
+      "Square",
+      "Squoval",
+      "Round",
+      "Oval",
+      "Almond",
+      "Coffin",
+      "Stiletto",
+      "Lipstick"
+     ]
+    },
+    {
+     "key": "nail.length",
+     "name": "Length",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Short",
+      "Medium",
+      "Long",
+      "Extra long"
+     ]
+    },
+    {
+     "key": "nail.color",
+     "name": "Colour and art",
+     "on": true,
+     "tags": [
+      "Nude",
+      "French",
+      "Baby boomer",
+      "Red",
+      "Chrome",
+      "Cat eye",
+      "Glitter",
+      "Ombré",
+      "Accent nail",
+      "Hand-painted art"
+     ]
     },
     {
      "key": "nail.durability",
-     "name": "Durability",
-     "on": true
+     "name": "Wear since last visit",
+     "on": true,
+     "tags": [
+      "Perfect at 3 weeks",
+      "Lifting at cuticle",
+      "Lifting at sides",
+      "Chipped tips",
+      "Broken nail",
+      "Grown out",
+      "Removed early"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "None",
+    "Redness around cuticle",
+    "Itchy fingertips",
+    "Heat spike while curing",
+    "Swelling",
+    "Nail bed pain",
+    "Small cut"
+   ],
+   "aftercareTags": [
+    "Cuticle oil daily",
+    "Gloves for cleaning",
+    "Don't pick or peel",
+    "Don't use nails as tools",
+    "Maintenance in 3 weeks",
+    "Don't cut cuticles at home",
+    "Acetone-free remover"
+   ]
   },
   {
    "id": "makeup",
@@ -675,41 +1143,147 @@
     {
      "key": "makeup.event",
      "name": "Event",
-     "on": true
+     "on": true,
+     "tags": [
+      "Bride",
+      "Bridal trial",
+      "Bridesmaid or guest",
+      "Graduation",
+      "Sweet sixteen",
+      "Party",
+      "Photo shoot",
+      "Corporate",
+      "Mother of the bride"
+     ]
+    },
+    {
+     "key": "makeup.skinType",
+     "name": "Skin type",
+     "on": true,
+     "tags": [
+      "Oily",
+      "Dry",
+      "Combination",
+      "Mature",
+      "Sensitive",
+      "Acne-prone",
+      "Textured",
+      "Dehydrated"
+     ]
     },
     {
      "key": "makeup.look",
      "name": "Look",
-     "on": true
+     "on": true,
+     "tags": [
+      "Natural",
+      "Soft glam",
+      "Full glam",
+      "Smoky eye",
+      "Cut crease",
+      "Graphic liner",
+      "Bold lip",
+      "Dewy",
+      "Matte"
+     ]
     },
     {
      "key": "makeup.skinPrep",
      "name": "Skin preparation",
-     "on": false
+     "on": true,
+     "tags": [
+      "Hydrating primer",
+      "Mattifying primer",
+      "Pore filler",
+      "Eye patches",
+      "Colour corrector",
+      "Grip primer",
+      "No-SPF base"
+     ]
     },
     {
      "key": "makeup.foundation",
-     "name": "Foundation",
-     "on": true
+     "name": "Foundation and shade",
+     "on": true,
+     "tags": [
+      "Warm",
+      "Neutral",
+      "Cool",
+      "Olive",
+      "Mix of 2 shades",
+      "Light coverage",
+      "Medium coverage",
+      "Full coverage",
+      "Oxidises: go lighter"
+     ]
     },
     {
-     "key": "makeup.shade",
-     "name": "Shade",
-     "on": true
+     "key": "makeup.lashes",
+     "name": "Lashes",
+     "on": true,
+     "tags": [
+      "None",
+      "Strip",
+      "Clusters",
+      "Individuals",
+      "Latex-free glue",
+      "Waterproof mascara"
+     ]
+    },
+    {
+     "key": "makeup.setting",
+     "name": "Setting and longevity",
+     "on": true,
+     "tags": [
+      "Setting spray",
+      "Translucent powder",
+      "Baking",
+      "Waterproof eyes",
+      "Lasted all day",
+      "Faded on T-zone",
+      "Touch-up kit given"
+     ]
     },
     {
      "key": "makeup.products",
      "name": "Products",
-     "on": true
+     "on": false,
+     "tags": []
     },
     {
      "key": "makeup.preferences",
      "name": "Preferences",
-     "on": true
+     "on": true,
+     "tags": [
+      "No shimmer",
+      "Light base",
+      "Wears glasses",
+      "Contact lenses",
+      "Sensitive eyes",
+      "Veil",
+      "Flash photos",
+      "Outdoor or humid"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "None",
+    "Watery eyes",
+    "Itchy eyes",
+    "Redness",
+    "Breakout",
+    "Lash glue reaction",
+    "Felt heavy"
+   ],
+   "aftercareTags": [
+    "Removal routine",
+    "Blotting papers",
+    "Lip touch-ups",
+    "Remove lashes gently",
+    "Moisturise overnight"
    ]
   },
   {
@@ -806,50 +1380,174 @@
    ],
    "fields": [
     {
-     "key": "tattoo.design",
-     "name": "Design",
-     "on": true
+     "key": "tattoo.procedure",
+     "name": "Procedure",
+     "on": true,
+     "tags": [
+      "Microblading",
+      "Nanoblading",
+      "Powder brows",
+      "Combo brows",
+      "Lip blush",
+      "Eyeliner",
+      "Lash line",
+      "Areola",
+      "Fine-line tattoo",
+      "Cover-up",
+      "Correction"
+     ]
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Session",
+     "on": true,
+     "tags": [
+      "First session",
+      "Touch-up 6–8 weeks",
+      "Annual refresh",
+      "Colour boost",
+      "Continuation",
+      "Correction"
+     ]
+    },
+    {
+     "key": "tattoo.healthCheck",
+     "name": "Contraindications today",
+     "on": true,
+     "tags": [
+      "Nothing new",
+      "Blood thinners",
+      "Isotretinoin",
+      "Pregnant or breastfeeding",
+      "Keloid tendency",
+      "Diabetes",
+      "Cold sores (antiviral taken)",
+      "Recent fillers or Botox",
+      "Old PMU or laser"
+     ]
     },
     {
      "key": "tattoo.placement",
      "name": "Placement",
-     "on": true
+     "on": true,
+     "tags": [
+      "Brows",
+      "Lips",
+      "Upper lash line",
+      "Lower lash line",
+      "Wrist",
+      "Forearm",
+      "Ankle",
+      "Behind the ear",
+      "Ribs",
+      "Back"
+     ]
     },
     {
-     "key": "tattoo.technique",
-     "name": "Technique",
-     "on": true
+     "key": "tattoo.design",
+     "name": "Design",
+     "on": true,
+     "tags": [
+      "Brow mapping",
+      "Approved by client",
+      "Reference photo",
+      "Stencil",
+      "Freehand",
+      "Fine line",
+      "Dotwork",
+      "Lettering"
+     ]
     },
     {
      "key": "tattoo.pigments",
-     "name": "Pigments",
-     "on": true
+     "name": "Pigments and lot",
+     "on": true,
+     "tags": [
+      "Warm brown",
+      "Ash brown",
+      "Neutral brown",
+      "Orange corrector",
+      "Nude rose",
+      "Coral",
+      "Red",
+      "Black",
+      "Lot noted"
+     ]
     },
     {
      "key": "tattoo.tools",
-     "name": "Tools and materials",
-     "on": true
+     "name": "Needle and machine",
+     "on": true,
+     "tags": [
+      "1RL",
+      "3RL",
+      "0.18 nano",
+      "U-blade 14",
+      "18-pin slope",
+      "Magnum",
+      "Cartridge lot noted",
+      "Low speed",
+      "High speed"
+     ]
     },
     {
-     "key": "tattoo.sessionNumber",
-     "name": "Session number",
-     "on": true
+     "key": "tattoo.skinResponse",
+     "name": "Skin response",
+     "on": true,
+     "tags": [
+      "Normal",
+      "Oily",
+      "Thin",
+      "Mature",
+      "Bled a lot",
+      "Swelled",
+      "Poor take",
+      "Scar tissue"
+     ]
     },
     {
      "key": "tattoo.healing",
-     "name": "Healing",
-     "on": true
-    },
-    {
-     "key": "tattoo.followUp",
-     "name": "Follow-up",
-     "on": true
+     "name": "Healed result",
+     "on": true,
+     "tags": [
+      "Even",
+      "Patchy",
+      "Too light",
+      "Too dark",
+      "Blurred or migrated",
+      "Ashy or grey",
+      "Warm or orange",
+      "Heavy scabbing",
+      "Blowout",
+      "Signs of infection"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "None",
+    "Normal swelling",
+    "Bleeding",
+    "Oozing",
+    "Heavy scabbing",
+    "Itching",
+    "Cold sore",
+    "Signs of infection",
+    "Raised and itchy"
+   ],
+   "aftercareTags": [
+    "Keep dry 7 days",
+    "Thin layer of balm",
+    "Don't pick scabs",
+    "No sun for 30 days",
+    "No pool, sea or sauna",
+    "Second skin 3–5 days",
+    "No makeup on the area",
+    "Antiviral before lips"
    ]
   },
   {
@@ -954,35 +1652,145 @@
     {
      "key": "barber.cut",
      "name": "Cut",
-     "on": true
-    },
-    {
-     "key": "barber.guards",
-     "name": "Guard sizes",
-     "on": true
+     "on": true,
+     "tags": [
+      "Crop",
+      "Buzz cut",
+      "Crew cut",
+      "Quiff",
+      "Slick back",
+      "Side part",
+      "Mullet",
+      "Afro shape",
+      "Twists",
+      "Scissor cut"
+     ]
     },
     {
      "key": "barber.fade",
      "name": "Fade",
-     "on": true
+     "on": true,
+     "tags": [
+      "Skin fade",
+      "Low",
+      "Mid",
+      "High",
+      "Drop",
+      "Burst",
+      "Taper",
+      "Low taper",
+      "No fade"
+     ]
+    },
+    {
+     "key": "barber.guards",
+     "name": "Guards and lengths",
+     "on": true,
+     "tags": [
+      "Bare blade",
+      "#0.5",
+      "#1",
+      "#1.5",
+      "#2",
+      "#3",
+      "#4",
+      "Top 2 cm",
+      "Scissors on top",
+      "Lever open"
+     ]
+    },
+    {
+     "key": "barber.neckline",
+     "name": "Neckline and details",
+     "on": true,
+     "tags": [
+      "Tapered nape",
+      "Squared",
+      "Rounded",
+      "Line-up",
+      "Hard part",
+      "Design",
+      "Brow cleanup",
+      "Ear and nose hair"
+     ]
     },
     {
      "key": "barber.beard",
      "name": "Beard",
-     "on": true
+     "on": true,
+     "tags": [
+      "Clean shave",
+      "Stubble",
+      "Short boxed",
+      "Full beard",
+      "Goatee",
+      "Faded beard",
+      "Line-up only",
+      "Hot towel shave",
+      "Beard tint"
+     ]
+    },
+    {
+     "key": "barber.skinScalp",
+     "name": "Skin and scalp",
+     "on": true,
+     "tags": [
+      "Razor bumps",
+      "Ingrown hairs",
+      "Sensitive skin",
+      "Dandruff",
+      "Thinning crown",
+      "Receding hairline",
+      "Cowlick",
+      "Scar"
+     ]
     },
     {
      "key": "barber.products",
      "name": "Products",
-     "on": false
+     "on": false,
+     "tags": [
+      "Matte clay",
+      "Pomade",
+      "Wax",
+      "Sea salt spray",
+      "Beard oil",
+      "Beard balm",
+      "Aftershave balm"
+     ]
     },
     {
      "key": "barber.preferences",
      "name": "Preferences",
-     "on": true
+     "on": true,
+     "tags": [
+      "No razor",
+      "Shave with the grain",
+      "Every 2 weeks",
+      "Every 3 weeks",
+      "Keep length on top",
+      "Quiet service"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "None",
+    "Razor bumps",
+    "Irritation",
+    "Nicks",
+    "Ingrown hairs",
+    "Clipper burn",
+    "Itchy scalp"
+   ],
+   "aftercareTags": [
+    "Aftershave balm",
+    "Exfoliate twice a week",
+    "Beard oil daily",
+    "Shave with the grain",
+    "Single-blade razor",
+    "Avoid tight caps"
+   ]
   },
   {
    "id": "massage",
@@ -1084,44 +1892,166 @@
    ],
    "fields": [
     {
-     "key": "massage.focusAreas",
-     "name": "Focus areas",
-     "on": true
-    },
-    {
-     "key": "massage.pressure",
-     "name": "Pressure",
-     "on": true
-    },
-    {
      "key": "massage.technique",
-     "name": "Technique",
-     "on": true
-    },
-    {
-     "key": "massage.oils",
-     "name": "Oils and products",
-     "on": false
+     "name": "Type",
+     "on": true,
+     "tags": [
+      "Relaxing",
+      "Deep tissue",
+      "Lymphatic drainage",
+      "Post-op drainage",
+      "Sports",
+      "Trigger point",
+      "Myofascial",
+      "Hot stones",
+      "Reflexology",
+      "Body sculpting",
+      "Prenatal"
+     ]
     },
     {
      "key": "massage.contraindications",
      "name": "Contraindications",
-     "on": true
+     "on": true,
+     "tags": [
+      "None reported",
+      "Pregnancy",
+      "Varicose veins",
+      "Recent surgery",
+      "Blood thinners",
+      "High blood pressure",
+      "History of thrombosis",
+      "Skin lesion",
+      "Fever",
+      "Cancer treatment",
+      "Doctor's clearance"
+     ]
+    },
+    {
+     "key": "massage.focusAreas",
+     "name": "Focus areas",
+     "on": true,
+     "tags": [
+      "Neck",
+      "Shoulders",
+      "Upper back",
+      "Lower back",
+      "Glutes",
+      "Hamstrings",
+      "Calves",
+      "Feet",
+      "Arms",
+      "Abdomen",
+      "Face and scalp"
+     ]
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Pressure",
+     "on": true,
+     "tags": [
+      "Light",
+      "Medium",
+      "Firm",
+      "Deep",
+      "Varies by area"
+     ]
+    },
+    {
+     "key": "massage.findings",
+     "name": "Findings",
+     "on": true,
+     "tags": [
+      "Knots",
+      "Muscle tightness",
+      "Fluid retention",
+      "Swelling",
+      "Fibrosis",
+      "Tender points",
+      "Limited movement",
+      "Cellulite"
+     ]
+    },
+    {
+     "key": "massage.painLevel",
+     "name": "Pain (0–10)",
+     "on": false,
+     "tags": [
+      "0",
+      "2",
+      "4",
+      "6",
+      "8",
+      "10"
+     ]
+    },
+    {
+     "key": "massage.oils",
+     "name": "Oils and products",
+     "on": false,
+     "tags": [
+      "Sweet almond",
+      "Grapeseed",
+      "Coconut",
+      "Unscented",
+      "Nut-free",
+      "Arnica",
+      "Drainage cream",
+      "Lavender"
+     ]
+    },
+    {
+     "key": "massage.postOp",
+     "name": "Post-op details",
+     "on": false,
+     "tags": [
+      "Liposuction",
+      "Tummy tuck",
+      "Breast surgery",
+      "BBL",
+      "Day 7",
+      "Day 15",
+      "Day 30",
+      "Compression garment",
+      "Seroma"
+     ]
     },
     {
      "key": "massage.result",
      "name": "Result",
-     "on": true
-    },
-    {
-     "key": "massage.homeCare",
-     "name": "Home care",
-     "on": false
+     "on": true,
+     "tags": [
+      "Relaxed",
+      "Less pain",
+      "Less swelling",
+      "Moves more freely",
+      "Still tense",
+      "Sore afterwards"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "None",
+    "Soreness",
+    "Bruising",
+    "Dizziness",
+    "Headache",
+    "Oil sensitivity",
+    "Pain at one point",
+    "Very relaxed"
+   ],
+   "aftercareTags": [
+    "Drink water",
+    "No hot bath for 24 h",
+    "Light stretching",
+    "Wear compression garment",
+    "Ice if sore",
+    "Light walk",
+    "Rest 2 h"
    ]
   },
   {
@@ -1181,21 +2111,43 @@
     {
      "key": "other.notes",
      "name": "Notes",
-     "on": true
+     "on": true,
+     "tags": []
     },
     {
      "key": "other.result",
      "name": "Result",
-     "on": true
+     "on": true,
+     "tags": [
+      "Went well",
+      "As planned",
+      "Needs follow-up"
+     ]
     },
     {
      "key": "other.nextSteps",
      "name": "Next steps",
-     "on": true
+     "on": true,
+     "tags": [
+      "Follow-up visit",
+      "Home care",
+      "See a doctor"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "None",
+    "Redness",
+    "Discomfort",
+    "Swelling"
+   ],
+   "aftercareTags": [
+    "Rest",
+    "Drink water",
+    "Follow the instructions given"
    ]
   }
  ]

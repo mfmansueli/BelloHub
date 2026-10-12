@@ -41,6 +41,15 @@ enum OptionNameRules {
         return Array((starts + others).prefix(limit))
     }
 
+    /// Each option once, in the order given: a later name that is the same option as an earlier one is dropped.
+    static func unique(_ names: [String]) -> [String] {
+        var seen: Set<String> = []
+        return names.filter { name in
+            let wanted = key(name)
+            return !wanted.isEmpty && seen.insert(wanted).inserted
+        }
+    }
+
     /// Whether `name` can be saved: not empty, not too long.
     static func isValid(_ name: String) -> Bool {
         let cleaned = normalized(name)

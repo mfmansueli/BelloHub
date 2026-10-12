@@ -405,6 +405,15 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
 
+### Visit form: specialized by niche, with quick answers
+
+- Each profession's fields come with its own quick answers (the profession catalog's `tags`): chips under a note field,
+  one tap writes the answer on its own line, a second tap takes it out, and she can still type anything. "+ Add" sits
+  at the end of the chips; "Save to reuse" keeps her answer for next time. Reaction and aftercare show her professions'
+  answers ("Watery eyes" for lashes, "Razor bumps" for barbers). Products and actives offer her product list and then
+  the profession's names. Fields with quick answers never fold under "More fields". A field she made with no answers
+  stays one line. Research and sources: `docs/agent-notes/record-fields-by-niche.md`.
+
 ### Quick access (Home avatar)
 
 - Her avatar on Home is a button (44 pt at accessibility sizes, never hidden) that opens the **Quick access** sheet:

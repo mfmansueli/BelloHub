@@ -12,6 +12,8 @@ extension OptionContext {
         case .preference: "options.context.preference"
         case .sensitivity: "options.context.sensitivity"
         case .recurringRequest: "options.context.recurringRequest"
+        case .reaction: "options.context.reaction"
+        case .aftercare: "options.context.aftercare"
         }
     }
 }
