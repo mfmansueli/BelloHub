@@ -7,42 +7,62 @@
 import Foundation
 import Testing
 
-/// The one reader of the store: the server verifier is asked before a state is believed, offers come from the
-/// store, and the registration gate opens once a plan is active.
+/// The one reader of the store (D59): the verdict comes from the store's verified entitlements on this iPhone, the
+/// last proven state stands offline and at launch, updates are followed for the session, restore re-reads the store,
+/// and the registration gate opens once a plan is active. Nothing goes to a server.
 @MainActor
 @Suite("SubscriptionService")
 struct SubscriptionServiceTests {
-    @Test("Start reads the entitlement through the verifier; the server's word wins")
-    func verifierWins() async {
-        let provider = FakeSubscriptionProvider(state: .active(period: .monthly, expiresAt: nil, willRenew: true))
-        let verifier = FakeSubscriptionVerifier(override: SubscriptionState.none)
-        let service = SubscriptionService(provider: provider, verifier: verifier)
+    private let yearly = SubscriptionState.active(period: .yearly, expiresAt: TestClock.days(30), willRenew: true)
+
+    @Test("Start reads the verified entitlements: an active plan, then the snapshot is saved")
+    func startReadsTheStore() async {
+        let store = FakeSubscriptionSnapshotStore()
+        let service = makeSubscriptionService(provider: FakeSubscriptionProvider(state: yearly), store: store)
 
         await service.start()
         defer { service.stop() }
 
-        #expect(service.state == SubscriptionState.none, "the server says no plan, so there is none")
-        #expect(verifier.received.count == 1)
-        #expect(!service.hasActivePlan)
+        #expect(service.state == yearly)
+        #expect(service.hasActivePlan)
+        #expect(store.snapshot?.accessEndsAt == TestClock.days(30))
     }
 
-    @Test("When the server cannot be reached the store's signed answer is kept")
-    func offlineKeepsStore() async {
-        let provider = FakeSubscriptionProvider(state: .active(period: .yearly, expiresAt: nil, willRenew: true))
-        let service = SubscriptionService(
-            provider: provider, verifier: FakeSubscriptionVerifier(error: FakeStoreError())
-        )
+    @Test("Offline, the last proven plan stands until its signed end; with no snapshot there is no plan")
+    func offline() async {
+        let provider = FakeSubscriptionProvider()
+        provider.entitlementsError = FakeStoreError()
+        let store = FakeSubscriptionSnapshotStore(SubscriptionSnapshot(state: yearly, seenAt: TestClock.days(-1)))
+
+        let service = makeSubscriptionService(provider: provider, store: store)
+        await service.refreshState()
+        #expect(service.state == yearly)
+
+        let later = makeSubscriptionService(provider: provider, store: store, now: TestClock.days(31))
+        await later.refreshState()
+        #expect(later.state == SubscriptionState.none)
+
+        let fresh = makeSubscriptionService(provider: provider)
+        await fresh.refreshState()
+        #expect(fresh.state == SubscriptionState.none)
+    }
+
+    @Test("At launch the cached plan shows before the store answers")
+    func cachedFirst() async {
+        let provider = FakeSubscriptionProvider()
+        provider.entitlementsError = FakeStoreError()
+        let store = FakeSubscriptionSnapshotStore(SubscriptionSnapshot(state: yearly, seenAt: TestClock.now))
+        let service = makeSubscriptionService(provider: provider, store: store)
 
         await service.start()
         defer { service.stop() }
 
         #expect(service.hasActivePlan)
-        #expect(service.state.period == .yearly)
     }
 
     @Test("A purchase refreshes the state and opens the registration gate (the 11th client, D42)")
     func purchaseOpensGate() async throws {
-        let service = SubscriptionService(provider: FakeSubscriptionProvider(), verifier: FakeSubscriptionVerifier())
+        let service = makeSubscriptionService()
         await service.start()
         defer { service.stop() }
         let repository = InMemoryClientRecordRepository()
@@ -60,46 +80,21 @@ struct SubscriptionServiceTests {
         #expect(try await gate.register(eleventh) == .registered)
     }
 
-    @Test("A purchase carries the server's account token into the store")
-    func purchaseCarriesToken() async throws {
-        let token = UUID()
-        let provider = FakeSubscriptionProvider()
-        let service = SubscriptionService(provider: provider, verifier: FakeSubscriptionVerifier(token: token))
+    @Test("A cancelled or pending purchase unlocks nothing")
+    func purchaseNotFinished() async throws {
+        let cancelled = makeSubscriptionService(provider: FakeSubscriptionProvider(purchaseOutcome: .cancelled))
+        #expect(try await cancelled.purchase(.yearly) == .cancelled)
+        #expect(!cancelled.hasActivePlan)
 
-        #expect(try await service.purchase(.yearly) == .purchased)
-
-        #expect(provider.purchaseTokens == [token])
-    }
-
-    @Test("Without the account token the store is never asked")
-    func purchaseNeedsToken() async {
-        let provider = FakeSubscriptionProvider()
-        let service = SubscriptionService(
-            provider: provider, verifier: FakeSubscriptionVerifier(tokenError: SubscriptionError.accountUnavailable)
-        )
-
-        await #expect(throws: SubscriptionError.accountUnavailable) { try await service.purchase(.monthly) }
-
-        #expect(provider.purchases.isEmpty)
-        #expect(!service.hasActivePlan)
-    }
-
-    @Test("The store's signed transaction goes to the verifier with the state")
-    func signedTransactionTravels() async {
-        let provider = FakeSubscriptionProvider(state: .active(period: .monthly, expiresAt: nil, willRenew: true))
-        provider.signedTransaction = "header.payload.signature"
-        let verifier = FakeSubscriptionVerifier()
-        let service = SubscriptionService(provider: provider, verifier: verifier)
-
-        await service.refreshState()
-
-        #expect(verifier.signedTransactions == ["header.payload.signature"])
+        let pending = makeSubscriptionService(provider: FakeSubscriptionProvider(purchaseOutcome: .pending))
+        #expect(try await pending.purchase(.yearly) == .pending)
+        #expect(!pending.hasActivePlan)
     }
 
     @Test("Offers come from the store, monthly first; an empty or failing store gives a message")
     func offers() async {
         let provider = FakeSubscriptionProvider()
-        let service = SubscriptionService(provider: provider, verifier: FakeSubscriptionVerifier())
+        let service = makeSubscriptionService(provider: provider)
 
         await service.loadOffers()
         #expect(service.offers.map(\.period) == [.monthly, .yearly])
@@ -111,30 +106,49 @@ struct SubscriptionServiceTests {
         #expect(service.offersErrorMessage != nil)
     }
 
-    @Test("A store update (a refund) arrives through the stream and goes through the verifier")
-    func updates() async {
-        let provider = FakeSubscriptionProvider(state: .active(period: .monthly, expiresAt: nil, willRenew: true))
-        let verifier = FakeSubscriptionVerifier()
-        let service = SubscriptionService(provider: provider, verifier: verifier)
+    @Test("A refund arriving through the updates takes the plan away")
+    func refundThroughUpdates() async {
+        let provider = FakeSubscriptionProvider(state: yearly)
+        let service = makeSubscriptionService(provider: provider)
         await service.start()
         defer { service.stop() }
         #expect(service.hasActivePlan)
 
-        provider.push(.none)
+        provider.push([StoreEntitlement(
+            productID: FakeSubscriptionProvider.products.yearly, renewal: .revoked, expiresAt: TestClock.days(30),
+            revokedAt: TestClock.now
+        )])
 
         #expect(await Wait.untilMain { !service.hasActivePlan })
-        #expect(verifier.received.count == 2)
     }
 
-    @Test("Restore reports whether a plan came back")
+    @Test("A failed payment in the grace period keeps the plan; billing retry without grace ends it")
+    func graceAndRetry() async {
+        let provider = FakeSubscriptionProvider()
+        provider.entitlementsNow = [StoreEntitlement(
+            productID: FakeSubscriptionProvider.products.monthly, renewal: .gracePeriod, expiresAt: TestClock.days(-1),
+            graceExpiresAt: TestClock.days(6)
+        )]
+        let service = makeSubscriptionService(provider: provider)
+        await service.refreshState()
+        #expect(service.state == .inGracePeriod(period: .monthly, expiresAt: TestClock.days(6)))
+
+        provider.entitlementsNow = [StoreEntitlement(
+            productID: FakeSubscriptionProvider.products.monthly, renewal: .billingRetry, expiresAt: TestClock.days(-1)
+        )]
+        await service.refreshState()
+        #expect(!service.hasActivePlan)
+    }
+
+    @Test("Restore syncs the store and reports whether a plan came back")
     func restore() async throws {
-        let found = SubscriptionService(
-            provider: FakeSubscriptionProvider(restoreOutcome: .purchased), verifier: FakeSubscriptionVerifier()
-        )
+        let foundProvider = FakeSubscriptionProvider(restoreOutcome: .purchased)
+        let found = makeSubscriptionService(provider: foundProvider)
         #expect(try await found.restorePurchases() == .purchased)
         #expect(found.hasActivePlan)
+        #expect(foundProvider.syncCount == 1)
 
-        let nothing = SubscriptionService(provider: FakeSubscriptionProvider(), verifier: FakeSubscriptionVerifier())
+        let nothing = makeSubscriptionService()
         #expect(try await nothing.restorePurchases() == .nothingToRestore)
         #expect(!nothing.hasActivePlan)
     }

@@ -33,7 +33,7 @@ final class PublishingService {
     private(set) var state: PublishState = .notOnline
     /// When the last publish went through.
     private(set) var lastPublishedAt: Date?
-    /// The server account, after the first `ensureAccount` of this session (S10 reads `appAccountToken` from it).
+    /// The server account, after the first `ensureAccount` of this session.
     private(set) var account: AccountInfo?
 
     /// The booking server, shared with the screens that only need the address check.

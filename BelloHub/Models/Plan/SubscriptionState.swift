@@ -5,9 +5,9 @@
 
 import Foundation
 
-/// Where her Bello Hub Pro subscription stands, as the store (and, from S8, the server) says. Read by the gate
-/// (`hasActivePlan`) and by the Plan screen. The app only reads it; the server re-verifies before it unlocks anything
-/// (CLAUDE.md section 2).
+/// Where her Bello Hub Pro subscription stands, as the App Store's signed data proves it on this iPhone (D59:
+/// `EntitlementRules`, `DeviceSubscriptionVerifier`). Read by the registration gate (`hasActivePlan`) and by the Plan
+/// screen. The server does not know it (D59 replaces the server verification of D33).
 enum SubscriptionState: Equatable, Sendable {
     /// Not looked up yet (the store has not answered).
     case unknown

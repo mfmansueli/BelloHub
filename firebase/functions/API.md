@@ -531,6 +531,13 @@ All owner calls use the signed-in professional's uid. The app reads her own docu
 
 ### 6.1 Account and the free registrations (D42)
 
+> **D59 (2026-10-12): `reserveRegistration`, `reserveRegistrations` and `syncPlan` are unused by the app since D59
+> and can be removed after v1** (they stay deployed meanwhile). The app counts the free registrations on the iPhone
+> (vault ledger and Keychain) and verifies the plan with StoreKit 2; it no longer reads `appAccountToken` from
+> `ensureAccount` (the call itself stays: publishing uses it). Note that `createBooking` and `respondBookingRequest`
+> still apply D42 with `accounts/{uid}.registrations.count` and `accounts/{uid}.plan`, which no longer learns about
+> purchases: see `docs/agent-notes/plan-on-device.md`.
+
 ```ts
 ensureAccount:  req { countryCode: string; locale: LocaleId }
                 res { uid: string; appAccountToken: Uuid /* pass to StoreKit as appAccountToken */; dataRegion: "eu";
@@ -809,7 +816,8 @@ Timestamps in documents are Firestore `Timestamp` (UTC). Nothing else is readabl
 `cleanupJob` (every 10 minutes: unanswered unverified requests, holds, envelopes, bookings, codes, trusted devices,
 portals, waitlist, audit, unfinished deletions, dead retired inbox keys),
 `sendReminders` (every 5 minutes, only when `WHATSAPP_AUTOMATION` is on), `appStoreNotifications` (HTTPS POST from Apple,
-App Store Server Notifications V2: verifies the signed payload and updates `accounts.plan`).
+App Store Server Notifications V2: verifies the signed payload and updates `accounts.plan`; **unused since D59, can be
+removed after v1**: no notification URL is configured and the app verifies the plan on the iPhone).
 
 ## 11. Function index (kept in step with the code by a test)
 

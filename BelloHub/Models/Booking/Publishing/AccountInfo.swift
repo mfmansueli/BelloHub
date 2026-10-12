@@ -9,7 +9,8 @@ import Foundation
 /// (CLAUDE.md section 2, Backend). Sensitive ones (plan, registrations) are shown by the stage that needs them (S10).
 struct AccountInfo: Decodable, Equatable, Sendable {
     let uid: String
-    /// Passed to StoreKit as `appAccountToken` (S10), so a purchase is tied to this account.
+    /// Still sent by `ensureAccount`, but unused since D59: purchases carry no account token and the server does not
+    /// verify them.
     let appAccountToken: String
     let registrations: Registrations
     /// The address she already owns on the server, if any.

@@ -113,6 +113,16 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-12: Plan on device (D59) on branch `plan-on-device` (from `build/v1` at `3e12e11`), NOT COMPILED.** Written in a
+Linux cloud container with no Swift toolchain. The plan is verified on the iPhone with StoreKit 2 (verified
+transactions only, grace period kept, revocation and billing retry end it, a signed-end snapshot for offline use) and
+the free registrations are counted on the iPhone (vault ledger and a this-device-only Keychain item, migrated by
+taking the larger). The app no longer calls `syncPlan` or `reserveRegistrations`; the functions stay deployed, unused.
+**Open server item:** online bookings still use the server's count and a plan it no longer learns about (notes
+`docs/agent-notes/plan-on-device.md`). **First thing on a Mac:** `scripts/build.sh`, fix what the compiler says, then
+`scripts/test.sh fast`, the Plan/Paywall/Clients/Import/Account UI tests, `scripts/check-warnings.sh`; create the tag
+`before-plan-on-device` on `3e12e11` (the cloud proxy refused tag pushes).
+
 **2026-10-12: Motion 1 to 5 done on `build/v1`, tag `motion-done`** (notes `docs/agent-notes/motion-1-5.md`, spec
 `docs/09-MOTION.md` section 8, stage log "Motion 1 to 5"). Numbers flow, rows enter and leave, confirmations with seal and
 haptic, camera flash and before/after settle, the calendar slides by direction of travel. Fast 2424 tests in 355 suites,
@@ -507,6 +517,13 @@ run failed once in the More-row walk, "pt-BR AX5 booking page back on More", and
 Performance, 2,000 clients (`PerformanceUITests`): scroll deceleration 2.435 s before and 2.436 s after, dragging 0.145 s
 and 0.137 s, search 12 ms: no regression (animations off in that launch).
 Open: a real-iPhone pass of the feel, haptics and VoiceOver (notes).
+
+### Plan on device (D59) · written 2026-10-12 · not compiled (no tag)
+Branch `plan-on-device`. StoreKit 2 verification on the iPhone (`DeviceSubscriptionVerifier`, `EntitlementRules`,
+`SubscriptionSnapshot`), product ids from the xcconfig, Keychain allowance (`KeychainRegistrationAllowanceStore`) with
+the ledger migration, no server calls for the plan or the count, Terms and Privacy links on the paywall, H14 rewritten,
+Purchase History removed from the privacy label. Strings `plan-on-device.json`. Linux checks green (privacy, strings,
+localization sources, server contract, legal resources; project settings up to its `plutil` step); no build or test run. Notes `docs/agent-notes/plan-on-device.md`.
 
 ## Assumptions
 | # | Assumption | Reason | Stage |

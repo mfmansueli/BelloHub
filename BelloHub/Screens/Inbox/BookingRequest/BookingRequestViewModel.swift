@@ -31,17 +31,20 @@ final class BookingRequestViewModel {
     @ObservationIgnored private let sync: BookingSyncService
     @ObservationIgnored private let vault: VaultService
     @ObservationIgnored private let link: BookingLink?
+    @ObservationIgnored private let subscription: (any SubscriptionStatusProviding)?
     @ObservationIgnored private let now: @Sendable () -> Date
 
-    /// `link` is her booking page, for the link of a suggested time; nil before she chose an address.
+    /// `link` is her booking page, for the link of a suggested time; nil before she chose an address. `subscription`
+    /// is her plan as this iPhone proves it (D59).
     init(
         bookingID: String, sync: BookingSyncService, vault: VaultService, link: BookingLink? = nil,
-        now: @escaping @Sendable () -> Date = { Date() }
+        subscription: (any SubscriptionStatusProviding)? = nil, now: @escaping @Sendable () -> Date = { Date() }
     ) {
         self.bookingID = bookingID
         self.sync = sync
         self.vault = vault
         self.link = link
+        self.subscription = subscription
         self.now = now
     }
 
@@ -54,6 +57,13 @@ final class BookingRequestViewModel {
             booking, isLoading: sync.isLoading, isSending: sync.answering.contains(bookingID),
             needsPlan: sync.needsSubscription.contains(bookingID)
         )
+    }
+
+    /// The server answered "needs a plan" although her plan is active on this iPhone. Since D59 the server no longer
+    /// learns about purchases, so it can still hold a new client's online booking on its own count; paying again would
+    /// change nothing, so the screen says so instead of offering the plans.
+    var serverMissesPlan: Bool {
+        phase == .needsPlan && subscription?.hasActivePlan == true
     }
 
     /// Only a request held by the no-show limit offers to start the count again.

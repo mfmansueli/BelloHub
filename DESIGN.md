@@ -277,13 +277,13 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
 | 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
 | 2.4 Alerts | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` and `InboxAlerts` are pure) | `alerts.*`, `alerts.request.<bookingId>[.action]`, `alerts.reschedule.<requestId>[.action]`, `alerts.waitlist[.action]` |
-| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.unverified`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
+| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.unverified`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.planOnDevice`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
 | 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
 | 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
 | 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
 | 7.1 Account (+ Delete account sheet) | `Screens/Account/` | `AccountViewModel` (the sheet runs on it; `AccountDeletionFlow`, `AccountRules` pure) | `account.*` (`account.signOutButton`, `account.languageRegionRow`, `account.nameField`) |
 | 7.2 LanguageRegion | `Screens/LanguageRegion/` (`RegionPresetRow`, `WeekClockCard`) | `LanguageRegionViewModel` (`LanguageRegionRules`, `LanguageRegionDraft`) | `languageRegion.*` |
-| 7.3 Plan, and the paywall (same screen in `PaywallSheet`, D42) | `Screens/Plan/` | `PlanViewModel` (`PlanPresentation`) over `SubscriptionService` | `plan.*`, `paywall.*` |
+| 7.3 Plan, and the paywall (same screen in `PaywallSheet`, D42) | `Screens/Plan/` (`PlanLegalSection`; the Legal notice sheet is `Screens/Shared/Legal/LegalNoticeSheet`) | `PlanViewModel` (`PlanPresentation`) over `SubscriptionService` (plan verified on the iPhone, D59) | `plan.*` (`plan.legal.renewal`, `plan.legal.termsButton`, `plan.legal.privacyButton`, `plan.restoreButton`), `paywall.*` |
 | 7.4 NotificationSettings | `Screens/NotificationSettings/` | `NotificationSettingsViewModel` | `notificationSettings.*` |
 | 7.6 Integrations | `Screens/Integrations/` | `IntegrationsViewModel` over `CalendarIntegrationService` | `integrations.*` |
 | 7.7 Privacy (+ Legal notice sheet) | `Screens/Privacy/` | `PrivacyViewModel` (`LegalNoticeLibrary`) | `privacy.*`, `legalNotice.*` |
@@ -397,6 +397,9 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   offers the export first, then asks "Delete everything?", then shows a done screen (the server answers first, D44).
 - **7.3 Plan**: no trial lines (D33/D42); two price cards (yearly highlighted and chosen by default, the saving read
   from the store's prices). The paywall is this screen in a sheet with the D42 headline.
+  D59 (2026-10-12): under the buttons, the auto-renewal sentence and "Terms of Use" / "Privacy Policy" links
+  (`roseText`, 44 pt, side by side or stacked by `ViewThatFits`) that open the bundled texts in the Legal notice sheet
+  (App Review 3.1.2); Restore purchases stays on both screens.
 - **7.6 Integrations**: Google Calendar is "Coming soon" (H9); Apple Calendar is a switch, one way.
 - **7.7 Privacy**: the terms with the DPA and the privacy policy open in a Legal notice sheet read from the bundle;
   pending operator fields are visibly pending in DEBUG and absent in Release; the word "draft" never appears.
@@ -436,6 +439,8 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
   zero" only for the no-show limit, sent before the approval. Approving when a plan is needed shows an amber notice
   with "See plans" (the paywall sheet, D42); she approves again after buying. **"Suggest another time" is not built**:
   the server has no counter-offer call; she can decline and message the client.
+  D59: when the server still answers "needs a plan" for a new client but the plan is active on this iPhone, an amber
+  notice (`bookingRequest.planOnDevice`) says to add the client and the visit by hand, instead of offering the plans.
 - **2.11 RescheduleRequest**: "Now" (struck through while the request is open) and "Asks for"; the primary button
   says "Move the visit" (not the weekday name, which needs grammar per language); the timing notice says how long
   before the visit the client asked and her free-change rule, shown only when the request came inside the window;

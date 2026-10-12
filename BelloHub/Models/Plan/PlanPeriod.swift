@@ -12,13 +12,6 @@ enum PlanPeriod: String, CaseIterable, Identifiable, Sendable {
 
     var id: String { rawValue }
 
-    var product: PlanProduct {
-        switch self {
-        case .monthly: .monthly
-        case .yearly: .yearly
-        }
-    }
-
     var label: LocalizedStringResource {
         switch self {
         case .monthly: "plan.monthly"
@@ -32,10 +25,5 @@ enum PlanPeriod: String, CaseIterable, Identifiable, Sendable {
         case .monthly: "plan.perMonth"
         case .yearly: "plan.perYear"
         }
-    }
-
-    init?(productID: String) {
-        guard let product = PlanProduct(rawValue: productID) else { return nil }
-        self = product == .monthly ? .monthly : .yearly
     }
 }
