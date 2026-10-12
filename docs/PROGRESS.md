@@ -113,6 +113,15 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-12: Client records and agenda on `claude/practical-dijkstra-hy0d79` (not merged, NOT COMPILED).** Written in a
+Linux cloud container without a Swift toolchain at the owner's request; notes, decisions, scenarios and limits in
+`docs/agent-notes/client-records.md`, stage log "Client records and agenda". The client record is the center
+(History/Photos/Information/Documents, timeline by links, visit details, reuse), the visit form is one screen with
+drafts and a visit day, the agenda opens the record and never finalizes it, saved options with Personalization,
+Before you start shows the last visit, Home/Alerts list records owed, documents per visit, required and per-service
+fields, honest onboarding. **First thing on a Mac:** `scripts/build.sh`, fix what the compiler says, then
+`scripts/test.sh fast`, `smoke` and `check-warnings.sh`.
+
 **2026-10-12: Client messages and location done on `build/v1`, tag `client-messages-done`** (task
 `docs/tasks/client-messages-and-location.md`, notes `docs/agent-notes/client-messages-location.md`, stage log
 "Client messages and location"). Every link in a client message is a full `https://` address on its own line
@@ -482,6 +491,14 @@ e2e-local 9; UI suites BookingSetup, Inbox, Home, Appointment, Publish, SuggestT
 `BookingSetupContrastTests`); e-mail colors measured in `messaging.test.ts`.
 Open questions: none. Human tasks: H7 note on `EMAIL_REPLY_TO`; H8 checklist extended (WhatsApp/Instagram opening the
 exact link, e-mail links in Outlook/Gmail/Apple Mail, Apple Maps and Google Maps).
+
+### Client records and agenda · written 2026-10-12 · not compiled (no tag)
+Branch `claude/practical-dijkstra-hy0d79`, commits `867db07`, `1f4a3aa`, `700dd24`, `ac80c38`, `900f926`, `25e8aeb` and
+the docs commit. Data: `TreatmentRecord.performedAt/status/finalizedAt/reaction/nextVisitReminder` (additive, old
+records decode as finalized with no visit day), `ConsentRecord.recordID`, `SavedOption` (new vault kind, sealed name),
+`RecordFieldSetting.isRequired/serviceIDs`, `NotificationPrefs.recordsToWrite`. Strings: `client-record.json`,
+`visit-form.json`, `agenda-records-options.json`, `record-followups.json` and edits in older batches; check-strings,
+privacy, localization-sources, professions and health-forms checks green on Linux. Not run: any build or test.
 
 ## Assumptions
 | # | Assumption | Reason | Stage |
