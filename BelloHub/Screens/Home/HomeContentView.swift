@@ -5,16 +5,19 @@
 
 import SwiftUI
 
-/// The body of Home (2.1, routine-a item 4). "New appointment" sits in the navigation bar, so it is one tap away on
-/// every day without scrolling. Then the next visit (or the clear day), today's pending items, the rest of today, one
-/// secondary card for everyone to reach out to, and the week. The digest is rebuilt every minute (`TimelineView`), so
-/// "in 1 h 20 min" and the visits that have already passed stay true while the screen is open. Empty, loading and
-/// error states are `ScreenStateView`'s.
+/// The body of Home (2.1, routine-a item 4). The two everyday starts, "New booking" and "Register visit", sit under the
+/// greeting, one tap away without scrolling. Then the next visit (or the clear day), today's pending items, the records
+/// to follow up, the rest of today, one secondary card for everyone to reach out to, and the week. The digest is
+/// rebuilt every minute (`TimelineView`), so "in 1 h 20 min" and the visits that have already passed stay true while
+/// the screen is open. Empty, loading and error states are `ScreenStateView`'s.
 struct HomeContentView: View {
     @State private var viewModel: HomeViewModel
     private let settings: CalendarSettings
 
     @State private var agendaSheet: AgendaSheet?
+    @State private var visitFlow: TreatmentFlowRequest?
+    @State private var picksClient = false
+    @State private var showsQuickAccess = false
     @Environment(ProfileService.self) private var profile
     @Environment(MainNavigation.self) private var navigation: MainNavigation?
     @Environment(\.locale) private var locale
@@ -32,6 +35,7 @@ struct HomeContentView: View {
             TimelineView(.everyMinute) { context in
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     header(now: context.date)
+                    shortcuts
                     // The iPhone's zone differs from the business zone: say so before the day (tz-mismatch-notice).
                     TimeZoneNoticeView(placement: .card, formatters: formatters, now: context.date)
                     ScreenStateView(phase: viewModel.phase, prefix: "home", rows: 3, retry: viewModel.retry) {
@@ -48,18 +52,35 @@ struct HomeContentView: View {
         .background(Palette.bg)
         .navigationTitle(Text("home.title"))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
-                    Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
-                        .labelStyle(.titleAndIcon)
-                }
-                .accessibilityIdentifier("home.quick.newAppointment")
-            }
-        }
         .refreshable { await viewModel.refreshAsync() }
         .task { viewModel.start() }
         .agendaSheet(item: $agendaSheet)
+        .treatmentFlow(item: $visitFlow)
+        .sheet(isPresented: $showsQuickAccess) { QuickAccessSheet() }
+        .sheet(isPresented: $picksClient) {
+            ClientPickerSheet { client in visitFlow = TreatmentFlowRequest(clientID: client.id) }
+        }
+    }
+
+    // MARK: - Shortcuts
+
+    /// The two ways a day starts: booking someone, or writing down a visit that just happened (a walk-in, a visit
+    /// with no booking). Side by side while both labels fit whole; stacked otherwise, so no word is ever cut.
+    private var shortcuts: some View {
+        FittingRow(fillsWidth: true) {
+            Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
+                Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.belloSecondary)
+            .accessibilityIdentifier("home.quick.newAppointment")
+            Button { picksClient = true } label: {
+                Label { Text("home.quick.registerVisit") } icon: { Image(icon: .compose) }
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.belloSecondary)
+            .accessibilityIdentifier("home.quick.registerVisit")
+        }
     }
 
     // MARK: - Header
@@ -78,10 +99,22 @@ struct HomeContentView: View {
                     .accessibilityIdentifier("home.date")
             }
             Spacer(minLength: Spacing.sm)
-            if let person = profile.profile, !typeSize.isAccessibilitySize {
-                Avatar(name: person.displayName, id: person.id.uuidString, size: 48)
-            }
+            if let person = profile.profile { quickAccessButton(person) }
         }
+    }
+
+    /// Her avatar opens the quick access sheet: profile, booking link and the settings she reaches for most. Smaller
+    /// at the largest text sizes, never hidden, so the sheet is always one tap away.
+    private func quickAccessButton(_ person: ProfessionalProfile) -> some View {
+        Button { showsQuickAccess = true } label: {
+            Avatar(name: person.displayName, id: person.id.uuidString, size: typeSize.isAccessibilitySize ? 44 : 48)
+                .frame(minWidth: Spacing.touchTarget, minHeight: Spacing.touchTarget)
+                .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("quickAccess.title"))
+        .accessibilityHint(Text("quickAccess.hint"))
+        .accessibilityIdentifier("home.avatarButton")
     }
 
     private func greeting(now: Date) -> Text {
@@ -108,6 +141,7 @@ struct HomeContentView: View {
     @ViewBuilder
     private func sections(_ digest: AgendaDigest, now: Date) -> some View {
         let pending = viewModel.pending(digest: digest, now: now)
+        let records = viewModel.records(now: now)
         let reachOut = viewModel.reachOut(now: now)
         // One container for the blocks that come and go, so a visit that is confirmed, moved or cancelled enters or
         // leaves where she can see it (docs/09-MOTION.md section 3.10). The loading and the first list never animate.
@@ -132,11 +166,18 @@ struct HomeContentView: View {
                 )
                 .motionRow()
             }
+            if !records.isEmpty {
+                HomeRecordsCard(
+                    pending: records, clientNames: viewModel.clientNames, formatters: formatters, now: now,
+                    onOpen: { visitFlow = $0.flowRequest }, onSeeAll: { navigation?.selection = .alerts }
+                )
+                .motionRow()
+            }
             if !digest.restOfToday.isEmpty { restOfToday(digest).motionRow() }
             if !reachOut.isEmpty { HomeReachOutCard(reachOut: reachOut, formatters: formatters).motionRow() }
             weekRow(digest)
         }
-        .motionRows(ids: HomeBlockIDs.make(digest: digest, pending: pending, reachOut: reachOut))
+        .motionRows(ids: HomeBlockIDs.make(digest: digest, pending: pending, records: records, reachOut: reachOut))
     }
 
     private func restOfToday(_ digest: AgendaDigest) -> some View {

@@ -21,7 +21,8 @@ struct ClientHealthView: View {
 
     var body: some View {
         ClientHealthContentView(
-            clientID: clientID, repository: vault.repository, profile: profile, photos: photoProcessing, locale: locale
+            clientID: clientID, repository: vault.repository, records: vault.repository, profile: profile,
+            photos: photoProcessing, locale: locale
         )
     }
 }

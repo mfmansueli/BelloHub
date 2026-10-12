@@ -71,7 +71,31 @@ struct ProfessionCatalogTests {
             #expect(left.services.map(\.selected) == right.services.map(\.selected))
             #expect(left.tags.map(\.key) == right.tags.map(\.key))
             #expect(left.fields.map(\.on) == right.fields.map(\.on))
+            #expect(left.fields.map(\.tags.count) == right.fields.map(\.tags.count), "\(left.id) quick answers")
+            #expect(left.reactionTags.count == right.reactionTags.count)
+            #expect(left.aftercareTags.count == right.aftercareTags.count)
             #expect(left.intake == right.intake)
         }
+    }
+
+    @Test("Every profession prepares its record: quick answers on its fields, its reactions and its aftercare",
+          arguments: AppLocalization.allCases)
+    func quickAnswers(localization: AppLocalization) throws {
+        let catalog = try ProfessionCatalog.loadBundled(localization: localization)
+        for entry in catalog.entries {
+            #expect(entry.fields.contains { !$0.tags.isEmpty }, "\(entry.id) has no quick answers")
+            #expect(!entry.reactionTags.isEmpty && !entry.aftercareTags.isEmpty, "\(entry.id) visit answers")
+            for field in entry.fields {
+                #expect(OptionNameRules.unique(field.tags) == field.tags, "\(field.key) repeats an answer")
+                #expect(field.tags.allSatisfy { !$0.isEmpty && $0.count <= 32 }, "\(field.key) answer length")
+            }
+        }
+    }
+
+    @Test("A catalog written before quick answers still decodes, with none")
+    func withoutQuickAnswers() {
+        let catalog = makeCatalog()
+        #expect(catalog.entry(for: .esthetician)?.fields.allSatisfy(\.tags.isEmpty) == true)
+        #expect(catalog.entry(for: .esthetician)?.reactionTags.isEmpty == true)
     }
 }

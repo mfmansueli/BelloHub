@@ -31,7 +31,7 @@ enum ConsentRecordRules {
     ) -> ConsentRecord {
         ConsentRecord(
             id: id, clientID: clientID, kind: draft.kind, isSigned: draft.isSigned,
-            signedAt: draft.isSigned ? draft.signedAt : nil, createdAt: createdAt,
+            signedAt: draft.isSigned ? draft.signedAt : nil, createdAt: createdAt, recordID: draft.recordID,
             label: optional(draft.label), note: optional(draft.note), document: draft.document
         )
     }
@@ -45,6 +45,7 @@ enum ConsentRecordRules {
         draft.isSigned = record.isSigned
         draft.note = record.note ?? ""
         draft.document = record.document
+        draft.recordID = record.recordID
         return draft
     }
 

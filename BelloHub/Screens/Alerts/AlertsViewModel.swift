@@ -66,6 +66,13 @@ final class AlertsViewModel {
         queueSource?.make(now: now).count(.all) ?? 0
     }
 
+    /// Records still owed: completed bookings with nothing written, and drafts. The same list as Home's.
+    func records(now: Date) -> RecordPending {
+        source.records(now: now)
+    }
+
+    var clientNames: [UUID: String] { source.clientNames }
+
     /// Requests and the waitlist from the server; empty when there is no inbox.
     func inboxAlerts(now: Date) -> InboxAlerts {
         guard let inbox else { return .empty }
@@ -85,7 +92,7 @@ final class AlertsViewModel {
     func phase(now: Date) -> ScreenPhase {
         source.phase(
             isEmpty: list(now: now).isEmpty && reachOutCount(now: now) == 0 && inboxAlerts(now: now).isEmpty
-                && mailboxAlerts.isEmpty
+                && mailboxAlerts.isEmpty && records(now: now).isEmpty
         )
     }
 

@@ -6,9 +6,11 @@
 import Foundation
 import Observation
 
-/// Screen 4.5: what one client told the professional about her health, her consent records (D55) and the patch
-/// tests. It loads from the vault, derives what the screen shows with the pure rules, and owns the three sheets
-/// (fill the form, record a patch test, add or edit a consent) so their lifetime is the screen's.
+/// Screen 4.5, a folder: the health forms and consents the professional filled in and signed with the client in
+/// person (D55, D60), and the patch tests. The app keeps a record of each paper (label, date, a photo or file of it);
+/// it asks no questions itself. Answers recorded in the app before D60 stay readable. It loads from the vault, derives
+/// what the screen shows with the pure rules, and owns the two sheets (a patch test, a form or consent record) so their
+/// lifetime is the screen's.
 @MainActor
 @Observable
 final class ClientHealthViewModel {
@@ -22,12 +24,14 @@ final class ClientHealthViewModel {
     private(set) var patchTests: [PatchTest] = []
     private(set) var templates: [HealthFormTemplate] = []
     private(set) var catalog: HealthFormCatalog?
+    /// Her visits, newest first, so a document can say which visit it belongs to (optional).
+    private(set) var visits: [TreatmentRecord] = []
     /// The sheets. Setting one to nil closes it; the view reloads when a sheet goes away.
-    var fillSheet: HealthFormViewModel?
     var patchSheet: PatchTestViewModel?
     var consentSheet: ConsentRecordViewModel?
 
     private let repository: (any HealthRepository)?
+    private let records: (any TreatmentRepository)?
     private let profile: ProfileService
     private let catalogProvider: any HealthFormCatalogProviding
     private let photos: any PhotoProcessing
@@ -36,11 +40,11 @@ final class ClientHealthViewModel {
     private let locale: Locale
     private let now: @Sendable () -> Date
     private let makeID: @Sendable () -> UUID
-    private var isPreparingSheet = false
 
     init(
         clientID: UUID,
         repository: (any HealthRepository)?,
+        records: (any TreatmentRepository)? = nil,
         profile: ProfileService,
         catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
         photos: any PhotoProcessing = ImageIOPhotoProcessing(),
@@ -51,6 +55,7 @@ final class ClientHealthViewModel {
     ) {
         self.clientID = clientID
         self.repository = repository
+        self.records = records
         self.profile = profile
         self.catalogProvider = catalogProvider
         self.photos = photos
@@ -89,6 +94,11 @@ final class ClientHealthViewModel {
             consents = try await repository.consents(for: clientID)
             patchTests = try await repository.patchTests(for: clientID)
             templates = try await repository.healthFormTemplates()
+            // A visit list that cannot be read only costs the optional link, never the screen.
+            // Finalized visits only: a draft may still be discarded, which would leave the document pointing nowhere.
+            visits = ((try? await records?.records(for: clientID)) ?? [])
+                .filter { !$0.isDraft }
+                .sorted { ($0.performedAt ?? $0.createdAt) > ($1.performedAt ?? $1.createdAt) }
             client = loadedClient
             catalog = loadedCatalog
             hasLoaded = true
@@ -111,10 +121,18 @@ final class ClientHealthViewModel {
     /// "Ask again every": the professional's setting, or the default until she has edited the form.
     var reviewMonths: Int { currentTemplate?.reviewEveryMonths ?? HealthFormTemplateRules.defaultReviewMonths }
 
+    /// The papers kept in the "Health forms" folder (D60), newest first.
+    var healthForms: [ConsentRecord] { consents.filter { $0.kind == .healthForm } }
+
+    /// Every other signed paper: treatment, photos, guardian, her own.
+    var otherConsents: [ConsentRecord] { consents.filter { $0.kind != .healthForm } }
+
+    /// "Next review on": counted from the last time she gave her health history, on paper or in the app before D60.
+    /// Nil until there is a dated one.
     var reviewStatus: HealthReviewStatus? {
-        guard let form = latestForm else { return nil }
+        guard let date = HealthFormTemplateRules.lastHealthFormDate(forms: forms, records: consents) else { return nil }
         return HealthFormTemplateRules.reviewStatus(
-            signedAt: form.signedAt, months: reviewMonths, now: now(), calendar: formatters.calendar
+            signedAt: date, months: reviewMonths, now: now(), calendar: formatters.calendar
         )
     }
 
@@ -143,48 +161,31 @@ final class ClientHealthViewModel {
 
     // MARK: - Sheets
 
-    /// Opens the health form sheet. The template it asks is stored first (version 1 on the first use), so a form
-    /// signed on it can always find its questions again.
-    func startFilling() {
-        Task { await startFillingAsync() }
-    }
-
-    func startFillingAsync() async {
-        guard let client, let catalog, let repository, fillSheet == nil, !isPreparingSheet else { return }
-        isPreparingSheet = true
-        defer { isPreparingSheet = false }
-        do {
-            let template = try await repository.currentHealthFormTemplate(
-                catalog: catalog, professions: profile.profile?.professions ?? [], now: now()
-            )
-            if !templates.contains(where: { $0.version == template.version }) { templates.append(template) }
-            fillSheet = HealthFormViewModel(
-                client: client, template: template, catalog: catalog, repository: repository, now: now, makeID: makeID
-            )
-        } catch {
-            errorMessage = String(interface: LocalizedStringResource("health.error.load"))
-        }
-    }
-
     func startPatchTest() {
         guard let repository, patchSheet == nil else { return }
         patchSheet = PatchTestViewModel(clientID: clientID, repository: repository, now: now, makeID: makeID)
     }
 
-    /// A new consent record (D55): the sheet starts signed, dated today.
-    func startConsent() {
+    /// A new record of a paper signed in person (D55, D60): a health form or a consent. The sheet starts signed,
+    /// dated today, on the kind she tapped.
+    func startConsent(kind: ConsentKind = .treatment) {
         guard let repository, consentSheet == nil else { return }
         consentSheet = ConsentRecordViewModel(
-            clientID: clientID, repository: repository, photos: photos, files: files, now: now, makeID: makeID
+            clientID: clientID, kind: kind, repository: repository, visits: visits, photos: photos, files: files,
+            now: now, makeID: makeID
         )
+    }
+
+    func startHealthForm() {
+        startConsent(kind: .healthForm)
     }
 
     /// Edits an existing consent record in the same sheet.
     func open(_ consent: ConsentRecord) {
         guard let repository, consentSheet == nil else { return }
         consentSheet = ConsentRecordViewModel(
-            clientID: clientID, existing: consent, repository: repository, photos: photos, files: files, now: now,
-            makeID: makeID
+            clientID: clientID, existing: consent, repository: repository, visits: visits, photos: photos,
+            files: files, now: now, makeID: makeID
         )
     }
 }

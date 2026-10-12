@@ -22,6 +22,9 @@ struct ConsentRecord: Identifiable, Hashable, Codable, Sendable {
     /// When it was signed. Nil while it is not signed, or when she did not note the day.
     var signedAt: Date?
     var createdAt: Date
+    /// The visit the paper belongs to, when she tied it to one. Optional: most documents are about the client, not one
+    /// visit. Tying a document to a visit changes nothing about who can see the record.
+    var recordID: UUID?
 
     // Encrypted at rest.
     /// Her own words ("Microblading consent, paper form"). Empty or nil shows the kind's title.
@@ -36,6 +39,7 @@ struct ConsentRecord: Identifiable, Hashable, Codable, Sendable {
         isSigned: Bool,
         signedAt: Date?,
         createdAt: Date,
+        recordID: UUID? = nil,
         label: String? = nil,
         note: String? = nil,
         document: ConsentDocument? = nil
@@ -46,13 +50,14 @@ struct ConsentRecord: Identifiable, Hashable, Codable, Sendable {
         self.isSigned = isSigned
         self.signedAt = signedAt
         self.createdAt = createdAt
+        self.recordID = recordID
         self.label = label
         self.note = note
         self.document = document
     }
 
     private enum CodingKeys: String, CodingKey {
-        case id, clientID, kind, isSigned, signedAt, createdAt, label, note, document
+        case id, clientID, kind, isSigned, signedAt, createdAt, recordID, label, note, document
     }
 
     /// Reads the D55 shape and the shape before it. A record from before D55 has a `signedAt` and no `isSigned`: it
@@ -66,6 +71,7 @@ struct ConsentRecord: Identifiable, Hashable, Codable, Sendable {
         signedAt = signed
         isSigned = try container.decodeIfPresent(Bool.self, forKey: .isSigned) ?? (signed != nil)
         createdAt = try container.decodeIfPresent(Date.self, forKey: .createdAt) ?? signed ?? .distantPast
+        recordID = try container.decodeIfPresent(UUID.self, forKey: .recordID)
         label = try container.decodeIfPresent(String.self, forKey: .label)
         note = try container.decodeIfPresent(String.self, forKey: .note)
         document = try container.decodeIfPresent(ConsentDocument.self, forKey: .document)

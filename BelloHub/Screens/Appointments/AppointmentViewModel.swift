@@ -26,6 +26,13 @@ final class AppointmentViewModel {
     /// A change could not be saved; the screen says so and the visit is as it was.
     private(set) var actionErrorMessage: String?
     private(set) var isWorking = false
+    /// This appointment's record, if one was made (matched by `appointmentID` only).
+    private(set) var record: TreatmentRecord?
+    /// The client's latest finalized visit before this appointment, for the summary card.
+    private(set) var previousVisit: VisitSummary?
+    /// "Mark completed" worked and the visit has no record yet: the screen offers "Register now" or "Later".
+    var offersToRegister = false
+    private var thumbnails: [UUID: Data] = [:]
 
     private let appointments: AppointmentService
     private let vault: VaultService
@@ -54,8 +61,27 @@ final class AppointmentViewModel {
 
     // MARK: - Derived
 
+    var recordState: AppointmentRecordState { .of(record) }
+
     var layout: AppointmentActionLayout? {
-        visit.map { AppointmentActionRules.layout(for: $0.appointment, now: now()) }
+        visit.map { AppointmentActionRules.layout(for: $0.appointment, record: recordState, now: now()) }
+    }
+
+    /// The visit form for this appointment. If a record already exists the flow opens it, so this never makes a
+    /// second record.
+    var visitFlowRequest: TreatmentFlowRequest? {
+        visit.map {
+            TreatmentFlowRequest(clientID: $0.client.id, appointmentID: $0.appointment.id,
+                                 serviceID: $0.appointment.serviceID, recordID: record?.id)
+        }
+    }
+
+    func thumbnail(for photo: Photo) async -> Data? {
+        if let cached = thumbnails[photo.id] { return cached }
+        guard let repository = vault.repository,
+              let data = try? await repository.photoThumbnail(id: photo.id) else { return nil }
+        thumbnails[photo.id] = data
+        return data
     }
 
     var reminder: AppointmentReminder {
@@ -118,6 +144,8 @@ final class AppointmentViewModel {
             let changed = try await appointments.complete(id: appointmentID, now: now())
             self.visit = VisitContext(appointment: changed, client: visit.client)
             actionErrorMessage = nil
+            // Closing the booking never requires a record; she is only offered to write it now.
+            offersToRegister = record == nil
         } catch {
             actionErrorMessage = String(interface: LocalizedStringResource("appointment.error.action"))
         }
@@ -177,6 +205,7 @@ final class AppointmentViewModel {
                 policy: setup.setup.noShow, client: loaded.client, appointments: history, now: current,
                 calendar: business.calendar
             )
+            try await loadRecords(for: loaded, appointments: history)
             visit = loaded
             isMissing = false
             errorMessage = nil
@@ -185,5 +214,16 @@ final class AppointmentViewModel {
             isLoading = false
             errorMessage = String(interface: LocalizedStringResource("appointment.error.load"))
         }
+    }
+
+    /// This appointment's record and the client's previous visit, both by stored links.
+    private func loadRecords(for loaded: VisitContext, appointments history: [Appointment]) async throws {
+        guard let repository = vault.repository else { return }
+        let found = try await AppointmentRecordsReader(repository: repository).records(
+            for: loaded, appointments: history, now: now(),
+            list: business.formatters(displayLocale: InterfaceLocale.current).list
+        )
+        record = found.record
+        previousVisit = found.previousVisit
     }
 }

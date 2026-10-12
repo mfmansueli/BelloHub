@@ -52,8 +52,9 @@ struct MoreTab: View {
     @ViewBuilder
     private func clientsDestination(for route: MoreRoute) -> some View {
         switch route {
-        case .recordTemplate: RecordTemplateView(profile: profile)
+        case .recordTemplate: RecordTemplateView(profile: profile, services: vault?.repository)
         case .formTemplates: FormTemplatesView()
+        case .personalization: PersonalizationView()
         default: TagsView(profile: profile, clients: vault?.repository)
         }
     }

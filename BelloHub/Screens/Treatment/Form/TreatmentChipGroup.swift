@@ -15,6 +15,9 @@ struct TreatmentChipGroup: View {
     let label: (String) -> String
     let identifier: (String) -> String
     let onTap: (String) -> Void
+    /// "+ Add" at the end of the chips; nil hides it.
+    var onAdd: (() -> Void)?
+    var addIdentifier = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
@@ -27,6 +30,7 @@ struct TreatmentChipGroup: View {
                         .accessibilityAddTraits(isSelected(option) ? .isSelected : [])
                         .accessibilityIdentifier(identifier(option))
                 }
+                if let onAdd { AddOptionChip(identifier: addIdentifier, action: onAdd) }
             }
         }
     }

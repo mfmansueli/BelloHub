@@ -7,7 +7,8 @@ import Foundation
 import Observation
 
 /// State and actions of "Before you start" (3.3): the glance at the client before she begins, built by the same
-/// `PreVisitChecklist` as the detail, and "Mark completed" from the sheet.
+/// `PreVisitChecklist` and `AppointmentRecords` as the detail, and "Mark completed" from the sheet. It only shows what
+/// is written in her records; nothing is inferred.
 @MainActor
 @Observable
 final class BeforeYouStartViewModel {
@@ -20,8 +21,13 @@ final class BeforeYouStartViewModel {
     private(set) var errorMessage: String?
     private(set) var actionErrorMessage: String?
     private(set) var isWorking = false
-    /// She marked it completed; the sheet closes.
+    /// She marked it completed; the sheet closes, unless it first asks whether to register the visit.
     private(set) var didComplete = false
+    /// This appointment's record and the client's previous visit.
+    private(set) var records = AppointmentRecords.empty
+    /// Completed with no record yet: "Register now" or "Later".
+    var offersToRegister = false
+    private var thumbnails: [UUID: Data] = [:]
 
     private let appointments: AppointmentService
     private let vault: VaultService
@@ -50,6 +56,22 @@ final class BeforeYouStartViewModel {
         return AppointmentActionRules.layout(for: appointment, now: now()).all.contains(.complete)
     }
 
+    /// The visit form for this appointment; it reopens the linked record when there is one, never a second record.
+    var visitFlowRequest: TreatmentFlowRequest? {
+        visit.map {
+            TreatmentFlowRequest(clientID: $0.client.id, appointmentID: $0.appointment.id,
+                                 serviceID: $0.appointment.serviceID, recordID: records.record?.id)
+        }
+    }
+
+    func thumbnail(for photo: Photo) async -> Data? {
+        if let cached = thumbnails[photo.id] { return cached }
+        guard let repository = vault.repository,
+              let data = try? await repository.photoThumbnail(id: photo.id) else { return nil }
+        thumbnails[photo.id] = data
+        return data
+    }
+
     // MARK: - Actions
 
     func load() {
@@ -69,6 +91,12 @@ final class BeforeYouStartViewModel {
                 vault: vault, localization: business.localization, catalogProvider: catalogProvider
             )
             checklist = try await reader.checklist(for: loaded, now: now(), calendar: business.calendar)
+            if let repository = vault.repository {
+                records = try await AppointmentRecordsReader(repository: repository).records(
+                    for: loaded, appointments: try await repository.appointments(for: loaded.client.id), now: now(),
+                    list: business.formatters(displayLocale: InterfaceLocale.current).list
+                )
+            }
             visit = loaded
             errorMessage = nil
             isLoading = false
@@ -88,11 +116,22 @@ final class BeforeYouStartViewModel {
         defer { isWorking = false }
         do {
             try await appointments.complete(id: appointmentID, now: now())
-            didComplete = true
             actionErrorMessage = nil
+            // Completing the booking never finalizes a record; with none written yet she chooses now or later.
+            if records.record == nil {
+                offersToRegister = true
+            } else {
+                didComplete = true
+            }
         } catch {
             actionErrorMessage = String(interface: LocalizedStringResource("appointment.error.action"))
         }
+    }
+
+    /// The register question was answered (or the visit form closed): the sheet can close.
+    func finishAfterCompleting() {
+        offersToRegister = false
+        didComplete = true
     }
 
     func dismissActionError() {

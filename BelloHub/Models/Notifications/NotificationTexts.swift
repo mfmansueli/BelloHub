@@ -19,6 +19,9 @@ struct NotificationTexts: Sendable {
     let remindersReadyTitle: String
     /// "3 reminders are ready to send".
     let remindersReadyBody: @Sendable (Int) -> String
+    let recordsToWriteTitle: String
+    /// "2 visits are waiting for their record".
+    let recordsToWriteBody: @Sendable (Int) -> String
 
     static func localized(in locale: Locale) -> NotificationTexts {
         NotificationTexts(
@@ -48,6 +51,14 @@ struct NotificationTexts: Sendable {
             remindersReadyBody: { count in
                 LocalizedStringResource(
                     "notification.remindersReady.body", defaultValue: "\(count) reminders are ready to send."
+                ).resolved(in: locale)
+            },
+            recordsToWriteTitle: LocalizedStringResource(
+                "notification.recordsToWrite.title", defaultValue: "Records to complete"
+            ).resolved(in: locale),
+            recordsToWriteBody: { count in
+                LocalizedStringResource(
+                    "notification.recordsToWrite.body", defaultValue: "\(count) visits are waiting for their record."
                 ).resolved(in: locale)
             }
         )

@@ -13,12 +13,15 @@ struct RecordTemplateView: View {
     @State private var viewModel: RecordTemplateViewModel
     @State private var editor: FieldEditorMode?
     @State private var pendingDeletion: RecordFieldSetting?
+    @State private var choosingServices: RecordFieldSetting?
     @Environment(\.locale) private var locale
     @Environment(\.dynamicTypeSize) private var typeSize
 
-    init(profile: ProfileService) {
+    init(profile: ProfileService, services: (any AgendaRepository)? = nil) {
         let catalog = Self.catalog(for: InterfaceLocale.localization)
-        _viewModel = State(initialValue: RecordTemplateViewModel(profile: profile, catalog: catalog))
+        _viewModel = State(initialValue: RecordTemplateViewModel(
+            profile: profile, catalog: catalog, services: services
+        ))
     }
 
     /// The field names of the interface language. A catalog that cannot be read leaves the standard fields showing
@@ -37,6 +40,11 @@ struct RecordTemplateView: View {
             .onChange(of: locale) { _, new in viewModel.useCatalog(Self.catalog(for: AppLocalization(resolving: new))) }
             .sheet(item: $editor) { mode in
                 FieldEditorSheet(mode: mode, viewModel: viewModel)
+            }
+            .sheet(item: $choosingServices) { field in
+                FieldServicesSheet(
+                    fieldName: viewModel.name(of: field), services: viewModel.services, selected: field.serviceIDs
+                ) { ids in viewModel.setServices(field.key, ids) }
             }
             .fieldDeletionDialog(
                 $pendingDeletion, name: viewModel.name(of:),
@@ -71,6 +79,7 @@ struct RecordTemplateView: View {
             }
             standardSection(for: profession)
             customSection(for: profession)
+            if !viewModel.enabledFields(for: profession).isEmpty { requiredSection(for: profession) }
             intakeSection(for: profession)
             formsSection
         }
@@ -91,7 +100,7 @@ struct RecordTemplateView: View {
         return Section {
             Text(LocalizedStringResource(
                 "recordTemplate.subtitle",
-                defaultValue: "What you want to remember about each \(term). The voice assistant fills these in."
+                defaultValue: "What you want to remember about each \(term). Start with these and adjust any time."
             ).localized(in: locale))
                 .font(Typography.body).foregroundStyle(Palette.ink2)
                 .listRowBackground(Color.clear)
@@ -127,12 +136,13 @@ struct RecordTemplateView: View {
         return Section {
             ForEach(viewModel.standardFields(for: profession)) { field in
                 ToggleRow(
-                    title: viewModel.name(of: field),
+                    title: viewModel.name(of: field), subtitle: servicesLine(field),
                     isOn: Binding(get: { field.isOn }, set: { viewModel.setField(field.key, on: $0) }),
                     identifier: "recordTemplate.field.\(field.key)"
                 )
                 .listRowBackground(Palette.surface)
                 .listRowInsets(EdgeInsets())
+                .swipeActions(edge: .trailing) { servicesAction(field) }
             }
         } header: {
             // The count goes under the title at the accessibility text sizes, where beside it the title would break
@@ -168,6 +178,7 @@ struct RecordTemplateView: View {
                 )
                 .listRowBackground(Palette.surface)
                 .listRowInsets(EdgeInsets())
+                .swipeActions(edge: .leading) { servicesAction(field) }
             }
             .onMove { source, destination in viewModel.moveFields(from: source, to: destination) }
             .onDelete { offsets in pendingDeletion = offsets.first.map { custom[$0] } }
@@ -202,6 +213,50 @@ struct RecordTemplateView: View {
         .listRowBackground(Palette.surface)
         .listRowInsets(EdgeInsets())
         .accessibilityIdentifier("recordTemplate.addFieldButton")
+    }
+
+    /// "Only for…" under a field's name when she narrowed it to some services.
+    private func servicesLine(_ field: RecordFieldSetting) -> String? {
+        viewModel.servicesSummary(of: field).map { names in
+            LocalizedStringResource("recordTemplate.services.only", defaultValue: "Only for \(names)")
+                .resolved(in: locale)
+        }
+    }
+
+    /// The swipe action that narrows a field to some services. Hidden when she has no services to choose from.
+    @ViewBuilder
+    private func servicesAction(_ field: RecordFieldSetting) -> some View {
+        if !viewModel.services.isEmpty {
+            Button { choosingServices = field } label: {
+                Label { Text("recordTemplate.services.action") } icon: { Image(icon: .scissors) }
+            }
+            .tint(Palette.sage)
+            .accessibilityIdentifier("recordTemplate.services.action.\(field.key)")
+        }
+    }
+}
+
+// MARK: - Needed to finalize
+
+extension RecordTemplateView {
+    /// Which fields a record needs before it can be finalized. Drafts never need them, so a busy day is never blocked:
+    /// she writes what she can and finalizes when the rest is there.
+    private func requiredSection(for profession: ProfessionID) -> some View {
+        Section {
+            ForEach(viewModel.enabledFields(for: profession)) { field in
+                ToggleRow(
+                    title: viewModel.name(of: field),
+                    isOn: Binding(get: { field.isRequired }, set: { viewModel.setRequired(field.key, $0) }),
+                    identifier: "recordTemplate.required.\(field.key)"
+                )
+                .listRowBackground(Palette.surface)
+                .listRowInsets(EdgeInsets())
+            }
+        } header: {
+            sectionTitle("recordTemplate.required.title")
+        } footer: {
+            Text("recordTemplate.required.footer").font(Typography.footnote).foregroundStyle(Palette.ink2)
+        }
     }
 
     // MARK: - Before the first visit

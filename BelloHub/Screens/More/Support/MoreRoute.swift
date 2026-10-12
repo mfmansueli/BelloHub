@@ -27,6 +27,8 @@ enum MoreRoute: Hashable, Sendable {
     case recordTemplate
     /// 6.14 FormTemplates.
     case formTemplates
+    /// Personalization: the options she saved to reuse (techniques, preferences…), to rename, reorder or archive.
+    case personalization
     /// 7.1 Account (7.2 LanguageRegion opens from it).
     case account
     /// 7.2 LanguageRegion.
@@ -59,7 +61,7 @@ enum MoreRoute: Hashable, Sendable {
     var section: Section {
         switch self {
         case .services, .products, .bookingPage, .availability, .credentials, .team: .business
-        case .tags, .recordTemplate, .formTemplates: .clients
+        case .tags, .recordTemplate, .formTemplates, .personalization: .clients
         case .quickReplies: .messages
         case .plan, .notifications, .aiSettings, .integrations, .privacy, .exportAll, .recoveryKey, .help: .preferences
         case .account, .languageRegion: .account

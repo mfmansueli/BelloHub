@@ -17,10 +17,6 @@ extension TreatmentFlowViewModel {
     /// Fills the empty fields with her answers of the last visit; what she already typed is kept.
     func applyLastVisit() {
         for (key, value) in lastVisitValues { draft.set(value, for: key) }
-    }
-
-    /// The form's questions: shown at once, and under "More fields".
-    var formLayout: (main: [TreatmentFormField], more: [TreatmentFormField]) {
-        TreatmentFormLayout.split(fields, draft: draft)
+        draftChanged()
     }
 }

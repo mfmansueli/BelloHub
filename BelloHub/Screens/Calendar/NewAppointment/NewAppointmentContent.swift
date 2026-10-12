@@ -217,7 +217,7 @@ struct NewAppointmentContent: View {
             .disabled(!viewModel.canBook)
             .accessibilityIdentifier("newAppointment.confirmButton")
             if viewModel.hasScheduleConflict {
-                HStack(spacing: Spacing.sm) {
+                FittingRow {
                     Button(action: scrollTo) { Text("newAppointment.chooseAnother") }
                         .buttonStyle(.belloTertiary)
                         .accessibilityIdentifier("newAppointment.chooseAnotherButton")

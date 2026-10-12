@@ -74,35 +74,47 @@ struct RecordExportDocumentBuilder {
 
     private func treatmentSection(_ treatment: RecordExportContent.Treatment) -> Section {
         let record = treatment.record
+        // What the record says now, so a corrected value shows as corrected and the log below says why.
+        let current = RecordCurrentValues(record: record, corrections: treatment.corrections)
         let service = record.serviceName
-        let date = formatters.shortDate(record.createdAt)
+        // The visit day when she noted one; records from before it existed show the day they were written.
+        let date = formatters.shortDate(current.performedAt ?? record.createdAt)
         var items: [RecordExportDocument.Item] = [
             .line(label: resolve("exportRecord.doc.result"), value: resolve(record.result.title))
         ]
-        if !record.productsUsed.isEmpty {
-            items.append(.line(
-                label: resolve("exportRecord.doc.products"), value: formatters.list(record.productsUsed)
-            ))
+        let products = current.products
+        if !products.isEmpty {
+            items.append(.line(label: resolve("exportRecord.doc.products"), value: formatters.list(products)))
         }
-        for field in RecordCorrectableField.allCases {
-            // What the record says now, so a corrected value shows as corrected and the log below says why.
-            let current = RecordEditRules.currentValue(of: field, in: record, corrections: treatment.corrections)
-            if let current, !current.isEmpty { items.append(.line(label: resolve(field.title), value: current)) }
+        for field in RecordCorrectableField.allCases where field != .productsUsed {
+            if let value = current.value(field), !value.isEmpty {
+                items.append(.line(label: resolve(field.title), value: value))
+            }
         }
-        for entry in record.fieldEntries ?? [] {
+        for entry in current.entries() {
             items.append(.line(label: entry.name, value: entry.value.replacingOccurrences(of: "\n", with: ", ")))
         }
-        items += treatment.corrections.map(correctionItem)
+        items += treatment.corrections.map { correctionItem($0, record: record) }
         return Section(
             heading: resolve(LocalizedStringResource("exportRecord.doc.visit", defaultValue: "\(service) · \(date)")),
             items: items
         )
     }
 
-    private func correctionItem(_ correction: RecordCorrection) -> RecordExportDocument.Item {
+    /// The name of the field a correction changed: a field of its own, one of her template's (by its name on the
+    /// record), the visit day, or the stored key when this version does not know it.
+    private func fieldName(_ key: String, record: TreatmentRecord) -> String {
+        if key == RecordCurrentValues.performedAtKey { return resolve("record.field.visitDate") }
+        switch RecordEditableField.field(forKey: key, in: record) {
+        case .standard(let field): return resolve(field.title)
+        case .entry(_, let name, _, _): return name
+        case nil: return key
+        }
+    }
+
+    private func correctionItem(_ correction: RecordCorrection, record: TreatmentRecord) -> RecordExportDocument.Item {
         let date = formatters.dateTime(correction.createdAt)
-        let known = RecordCorrectableField(rawValue: correction.fieldKey)
-        let field = known.map { resolve($0.title) } ?? correction.fieldKey
+        let field = fieldName(correction.fieldKey, record: record)
         let reason = correction.reason ?? ""
         let text = resolve(LocalizedStringResource(
             "exportRecord.doc.correction", defaultValue: "Correction, \(date), \(field): \(reason)"

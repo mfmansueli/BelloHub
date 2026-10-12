@@ -5,11 +5,13 @@
 
 import SwiftUI
 
-/// The body of the Alerts tab: the permission strip, the reminders ready to send, and the cards about her next visit,
-/// birthdays and the clients to reach. Empty, loading and error states are `ScreenStateView`'s.
+/// The body of the Alerts tab: the permission strip, requests, what her clients sent, the records still owed (each one
+/// opens the visit form), and the cards about her next visit and the clients to reach. Empty, loading and error states
+/// are `ScreenStateView`'s.
 struct AlertsContentView: View {
     @State private var viewModel: AlertsViewModel
     @State private var agendaSheet: AgendaSheet?
+    @State private var visitFlow: TreatmentFlowRequest?
     @Environment(ProfileService.self) private var profile
     @Environment(\.locale) private var locale
 
@@ -52,6 +54,7 @@ struct AlertsContentView: View {
         .refreshable { await viewModel.refreshAsync() }
         .task { viewModel.start() }
         .agendaSheet(item: $agendaSheet)
+        .treatmentFlow(item: $visitFlow)
     }
 
     // MARK: - Sections
@@ -59,6 +62,7 @@ struct AlertsContentView: View {
     private func sections(_ list: AlertsList, inbox: InboxAlerts, now: Date) -> some View {
         let mailbox = viewModel.mailboxAlerts
         let count = viewModel.reachOutCount(now: now)
+        let records = viewModel.records(now: now)
         // A request that is answered, a check-in that is handled: the card leaves where she can see it. The first
         // list and a load never animate (`motionRows`).
         return VStack(alignment: .leading, spacing: Spacing.row) {
@@ -66,6 +70,12 @@ struct AlertsContentView: View {
             if !mailbox.isEmpty {
                 MailboxAlertCards(
                     alerts: mailbox, onResolve: viewModel.resolve, onImportsSeen: viewModel.markImportsSeen
+                )
+            }
+            if !records.isEmpty {
+                RecordPendingAlertCards(
+                    pending: records, clientNames: viewModel.clientNames, formatters: formatters, now: now,
+                    onOpen: { visitFlow = $0.flowRequest }
                 )
             }
             if let visit = list.upcomingVisit {
@@ -77,7 +87,9 @@ struct AlertsContentView: View {
                 reachOutCard(count).motionRow()
             }
         }
-        .motionRows(ids: AlertBlockIDs.make(list: list, inbox: inbox, mailbox: mailbox, reachOut: count))
+        .motionRows(ids: AlertBlockIDs.make(
+            list: list, inbox: inbox, mailbox: mailbox, records: records, reachOut: count
+        ))
     }
 
     // MARK: - Inbox (S8)

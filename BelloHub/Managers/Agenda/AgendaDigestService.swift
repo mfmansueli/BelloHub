@@ -20,6 +20,9 @@ final class AgendaDigestService {
     private(set) var clients: [Client] = []
     private(set) var services: [Service] = []
     private(set) var blocks: [TimeBlock] = []
+    /// Every record reduced to its links and state (`RecordMark`), for "To follow up": completed visits with nothing
+    /// written and drafts to finish. No clinical text is held here.
+    private(set) var recordMarks: [RecordMark] = []
     /// True until the visits have arrived once.
     private(set) var isLoading = true
     private(set) var errorMessage: String?
@@ -81,6 +84,8 @@ final class AgendaDigestService {
                 for await list in people {
                     guard let self, !Task.isCancelled else { return }
                     clients = list
+                    // The clients stream fires on every vault change, so a record saved anywhere is seen here too.
+                    await loadRecordMarks()
                 }
             },
             Task { [weak self] in
@@ -97,6 +102,7 @@ final class AgendaDigestService {
         clients = []
         services = []
         blocks = []
+        recordMarks = []
         isLoading = true
         errorMessage = nil
     }
@@ -105,9 +111,15 @@ final class AgendaDigestService {
     func refresh() async {
         if !isListening { startListening() }
         await loadServices()
+        await loadRecordMarks()
     }
 
     // MARK: - Private
+
+    private func loadRecordMarks() async {
+        guard let repository = vault.repository else { return }
+        if let marks = try? await repository.recordMarks() { recordMarks = marks }
+    }
 
     private func loadServices() async {
         guard let repository = vault.repository else { return }

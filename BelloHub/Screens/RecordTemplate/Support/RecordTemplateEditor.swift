@@ -55,6 +55,35 @@ enum RecordTemplateEditor {
         return updated
     }
 
+    /// A field marked as needed (or not) to finalize a record. Drafts never need it.
+    static func settingRequired(
+        _ key: String, required: Bool, for profession: ProfessionID, in template: RecordTemplate, now: Date
+    ) -> RecordTemplate {
+        updatingField(key, for: profession, in: template, now: now) { $0.isRequired = required }
+    }
+
+    /// The services a field is asked for; empty means every service. Duplicates are dropped, her order kept.
+    static func settingServices(
+        _ key: String, serviceIDs: [UUID], for profession: ProfessionID, in template: RecordTemplate, now: Date
+    ) -> RecordTemplate {
+        var seen: Set<UUID> = []
+        let unique = serviceIDs.filter { seen.insert($0).inserted }
+        return updatingField(key, for: profession, in: template, now: now) { $0.serviceIDs = unique }
+    }
+
+    private static func updatingField(
+        _ key: String, for profession: ProfessionID, in template: RecordTemplate, now: Date,
+        _ change: (inout RecordFieldSetting) -> Void
+    ) -> RecordTemplate {
+        guard let index = template.fields.firstIndex(where: { $0.profession == profession && $0.key == key })
+        else { return template }
+        var updated = template
+        change(&updated.fields[index])
+        guard updated.fields[index] != template.fields[index] else { return template }
+        updated.updatedAt = now
+        return updated
+    }
+
     /// An intake item switched on or off. An item the template has no entry for yet gets one.
     static func settingIntake(
         _ item: IntakeItem, on: Bool, for profession: ProfessionID, in template: RecordTemplate, now: Date
@@ -184,33 +213,11 @@ enum RecordTemplateEditor {
 
     // MARK: - Completing
 
-    /// The template with what the catalog has and the template does not: the fields and intake items of a profession
-    /// she has but never saved (a profession added after the setup), and catalog fields added in a newer version. They
-    /// start as the catalog says. It is a view of what to show, not a write: the screen saves only when she changes
-    /// something, and a field that is already there is never changed.
+    /// The template completed with what the catalog added (`RecordTemplate.completed`, shared with the visit form).
     static func completed(
         _ template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, now: Date
     ) -> RecordTemplate {
-        var result = template ?? RecordTemplate(fields: [], intake: [], updatedAt: now)
-        for profession in professions {
-            guard let entry = catalog.entry(for: profession) else { continue }
-            let known = Set(result.fields(for: profession).map(\.key))
-            let missing = entry.fields.filter { !known.contains($0.key) }.map {
-                RecordFieldSetting(profession: profession, key: $0.key, isOn: $0.on)
-            }
-            if !missing.isEmpty {
-                let ofProfession = result.fields.indices.filter { result.fields[$0].profession == profession }
-                let lastStandard = ofProfession.last { !result.fields[$0].isCustom }
-                let position = lastStandard.map { $0 + 1 } ?? ofProfession.first ?? result.fields.count
-                result.fields.insert(contentsOf: missing, at: position)
-            }
-            for item in IntakeItem.allCases
-            where !result.intake.contains(where: { $0.profession == profession && $0.item == item }) {
-                let isOn = entry.intake.contains(item)
-                result.intake.append(IntakeSetting(profession: profession, item: item, isOn: isOn))
-            }
-        }
-        return result
+        RecordTemplate.completed(template, professions: professions, catalog: catalog, now: now)
     }
 
     // MARK: - Helpers

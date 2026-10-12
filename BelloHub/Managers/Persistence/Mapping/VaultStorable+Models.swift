@@ -40,8 +40,8 @@ extension Service: VaultStorable {
 extension TreatmentRecord: VaultStorable {
     static var kind: VaultKind { .treatmentRecord }
     static var sensitiveKeys: Set<String> {
-        ["notes", "technique", "productsUsed", "resultDetail", "aftercare", "nextSessionSuggestion",
-         "fieldEntries"]
+        ["notes", "technique", "productsUsed", "resultDetail", "reaction", "aftercare", "nextSessionSuggestion",
+         "nextVisitReminder", "fieldEntries"]
     }
 
     var index: VaultIndex {
@@ -133,5 +133,14 @@ extension RecordTemplate: VaultStorable {
 
     var index: VaultIndex {
         VaultIndex(dateA: updatedAt)
+    }
+}
+
+extension SavedOption: VaultStorable {
+    static var kind: VaultKind { .savedOption }
+    static var sensitiveKeys: Set<String> { ["name"] }
+
+    var index: VaultIndex {
+        VaultIndex(dateA: createdAt, statusRaw: context.rawValue)
     }
 }

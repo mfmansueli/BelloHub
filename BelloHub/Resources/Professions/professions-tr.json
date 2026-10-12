@@ -102,49 +102,163 @@
    ],
    "fields": [
     {
+     "key": "esthetician.healthCheck",
+     "name": "Bugünkü sağlık kontrolü",
+     "on": true,
+     "tags": [
+      "Değişiklik yok",
+      "Hamilelik veya emzirme",
+      "İzotretinoin",
+      "Retinoid kullanımı",
+      "Yeni güneşlenme veya bronzluk",
+      "Antibiyotik",
+      "Uçuk",
+      "Aktif lezyon",
+      "Yeni ilaç"
+     ]
+    },
+    {
      "key": "esthetician.skinCondition",
      "name": "Cilt durumu",
-     "on": true
+     "on": true,
+     "tags": [
+      "Yağlı",
+      "Kuru",
+      "Karma",
+      "Nemsiz",
+      "Hassas",
+      "Akneye eğilimli",
+      "Rozasea",
+      "Melazma",
+      "Hiperpigmentasyon",
+      "İnce çizgiler",
+      "Geniş gözenekler",
+      "Siyah nokta"
+     ]
+    },
+    {
+     "key": "esthetician.phototype",
+     "name": "Fototip",
+     "on": true,
+     "tags": [
+      "Tip I",
+      "Tip II",
+      "Tip III",
+      "Tip IV",
+      "Tip V",
+      "Tip VI"
+     ]
     },
     {
      "key": "esthetician.areas",
      "name": "Bölgeler",
-     "on": true
+     "on": true,
+     "tags": [
+      "Tüm yüz",
+      "Alın",
+      "T bölgesi",
+      "Yanaklar",
+      "Çene hattı",
+      "Göz altı",
+      "Üst dudak",
+      "Boyun",
+      "Dekolte",
+      "Sırt"
+     ]
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Uygulama",
+     "on": true,
+     "tags": [
+      "Derin temizlik",
+      "Kimyasal peeling",
+      "Dermapen",
+      "Komedon temizliği",
+      "Hydrafacial",
+      "Dermaplaning",
+      "LED",
+      "Radyofrekans",
+      "Nem bakımı",
+      "Yüz lenf drenajı"
+     ]
     },
     {
      "key": "esthetician.products",
      "name": "Ürünler ve aktifler",
-     "on": true
-    },
-    {
-     "key": "esthetician.protocol",
-     "name": "Protokol",
-     "on": true
+     "on": true,
+     "tags": [
+      "Glikolik asit",
+      "Salisilik asit",
+      "Mandelik asit",
+      "Laktik asit",
+      "TCA",
+      "Retinol",
+      "C vitamini",
+      "Niasinamid",
+      "Azelaik asit",
+      "Traneksamik asit",
+      "Hyalüronik asit"
+     ]
     },
     {
      "key": "esthetician.technique",
-     "name": "Teknik",
-     "on": false
-    },
-    {
-     "key": "esthetician.reaction",
-     "name": "Reaksiyon",
-     "on": true
+     "name": "Yoğunluk, derinlik ve süre",
+     "on": true,
+     "tags": [
+      "%20",
+      "%35",
+      "1 kat",
+      "2 kat",
+      "3 dk",
+      "0,5 mm",
+      "1,0 mm",
+      "1,5 mm",
+      "2 geçiş",
+      "Eşit frost",
+      "Düzensiz frost",
+      "Nötralize edildi"
+     ]
     },
     {
      "key": "esthetician.result",
      "name": "Sonuç",
-     "on": true
-    },
-    {
-     "key": "esthetician.aftercare",
-     "name": "Bakım sonrası",
-     "on": true
+     "on": true,
+     "tags": [
+      "Işıltılı",
+      "Daha sakin cilt",
+      "Daha az sivilce",
+      "Daha eşit ton",
+      "Daha pürüzsüz doku",
+      "İyi nemlenmiş",
+      "Ek seans gerekli"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Hafif kızarıklık",
+    "Yanma veya batma",
+    "Şişlik",
+    "Sivilce çıkışı",
+    "Soyulma",
+    "Frost",
+    "Kaşıntı",
+    "Koyu lekeler"
+   ],
+   "aftercareTags": [
+    "Her gün SPF 50",
+    "3 gün aktif ürün yok",
+    "7 gün güneş yok",
+    "Soyulan deriyi koparmamak",
+    "Hafif temizleyici",
+    "Nemlendirici serum",
+    "24 saat makyaj yok",
+    "48 saat sauna ve spor yok"
    ]
   },
   {
@@ -248,52 +362,180 @@
    "fields": [
     {
      "key": "hair.hairCondition",
-     "name": "Saç durumu",
-     "on": true
+     "name": "Saç ve saç derisi",
+     "on": true,
+     "tags": [
+      "İşlemsiz saç",
+      "İnce telli",
+      "Kalın telli",
+      "Kıvırcık veya bukleli",
+      "Gözenekli",
+      "Kırılma",
+      "Kuru uçlar",
+      "Yağlı saç derisi",
+      "Hassas saç derisi",
+      "Kepek",
+      "Seyrelme"
+     ]
+    },
+    {
+     "key": "hair.naturalBase",
+     "name": "Doğal seviye ve beyaz oranı",
+     "on": true,
+     "tags": [
+      "Seviye 3–4",
+      "Seviye 5–6",
+      "Seviye 7–8",
+      "Seviye 9–10",
+      "%10'dan az beyaz",
+      "%25 beyaz",
+      "%50 beyaz",
+      "%75+ beyaz",
+      "Dirençli beyazlar"
+     ]
     },
     {
      "key": "hair.previousColor",
-     "name": "Önceki renk",
-     "on": true
+     "name": "Kimyasal geçmiş",
+     "on": true,
+     "tags": [
+      "Evde boya",
+      "Kına",
+      "Kalıcı boya",
+      "Gloss veya toner",
+      "Röfle",
+      "Açıcı",
+      "Keratin veya Brezilya fönü",
+      "Düzleştirici",
+      "Perma",
+      "Boya sökücü"
+     ]
+    },
+    {
+     "key": "hair.allergyTest",
+     "name": "Alerji ve tutam testi",
+     "on": true,
+     "tags": [
+      "Alerji testi negatif",
+      "Alerji testi pozitif",
+      "Yapılmadı",
+      "Müşteri istemedi",
+      "Tutam testi tamam",
+      "Tutam testi: formülü ayarla"
+     ]
     },
     {
      "key": "hair.formula",
      "name": "Formül",
-     "on": true
+     "on": true,
+     "tags": [
+      "Dipler",
+      "Orta boy",
+      "Uçlar",
+      "Toner",
+      "1:1",
+      "1:1,5",
+      "1:2",
+      "Bağ güçlendirici",
+      "Ön pigmentasyon",
+      "Gloss"
+     ]
     },
     {
      "key": "hair.developer",
      "name": "Oksidan",
-     "on": true
-    },
-    {
-     "key": "hair.technique",
-     "name": "Teknik",
-     "on": true
+     "on": true,
+     "tags": [
+      "%1,5 (5 vol)",
+      "%3 (10 vol)",
+      "%6 (20 vol)",
+      "%9 (30 vol)",
+      "%12 (40 vol)",
+      "Yarı kalıcı aktivatör"
+     ]
     },
     {
      "key": "hair.processingTime",
      "name": "Bekleme süresi",
-     "on": true
+     "on": true,
+     "tags": [
+      "10 dk",
+      "20 dk",
+      "30 dk",
+      "35 dk",
+      "45 dk",
+      "Isıyla",
+      "Açılana kadar"
+     ]
     },
     {
-     "key": "hair.products",
-     "name": "Ürünler",
-     "on": false
+     "key": "hair.technique",
+     "name": "Teknik",
+     "on": true,
+     "tags": [
+      "Komple boya",
+      "Dip boya",
+      "Folyo röfle",
+      "Balyaj",
+      "Babylights",
+      "Yüz çevresi aydınlatma",
+      "Dip gölgelendirme",
+      "Renk düzeltme",
+      "Sadece toner",
+      "Kesim",
+      "Fön"
+     ]
     },
     {
      "key": "hair.result",
      "name": "Sonuç",
-     "on": true
+     "on": true,
+     "tags": [
+      "Eşit renk",
+      "Hedef tona ulaşıldı",
+      "Planlanandan sıcak",
+      "Planlanandan soğuk",
+      "Renk bantlaşması",
+      "Toner gerekli",
+      "Sağlıklı parlaklık"
+     ]
     },
     {
      "key": "hair.preferences",
      "name": "Tercihler",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sıcak ton istemiyor",
+      "Az bakım",
+      "Daha açık istiyor",
+      "Boy korunsun",
+      "Kuru kesim",
+      "Bukle kesimi",
+      "Beyaz saça geçiş"
+     ]
     }
    ],
    "intake": [
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Saç derisi kaşıntısı",
+    "Yanma",
+    "Kızarıklık",
+    "Saç derisinde şişlik",
+    "Kurdeşen",
+    "Kırılma",
+    "Kuruluk"
+   ],
+   "aftercareTags": [
+    "Sülfatsız şampuan",
+    "48 saat yıkamamak",
+    "Mor şampuan",
+    "Evde bağ onarımı",
+    "Isı koruyucu",
+    "6 hafta sonra gloss",
+    "Soğuk suyla durulamak"
    ]
   },
   {
@@ -397,49 +639,170 @@
    "fields": [
     {
      "key": "lash.set",
-     "name": "Set",
-     "on": true
+     "name": "İşlem",
+     "on": true,
+     "tags": [
+      "Klasik",
+      "Hibrit",
+      "Volüm",
+      "Mega volüm",
+      "Wet look",
+      "Wispy",
+      "Dolgu",
+      "Söküm",
+      "Kirpik lifting",
+      "Lifting ve boya",
+      "Kaş laminasyonu"
+     ]
+    },
+    {
+     "key": "lash.naturalLashes",
+     "name": "Doğal kirpikler ve gözler",
+     "on": true,
+     "tags": [
+      "Sağlıklı",
+      "Seyrek",
+      "İnce",
+      "Kısa",
+      "Düz",
+      "Aşağı bakan",
+      "Boşluklar",
+      "Yağlı göz kapağı",
+      "Düşük göz kapağı",
+      "Tek kat göz kapağı",
+      "Çukur göz"
+     ]
     },
     {
      "key": "lash.curl",
      "name": "Kıvrım",
-     "on": true
-    },
-    {
-     "key": "lash.length",
-     "name": "Uzunluk",
-     "on": true
+     "on": true,
+     "tags": [
+      "J",
+      "B",
+      "C",
+      "CC",
+      "D",
+      "DD",
+      "L",
+      "L+",
+      "M"
+     ]
     },
     {
      "key": "lash.thickness",
      "name": "Kalınlık",
-     "on": true
+     "on": true,
+     "tags": [
+      "0,03 mm",
+      "0,05 mm",
+      "0,07 mm",
+      "0,10 mm",
+      "0,12 mm",
+      "0,15 mm"
+     ]
     },
     {
      "key": "lash.mapping",
-     "name": "Haritalama",
-     "on": true
+     "name": "Haritalama ve uzunluklar",
+     "on": true,
+     "tags": [
+      "Doğal",
+      "Kedi göz",
+      "Bebek göz",
+      "Squirrel",
+      "Açık göz",
+      "Kim K",
+      "8-10-12",
+      "9-11-13",
+      "10-12-14",
+      "Kısa iç köşe"
+     ]
     },
     {
      "key": "lash.adhesive",
-     "name": "Yapıştırıcı",
-     "on": true
+     "name": "Yapıştırıcı ve ortam",
+     "on": true,
+     "tags": [
+      "Hassas formül",
+      "0,5 sn kuruma",
+      "1–2 sn kuruma",
+      "Karbon siyahı içermez",
+      "Açılalı 4 haftadan az",
+      "Nem %40–50",
+      "Nem %50–65",
+      "Yama testi yapıldı"
+     ]
     },
     {
      "key": "lash.retention",
-     "name": "Kalıcılık",
-     "on": true
+     "name": "Dolguda tutunma",
+     "on": true,
+     "tags": [
+      "%75 veya üzeri",
+      "%50–75",
+      "%50'nin altı",
+      "Dış köşede boşluk",
+      "Yapışık veya bükülmüş",
+      "Uzamış",
+      "Koparılmış"
+     ]
+    },
+    {
+     "key": "lash.liftSettings",
+     "name": "Lifting ayarları",
+     "on": false,
+     "tags": [
+      "Ped S",
+      "Ped M",
+      "Ped L",
+      "Ped XL",
+      "Lifting 6 dk",
+      "Sabitleme 5 dk",
+      "Siyah boya",
+      "Kahverengi boya",
+      "Keratin serumu"
+     ]
     },
     {
      "key": "lash.preferences",
      "name": "Tercihler",
-     "on": false
+     "on": false,
+     "tags": [
+      "Doğal görünüm",
+      "Dramatik",
+      "İç köşe yok",
+      "Yan yatarak uyuyor",
+      "Lens kullanıyor",
+      "Maskara kullanıyor",
+      "Alerjiye yatkın"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Sulanan gözler",
+    "Batma",
+    "Kaşınan gözler",
+    "Şiş göz kapakları",
+    "Kızarık gözler",
+    "Gözde kanlanma",
+    "Buhara hassasiyet"
+   ],
+   "aftercareTags": [
+    "24 saat ıslatmamak",
+    "Yağ bazlı ürün yok",
+    "Her gün taramak",
+    "Kirpik şampuanı",
+    "Ovmamak ve çekmemek",
+    "48 saat buhar yok",
+    "Sırtüstü uyumak",
+    "2–3 hafta sonra dolgu"
    ]
   },
   {
@@ -542,42 +905,147 @@
    ],
    "fields": [
     {
+     "key": "nail.service",
+     "name": "İşlem",
+     "on": true,
+     "tags": [
+      "Manikür",
+      "Pedikür",
+      "Kalıcı oje",
+      "Builder jel",
+      "Akrilik",
+      "Polygel",
+      "Fiberglas",
+      "Tips",
+      "Dolgu",
+      "Söküm",
+      "Spa pedikür"
+     ]
+    },
+    {
      "key": "nail.nailCondition",
      "name": "Tırnak durumu",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sağlıklı",
+      "İnce",
+      "Kırılgan",
+      "Katman katman soyulma",
+      "Yenmiş",
+      "Oluklu",
+      "Tırnak yatağından ayrılma",
+      "Renk değişikliği",
+      "Kuru kütikül",
+      "Batık tırnak",
+      "Kalınlaşmış ayak tırnağı"
+     ]
     },
     {
-     "key": "nail.shape",
-     "name": "Şekil",
-     "on": true
-    },
-    {
-     "key": "nail.length",
-     "name": "Uzunluk",
-     "on": true
-    },
-    {
-     "key": "nail.color",
-     "name": "Renk",
-     "on": true
+     "key": "nail.technique",
+     "name": "Hazırlık",
+     "on": true,
+     "tags": [
+      "Freze manikür",
+      "Kuru manikür",
+      "Islak manikür",
+      "Sadece kütikül itme",
+      "Dehidratör",
+      "Asitsiz primer",
+      "Hafif zımpara"
+     ]
     },
     {
      "key": "nail.productSystem",
      "name": "Ürün sistemi",
-     "on": true
+     "on": true,
+     "tags": [
+      "HEMA içermez",
+      "Rubber base",
+      "Builder jel",
+      "Silmesiz top coat",
+      "LED 60 sn",
+      "UV/LED 30 sn",
+      "Base'den top'a aynı marka"
+     ]
     },
     {
-     "key": "nail.technique",
-     "name": "Teknik",
-     "on": false
+     "key": "nail.shape",
+     "name": "Şekil",
+     "on": true,
+     "tags": [
+      "Kare",
+      "Squoval",
+      "Yuvarlak",
+      "Oval",
+      "Badem",
+      "Balerin",
+      "Stiletto",
+      "Lipstick"
+     ]
+    },
+    {
+     "key": "nail.length",
+     "name": "Uzunluk",
+     "on": true,
+     "tags": [
+      "Doğal",
+      "Kısa",
+      "Orta",
+      "Uzun",
+      "Ekstra uzun"
+     ]
+    },
+    {
+     "key": "nail.color",
+     "name": "Renk ve tasarım",
+     "on": true,
+     "tags": [
+      "Nude",
+      "French",
+      "Baby boomer",
+      "Kırmızı",
+      "Krom",
+      "Kedi gözü",
+      "Simli",
+      "Ombre",
+      "Vurgu tırnak",
+      "El çizimi tasarım"
+     ]
     },
     {
      "key": "nail.durability",
-     "name": "Dayanıklılık",
-     "on": true
+     "name": "Son ziyaretten beri kalıcılık",
+     "on": true,
+     "tags": [
+      "3 haftada kusursuz",
+      "Kütikülde kalkma",
+      "Yanlarda kalkma",
+      "Uçlarda kopma",
+      "Kırık tırnak",
+      "Uzamış",
+      "Erken söküldü"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Yok",
+    "Kütikül çevresinde kızarıklık",
+    "Parmak uçlarında kaşıntı",
+    "Lambada ısı yanması",
+    "Şişlik",
+    "Tırnak yatağında ağrı",
+    "Küçük kesik"
+   ],
+   "aftercareTags": [
+    "Her gün kütikül yağı",
+    "Temizlikte eldiven",
+    "Koparmamak ve soymamak",
+    "Tırnakları alet yapmamak",
+    "3 hafta sonra dolgu",
+    "Evde kütikül kesmemek",
+    "Asetonsuz çıkarıcı"
+   ]
   },
   {
    "id": "makeup",
@@ -675,41 +1143,147 @@
     {
      "key": "makeup.event",
      "name": "Etkinlik",
-     "on": true
+     "on": true,
+     "tags": [
+      "Gelin",
+      "Gelin provası",
+      "Nedime veya davetli",
+      "Mezuniyet",
+      "15. yaş günü",
+      "Parti",
+      "Fotoğraf çekimi",
+      "Kurumsal",
+      "Gelinin annesi"
+     ]
+    },
+    {
+     "key": "makeup.skinType",
+     "name": "Cilt tipi",
+     "on": true,
+     "tags": [
+      "Yağlı",
+      "Kuru",
+      "Karma",
+      "Olgun",
+      "Hassas",
+      "Akneye eğilimli",
+      "Pürüzlü",
+      "Nemsiz"
+     ]
     },
     {
      "key": "makeup.look",
      "name": "Görünüm",
-     "on": true
+     "on": true,
+     "tags": [
+      "Doğal",
+      "Soft glam",
+      "Full glam",
+      "Smoky göz",
+      "Cut crease",
+      "Grafik eyeliner",
+      "Belirgin dudak",
+      "Dewy",
+      "Mat"
+     ]
     },
     {
      "key": "makeup.skinPrep",
      "name": "Cilt hazırlığı",
-     "on": false
+     "on": true,
+     "tags": [
+      "Nemlendirici primer",
+      "Matlaştırıcı primer",
+      "Gözenek doldurucu",
+      "Göz altı pedi",
+      "Renk düzeltici",
+      "Tutucu primer",
+      "SPF'siz baz"
+     ]
     },
     {
      "key": "makeup.foundation",
-     "name": "Fondöten",
-     "on": true
+     "name": "Fondöten ve ton",
+     "on": true,
+     "tags": [
+      "Sıcak",
+      "Nötr",
+      "Soğuk",
+      "Zeytin",
+      "2 ton karışımı",
+      "Hafif kapatıcılık",
+      "Orta kapatıcılık",
+      "Tam kapatıcılık",
+      "Oksitleniyor: açık ton seç"
+     ]
     },
     {
-     "key": "makeup.shade",
-     "name": "Ton",
-     "on": true
+     "key": "makeup.lashes",
+     "name": "Kirpikler",
+     "on": true,
+     "tags": [
+      "Yok",
+      "Şerit kirpik",
+      "Küme kirpik",
+      "Tek tek kirpik",
+      "Lateksiz yapıştırıcı",
+      "Suya dayanıklı maskara"
+     ]
+    },
+    {
+     "key": "makeup.setting",
+     "name": "Sabitleme ve kalıcılık",
+     "on": true,
+     "tags": [
+      "Sabitleyici sprey",
+      "Şeffaf pudra",
+      "Baking",
+      "Suya dayanıklı göz",
+      "Gün boyu kaldı",
+      "T bölgesinde silindi",
+      "Rötuş kiti verildi"
+     ]
     },
     {
      "key": "makeup.products",
      "name": "Ürünler",
-     "on": true
+     "on": false,
+     "tags": []
     },
     {
      "key": "makeup.preferences",
      "name": "Tercihler",
-     "on": true
+     "on": true,
+     "tags": [
+      "Simsiz",
+      "Hafif baz",
+      "Gözlük kullanıyor",
+      "Lens kullanıyor",
+      "Hassas gözler",
+      "Duvak",
+      "Flaşlı çekim",
+      "Dış mekân veya nemli"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Sulanan gözler",
+    "Kaşınan gözler",
+    "Kızarıklık",
+    "Sivilce çıkışı",
+    "Kirpik yapıştırıcısı reaksiyonu",
+    "Ağır hissettirdi"
+   ],
+   "aftercareTags": [
+    "Makyaj temizleme rutini",
+    "Yağ alma kâğıdı",
+    "Dudak rötuşu",
+    "Kirpikleri nazikçe çıkarmak",
+    "Gece nemlendirmek"
    ]
   },
   {
@@ -806,50 +1380,174 @@
    ],
    "fields": [
     {
-     "key": "tattoo.design",
-     "name": "Tasarım",
-     "on": true
+     "key": "tattoo.procedure",
+     "name": "İşlem",
+     "on": true,
+     "tags": [
+      "Microblading",
+      "Nanoblading",
+      "Pudralı kaş",
+      "Kombine kaş",
+      "Dudak renklendirme",
+      "Eyeliner",
+      "Kirpik dibi",
+      "Areola",
+      "Fine line dövme",
+      "Kapatma",
+      "Düzeltme"
+     ]
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Seans",
+     "on": true,
+     "tags": [
+      "İlk seans",
+      "6–8 hafta sonra rötuş",
+      "Yıllık yenileme",
+      "Renk takviyesi",
+      "Devam seansı",
+      "Düzeltme"
+     ]
+    },
+    {
+     "key": "tattoo.healthCheck",
+     "name": "Bugünkü kontrendikasyonlar",
+     "on": true,
+     "tags": [
+      "Yeni bir şey yok",
+      "Kan sulandırıcı",
+      "İzotretinoin",
+      "Hamilelik veya emzirme",
+      "Keloid eğilimi",
+      "Diyabet",
+      "Uçuk (antiviral alındı)",
+      "Yeni dolgu veya Botox",
+      "Eski kalıcı makyaj veya lazer"
+     ]
     },
     {
      "key": "tattoo.placement",
      "name": "Bölge",
-     "on": true
+     "on": true,
+     "tags": [
+      "Kaşlar",
+      "Dudaklar",
+      "Üst kirpik dibi",
+      "Alt kirpik dibi",
+      "Bilek",
+      "Ön kol",
+      "Ayak bileği",
+      "Kulak arkası",
+      "Kaburga",
+      "Sırt"
+     ]
     },
     {
-     "key": "tattoo.technique",
-     "name": "Teknik",
-     "on": true
+     "key": "tattoo.design",
+     "name": "Tasarım",
+     "on": true,
+     "tags": [
+      "Kaş haritalama",
+      "Müşteri onayladı",
+      "Referans fotoğraf",
+      "Şablon",
+      "Serbest el",
+      "Fine line",
+      "Dotwork",
+      "Yazı"
+     ]
     },
     {
      "key": "tattoo.pigments",
-     "name": "Pigmentler",
-     "on": true
+     "name": "Pigmentler ve lot",
+     "on": true,
+     "tags": [
+      "Sıcak kahve",
+      "Küllü kahve",
+      "Nötr kahve",
+      "Turuncu düzeltici",
+      "Nude pembe",
+      "Mercan",
+      "Kırmızı",
+      "Siyah",
+      "Lot not edildi"
+     ]
     },
     {
      "key": "tattoo.tools",
-     "name": "Araç ve malzemeler",
-     "on": true
+     "name": "İğne ve makine",
+     "on": true,
+     "tags": [
+      "1RL",
+      "3RL",
+      "0,18 nano",
+      "U-blade 14",
+      "18 pin slope",
+      "Magnum",
+      "Kartuş lotu not edildi",
+      "Düşük hız",
+      "Yüksek hız"
+     ]
     },
     {
-     "key": "tattoo.sessionNumber",
-     "name": "Seans numarası",
-     "on": true
+     "key": "tattoo.skinResponse",
+     "name": "Cilt tepkisi",
+     "on": true,
+     "tags": [
+      "Normal",
+      "Yağlı",
+      "İnce",
+      "Olgun",
+      "Çok kanadı",
+      "Şişti",
+      "Pigment zor tuttu",
+      "Yara dokusu"
+     ]
     },
     {
      "key": "tattoo.healing",
-     "name": "İyileşme",
-     "on": true
-    },
-    {
-     "key": "tattoo.followUp",
-     "name": "Kontrol",
-     "on": true
+     "name": "İyileşmiş sonuç",
+     "on": true,
+     "tags": [
+      "Eşit",
+      "Yer yer açık",
+      "Çok açık",
+      "Çok koyu",
+      "Dağılma veya kayma",
+      "Küllü veya gri",
+      "Sıcak veya turuncu",
+      "Yoğun kabuklanma",
+      "Blowout",
+      "Enfeksiyon belirtisi"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Normal şişlik",
+    "Kanama",
+    "Sızıntı",
+    "Yoğun kabuklanma",
+    "Kaşıntı",
+    "Uçuk",
+    "Enfeksiyon belirtisi",
+    "Kabarık ve kaşıntılı"
+   ],
+   "aftercareTags": [
+    "7 gün ıslatmamak",
+    "İnce kat krem",
+    "Kabukları koparmamak",
+    "30 gün güneş yok",
+    "Havuz, deniz, sauna yok",
+    "3–5 gün ikinci deri",
+    "Bölgeye makyaj yok",
+    "Dudak öncesi antiviral"
    ]
   },
   {
@@ -954,35 +1652,145 @@
     {
      "key": "barber.cut",
      "name": "Kesim",
-     "on": true
-    },
-    {
-     "key": "barber.guards",
-     "name": "Makine numarası",
-     "on": true
+     "on": true,
+     "tags": [
+      "Crop",
+      "Buzz cut",
+      "Crew cut",
+      "Quiff",
+      "Geriye tarama",
+      "Yandan ayrık",
+      "Mullet",
+      "Afro şekil",
+      "Twist",
+      "Makas kesim"
+     ]
     },
     {
      "key": "barber.fade",
      "name": "Fade",
-     "on": true
+     "on": true,
+     "tags": [
+      "Skin fade",
+      "Düşük",
+      "Orta",
+      "Yüksek",
+      "Drop",
+      "Burst",
+      "Taper",
+      "Low taper",
+      "Fade yok"
+     ]
+    },
+    {
+     "key": "barber.guards",
+     "name": "Numaralar ve uzunluklar",
+     "on": true,
+     "tags": [
+      "Başlıksız",
+      "#0,5",
+      "#1",
+      "#1,5",
+      "#2",
+      "#3",
+      "#4",
+      "Üstü 2 cm",
+      "Üstü makas",
+      "Ayar kolu açık"
+     ]
+    },
+    {
+     "key": "barber.neckline",
+     "name": "Ense ve detaylar",
+     "on": true,
+     "tags": [
+      "Geçişli ense",
+      "Kare",
+      "Yuvarlak",
+      "Kontür",
+      "Ayrım çizgisi",
+      "Desen",
+      "Kaş düzeltme",
+      "Kulak ve burun kılı"
+     ]
     },
     {
      "key": "barber.beard",
      "name": "Sakal",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sinek kaydı",
+      "Kirli sakal",
+      "Kısa köşeli",
+      "Gür sakal",
+      "Keçi sakal",
+      "Geçişli sakal",
+      "Sadece kontür",
+      "Sıcak havlu tıraşı",
+      "Sakal boyama"
+     ]
+    },
+    {
+     "key": "barber.skinScalp",
+     "name": "Cilt ve saç derisi",
+     "on": true,
+     "tags": [
+      "Tıraş sivilcesi",
+      "Batık kıllar",
+      "Hassas cilt",
+      "Kepek",
+      "Tepede seyrelme",
+      "Alında açılma",
+      "Girdap",
+      "Yara izi"
+     ]
     },
     {
      "key": "barber.products",
      "name": "Ürünler",
-     "on": false
+     "on": false,
+     "tags": [
+      "Mat kil",
+      "Pomat",
+      "Wax",
+      "Deniz tuzu spreyi",
+      "Sakal yağı",
+      "Sakal balmı",
+      "Tıraş sonrası balm"
+     ]
     },
     {
      "key": "barber.preferences",
      "name": "Tercihler",
-     "on": true
+     "on": true,
+     "tags": [
+      "Ustura yok",
+      "Kıl yönünde tıraş",
+      "2 haftada bir",
+      "3 haftada bir",
+      "Üstte boy kalsın",
+      "Sessiz hizmet"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Yok",
+    "Tıraş sivilcesi",
+    "Tahriş",
+    "Küçük kesikler",
+    "Batık kıllar",
+    "Makine yanığı",
+    "Saç derisi kaşıntısı"
+   ],
+   "aftercareTags": [
+    "Tıraş sonrası balm",
+    "Haftada 2 kez peeling",
+    "Her gün sakal yağı",
+    "Kıl yönünde tıraş olmak",
+    "Tek bıçaklı jilet",
+    "Dar şapkadan kaçınmak"
+   ]
   },
   {
    "id": "massage",
@@ -1084,44 +1892,166 @@
    ],
    "fields": [
     {
-     "key": "massage.focusAreas",
-     "name": "Odak bölgeleri",
-     "on": true
-    },
-    {
-     "key": "massage.pressure",
-     "name": "Basınç",
-     "on": true
-    },
-    {
      "key": "massage.technique",
-     "name": "Teknik",
-     "on": true
-    },
-    {
-     "key": "massage.oils",
-     "name": "Yağlar ve ürünler",
-     "on": false
+     "name": "Tür",
+     "on": true,
+     "tags": [
+      "Rahatlatıcı",
+      "Derin doku",
+      "Lenf drenajı",
+      "Ameliyat sonrası drenaj",
+      "Spor masajı",
+      "Tetik nokta",
+      "Miyofasyal",
+      "Sıcak taş",
+      "Refleksoloji",
+      "Vücut şekillendirme",
+      "Hamilelik masajı"
+     ]
     },
     {
      "key": "massage.contraindications",
      "name": "Kontrendikasyonlar",
-     "on": true
+     "on": true,
+     "tags": [
+      "Bildirilen yok",
+      "Hamilelik",
+      "Varis",
+      "Yeni ameliyat",
+      "Kan sulandırıcı",
+      "Yüksek tansiyon",
+      "Tromboz öyküsü",
+      "Cilt lezyonu",
+      "Ateş",
+      "Kanser tedavisi",
+      "Doktor onayı"
+     ]
+    },
+    {
+     "key": "massage.focusAreas",
+     "name": "Odak bölgeleri",
+     "on": true,
+     "tags": [
+      "Boyun",
+      "Omuzlar",
+      "Üst sırt",
+      "Bel",
+      "Kalça",
+      "Arka bacak",
+      "Baldırlar",
+      "Ayaklar",
+      "Kollar",
+      "Karın",
+      "Yüz ve saç derisi"
+     ]
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Basınç",
+     "on": true,
+     "tags": [
+      "Hafif",
+      "Orta",
+      "Sert",
+      "Derin",
+      "Bölgeye göre değişir"
+     ]
+    },
+    {
+     "key": "massage.findings",
+     "name": "Bulgular",
+     "on": true,
+     "tags": [
+      "Düğümler",
+      "Kas gerginliği",
+      "Ödem",
+      "Şişlik",
+      "Fibrozis",
+      "Hassas noktalar",
+      "Kısıtlı hareket",
+      "Selülit"
+     ]
+    },
+    {
+     "key": "massage.painLevel",
+     "name": "Ağrı (0–10)",
+     "on": false,
+     "tags": [
+      "0",
+      "2",
+      "4",
+      "6",
+      "8",
+      "10"
+     ]
+    },
+    {
+     "key": "massage.oils",
+     "name": "Yağlar ve ürünler",
+     "on": false,
+     "tags": [
+      "Tatlı badem",
+      "Üzüm çekirdeği",
+      "Hindistan cevizi",
+      "Kokusuz",
+      "Kuruyemiş içermez",
+      "Arnika",
+      "Drenaj kremi",
+      "Lavanta"
+     ]
+    },
+    {
+     "key": "massage.postOp",
+     "name": "Ameliyat sonrası detaylar",
+     "on": false,
+     "tags": [
+      "Liposuction",
+      "Karın germe",
+      "Göğüs ameliyatı",
+      "BBL",
+      "7. gün",
+      "15. gün",
+      "30. gün",
+      "Korse",
+      "Seroma"
+     ]
     },
     {
      "key": "massage.result",
      "name": "Sonuç",
-     "on": true
-    },
-    {
-     "key": "massage.homeCare",
-     "name": "Evde bakım",
-     "on": false
+     "on": true,
+     "tags": [
+      "Rahatladı",
+      "Ağrı azaldı",
+      "Şişlik azaldı",
+      "Daha rahat hareket ediyor",
+      "Hâlâ gergin",
+      "Sonrasında ağrılı"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Kas ağrısı",
+    "Morarma",
+    "Baş dönmesi",
+    "Baş ağrısı",
+    "Yağa hassasiyet",
+    "Tek noktada ağrı",
+    "Çok rahatladı"
+   ],
+   "aftercareTags": [
+    "Bol su içmek",
+    "24 saat sıcak banyo yok",
+    "Hafif esneme",
+    "Korse giymek",
+    "Ağrıda buz",
+    "Hafif yürüyüş",
+    "2 saat dinlenmek"
    ]
   },
   {
@@ -1181,21 +2111,43 @@
     {
      "key": "other.notes",
      "name": "Notlar",
-     "on": true
+     "on": true,
+     "tags": []
     },
     {
      "key": "other.result",
      "name": "Sonuç",
-     "on": true
+     "on": true,
+     "tags": [
+      "İyi geçti",
+      "Planlandığı gibi",
+      "Takip gerekli"
+     ]
     },
     {
      "key": "other.nextSteps",
      "name": "Sonraki adımlar",
-     "on": true
+     "on": true,
+     "tags": [
+      "Kontrol randevusu",
+      "Evde bakım",
+      "Doktora görünmek"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Yok",
+    "Kızarıklık",
+    "Rahatsızlık",
+    "Şişlik"
+   ],
+   "aftercareTags": [
+    "Dinlenmek",
+    "Bol su içmek",
+    "Verilen talimatlara uymak"
    ]
   }
  ]

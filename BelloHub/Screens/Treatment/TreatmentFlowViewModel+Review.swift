@@ -5,8 +5,8 @@
 
 import Foundation
 
-/// The review step (5.4): she decides on every proposed field, and only then does anything save. The gate itself is
-/// `ReviewMerge`; this file keeps the cards' state and saves through the same path as the manual form.
+/// The review step (5.4): she decides on every proposed field, and only then does anything go into the form. The gate
+/// itself is `ReviewMerge`; this file keeps the cards' state and hands the kept answers to the draft.
 extension TreatmentFlowViewModel {
     var isReviewComplete: Bool { ReviewMerge.isComplete(proposals) }
 
@@ -32,13 +32,19 @@ extension TreatmentFlowViewModel {
 
     var canSaveReview: Bool { isReviewComplete && !isSaving }
 
-    /// Saves the kept answers. `aiAssisted` is set here and only here, from a finished review.
+    /// Puts the kept answers into the visit form and goes back to it; the draft saves them. `aiAssisted` is set
+    /// here and only here, from a finished review. Nothing is finalized: she reads the form and finalizes it herself.
     func saveReview() async {
         guard canSaveReview else { return }
         let merged = ReviewMerge.apply(proposals, to: draft)
         showsValidation = true
         guard !merged.isEmpty else { return }
-        await save(draft: merged, aiAssisted: ReviewMerge.isAIAssisted(proposals))
+        draft = merged
+        aiAssisted = aiAssisted || ReviewMerge.isAIAssisted(proposals)
+        proposals = []
+        returnToForm()
+        draftChanged()
+        await autosaveNow()
     }
 
     func saveReviewTapped() { Task { await saveReview() } }

@@ -34,7 +34,7 @@ HARD_CODED_TEXT = re.compile(r'\bText\(\s*"([^"\\]*)"\s*\)')
 # Strings a client reads (messages she sends, rules on the booking page, the QR card and share texts). They keep
 # the polite address (de Sie, id Anda, tr siz) while the app speaks to the professional informally.
 CLIENT_FACING = re.compile(r"^(policy\.rule\.|quickReplies\.default\.\w+\.text(\.v1)?$|appointment\.message\.|"
-                           r"clientMessage\.birthday$|shareLink\.(card\.|instagram\.text$|whatsapp\.text$|message$)|"
+                           r"clientMessage\.(birthday|general)$|shareLink\.(card\.|instagram\.text$|whatsapp\.text$|message$)|"
                            r"waitlist\.offerMessage$|clientText\.)")
 # Strings that speak to the professional and quote what a client reads, so both addresses appear in them.
 MIXED_ADDRESS = {"clientEdit.stop.hint"}

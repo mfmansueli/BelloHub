@@ -102,49 +102,163 @@
    ],
    "fields": [
     {
+     "key": "esthetician.healthCheck",
+     "name": "Anamnese do dia",
+     "on": true,
+     "tags": [
+      "Sem alterações",
+      "Gestante ou lactante",
+      "Isotretinoína",
+      "Uso de retinoides",
+      "Sol ou bronzeado recente",
+      "Antibióticos",
+      "Herpes labial",
+      "Lesão ativa",
+      "Medicação nova"
+     ]
+    },
+    {
      "key": "esthetician.skinCondition",
      "name": "Condição da pele",
-     "on": true
+     "on": true,
+     "tags": [
+      "Oleosa",
+      "Seca",
+      "Mista",
+      "Desidratada",
+      "Sensível",
+      "Acneica",
+      "Rosácea",
+      "Melasma",
+      "Hiperpigmentação",
+      "Linhas finas",
+      "Poros dilatados",
+      "Cravos"
+     ]
+    },
+    {
+     "key": "esthetician.phototype",
+     "name": "Fototipo",
+     "on": true,
+     "tags": [
+      "Tipo I",
+      "Tipo II",
+      "Tipo III",
+      "Tipo IV",
+      "Tipo V",
+      "Tipo VI"
+     ]
     },
     {
      "key": "esthetician.areas",
      "name": "Áreas",
-     "on": true
+     "on": true,
+     "tags": [
+      "Rosto todo",
+      "Testa",
+      "Zona T",
+      "Bochechas",
+      "Contorno mandibular",
+      "Olheiras",
+      "Buço",
+      "Pescoço",
+      "Colo",
+      "Costas"
+     ]
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Procedimento",
+     "on": true,
+     "tags": [
+      "Limpeza de pele profunda",
+      "Peeling químico",
+      "Microagulhamento",
+      "Extração",
+      "Hydrafacial",
+      "Dermaplaning",
+      "LED",
+      "Radiofrequência",
+      "Hidratação facial",
+      "Drenagem linfática facial"
+     ]
     },
     {
      "key": "esthetician.products",
      "name": "Produtos e ativos",
-     "on": true
-    },
-    {
-     "key": "esthetician.protocol",
-     "name": "Protocolo",
-     "on": true
+     "on": true,
+     "tags": [
+      "Ácido glicólico",
+      "Ácido salicílico",
+      "Ácido mandélico",
+      "Ácido lático",
+      "ATA",
+      "Retinol",
+      "Vitamina C",
+      "Niacinamida",
+      "Ácido azelaico",
+      "Ácido tranexâmico",
+      "Ácido hialurônico"
+     ]
     },
     {
      "key": "esthetician.technique",
-     "name": "Técnica",
-     "on": false
-    },
-    {
-     "key": "esthetician.reaction",
-     "name": "Reação",
-     "on": true
+     "name": "Concentração, profundidade e tempo",
+     "on": true,
+     "tags": [
+      "20%",
+      "35%",
+      "1 camada",
+      "2 camadas",
+      "3 min",
+      "0,5 mm",
+      "1,0 mm",
+      "1,5 mm",
+      "2 passadas",
+      "Frosting uniforme",
+      "Frosting irregular",
+      "Neutralizado"
+     ]
     },
     {
      "key": "esthetician.result",
      "name": "Resultado",
-     "on": true
-    },
-    {
-     "key": "esthetician.aftercare",
-     "name": "Cuidados pós-atendimento",
-     "on": true
+     "on": true,
+     "tags": [
+      "Pele com viço",
+      "Pele mais calma",
+      "Menos espinhas",
+      "Tom mais uniforme",
+      "Textura mais lisa",
+      "Bem hidratada",
+      "Precisa de mais sessões"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Eritema leve",
+    "Ardência ou queimação",
+    "Edema",
+    "Espinhas novas",
+    "Descamação",
+    "Frosting",
+    "Coceira",
+    "Manchas escuras"
+   ],
+   "aftercareTags": [
+    "Use FPS 50 todo dia",
+    "Não use ativos por 3 dias",
+    "Evite sol por 7 dias",
+    "Não puxe a pele descamando",
+    "Use sabonete suave",
+    "Use sérum hidratante",
+    "Sem maquiagem por 24 h",
+    "Sem sauna ou academia por 48 h"
    ]
   },
   {
@@ -248,52 +362,180 @@
    "fields": [
     {
      "key": "hair.hairCondition",
-     "name": "Condição do cabelo",
-     "on": true
+     "name": "Cabelo e couro cabeludo",
+     "on": true,
+     "tags": [
+      "Cabelo virgem",
+      "Fino",
+      "Grosso",
+      "Cacheado ou crespo",
+      "Poroso",
+      "Quebra",
+      "Pontas secas",
+      "Couro cabeludo oleoso",
+      "Couro cabeludo sensível",
+      "Caspa",
+      "Ralo"
+     ]
+    },
+    {
+     "key": "hair.naturalBase",
+     "name": "Altura de tom natural e brancos",
+     "on": true,
+     "tags": [
+      "Altura 3–4",
+      "Altura 5–6",
+      "Altura 7–8",
+      "Altura 9–10",
+      "Menos de 10% brancos",
+      "25% brancos",
+      "50% brancos",
+      "75%+ brancos",
+      "Brancos resistentes"
+     ]
     },
     {
      "key": "hair.previousColor",
-     "name": "Cor anterior",
-     "on": true
+     "name": "Histórico químico",
+     "on": true,
+     "tags": [
+      "Tinta de farmácia",
+      "Henna",
+      "Coloração permanente",
+      "Tonalizante ou banho de brilho",
+      "Mechas",
+      "Descoloração",
+      "Progressiva ou queratina",
+      "Relaxamento",
+      "Permanente",
+      "Decapagem"
+     ]
+    },
+    {
+     "key": "hair.allergyTest",
+     "name": "Teste de toque e de mecha",
+     "on": true,
+     "tags": [
+      "Teste de toque negativo",
+      "Teste de toque positivo",
+      "Não feito",
+      "Cliente recusou",
+      "Teste de mecha OK",
+      "Teste de mecha: ajustar fórmula"
+     ]
     },
     {
      "key": "hair.formula",
      "name": "Fórmula",
-     "on": true
+     "on": true,
+     "tags": [
+      "Raiz",
+      "Comprimento",
+      "Pontas",
+      "Tonalizante",
+      "1:1",
+      "1:1,5",
+      "1:2",
+      "Plex",
+      "Pré-pigmentação",
+      "Banho de brilho"
+     ]
     },
     {
      "key": "hair.developer",
      "name": "Oxidante",
-     "on": true
-    },
-    {
-     "key": "hair.technique",
-     "name": "Técnica",
-     "on": true
+     "on": true,
+     "tags": [
+      "1,5% (5 vol)",
+      "3% (10 vol)",
+      "6% (20 vol)",
+      "9% (30 vol)",
+      "12% (40 vol)",
+      "Ativador tom sobre tom"
+     ]
     },
     {
      "key": "hair.processingTime",
      "name": "Tempo de pausa",
-     "on": true
+     "on": true,
+     "tags": [
+      "10 min",
+      "20 min",
+      "30 min",
+      "35 min",
+      "45 min",
+      "Com calor",
+      "Até clarear"
+     ]
     },
     {
-     "key": "hair.products",
-     "name": "Produtos",
-     "on": false
+     "key": "hair.technique",
+     "name": "Técnica",
+     "on": true,
+     "tags": [
+      "Coloração global",
+      "Retoque de raiz",
+      "Mechas no papel",
+      "Balayage",
+      "Babylights",
+      "Contorno do rosto",
+      "Esfumado de raiz",
+      "Correção de cor",
+      "Só tonalizante",
+      "Corte",
+      "Escova"
+     ]
     },
     {
      "key": "hair.result",
      "name": "Resultado",
-     "on": true
+     "on": true,
+     "tags": [
+      "Cor uniforme",
+      "Tom desejado atingido",
+      "Mais quente que o previsto",
+      "Mais frio que o previsto",
+      "Cor em faixas",
+      "Precisa de tonalizante",
+      "Brilho saudável"
+     ]
     },
     {
      "key": "hair.preferences",
      "name": "Preferências",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sem tons quentes",
+      "Pouca manutenção",
+      "Quer clarear mais",
+      "Manter o comprimento",
+      "Corte a seco",
+      "Corte para cacheados",
+      "Assumindo os brancos"
+     ]
     }
    ],
    "intake": [
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Coceira no couro cabeludo",
+    "Ardência",
+    "Vermelhidão",
+    "Inchaço no couro cabeludo",
+    "Urticária",
+    "Quebra",
+    "Ressecamento"
+   ],
+   "aftercareTags": [
+    "Use shampoo sem sulfato",
+    "Espere 48 h para lavar",
+    "Use shampoo matizador",
+    "Tratamento reparador em casa",
+    "Use protetor térmico",
+    "Banho de brilho em 6 semanas",
+    "Enxágue com água fria"
    ]
   },
   {
@@ -397,49 +639,170 @@
    "fields": [
     {
      "key": "lash.set",
-     "name": "Modelo",
-     "on": true
+     "name": "Serviço",
+     "on": true,
+     "tags": [
+      "Fio a fio",
+      "Híbrido",
+      "Volume russo",
+      "Mega volume",
+      "Efeito molhado",
+      "Wispy",
+      "Manutenção",
+      "Remoção",
+      "Lash lifting",
+      "Lash lifting com tintura",
+      "Brow lamination"
+     ]
+    },
+    {
+     "key": "lash.naturalLashes",
+     "name": "Cílios naturais e olhos",
+     "on": true,
+     "tags": [
+      "Saudáveis",
+      "Ralos",
+      "Finos",
+      "Curtos",
+      "Retos",
+      "Para baixo",
+      "Falhas",
+      "Pálpebras oleosas",
+      "Olhos encapuzados",
+      "Pálpebra única",
+      "Olhos fundos"
+     ]
     },
     {
      "key": "lash.curl",
      "name": "Curvatura",
-     "on": true
-    },
-    {
-     "key": "lash.length",
-     "name": "Comprimento",
-     "on": true
+     "on": true,
+     "tags": [
+      "J",
+      "B",
+      "C",
+      "CC",
+      "D",
+      "DD",
+      "L",
+      "L+",
+      "M"
+     ]
     },
     {
      "key": "lash.thickness",
      "name": "Espessura",
-     "on": true
+     "on": true,
+     "tags": [
+      "0,03 mm",
+      "0,05 mm",
+      "0,07 mm",
+      "0,10 mm",
+      "0,12 mm",
+      "0,15 mm"
+     ]
     },
     {
      "key": "lash.mapping",
-     "name": "Mapping",
-     "on": true
+     "name": "Mapping e tamanhos",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Gatinho",
+      "Boneca",
+      "Esquilo",
+      "Olho aberto",
+      "Kim K",
+      "8-10-12",
+      "9-11-13",
+      "10-12-14",
+      "Canto interno curto"
+     ]
     },
     {
      "key": "lash.adhesive",
-     "name": "Cola",
-     "on": true
+     "name": "Cola e ambiente",
+     "on": true,
+     "tags": [
+      "Cola para sensíveis",
+      "Secagem 0,5 s",
+      "Secagem 1–2 s",
+      "Sem negro de fumo",
+      "Aberta há menos de 4 semanas",
+      "Umidade 40–50%",
+      "Umidade 50–65%",
+      "Teste de alergia feito"
+     ]
     },
     {
      "key": "lash.retention",
-     "name": "Retenção",
-     "on": true
+     "name": "Retenção na manutenção",
+     "on": true,
+     "tags": [
+      "75% ou mais",
+      "50–75%",
+      "Menos de 50%",
+      "Falhas no canto externo",
+      "Grudados ou torcidos",
+      "Cresceram",
+      "Arrancados"
+     ]
+    },
+    {
+     "key": "lash.liftSettings",
+     "name": "Parâmetros do lifting",
+     "on": false,
+     "tags": [
+      "Bigudi P",
+      "Bigudi M",
+      "Bigudi G",
+      "Bigudi GG",
+      "Lifting 6 min",
+      "Fixação 5 min",
+      "Tintura preta",
+      "Tintura marrom",
+      "Sérum de queratina"
+     ]
     },
     {
      "key": "lash.preferences",
      "name": "Preferências",
-     "on": false
+     "on": false,
+     "tags": [
+      "Efeito natural",
+      "Dramático",
+      "Sem canto interno",
+      "Dorme de lado",
+      "Lentes de contato",
+      "Usa rímel",
+      "Tendência a alergia"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Olhos lacrimejando",
+    "Ardência",
+    "Coceira nos olhos",
+    "Pálpebras inchadas",
+    "Olhos vermelhos",
+    "Mancha vermelha no olho",
+    "Sensível ao vapor da cola"
+   ],
+   "aftercareTags": [
+    "Não molhe por 24 h",
+    "Evite produtos oleosos",
+    "Escove os fios todo dia",
+    "Lave com shampoo de cílios",
+    "Não esfregue nem puxe",
+    "Evite vapor por 48 h",
+    "Durma de barriga para cima",
+    "Manutenção em 2–3 semanas"
    ]
   },
   {
@@ -542,42 +905,147 @@
    ],
    "fields": [
     {
+     "key": "nail.service",
+     "name": "Serviço",
+     "on": true,
+     "tags": [
+      "Manicure",
+      "Pedicure",
+      "Esmaltação em gel",
+      "Banho de gel",
+      "Acrílico",
+      "Polygel",
+      "Fibra de vidro",
+      "Tips",
+      "Manutenção",
+      "Remoção",
+      "Spa dos pés"
+     ]
+    },
+    {
      "key": "nail.nailCondition",
      "name": "Condição das unhas",
-     "on": true
+     "on": true,
+     "tags": [
+      "Saudáveis",
+      "Finas",
+      "Quebradiças",
+      "Descamando",
+      "Roídas",
+      "Estrias",
+      "Descolamento do leito",
+      "Manchadas",
+      "Cutículas ressecadas",
+      "Unha encravada",
+      "Unha do pé espessada"
+     ]
     },
     {
-     "key": "nail.shape",
-     "name": "Formato",
-     "on": true
-    },
-    {
-     "key": "nail.length",
-     "name": "Comprimento",
-     "on": true
-    },
-    {
-     "key": "nail.color",
-     "name": "Cor",
-     "on": true
+     "key": "nail.technique",
+     "name": "Preparação",
+     "on": true,
+     "tags": [
+      "Manicure com motor",
+      "Manicure a seco",
+      "Manicure tradicional",
+      "Só empurrar cutícula",
+      "Desidratador",
+      "Primer sem ácido",
+      "Lixamento leve"
+     ]
     },
     {
      "key": "nail.productSystem",
      "name": "Sistema de produtos",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sem HEMA",
+      "Rubber base",
+      "Gel construtor",
+      "Top coat no wipe",
+      "LED 60 s",
+      "UV/LED 30 s",
+      "Base e top da mesma marca"
+     ]
     },
     {
-     "key": "nail.technique",
-     "name": "Técnica",
-     "on": false
+     "key": "nail.shape",
+     "name": "Formato",
+     "on": true,
+     "tags": [
+      "Quadrada",
+      "Quadrada arredondada",
+      "Redonda",
+      "Oval",
+      "Amendoada",
+      "Bailarina",
+      "Stiletto",
+      "Batom"
+     ]
+    },
+    {
+     "key": "nail.length",
+     "name": "Comprimento",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Curta",
+      "Média",
+      "Longa",
+      "Extra longa"
+     ]
+    },
+    {
+     "key": "nail.color",
+     "name": "Cor e nail art",
+     "on": true,
+     "tags": [
+      "Nude",
+      "Francesinha",
+      "Baby boomer",
+      "Vermelho",
+      "Cromado",
+      "Olho de gato",
+      "Glitter",
+      "Degradê",
+      "Filha única",
+      "Arte à mão livre"
+     ]
     },
     {
      "key": "nail.durability",
-     "name": "Durabilidade",
-     "on": true
+     "name": "Durabilidade desde a última visita",
+     "on": true,
+     "tags": [
+      "Intacta com 3 semanas",
+      "Descolou na cutícula",
+      "Descolou nas laterais",
+      "Pontas lascadas",
+      "Unha quebrada",
+      "Crescimento grande",
+      "Removida antes do tempo"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Nenhuma",
+    "Vermelhidão na cutícula",
+    "Coceira nas pontas dos dedos",
+    "Esquentou na cabine",
+    "Inchaço",
+    "Dor no leito da unha",
+    "Bife (pequeno corte)"
+   ],
+   "aftercareTags": [
+    "Óleo de cutícula todo dia",
+    "Use luvas para limpar",
+    "Não puxe nem descasque",
+    "Não use a unha de ferramenta",
+    "Manutenção em 3 semanas",
+    "Não tire a cutícula em casa",
+    "Use removedor sem acetona"
+   ]
   },
   {
    "id": "makeup",
@@ -675,41 +1143,147 @@
     {
      "key": "makeup.event",
      "name": "Evento",
-     "on": true
+     "on": true,
+     "tags": [
+      "Noiva",
+      "Teste de noiva",
+      "Madrinha ou convidada",
+      "Formatura",
+      "Debutante (15 anos)",
+      "Festa",
+      "Ensaio fotográfico",
+      "Corporativo",
+      "Mãe da noiva"
+     ]
+    },
+    {
+     "key": "makeup.skinType",
+     "name": "Tipo de pele",
+     "on": true,
+     "tags": [
+      "Oleosa",
+      "Seca",
+      "Mista",
+      "Madura",
+      "Sensível",
+      "Acneica",
+      "Com textura",
+      "Desidratada"
+     ]
     },
     {
      "key": "makeup.look",
      "name": "Look",
-     "on": true
+     "on": true,
+     "tags": [
+      "Natural",
+      "Soft glam",
+      "Full glam",
+      "Olho esfumado",
+      "Cut crease",
+      "Delineado gráfico",
+      "Boca marcante",
+      "Pele iluminada",
+      "Pele matte"
+     ]
     },
     {
      "key": "makeup.skinPrep",
      "name": "Preparação da pele",
-     "on": false
+     "on": true,
+     "tags": [
+      "Primer hidratante",
+      "Primer matificante",
+      "Preenchedor de poros",
+      "Patches para olheiras",
+      "Corretivo colorido",
+      "Primer aderente",
+      "Base sem FPS"
+     ]
     },
     {
      "key": "makeup.foundation",
-     "name": "Base",
-     "on": true
+     "name": "Base e tom",
+     "on": true,
+     "tags": [
+      "Quente",
+      "Neutro",
+      "Frio",
+      "Oliva",
+      "Mistura de 2 tons",
+      "Cobertura leve",
+      "Cobertura média",
+      "Cobertura alta",
+      "Oxida: 1 tom mais claro"
+     ]
     },
     {
-     "key": "makeup.shade",
-     "name": "Tom",
-     "on": true
+     "key": "makeup.lashes",
+     "name": "Cílios",
+     "on": true,
+     "tags": [
+      "Sem cílios",
+      "Cílios em fita",
+      "Tufos",
+      "Fio a fio",
+      "Cola sem látex",
+      "Rímel à prova d'água"
+     ]
+    },
+    {
+     "key": "makeup.setting",
+     "name": "Fixação e durabilidade",
+     "on": true,
+     "tags": [
+      "Spray fixador",
+      "Pó translúcido",
+      "Baking",
+      "Olhos à prova d'água",
+      "Durou o dia todo",
+      "Saiu na zona T",
+      "Kit de retoque entregue"
+     ]
     },
     {
      "key": "makeup.products",
      "name": "Produtos",
-     "on": true
+     "on": false,
+     "tags": []
     },
     {
      "key": "makeup.preferences",
      "name": "Preferências",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sem cintilante",
+      "Base leve",
+      "Usa óculos",
+      "Lentes de contato",
+      "Olhos sensíveis",
+      "Véu",
+      "Fotos com flash",
+      "Ao ar livre ou úmido"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Olhos lacrimejando",
+    "Coceira nos olhos",
+    "Vermelhidão",
+    "Espinhas",
+    "Reação à cola de cílios",
+    "Sensação de peso"
+   ],
+   "aftercareTags": [
+    "Rotina de demaquiagem",
+    "Papel matificante",
+    "Retoques de batom",
+    "Remova os cílios com cuidado",
+    "Hidrate antes de dormir"
    ]
   },
   {
@@ -806,50 +1380,174 @@
    ],
    "fields": [
     {
-     "key": "tattoo.design",
-     "name": "Desenho",
-     "on": true
+     "key": "tattoo.procedure",
+     "name": "Procedimento",
+     "on": true,
+     "tags": [
+      "Microblading",
+      "Nanoblading",
+      "Sobrancelha shadow",
+      "Técnica mista",
+      "Lip blush",
+      "Delineado",
+      "Interlinha",
+      "Aréola",
+      "Tatuagem fine line",
+      "Cobertura",
+      "Correção"
+     ]
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Sessão",
+     "on": true,
+     "tags": [
+      "Primeira sessão",
+      "Retoque 6–8 semanas",
+      "Manutenção anual",
+      "Reforço de cor",
+      "Continuação",
+      "Correção"
+     ]
+    },
+    {
+     "key": "tattoo.healthCheck",
+     "name": "Contraindicações do dia",
+     "on": true,
+     "tags": [
+      "Sem novidades",
+      "Anticoagulante",
+      "Isotretinoína",
+      "Gestante ou lactante",
+      "Tendência a queloide",
+      "Diabetes",
+      "Herpes (tomou antiviral)",
+      "Preenchimento ou Botox recente",
+      "Micro antiga ou laser"
+     ]
     },
     {
      "key": "tattoo.placement",
      "name": "Local",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sobrancelhas",
+      "Lábios",
+      "Linha superior dos cílios",
+      "Linha inferior dos cílios",
+      "Pulso",
+      "Antebraço",
+      "Tornozelo",
+      "Atrás da orelha",
+      "Costelas",
+      "Costas"
+     ]
     },
     {
-     "key": "tattoo.technique",
-     "name": "Técnica",
-     "on": true
+     "key": "tattoo.design",
+     "name": "Desenho",
+     "on": true,
+     "tags": [
+      "Mapeamento da sobrancelha",
+      "Cliente aprovou",
+      "Foto de referência",
+      "Decalque",
+      "Mão livre",
+      "Fine line",
+      "Pontilhismo",
+      "Lettering"
+     ]
     },
     {
      "key": "tattoo.pigments",
-     "name": "Pigmentos",
-     "on": true
+     "name": "Pigmentos e lote",
+     "on": true,
+     "tags": [
+      "Marrom quente",
+      "Marrom acinzentado",
+      "Marrom neutro",
+      "Corretor laranja",
+      "Nude rosado",
+      "Coral",
+      "Vermelho",
+      "Preto",
+      "Lote anotado"
+     ]
     },
     {
      "key": "tattoo.tools",
-     "name": "Materiais",
-     "on": true
+     "name": "Agulha e máquina",
+     "on": true,
+     "tags": [
+      "1RL",
+      "3RL",
+      "Nano 0,18",
+      "U-blade 14",
+      "Slope 18 pinos",
+      "Magnum",
+      "Lote do cartucho anotado",
+      "Velocidade baixa",
+      "Velocidade alta"
+     ]
     },
     {
-     "key": "tattoo.sessionNumber",
-     "name": "Número da sessão",
-     "on": true
+     "key": "tattoo.skinResponse",
+     "name": "Resposta da pele",
+     "on": true,
+     "tags": [
+      "Normal",
+      "Oleosa",
+      "Fina",
+      "Madura",
+      "Sangrou muito",
+      "Inchou",
+      "Pouca fixação",
+      "Tecido cicatricial"
+     ]
     },
     {
      "key": "tattoo.healing",
-     "name": "Cicatrização",
-     "on": true
-    },
-    {
-     "key": "tattoo.followUp",
-     "name": "Retorno",
-     "on": true
+     "name": "Resultado após cicatrização",
+     "on": true,
+     "tags": [
+      "Uniforme",
+      "Com falhas",
+      "Muito claro",
+      "Muito escuro",
+      "Borrado ou migrado",
+      "Acinzentado",
+      "Quente ou alaranjado",
+      "Muitas casquinhas",
+      "Estourado",
+      "Sinais de infecção"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Inchaço normal",
+    "Sangramento",
+    "Secreção",
+    "Muitas casquinhas",
+    "Coceira",
+    "Herpes labial",
+    "Sinais de infecção",
+    "Relevo e coceira"
+   ],
+   "aftercareTags": [
+    "Não molhe por 7 dias",
+    "Camada fina de pomada",
+    "Não tire as casquinhas",
+    "Evite sol por 30 dias",
+    "Evite piscina, mar e sauna",
+    "Second skin 3–5 dias",
+    "Sem maquiagem na área",
+    "Antiviral antes da micro labial"
    ]
   },
   {
@@ -954,35 +1652,145 @@
     {
      "key": "barber.cut",
      "name": "Corte",
-     "on": true
-    },
-    {
-     "key": "barber.guards",
-     "name": "Tamanho da máquina",
-     "on": true
+     "on": true,
+     "tags": [
+      "Crop",
+      "Corte na máquina",
+      "Militar",
+      "Topete",
+      "Penteado para trás",
+      "Risca lateral",
+      "Mullet",
+      "Black power",
+      "Twists",
+      "Corte na tesoura"
+     ]
     },
     {
      "key": "barber.fade",
      "name": "Degradê",
-     "on": true
+     "on": true,
+     "tags": [
+      "Navalhado",
+      "Baixo",
+      "Médio",
+      "Alto",
+      "Drop",
+      "Burst",
+      "Taper",
+      "Taper baixo",
+      "Sem degradê"
+     ]
+    },
+    {
+     "key": "barber.guards",
+     "name": "Pentes e alturas",
+     "on": true,
+     "tags": [
+      "Sem pente",
+      "Pente 0,5",
+      "Pente 1",
+      "Pente 1,5",
+      "Pente 2",
+      "Pente 3",
+      "Pente 4",
+      "2 cm em cima",
+      "Tesoura em cima",
+      "Alavanca aberta"
+     ]
+    },
+    {
+     "key": "barber.neckline",
+     "name": "Pezinho e detalhes",
+     "on": true,
+     "tags": [
+      "Pezinho disfarçado",
+      "Quadrado",
+      "Arredondado",
+      "Contorno na navalha",
+      "Risca na navalha",
+      "Desenho",
+      "Limpeza de sobrancelha",
+      "Pelos do nariz e orelha"
+     ]
     },
     {
      "key": "barber.beard",
      "name": "Barba",
-     "on": true
+     "on": true,
+     "tags": [
+      "Barba feita",
+      "Barba por fazer",
+      "Barba curta",
+      "Barba cheia",
+      "Cavanhaque",
+      "Barba degradê",
+      "Só contorno",
+      "Barba na toalha quente",
+      "Pigmentação de barba"
+     ]
+    },
+    {
+     "key": "barber.skinScalp",
+     "name": "Pele e couro cabeludo",
+     "on": true,
+     "tags": [
+      "Foliculite",
+      "Pelos encravados",
+      "Pele sensível",
+      "Caspa",
+      "Rarefação na coroa",
+      "Entradas",
+      "Redemoinho",
+      "Cicatriz"
+     ]
     },
     {
      "key": "barber.products",
      "name": "Produtos",
-     "on": false
+     "on": false,
+     "tags": [
+      "Argila matte",
+      "Pomada",
+      "Cera",
+      "Spray de sal marinho",
+      "Óleo para barba",
+      "Balm para barba",
+      "Balm pós-barba"
+     ]
     },
     {
      "key": "barber.preferences",
      "name": "Preferências",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sem navalha",
+      "Barbear a favor do pelo",
+      "A cada 15 dias",
+      "A cada 3 semanas",
+      "Manter o comprimento em cima",
+      "Atendimento silencioso"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Nenhuma",
+    "Foliculite",
+    "Irritação",
+    "Pequenos cortes",
+    "Pelos encravados",
+    "Ardência da máquina",
+    "Coceira no couro cabeludo"
+   ],
+   "aftercareTags": [
+    "Balm pós-barba",
+    "Esfolie 2x por semana",
+    "Óleo na barba todo dia",
+    "Barbeie a favor do pelo",
+    "Use aparelho de 1 lâmina",
+    "Evite bonés apertados"
+   ]
   },
   {
    "id": "massage",
@@ -1084,44 +1892,166 @@
    ],
    "fields": [
     {
-     "key": "massage.focusAreas",
-     "name": "Áreas de foco",
-     "on": true
-    },
-    {
-     "key": "massage.pressure",
-     "name": "Pressão",
-     "on": true
-    },
-    {
      "key": "massage.technique",
-     "name": "Técnica",
-     "on": true
-    },
-    {
-     "key": "massage.oils",
-     "name": "Óleos e produtos",
-     "on": false
+     "name": "Tipo de massagem",
+     "on": true,
+     "tags": [
+      "Relaxante",
+      "Profunda",
+      "Drenagem linfática",
+      "Drenagem pós-operatória",
+      "Esportiva",
+      "Pontos-gatilho",
+      "Liberação miofascial",
+      "Pedras quentes",
+      "Reflexologia",
+      "Modeladora",
+      "Para gestantes"
+     ]
     },
     {
      "key": "massage.contraindications",
      "name": "Contraindicações",
-     "on": true
+     "on": true,
+     "tags": [
+      "Nenhuma relatada",
+      "Gravidez",
+      "Varizes",
+      "Cirurgia recente",
+      "Anticoagulante",
+      "Pressão alta",
+      "Histórico de trombose",
+      "Lesão de pele",
+      "Febre",
+      "Tratamento oncológico",
+      "Liberação médica"
+     ]
+    },
+    {
+     "key": "massage.focusAreas",
+     "name": "Áreas de foco",
+     "on": true,
+     "tags": [
+      "Pescoço",
+      "Ombros",
+      "Parte alta das costas",
+      "Lombar",
+      "Glúteos",
+      "Posteriores da coxa",
+      "Panturrilhas",
+      "Pés",
+      "Braços",
+      "Abdômen",
+      "Rosto e couro cabeludo"
+     ]
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Pressão",
+     "on": true,
+     "tags": [
+      "Leve",
+      "Média",
+      "Firme",
+      "Profunda",
+      "Varia por região"
+     ]
+    },
+    {
+     "key": "massage.findings",
+     "name": "Avaliação",
+     "on": true,
+     "tags": [
+      "Nódulos",
+      "Tensão muscular",
+      "Retenção de líquido",
+      "Edema",
+      "Fibrose",
+      "Pontos dolorosos",
+      "Movimento limitado",
+      "Celulite"
+     ]
+    },
+    {
+     "key": "massage.painLevel",
+     "name": "Dor (0–10)",
+     "on": false,
+     "tags": [
+      "0",
+      "2",
+      "4",
+      "6",
+      "8",
+      "10"
+     ]
+    },
+    {
+     "key": "massage.oils",
+     "name": "Óleos e produtos",
+     "on": false,
+     "tags": [
+      "Amêndoas doces",
+      "Semente de uva",
+      "Coco",
+      "Sem perfume",
+      "Sem oleaginosas",
+      "Arnica",
+      "Creme para drenagem",
+      "Lavanda"
+     ]
+    },
+    {
+     "key": "massage.postOp",
+     "name": "Detalhes do pós-operatório",
+     "on": false,
+     "tags": [
+      "Lipoaspiração",
+      "Abdominoplastia",
+      "Mamoplastia",
+      "BBL",
+      "7º dia",
+      "15º dia",
+      "30º dia",
+      "Cinta compressiva",
+      "Seroma"
+     ]
     },
     {
      "key": "massage.result",
      "name": "Resultado",
-     "on": true
-    },
-    {
-     "key": "massage.homeCare",
-     "name": "Cuidados em casa",
-     "on": false
+     "on": true,
+     "tags": [
+      "Relaxamento",
+      "Menos dor",
+      "Menos inchaço",
+      "Mais mobilidade",
+      "Ainda com tensão",
+      "Dor após a sessão"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Dor muscular",
+    "Hematoma",
+    "Tontura",
+    "Dor de cabeça",
+    "Sensibilidade ao óleo",
+    "Dor em um ponto",
+    "Relaxamento profundo"
+   ],
+   "aftercareTags": [
+    "Beba água",
+    "Evite banho quente por 24 h",
+    "Faça alongamento leve",
+    "Use a cinta compressiva",
+    "Use gelo se doer",
+    "Faça uma caminhada leve",
+    "Descanse 2 h"
    ]
   },
   {
@@ -1181,21 +2111,43 @@
     {
      "key": "other.notes",
      "name": "Anotações",
-     "on": true
+     "on": true,
+     "tags": []
     },
     {
      "key": "other.result",
      "name": "Resultado",
-     "on": true
+     "on": true,
+     "tags": [
+      "Foi tudo bem",
+      "Conforme o planejado",
+      "Precisa de retorno"
+     ]
     },
     {
      "key": "other.nextSteps",
      "name": "Próximos passos",
-     "on": true
+     "on": true,
+     "tags": [
+      "Consulta de retorno",
+      "Cuidados em casa",
+      "Procure um médico"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Nenhuma",
+    "Vermelhidão",
+    "Desconforto",
+    "Inchaço"
+   ],
+   "aftercareTags": [
+    "Descanse",
+    "Beba água",
+    "Siga as orientações dadas"
    ]
   }
  ]

@@ -19,6 +19,7 @@ Nothing here blocks the build; each item has a safe default in use.
 | 2026-10-08 | **D43 Environment:** the owner said `bello-hub` may be used as the **development** environment ("the project is still in development, errors in production do not matter at this stage"): real rules, functions and hosting may be deployed to it. | Supersedes the deploy limits of ASSUMPTION-1 for `bello-hub` only. Still in force: never turn on App Check enforcement, never run destructive commands against existing data, never publish to the App Store or open a market. A real `prod` project must be created and kept deny-all before launch (human task H4). Cloud Functions need the Blaze plan: the owner links billing in the console. |
 | 2026-10-09 | **D44 to D52:** Sign in with Apple is the main sign-in of the professional (phone as alternative); no first-visit questions on the booking page (she asks in the app); policies apply from the moment of booking and the app and web say so; e-mail-code verification on the web with the strict CSP; guests as a count; the consent text comes from the server; no manage token in third-party URLs; retired inbox keys stop after 24 h (at once on compromise); forms are reached from the booking link. | Work launched on 2026-10-09: sign-in with Apple (iOS), web and backend alignment (see "Current stage"). `docs/02-DECISIONS.md` has the full text. |
 | 2026-10-10 | **D56 Smart slots** (owner's request "se a profissional tem serviços com tempos variados… fazer melhor", spec `docs/tasks/smart-slots.md`): anchored start times, per-service prep/clean-up/processing time, a slot interval setting and "Keep my day compact" with an honest fallback. | Built on `build/v1` after S9 (notes `docs/agent-notes/smart-slots.md`); deployed to dev. |
+| 2026-10-12 | **Device-test feedback (owner on his iPhone 15 Pro):** (1) no word may break in the middle in any language; (2) the visit form specialized per niche with quick answers to tap, free text kept; (3) **D60** health forms are her own papers: 4.5 becomes a folder, the in-app questionnaire is removed; (4) the Home avatar opens a quick access sheet. | `FittingRow`/`FittingGrid` replace the accessibility-size stacking; catalog `tags`, `reactionTags`, `aftercareTags` in all 14 catalogs (research in `docs/agent-notes/record-fields-by-niche.md`); health-form records reuse the consent record (D55); `QuickAccessSheet` opens the More screens. Built without a compiler: the owner builds on his Mac. |
 
 **Plan item L (legal drafting pass), right after S2, done 2026-10-08 (98 drafts, see the stage log):** for every market, the terms and data processing agreement, privacy policy, client notice, health-form consent, photo consent, guardian consent and data-subject-request wording, written as carefully as possible in the language of each region set (`docs/07-LOCALIZATION.md` section 8), versioned under `legal/<doc>/<localization>/<version>.md`, with `legal/STATUS.md` and `scripts/check-legal-status.sh`. Refined in S11 once the screens that show them exist. Marked `LEGAL-REVIEW` in the headers, never claiming compliance (`docs/06` section 12).
 
@@ -113,6 +114,15 @@ Read by `scripts/check-strings.sh --final` (S11): a `needs_review` string is all
 `build/v1` at `87e45ca` or later is the truth: S0 to S5 tagged; S6 (calendar, appointment) and S7 flow merged; fast 1426+, smoke and `check-warnings` zero warnings on the merged tree; installed on both iPhones. Four agents may have died with the limit: `s6-home`, `s7-record`, `s8-publish` (Sonnet) and `s10-account` (Fable). For each: `git -C .claude/worktrees/<agent dir> log --oneline` and `status`, read its `docs/agent-notes/<slice>.md`, and launch a NEW agent (sonnet or fable, effort `medium` at most) pointed at the same worktree and branch with the original brief shortened to "finish, verify, commit"; then merge each branch (conflicts are always the same: `MainView`, `RootView`, `AppDependencies`, `UITestSeeding`, `UISmoke.xctestplan`: keep both sides; regenerate the catalog with `git checkout --ours BelloHub/SupportFiles/Localizable.xcstrings && python3 scripts/merge-strings.py`), run `scripts/test.sh fast`, `smoke`, `scripts/check-warnings.sh`, tag `stage-S6` when "home" is merged. Then queue: S8 "inbox", D55 consent removal (web+backend with Fable now; iOS after S10 merges), wire the S7 Start/Records/Incident/Export rows, add the AI settings row to More, S9 integration, S10 merge, S11, S12. Deployed: backend and web at `https://bello-hub.web.app` (dev); the app does not publish yet (waits for `s8-publish`).
 
 ### RESUME HERE (living block: updated at every milestone; a cut of the session costs little if this is current)
+**2026-10-12: Client records and agenda on `claude/practical-dijkstra-hy0d79` (not merged, NOT COMPILED).** Written in a
+Linux cloud container without a Swift toolchain at the owner's request; notes, decisions, scenarios and limits in
+`docs/agent-notes/client-records.md`, stage log "Client records and agenda". The client record is the center
+(History/Photos/Information/Documents, timeline by links, visit details, reuse), the visit form is one screen with
+drafts and a visit day, the agenda opens the record and never finalizes it, saved options with Personalization,
+Before you start shows the last visit, Home/Alerts list records owed, documents per visit, required and per-service
+fields, honest onboarding. **First thing on a Mac:** `scripts/build.sh`, fix what the compiler says, then
+`scripts/test.sh fast`, `smoke` and `check-warnings.sh`.
+
 **2026-10-12: Client messages and location done on `build/v1`, tag `client-messages-done`** (task
 `docs/tasks/client-messages-and-location.md`, notes `docs/agent-notes/client-messages-location.md`, stage log
 "Client messages and location"). Every link in a client message is a full `https://` address on its own line
@@ -482,6 +492,14 @@ e2e-local 9; UI suites BookingSetup, Inbox, Home, Appointment, Publish, SuggestT
 `BookingSetupContrastTests`); e-mail colors measured in `messaging.test.ts`.
 Open questions: none. Human tasks: H7 note on `EMAIL_REPLY_TO`; H8 checklist extended (WhatsApp/Instagram opening the
 exact link, e-mail links in Outlook/Gmail/Apple Mail, Apple Maps and Google Maps).
+
+### Client records and agenda · written 2026-10-12 · not compiled (no tag)
+Branch `claude/practical-dijkstra-hy0d79`, commits `867db07`, `1f4a3aa`, `700dd24`, `ac80c38`, `900f926`, `25e8aeb` and
+the docs commit. Data: `TreatmentRecord.performedAt/status/finalizedAt/reaction/nextVisitReminder` (additive, old
+records decode as finalized with no visit day), `ConsentRecord.recordID`, `SavedOption` (new vault kind, sealed name),
+`RecordFieldSetting.isRequired/serviceIDs`, `NotificationPrefs.recordsToWrite`. Strings: `client-record.json`,
+`visit-form.json`, `agenda-records-options.json`, `record-followups.json` and edits in older batches; check-strings,
+privacy, localization-sources, professions and health-forms checks green on Linux. Not run: any build or test.
 
 ## Assumptions
 | # | Assumption | Reason | Stage |

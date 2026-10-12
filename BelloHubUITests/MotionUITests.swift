@@ -54,7 +54,8 @@ final class MotionUITests: XCTestCase {
         app.tapButton("calendar.nextButton")
         XCTAssertTrue(app.element("calendar.week.dayViewButton").waitForExistence(timeout: 8), "the next week is empty")
         app.segmentedControls["calendar.modePicker"].buttons.element(boundBy: 0).tap()
-        XCTAssertTrue(app.elements(prefix: "calendar.stripDay.").firstMatch.waitForExistence(timeout: 8), "no day strip")
+        let stripDay = app.elements(prefix: "calendar.stripDay.").firstMatch
+        XCTAssertTrue(stripDay.waitForExistence(timeout: 8), "no day strip")
     }
 
     private func selectedDayLabel(_ app: XCUIApplication) -> String? {
@@ -87,7 +88,8 @@ final class MotionUITests: XCTestCase {
         app.goBack()
         XCTAssertTrue(app.element("alerts.subtitle").waitForExistence(timeout: 8))
         XCTAssertTrue(
-            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10), "the answered request is still listed"
+            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10),
+            "the answered request is still listed"
         )
         XCTAssertTrue(app.element("alerts.reschedule.rr-camila").exists, "the other request left too")
     }
@@ -126,17 +128,9 @@ final class MotionUITests: XCTestCase {
         let app = XCUIApplication.launchedForUITests(arguments: [
             "-uiSeed", "clientWithHealth", "-uiRoute", "treatmentFlow", "-uiTreatmentFlow", "-uiCamera", "scripted"
         ] + extra)
-        XCTAssertTrue(app.buttons["treatmentFlow.register.manualButton"].waitForExistence(timeout: 30))
-        app.tapButton("treatmentFlow.register.manualButton")
-        app.typeNotes("Calm skin, no reaction.")
-        app.tapButton("treatmentFlow.form.saveButton")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 30))
 
-        // Saved: the seal plays above the badge and the button below is tappable at once.
-        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
-        app.tapButton("treatmentFlow.saved.continueButton")
-
-        // A photo: the capture flashes, the review opens, saving returns to the list with its row.
-        XCTAssertTrue(app.element("treatmentFlow.photos.consent").waitForExistence(timeout: 10))
+        // A photo first: the capture flashes, the review opens, saving returns to the form with its tile.
         app.tapButton("treatmentFlow.photos.takeButton")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         app.tapButton("treatmentFlow.camera.captureButton")
@@ -144,9 +138,12 @@ final class MotionUITests: XCTestCase {
         app.tapButton("treatmentFlow.camera.saveButton")
         XCTAssertTrue(app.element(withPrefix: "treatmentFlow.photos.row.").waitForExistence(timeout: 20))
 
-        // The brief seal is still on screen: the buttons under it answer at once.
-        app.tapButton("treatmentFlow.photos.continueButton")
-        XCTAssertTrue(app.element("treatmentFlow.aftercare").waitForExistence(timeout: 10))
+        // Finalized: the seal plays and the buttons below are tappable at once.
+        app.typeNotes("Calm skin, no reaction.")
+        app.tapButton("treatmentFlow.form.saveButton")
+        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
+        app.tapButton("treatmentFlow.saved.doneButton")
+        XCTAssertTrue(app.element("treatmentFlow.debug.closed").waitForExistence(timeout: 10))
     }
 
     // MARK: - Helpers

@@ -19,10 +19,13 @@ struct ClientsTabView: View {
     @Environment(VaultService.self) private var vault
     @Environment(ProfileService.self) private var profile
     @Environment(ClientRegistrationService.self) private var registration
-    // A `NavigationPath`, not `[ClientsRoute]`: the stack also pushes `RecordRoute` (4.7), whose destinations come from
-    // `.recordDestinations()`.
+    // A `NavigationPath`, not `[ClientsRoute]`: the stack also pushes `RecordRoute` (a visit's details) and
+    // `AgendaRoute` (an appointment, a session plan), whose destinations come from `.recordDestinations()` and
+    // `.agendaDestinations()`.
     @State private var path = NavigationPath()
     @State private var recordSheet: RecordSheet?
+    @State private var agendaSheet: AgendaSheet?
+    @State private var visitFlow: TreatmentFlowRequest?
     @State private var sheet: Sheet?
     // Why here: the phone normalizer needs the region table, and this is the one place that reads it for the tab.
     @State private var regions = (try? RegionCatalog.loadBundled()) ?? RegionCatalog(presets: [])
@@ -34,8 +37,11 @@ struct ClientsTabView: View {
             )
             .navigationDestination(for: ClientsRoute.self) { destination($0) }
             .recordDestinations()
+            .agendaDestinations()
         }
         .recordSheet(item: $recordSheet)
+        .agendaSheet(item: $agendaSheet)
+        .treatmentFlow(item: $visitFlow)
         .sheet(item: $sheet) { sheet in
             switch sheet {
             case .newClient: newClient
@@ -52,7 +58,8 @@ struct ClientsTabView: View {
         case .profile(let clientID):
             ClientProfileView(
                 clientID: clientID, vault: vault, profile: profile, onOpen: { path.append($0) },
-                onRecord: { path.append($0) }, onRecordSheet: { recordSheet = $0 }
+                onRecord: { path.append($0) }, onRecordSheet: { recordSheet = $0 },
+                onVisitFlow: { visitFlow = $0 }, onAgendaSheet: { agendaSheet = $0 }
             )
         case .edit(let clientID):
             ClientEditView(

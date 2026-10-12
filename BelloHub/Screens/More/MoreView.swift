@@ -82,7 +82,12 @@ struct MoreView: View {
                     MoreRow(icon: .bell, tint: .peach, title: Text("more.row.notifications"), showsChevron: true)
                 }
                 link(.aiSettings, identifier: "more.aiSettingsRow") {
-                    MoreRow(icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"), showsChevron: true)
+                    // Voice and the assistant are optional and may not be available on this iPhone yet; the row
+                    // says so, so nobody expects them to be on.
+                    MoreRow(
+                        icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"),
+                        subtitle: Text("more.row.aiSettings.subtitle"), showsChevron: true
+                    )
                 }
                 link(.integrations, identifier: "more.integrationsRow") {
                     MoreRow(icon: .link, tint: .sage, title: Text("more.row.integrations"), showsChevron: true)
@@ -164,6 +169,12 @@ struct MoreView: View {
                         subtitle: Text("more.row.forms.subtitle"), showsChevron: true
                     )
                 }
+                link(.personalization, identifier: "more.personalizationRow") {
+                    MoreRow(
+                        icon: .sliders, tint: .peach, title: Text("more.row.personalization"),
+                        subtitle: Text("more.row.personalization.subtitle"), showsChevron: true
+                    )
+                }
                 link(.tags, identifier: "more.tagsRow") {
                     MoreRow(
                         icon: .tag, tint: .rose, title: Text("more.row.tags"), subtitle: tagsSubtitle,
@@ -212,15 +223,14 @@ struct MoreView: View {
             .accessibilityIdentifier(identifier)
     }
 
-    /// "Bello Hub Pro" or "No plan yet"; nothing until the store answered.
-    private var planSubtitle: Text? {
-        guard let state = subscription?.state else { return nil }
-        switch state {
-        case .unknown: return nil
-        case .none: return Text("more.row.plan.none")
-        case .active, .inGracePeriod: return Text("more.row.plan.active")
-        }
+    private var subtitles: SettingsSubtitles {
+        SettingsSubtitles(
+            profile: profile, bookingSetup: bookingSetup, publishing: publishing, subscription: subscription,
+            locale: locale
+        )
     }
+
+    private var planSubtitle: Text? { subtitles.plan }
 
     /// Reminds her to save the recovery key until she does.
     private var privacySubtitle: Text? {
@@ -245,45 +255,13 @@ struct MoreView: View {
         ).localized(in: locale))
     }
 
-    /// "Not online yet" until her page is published, then "Taking bookings", "Paused" or "Paused until Oct 20"; nothing
-    /// until the settings are read.
-    private var bookingPageSubtitle: Text? {
-        guard bookingSetup.hasLoaded else { return nil }
-        let zone = timeZone
-        let formatters = Formatters(locale: locale, timeZone: zone, currencyCode: "EUR")
-        let summary = BookingSetupSummary.page(
-            bookingSetup.setup.page, now: Date(), timeZone: zone, formatters: formatters
-        )
-        return Text(PublishStatusText.rowSubtitle(publishing.state, pageSummary: summary).localized(in: locale))
-    }
+    private var bookingPageSubtitle: Text? { subtitles.bookingPage() }
 
-    /// "Tue to Sat · 09:00 – 19:00"; nothing until the settings are read.
-    private var availabilitySubtitle: Text? {
-        guard bookingSetup.hasLoaded else { return nil }
-        let formatters = Formatters(locale: locale, timeZone: bookingSetup.availability.timeZone, currencyCode: "EUR")
-        let firstWeekday = profile.profile?.weekConfig.firstWeekday ?? Calendar.current.firstWeekday
-        return Text(verbatim: AvailabilityText(formatters: formatters, firstWeekday: firstWeekday)
-            .weekSummary(of: bookingSetup.availability))
-    }
+    private var availabilitySubtitle: Text? { subtitles.availability }
 
-    private var timeZone: TimeZone {
-        profile.profile.flatMap { TimeZone(identifier: $0.timeZoneID) } ?? .current
-    }
+    private var name: String { subtitles.name }
 
-    private var name: String {
-        profile.profile?.publicName ?? ""
-    }
-
-    /// "Esthetician · Brazil": her first profession and her region, in the language of the app.
-    private var subtitle: String {
-        guard let current = profile.profile else { return "" }
-        let region = locale.localizedString(forRegionCode: current.regionCode)
-        // The profession's name is interface text: the interface language, not the business one.
-        let localization = AppLocalization(resolving: locale)
-        let profession = (try? ProfessionCatalog.loadBundled(localization: localization))
-            .flatMap { catalog in current.professions.first.flatMap { catalog.entry(for: $0)?.name } }
-        return [profession, region].compactMap { $0 }.joined(separator: " · ")
-    }
+    private var subtitle: String { subtitles.headline }
 }
 
 #if DEBUG

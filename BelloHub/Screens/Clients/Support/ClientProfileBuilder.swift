@@ -26,7 +26,9 @@ enum ClientProfileBuilder {
             lastVisit: own.filter { $0.status == .completed }.max { $0.startsAt < $1.startsAt },
             nextAppointment: own.filter { $0.status.holdsTime && $0.startsAt >= now }.min { $0.startsAt < $1.startsAt },
             plan: activePlan(plans: input.plans, appointments: own, calendar: calendar),
-            health: .make(forms: input.forms, consents: input.consents)
+            health: .make(forms: input.forms, consents: input.consents),
+            consents: input.consents.sorted { $0.effectiveDate > $1.effectiveDate },
+            forms: input.forms.sorted { ($0.signedAt ?? .distantPast) > ($1.signedAt ?? .distantPast) }
         )
     }
 

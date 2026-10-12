@@ -35,6 +35,7 @@ struct RootView: View {
     @State private var language: InterfaceLanguageService
     @State private var navigation: MainNavigation
     @State private var followUpQueue: FollowUpQueueService
+    @State private var options: OptionCatalogService
     @State private var timeZoneNotice: TimeZoneNoticeService
     @State private var model: RootViewModel
     private let regions: RegionCatalog
@@ -79,6 +80,7 @@ struct RootView: View {
         _followUpQueue = State(initialValue: FollowUpQueueService(
             defaults: dependencies.defaults, vault: dependencies.vault
         ))
+        _options = State(initialValue: OptionCatalogService(vault: dependencies.vault))
         let regions = (try? RegionCatalog.loadBundled()) ?? RegionCatalog(presets: [])
         _timeZoneNotice = State(initialValue: .forApp(defaults: dependencies.defaults, regions: regions))
         _model = State(initialValue: RootViewModel(
@@ -122,6 +124,7 @@ struct RootView: View {
         .environment(language)
         .environment(navigation)
         .environment(followUpQueue)
+        .environment(options)
         .environment(timeZoneNotice)
         .belloLocaleTypography()
         // The interface language, above every stage, the privacy cover and the lock screen: sheets, alerts, menus and
@@ -154,9 +157,11 @@ struct RootView: View {
                 push.startListening(userId: userID)
                 followUpQueue.start(userID: userID)
                 timeZoneNotice.start(userID: userID)
+                Task { await options.reload() }
             } else if stage != .app {
                 followUpQueue.stop()
                 timeZoneNotice.stop()
+                options.clear()
                 bookingSetup.clear()
                 publishing.clear()
                 agendaDigest.stopListening()
@@ -201,9 +206,11 @@ struct RootView: View {
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
         }
     }
+}
 
-    // MARK: - Stages
+// MARK: - Stages
 
+extension RootView {
     @ViewBuilder
     private var content: some View {
         #if DEBUG

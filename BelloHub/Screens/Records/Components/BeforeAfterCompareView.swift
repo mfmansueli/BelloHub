@@ -18,6 +18,10 @@ struct BeforeAfterCompareView: View {
     let pair: BeforeAfterPair
     let mode: Mode
     let load: (Photo) async -> PhotoData?
+    /// The names under each side. "Before" and "After" by default; two photos she picked from any visits carry their
+    /// own day and kind instead.
+    var leadingTitle = Text("treatmentFlow.photos.before")
+    var trailingTitle = Text("treatmentFlow.photos.after")
 
     @State private var fraction = 0.5
     @Environment(\.layoutDirection) private var layoutDirection
@@ -34,21 +38,21 @@ struct BeforeAfterCompareView: View {
 
     private var sideBySide: some View {
         HStack(alignment: .top, spacing: Spacing.row) {
-            cell(pair.before, title: "treatmentFlow.photos.before")
-            cell(pair.after, title: "treatmentFlow.photos.after")
+            cell(pair.before, title: leadingTitle)
+            cell(pair.after, title: trailingTitle)
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("recordHistory.compare.sideBySide")
     }
 
-    private func cell(_ photo: Photo, title: LocalizedStringKey) -> some View {
+    private func cell(_ photo: Photo, title: Text) -> some View {
         VStack(alignment: .leading, spacing: Spacing.xs) {
             frame(for: photo)
-            Text(title).font(Typography.metaStrong).foregroundStyle(Palette.ink)
+            title.font(Typography.metaStrong).foregroundStyle(Palette.ink)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(title))
+        .accessibilityLabel(title)
     }
 
     private func frame(for photo: Photo) -> some View {
@@ -76,9 +80,9 @@ struct BeforeAfterCompareView: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: Radius.tile, style: .continuous))
             HStack {
-                Text("treatmentFlow.photos.before").font(Typography.metaStrong).foregroundStyle(Palette.ink)
+                leadingTitle.font(Typography.metaStrong).foregroundStyle(Palette.ink)
                 Spacer()
-                Text("treatmentFlow.photos.after").font(Typography.metaStrong).foregroundStyle(Palette.ink)
+                trailingTitle.font(Typography.metaStrong).foregroundStyle(Palette.ink)
             }
             .accessibilityHidden(true)
             // The system slider follows the finger 1:1 and speaks its value; on release the handle settles on an end

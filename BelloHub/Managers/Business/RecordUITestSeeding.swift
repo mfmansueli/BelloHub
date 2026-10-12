@@ -6,14 +6,17 @@
 #if DEBUG
 import Foundation
 
-/// What `-uiRecords` adds to the vault for the record screens' UI tests (4.7, 4.9, 4.10): for the seeded client Ana
-/// Costa, one record locked two days ago with one correction already logged, one record still open from an hour ago,
-/// and one incident. The ids are fixed so a test can address the locked record's "Change" button. Run it with
-/// `-uiSeed clientWithHealth`. DEBUG only.
+/// What `-uiRecords` adds to the vault for the record screens' UI tests (4.7, 4.9, 4.10 and the client record): for the
+/// seeded client Ana Costa, one record locked two days ago with one correction already logged, one record still open
+/// from an hour ago, one draft, one incident, and a completed appointment from yesterday that has no record yet. The
+/// ids are fixed so a test can address the locked record's "Change" button. Run it with `-uiSeed clientWithHealth`.
+/// DEBUG only.
 enum RecordUITestSeeding {
     static let argument = "-uiRecords"
     static let lockedRecordID = UUID(uuidString: "C0FFEE00-0000-4000-8000-00000000A001") ?? UUID()
     static let openRecordID = UUID(uuidString: "C0FFEE00-0000-4000-8000-00000000A002") ?? UUID()
+    static let draftRecordID = UUID(uuidString: "C0FFEE00-0000-4000-8000-00000000A003") ?? UUID()
+    static let pendingAppointmentID = UUID(uuidString: "C0FFEE00-0000-4000-8000-00000000A004") ?? UUID()
 
     @MainActor
     static func seedIfRequested(
@@ -40,8 +43,19 @@ enum RecordUITestSeeding {
             severity: .mild, lockedAt: RecordLockPolicy.lockedAt(createdAt: now.addingTimeInterval(-86_400)),
             needsFollowUp: true, symptoms: "Redness", area: "Cheeks", actionTaken: "Advised the client", followUp: nil
         )
+        let draft = TreatmentRecord(
+            id: draftRecordID, clientID: clientID, serviceName: "Lash lift", createdAt: now.addingTimeInterval(-1_800),
+            performedAt: now.addingTimeInterval(-1_800), status: .draft, technique: "Curl C"
+        )
+        let yesterday = now.addingTimeInterval(-86_400)
+        let pending = Appointment(
+            id: pendingAppointmentID, clientID: clientID, serviceName: "Brow design", startsAt: yesterday,
+            endsAt: yesterday.addingTimeInterval(3_600), status: .completed, createdAt: yesterday
+        )
         try? await repository.save(locked)
         try? await repository.save(open)
+        try? await repository.save(draft)
+        try? await repository.save(pending)
         try? await repository.addCorrection(correction)
         try? await repository.save(incident)
     }
