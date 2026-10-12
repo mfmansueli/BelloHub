@@ -97,6 +97,25 @@ struct RepositoryRecordContractTests {
         #expect(stored.lockedAt == lock)
     }
 
+    @Test("A draft is deleted with its photos; a finalized record is refused", arguments: RepositoryFlavor.allCases)
+    func deleteDraft(flavor: RepositoryFlavor) async throws {
+        let (repository, client) = try seeded(flavor)
+        let draft = TreatmentRecord(clientID: client.id, serviceName: "Glow", createdAt: clock.now, status: .draft,
+                                    notes: "Sentinel-DRAFT")
+        try await repository.save(draft)
+        let photo = Photo(id: UUID(), clientID: client.id, recordID: draft.id, takenAt: clock.now, kind: .before,
+                          visibility: .professionalOnly)
+        try await repository.save(photo, data: PhotoData(image: Data([1, 2]), thumbnail: Data([3])))
+        let finalized = record(client)
+        try await repository.save(finalized)
+
+        try await repository.deleteDraft(id: draft.id)
+        #expect(try await repository.record(id: draft.id) == nil)
+        #expect(try await repository.photos(for: client.id).isEmpty)
+        await #expect(throws: VaultRepositoryError.recordLocked) { try await repository.deleteDraft(id: finalized.id) }
+        #expect(try await repository.record(id: finalized.id) != nil)
+    }
+
     @Test("Corrections need a locked record, are ordered, and the same one twice is a no-op",
           arguments: RepositoryFlavor.allCases)
     func corrections(flavor: RepositoryFlavor) async throws {
@@ -176,6 +195,7 @@ struct RepositoryRecordContractTests {
         try await repository.save(photo, data: bytes)
 
         #expect(try await repository.photoData(id: photo.id) == bytes)
+        #expect(try await repository.photoThumbnail(id: photo.id) == bytes.thumbnail)
         #expect(try await repository.photos(for: client.id).first?.visibility == .shareWithClient)
         try await repository.deletePhoto(id: photo.id)
         await #expect(throws: VaultRepositoryError.notFound) { _ = try await repository.photoData(id: photo.id) }

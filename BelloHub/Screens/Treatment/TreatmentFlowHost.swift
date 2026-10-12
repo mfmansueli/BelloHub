@@ -56,7 +56,12 @@ struct TreatmentFlowHost: View {
         switch step {
         case .listening: ListeningStepView(viewModel: viewModel)
         case .organizing: OrganizingStepView(viewModel: viewModel)
-        case .review: ReviewStepView(viewModel: viewModel, onCancel: cancel)
+        case .review:
+            // Her words are kept as notes before leaving, so cancelling the review never loses the dictation.
+            ReviewStepView(viewModel: viewModel, onCancel: {
+                viewModel.applyTranscriptAsNotes()
+                cancel()
+            })
         case .saved: SavedStepView(viewModel: viewModel, onBook: { agendaSheet = $0 }, onDone: close)
         case .camera(let kind): CameraStepView(viewModel: viewModel, kind: kind)
         case .record: VisitDetailView(recordID: viewModel.recordID)

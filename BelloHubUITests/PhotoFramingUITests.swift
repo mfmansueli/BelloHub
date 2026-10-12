@@ -34,7 +34,6 @@ final class PhotoFramingUITests: XCTestCase {
 
         // First photo, before anything is written: nothing to line up with yet.
         app.tapButton("treatmentFlow.photos.takeButton")
-        app.tapButton("visitForm.photos.take.before")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         XCTAssertFalse(app.switches["treatmentFlow.camera.referenceToggle"].exists, "no earlier photo, no reference")
         app.tapButton("treatmentFlow.camera.captureButton")
@@ -43,7 +42,6 @@ final class PhotoFramingUITests: XCTestCase {
 
         // Second photo: the first one is the reference, adjustable and switchable.
         app.tapButton("treatmentFlow.photos.takeButton")
-        app.tapButton("visitForm.photos.take.after")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         let toggle = app.switches["treatmentFlow.camera.referenceToggle"]
         XCTAssertTrue(toggle.waitForExistence(timeout: 10), "the visit's first photo is offered")

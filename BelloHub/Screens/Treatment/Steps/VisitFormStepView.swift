@@ -55,7 +55,18 @@ struct VisitFormStepView: View {
                         .accessibilityIdentifier("visitForm.lockedNotice")
                 }
                 if let failure = viewModel.failure {
-                    TreatmentFailureNotice(failure: failure) { viewModel.retryAutosave() }
+                    // Only a failed save is retried; the autosave line retries it too.
+                    TreatmentFailureNotice(
+                        failure: failure, onRetry: failure == .save ? viewModel.retryAutosave : nil,
+                        onDismiss: { viewModel.failure = nil }
+                    )
+                }
+                if viewModel.heardNothing {
+                    InlineNotice(
+                        style: .info, title: "treatmentFlow.register.heardNothing.title",
+                        message: "treatmentFlow.register.heardNothing.message"
+                    )
+                    .accessibilityIdentifier("treatmentFlow.register.heardNothing")
                 }
                 VisitPhotosSection(viewModel: viewModel)
                 if viewModel.registerOffer == .voiceAndManual, !viewModel.isLocked { dictate }

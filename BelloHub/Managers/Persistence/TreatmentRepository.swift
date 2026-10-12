@@ -12,11 +12,11 @@ protocol TreatmentRepository: Sendable {
     /// Inserts a record, or edits an existing one **while it is not locked**. A locked record throws
     /// `VaultRepositoryError.recordLocked`: use `addCorrection` (D9, `RecordLockPolicy`).
     func save(_ record: TreatmentRecord) async throws
-    /// Adds a logged correction to a locked record. Corrections are never edited or deleted. Adding the same
-    /// correction id twice is a no-op.
     /// Deletes a draft she does not want, with the photos tied to it. A finalized record is never deleted this way
     /// (`recordLocked`): it changes only by corrections, and goes only with the client's data.
     func deleteDraft(id: UUID) async throws
+    /// Adds a logged correction to a locked record. Corrections are never edited or deleted. Adding the same
+    /// correction id twice is a no-op.
     func addCorrection(_ correction: RecordCorrection) async throws
     func corrections(for recordID: UUID) async throws -> [RecordCorrection]
 

@@ -50,6 +50,7 @@ extension TreatmentFlowViewModel {
             return true
         } catch {
             failure = .photo
+            await removeIfEmpty()
             return false
         }
     }
@@ -84,8 +85,18 @@ extension TreatmentFlowViewModel {
         do {
             try await repository.deletePhoto(id: id)
             photos.removeAll { $0.id == id }
+            await removeIfEmpty()
         } catch {
             failure = .photo
         }
+    }
+
+    /// A draft stored only to hold a photo leaves no trace once that photo is gone (it failed to save, or she removed
+    /// it) and nothing else was written.
+    private func removeIfEmpty() async {
+        guard let repository, !hasContent, savedRecord?.isDraft == true else { return }
+        guard (try? await repository.deleteDraft(id: recordID)) != nil else { return }
+        savedRecord = nil
+        autosave = .idle
     }
 }

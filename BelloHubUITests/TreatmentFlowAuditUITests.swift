@@ -64,7 +64,6 @@ final class TreatmentFlowAuditUITests: XCTestCase {
         app.swipeDown()
         app.swipeDown()
         app.tapButton("treatmentFlow.photos.takeButton")
-        app.tapButton("visitForm.photos.take.before")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15), "\(tag) camera")
         try audit(app, "\(tag) camera")
         app.tapButton("treatmentFlow.camera.captureButton")

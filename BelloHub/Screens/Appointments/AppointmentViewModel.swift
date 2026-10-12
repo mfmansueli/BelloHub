@@ -219,17 +219,11 @@ final class AppointmentViewModel {
     /// This appointment's record and the client's previous visit, both by stored links.
     private func loadRecords(for loaded: VisitContext, appointments history: [Appointment]) async throws {
         guard let repository = vault.repository else { return }
-        let records = try await repository.records(for: loaded.client.id)
-        record = RecordForAppointment.existing(in: records, appointmentID: loaded.appointment.id)
-        let earlier = records.filter { !$0.isDraft && $0.appointmentID != loaded.appointment.id }
-        guard !earlier.isEmpty else {
-            previousVisit = nil
-            return
-        }
-        let timeline = ClientTimelineBuilder.make(
-            .init(records: earlier, appointments: history, photos: try await repository.photos(for: loaded.client.id)),
-            now: now(), list: business.formatters(displayLocale: InterfaceLocale.current).list
+        let found = try await AppointmentRecordsReader(repository: repository).records(
+            for: loaded, appointments: history, now: now(),
+            list: business.formatters(displayLocale: InterfaceLocale.current).list
         )
-        previousVisit = timeline.lastVisit
+        record = found.record
+        previousVisit = found.previousVisit
     }
 }

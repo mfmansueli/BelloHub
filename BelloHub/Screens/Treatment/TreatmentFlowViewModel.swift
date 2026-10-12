@@ -84,6 +84,9 @@ final class TreatmentFlowViewModel {
     var lastVisit: TreatmentRecord?
     /// The parts copied from a past visit she used as the base, kept until the first save carries them.
     var carriedFromBase: TreatmentRecord?
+    /// What the flow wrote in the form by itself, by field key. A form holding only these is still empty: nothing is
+    /// stored until she changes something.
+    var startingValues: [String: String] = [:]
 
     let repository: (any ClientRecordRepository)?
     let profile: ProfileService
@@ -178,21 +181,16 @@ final class TreatmentFlowViewModel {
 
     var isFinalized: Bool { savedRecord.map { !$0.isDraft } ?? false }
 
-    /// Anything not yet in the vault: a change waiting for the automatic save, or a save that failed.
-    var hasUnsavedWork: Bool {
-        switch autosave {
-        case .saving, .failed: true
-        case .idle, .saved: VoiceFlowRules.hasContent(transcript) || !proposals.isEmpty
-        }
-    }
-
-    /// Something worth keeping: an answer, a result or a photo. An empty draft is never stored.
-    var hasContent: Bool { !draft.isEmpty || !photos.isEmpty }
+    /// Something worth keeping: an answer or a result she gave, or a photo. An empty draft is never stored.
+    var hasContent: Bool { draft.hasAnswers(besides: startingValues) || !photos.isEmpty }
 
     var issues: [TreatmentRecordBuilder.Issue] {
-        let found = TreatmentRecordBuilder.issues(of: draft, fields: fields, locale: locale)
-        // A visit documented only with photos is a complete record too.
-        return photos.isEmpty ? found : found.filter { $0 != .nothingToSave }
+        var found = TreatmentRecordBuilder.issues(of: draft, fields: fields, locale: locale)
+            .filter { $0 != .nothingToSave }
+        // A visit documented only with photos is a complete record too, and so is a past visit repeated as it was.
+        // Only the service's standard aftercare text is not.
+        if !hasContent, carriedFromBase == nil { found.insert(.nothingToSave, at: 0) }
+        return found
     }
 
     func issue(forNumberField key: String) -> Bool {
@@ -240,7 +238,8 @@ final class TreatmentFlowViewModel {
             if profile.template == nil { await profile.load() }
             await options?.loadIfNeeded()
             buildFields()
-            performedAt = appointment?.startsAt ?? now()
+            // A visit opened before its appointment starts is still today, never a day to come.
+            performedAt = min(appointment?.startsAt ?? now(), now())
             nextWeeks = NextSessionRules.suggestedWeeks(serviceFollowUpWeeks: service?.followUpWeeks)
             if let existing {
                 await open(existing)
@@ -310,6 +309,7 @@ final class TreatmentFlowViewModel {
               let field = fields.first(where: { $0.role == .aftercare }), draft.value(for: field.key).isEmpty
         else { return }
         draft.set(template, for: field.key)
+        startingValues[field.key] = draft.value(for: field.key)
     }
 
     // MARK: - Navigation
@@ -323,12 +323,6 @@ final class TreatmentFlowViewModel {
     /// Back to the visit form, the root of the flow (after the voice path, or after reviewing proposals).
     func returnToForm() {
         path = []
-    }
-
-    /// Opens the form with what she said, if she said something, as notes she can edit.
-    func writeItMyself() {
-        applyTranscriptAsNotes()
-        returnToForm()
     }
 
     /// Her dictated words become the notes field, once, so nothing she said is lost when the technology cannot

@@ -20,7 +20,12 @@ extension TreatmentFlowViewModel {
         performedAt = record.performedAt ?? appointment?.startsAt ?? record.createdAt
         aiAssisted = record.aiAssisted
         usedTranscript = record.source == .voice
-        autosave = .saved(record.createdAt)
+        // The vault keeps no "last edited" time; a draft says it saves as she writes rather than show a wrong time.
+        autosave = record.isDraft ? .idle : .saved(record.finalizedAt ?? record.createdAt)
+        let note = draft.value(for: TreatmentFormField.nextSessionKey)
+        if let weeks = weekChoices.first(where: { formatters.weeks($0) == note }) {
+            nextWeeks = weeks
+        }
         guard let repository else { return }
         let stored = ((try? await repository.photos(for: clientID)) ?? [])
             .filter { $0.recordID == record.id }
@@ -40,7 +45,10 @@ extension TreatmentFlowViewModel {
                                     status: .draft)
         let copied = VisitReuse.apply(parts, from: source, to: empty)
         let loaded = TreatmentDraftLoader.draft(from: copied, fields: reviewFields)
-        for (key, value) in loaded.values where draft.value(for: key).isEmpty { draft.set(value, for: key) }
+        for (key, value) in loaded.values where draft.value(for: key).isEmpty {
+            draft.set(value, for: key)
+            startingValues[key] = draft.value(for: key)
+        }
         draft.result = nil
         carriedFromBase = copied
     }
@@ -76,6 +84,8 @@ extension TreatmentFlowViewModel {
     /// Called after every change on the form: saves the draft a moment later. A locked record is never touched (its
     /// fields read only), and nothing is stored before there is something worth keeping.
     func draftChanged() {
+        // She is writing: a "heard nothing" from an earlier dictation no longer applies.
+        heardNothing = false
         guard loadState == .ready, !isLocked else { return }
         guard hasContent || savedRecord != nil else { return }
         autosave = .saving

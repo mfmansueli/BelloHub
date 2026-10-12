@@ -66,16 +66,10 @@ enum TreatmentRecordBuilder {
         for field in fields {
             let value = draft.value(for: field.key).trimmingCharacters(in: .whitespacesAndNewlines)
             guard !value.isEmpty else { continue }
-            switch field.role {
-            case .notes: record.notes = value
-            case .products: record.productsUsed = draft.lines(for: field.key)
-            case .technique: record.technique = value
-            case .result: record.resultDetail = value
-            case .aftercare: record.aftercare = value
-            case .nextSession: record.nextSessionSuggestion = value
-            case .reaction: record.reaction = value
-            case .nextVisitReminder: record.nextVisitReminder = value
-            case .generic: entries.append(entry(for: field, value: value, locale: locale))
+            if field.role == .generic {
+                entries.append(entry(for: field, value: value, locale: locale))
+            } else {
+                place(value, of: field, draft: draft, into: &record)
             }
         }
         let suggestion = draft.value(for: TreatmentFormField.nextSessionKey)
@@ -106,6 +100,23 @@ enum TreatmentRecordBuilder {
     }
 
     // MARK: - Private
+
+    /// Puts one answer into the record's part that the field's role names. Generic fields are entries instead.
+    private static func place(
+        _ value: String, of field: TreatmentFormField, draft: TreatmentDraft, into record: inout TreatmentRecord
+    ) {
+        switch field.role {
+        case .notes: record.notes = value
+        case .products: record.productsUsed = draft.lines(for: field.key)
+        case .technique: record.technique = value
+        case .result: record.resultDetail = value
+        case .aftercare: record.aftercare = value
+        case .nextSession: record.nextSessionSuggestion = value
+        case .reaction: record.reaction = value
+        case .nextVisitReminder: record.nextVisitReminder = value
+        case .generic: break
+        }
+    }
 
     private static func entry(for field: TreatmentFormField, value: String, locale: Locale) -> RecordFieldEntry {
         var stored = value

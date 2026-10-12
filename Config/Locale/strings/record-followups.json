@@ -1,0 +1,8 @@
+{
+ "languages": ["en", "pt-BR", "pt-PT", "es-MX", "es", "it", "fr", "de", "tr", "id", "hi", "ar"],
+ "strings": [
+  ["beforeYouStart.rememberToday", "Before you start: the note left on the previous visit for this one", "Remember today", "Lembrar para hoje", "Lembrar hoje", "Recordar hoy", "Recordar hoy", "Da ricordare oggi", "À retenir aujourd'hui", "Heute dran denken", "Bugün hatırlayın", "Ingat hari ini", "आज याद रखें", "تذكّري اليوم"],
+  ["beforeYouStart.result", "Before you start: label of the result of the last visit", "Result", "Resultado", "Resultado", "Resultado", "Resultado", "Risultato", "Résultat", "Ergebnis", "Sonuç", "Hasil", "नतीजा", "النتيجة"],
+  ["treatmentFlow.review.toForm", "Voice review: puts the kept answers into the visit form (nothing is finalized yet)", "Put in the form", "Levar para o formulário", "Passar para o formulário", "Pasar al formulario", "Pasar al formulario", "Porta nel modulo", "Mettre dans le formulaire", "Ins Formular übernehmen", "Forma aktar", "Masukkan ke formulir", "फ़ॉर्म में डालें", "نقل إلى النموذج"]
+ ]
+}

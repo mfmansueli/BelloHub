@@ -54,7 +54,8 @@ final class MotionUITests: XCTestCase {
         app.tapButton("calendar.nextButton")
         XCTAssertTrue(app.element("calendar.week.dayViewButton").waitForExistence(timeout: 8), "the next week is empty")
         app.segmentedControls["calendar.modePicker"].buttons.element(boundBy: 0).tap()
-        XCTAssertTrue(app.elements(prefix: "calendar.stripDay.").firstMatch.waitForExistence(timeout: 8), "no day strip")
+        let stripDay = app.elements(prefix: "calendar.stripDay.").firstMatch
+        XCTAssertTrue(stripDay.waitForExistence(timeout: 8), "no day strip")
     }
 
     private func selectedDayLabel(_ app: XCUIApplication) -> String? {
@@ -87,7 +88,8 @@ final class MotionUITests: XCTestCase {
         app.goBack()
         XCTAssertTrue(app.element("alerts.subtitle").waitForExistence(timeout: 8))
         XCTAssertTrue(
-            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10), "the answered request is still listed"
+            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10),
+            "the answered request is still listed"
         )
         XCTAssertTrue(app.element("alerts.reschedule.rr-camila").exists, "the other request left too")
     }
@@ -130,7 +132,6 @@ final class MotionUITests: XCTestCase {
 
         // A photo first: the capture flashes, the review opens, saving returns to the form with its tile.
         app.tapButton("treatmentFlow.photos.takeButton")
-        app.tapButton("visitForm.photos.take.before")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         app.tapButton("treatmentFlow.camera.captureButton")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.saveButton"].waitForExistence(timeout: 10), "no review")

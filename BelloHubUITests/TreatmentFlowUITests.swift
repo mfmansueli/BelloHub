@@ -27,7 +27,6 @@ final class TreatmentFlowUITests: XCTestCase {
 
         // A photo first, before any field: the (scripted) camera, then back to the form with the photo in it.
         app.tapButton("treatmentFlow.photos.takeButton")
-        app.tapButton("visitForm.photos.take.before")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         app.tapButton("treatmentFlow.camera.captureButton")
         app.tapButton("treatmentFlow.camera.saveButton")

@@ -15,23 +15,29 @@ enum TreatmentDraftLoader {
             (record.fieldEntries ?? []).map { ($0.key, $0.value) }, uniquingKeysWith: { first, _ in first }
         )
         for field in fields {
-            let value: String? = switch field.role {
-            case .notes: record.notes
-            case .products: record.productsUsed.isEmpty
-                ? nil : record.productsUsed.joined(separator: RecordFieldEntry.optionSeparator)
-            case .technique: record.technique
-            case .result: record.resultDetail
-            case .aftercare: record.aftercare
-            case .nextSession: record.nextSessionSuggestion
-            case .reaction: record.reaction
-            case .nextVisitReminder: record.nextVisitReminder
-            case .generic: entries[field.key]
-            }
-            if let value { draft.set(value, for: field.key) }
+            if let value = value(for: field, in: record, entries: entries) { draft.set(value, for: field.key) }
         }
         if let suggestion = record.nextSessionSuggestion {
             draft.set(suggestion, for: TreatmentFormField.nextSessionKey)
         }
         return draft
+    }
+
+    /// The record's part that the field's role names; her template's own fields read their entry by key.
+    private static func value(
+        for field: TreatmentFormField, in record: TreatmentRecord, entries: [String: String]
+    ) -> String? {
+        switch field.role {
+        case .notes: record.notes
+        case .products: record.productsUsed.isEmpty
+            ? nil : record.productsUsed.joined(separator: RecordFieldEntry.optionSeparator)
+        case .technique: record.technique
+        case .result: record.resultDetail
+        case .aftercare: record.aftercare
+        case .nextSession: record.nextSessionSuggestion
+        case .reaction: record.reaction
+        case .nextVisitReminder: record.nextVisitReminder
+        case .generic: entries[field.key]
+        }
     }
 }

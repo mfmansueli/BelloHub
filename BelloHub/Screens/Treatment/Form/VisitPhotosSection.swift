@@ -6,9 +6,9 @@
 import PhotosUI
 import SwiftUI
 
-/// Photos of this visit, at any moment of the form: take one with the app's own camera (before, after or progress,
-/// with the previous photo as a framing reference when there is one) or import one through the system picker (no
-/// library permission). Each photo can change kind and who sees it; private by default.
+/// Photos of this visit, at any moment of the form: take one with the app's own camera (before, then after, then
+/// progress, with the previous photo as a framing reference when there is one) or import one through the system
+/// picker (no library permission). Each photo can change kind and who sees it; private by default.
 struct VisitPhotosSection: View {
     @Bindable var viewModel: TreatmentFlowViewModel
 
@@ -33,19 +33,12 @@ struct VisitPhotosSection: View {
                 .accessibilityElement(children: .combine)
             }
             HStack(spacing: Spacing.sm) {
-                Menu {
-                    ForEach(PhotoKind.allCases, id: \.self) { kind in
-                        Button { viewModel.path.append(.camera(kind)) } label: { Text(kind.title) }
-                            .accessibilityIdentifier("visitForm.photos.take.\(kind.rawValue)")
-                    }
-                } label: {
+                // One tap to the camera: the kind follows the visit (before, then after, then progress) and is
+                // changed on the photo's tile, so taking a picture never starts with a choice.
+                Button { viewModel.path.append(.camera(viewModel.nextPhotoKind)) } label: {
                     Label { Text("treatmentFlow.photos.take") } icon: { Image(icon: .camera) }
-                        .font(Typography.metaStrong)
-                        .padding(.horizontal, Spacing.md)
-                        .frame(minHeight: Spacing.touchTarget)
-                        .overlay { Capsule().strokeBorder(Palette.fieldBorder, lineWidth: 1) }
                 }
-                .tint(Palette.ink)
+                .buttonStyle(.belloChip(selected: false))
                 .accessibilityIdentifier("treatmentFlow.photos.takeButton")
                 PhotosPicker(selection: $picked, matching: .images) {
                     Label { Text("treatmentFlow.photos.library") } icon: { Image(icon: .image) }
