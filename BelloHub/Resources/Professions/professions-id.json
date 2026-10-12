@@ -102,49 +102,163 @@
    ],
    "fields": [
     {
+     "key": "esthetician.healthCheck",
+     "name": "Cek kesehatan hari ini",
+     "on": true,
+     "tags": [
+      "Tidak ada perubahan",
+      "Hamil atau menyusui",
+      "Isotretinoin",
+      "Pakai retinoid",
+      "Baru terpapar matahari",
+      "Antibiotik",
+      "Herpes bibir",
+      "Lesi aktif",
+      "Obat baru"
+     ]
+    },
+    {
      "key": "esthetician.skinCondition",
      "name": "Kondisi kulit",
-     "on": true
+     "on": true,
+     "tags": [
+      "Berminyak",
+      "Kering",
+      "Kombinasi",
+      "Dehidrasi",
+      "Sensitif",
+      "Mudah berjerawat",
+      "Rosacea",
+      "Melasma",
+      "Hiperpigmentasi",
+      "Garis halus",
+      "Pori-pori besar",
+      "Komedo hitam"
+     ]
+    },
+    {
+     "key": "esthetician.phototype",
+     "name": "Fototipe",
+     "on": true,
+     "tags": [
+      "Tipe I",
+      "Tipe II",
+      "Tipe III",
+      "Tipe IV",
+      "Tipe V",
+      "Tipe VI"
+     ]
     },
     {
      "key": "esthetician.areas",
      "name": "Area",
-     "on": true
+     "on": true,
+     "tags": [
+      "Seluruh wajah",
+      "Dahi",
+      "Zona T",
+      "Pipi",
+      "Garis rahang",
+      "Bawah mata",
+      "Atas bibir",
+      "Leher",
+      "Dada atas",
+      "Punggung"
+     ]
+    },
+    {
+     "key": "esthetician.protocol",
+     "name": "Perawatan",
+     "on": true,
+     "tags": [
+      "Pembersihan mendalam",
+      "Peeling kimia",
+      "Microneedling",
+      "Ekstraksi",
+      "Hydrafacial",
+      "Dermaplaning",
+      "LED",
+      "Radiofrekuensi",
+      "Facial melembapkan",
+      "Facial drainase limfatik"
+     ]
     },
     {
      "key": "esthetician.products",
      "name": "Produk dan bahan aktif",
-     "on": true
-    },
-    {
-     "key": "esthetician.protocol",
-     "name": "Protokol",
-     "on": true
+     "on": true,
+     "tags": [
+      "Asam glikolat",
+      "Asam salisilat",
+      "Asam mandelat",
+      "Asam laktat",
+      "TCA",
+      "Retinol",
+      "Vitamin C",
+      "Niacinamide",
+      "Asam azelat",
+      "Asam traneksamat",
+      "Asam hialuronat"
+     ]
     },
     {
      "key": "esthetician.technique",
-     "name": "Teknik",
-     "on": false
-    },
-    {
-     "key": "esthetician.reaction",
-     "name": "Reaksi",
-     "on": true
+     "name": "Konsentrasi, kedalaman, dan waktu",
+     "on": true,
+     "tags": [
+      "20%",
+      "35%",
+      "1 lapis",
+      "2 lapis",
+      "3 menit",
+      "0,5 mm",
+      "1,0 mm",
+      "1,5 mm",
+      "2 kali lintasan",
+      "Frost merata",
+      "Frost tidak merata",
+      "Dinetralkan"
+     ]
     },
     {
      "key": "esthetician.result",
      "name": "Hasil",
-     "on": true
-    },
-    {
-     "key": "esthetician.aftercare",
-     "name": "Perawatan lanjutan",
-     "on": true
+     "on": true,
+     "tags": [
+      "Kulit glowing",
+      "Kulit lebih tenang",
+      "Jerawat berkurang",
+      "Warna kulit lebih rata",
+      "Tekstur lebih halus",
+      "Terhidrasi baik",
+      "Perlu sesi tambahan"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Kemerahan ringan",
+    "Panas atau perih",
+    "Bengkak",
+    "Muncul jerawat",
+    "Kulit mengelupas",
+    "Frosting",
+    "Gatal",
+    "Flek hitam"
+   ],
+   "aftercareTags": [
+    "SPF 50 setiap hari",
+    "Tanpa bahan aktif 3 hari",
+    "Hindari matahari 7 hari",
+    "Jangan kelupas kulit",
+    "Pembersih wajah lembut",
+    "Serum hidrasi",
+    "Tanpa makeup 24 jam",
+    "Hindari sauna/gym 48 jam"
    ]
   },
   {
@@ -248,52 +362,180 @@
    "fields": [
     {
      "key": "hair.hairCondition",
-     "name": "Kondisi rambut",
-     "on": true
+     "name": "Rambut dan kulit kepala",
+     "on": true,
+     "tags": [
+      "Rambut virgin",
+      "Halus",
+      "Kasar",
+      "Ikal atau keriting",
+      "Berpori",
+      "Mudah patah",
+      "Ujung kering",
+      "Kulit kepala berminyak",
+      "Kulit kepala sensitif",
+      "Ketombe",
+      "Menipis"
+     ]
+    },
+    {
+     "key": "hair.naturalBase",
+     "name": "Level alami dan uban",
+     "on": true,
+     "tags": [
+      "Level 3–4",
+      "Level 5–6",
+      "Level 7–8",
+      "Level 9–10",
+      "Uban di bawah 10%",
+      "Uban 25%",
+      "Uban 50%",
+      "Uban 75%+",
+      "Uban sulit tertutup"
+     ]
     },
     {
      "key": "hair.previousColor",
-     "name": "Warna sebelumnya",
-     "on": true
+     "name": "Riwayat kimia",
+     "on": true,
+     "tags": [
+      "Cat rambut instan",
+      "Henna",
+      "Cat permanen",
+      "Gloss atau toner",
+      "Highlight",
+      "Bleaching",
+      "Keratin atau smoothing",
+      "Pelurusan (relaxer)",
+      "Keriting permanen",
+      "Color remover"
+     ]
+    },
+    {
+     "key": "hair.allergyTest",
+     "name": "Tes alergi dan tes helai",
+     "on": true,
+     "tags": [
+      "Tes alergi negatif",
+      "Tes alergi positif",
+      "Tidak dilakukan",
+      "Klien menolak",
+      "Tes helai OK",
+      "Tes helai: sesuaikan formula"
+     ]
     },
     {
      "key": "hair.formula",
      "name": "Formula",
-     "on": true
+     "on": true,
+     "tags": [
+      "Akar",
+      "Bagian tengah",
+      "Ujung",
+      "Toner",
+      "1:1",
+      "1:1,5",
+      "1:2",
+      "Bond builder",
+      "Pre-pigmentasi",
+      "Gloss"
+     ]
     },
     {
      "key": "hair.developer",
      "name": "Developer",
-     "on": true
-    },
-    {
-     "key": "hair.technique",
-     "name": "Teknik",
-     "on": true
+     "on": true,
+     "tags": [
+      "1,5% (5 vol)",
+      "3% (10 vol)",
+      "6% (20 vol)",
+      "9% (30 vol)",
+      "12% (40 vol)",
+      "Aktivator demi-permanen"
+     ]
     },
     {
      "key": "hair.processingTime",
      "name": "Waktu proses",
-     "on": true
+     "on": true,
+     "tags": [
+      "10 menit",
+      "20 menit",
+      "30 menit",
+      "35 menit",
+      "45 menit",
+      "Dengan panas",
+      "Sampai level tercapai"
+     ]
     },
     {
-     "key": "hair.products",
-     "name": "Produk",
-     "on": false
+     "key": "hair.technique",
+     "name": "Teknik",
+     "on": true,
+     "tags": [
+      "Pewarnaan penuh",
+      "Touch-up akar",
+      "Foil",
+      "Balayage",
+      "Babylights",
+      "Face frame",
+      "Root shadow",
+      "Koreksi warna",
+      "Toner saja",
+      "Potong",
+      "Blow-dry"
+     ]
     },
     {
      "key": "hair.result",
      "name": "Hasil",
-     "on": true
+     "on": true,
+     "tags": [
+      "Warna rata",
+      "Tone target tercapai",
+      "Lebih hangat dari rencana",
+      "Lebih dingin dari rencana",
+      "Warna belang",
+      "Perlu toner",
+      "Kilau sehat"
+     ]
     },
     {
      "key": "hair.preferences",
      "name": "Preferensi",
-     "on": true
+     "on": true,
+     "tags": [
+      "Tanpa nuansa hangat",
+      "Mudah dirawat",
+      "Ingin lebih terang",
+      "Pertahankan panjang",
+      "Potong kering",
+      "Potongan ikal",
+      "Membiarkan uban tumbuh"
+     ]
     }
    ],
    "intake": [
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Kulit kepala gatal",
+    "Rasa terbakar",
+    "Kemerahan",
+    "Kulit kepala bengkak",
+    "Biduran",
+    "Rambut patah",
+    "Kering"
+   ],
+   "aftercareTags": [
+    "Sampo bebas sulfat",
+    "Keramas setelah 48 jam",
+    "Sampo ungu",
+    "Bond repair di rumah",
+    "Pelindung panas",
+    "Gloss dalam 6 minggu",
+    "Bilas air dingin"
    ]
   },
   {
@@ -397,49 +639,170 @@
    "fields": [
     {
      "key": "lash.set",
-     "name": "Set",
-     "on": true
+     "name": "Layanan",
+     "on": true,
+     "tags": [
+      "Classic",
+      "Hybrid",
+      "Volume",
+      "Mega volume",
+      "Wet look",
+      "Wispy",
+      "Refill",
+      "Pelepasan",
+      "Lash lift",
+      "Lift dan tint",
+      "Brow lamination"
+     ]
+    },
+    {
+     "key": "lash.naturalLashes",
+     "name": "Bulu mata asli dan mata",
+     "on": true,
+     "tags": [
+      "Sehat",
+      "Jarang",
+      "Halus",
+      "Pendek",
+      "Lurus",
+      "Mengarah ke bawah",
+      "Ada celah",
+      "Kelopak berminyak",
+      "Mata hooded",
+      "Monolid",
+      "Mata cekung"
+     ]
     },
     {
      "key": "lash.curl",
      "name": "Lengkungan",
-     "on": true
-    },
-    {
-     "key": "lash.length",
-     "name": "Panjang",
-     "on": true
+     "on": true,
+     "tags": [
+      "J",
+      "B",
+      "C",
+      "CC",
+      "D",
+      "DD",
+      "L",
+      "L+",
+      "M"
+     ]
     },
     {
      "key": "lash.thickness",
      "name": "Ketebalan",
-     "on": true
+     "on": true,
+     "tags": [
+      "0,03 mm",
+      "0,05 mm",
+      "0,07 mm",
+      "0,10 mm",
+      "0,12 mm",
+      "0,15 mm"
+     ]
     },
     {
      "key": "lash.mapping",
-     "name": "Pemetaan",
-     "on": true
+     "name": "Pemetaan dan panjang",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Cat eye",
+      "Doll eye",
+      "Squirrel",
+      "Open eye",
+      "Kim K",
+      "8-10-12",
+      "9-11-13",
+      "10-12-14",
+      "Sudut dalam pendek"
+     ]
     },
     {
      "key": "lash.adhesive",
-     "name": "Lem",
-     "on": true
+     "name": "Lem dan ruangan",
+     "on": true,
+     "tags": [
+      "Formula sensitif",
+      "Kering 0,5 detik",
+      "Kering 1–2 detik",
+      "Tanpa carbon black",
+      "Dibuka kurang dari 4 minggu",
+      "Kelembapan 40–50%",
+      "Kelembapan 50–65%",
+      "Patch test sudah dilakukan"
+     ]
     },
     {
      "key": "lash.retention",
-     "name": "Daya tahan",
-     "on": true
+     "name": "Retensi saat refill",
+     "on": true,
+     "tags": [
+      "75% atau lebih",
+      "50–75%",
+      "Di bawah 50%",
+      "Bolong di sudut luar",
+      "Lengket atau terpelintir",
+      "Sudah tumbuh panjang",
+      "Dicabut sendiri"
+     ]
+    },
+    {
+     "key": "lash.liftSettings",
+     "name": "Pengaturan lift",
+     "on": false,
+     "tags": [
+      "Shield S",
+      "Shield M",
+      "Shield L",
+      "Shield XL",
+      "Lift 6 menit",
+      "Set 5 menit",
+      "Tint hitam",
+      "Tint cokelat",
+      "Serum keratin"
+     ]
     },
     {
      "key": "lash.preferences",
      "name": "Preferensi",
-     "on": false
+     "on": false,
+     "tags": [
+      "Tampilan natural",
+      "Dramatis",
+      "Tanpa sudut dalam",
+      "Tidur menyamping",
+      "Lensa kontak",
+      "Pakai maskara",
+      "Mudah alergi"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Mata berair",
+    "Perih",
+    "Mata gatal",
+    "Kelopak bengkak",
+    "Mata merah",
+    "Bercak merah di mata",
+    "Sensitif uap lem"
+   ],
+   "aftercareTags": [
+    "Jangan kena air 24 jam",
+    "Hindari produk berbahan minyak",
+    "Sisir setiap hari",
+    "Pembersih bulu mata",
+    "Jangan digosok atau ditarik",
+    "Hindari uap 48 jam",
+    "Tidur telentang",
+    "Refill dalam 2–3 minggu"
    ]
   },
   {
@@ -542,42 +905,147 @@
    ],
    "fields": [
     {
+     "key": "nail.service",
+     "name": "Layanan",
+     "on": true,
+     "tags": [
+      "Manikur",
+      "Pedikur",
+      "Kutek gel",
+      "Builder gel",
+      "Akrilik",
+      "Polygel",
+      "Fiberglass",
+      "Tips",
+      "Refill",
+      "Pelepasan",
+      "Spa pedikur"
+     ]
+    },
+    {
      "key": "nail.nailCondition",
      "name": "Kondisi kuku",
-     "on": true
+     "on": true,
+     "tags": [
+      "Sehat",
+      "Tipis",
+      "Rapuh",
+      "Mengelupas",
+      "Digigit",
+      "Bergaris",
+      "Terangkat dari dasar kuku",
+      "Berubah warna",
+      "Kutikula kering",
+      "Kuku kaki tumbuh ke dalam",
+      "Kuku kaki menebal"
+     ]
     },
     {
-     "key": "nail.shape",
-     "name": "Bentuk",
-     "on": true
-    },
-    {
-     "key": "nail.length",
-     "name": "Panjang",
-     "on": true
-    },
-    {
-     "key": "nail.color",
-     "name": "Warna",
-     "on": true
+     "key": "nail.technique",
+     "name": "Persiapan",
+     "on": true,
+     "tags": [
+      "Manikur mesin (e-file)",
+      "Manikur kering",
+      "Manikur basah",
+      "Hanya dorong kutikula",
+      "Dehydrator",
+      "Primer bebas asam",
+      "Buffing ringan"
+     ]
     },
     {
      "key": "nail.productSystem",
      "name": "Sistem produk",
-     "on": true
+     "on": true,
+     "tags": [
+      "Bebas HEMA",
+      "Rubber base",
+      "Builder gel",
+      "Top coat no-wipe",
+      "LED 60 dtk",
+      "UV/LED 30 dtk",
+      "Base sampai top merek sama"
+     ]
     },
     {
-     "key": "nail.technique",
-     "name": "Teknik",
-     "on": false
+     "key": "nail.shape",
+     "name": "Bentuk",
+     "on": true,
+     "tags": [
+      "Square",
+      "Squoval",
+      "Round",
+      "Oval",
+      "Almond",
+      "Coffin",
+      "Stiletto",
+      "Lipstick"
+     ]
+    },
+    {
+     "key": "nail.length",
+     "name": "Panjang",
+     "on": true,
+     "tags": [
+      "Natural",
+      "Pendek",
+      "Sedang",
+      "Panjang",
+      "Ekstra panjang"
+     ]
+    },
+    {
+     "key": "nail.color",
+     "name": "Warna dan nail art",
+     "on": true,
+     "tags": [
+      "Nude",
+      "French",
+      "Baby boomer",
+      "Merah",
+      "Chrome",
+      "Cat eye",
+      "Glitter",
+      "Ombré",
+      "Kuku aksen",
+      "Nail art lukis tangan"
+     ]
     },
     {
      "key": "nail.durability",
-     "name": "Daya tahan",
-     "on": true
+     "name": "Daya tahan sejak kunjungan lalu",
+     "on": true,
+     "tags": [
+      "Sempurna di minggu ke-3",
+      "Terangkat di kutikula",
+      "Terangkat di sisi",
+      "Ujung gompal",
+      "Kuku patah",
+      "Sudah tumbuh panjang",
+      "Dilepas lebih awal"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Tidak ada",
+    "Kemerahan di kutikula",
+    "Ujung jari gatal",
+    "Panas saat curing",
+    "Bengkak",
+    "Nyeri di dasar kuku",
+    "Luka kecil"
+   ],
+   "aftercareTags": [
+    "Minyak kutikula setiap hari",
+    "Sarung tangan saat bersih-bersih",
+    "Jangan dicungkil atau dikelupas",
+    "Jangan pakai kuku sebagai alat",
+    "Refill dalam 3 minggu",
+    "Jangan potong kutikula sendiri",
+    "Remover tanpa aseton"
+   ]
   },
   {
    "id": "makeup",
@@ -675,41 +1143,147 @@
     {
      "key": "makeup.event",
      "name": "Acara",
-     "on": true
+     "on": true,
+     "tags": [
+      "Pengantin",
+      "Tes makeup pengantin",
+      "Bridesmaid atau tamu",
+      "Wisuda",
+      "Sweet seventeen",
+      "Pesta",
+      "Photoshoot",
+      "Acara kantor",
+      "Ibu pengantin"
+     ]
+    },
+    {
+     "key": "makeup.skinType",
+     "name": "Jenis kulit",
+     "on": true,
+     "tags": [
+      "Berminyak",
+      "Kering",
+      "Kombinasi",
+      "Matang",
+      "Sensitif",
+      "Mudah berjerawat",
+      "Bertekstur",
+      "Dehidrasi"
+     ]
     },
     {
      "key": "makeup.look",
      "name": "Tampilan",
-     "on": true
+     "on": true,
+     "tags": [
+      "Natural",
+      "Soft glam",
+      "Full glam",
+      "Smoky eye",
+      "Cut crease",
+      "Graphic liner",
+      "Bold lip",
+      "Dewy",
+      "Matte"
+     ]
     },
     {
      "key": "makeup.skinPrep",
      "name": "Persiapan kulit",
-     "on": false
+     "on": true,
+     "tags": [
+      "Primer melembapkan",
+      "Primer matte",
+      "Pore filler",
+      "Eye patch",
+      "Color corrector",
+      "Grip primer",
+      "Base tanpa SPF"
+     ]
     },
     {
      "key": "makeup.foundation",
-     "name": "Foundation",
-     "on": true
+     "name": "Foundation dan shade",
+     "on": true,
+     "tags": [
+      "Hangat",
+      "Netral",
+      "Dingin",
+      "Olive",
+      "Campur 2 shade",
+      "Coverage ringan",
+      "Coverage sedang",
+      "Full coverage",
+      "Oksidasi: pilih lebih terang"
+     ]
     },
     {
-     "key": "makeup.shade",
-     "name": "Warna",
-     "on": true
+     "key": "makeup.lashes",
+     "name": "Bulu mata",
+     "on": true,
+     "tags": [
+      "Tidak ada",
+      "Strip",
+      "Cluster",
+      "Individual",
+      "Lem bebas lateks",
+      "Maskara waterproof"
+     ]
+    },
+    {
+     "key": "makeup.setting",
+     "name": "Setting dan ketahanan",
+     "on": true,
+     "tags": [
+      "Setting spray",
+      "Bedak tabur translucent",
+      "Baking",
+      "Mata waterproof",
+      "Tahan seharian",
+      "Pudar di zona T",
+      "Diberi kit touch-up"
+     ]
     },
     {
      "key": "makeup.products",
      "name": "Produk",
-     "on": true
+     "on": false,
+     "tags": []
     },
     {
      "key": "makeup.preferences",
      "name": "Preferensi",
-     "on": true
+     "on": true,
+     "tags": [
+      "Tanpa shimmer",
+      "Base tipis",
+      "Pakai kacamata",
+      "Lensa kontak",
+      "Mata sensitif",
+      "Kerudung/veil",
+      "Foto dengan flash",
+      "Outdoor atau lembap"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Mata berair",
+    "Mata gatal",
+    "Kemerahan",
+    "Muncul jerawat",
+    "Reaksi lem bulu mata",
+    "Terasa berat"
+   ],
+   "aftercareTags": [
+    "Cara menghapus makeup",
+    "Kertas minyak",
+    "Touch-up lipstik",
+    "Lepas bulu mata pelan-pelan",
+    "Pelembap sebelum tidur"
    ]
   },
   {
@@ -806,50 +1380,174 @@
    ],
    "fields": [
     {
-     "key": "tattoo.design",
-     "name": "Desain",
-     "on": true
+     "key": "tattoo.procedure",
+     "name": "Prosedur",
+     "on": true,
+     "tags": [
+      "Microblading",
+      "Nanoblading",
+      "Powder brows",
+      "Combo brows",
+      "Sulam bibir (lip blush)",
+      "Sulam eyeliner",
+      "Lash line",
+      "Areola",
+      "Tato fine line",
+      "Cover-up",
+      "Koreksi"
+     ]
+    },
+    {
+     "key": "tattoo.sessionNumber",
+     "name": "Sesi",
+     "on": true,
+     "tags": [
+      "Sesi pertama",
+      "Touch-up 6–8 minggu",
+      "Refresh tahunan",
+      "Penguatan warna",
+      "Lanjutan",
+      "Koreksi"
+     ]
+    },
+    {
+     "key": "tattoo.healthCheck",
+     "name": "Kontraindikasi hari ini",
+     "on": true,
+     "tags": [
+      "Tidak ada yang baru",
+      "Pengencer darah",
+      "Isotretinoin",
+      "Hamil atau menyusui",
+      "Cenderung keloid",
+      "Diabetes",
+      "Herpes bibir (sudah antivirus)",
+      "Baru filler atau Botox",
+      "PMU lama atau laser"
+     ]
     },
     {
      "key": "tattoo.placement",
      "name": "Lokasi",
-     "on": true
+     "on": true,
+     "tags": [
+      "Alis",
+      "Bibir",
+      "Garis bulu mata atas",
+      "Garis bulu mata bawah",
+      "Pergelangan tangan",
+      "Lengan bawah",
+      "Pergelangan kaki",
+      "Belakang telinga",
+      "Rusuk",
+      "Punggung"
+     ]
     },
     {
-     "key": "tattoo.technique",
-     "name": "Teknik",
-     "on": true
+     "key": "tattoo.design",
+     "name": "Desain",
+     "on": true,
+     "tags": [
+      "Mapping alis",
+      "Disetujui klien",
+      "Foto referensi",
+      "Stensil",
+      "Freehand",
+      "Fine line",
+      "Dotwork",
+      "Lettering"
+     ]
     },
     {
      "key": "tattoo.pigments",
-     "name": "Pigmen",
-     "on": true
+     "name": "Pigmen dan lot",
+     "on": true,
+     "tags": [
+      "Cokelat hangat",
+      "Cokelat abu",
+      "Cokelat netral",
+      "Korektor oranye",
+      "Nude rose",
+      "Koral",
+      "Merah",
+      "Hitam",
+      "Lot dicatat"
+     ]
     },
     {
      "key": "tattoo.tools",
-     "name": "Alat dan bahan",
-     "on": true
+     "name": "Jarum dan mesin",
+     "on": true,
+     "tags": [
+      "1RL",
+      "3RL",
+      "0,18 nano",
+      "U-blade 14",
+      "18-pin slope",
+      "Magnum",
+      "Lot cartridge dicatat",
+      "Kecepatan rendah",
+      "Kecepatan tinggi"
+     ]
     },
     {
-     "key": "tattoo.sessionNumber",
-     "name": "Nomor sesi",
-     "on": true
+     "key": "tattoo.skinResponse",
+     "name": "Respons kulit",
+     "on": true,
+     "tags": [
+      "Normal",
+      "Berminyak",
+      "Tipis",
+      "Matang",
+      "Banyak berdarah",
+      "Bengkak",
+      "Pigmen kurang masuk",
+      "Jaringan parut"
+     ]
     },
     {
      "key": "tattoo.healing",
-     "name": "Penyembuhan",
-     "on": true
-    },
-    {
-     "key": "tattoo.followUp",
-     "name": "Tindak lanjut",
-     "on": true
+     "name": "Hasil setelah sembuh",
+     "on": true,
+     "tags": [
+      "Rata",
+      "Belang",
+      "Terlalu terang",
+      "Terlalu gelap",
+      "Blur atau menyebar",
+      "Keabuan",
+      "Hangat atau oranye",
+      "Keropeng tebal",
+      "Blowout",
+      "Tanda infeksi"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm",
     "patchTestLog"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Bengkak normal",
+    "Berdarah",
+    "Keluar cairan",
+    "Keropeng tebal",
+    "Gatal",
+    "Herpes bibir",
+    "Tanda infeksi",
+    "Menonjol dan gatal"
+   ],
+   "aftercareTags": [
+    "Jaga tetap kering 7 hari",
+    "Oles tipis balm",
+    "Jangan kelupas keropeng",
+    "Hindari matahari 30 hari",
+    "Hindari kolam, laut, sauna",
+    "Second skin 3–5 hari",
+    "Tanpa makeup di area ini",
+    "Antivirus sebelum sulam bibir"
    ]
   },
   {
@@ -954,35 +1652,145 @@
     {
      "key": "barber.cut",
      "name": "Potongan",
-     "on": true
-    },
-    {
-     "key": "barber.guards",
-     "name": "Ukuran mesin",
-     "on": true
+     "on": true,
+     "tags": [
+      "Crop",
+      "Buzz cut",
+      "Crew cut",
+      "Quiff",
+      "Slick back",
+      "Side part",
+      "Mullet",
+      "Bentuk afro",
+      "Twist",
+      "Potong gunting"
+     ]
     },
     {
      "key": "barber.fade",
      "name": "Fade",
-     "on": true
+     "on": true,
+     "tags": [
+      "Skin fade",
+      "Low",
+      "Mid",
+      "High",
+      "Drop",
+      "Burst",
+      "Taper",
+      "Low taper",
+      "Tanpa fade"
+     ]
+    },
+    {
+     "key": "barber.guards",
+     "name": "Ukuran sepatu dan panjang",
+     "on": true,
+     "tags": [
+      "Tanpa sepatu",
+      "#0,5",
+      "#1",
+      "#1,5",
+      "#2",
+      "#3",
+      "#4",
+      "Atas 2 cm",
+      "Gunting di atas",
+      "Tuas terbuka"
+     ]
+    },
+    {
+     "key": "barber.neckline",
+     "name": "Garis tengkuk dan detail",
+     "on": true,
+     "tags": [
+      "Tengkuk gradasi",
+      "Kotak",
+      "Bulat",
+      "Line-up",
+      "Hard part",
+      "Desain",
+      "Rapikan alis",
+      "Bulu telinga dan hidung"
+     ]
     },
     {
      "key": "barber.beard",
      "name": "Jenggot",
-     "on": true
+     "on": true,
+     "tags": [
+      "Cukur bersih",
+      "Brewok tipis",
+      "Boxed pendek",
+      "Jenggot penuh",
+      "Goatee",
+      "Jenggot fade",
+      "Line-up saja",
+      "Cukur handuk hangat",
+      "Semir jenggot"
+     ]
+    },
+    {
+     "key": "barber.skinScalp",
+     "name": "Kulit dan kulit kepala",
+     "on": true,
+     "tags": [
+      "Bintik iritasi cukur",
+      "Rambut tumbuh ke dalam",
+      "Kulit sensitif",
+      "Ketombe",
+      "Ubun-ubun menipis",
+      "Garis rambut mundur",
+      "Pusaran rambut",
+      "Bekas luka"
+     ]
     },
     {
      "key": "barber.products",
      "name": "Produk",
-     "on": false
+     "on": false,
+     "tags": [
+      "Clay matte",
+      "Pomade",
+      "Wax",
+      "Sea salt spray",
+      "Minyak jenggot",
+      "Balm jenggot",
+      "Balm aftershave"
+     ]
     },
     {
      "key": "barber.preferences",
      "name": "Preferensi",
-     "on": true
+     "on": true,
+     "tags": [
+      "Tanpa pisau cukur",
+      "Cukur searah rambut",
+      "Setiap 2 minggu",
+      "Setiap 3 minggu",
+      "Atas tetap panjang",
+      "Tanpa banyak obrolan"
+     ]
     }
    ],
-   "intake": []
+   "intake": [],
+   "reactionTags": [
+    "Tidak ada",
+    "Bintik iritasi cukur",
+    "Iritasi",
+    "Luka gores",
+    "Rambut tumbuh ke dalam",
+    "Lecet karena clipper",
+    "Kulit kepala gatal"
+   ],
+   "aftercareTags": [
+    "Balm aftershave",
+    "Eksfoliasi 2x seminggu",
+    "Minyak jenggot setiap hari",
+    "Cukur searah rambut",
+    "Pisau cukur satu mata",
+    "Hindari topi ketat"
+   ]
   },
   {
    "id": "massage",
@@ -1084,44 +1892,166 @@
    ],
    "fields": [
     {
-     "key": "massage.focusAreas",
-     "name": "Area fokus",
-     "on": true
-    },
-    {
-     "key": "massage.pressure",
-     "name": "Tekanan",
-     "on": true
-    },
-    {
      "key": "massage.technique",
-     "name": "Teknik",
-     "on": true
-    },
-    {
-     "key": "massage.oils",
-     "name": "Minyak dan produk",
-     "on": false
+     "name": "Jenis",
+     "on": true,
+     "tags": [
+      "Relaksasi",
+      "Deep tissue",
+      "Drainase limfatik",
+      "Drainase pascaoperasi",
+      "Pijat olahraga",
+      "Trigger point",
+      "Myofascial",
+      "Batu panas",
+      "Refleksi",
+      "Body sculpting",
+      "Pijat ibu hamil"
+     ]
     },
     {
      "key": "massage.contraindications",
      "name": "Kontraindikasi",
-     "on": true
+     "on": true,
+     "tags": [
+      "Tidak ada yang dilaporkan",
+      "Kehamilan",
+      "Varises",
+      "Baru operasi",
+      "Pengencer darah",
+      "Tekanan darah tinggi",
+      "Riwayat trombosis",
+      "Lesi kulit",
+      "Demam",
+      "Pengobatan kanker",
+      "Izin dokter"
+     ]
+    },
+    {
+     "key": "massage.focusAreas",
+     "name": "Area fokus",
+     "on": true,
+     "tags": [
+      "Leher",
+      "Bahu",
+      "Punggung atas",
+      "Punggung bawah",
+      "Bokong",
+      "Paha belakang",
+      "Betis",
+      "Telapak kaki",
+      "Lengan",
+      "Perut",
+      "Wajah dan kepala"
+     ]
+    },
+    {
+     "key": "massage.pressure",
+     "name": "Tekanan",
+     "on": true,
+     "tags": [
+      "Ringan",
+      "Sedang",
+      "Kuat",
+      "Dalam",
+      "Berbeda per area"
+     ]
+    },
+    {
+     "key": "massage.findings",
+     "name": "Temuan",
+     "on": true,
+     "tags": [
+      "Simpul otot",
+      "Otot tegang",
+      "Retensi cairan",
+      "Bengkak",
+      "Fibrosis",
+      "Titik nyeri",
+      "Gerak terbatas",
+      "Selulit"
+     ]
+    },
+    {
+     "key": "massage.painLevel",
+     "name": "Nyeri (0–10)",
+     "on": false,
+     "tags": [
+      "0",
+      "2",
+      "4",
+      "6",
+      "8",
+      "10"
+     ]
+    },
+    {
+     "key": "massage.oils",
+     "name": "Minyak dan produk",
+     "on": false,
+     "tags": [
+      "Almond manis",
+      "Biji anggur",
+      "Kelapa",
+      "Tanpa pewangi",
+      "Bebas kacang",
+      "Arnika",
+      "Krim drainase",
+      "Lavender"
+     ]
+    },
+    {
+     "key": "massage.postOp",
+     "name": "Detail pascaoperasi",
+     "on": false,
+     "tags": [
+      "Sedot lemak",
+      "Tummy tuck",
+      "Operasi payudara",
+      "BBL",
+      "Hari ke-7",
+      "Hari ke-15",
+      "Hari ke-30",
+      "Korset kompresi",
+      "Seroma"
+     ]
     },
     {
      "key": "massage.result",
      "name": "Hasil",
-     "on": true
-    },
-    {
-     "key": "massage.homeCare",
-     "name": "Perawatan di rumah",
-     "on": false
+     "on": true,
+     "tags": [
+      "Rileks",
+      "Nyeri berkurang",
+      "Bengkak berkurang",
+      "Gerak lebih leluasa",
+      "Masih tegang",
+      "Pegal setelahnya"
+     ]
     }
    ],
    "intake": [
     "healthHistory",
     "consentForm"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Pegal",
+    "Memar",
+    "Pusing",
+    "Sakit kepala",
+    "Sensitif terhadap minyak",
+    "Nyeri di satu titik",
+    "Sangat rileks"
+   ],
+   "aftercareTags": [
+    "Minum air putih",
+    "Hindari mandi air panas 24 jam",
+    "Peregangan ringan",
+    "Pakai korset kompresi",
+    "Kompres es jika pegal",
+    "Jalan santai",
+    "Istirahat 2 jam"
    ]
   },
   {
@@ -1181,21 +2111,43 @@
     {
      "key": "other.notes",
      "name": "Catatan",
-     "on": true
+     "on": true,
+     "tags": []
     },
     {
      "key": "other.result",
      "name": "Hasil",
-     "on": true
+     "on": true,
+     "tags": [
+      "Berjalan lancar",
+      "Sesuai rencana",
+      "Perlu tindak lanjut"
+     ]
     },
     {
      "key": "other.nextSteps",
      "name": "Langkah berikutnya",
-     "on": true
+     "on": true,
+     "tags": [
+      "Kunjungan lanjutan",
+      "Perawatan di rumah",
+      "Periksa ke dokter"
+     ]
     }
    ],
    "intake": [
     "healthHistory"
+   ],
+   "reactionTags": [
+    "Tidak ada",
+    "Kemerahan",
+    "Tidak nyaman",
+    "Bengkak"
+   ],
+   "aftercareTags": [
+    "Istirahat",
+    "Minum air putih",
+    "Ikuti petunjuk yang diberikan"
    ]
   }
  ]
