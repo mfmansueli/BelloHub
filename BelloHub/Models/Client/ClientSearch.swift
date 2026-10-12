@@ -13,12 +13,13 @@ enum ClientSearch {
     /// Characters that may appear around the digits of a typed phone number.
     private static let phoneMarks = Set("+-().")
 
-    /// The entries that match `query`; all of them for an empty query. Order is kept.
-    static func filter(_ entries: [ClientListEntry], query: String, tags: [Tag]) -> [ClientListEntry] {
+    /// The clients that match `query`; all of them for an empty query. Order is kept. The client list and the client
+    /// pickers (register a visit from Home) share this one rule.
+    static func filter<Item>(_ items: [Item], query: String, tags: [Tag], client: (Item) -> Client) -> [Item] {
         let words = words(in: query)
-        guard !words.isEmpty else { return entries }
+        guard !words.isEmpty else { return items }
         let tagNames = foldedNames(of: tags)
-        return entries.filter { matches($0.client, words: words, tagNames: tagNames) }
+        return items.filter { matches(client($0), words: words, tagNames: tagNames) }
     }
 
     /// Whether one client matches `query`. Same rule as `filter`, for callers that hold a single client.

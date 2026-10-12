@@ -19,6 +19,8 @@ enum NotificationPlanner {
         var appointments: [Appointment]
         var clients: [Client]
         var prefs: NotificationPrefs
+        /// Visits waiting for their record right now (`RecordPending`): only the count reaches the planner.
+        var recordsToWrite = 0
     }
 
     /// Minutes before a visit that the professional is told.
@@ -27,6 +29,8 @@ enum NotificationPlanner {
     static let birthdayMinutes = 9 * 60
     /// The daily summary arrives at this time (minutes from midnight).
     static let dailySummaryMinutes = 8 * 60
+    /// "Records to complete" arrives at this time, at the end of a working day (minutes from midnight).
+    static let recordsToWriteMinutes = 19 * 60
     /// How many days ahead the planner looks. The phone keeps only 64 pending notifications, so the plan is rebuilt
     /// after every calendar change and every time the app opens.
     static let horizonDays = 14
@@ -39,6 +43,7 @@ enum NotificationPlanner {
         if input.prefs.birthdays { planned += birthdays(input, texts: texts) }
         if input.prefs.dailySummary { planned += dailySummaries(input, texts: texts) }
         if input.prefs.clientRemindersEnabled { planned += remindersReady(input, texts: texts) }
+        if input.prefs.recordsToWrite { planned += recordsToWrite(input, texts: texts) }
         return Array(planned.sorted { ($0.fireDate, $0.id) < ($1.fireDate, $1.id) }.prefix(maximumCount))
     }
 
@@ -132,6 +137,26 @@ enum NotificationPlanner {
                 body: texts.remindersReadyBody(visits.count)
             )
         }
+    }
+
+    /// One nudge, this evening (or tomorrow evening when it has passed), while visits wait for their record. The plan
+    /// is rebuilt after every change in the vault, so a record written meanwhile takes it away.
+    private static func recordsToWrite(_ input: Input, texts: NotificationTexts) -> [PlannedNotification] {
+        guard input.recordsToWrite > 0 else { return [] }
+        let today = input.calendar.startOfDay(for: input.now)
+        let tomorrow = input.calendar.date(byAdding: .day, value: 1, to: today) ?? today
+        let evening = [today, tomorrow].lazy
+            .compactMap { time(recordsToWriteMinutes, on: $0, calendar: input.calendar) }
+            .first { $0 > input.now }
+        guard let evening,
+              let delivery = deliveryDate(
+                kind: LocalNotificationKind.recordsToWrite.alertKind, fireAt: evening, visitStartsAt: nil,
+                window: input.prefs.quietHours, calendar: input.calendar
+              ) else { return [] }
+        return [PlannedNotification(
+            id: "\(PlannedNotification.identifierPrefix)recordsToWrite", kind: .recordsToWrite, fireDate: delivery,
+            title: texts.recordsToWriteTitle, body: texts.recordsToWriteBody(input.recordsToWrite)
+        )]
     }
 
     // MARK: - Helpers

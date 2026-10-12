@@ -11,6 +11,7 @@ enum LocalNotificationKind: String, CaseIterable, Sendable {
     case birthday
     case dailySummary
     case remindersReady
+    case recordsToWrite
 
     /// What quiet hours decide on (`QuietHours`).
     var alertKind: AlertKind {
@@ -19,6 +20,8 @@ enum LocalNotificationKind: String, CaseIterable, Sendable {
         case .birthday: .birthday
         case .dailySummary: .dailySummary
         case .remindersReady: .remindersReady
+        // Not urgent, like "reminders ready": quiet hours hold it.
+        case .recordsToWrite: .remindersReady
         }
     }
 

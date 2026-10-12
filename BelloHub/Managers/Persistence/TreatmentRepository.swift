@@ -9,6 +9,9 @@ import Foundation
 protocol TreatmentRepository: Sendable {
     func records(for clientID: UUID) async throws -> [TreatmentRecord]
     func record(id: UUID) async throws -> TreatmentRecord?
+    /// Every record of every client, reduced to what lists of pending work need (`RecordMark`): no notes, no
+    /// technique, no products leave the repository through this.
+    func recordMarks() async throws -> [RecordMark]
     /// Inserts a record, or edits an existing one **while it is not locked**. A locked record throws
     /// `VaultRepositoryError.recordLocked`: use `addCorrection` (D9, `RecordLockPolicy`).
     func save(_ record: TreatmentRecord) async throws

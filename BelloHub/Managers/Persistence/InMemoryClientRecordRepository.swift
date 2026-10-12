@@ -195,6 +195,10 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         changes.notify()
     }
 
+    func recordMarks() -> [RecordMark] {
+        recordsByID.values.map(RecordMark.init)
+    }
+
     func deleteDraft(id: UUID) throws {
         guard let record = recordsByID[id] else { return }
         guard record.isDraft else { throw VaultRepositoryError.recordLocked }

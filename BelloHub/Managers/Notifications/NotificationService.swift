@@ -135,9 +135,11 @@ final class NotificationService {
         do {
             let visits = try await appointments.appointments(in: window)
             let clients = try await repository.allClients()
+            let owed = try await recordsToWrite(clients: clients, now: moment, calendar: calendar)
             let plan = NotificationPlanner.plan(
                 NotificationPlanner.Input(
-                    now: moment, calendar: calendar, appointments: visits, clients: clients, prefs: prefs.load()
+                    now: moment, calendar: calendar, appointments: visits, clients: clients, prefs: prefs.load(),
+                    recordsToWrite: owed
                 ),
                 texts: NotificationTexts.localized(in: locale)
             )
@@ -146,5 +148,17 @@ final class NotificationService {
         } catch {
             // The vault could not be read (locked): keep what is scheduled; the next change tries again.
         }
+    }
+
+    /// How many visits wait for their record now: completed bookings of the last days with nothing written, and
+    /// drafts. Only this count goes to the planner.
+    private func recordsToWrite(clients: [Client], now: Date, calendar: Calendar) async throws -> Int {
+        guard let repository = vault.repository else { return 0 }
+        let days = TimeInterval((RecordPending.unwrittenDays + 1) * 86_400)
+        let past = try await appointments.appointments(in: DateInterval(start: now.addingTimeInterval(-days), end: now))
+        return RecordPending.make(
+            appointments: past, marks: try await repository.recordMarks(), clients: clients, now: now,
+            calendar: calendar
+        ).items.count
     }
 }

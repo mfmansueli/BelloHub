@@ -55,6 +55,13 @@ final class HomeViewModel {
         )
     }
 
+    /// Records still owed: completed bookings with nothing written, and drafts (`RecordPending`).
+    func records(now: Date) -> RecordPending {
+        source.records(now: now)
+    }
+
+    var clientNames: [UUID: String] { source.clientNames }
+
     func reachOut(now: Date) -> HomeReachOut {
         HomeReachOut.make(queue: queueSource.make(now: now))
     }

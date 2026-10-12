@@ -88,6 +88,8 @@ struct NotificationSettingsContentView: View {
                        \.birthdays, "notificationSettings.birthdaysSwitch")
                 toggle("notificationSettings.dailySummary", "notificationSettings.dailySummary.subtitle",
                        \.dailySummary, "notificationSettings.dailySummarySwitch")
+                toggle("notificationSettings.recordsToWrite", "notificationSettings.recordsToWrite.subtitle",
+                       \.recordsToWrite, "notificationSettings.recordsToWriteSwitch")
             }
         }
     }

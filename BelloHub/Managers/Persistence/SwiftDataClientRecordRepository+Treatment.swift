@@ -6,6 +6,10 @@
 import Foundation
 
 extension SwiftDataClientRecordRepository {
+    func recordMarks() throws -> [RecordMark] {
+        try values(TreatmentRecord.self, from: items(kind: .treatmentRecord)).map(RecordMark.init)
+    }
+
     func records(for clientID: UUID) throws -> [TreatmentRecord] {
         try values(TreatmentRecord.self, from: items(kind: .treatmentRecord, ownerID: clientID))
             .sorted { $0.createdAt > $1.createdAt }
