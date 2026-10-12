@@ -82,7 +82,12 @@ struct MoreView: View {
                     MoreRow(icon: .bell, tint: .peach, title: Text("more.row.notifications"), showsChevron: true)
                 }
                 link(.aiSettings, identifier: "more.aiSettingsRow") {
-                    MoreRow(icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"), showsChevron: true)
+                    // Voice and the assistant are optional and may not be available on this iPhone yet; the row
+                    // says so, so nobody expects them to be on.
+                    MoreRow(
+                        icon: .sparkle, tint: .rose, title: Text("more.row.aiSettings"),
+                        subtitle: Text("more.row.aiSettings.subtitle"), showsChevron: true
+                    )
                 }
                 link(.integrations, identifier: "more.integrationsRow") {
                     MoreRow(icon: .link, tint: .sage, title: Text("more.row.integrations"), showsChevron: true)

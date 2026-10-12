@@ -292,7 +292,7 @@ final class TreatmentFlowViewModel {
             ?? ProfessionCatalog(localization: localization.rawValue, status: "needs_review", entries: [])
         let template = TreatmentFormFields.resolve(
             template: profile.template, professions: profile.profile?.professions ?? [], catalog: catalog,
-            notesName: names.notes
+            notesName: names.notes, serviceID: service?.id
         )
         fields = TreatmentFormFields.withVisitFields(
             template, aftercareName: names.aftercare, reactionName: names.reaction, reminderName: names.reminder

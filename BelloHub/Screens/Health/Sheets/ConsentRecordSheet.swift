@@ -36,6 +36,7 @@ struct ConsentRecordSheet: View {
                         isSensitive: true, identifier: "consent.noteField"
                     )
                     documentSection
+                    if !viewModel.visits.isEmpty { visitPicker }
                     if viewModel.isEditing { deleteButton }
                 }
                 .padding(.horizontal, Spacing.gutter)
@@ -135,6 +136,31 @@ struct ConsentRecordSheet: View {
                 }
             }
         }
+    }
+
+    /// The visit this document belongs to, if any. "No visit" is a real answer: a general consent is not tied to one.
+    private var visitPicker: some View {
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Picker(selection: $viewModel.draft.recordID) {
+                Text("consent.visit.none").tag(UUID?.none)
+                ForEach(viewModel.visits) { record in
+                    Text(verbatim: visitTitle(record)).tag(UUID?.some(record.id))
+                }
+            } label: {
+                Text("consent.visit")
+            }
+            .pickerStyle(.menu)
+            .tint(Palette.roseText)
+            .frame(minHeight: Spacing.touchTarget)
+            .accessibilityIdentifier("consent.visitPicker")
+            Text("consent.visit.note").font(Typography.footnote).foregroundStyle(Palette.ink2)
+        }
+    }
+
+    private func visitTitle(_ record: TreatmentRecord) -> String {
+        let day = (record.performedAt ?? record.createdAt)
+            .formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale))
+        return "\(record.serviceName) · \(day)"
     }
 
     private var deleteButton: some View {

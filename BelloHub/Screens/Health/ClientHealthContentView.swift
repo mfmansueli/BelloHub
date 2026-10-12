@@ -11,11 +11,12 @@ struct ClientHealthContentView: View {
     @State private var viewModel: ClientHealthViewModel
 
     init(
-        clientID: UUID, repository: (any HealthRepository)?, profile: ProfileService, photos: any PhotoProcessing,
-        locale: Locale
+        clientID: UUID, repository: (any HealthRepository)?, records: (any TreatmentRepository)?,
+        profile: ProfileService, photos: any PhotoProcessing, locale: Locale
     ) {
         _viewModel = State(initialValue: ClientHealthViewModel(
-            clientID: clientID, repository: repository, profile: profile, photos: photos, locale: locale
+            clientID: clientID, repository: repository, records: records, profile: profile, photos: photos,
+            locale: locale
         ))
     }
 

@@ -75,6 +75,8 @@ extension TreatmentFlowViewModel {
     func selectService(_ id: UUID?) {
         service = services.first { $0.id == id }
         nextWeeks = NextSessionRules.suggestedWeeks(serviceFollowUpWeeks: service?.followUpWeeks)
+        // Her template may ask other fields for this service; what she already wrote stays.
+        buildFieldsKeepingAnswers()
         prefillAftercare()
         draftChanged()
     }

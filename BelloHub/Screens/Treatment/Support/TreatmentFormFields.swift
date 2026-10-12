@@ -24,22 +24,24 @@ enum TreatmentFormFields {
     }
 
     /// The form's fields: observations first, then every field of the template that is on for one of her
-    /// professions. A catalog field the catalog no longer names is left out (there is nothing to call it); a field
-    /// she added always has her own name.
+    /// professions and asked for this visit's service. A catalog field the catalog no longer names is left out (there
+    /// is nothing to call it); a field she added always has her own name.
     static func resolve(
-        template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String
+        template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String,
+        serviceID: UUID? = nil
     ) -> [TreatmentFormField] {
         var fields = [TreatmentFormField(key: TreatmentFormField.notesKey, name: notesName, input: .text, role: .notes)]
         var seenKeys: Set<String> = [TreatmentFormField.notesKey]
         var claimedRoles: Set<String> = []
         for profession in professions {
-            for setting in template?.fields(for: profession) ?? [] where setting.isOn {
+            for setting in template?.fields(for: profession) ?? []
+            where setting.isOn && setting.applies(toService: serviceID) {
                 guard seenKeys.insert(setting.key).inserted,
                       let name = name(of: setting, in: catalog) else { continue }
                 var role = role(forKey: setting.key)
                 if role != .generic, !claimedRoles.insert("\(role)").inserted { role = .generic }
                 fields.append(TreatmentFormField(key: setting.key, name: name, input: input(of: setting, role: role),
-                                                 role: role))
+                                                 role: role, isRequired: setting.isRequired))
             }
         }
         return fields

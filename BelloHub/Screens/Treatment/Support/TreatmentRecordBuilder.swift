@@ -36,17 +36,19 @@ enum TreatmentRecordBuilder {
         case nothingToSave
         /// A number field holds something that is not a number.
         case invalidNumber(key: String)
+        /// A field her template needs before finalizing is empty. It never stops a draft from being saved.
+        case missingRequired(key: String)
     }
 
-    /// The problems that stop a save, in the form's order.
+    /// The problems that stop finalizing, in the form's order. A draft is saved whatever they say.
     static func issues(of draft: TreatmentDraft, fields: [TreatmentFormField], locale: Locale) -> [Issue] {
         var found: [Issue] = []
         if draft.isEmpty { found.append(.nothingToSave) }
         for field in fields {
+            let value = draft.value(for: field.key).trimmingCharacters(in: .whitespacesAndNewlines)
+            if field.isRequired, value.isEmpty { found.append(.missingRequired(key: field.key)) }
             guard case .number = field.input else { continue }
-            if PriceInput(draft.value(for: field.key), locale: locale) == .invalid {
-                found.append(.invalidNumber(key: field.key))
-            }
+            if PriceInput(value, locale: locale) == .invalid { found.append(.invalidNumber(key: field.key)) }
         }
         return found
     }

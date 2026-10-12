@@ -24,6 +24,8 @@
  "noShowPolicy.counts.late.subtitle": "Also counts towards the limit.",
  "notificationSettings.cancellations.subtitle": "And a freed time for the waiting list",
  "onb.permissions.microphone.text": "Bello Hub listens only while you record a treatment, then organises what you said. You review everything before it is saved.",
+ "onb.record.fieldsHint": "You only see these fields when you register a visit. Every field is optional unless you mark it as needed to finalise.",
+ "onb.welcome.tagline": "Organise your diary. Follow every client.",
  "organizePhotos.title": "Organise photos",
  "personalization.title": "Personalisation",
  "plan.feature.followUps": "Follow-ups, waiting list and check-ins",
@@ -31,6 +33,8 @@
  "push.waitlist.new": "Waiting list update",
  "record.status.finalized": "Finalised",
  "recordHistory.trail.finalized": "Record finalised",
+ "recordTemplate.required.footer": "A record is finalised only with these filled in. Drafts save without them, so a busy day never blocks you.",
+ "recordTemplate.required.title": "Needed to finalise",
  "recoveryKey.error.notRecognized.title": "Not recognised",
  "registration.limit.explainer": "Your first 10 client registrations are free. Deleted clients still count towards this limit.",
  "reuseVisit.intro": "Choose what to copy into the new visit. You review everything before finalising it.",
@@ -47,6 +51,8 @@
  "visitDetail.status.locked": "Finalised and locked · changes are logged corrections",
  "visitDetail.status.open": "Finalised · editable for %@",
  "visitForm.finalize": "Finalise record",
+ "visitForm.required": "Needed to finalise",
+ "visitForm.required.missing": "Fill this in to finalise. Your draft is saved.",
  "visitForm.saved.title": "Record finalised",
  "waitlist.title": "Waiting list"
 }

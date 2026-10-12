@@ -16,6 +16,9 @@ struct RecordMark: Identifiable, Equatable, Sendable {
     let serviceName: String
     let status: RecordStatus
     let createdAt: Date
+    /// The day the visit happened when she noted one; corrections to it are not applied here (only the record's own
+    /// screens read corrections).
+    let performedAt: Date?
 
     init(_ record: TreatmentRecord) {
         id = record.id
@@ -25,7 +28,14 @@ struct RecordMark: Identifiable, Equatable, Sendable {
         serviceName = record.serviceName
         status = record.status
         createdAt = record.createdAt
+        performedAt = record.performedAt
     }
 
     var isDraft: Bool { status == .draft }
+
+    /// A finalized record with no booking: a walk-in, or an earlier visit written later.
+    var isWalkInVisit: Bool { !isDraft && appointmentID == nil }
+
+    /// When the visit happened, as far as the record says: its visit day, else the day it was written.
+    var visitDate: Date { performedAt ?? createdAt }
 }

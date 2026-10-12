@@ -192,14 +192,30 @@ struct VisitFormStepView: View {
     }
 
     private func input(_ field: TreatmentFormField) -> some View {
-        TreatmentFieldInput(
-            field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
-            hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key),
-            choices: viewModel.choices(for: field),
-            textSuggestions: field.role == .technique ? viewModel.techniqueSuggestions : [],
-            onAddOption: addOption(for: field)
-        )
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            TreatmentFieldInput(
+                field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
+                hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key),
+                choices: viewModel.choices(for: field),
+                textSuggestions: field.role == .technique ? viewModel.techniqueSuggestions : [],
+                onAddOption: addOption(for: field)
+            )
+            if field.isRequired, !viewModel.isFinalized { requiredNote(field) }
+        }
         .disabled(viewModel.isLocked)
+    }
+
+    /// Her template needs this field to finalize. Said quietly until she tries to finalize without it; a draft is
+    /// saved either way.
+    @ViewBuilder
+    private func requiredNote(_ field: TreatmentFormField) -> some View {
+        if viewModel.showsValidation, viewModel.issues.contains(.missingRequired(key: field.key)) {
+            Text("visitForm.required.missing")
+                .font(Typography.meta).foregroundStyle(Palette.coralText)
+                .accessibilityIdentifier("visitForm.required.missing.\(field.key)")
+        } else {
+            Text("visitForm.required").font(Typography.footnote).foregroundStyle(Palette.ink2)
+        }
     }
 
     /// "+ Add" for the lists that take new options: techniques, products and her fields' choices. Fixed answers

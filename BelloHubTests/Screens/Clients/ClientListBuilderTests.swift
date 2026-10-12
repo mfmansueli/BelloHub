@@ -47,6 +47,22 @@ struct ClientListBuilderTests {
         #expect(entries.first { $0.client.name == "Nobody" }?.summary == .noVisitsYet)
     }
 
+    @Test("A visit recorded with no booking is the last visit; drafts and booked visits' records are not counted twice")
+    func walkInIsTheLastVisit() {
+        let client = makeListedClient()
+        let booked = makeAppointment(clientID: client.id, daysFromNow: -30, serviceName: "Glow Facial")
+        let walkIn = TreatmentRecord(clientID: client.id, serviceName: "Brow lamination", createdAt: TestClock.days(-1),
+                                     performedAt: TestClock.days(-5))
+        let draft = TreatmentRecord(clientID: client.id, serviceName: "Peel", createdAt: TestClock.days(-1),
+                                    status: .draft)
+        let summary = ClientListBuilder.build(
+            clients: [client], appointments: [booked], services: [glow],
+            walkIns: [walkIn, draft].map(RecordMark.init), now: TestClock.now, calendar: calendar
+        ).entries[0].summary
+
+        #expect(summary == .lastVisit(service: "Brow lamination", date: TestClock.days(-5)))
+    }
+
     // MARK: - Win back (FollowUpPlanner's rule)
 
     @Test("The strip counts clients with no visit for 60 days and nothing booked, longest away first")

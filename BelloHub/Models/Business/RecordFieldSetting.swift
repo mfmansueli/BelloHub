@@ -13,7 +13,8 @@ import Foundation
 /// touched by the template (the record keeps its own values, keyed by `key`).
 ///
 /// `kind`, `options` and `unit` arrived after the first build (S3 stored only the four properties above), so decoding
-/// treats all three as optional: a value saved by that build reads back as a free-text field.
+/// treats all three as optional: a value saved by that build reads back as a free-text field. `isRequired` and
+/// `serviceIDs` came later still and read back as "not required" and "every service".
 struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
     /// Keys of the fields she adds start with this, followed by a UUID that never changes and is never reused.
     static let customKeyPrefix = "custom-"
@@ -27,11 +28,22 @@ struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
     var options: [String]
     /// What a `.number` field is measured in ("mm"). Nil when she gave none.
     var unit: String?
+    /// Needed before a record can be finalized. Never needed to save a draft.
+    var isRequired: Bool
+    /// The services this field is asked for; empty means every service.
+    var serviceIDs: [UUID]
 
     var id: String { "\(profession.rawValue)|\(key)" }
 
     /// Whether she created this field (the catalog's fields never carry a custom name).
     var isCustom: Bool { customName != nil }
+
+    /// Whether the visit form asks this field for a visit of `serviceID`. A visit with no service known yet asks
+    /// every field, so nothing is hidden before she says what was done.
+    func applies(toService serviceID: UUID?) -> Bool {
+        guard let serviceID, !serviceIDs.isEmpty else { return true }
+        return serviceIDs.contains(serviceID)
+    }
 
     init(
         profession: ProfessionID,
@@ -40,7 +52,9 @@ struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
         isOn: Bool,
         kind: RecordFieldKind = .text,
         options: [String] = [],
-        unit: String? = nil
+        unit: String? = nil,
+        isRequired: Bool = false,
+        serviceIDs: [UUID] = []
     ) {
         self.profession = profession
         self.key = key
@@ -49,10 +63,12 @@ struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
         self.kind = kind
         self.options = options
         self.unit = unit
+        self.isRequired = isRequired
+        self.serviceIDs = serviceIDs
     }
 
     private enum CodingKeys: String, CodingKey {
-        case profession, key, customName, isOn, kind, options, unit
+        case profession, key, customName, isOn, kind, options, unit, isRequired, serviceIDs
     }
 
     init(from decoder: any Decoder) throws {
@@ -64,5 +80,7 @@ struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
         kind = try container.decodeIfPresent(RecordFieldKind.self, forKey: .kind) ?? .text
         options = try container.decodeIfPresent([String].self, forKey: .options) ?? []
         unit = try container.decodeIfPresent(String.self, forKey: .unit)
+        isRequired = try container.decodeIfPresent(Bool.self, forKey: .isRequired) ?? false
+        serviceIDs = try container.decodeIfPresent([UUID].self, forKey: .serviceIDs) ?? []
     }
 }

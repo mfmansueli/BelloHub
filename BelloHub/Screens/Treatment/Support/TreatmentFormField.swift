@@ -47,6 +47,8 @@ struct TreatmentFormField: Identifiable, Equatable, Sendable {
     let name: String
     let input: Input
     let role: Role
+    /// Her template says this field is needed to finalize the record (never to save a draft).
+    var isRequired = false
 
     var id: String { key }
 

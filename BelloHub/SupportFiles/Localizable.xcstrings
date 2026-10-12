@@ -63421,6 +63421,276 @@
         }
       }
     },
+    "clientRecord.documents.portfolio" : {
+      "comment" : "Documents: section about photos marked for portfolio use",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الاستخدام في معرض الأعمال"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nutzung im Portfolio"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portfolio use"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Portfolio use"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso en portfolio"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso en portafolio"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso en portafolio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Usage portfolio"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पोर्टफ़ोलियो में उपयोग"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Penggunaan portofolio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso nel portfolio"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso em portfólio"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uso em portefólio"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Portfolyo kullanımı"
+          }
+        }
+      }
+    },
+    "clientRecord.documents.portfolio.count" : {
+      "comment" : "Documents: %lld is how many photos are marked for portfolio",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صور محددة لمعرض الأعمال: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fürs Portfolio markierte Fotos: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photos marked for portfolio: %lld"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos marked for portfolio: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos marcadas para portfolio: %lld"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos marcadas para portafolio: %lld"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos marcadas para portafolio: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos marquées pour le portfolio : %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पोर्टफ़ोलियो के लिए चिह्नित फ़ोटो: %lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto yang ditandai untuk portofolio: %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto segnate per il portfolio: %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos marcadas para portfólio: %lld"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografias marcadas para portefólio: %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Portfolyo için işaretli fotoğraflar: %lld"
+          }
+        }
+      }
+    },
+    "clientRecord.documents.portfolio.note" : {
+      "comment" : "Documents: rule for portfolio photos",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "فقط الصور التي تحددينها واحدة واحدة، وفقط بموافقة تصوير موقّعة. لا يرافقها أي شيء آخر من السجل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nur Fotos, die du einzeln markierst, und nur mit unterschriebener Foto-Einwilligung. Nichts anderes aus der Akte geht mit."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only photos you mark one by one, and only with a signed photo consent. Nothing else from the record goes with them."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Only photos you mark one by one, and only with a signed photo consent. Nothing else from the record goes with them."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo las fotos que marcas una por una, y solo con un consentimiento de fotos firmado. Nada más de la ficha va con ellas."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo las fotos que marcas una por una, y solo con un consentimiento de fotos firmado. Nada más de la ficha va con ellas."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo las fotos que marcas una por una, y solo con un consentimiento de fotos firmado. Nada más de la ficha va con ellas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Seulement les photos que vous marquez une par une, et seulement avec un consentement photo signé. Rien d'autre du dossier ne les accompagne."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सिर्फ़ वे फ़ोटो जिन्हें आप एक-एक करके चुनें, और सिर्फ़ हस्ताक्षरित फ़ोटो सहमति के साथ। रिकॉर्ड का और कुछ साथ नहीं जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hanya foto yang kamu tandai satu per satu, dan hanya dengan persetujuan foto yang ditandatangani. Tidak ada isi rekam lain yang ikut."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo le foto che segni una per una, e solo con un consenso foto firmato. Nient'altro della scheda le accompagna."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Só as fotos que você marca uma a uma, e só com consentimento de foto assinado. Nada mais da ficha vai junto."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Só as fotografias que marca uma a uma, e só com consentimento de fotografia assinado. Nada mais da ficha vai com elas."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yalnızca tek tek işaretlediğiniz fotoğraflar ve yalnızca imzalı fotoğraf onayıyla. Dosyadan başka hiçbir şey onlarla gitmez."
+          }
+        }
+      }
+    },
     "clientRecord.documents.sharing" : {
       "comment" : "Client record Documents: section about which photos the client or a portfolio can see",
       "extractionState" : "manual",
@@ -63777,6 +64047,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "İmzalı fotoğraf onayı yok: tüm fotoğraflar gizli kalır. Bir belgeyi imzalamak dosyanın geri kalanını asla açmaz."
+          }
+        }
+      }
+    },
+    "clientRecord.documents.sharing.privateCount" : {
+      "comment" : "Documents: %lld is how many photos are private",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الصور الخاصة: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Private Fotos: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private photos: %lld"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Private photos: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos privadas: %lld"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos privadas: %lld"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos privadas: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos privées : %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "निजी फ़ोटो: %lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto pribadi: %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto private: %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos privadas: %lld"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografias privadas: %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Özel fotoğraflar: %lld"
+          }
+        }
+      }
+    },
+    "clientRecord.documents.sharing.withClient" : {
+      "comment" : "Documents: %lld is how many photos the client can see",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الصور التي تراها العميلة: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos, die die Person sehen kann: %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photos the client can see: %lld"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos the client can see: %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos que la clienta puede ver: %lld"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos que la clienta puede ver: %lld"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos que la clienta puede ver: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos visibles par le client : %lld"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "क्लाइंट जो फ़ोटो देख सकती हैं: %lld"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto yang bisa dilihat klien: %lld"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto che la cliente può vedere: %lld"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos que a cliente pode ver: %lld"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografias que o cliente pode ver: %lld"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Müşterinin görebildiği fotoğraflar: %lld"
           }
         }
       }
@@ -72345,6 +72795,276 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Yeni onay"
+          }
+        }
+      }
+    },
+    "consent.visit" : {
+      "comment" : "Consent sheet: picker of the visit this document belongs to",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الزيارة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Besuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visita"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visita"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visita"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visite"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "विज़िट"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kunjungan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visita"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atendimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Atendimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ziyaret"
+          }
+        }
+      }
+    },
+    "consent.visit.none" : {
+      "comment" : "Consent sheet: the document belongs to no particular visit",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "دون زيارة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kein Besuch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No visit"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No visit"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguna visita"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguna visita"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ninguna visita"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucune visite"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कोई विज़िट नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tanpa kunjungan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessuna visita"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhum atendimento"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nenhum atendimento"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ziyaret yok"
+          }
+        }
+      }
+    },
+    "consent.visit.note" : {
+      "comment" : "Consent sheet: under the visit picker",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختياري. لا يعتمد سجل الزيارة أبدًا على مستند."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. Der Eintrag eines Besuchs hängt nie von einem Dokument ab."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional. A visit's record never depends on a document."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. A visit's record never depends on a document."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. El registro de una visita nunca depende de un documento."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. El registro de una visita nunca depende de un documento."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. El registro de una visita nunca depende de un documento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facultatif. La fiche d'une visite ne dépend jamais d'un document."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "वैकल्पिक। किसी विज़िट का रिकॉर्ड कभी किसी दस्तावेज़ पर निर्भर नहीं होता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opsional. Catatan kunjungan tidak pernah bergantung pada dokumen."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facoltativo. La scheda di una visita non dipende mai da un documento."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. O registro de um atendimento nunca depende de um documento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. O registo de um atendimento nunca depende de um documento."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İsteğe bağlı. Bir ziyaretin kaydı hiçbir zaman bir belgeye bağlı değildir."
           }
         }
       }
@@ -124507,6 +125227,96 @@
         }
       }
     },
+    "more.row.aiSettings.subtitle" : {
+      "comment" : "More: subtitle of the AI assistant row (voice and assistant are optional, maybe not available)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختياري. تعمل السجلات يدويًا بالكامل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. Einträge funktionieren auch ganz von Hand."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional. Records work fully by hand."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Optional. Records work fully by hand."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Los registros funcionan por completo a mano."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Los registros funcionan por completo a mano."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Los registros funcionan por completo a mano."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facultatif. Les fiches fonctionnent entièrement à la main."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "वैकल्पिक। रिकॉर्ड पूरी तरह हाथ से भी भरे जा सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opsional. Catatan bisa diisi sepenuhnya secara manual."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Facoltativo. Le schede funzionano anche solo a mano."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Os registros funcionam por completo à mão."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opcional. Os registos funcionam por completo à mão."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İsteğe bağlı. Kayıtlar tamamen elle de çalışır."
+          }
+        }
+      }
+    },
     "more.row.availability" : {
       "comment" : "More row: opens her working hours, breaks and days off.",
       "extractionState" : "manual",
@@ -145436,85 +146246,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "لا ترى هذه الحقول إلا عند تسجيل خدمة. تملؤها الملاحظات الصوتية عنك."
+            "value" : "لا ترين هذه الحقول إلا عند تسجيل زيارة. كلها اختيارية ما لم تحدّديها ضرورية لإنهاء السجل."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Diese Felder siehst du nur, wenn du eine Behandlung erfasst. Sprachnotizen füllen sie für dich aus."
+            "value" : "Diese Felder siehst du nur, wenn du einen Besuch erfasst. Alle sind freiwillig, außer du markierst sie als nötig zum Abschließen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You only see these fields when you register a treatment. Voice notes fill them for you."
+            "value" : "You only see these fields when you register a visit. Every field is optional unless you mark it as needed to finalize."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "You only see these fields when you register a treatment. Voice notes fill them for you."
+            "value" : "You only see these fields when you register a visit. Every field is optional unless you mark it as needed to finalise."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Solo ves estos campos cuando registras un tratamiento. Las notas de voz los rellenan por ti."
+            "value" : "Solo ves estos campos cuando registras una visita. Todos son opcionales, salvo los que marques como necesarios para finalizar."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Solo ves estos campos cuando registras un tratamiento. Las notas de voz los rellenan por ti."
+            "value" : "Solo ves estos campos cuando registras una visita. Todos son opcionales, salvo los que marques como necesarios para finalizar."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Solo ves estos campos cuando registras un tratamiento. Las notas de voz los rellenan por ti."
+            "value" : "Solo ves estos campos cuando registras una visita. Todos son opcionales, salvo los que marques como necesarios para finalizar."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vous ne voyez ces champs que lorsque vous enregistrez un soin. Les notes vocales les remplissent pour vous."
+            "value" : "Vous ne voyez ces champs que lorsque vous enregistrez une visite. Tous sont facultatifs, sauf ceux que vous marquez comme nécessaires pour finaliser."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "आप ये फ़ील्ड केवल उपचार दर्ज करते समय देखते हैं। वॉइस नोट इन्हें आपके लिए भर देते हैं।"
+            "value" : "आप ये फ़ील्ड केवल विज़िट दर्ज करते समय देखते हैं। सभी वैकल्पिक हैं, जब तक आप उन्हें पूरा करने के लिए ज़रूरी न बताएँ।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Kamu hanya melihat kolom ini saat mencatat perawatan. Catatan suara mengisinya untuk kamu."
+            "value" : "Kamu hanya melihat kolom ini saat mencatat kunjungan. Semuanya opsional, kecuali yang kamu tandai wajib untuk menyelesaikan."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Vedi questi campi solo quando registri un trattamento. Le note vocali li compilano per te."
+            "value" : "Vedi questi campi solo quando registri una visita. Sono tutti facoltativi, tranne quelli che segni come necessari per finalizzare."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Você só vê esses campos ao registrar um atendimento. As notas de voz preenchem por você."
+            "value" : "Você só vê esses campos ao registrar um atendimento. Todos são opcionais, a menos que você marque como necessários para finalizar."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Só vê estes campos ao registar um atendimento. As notas de voz preenchem-nos por si."
+            "value" : "Só vê estes campos ao registar um atendimento. Todos são opcionais, a menos que os marque como necessários para concluir."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bu alanları yalnızca bir işlemi kaydederken görürsünüz. Sesli notlar bunları sizin yerinize doldurur."
+            "value" : "Bu alanları yalnızca bir ziyareti kaydederken görürsünüz. Tamamlamak için gerekli olarak işaretlemedikleriniz isteğe bağlıdır."
           }
         }
       }
@@ -150739,6 +151549,96 @@
         }
       }
     },
+    "onb.welcome.sample.photos" : {
+      "comment" : "Welcome sample card: the client's private photos",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "صور قبل وبعد، خاصة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vorher-nachher-Fotos, privat"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before and after photos, private"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Before and after photos, private"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos de antes y después, privadas"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos de antes y después, privadas"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos de antes y después, privadas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Photos avant et après, privées"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पहले और बाद की फ़ोटो, निजी"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto sebelum dan sesudah, pribadi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Foto prima e dopo, private"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotos de antes e depois, privadas"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fotografias de antes e depois, privadas"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Öncesi ve sonrası fotoğraflar, özel"
+          }
+        }
+      }
+    },
     "onb.welcome.sample.service1" : {
       "comment" : "Welcome sample: a service name.",
       "extractionState" : "manual",
@@ -151016,85 +151916,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "كل ما تحتاجه لإدارة عملك في الجمال وتذكّر كل عميل."
+            "value" : "احجزي الزيارات، ودوّني ما قمتِ به، وشاهدي سجل كل عميلة وصورها وعنايتها في ملف خاص."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Alles, was du brauchst, um dein Beauty-Geschäft zu führen und dir jede Person deiner Kundschaft zu merken."
+            "value" : "Plane Termine, halte fest, was du gemacht hast, und sieh Verlauf, Fotos und Pflege jeder Person in einer privaten Akte."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Everything you need to manage your beauty business and remember every client."
+            "value" : "Book visits, write down what you did and see each client's history, photos and care in one private record."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Everything you need to manage your beauty business and remember every client."
+            "value" : "Book visits, write down what you did and see each client's history, photos and care in one private record."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todo lo que necesitas para llevar tu negocio de belleza y recordar a cada cliente."
+            "value" : "Reserva, registra lo que hiciste y ve el historial, las fotos y los cuidados de cada clienta en una ficha privada."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todo lo que necesitas para llevar tu negocio de belleza y recordar a cada cliente."
+            "value" : "Agenda, registra lo que hiciste y ve el historial, las fotos y los cuidados de cada clienta en una ficha privada."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Todo lo que necesitas para llevar tu negocio de belleza y recordar a cada cliente."
+            "value" : "Agenda, registra lo que hiciste y ve el historial, las fotos y los cuidados de cada clienta en una ficha privada."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tout ce qu'il faut pour gérer votre activité beauté et vous souvenir de chaque client."
+            "value" : "Planifiez, notez ce que vous avez fait et retrouvez l'historique, les photos et les soins de chaque client dans un dossier privé."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "अपना ब्यूटी बिज़नेस सँभालने और हर क्लाइंट को याद रखने के लिए ज़रूरी सब कुछ।"
+            "value" : "विज़िट बुक करें, जो किया वह लिखें और हर क्लाइंट का इतिहास, फ़ोटो और देखभाल एक निजी रिकॉर्ड में देखें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Semua yang kamu perlukan untuk mengelola bisnis kecantikan dan mengingat setiap klien."
+            "value" : "Buat janji, catat yang kamu lakukan, dan lihat riwayat, foto, serta perawatan setiap klien dalam satu rekam pribadi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tutto ciò che ti serve per gestire la tua attività di bellezza e ricordare ogni cliente."
+            "value" : "Prenota, annota cosa hai fatto e vedi storico, foto e cure di ogni cliente in una scheda privata."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tudo o que você precisa para cuidar do seu negócio de beleza e lembrar de cada cliente."
+            "value" : "Agende, registre o que fez e veja o histórico, as fotos e os cuidados de cada cliente numa ficha privada."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Tudo o que precisa para gerir o seu negócio de beleza e recordar cada cliente."
+            "value" : "Marque, registe o que fez e veja o histórico, as fotografias e os cuidados de cada cliente numa ficha privada."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Güzellik işinizi yönetmek ve her müşteriyi hatırlamak için ihtiyacınız olan her şey."
+            "value" : "Randevu verin, yaptığınızı kaydedin; her müşterinin geçmişini, fotoğraflarını ve bakımını özel bir dosyada görün."
           }
         }
       }
@@ -151106,85 +152006,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "الأجندة. العملاء. الإدارة."
+            "value" : "نظّمي مواعيدك. تابعي كل عميلة."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Termine. Kundschaft. Geschäft."
+            "value" : "Organisiere deinen Kalender. Begleite deine ganze Kundschaft."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schedule. Clients. Business."
+            "value" : "Organize your agenda. Follow every client."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schedule. Clients. Business."
+            "value" : "Organise your diary. Follow every client."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Gestión."
+            "value" : "Organiza tu agenda. Acompaña a cada clienta."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Negocio."
+            "value" : "Organiza tu agenda. Acompaña a cada clienta."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Negocio."
+            "value" : "Organiza tu agenda. Acompaña a cada clienta."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clients. Gestion."
+            "value" : "Organisez votre agenda. Suivez chaque client."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "एजेंडा. क्लाइंट. प्रबंधन."
+            "value" : "अपना अपॉइंटमेंट कैलेंडर व्यवस्थित करें। हर क्लाइंट का ध्यान रखें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Jadwal. Klien. Bisnis."
+            "value" : "Atur agendamu. Ikuti setiap klien."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clienti. Gestione."
+            "value" : "Organizza l'agenda. Segui ogni cliente."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Gestão."
+            "value" : "Organize sua agenda. Acompanhe cada cliente."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Agenda. Clientes. Gestão."
+            "value" : "Organize a sua agenda. Acompanhe cada cliente."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ajanda. Müşteriler. Yönetim."
+            "value" : "Ajandanızı düzenleyin. Her müşteriyi takip edin."
           }
         }
       }
@@ -156326,85 +157226,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "سجلات علاج بالإدخال الصوتي"
+            "value" : "سجلات العميلات مع سجل الزيارات والصور"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Behandlungseinträge mit Spracheingabe"
+            "value" : "Akten deiner Kundschaft mit Besuchsverlauf und Fotos"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Treatment records with voice entry"
+            "value" : "Client records with visit history and photos"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Treatment records with voice entry"
+            "value" : "Client records with visit history and photos"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registros de tratamiento con entrada por voz"
+            "value" : "Fichas de clientas con historial de visitas y fotos"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registros de atención con entrada por voz"
+            "value" : "Fichas de clientas con historial de visitas y fotos"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registros de atención con entrada por voz"
+            "value" : "Fichas de clientas con historial de visitas y fotos"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fiches de soin avec saisie vocale"
+            "value" : "Dossiers clients avec historique des visites et photos"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "वॉइस एंट्री वाले ट्रीटमेंट रिकॉर्ड"
+            "value" : "विज़िट इतिहास और फ़ोटो के साथ क्लाइंट रिकॉर्ड"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Catatan perawatan dengan input suara"
+            "value" : "Rekam klien dengan riwayat kunjungan dan foto"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Schede trattamento con inserimento vocale"
+            "value" : "Schede clienti con storico delle visite e foto"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registros de atendimento com entrada por voz"
+            "value" : "Fichas de clientes com histórico de atendimentos e fotos"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Registos de atendimento com entrada por voz"
+            "value" : "Fichas de clientes com histórico de atendimentos e fotos"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sesle girilebilen uygulama kayıtları"
+            "value" : "Ziyaret geçmişi ve fotoğraflarla müşteri dosyaları"
           }
         }
       }
@@ -184879,6 +185779,186 @@
         }
       }
     },
+    "recordTemplate.required.footer" : {
+      "comment" : "Record fields: footer of the needed-to-finalize section",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا يُنهى السجل إلا بعد ملء هذه الحقول. تُحفظ المسودات دونها، فلا يعيقك يوم مزدحم أبدًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ein Eintrag wird nur mit diesen Angaben abgeschlossen. Entwürfe speichern ohne sie, ein voller Tag hält dich also nie auf."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A record is finalized only with these filled in. Drafts save without them, so a busy day never blocks you."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A record is finalised only with these filled in. Drafts save without them, so a busy day never blocks you."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un registro solo se finaliza con estos completos. Los borradores se guardan sin ellos, así un día ajetreado nunca te frena."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un registro solo se finaliza con estos completos. Los borradores se guardan sin ellos, así un día ajetreado nunca te frena."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Un registro solo se finaliza con estos completos. Los borradores se guardan sin ellos, así un día ajetreado nunca te frena."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Une fiche n'est finalisée qu'avec ces champs remplis. Les brouillons s'enregistrent sans eux : une journée chargée ne vous bloque jamais."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "रिकॉर्ड तभी पूरा होता है जब ये भरे हों। ड्राफ़्ट इनके बिना भी सहेजे जाते हैं, इसलिए व्यस्त दिन में आप कभी नहीं अटकतीं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Catatan hanya bisa diselesaikan jika ini terisi. Draf tetap tersimpan tanpanya, jadi hari sibuk tidak menghambatmu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Una scheda si finalizza solo con questi compilati. Le bozze si salvano senza, così una giornata piena non ti blocca mai."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Um registro só é finalizado com estes preenchidos. Rascunhos são salvos sem eles, então um dia corrido nunca te trava."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Um registo só é concluído com estes preenchidos. Os rascunhos guardam-se sem eles, por isso um dia cheio nunca a bloqueia."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kayıt yalnızca bunlar doluyken tamamlanır. Taslaklar onlarsız kaydedilir, yoğun bir gün sizi asla durdurmaz."
+          }
+        }
+      }
+    },
+    "recordTemplate.required.title" : {
+      "comment" : "Record fields: section of fields needed before finalizing",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مطلوبة لإنهاء السجل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nötig zum Abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needed to finalize"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Needed to finalise"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesarios para finalizar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesarios para finalizar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesarios para finalizar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nécessaires pour finaliser"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पूरा करने के लिए ज़रूरी"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wajib untuk menyelesaikan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessari per finalizzare"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessários para finalizar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessários para concluir"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tamamlamak için gerekenler"
+          }
+        }
+      }
+    },
     "recordTemplate.section.yours" : {
       "comment" : "Record fields: section of the fields she added herself.",
       "extractionState" : "manual",
@@ -184969,6 +186049,546 @@
         }
       }
     },
+    "recordTemplate.services.action" : {
+      "comment" : "Record fields: swipe action to choose the services a field is asked for",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخدمات"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Leistungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Services"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Services"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prestations"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सेवाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servizi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hizmetler"
+          }
+        }
+      }
+    },
+    "recordTemplate.services.all" : {
+      "comment" : "Record fields: the field is asked at every service",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كل الخدمات"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle Leistungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every service"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Every service"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los servicios"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los servicios"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los servicios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Toutes les prestations"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सभी सेवाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Semua layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutti i servizi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os serviços"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os serviços"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tüm hizmetler"
+          }
+        }
+      }
+    },
+    "recordTemplate.services.footer" : {
+      "comment" : "Record fields: footer of the services sheet",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يطلب النموذج هذا الحقل في زيارات هذه الخدمات فقط. يبقى ما تحويه السجلات."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Das Formular fragt dieses Feld nur bei diesen Leistungen ab. Was Einträge schon enthalten, bleibt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The form asks this field only at visits of these services. What records already hold stays."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The form asks this field only at visits of these services. What records already hold stays."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El formulario pide este campo solo en visitas de estos servicios. Lo que ya tienen los registros se queda."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El formulario pide este campo solo en visitas de estos servicios. Lo que ya tienen los registros se queda."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El formulario pide este campo solo en visitas de estos servicios. Lo que ya tienen los registros se queda."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le formulaire ne demande ce champ que pour ces prestations. Ce que les fiches contiennent déjà reste."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "फ़ॉर्म यह फ़ील्ड सिर्फ़ इन सेवाओं की विज़िट में पूछता है। रिकॉर्ड में पहले से जो है, वह रहता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Formulir hanya menanyakan kolom ini pada kunjungan layanan ini. Isi catatan yang ada tetap tersimpan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il modulo chiede questo campo solo nelle visite di questi servizi. Ciò che le schede contengono già resta."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O formulário pede este campo só em atendimentos destes serviços. O que os registros já têm continua."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O formulário pede este campo só em atendimentos destes serviços. O que os registos já têm mantém-se."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Form bu alanı yalnızca bu hizmetlerin ziyaretlerinde sorar. Kayıtlarda olanlar kalır."
+          }
+        }
+      }
+    },
+    "recordTemplate.services.only" : {
+      "comment" : "Record fields: under a field narrowed to some services; %@ is the list of services",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "فقط لـ %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nur für %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only for %@"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Only for %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo para %@"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo para %@"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo para %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uniquement pour %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सिर्फ़ %@ के लिए"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hanya untuk %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Solo per %@"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Só para %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Só para %@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yalnızca %@ için"
+          }
+        }
+      }
+    },
+    "recordTemplate.services.save" : {
+      "comment" : "Record fields: save the services of a field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "حفظ"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Speichern"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Save"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Enregistrer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सहेजें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Simpan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Salva"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Salvar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Guardar"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kaydet"
+          }
+        }
+      }
+    },
+    "recordTemplate.services.title" : {
+      "comment" : "Record fields: sheet title to choose the services a field is asked for (inline, keep short)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخدمات"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Leistungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Services"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Services"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prestations"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सेवाएँ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Layanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servizi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hizmetler"
+          }
+        }
+      }
+    },
     "recordTemplate.subtitle" : {
       "comment" : "Record fields screen: line under the title. %@ is what she calls the people she serves, singular (\"client\"). The German sentence uses pro %@, which works with every term.",
       "extractionState" : "manual",
@@ -184976,85 +186596,85 @@
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ما تريد تذكّره عن كل %@. يملأ المساعد الصوتي هذه الحقول عنك."
+            "value" : "ما تريد تذكّره عن كل %@. ابدئي بهذه وعدّليها متى شئتِ."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Was du pro %@ festhalten möchtest. Der Sprachassistent füllt diese Felder für dich aus."
+            "value" : "Was du pro %@ festhalten möchtest. Fang mit diesen an und pass sie jederzeit an."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "What you want to remember about each %@. The voice assistant fills these in."
+            "value" : "What you want to remember about each %@. Start with these and adjust any time."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "What you want to remember about each %@. The voice assistant fills these in."
+            "value" : "What you want to remember about each %@. Start with these and adjust any time."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lo que quieres recordar de cada %@. El asistente de voz los rellena por ti."
+            "value" : "Lo que quieres recordar de cada %@. Empieza con estos y ajústalos cuando quieras."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lo que quieres recordar de cada %@. El asistente de voz los rellena por ti."
+            "value" : "Lo que quieres recordar de cada %@. Empieza con estos y ajústalos cuando quieras."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Lo que quieres recordar de cada %@. El asistente de voz los rellena por ti."
+            "value" : "Lo que quieres recordar de cada %@. Empieza con estos y ajústalos cuando quieras."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ce que vous voulez retenir pour chaque %@. L'assistant vocal les remplit pour vous."
+            "value" : "Ce que vous voulez retenir pour chaque %@. Commencez avec ceux-ci et ajustez quand vous voulez."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "हर %@ के बारे में आप क्या याद रखना चाहते हैं। वॉइस असिस्टेंट इन्हें भर देता है।"
+            "value" : "हर %@ के बारे में आप क्या याद रखना चाहते हैं। इनसे शुरू करें और जब चाहें बदलें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hal yang ingin kamu ingat tentang setiap %@. Asisten suara mengisinya untuk kamu."
+            "value" : "Hal yang ingin kamu ingat tentang setiap %@. Mulai dengan ini dan ubah kapan saja."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cosa vuoi ricordare di ogni %@. L'assistente vocale li compila per te."
+            "value" : "Cosa vuoi ricordare di ogni %@. Inizia con questi e modificali quando vuoi."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O que você quer lembrar sobre cada %@. O assistente de voz preenche por você."
+            "value" : "O que você quer lembrar sobre cada %@. Comece com estes e ajuste quando quiser."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "O que quer lembrar sobre cada %@. O assistente de voz preenche por si."
+            "value" : "O que quer lembrar sobre cada %@. Comece com estes e ajuste quando quiser."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Her %@ hakkında hatırlamak istedikleriniz. Sesli asistan bunları sizin yerinize doldurur."
+            "value" : "Her %@ hakkında hatırlamak istedikleriniz. Bunlarla başlayın, istediğiniz zaman değiştirin."
           }
         }
       }
@@ -234603,6 +236223,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bu ziyarette öne çıkan neydi?"
+          }
+        }
+      }
+    },
+    "visitForm.required" : {
+      "comment" : "Visit form: under a field her template needs before finalizing",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مطلوب لإنهاء السجل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nötig zum Abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needed to finalize"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Needed to finalise"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesario para finalizar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesario para finalizar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necesario para finalizar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nécessaire pour finaliser"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पूरा करने के लिए ज़रूरी"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wajib untuk menyelesaikan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessario per finalizzare"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessário para finalizar"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Necessário para concluir"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tamamlamak için gerekli"
+          }
+        }
+      }
+    },
+    "visitForm.required.missing" : {
+      "comment" : "Visit form: she tried to finalize with a needed field empty",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "املئي هذا لإنهاء السجل. المسودة محفوظة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füll das aus, um abzuschließen. Dein Entwurf ist gespeichert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill this in to finalize. Your draft is saved."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fill this in to finalise. Your draft is saved."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rellénalo para finalizar. Tu borrador está guardado."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complétalo para finalizar. Tu borrador está guardado."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complétalo para finalizar. Tu borrador está guardado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Remplissez ce champ pour finaliser. Votre brouillon est enregistré."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पूरा करने के लिए इसे भरें। आपका ड्राफ़्ट सहेजा हुआ है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Isi ini untuk menyelesaikan. Drafmu sudah tersimpan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Compilalo per finalizzare. La bozza è salvata."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preencha para finalizar. Seu rascunho está salvo."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preencha para concluir. O seu rascunho está guardado."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tamamlamak için doldurun. Taslağınız kaydedildi."
           }
         }
       }
