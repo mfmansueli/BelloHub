@@ -5,8 +5,10 @@
 
 import Foundation
 
-/// Photos added in the flow (5.7 and 5.8). Every photo is processed by `PhotoProcessing` (size, no metadata, thumbnail)
-/// and saved at once through the vault, tied to this client and this record; nothing goes to the photo library.
+/// Photos of the visit, taken or imported at any moment: before the form is filled, in the middle, or after it is
+/// finalized. Every photo is processed by `PhotoProcessing` (size, no metadata, thumbnail) and saved at once through
+/// the vault, tied to this client and this record by its id; nothing goes to the photo library. The draft is stored
+/// first when it does not exist yet, so a photo never points to a record that is not there.
 extension TreatmentFlowViewModel {
     var allowedVisibilities: [PhotoVisibility] {
         PhotoConsentRules.allowedVisibilities(hasConsent: hasPhotoConsent)
@@ -18,7 +20,15 @@ extension TreatmentFlowViewModel {
         return (photos.first { $0.id == found.before?.id }, photos.first { $0.id == found.after?.id })
     }
 
-    /// Prepares and saves one photo. Returns whether it worked; on failure `failure` is `.photo` and nothing was saved.
+    /// The kind the camera or the library proposes next: before, then after, then progress.
+    var nextPhotoKind: PhotoKind {
+        if pair.before == nil { return .before }
+        if pair.after == nil { return .after }
+        return .progress
+    }
+
+    /// Prepares and saves one photo. Returns whether it worked; on failure `failure` is `.photo` (or `.save` when the
+    /// draft could not be stored) and no photo was saved.
     @discardableResult
     func addPhoto(
         _ source: Data, kind: PhotoKind, visibility: PhotoVisibility = .professionalOnly
@@ -29,12 +39,14 @@ extension TreatmentFlowViewModel {
         defer { isProcessingPhoto = false }
         do {
             let data = try await photoProcessing.process(source)
+            guard await ensureStored() else { return false }
             let photo = Photo(
-                id: makeID(), clientID: clientID, recordID: savedRecord?.id, takenAt: now(), kind: kind,
+                id: makeID(), clientID: clientID, recordID: recordID, takenAt: now(), kind: kind,
                 visibility: PhotoConsentRules.visibility(requested: visibility, hasConsent: hasPhotoConsent)
             )
             try await repository.save(photo, data: data)
             photos.append(FlowPhoto(photo: photo, data: data))
+            if case .idle = autosave { autosave = .saved(now()) }
             return true
         } catch {
             failure = .photo
@@ -66,8 +78,9 @@ extension TreatmentFlowViewModel {
         }
     }
 
+    /// Removes a photo of a visit still open. A locked record keeps its photos: what it showed stays as it was.
     func deletePhoto(_ id: UUID) async {
-        guard let repository else { return }
+        guard let repository, !isLocked else { return }
         do {
             try await repository.deletePhoto(id: id)
             photos.removeAll { $0.id == id }

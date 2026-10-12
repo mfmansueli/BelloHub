@@ -6,14 +6,18 @@
 import Foundation
 import Observation
 
-/// State and actions of one client's profile (4.1): it watches the vault for her client record and her appointments
-/// and rebuilds the snapshot (`ClientProfileBuilder`) when either changes, so an edit or a new appointment shows at
-/// once. The only action of its own is the call.
+/// State and actions of one client's record (4.1): it watches the vault and rebuilds the snapshot
+/// (`ClientProfileBuilder`) and the visit timeline (`ClientTimelineBuilder`) when anything changes, so an edit, a new
+/// appointment or a saved visit shows at once. Its own actions are the call and the record section she is looking at.
 @MainActor
 @Observable
 final class ClientProfileViewModel {
     let clientID: UUID
     private(set) var snapshot: ClientProfileSnapshot?
+    /// Her visits, pending records and bookings that did not happen, newest first.
+    private(set) var timeline: ClientTimeline = .empty
+    /// The part of the record on screen; History opens first.
+    var section: ClientRecordSection = .history
     private(set) var isLoading = true
     /// She was merged into another profile or deleted while this screen was open.
     private(set) var isMissing = false
@@ -28,6 +32,11 @@ final class ClientProfileViewModel {
     private let listeners = TaskBag()
     private var isReloading = false
     private var needsReload = false
+    /// Decrypted thumbnails, kept only while the record is open. A thumbnail is small (about 20 KB), so even a long
+    /// record holds a few megabytes at most; full images are never loaded here.
+    private var thumbnails: [UUID: Data] = [:]
+    /// Full images for a comparison, only the last few (`PhotoMemoryCache`).
+    private var fullImages = PhotoMemoryCache()
 
     init(
         clientID: UUID,
@@ -58,6 +67,47 @@ final class ClientProfileViewModel {
         snapshot?.client.phoneE164.flatMap(PhoneLauncher.telURL(forE164:)) != nil
     }
 
+    /// There is a number to open WhatsApp with.
+    var canMessage: Bool {
+        snapshot?.client.phoneE164 != nil
+    }
+
+    /// Opens the visit flow for a visit with no appointment (a walk-in, an old visit she is writing now).
+    var newVisitRequest: TreatmentFlowRequest {
+        TreatmentFlowRequest(clientID: clientID)
+    }
+
+    /// Opens the visit flow for a completed appointment that has no record yet. If a record appeared meanwhile, the
+    /// flow opens that one (`RecordForAppointment`), so this never makes a second record for the appointment.
+    func pendingRecordRequest(for appointment: Appointment) -> TreatmentFlowRequest {
+        TreatmentFlowRequest(clientID: clientID, appointmentID: appointment.id, serviceID: appointment.serviceID)
+    }
+
+    /// Continues a draft where she left it.
+    func continueRequest(for visit: VisitSummary) -> TreatmentFlowRequest {
+        TreatmentFlowRequest(clientID: clientID, appointmentID: visit.record.appointmentID,
+                             serviceID: visit.record.serviceID, recordID: visit.record.id)
+    }
+
+    /// A photo's full image, for a comparison. Only the last few stay in memory.
+    func fullPhoto(for photo: Photo) async -> PhotoData? {
+        if let cached = fullImages.photo(photo.id) { return cached }
+        guard let repository = vault.repository, let data = try? await repository.photoData(id: photo.id) else {
+            return nil
+        }
+        fullImages.store(data, for: photo.id)
+        return data
+    }
+
+    /// The thumbnail of a photo, decrypted on first use and kept while the record is open.
+    func thumbnail(for photo: Photo) async -> Data? {
+        if let cached = thumbnails[photo.id] { return cached }
+        guard let repository = vault.repository,
+              let data = try? await repository.photoThumbnail(id: photo.id) else { return nil }
+        thumbnails[photo.id] = data
+        return data
+    }
+
     // MARK: - Listening
 
     /// Starts watching the vault. Safe to call again: a running watch is kept.
@@ -84,6 +134,9 @@ final class ClientProfileViewModel {
     func stopListening() {
         listeners.cancelAll()
         snapshot = nil
+        timeline = .empty
+        thumbnails = [:]
+        fullImages = PhotoMemoryCache()
         isLoading = true
         isMissing = false
         errorMessage = nil
@@ -141,14 +194,19 @@ final class ClientProfileViewModel {
                 isLoading = false
                 return
             }
+            let appointments = try await repository.appointments(for: clientID)
             let input = ClientProfileBuilder.Input(
                 client: client,
-                appointments: try await repository.appointments(for: clientID),
+                appointments: appointments,
                 plans: try await repository.sessionPlans(for: clientID),
                 forms: try await repository.healthForms(for: clientID),
                 consents: try await repository.consents(for: clientID)
             )
-            snapshot = ClientProfileBuilder.make(input, now: now(), calendar: calendar)
+            let moment = now()
+            snapshot = ClientProfileBuilder.make(input, now: moment, calendar: calendar)
+            timeline = ClientTimelineBuilder.make(
+                try await timelineInput(repository, appointments: appointments), now: moment, list: formatters.list
+            )
             isMissing = false
             errorMessage = nil
             isLoading = false
@@ -157,9 +215,30 @@ final class ClientProfileViewModel {
         }
     }
 
+    /// Everything of hers the timeline groups: records with their corrections, photos (metadata only) and incidents.
+    private func timelineInput(
+        _ repository: any ClientRecordRepository, appointments: [Appointment]
+    ) async throws -> ClientTimelineBuilder.Input {
+        let records = try await repository.records(for: clientID)
+        var corrections: [RecordCorrection] = []
+        for record in records where !record.isDraft {
+            corrections += try await repository.corrections(for: record.id)
+        }
+        return ClientTimelineBuilder.Input(
+            records: records, corrections: corrections, appointments: appointments,
+            photos: try await repository.photos(for: clientID), incidents: try await repository.incidents(for: clientID)
+        )
+    }
+
     private func fail() {
         isLoading = false
         errorMessage = String(interface: LocalizedStringResource("clientProfile.error.message"))
+    }
+
+    /// For the timeline's summaries, in the language of the interface.
+    private var formatters: Formatters {
+        Formatters(locale: InterfaceLocale.current, timeZone: calendar.timeZone,
+                   currencyCode: profile.profile?.currencyCode ?? "USD")
     }
 
     private var calendar: Calendar {

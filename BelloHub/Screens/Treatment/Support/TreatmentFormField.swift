@@ -28,12 +28,20 @@ struct TreatmentFormField: Identifiable, Equatable, Sendable {
         case result
         case aftercare
         case nextSession
+        /// How the client reacted, in her words (`TreatmentRecord.reaction`).
+        case reaction
+        /// What to remember at the next visit (`TreatmentRecord.nextVisitReminder`).
+        case nextVisitReminder
         case generic
     }
 
-    /// The reserved keys of the two fields every record has, whatever her template says.
+    /// The reserved keys of the fields every record has, whatever her template says.
     static let notesKey = "notes"
     static let nextSessionKey = "nextSession"
+    static let reactionKey = "reaction"
+    static let reminderKey = "nextVisitReminder"
+    /// Used only when her template has no aftercare field of its own.
+    static let aftercareKey = "aftercare"
 
     let key: String
     let name: String

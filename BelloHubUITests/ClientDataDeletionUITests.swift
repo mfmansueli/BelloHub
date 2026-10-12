@@ -23,7 +23,7 @@ final class ClientDataDeletionUITests: XCTestCase {
         app.tapButton("newClient.saveButton")
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5))
 
-        app.tapButton("clientProfile.editButton")
+        app.tapButton("clientProfile.editAction")
         let export = app.buttons["clientEdit.exportDataRow"]
         XCTAssertTrue(export.waitForExistence(timeout: 5), "no export row")
         app.bringIntoView(export)

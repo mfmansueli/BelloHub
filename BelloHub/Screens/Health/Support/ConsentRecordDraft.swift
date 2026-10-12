@@ -15,6 +15,8 @@ struct ConsentRecordDraft: Equatable, Sendable {
     var signedAt: Date
     var note = ""
     var document: ConsentDocument?
+    /// The visit the document belongs to, if she tied it to one.
+    var recordID: UUID?
 
     init(signedAt: Date) {
         self.signedAt = signedAt

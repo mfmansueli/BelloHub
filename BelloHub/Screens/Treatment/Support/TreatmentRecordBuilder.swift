@@ -21,6 +21,14 @@ enum TreatmentRecordBuilder {
         var source = RecordSource.manual
         /// Set only after she reviewed every proposed field.
         var aiAssisted = false
+        /// The day the treatment happened, as she set it on the form.
+        var performedAt: Date?
+        /// A draft while she works; finalized when she says so.
+        var status = RecordStatus.finalized
+        /// The record as it was before this save (a draft being continued, a record being completed). What the form
+        /// has no field for is carried over from it, so a field switched off since, or a part copied from an earlier
+        /// visit, is never dropped by saving.
+        var carried: TreatmentRecord?
     }
 
     enum Issue: Equatable, Sendable {
@@ -50,8 +58,10 @@ enum TreatmentRecordBuilder {
         var record = TreatmentRecord(
             id: context.id, clientID: context.clientID, appointmentID: context.appointmentID,
             serviceID: context.serviceID, serviceName: context.serviceName, createdAt: context.createdAt,
-            source: context.source, result: draft.result ?? .neutral, aiAssisted: context.aiAssisted
+            performedAt: context.performedAt, status: context.status, source: context.source,
+            result: draft.result ?? .neutral, aiAssisted: context.aiAssisted
         )
+        carry(context.carried, into: &record, fields: fields)
         var entries: [RecordFieldEntry] = []
         for field in fields {
             let value = draft.value(for: field.key).trimmingCharacters(in: .whitespacesAndNewlines)
@@ -63,14 +73,36 @@ enum TreatmentRecordBuilder {
             case .result: record.resultDetail = value
             case .aftercare: record.aftercare = value
             case .nextSession: record.nextSessionSuggestion = value
+            case .reaction: record.reaction = value
+            case .nextVisitReminder: record.nextVisitReminder = value
             case .generic: entries.append(entry(for: field, value: value, locale: locale))
             }
         }
         let suggestion = draft.value(for: TreatmentFormField.nextSessionKey)
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if !suggestion.isEmpty { record.nextSessionSuggestion = suggestion }
+        // Answers of fields the form no longer shows (switched off since) stay with the record.
+        let shown = Set(fields.map(\.key))
+        entries += (context.carried?.fieldEntries ?? []).filter { !shown.contains($0.key) }
         record.fieldEntries = entries
         return record
+    }
+
+    /// Copies from the earlier version of the record what the form has no field for: a part with no field in her
+    /// template now is kept as it was, never erased by a save.
+    private static func carry(_ carried: TreatmentRecord?, into record: inout TreatmentRecord,
+                              fields: [TreatmentFormField]) {
+        guard let carried else { return }
+        let roles = Set(fields.map { "\($0.role)" })
+        func lacks(_ role: TreatmentFormField.Role) -> Bool { !roles.contains("\(role)") }
+        if lacks(.notes) { record.notes = carried.notes }
+        if lacks(.products) { record.productsUsed = carried.productsUsed }
+        if lacks(.technique) { record.technique = carried.technique }
+        if lacks(.result) { record.resultDetail = carried.resultDetail }
+        if lacks(.aftercare) { record.aftercare = carried.aftercare }
+        if lacks(.reaction) { record.reaction = carried.reaction }
+        if lacks(.nextVisitReminder) { record.nextVisitReminder = carried.nextVisitReminder }
+        record.nextSessionSuggestion = carried.nextSessionSuggestion
     }
 
     // MARK: - Private

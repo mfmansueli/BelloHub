@@ -5,9 +5,8 @@
 
 import Foundation
 
-/// The next-session step (5.9): a suggested interval and date, a note in the record, and a way into the new-appointment
-/// sheet. Reminders to the client are not part of this front end (they need the S6/S8 services), so nothing here
-/// sends anything.
+/// The next visit: a suggested interval and date on the form (written into the record as a note), and "Book return"
+/// in the confirmation, which opens the new-appointment sheet. Nothing here sends anything to the client.
 extension TreatmentFlowViewModel {
     var weekChoices: [Int] { NextSessionRules.choices(including: NextSessionRules.suggestedWeeks(
         serviceFollowUpWeeks: service?.followUpWeeks
@@ -22,22 +21,14 @@ extension TreatmentFlowViewModel {
         NextSessionRules.date(afterVisit: visitDate, weeks: nextWeeks, now: now(), calendar: calendar)
     }
 
-    /// Writes the interval into the record ("4 wk") so the history shows it. Allowed because the record is still
-    /// inside its 24-hour window; if the vault refuses, the step says so and she can book anyway.
-    @discardableResult
-    func saveSuggestion(formatters: Formatters) async -> Bool {
-        guard let repository, var record = savedRecord else { return true }
-        // A locked record changes only through a correction (RecordLockPolicy).
-        guard isRecordEditable else { return false }
-        record.nextSessionSuggestion = formatters.weeks(nextWeeks)
-        do {
-            try await repository.save(record)
-            savedRecord = record
-            suggestionSaved = true
-            return true
-        } catch {
-            failure = .save
-            return false
-        }
+    /// Sets the interval of the next visit ("4 wk"), written into the record as its next-session note.
+    func setNextWeeks(_ weeks: Int) {
+        nextWeeks = weeks
+        set(formatters.weeks(weeks), for: TreatmentFormField.nextSessionKey)
+    }
+
+    /// The next-session note on the form, if she set one.
+    var nextSessionNote: String {
+        draft.value(for: TreatmentFormField.nextSessionKey)
     }
 }

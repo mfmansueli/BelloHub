@@ -22,6 +22,15 @@ extension SwiftDataClientRecordRepository {
         try commit()
     }
 
+    func deleteDraft(id: UUID) throws {
+        guard let found = try item(kind: .treatmentRecord, id: id) else { return }
+        let record = try value(TreatmentRecord.self, from: found)
+        guard record.isDraft else { throw VaultRepositoryError.recordLocked }
+        let photos = try items(kind: .photo, ownerID: record.clientID).filter { $0.secondaryID == id }
+        delete([found] + photos)
+        try commit()
+    }
+
     func addCorrection(_ correction: RecordCorrection) throws {
         guard let record = try self.record(id: correction.recordID) else { throw VaultRepositoryError.notFound }
         guard RecordLockPolicy.isLocked(lockedAt: record.lockedAt, now: clock()) else {
@@ -79,6 +88,20 @@ extension SwiftDataClientRecordRepository {
                 image: try codec.openData(blob, model: model, id: id, field: "image"),
                 thumbnail: try codec.openData(thumbnail, model: model, id: id, field: "thumbnail")
             )
+        } catch let error as VaultError {
+            throw error
+        } catch {
+            throw VaultRepositoryError.unreadable
+        }
+    }
+
+    /// Decrypts the thumbnail alone: a timeline of 200 photos never opens 200 full images.
+    func photoThumbnail(id: UUID) throws -> Data {
+        guard let stored = try item(kind: .photo, id: id), let thumbnail = stored.thumbnail else {
+            throw VaultRepositoryError.notFound
+        }
+        do {
+            return try codec.openData(thumbnail, model: VaultKind.photo.rawValue, id: id, field: "thumbnail")
         } catch let error as VaultError {
             throw error
         } catch {

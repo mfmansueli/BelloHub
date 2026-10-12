@@ -194,6 +194,17 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         changes.notify()
     }
 
+    func deleteDraft(id: UUID) throws {
+        guard let record = recordsByID[id] else { return }
+        guard record.isDraft else { throw VaultRepositoryError.recordLocked }
+        recordsByID[id] = nil
+        for photo in photosByID.values where photo.recordID == id {
+            photosByID[photo.id] = nil
+            photoDataByID[photo.id] = nil
+        }
+        changes.notify()
+    }
+
     func addCorrection(_ correction: RecordCorrection) throws {
         guard let record = recordsByID[correction.recordID] else { throw VaultRepositoryError.notFound }
         guard RecordLockPolicy.isLocked(lockedAt: record.lockedAt, now: clock()) else {

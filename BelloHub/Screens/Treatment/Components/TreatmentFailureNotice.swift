@@ -29,6 +29,10 @@ struct TreatmentFailureNotice: View {
             LocalizedStringResource(
                 "treatmentFlow.error.photo", defaultValue: "That picture could not be used. Try another one."
             ).resolved(in: locale)
+        case .delete:
+            LocalizedStringResource(
+                "treatmentFlow.error.delete", defaultValue: "The draft could not be deleted. It is still saved."
+            ).resolved(in: locale)
         case .organize:
             LocalizedStringResource(
                 "treatmentFlow.error.organize",

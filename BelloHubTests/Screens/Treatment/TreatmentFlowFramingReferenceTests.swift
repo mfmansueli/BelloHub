@@ -40,8 +40,9 @@ struct TreatmentFlowFramingReferenceTests {
         }
         let model = TreatmentFlowViewModel(
             request: TreatmentFlowRequest(clientID: client.id), repository: world.repository, profile: world.profile,
-            photoProcessing: FakePhotoProcessing(), fallbackServiceName: "Treatment", notesName: "Observations",
-            recommendationName: "Recommendation", now: { TestClock.now }
+            photoProcessing: FakePhotoProcessing(),
+            names: .init(serviceFallback: "Treatment", notes: "Observations", recommendation: "Recommendation"),
+            now: { TestClock.now }
         )
         await model.load()
         return (model, world.repository)
