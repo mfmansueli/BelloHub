@@ -54,7 +54,9 @@ final class MotionUITests: XCTestCase {
         app.tapButton("calendar.nextButton")
         XCTAssertTrue(app.element("calendar.week.dayViewButton").waitForExistence(timeout: 8), "the next week is empty")
         app.segmentedControls["calendar.modePicker"].buttons.element(boundBy: 0).tap()
-        XCTAssertTrue(app.elements(prefix: "calendar.stripDay.").firstMatch.waitForExistence(timeout: 8), "no day strip")
+        XCTAssertTrue(
+            app.elements(prefix: "calendar.stripDay.").firstMatch.waitForExistence(timeout: 8), "no day strip"
+        )
     }
 
     private func selectedDayLabel(_ app: XCUIApplication) -> String? {
@@ -87,7 +89,7 @@ final class MotionUITests: XCTestCase {
         app.goBack()
         XCTAssertTrue(app.element("alerts.subtitle").waitForExistence(timeout: 8))
         XCTAssertTrue(
-            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10), "the answered request is still listed"
+            app.waitUntilGone(app.element("alerts.request.req-ana"), timeout: 10), "the answered request is listed"
         )
         XCTAssertTrue(app.element("alerts.reschedule.rr-camila").exists, "the other request left too")
     }

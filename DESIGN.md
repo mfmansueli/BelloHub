@@ -165,6 +165,22 @@ One motion layer (D20), in `DesignSystem/Motion/` and `Tokens/Motion.swift`; no 
 - **`MotionPolicy`** (pure, tested): Reduce Motion removes movement, loops, overshoot, sheen and ring and keeps a
   0.2 s fade; Low Power Mode stops loops; `-uiTesting` stops everything (the root sets `isMotionDisabled`).
 - Horizontal motion goes through `Directional` so it flips in Arabic.
+- **Changes in place (2026-10-12, `docs/09-MOTION.md` section 8; every decision is `MotionChange`, pure and tested):**
+  - **Numbers:** `.motionNumber(value, countsDown:)` rolls a count, a time or a duration to its new value with `ease(0.3)`;
+    only when the value changes, never from zero on first appearance; a crossfade with Reduce Motion. Home counters, the
+    next-visit countdown and time, week-glance tiles, Clients count, queue counts, registration counter, New appointment
+    duration, Plan button.
+  - **Rows:** `.motionRows(ids:context:isReady:)` on a container and `.motionRow()` on its rows: a row enters from above
+    with a fade and leaves with a fade and a slide, the rest close the gap, `ease(0.3)`; never on load, on a different
+    context (day, filter), or when more than 12 identities change at once. Home, Alerts and inbox, the follow-up queue,
+    the waitlist, the calendar (day, week) and the Clients list.
+  - **Confirmations:** `SuccessSeal` on the saved step, a brief `.confirmationSeal` (56 pt, 1.5 s, never takes a touch) for
+    a saved photo, a message marked as sent, an offer sent and a request accepted, `InlineCheck` (drawn in 0.5 s) beside
+    a label, always with the `.success` haptic; Reduce Motion shows the drawn check at once.
+  - **Camera:** `.captureFlash` (20 % white, 0.12 s, medium impact; none with Reduce Motion), the framing reference and
+    its controls fade with their switch (`ease(0.28)`), the before/after handle settles on an end or the middle.
+  - **Calendar:** the day or week slides in from the side of travel (24 pt, `DaySlide`, mirrors in Arabic), the selected
+    day chip slides between days, the now line and a moved visit glide (`motionSettle`).
 
 ## Components
 
