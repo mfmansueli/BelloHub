@@ -17,6 +17,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     var servicesByID: [UUID: Service] = [:]
     var addOnsByID: [UUID: AddOn] = [:]
     var productsByID: [UUID: Product] = [:]
+    var optionsByID: [UUID: SavedOption] = [:]
     var credentialsByID: [UUID: Credential] = [:]
     var recordsByID: [UUID: TreatmentRecord] = [:]
     var correctionsByID: [UUID: RecordCorrection] = [:]
@@ -189,15 +190,23 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     }
 
     func save(_ record: TreatmentRecord) throws {
-        var stored = record
-        if let existing = recordsByID[record.id] {
-            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
-                throw VaultRepositoryError.recordLocked
-            }
-            stored.lockedAt = existing.lockedAt
-            stored.createdAt = existing.createdAt
+        recordsByID[record.id] = try TreatmentRecordSaveRule.stored(record, existing: recordsByID[record.id],
+                                                                    now: clock())
+        changes.notify()
+    }
+
+    func recordMarks() -> [RecordMark] {
+        recordsByID.values.map(RecordMark.init)
+    }
+
+    func deleteDraft(id: UUID) throws {
+        guard let record = recordsByID[id] else { return }
+        guard record.isDraft else { throw VaultRepositoryError.recordLocked }
+        recordsByID[id] = nil
+        for photo in photosByID.values where photo.recordID == id {
+            photosByID[photo.id] = nil
+            photoDataByID[photo.id] = nil
         }
-        recordsByID[record.id] = stored
         changes.notify()
     }
 
@@ -251,9 +260,11 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         photoDataByID[id] = nil
         changes.notify()
     }
+}
 
-    // MARK: - BusinessRepository
+// MARK: - BusinessRepository
 
+extension InMemoryClientRecordRepository {
     func profile() -> ProfessionalProfile? {
         storedProfile
     }

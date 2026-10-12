@@ -6,6 +6,12 @@
 import Foundation
 
 extension SwiftDataClientRecordRepository {
+    /// Reads the clear part only: Home, Alerts and the notifications ask on every change, and none of them needs (or
+    /// may hold) the clinical text. An item whose clear part cannot be read is left out.
+    func recordMarks() throws -> [RecordMark] {
+        try items(kind: .treatmentRecord).compactMap { try? VaultCoding.plainPart(RecordMark.self, from: $0.plain) }
+    }
+
     func records(for clientID: UUID) throws -> [TreatmentRecord] {
         try values(TreatmentRecord.self, from: items(kind: .treatmentRecord, ownerID: clientID))
             .sorted { $0.createdAt > $1.createdAt }
@@ -16,16 +22,18 @@ extension SwiftDataClientRecordRepository {
     }
 
     func save(_ record: TreatmentRecord) throws {
-        var stored = record
-        if let existing = try self.record(id: record.id) {
-            guard !RecordLockPolicy.isLocked(lockedAt: existing.lockedAt, now: clock()) else {
-                throw VaultRepositoryError.recordLocked
-            }
-            // The lock time is fixed at creation: an edit can never move it.
-            stored.lockedAt = existing.lockedAt
-            stored.createdAt = existing.createdAt
-        }
+        // The lock and draft rules live in one place for both repositories.
+        let stored = try TreatmentRecordSaveRule.stored(record, existing: try self.record(id: record.id), now: clock())
         try upsert(stored)
+        try commit()
+    }
+
+    func deleteDraft(id: UUID) throws {
+        guard let found = try item(kind: .treatmentRecord, id: id) else { return }
+        let record = try value(TreatmentRecord.self, from: found)
+        guard record.isDraft else { throw VaultRepositoryError.recordLocked }
+        let photos = try items(kind: .photo, ownerID: record.clientID).filter { $0.secondaryID == id }
+        delete([found] + photos)
         try commit()
     }
 
@@ -86,6 +94,20 @@ extension SwiftDataClientRecordRepository {
                 image: try codec.openData(blob, model: model, id: id, field: "image"),
                 thumbnail: try codec.openData(thumbnail, model: model, id: id, field: "thumbnail")
             )
+        } catch let error as VaultError {
+            throw error
+        } catch {
+            throw VaultRepositoryError.unreadable
+        }
+    }
+
+    /// Decrypts the thumbnail alone: a timeline of 200 photos never opens 200 full images.
+    func photoThumbnail(id: UUID) throws -> Data {
+        guard let stored = try item(kind: .photo, id: id), let thumbnail = stored.thumbnail else {
+            throw VaultRepositoryError.notFound
+        }
+        do {
+            return try codec.openData(thumbnail, model: VaultKind.photo.rawValue, id: id, field: "thumbnail")
         } catch let error as VaultError {
             throw error
         } catch {

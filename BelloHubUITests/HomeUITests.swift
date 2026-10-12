@@ -38,7 +38,7 @@ final class HomeUITests: XCTestCase {
         XCTAssertTrue(app.element("followUps.subtitle").waitForExistence(timeout: 5))
     }
 
-    func testNewAppointmentIsInTheNavigationBarAndTheQueueGroupsAClient() {
+    func testNewAppointmentIsOneTapAwayAndTheQueueGroupsAClient() {
         let app = XCUIApplication.launchedOnHome()
         XCTAssertTrue(app.buttons["home.quick.newAppointment"].isHittable, "New appointment is not one tap away")
         app.scrollToAndTap(prefix: "home.reachOut.open")
@@ -51,4 +51,24 @@ final class HomeUITests: XCTestCase {
         app.tapButton("home.quick.newAppointment")
         XCTAssertTrue(app.buttons["newAppointment.cancelButton"].waitForExistence(timeout: 5))
     }
+
+    func testRecordsToFollowUpAndRegisterVisitOpenTheVisitForm() {
+        let app = XCUIApplication.launchedOnHome()
+        // Julia's visit earlier today is completed with nothing written: it waits under "To follow up".
+        app.scrollToAndTap(prefix: "home.records.unwritten:")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 10), "the visit form did not open")
+        // Nothing written: the form closes at once and leaves no draft.
+        app.tapButton("treatmentFlow.register.cancelButton")
+
+        app.scrollToTop()
+        app.tapButton("home.quick.registerVisit")
+        XCTAssertTrue(app.element("clientPicker.list").waitForExistence(timeout: 5), "no client picker")
+        app.tapButton("clientPicker.client.\(Self.julia)")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 10), "no visit form for Julia")
+    }
+
+    // MARK: - Helpers
+
+    /// Julia Mendes in `HomeUITestSeeding`.
+    private static let julia = "A9902200-0000-4000-8000-000000000001"
 }

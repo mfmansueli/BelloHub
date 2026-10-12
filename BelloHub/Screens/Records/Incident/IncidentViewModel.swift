@@ -29,18 +29,22 @@ final class IncidentViewModel {
     private(set) var saveErrorMessage: String?
 
     private let appointmentID: UUID?
+    /// The visit she came from, when she opened the note from a visit's details.
+    private let recordID: UUID?
     private let vault: VaultService
     private let now: @Sendable () -> Date
     private let makeID: @Sendable () -> UUID
     private let resolve: (LocalizedStringResource) -> String
 
     init(
-        clientID: UUID, appointmentID: UUID?, vault: VaultService, now: @escaping @Sendable () -> Date = { Date() },
+        clientID: UUID, appointmentID: UUID?, recordID: UUID? = nil, vault: VaultService,
+        now: @escaping @Sendable () -> Date = { Date() },
         makeID: @escaping @Sendable () -> UUID = { UUID() },
         resolve: @escaping (LocalizedStringResource) -> String = { String(interface: $0) }
     ) {
         self.clientID = clientID
         self.appointmentID = appointmentID
+        self.recordID = recordID
         self.vault = vault
         self.now = now
         self.makeID = makeID
@@ -68,10 +72,12 @@ final class IncidentViewModel {
                 return
             }
             client = loaded
-            visits = try await repository.records(for: clientID).sorted { $0.createdAt > $1.createdAt }
+            visits = try await repository.records(for: clientID)
+                .sorted { ($0.performedAt ?? $0.createdAt) > ($1.performedAt ?? $1.createdAt) }
             if phase == .loading || isFailure {
                 // The visit she came from is already chosen; she can change it or clear it.
-                draft.recordID = visits.first { appointmentID != nil && $0.appointmentID == appointmentID }?.id
+                draft.recordID = visits.first { $0.id == recordID }?.id
+                    ?? visits.first { appointmentID != nil && $0.appointmentID == appointmentID }?.id
                 phase = .form
             }
         } catch {

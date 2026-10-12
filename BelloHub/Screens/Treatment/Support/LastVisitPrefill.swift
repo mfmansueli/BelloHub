@@ -36,7 +36,7 @@ enum LastVisitPrefill {
             case .products: record.productsUsed.isEmpty
                 ? nil : record.productsUsed.joined(separator: RecordFieldEntry.optionSeparator)
             case .generic: entries[field.key]
-            case .notes, .result, .aftercare, .nextSession: nil
+            case .notes, .result, .aftercare, .nextSession, .reaction, .nextVisitReminder: nil
             }
             if let value, !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { found[field.key] = value }
         }

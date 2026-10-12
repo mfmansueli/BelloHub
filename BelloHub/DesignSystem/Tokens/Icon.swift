@@ -64,6 +64,14 @@ enum Icon: String, CaseIterable {
     case gift = "gift"
     case moon = "moon"
     case more = "ellipsis.circle"
+    case history = "clock.arrow.circlepath"
+    case compose = "square.and.pencil"
+    case copy = "doc.on.doc"
+    case photoStack = "photo.on.rectangle.angled"
+    case compare = "rectangle.split.2x1"
+    case paperclip = "paperclip"
+    case checkCircle = "checkmark.circle"
+    case ellipsis = "ellipsis"
 
     var symbolName: String { rawValue }
 }

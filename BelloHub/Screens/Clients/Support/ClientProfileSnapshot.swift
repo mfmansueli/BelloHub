@@ -19,4 +19,7 @@ struct ClientProfileSnapshot: Equatable, Sendable {
     let nextAppointment: Appointment?
     let plan: ActivePlan?
     let health: ClientHealthSummary
+    /// Her consent notes and health forms, newest first, for the record's "Documents" section.
+    var consents: [ConsentRecord] = []
+    var forms: [HealthForm] = []
 }

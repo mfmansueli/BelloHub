@@ -27,13 +27,14 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 |---|---|
 | `HealthForm` | all `answers`, `minorName` |
 | `ConsentRecord` | `label`, `note`, `document` (photo or file of the real signed paper) |
-| `TreatmentRecord` | `notes`, `technique`, `productsUsed`, `result` detail text, `aftercare`, `nextSessionSuggestion` |
+| `TreatmentRecord` | `notes`, `technique`, `productsUsed`, `result` detail text, `reaction`, `aftercare`, `nextSessionSuggestion`, `nextVisitReminder`, `fieldEntries` |
 | `RecordCorrection` | `oldValue`, `newValue`, `reason` |
 | `Incident` | `symptoms`, `actionTaken`, `followUp` |
 | `Client` | `importantNote`, `allergies`, `sensitivities`, `preferences`, `recurringRequests`, `stopReason` |
 | `Photo` | `image`, `thumbnail` (encrypted file bytes in `externalStorage`) |
 | `Appointment` | `privateNote` (if present) |
 | `TimeBlock` | `reason` |
+| `SavedOption` | `name` (a saved sensitivity can be health information) |
 
 **Not encrypted** (needed for sorting, queries, notifications, search): names, phone numbers, dates, service names, statuses, tags, counts. Free-text clinical search works by decrypting in memory over the working set (fine to a few thousand records) and is limited to what the professional has loaded; document the limit.
 
@@ -56,13 +57,15 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
   published.
 - **QuickReply** text may use `{address}` besides `{name} {service} {date} {time} {link}`; built-ins she never edited
   are upgraded once to the current wording (`QuickReplyUpgrade`).
-- **NotificationPrefs**: toggles per alert kind, `quietHours?` (`from`, `until`), `dailySummary`, `clientRemindersEnabled`, `birthdaysEnabled`. Urgent alerts (client running late, same-day cancellation) ignore quiet hours.
+- **NotificationPrefs**: toggles per alert kind, `quietHours?` (`from`, `until`), `dailySummary`, `clientRemindersEnabled`, `birthdaysEnabled`, `recordsToWrite` (2026-10-12; an evening count of visits waiting for their record; missing reads as on). Urgent alerts (client running late, same-day cancellation) ignore quiet hours.
+- **RecordFieldSetting** (in `RecordTemplate`): `profession`, `key`, `customName?`, `isOn`, `kind`, `options`, `unit?`, `isRequired` (2026-10-12: needed to finalize, never to save a draft), `serviceIDs` (2026-10-12: the services the field is asked for; empty = every service). Both new fields are optional in storage and read as false / empty.
+- **RecordMark** is never stored: Home, Alerts, notifications and the client list read every record reduced to its links and state (`id`, `clientID`, `appointmentID?`, `serviceID?`, `serviceName`, `status`, `createdAt`, `performedAt?`) through `TreatmentRepository.recordMarks()`; no clinical text leaves the repository that way.
 - **LocalePrefs**: see `07-LOCALIZATION.md` §3 (`businessLocalizationID`, `regionCode`, `currencyCode`, `weekStart`, `use24Hour`, `bookingLocaleIDs`). **RegionPreset** is bundled data (`16-MARKETS.md` §1), not stored per user.
 
 ### Clients
 - **Client**: `name`, `phoneE164?`, `email?`, `photo?`, `tags`, `source` (`bookingLink`, `import`, `manual`, `referral`), `birthday?`, `isArchived`, `onlineBookingStopped`, `remindersEnabled`, plus the encrypted fields above.
 - **HealthForm**: `client`, `formVersion`, `answers` (key → value; includes isotretinoin or peel in the last 6 months), `filledBy` (`client`, `professional`), `isForMinor`, `submittedAt?`, `importedFromItemID?` (dedup). No consent text, agreement or signature travels with it (D55).
-- **ConsentRecord** (D55; consents are the professional's own business; the app only records their status): `client`, `kind` (`treatment`, `photos`, `guardian`, `other`; in the clear, it is the index), `label?` (free, hers), `isSigned`, `signedAt?` (only while signed), `createdAt`, `note?`, `document?` (encrypted photo or file of the real signed paper: `kind` photo or file, `fileName?`, `contentType`, `data`, `thumbnail?`; a photo goes through the photo pipeline, a file is at most 10 MB). The app writes no consent text; a `photos` record she marks signed is what drives `Photo.visibility`. The vault kind stays `consent`: a record from before D55 (text version, language, typed signature) reads as signed on its date, the old fields ignored.
+- **ConsentRecord** (D55; consents are the professional's own business; the app only records their status): `client`, `kind` (`treatment`, `photos`, `guardian`, `other`; in the clear, it is the index), `label?` (free, hers), `isSigned`, `signedAt?` (only while signed), `createdAt`, `note?`, `recordID?` (2026-10-12: the visit the document belongs to, optional; a visit's record never depends on it), `document?` (encrypted photo or file of the real signed paper: `kind` photo or file, `fileName?`, `contentType`, `data`, `thumbnail?`; a photo goes through the photo pipeline, a file is at most 10 MB). The app writes no consent text; a `photos` record she marks signed is what drives `Photo.visibility`. The vault kind stays `consent`: a record from before D55 (text version, language, typed signature) reads as signed on its date, the old fields ignored.
 - **SessionPlan**: `client`, `name`, `totalSessions`, `intervalWeeks`, `startDate`, `currentIndex`.
 
 ### Agenda
@@ -72,7 +75,9 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 - **MessageLog**: `client`, `channel`, `template`, `openedAt`. Records that the chat was **opened** with the text ready.
 
 ### Treatment record
-- **TreatmentRecord**: `client`, `appointment?`, `service`, `createdAt`, `lockedAt` (= `createdAt` + 24 h), `source` (`voice`, `manual`), `result` (`great`, `good`, `neutral`, `reaction`), `aiAssisted`, plus encrypted text fields. **After `lockedAt` it changes only through `RecordCorrection`.**
+- **TreatmentRecord**: `client`, `appointment?`, `service`, `createdAt`, `performedAt?` (the day the treatment happened, set by her; nil on records from before it existed), `status` (`draft`, `finalized`; missing reads as `finalized`), `finalizedAt?`, `lockedAt` (`.distantFuture` while a draft, `finalizedAt` + 24 h once finalized; records from before drafts keep `createdAt` + 24 h), `source` (`voice`, `manual`), `result` (`great`, `good`, `neutral`, `reaction`), `aiAssisted`, plus encrypted text fields. **After `lockedAt` it changes only through `RecordCorrection`.** A draft is never locked and is never corrected; a finalized record never returns to draft (`TreatmentRecordSaveRule`).
+  - **Visit date shown on screen** (`RecordVisitDate`): `performedAt`, else the linked appointment's start, else none (the screen says the visit day was not noted and shows when it was written). Nothing is backfilled into old records.
+  - **One record per appointment**: a new record for an appointment first looks for a record with that `appointmentID` and opens it instead (`RecordForAppointment`).
 - **RecordCorrection**: `record`, `createdAt`, `fieldKey`, encrypted old/new/reason. Never deleted.
 - **Incident**: `client`, `record?`, `occurredAt`, `severity`, encrypted text; locks like a record.
 - **Photo**: `client`, `record?`, `takenAt`, `kind` (`before`, `after`, `progress`), `visibility` (`professionalOnly`, `shareWithClient`, `portfolio`), encrypted `image` and `thumbnail`.

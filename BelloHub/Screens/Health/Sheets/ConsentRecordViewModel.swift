@@ -25,6 +25,9 @@ final class ConsentRecordViewModel: Identifiable {
 
     /// The record being edited, nil for a new one.
     let existing: ConsentRecord?
+    /// The client's visits, newest first, offered as the visit this document belongs to. Linking is optional: a
+    /// document can stand on its own, and a visit's record never depends on a document.
+    let visits: [TreatmentRecord]
     private let clientID: UUID
     private let repository: any HealthRepository
     private let photos: any PhotoProcessing
@@ -37,6 +40,7 @@ final class ConsentRecordViewModel: Identifiable {
         clientID: UUID,
         existing: ConsentRecord? = nil,
         repository: any HealthRepository,
+        visits: [TreatmentRecord] = [],
         photos: any PhotoProcessing = ImageIOPhotoProcessing(),
         files: any ConsentDocumentReading = SystemConsentDocumentReader(),
         now: @escaping @Sendable () -> Date = { Date() },
@@ -45,6 +49,7 @@ final class ConsentRecordViewModel: Identifiable {
         self.clientID = clientID
         self.existing = existing
         self.repository = repository
+        self.visits = visits
         self.photos = photos
         self.files = files
         self.now = now

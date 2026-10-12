@@ -40,7 +40,7 @@ final class ClientsUITests: XCTestCase {
         // Open her profile from the list and edit her name.
         row.tap()
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5))
-        app.tapButton("clientProfile.editButton")
+        app.tapButton("clientProfile.editAction")
         app.replaceText(inField: "clientEdit.nameField", with: "Ana Maria Costa")
         app.tapButton("clientEdit.saveButton")
 

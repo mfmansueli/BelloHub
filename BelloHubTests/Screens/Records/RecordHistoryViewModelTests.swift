@@ -101,7 +101,7 @@ struct RecordHistoryViewModelTests {
     func beginCorrection() async throws {
         let world = try await makeWorld()
         world.model.beginCorrection(for: world.locked.id)
-        world.model.selectField(.aftercare)
+        world.model.selectField(.standard(.aftercare))
         #expect(world.model.draft?.newValue == "Original")
         #expect(world.model.draftPath == .addCorrection)
         #expect(world.model.draftCurrentValue == "Original")
@@ -111,7 +111,7 @@ struct RecordHistoryViewModelTests {
     func correctionNeedsReason() async throws {
         let world = try await makeWorld()
         world.model.beginCorrection(for: world.locked.id)
-        world.model.selectField(.aftercare)
+        world.model.selectField(.standard(.aftercare))
         world.model.draft?.newValue = "Gentle cleansing for 48 hours"
         await world.model.saveCorrectionAsync()
         #expect(world.model.draftProblem == .reasonMissing)
@@ -123,7 +123,7 @@ struct RecordHistoryViewModelTests {
     func correctionIsLogged() async throws {
         let world = try await makeWorld()
         world.model.beginCorrection(for: world.locked.id)
-        world.model.selectField(.aftercare)
+        world.model.selectField(.standard(.aftercare))
         world.model.draft?.newValue = "Gentle cleansing for 48 hours"
         world.model.draft?.reason = "Forgot to write it"
         await world.model.saveCorrectionAsync()
@@ -145,7 +145,7 @@ struct RecordHistoryViewModelTests {
     func openRecordIsEdited() async throws {
         let world = try await makeWorld()
         world.model.beginCorrection(for: world.open.id)
-        world.model.selectField(.technique)
+        world.model.selectField(.standard(.technique))
         world.model.draft?.newValue = "Microneedling"
         await world.model.saveCorrectionAsync()
         #expect(world.model.draft == nil)
@@ -158,7 +158,7 @@ struct RecordHistoryViewModelTests {
     func unchangedIsRefused() async throws {
         let world = try await makeWorld()
         world.model.beginCorrection(for: world.open.id)
-        world.model.selectField(.technique)
+        world.model.selectField(.standard(.technique))
         await world.model.saveCorrectionAsync()
         #expect(world.model.draftProblem == .unchanged)
     }

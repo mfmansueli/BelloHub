@@ -22,6 +22,8 @@ final class RecordTemplateViewModel {
     private(set) var isSaving = false
     private(set) var errorMessage: String?
     private(set) var catalog: ProfessionCatalog
+    /// Her active services, for "ask this field only for…". Empty when they cannot be read: the choice is hidden.
+    private(set) var services: [Service] = []
 
     private var chosenProfession: ProfessionID?
     private var lastWrite: Task<Bool, Never>?
@@ -29,16 +31,19 @@ final class RecordTemplateViewModel {
     private var stored: RecordTemplate
 
     private let profile: ProfileService
+    private let serviceSource: (any AgendaRepository)?
     private let now: @Sendable () -> Date
     private let makeID: @Sendable () -> UUID
 
     init(
         profile: ProfileService,
         catalog: ProfessionCatalog,
+        services: (any AgendaRepository)? = nil,
         now: @escaping @Sendable () -> Date = { Date() },
         makeID: @escaping @Sendable () -> UUID = { UUID() }
     ) {
         self.profile = profile
+        self.serviceSource = services
         self.catalog = catalog
         self.now = now
         self.makeID = makeID
@@ -122,6 +127,7 @@ final class RecordTemplateViewModel {
         defer { isLoading = false }
         do {
             try await profile.reloadTemplate()
+            services = ((try? await serviceSource?.services()) ?? []).filter(\.isActive)
             let fresh = Self.completed(profile: profile, catalog: catalog, now: now())
             template = fresh
             stored = fresh
@@ -148,6 +154,31 @@ final class RecordTemplateViewModel {
     func setField(_ key: String, on: Bool) {
         guard let profession = selectedProfession else { return }
         change { RecordTemplateEditor.setting(key, on: on, for: profession, in: $0, now: now()) }
+    }
+
+    /// Every field switched on for the selected profession, hers and the catalog's, in the form's order.
+    func enabledFields(for profession: ProfessionID) -> [RecordFieldSetting] {
+        template.fields(for: profession).filter(\.isOn)
+    }
+
+    func setRequired(_ key: String, _ required: Bool) {
+        guard let profession = selectedProfession else { return }
+        change { RecordTemplateEditor.settingRequired(key, required: required, for: profession, in: $0, now: now()) }
+    }
+
+    func setServices(_ key: String, _ serviceIDs: [UUID]) {
+        guard let profession = selectedProfession else { return }
+        change {
+            RecordTemplateEditor.settingServices(key, serviceIDs: serviceIDs, for: profession, in: $0, now: now())
+        }
+    }
+
+    /// "Only for Brow lamination, Lash lift", or nil when the field is asked for every service. Services that no
+    /// longer exist are not named.
+    func servicesSummary(of field: RecordFieldSetting) -> String? {
+        let names = field.serviceIDs.compactMap { id in services.first { $0.id == id }?.name }
+        guard !names.isEmpty else { return nil }
+        return names.formatted(.list(type: .and, width: .short).locale(InterfaceLocale.current))
     }
 
     func setIntake(_ item: IntakeItem, on: Bool) {

@@ -42,6 +42,7 @@ struct RecordTrailRow: View {
     private var dot: (fill: Color, stroke: Color) {
         switch entry.kind {
         case .created: (Palette.surface, Palette.ink2)
+        case .finalized: (Palette.surface, Palette.sage)
         case .locked: (Palette.sageWash, Palette.sage)
         case .correction: (Palette.roseWash, Palette.rose)
         }
@@ -53,6 +54,7 @@ struct RecordTrailRow: View {
             Text(LocalizedStringResource(
                 "recordHistory.trail.created", defaultValue: "Created by \(professionalName)"
             ).localized(in: locale))
+        case .finalized: Text("recordHistory.trail.finalized")
         case .locked: Text("recordHistory.trail.locked")
         case .correction:
             Text(LocalizedStringResource(
@@ -65,10 +67,12 @@ struct RecordTrailRow: View {
         switch entry.kind {
         case .created(let source, let result, let products):
             createdDetail(source: source, result: result, products: products)
+        case .finalized:
+            LocalizedStringResource("recordHistory.trail.finalizedDetail").resolved(in: locale)
         case .locked:
             LocalizedStringResource("recordHistory.trail.lockedDetail").resolved(in: locale)
-        case .correction(let correction):
-            correctionDetail(correction)
+        case .correction(let correction, let entryName):
+            correctionDetail(correction, entryName: entryName)
         }
     }
 
@@ -89,11 +93,19 @@ struct RecordTrailRow: View {
         return parts.joined(separator: " ")
     }
 
-    private func correctionDetail(_ correction: RecordCorrection) -> String {
-        let field = RecordCorrectableField(rawValue: correction.fieldKey)?.title.resolved(in: locale)
-            ?? correction.fieldKey
-        let old = correction.oldValue
-        let new = correction.newValue
+    private func correctionDetail(_ correction: RecordCorrection, entryName: String?) -> String {
+        let isVisitDay = correction.fieldKey == RecordCurrentValues.performedAtKey
+        let field = isVisitDay
+            ? LocalizedStringResource("record.field.visitDate").resolved(in: locale)
+            : RecordCorrectableField(rawValue: correction.fieldKey)?.title.resolved(in: locale)
+                ?? entryName ?? correction.fieldKey
+        // A visit day is stored as an instant; it reads as a day.
+        let readable: (String?) -> String? = { value in
+            guard isVisitDay else { return value }
+            return value.flatMap(RecordCurrentValues.date(from:)).map(formatters.shortDate) ?? value
+        }
+        let old = readable(correction.oldValue)
+        let new = readable(correction.newValue)
         var parts: [String] = []
         switch (old, new) {
         case (.some(let old), .some(let new)):

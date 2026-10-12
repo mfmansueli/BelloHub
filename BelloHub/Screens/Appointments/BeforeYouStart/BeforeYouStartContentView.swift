@@ -10,6 +10,8 @@ import SwiftUI
 /// blocks (D16). Her health answers stay on the Health and consent screen, one tap away.
 struct BeforeYouStartContentView: View {
     @State private var viewModel: BeforeYouStartViewModel
+    @State private var recordRoute: RecordRoute?
+    @State private var visitFlow: TreatmentFlowRequest?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
 
@@ -23,6 +25,7 @@ struct BeforeYouStartContentView: View {
         NavigationStack {
             content
                 .background(Palette.bg)
+                .recordDestination(item: $recordRoute)
                 .navigationTitle(Text("beforeYouStart.title"))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -34,6 +37,21 @@ struct BeforeYouStartContentView: View {
         }
         .task { await viewModel.loadAsync() }
         .onChange(of: viewModel.didComplete) { _, completed in if completed { dismiss() } }
+        .confirmationDialog(
+            Text("appointment.register.title"), isPresented: $viewModel.offersToRegister, titleVisibility: .visible
+        ) {
+            Button { visitFlow = viewModel.visitFlowRequest } label: { Text("appointment.register.now") }
+                .accessibilityIdentifier("beforeYouStart.registerNowButton")
+            Button(role: .cancel) { viewModel.finishAfterCompleting() } label: {
+                Text("appointment.register.later")
+            }
+            .accessibilityIdentifier("beforeYouStart.registerLaterButton")
+        } message: {
+            Text("appointment.register.message")
+        }
+        .treatmentFlow(item: $visitFlow)
+        // Back from the visit form opened after completing: the sheet's job is done.
+        .onChange(of: visitFlow) { old, new in if old != nil, new == nil { viewModel.finishAfterCompleting() } }
         .presentationDetents([.large])
         .presentationBackground(Palette.bg)
     }
@@ -68,7 +86,16 @@ struct BeforeYouStartContentView: View {
                 }
                 if hasImportant(checklist) { important(checklist, formatters: formatters) }
                 if let plan = checklist.plan { planRow(plan, clientID: visit.client.id) }
-                if let last = checklist.lastVisit { lastVisit(last, formatters: formatters, now: now) }
+                if let previous = viewModel.records.previousVisit {
+                    BeforeYouStartLastVisit(
+                        visit: previous, rememberToday: viewModel.records.rememberToday, formatters: formatters,
+                        now: now, loadThumbnail: viewModel.thumbnail(for:),
+                        onOpen: { recordRoute = .visit(recordID: previous.id) }
+                    )
+                } else if let last = checklist.lastVisit {
+                    // A past booking with nothing written: only its day and service are known.
+                    lastVisit(last, formatters: formatters, now: now)
+                }
                 PreVisitChecksCard(
                     checklist: checklist, serviceName: visit.appointment.serviceName, formatters: formatters, now: now
                 )

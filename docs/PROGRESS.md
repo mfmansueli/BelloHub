@@ -131,6 +131,15 @@ the new MotionUITests green, accessibility audit en and pt-BR with Reduce Motion
 scroll unchanged. **Not built on purpose:** a drag-to-move gesture (it does not exist in the app). **Needs a real iPhone:**
 how it feels at 60 fps, haptics, VoiceOver with row removals (list in the notes). Nothing deployed.
 
+**2026-10-12: Client records and agenda on `claude/practical-dijkstra-hy0d79` (not merged, NOT COMPILED).** Written in a
+Linux cloud container without a Swift toolchain at the owner's request; notes, decisions, scenarios and limits in
+`docs/agent-notes/client-records.md`, stage log "Client records and agenda". The client record is the center
+(History/Photos/Information/Documents, timeline by links, visit details, reuse), the visit form is one screen with
+drafts and a visit day, the agenda opens the record and never finalizes it, saved options with Personalization,
+Before you start shows the last visit, Home/Alerts list records owed, documents per visit, required and per-service
+fields, honest onboarding. **First thing on a Mac:** `scripts/build.sh`, fix what the compiler says, then
+`scripts/test.sh fast`, `smoke` and `check-warnings.sh`.
+
 **2026-10-12: Client messages and location done on `build/v1`, tag `client-messages-done`** (task
 `docs/tasks/client-messages-and-location.md`, notes `docs/agent-notes/client-messages-location.md`, stage log
 "Client messages and location"). Every link in a client message is a full `https://` address on its own line
@@ -524,6 +533,14 @@ Branch `plan-on-device`. StoreKit 2 verification on the iPhone (`DeviceSubscript
 the ledger migration, no server calls for the plan or the count, Terms and Privacy links on the paywall, H14 rewritten,
 Purchase History removed from the privacy label. Strings `plan-on-device.json`. Linux checks green (privacy, strings,
 localization sources, server contract, legal resources; project settings up to its `plutil` step); no build or test run. Notes `docs/agent-notes/plan-on-device.md`.
+
+### Client records and agenda · written 2026-10-12 · not compiled (no tag)
+Branch `claude/practical-dijkstra-hy0d79`, commits `867db07`, `1f4a3aa`, `700dd24`, `ac80c38`, `900f926`, `25e8aeb` and
+the docs commit. Data: `TreatmentRecord.performedAt/status/finalizedAt/reaction/nextVisitReminder` (additive, old
+records decode as finalized with no visit day), `ConsentRecord.recordID`, `SavedOption` (new vault kind, sealed name),
+`RecordFieldSetting.isRequired/serviceIDs`, `NotificationPrefs.recordsToWrite`. Strings: `client-record.json`,
+`visit-form.json`, `agenda-records-options.json`, `record-followups.json` and edits in older batches; check-strings,
+privacy, localization-sources, professions and health-forms checks green on Linux. Not run: any build or test.
 
 ## Assumptions
 | # | Assumption | Reason | Stage |

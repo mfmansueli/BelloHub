@@ -88,7 +88,7 @@ struct RecordEditRulesTests {
     func problem(_ testCase: ProblemCase) {
         let record = makeRecord(createdAt: createdAt, notes: "Skin a little sensitive.")
         let draft = RecordCorrectionDraft(
-            recordID: record.id, field: .notes, newValue: testCase.newValue, reason: testCase.reason
+            recordID: record.id, field: .standard(.notes), newValue: testCase.newValue, reason: testCase.reason
         )
         let problem = RecordEditRules.problem(
             for: draft, record: record, corrections: [], now: createdAt.addingTimeInterval(testCase.elapsed)
@@ -104,7 +104,7 @@ struct RecordEditRulesTests {
         let earlier = makeCorrection(recordID: record.id, old: "Original", new: "First fix")
         let id = UUID()
         let draft = RecordCorrectionDraft(
-            recordID: record.id, field: .aftercare, newValue: "  Second fix ", reason: " Client called "
+            recordID: record.id, field: .standard(.aftercare), newValue: "  Second fix ", reason: " Client called "
         )
         let correction = RecordEditRules.correction(
             id: id, draft: draft, record: record, corrections: [earlier], now: TestClock.now
@@ -121,7 +121,9 @@ struct RecordEditRulesTests {
     @Test("Emptying a field is stored as nil")
     func emptyingAField() {
         let record = makeRecord(notes: "Note")
-        let draft = RecordCorrectionDraft(recordID: record.id, field: .notes, newValue: "   ", reason: "Remove")
+        let draft = RecordCorrectionDraft(
+            recordID: record.id, field: .standard(.notes), newValue: "   ", reason: "Remove"
+        )
         let correction = RecordEditRules.correction(
             id: UUID(), draft: draft, record: record, corrections: [], now: TestClock.now
         )

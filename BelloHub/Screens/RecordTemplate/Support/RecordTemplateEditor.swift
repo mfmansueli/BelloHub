@@ -55,6 +55,35 @@ enum RecordTemplateEditor {
         return updated
     }
 
+    /// A field marked as needed (or not) to finalize a record. Drafts never need it.
+    static func settingRequired(
+        _ key: String, required: Bool, for profession: ProfessionID, in template: RecordTemplate, now: Date
+    ) -> RecordTemplate {
+        updatingField(key, for: profession, in: template, now: now) { $0.isRequired = required }
+    }
+
+    /// The services a field is asked for; empty means every service. Duplicates are dropped, her order kept.
+    static func settingServices(
+        _ key: String, serviceIDs: [UUID], for profession: ProfessionID, in template: RecordTemplate, now: Date
+    ) -> RecordTemplate {
+        var seen: Set<UUID> = []
+        let unique = serviceIDs.filter { seen.insert($0).inserted }
+        return updatingField(key, for: profession, in: template, now: now) { $0.serviceIDs = unique }
+    }
+
+    private static func updatingField(
+        _ key: String, for profession: ProfessionID, in template: RecordTemplate, now: Date,
+        _ change: (inout RecordFieldSetting) -> Void
+    ) -> RecordTemplate {
+        guard let index = template.fields.firstIndex(where: { $0.profession == profession && $0.key == key })
+        else { return template }
+        var updated = template
+        change(&updated.fields[index])
+        guard updated.fields[index] != template.fields[index] else { return template }
+        updated.updatedAt = now
+        return updated
+    }
+
     /// An intake item switched on or off. An item the template has no entry for yet gets one.
     static func settingIntake(
         _ item: IntakeItem, on: Bool, for profession: ProfessionID, in template: RecordTemplate, now: Date

@@ -26,4 +26,6 @@ enum AgendaRoute: Hashable, Sendable {
     case rescheduleRequest(id: String)
     /// 2.9 Waitlist.
     case waitlist
+    /// 4.1 The client's record, opened from an appointment or Home.
+    case clientRecord(clientID: UUID)
 }

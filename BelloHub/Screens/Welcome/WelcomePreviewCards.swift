@@ -5,8 +5,9 @@
 
 import SwiftUI
 
-/// Two sample cards that show what the app remembers for her: the day's list and one client's note. Decorative:
-/// the names and times are made up, so VoiceOver skips them and reads the tagline below instead.
+/// Two sample cards that show the two pillars: the day's agenda, and one client's record (her last visit, what to
+/// keep in mind, private photos). Decorative: the names and times are made up, so VoiceOver skips them and reads the
+/// tagline below instead.
 struct WelcomePreviewCards: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
@@ -55,6 +56,9 @@ struct WelcomePreviewCards: View {
             .padding(Spacing.row)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Palette.roseWash, in: RoundedRectangle(cornerRadius: Radius.control, style: .continuous))
+            Label { Text("onb.welcome.sample.photos") } icon: { Image(icon: .photoStack) }
+                .font(Typography.footnote)
+                .foregroundStyle(Palette.ink2)
         }
         .padding(Spacing.md)
         .belloCard()

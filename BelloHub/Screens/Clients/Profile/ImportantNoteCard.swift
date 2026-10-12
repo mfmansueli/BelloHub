@@ -10,6 +10,8 @@ import SwiftUI
 struct ImportantNoteCard: View {
     let note: String?
     let allergies: [String]
+    /// What she registered as sensitive ("cheeks", "fragrance"). Only what she wrote: nothing is inferred from notes.
+    var sensitivities: [String] = []
     @Environment(\.locale) private var locale
 
     var body: some View {
@@ -28,6 +30,13 @@ struct ImportantNoteCard: View {
                     defaultValue: "Allergies: \(allergies.map(BidiIsolate.wrap).joined(separator: ", "))"
                 ).localized(in: locale))
                     .font(Typography.subtitle)
+            }
+            if !sensitivities.isEmpty {
+                Text(LocalizedStringResource(
+                    "clientProfile.important.sensitivities",
+                    defaultValue: "Sensitive: \(sensitivities.map(BidiIsolate.wrap).joined(separator: ", "))"
+                ).localized(in: locale))
+                    .font(Typography.bodyStrong)
             }
             if let note {
                 Text(verbatim: note)

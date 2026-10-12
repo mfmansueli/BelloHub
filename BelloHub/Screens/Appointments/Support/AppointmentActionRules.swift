@@ -5,34 +5,35 @@
 
 import Foundation
 
-/// Which actions a visit allows, by its status and the time (3.2). One owner: the detail screen only lays out what this
-/// returns, so a button that should not exist can never be shown. Every change still goes through `AppointmentService`.
-///
-/// - Still ahead, in progress, or past but not closed (`booked` / `confirmed`): she can write to the client, move or
-///   cancel it (she may cancel at any time, and her own cancellation never counts against the client, D13).
-/// - "Didn't show up" exists only once the start has passed: a visit that has not started cannot be missed.
-/// - "Mark completed" exists once the visit has started.
-/// - "Running late" (she tells the next clients) exists until the visit ends.
-/// - A closed visit (`completed`, `cancelled`, `noShow`) only keeps the message: aftercare, a new time, a friendly
-///   note.
+/// Which actions a visit allows, and which one leads. Booking and record are separate: "Mark completed" closes the
+/// booking, the record action (register, continue, open) documents the treatment, and neither requires the other.
+/// While the visit runs, registering it leads; once it is over, closing the booking leads; a completed booking leads
+/// to its record. A cancelled booking or a no-show has nothing to document.
 enum AppointmentActionRules {
-    static func layout(for appointment: Appointment, now: Date) -> AppointmentActionLayout {
+    static func layout(
+        for appointment: Appointment, record: AppointmentRecordState = .none, now: Date
+    ) -> AppointmentActionLayout {
+        let documentAction = record.action
         guard appointment.status.holdsTime else {
-            return AppointmentActionLayout(primary: nil, quick: [.message], secondary: [])
+            guard appointment.status == .completed else {
+                return AppointmentActionLayout(primary: nil, quick: [.message], secondary: [])
+            }
+            return AppointmentActionLayout(primary: documentAction, quick: [.message], secondary: [])
         }
         if now < appointment.startsAt {
-            return AppointmentActionLayout(
-                primary: .beforeYouStart, quick: [.message, .runningLate], secondary: [.reschedule, .cancel]
-            )
+            // Photos "before" may be taken before the start: a draft already started stays one tap away.
+            let quick: [AppointmentAction] = record == .none
+                ? [.message, .runningLate] : [documentAction, .message, .runningLate]
+            return AppointmentActionLayout(primary: .beforeYouStart, quick: quick, secondary: [.reschedule, .cancel])
         }
         if now < appointment.endsAt {
             return AppointmentActionLayout(
-                primary: .beforeYouStart, quick: [.complete, .message, .runningLate],
-                secondary: [.reschedule, .noShow, .cancel]
+                primary: documentAction, quick: [.complete, .beforeYouStart, .message],
+                secondary: [.runningLate, .reschedule, .noShow, .cancel]
             )
         }
         return AppointmentActionLayout(
-            primary: .complete, quick: [.message], secondary: [.noShow, .reschedule, .cancel]
+            primary: .complete, quick: [documentAction, .message], secondary: [.noShow, .reschedule, .cancel]
         )
     }
 }

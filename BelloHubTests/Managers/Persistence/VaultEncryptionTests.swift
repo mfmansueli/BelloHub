@@ -73,8 +73,9 @@ struct VaultEncryptionTests {
         let record = TreatmentRecord(clientID: client.id, serviceName: "Glow Facial", createdAt: start,
                                      notes: "SENTINEL-NOTES", technique: "SENTINEL-TECH",
                                      productsUsed: ["SENTINEL-PRODUCT"],
-                                     resultDetail: "SENTINEL-RESULT", aftercare: "SENTINEL-AFTER",
-                                     nextSessionSuggestion: "SENTINEL-NEXT")
+                                     resultDetail: "SENTINEL-RESULT", reaction: "SENTINEL-REACTION",
+                                     aftercare: "SENTINEL-AFTER", nextSessionSuggestion: "SENTINEL-NEXT",
+                                     nextVisitReminder: "SENTINEL-REMEMBER")
         try await repository.save(record)
         clock.set(record.lockedAt.addingTimeInterval(1))
         try await repository.addCorrection(RecordCorrection(id: UUID(), recordID: record.id, createdAt: clock.now,
@@ -96,6 +97,7 @@ struct VaultEncryptionTests {
                 data: Data("SENTINEL-CONSENTIMG".utf8), thumbnail: Data("SENTINEL-CONSENTTHUMB".utf8)
             )
         ))
+        try await repository.save(SavedOption(context: .sensitivity, name: "SENTINEL-OPTION", createdAt: start))
         let photoBytes = Data("SENTINEL-PHOTO-BYTES-".utf8) + Data(repeating: 0xAB, count: 4_000)
         try await repository.save(Photo(id: UUID(), clientID: client.id, recordID: record.id, takenAt: start,
                                         kind: .before, visibility: .professionalOnly),
@@ -113,10 +115,12 @@ struct VaultEncryptionTests {
         let sentinels = [
             "SENTINEL-CLIENT-NOTE", "SENTINEL-ALLERGY", "SENTINEL-SENS", "SENTINEL-PREF", "SENTINEL-REQUEST",
             "SENTINEL-STOP", "SENTINEL-APPT", "SENTINEL-NOTES", "SENTINEL-TECH", "SENTINEL-PRODUCT",
-            "SENTINEL-RESULT", "SENTINEL-AFTER", "SENTINEL-NEXT", "SENTINEL-OLD", "SENTINEL-NEW",
+            "SENTINEL-RESULT", "SENTINEL-REACTION", "SENTINEL-AFTER", "SENTINEL-NEXT", "SENTINEL-REMEMBER",
+            "SENTINEL-OLD", "SENTINEL-NEW",
             "SENTINEL-WHY", "SENTINEL-SYMPTOMS", "SENTINEL-AREA", "SENTINEL-ACTION", "SENTINEL-FOLLOW",
             "SENTINEL-ANSWER", "SENTINEL-MINOR", "SENTINEL-LABEL", "SENTINEL-CONSENTNOTE", "SENTINEL-FILENAME",
-            "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB"
+            "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB",
+            "SENTINEL-OPTION"
         ]
 
         #expect(!files.isEmpty)
@@ -155,13 +159,15 @@ struct VaultEncryptionTests {
         #expect(Client.sensitiveKeys == ["importantNote", "allergies", "sensitivities", "preferences",
                                          "recurringRequests", "stopReason"])
         #expect(Appointment.sensitiveKeys == ["privateNote"])
-        #expect(TreatmentRecord.sensitiveKeys == ["notes", "technique", "productsUsed", "resultDetail", "aftercare",
-                                                  "nextSessionSuggestion", "fieldEntries"])
+        #expect(TreatmentRecord.sensitiveKeys == ["notes", "technique", "productsUsed", "resultDetail", "reaction",
+                                                  "aftercare", "nextSessionSuggestion", "nextVisitReminder",
+                                                  "fieldEntries"])
         #expect(RecordCorrection.sensitiveKeys == ["oldValue", "newValue", "reason"])
         #expect(Incident.sensitiveKeys == ["symptoms", "area", "actionTaken", "followUp"])
         #expect(HealthForm.sensitiveKeys == ["answers", "minorName"])
         #expect(ConsentRecord.sensitiveKeys == ["label", "note", "document"])
         #expect(Photo.sensitiveKeys.isEmpty, "photo bytes are sealed separately, not as JSON keys")
+        #expect(SavedOption.sensitiveKeys == ["name"])
     }
 
     // MARK: - Keys
@@ -239,9 +245,11 @@ struct VaultEncryptionTests {
 
         #expect(try await restored.client(id: client.id)?.importantNote == "Sentinel-RESTORE")
     }
+}
 
-    // MARK: - Tampering and binding
+// MARK: - Tampering and binding
 
+extension VaultEncryptionTests {
     private func flipAByte(in container: ModelContainer, kind: VaultKind, named name: String) throws {
         let context = ModelContext(container)
         let raw = kind.rawValue

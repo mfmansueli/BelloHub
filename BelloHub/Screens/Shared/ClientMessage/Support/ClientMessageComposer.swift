@@ -23,6 +23,9 @@ enum ClientMessageComposer {
                 Happy birthday, {name}! Wishing you a lovely day. Whenever you want a little care, I am here.
                 """
             ).resolved(in: localization.locale)
+        case .general:
+            return LocalizedStringResource("clientMessage.general", defaultValue: "Hi {name}! ")
+                .resolved(in: localization.locale)
         }
     }
 

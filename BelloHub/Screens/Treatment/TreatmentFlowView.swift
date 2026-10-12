@@ -5,9 +5,10 @@
 
 import SwiftUI
 
-/// 5.1 to 5.9, the treatment flow, shown full screen (`.treatmentFlow(item:)`) with its own navigation stack. It is a
-/// thin wrapper: it reads the Services and the replaceable technologies from the environment and builds the host, which
-/// owns the flow's ViewModel. The first screen is "how do you want to record"; the rest are pushed on top of it.
+/// The visit flow, shown full screen (`.treatmentFlow(item:)`) with its own navigation stack. It is a thin wrapper: it
+/// reads the Services and the replaceable technologies from the environment and builds the host, which owns the
+/// flow's ViewModel. The first screen is the visit form; the camera, the voice path and the confirmation are pushed on
+/// top of it.
 struct TreatmentFlowView: View {
     let request: TreatmentFlowRequest
 
@@ -18,15 +19,21 @@ struct TreatmentFlowView: View {
     @Environment(\.photoProcessing) private var photoProcessing
     @Environment(\.locale) private var locale
     @Environment(FollowUpQueueService.self) private var closings: FollowUpQueueService?
+    @Environment(OptionCatalogService.self) private var options: OptionCatalogService?
 
     var body: some View {
         TreatmentFlowHost(
             viewModel: TreatmentFlowViewModel(
                 request: request, repository: vault.repository, profile: profile, voice: voice,
-                structuring: structuring, photoProcessing: photoProcessing, closings: closings,
-                fallbackServiceName: text("treatmentFlow.serviceFallback", "Treatment"),
-                notesName: text("treatmentFlow.field.notes", "Observations"),
-                recommendationName: text("treatmentFlow.field.recommendation", "Recommendation")
+                structuring: structuring, photoProcessing: photoProcessing, closings: closings, options: options,
+                names: TreatmentFlowViewModel.FieldNames(
+                    serviceFallback: text("treatmentFlow.serviceFallback", "Treatment"),
+                    notes: text("treatmentFlow.field.notes", "Observations"),
+                    recommendation: text("treatmentFlow.field.recommendation", "Recommendation"),
+                    aftercare: text("record.field.aftercare", "Aftercare"),
+                    reaction: text("record.field.reaction", "Reaction"),
+                    reminder: text("record.field.nextVisitReminder", "Remember next time")
+                )
             )
         )
     }

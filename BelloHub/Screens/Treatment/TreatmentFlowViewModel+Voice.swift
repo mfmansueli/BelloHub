@@ -69,7 +69,7 @@ extension TreatmentFlowViewModel {
             organize()
         case .formWithTranscriptAsNotes:
             applyTranscriptAsNotes()
-            replaceTop(with: .form)
+            returnToForm()
         }
     }
 
@@ -113,7 +113,7 @@ extension TreatmentFlowViewModel {
         organizeTask?.cancel()
         failure = nil
         applyTranscriptAsNotes()
-        replaceTop(with: .form)
+        returnToForm()
     }
 
     func receive(_ result: StructuredRecordDraft) {

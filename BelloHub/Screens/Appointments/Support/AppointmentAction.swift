@@ -12,4 +12,10 @@ enum AppointmentAction: String, CaseIterable, Sendable {
     case reschedule
     case noShow
     case cancel
+    /// Opens the visit form for this appointment (no record yet).
+    case registerVisit
+    /// Opens the draft already started for this appointment.
+    case continueRecord
+    /// Opens the finalized record's details.
+    case openRecord
 }

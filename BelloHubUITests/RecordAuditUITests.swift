@@ -61,7 +61,7 @@ final class RecordAuditUITests: XCTestCase {
     private func auditSheets(locale: String, largestText: Bool, tag: String) throws {
         let app = XCUIApplication.launchedOnSeededProfile(locale: locale, largestText: largestText)
 
-        app.tapRow("clientProfile.incidentRow", expecting: "incident.form")
+        app.chooseRecordMenuItem("clientRecord.menu.incident", expecting: "incident.form")
         try audit(app, "\(tag) incident")
         app.swipeUp()
         try audit(app, "\(tag) incident, lower half")
@@ -71,7 +71,7 @@ final class RecordAuditUITests: XCTestCase {
         app.tapButton("incident.doneButton")
         XCTAssertTrue(app.element("incident.saved").waitForNonExistence(timeout: 5))
 
-        app.tapRow("clientProfile.exportRow", expecting: "exportRecord.form")
+        app.chooseRecordMenuItem("clientRecord.menu.export", expecting: "exportRecord.form")
         try audit(app, "\(tag) export")
         app.swipeUp()
         try audit(app, "\(tag) export, lower half")

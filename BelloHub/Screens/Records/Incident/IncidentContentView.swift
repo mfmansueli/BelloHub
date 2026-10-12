@@ -14,9 +14,9 @@ struct IncidentContentView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
 
-    init(clientID: UUID, appointmentID: UUID?, vault: VaultService, locale: Locale) {
+    init(clientID: UUID, appointmentID: UUID?, recordID: UUID? = nil, vault: VaultService, locale: Locale) {
         _viewModel = State(initialValue: IncidentViewModel(
-            clientID: clientID, appointmentID: appointmentID, vault: vault,
+            clientID: clientID, appointmentID: appointmentID, recordID: recordID, vault: vault,
             resolve: { $0.resolved(in: locale) }
         ))
     }
@@ -148,7 +148,9 @@ struct IncidentContentView: View {
     }
 
     private func visitTitle(_ record: TreatmentRecord) -> String {
-        let date = record.createdAt.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale))
+        // The visit day when she noted one, else the day it was written.
+        let day = record.performedAt ?? record.createdAt
+        let date = day.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale))
         return "\(record.serviceName) · \(date)"
     }
 

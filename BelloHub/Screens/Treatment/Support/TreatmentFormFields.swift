@@ -24,25 +24,44 @@ enum TreatmentFormFields {
     }
 
     /// The form's fields: observations first, then every field of the template that is on for one of her
-    /// professions. A catalog field the catalog no longer names is left out (there is nothing to call it); a field
-    /// she added always has her own name.
+    /// professions and asked for this visit's service. A catalog field the catalog no longer names is left out (there
+    /// is nothing to call it); a field she added always has her own name.
     static func resolve(
-        template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String
+        template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String,
+        serviceID: UUID? = nil, existingServiceIDs: Set<UUID>? = nil
     ) -> [TreatmentFormField] {
         var fields = [TreatmentFormField(key: TreatmentFormField.notesKey, name: notesName, input: .text, role: .notes)]
         var seenKeys: Set<String> = [TreatmentFormField.notesKey]
         var claimedRoles: Set<String> = []
         for profession in professions {
-            for setting in template?.fields(for: profession) ?? [] where setting.isOn {
+            for setting in template?.fields(for: profession) ?? []
+            where setting.isOn && setting.applies(toService: serviceID, existing: existingServiceIDs) {
                 guard seenKeys.insert(setting.key).inserted,
                       let name = name(of: setting, in: catalog) else { continue }
                 var role = role(forKey: setting.key)
                 if role != .generic, !claimedRoles.insert("\(role)").inserted { role = .generic }
                 fields.append(TreatmentFormField(key: setting.key, name: name, input: input(of: setting, role: role),
-                                                 role: role))
+                                                 role: role, isRequired: setting.isRequired))
             }
         }
         return fields
+    }
+
+    /// The form's fields plus the ones every visit offers: aftercare (when her template has none of its own), the
+    /// client's reaction and what to remember next time. They are optional like every other field.
+    static func withVisitFields(
+        _ fields: [TreatmentFormField], aftercareName: String, reactionName: String, reminderName: String
+    ) -> [TreatmentFormField] {
+        var all = fields
+        if !fields.contains(where: { $0.role == .aftercare }) {
+            all.append(TreatmentFormField(key: TreatmentFormField.aftercareKey, name: aftercareName, input: .text,
+                                          role: .aftercare))
+        }
+        all.append(TreatmentFormField(key: TreatmentFormField.reactionKey, name: reactionName, input: .text,
+                                      role: .reaction))
+        all.append(TreatmentFormField(key: TreatmentFormField.reminderKey, name: reminderName, input: .text,
+                                      role: .nextVisitReminder))
+        return all
     }
 
     /// The form's fields plus the recommendation for the next visit, which only the voice path proposes (the manual
@@ -50,6 +69,16 @@ enum TreatmentFormFields {
     static func withRecommendation(_ fields: [TreatmentFormField], name: String) -> [TreatmentFormField] {
         fields + [TreatmentFormField(key: TreatmentFormField.nextSessionKey, name: name, input: .text,
                                      role: .nextSession)]
+    }
+
+    /// Her template's own fields (the ones with no place of their own on the record) as empty answers, so a visit's
+    /// details can offer to complete a field the visit left blank.
+    static func emptyEntries(_ fields: [TreatmentFormField]) -> [RecordFieldEntry] {
+        fields.filter { $0.role == .generic }.map { field in
+            let unit: String? = if case .number(let unit) = field.input { unit } else { nil }
+            return RecordFieldEntry(key: field.key, name: field.name, kind: field.structuringKind, value: "",
+                                    unit: unit)
+        }
     }
 
     /// What the structuring technology may fill.

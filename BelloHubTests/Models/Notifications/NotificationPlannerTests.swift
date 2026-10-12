@@ -208,6 +208,40 @@ struct NotificationPlannerTests {
         #expect(before.map(\.fireDate) != after.map(\.fireDate))
     }
 
+    // MARK: - Records to write
+
+    @Test("Visits waiting for their record bring one nudge this evening, or tomorrow evening once it has passed")
+    func recordsToWrite() throws {
+        func planned(now: Date, count: Int, on: Bool = true) -> [PlannedNotification] {
+            var value = prefs()
+            value.recordsToWrite = on
+            return NotificationPlanner.plan(
+                NotificationPlanner.Input(now: now, calendar: calendar, appointments: [], clients: [], prefs: value,
+                                          recordsToWrite: count),
+                texts: texts
+            )
+        }
+        let today = try #require(planned(now: TestClock.now, count: 2).first)
+        #expect(today.kind == .recordsToWrite)
+        #expect(today.fireDate == TestClock.date("2026-10-01 19:00"))
+        #expect(today.body.contains("2"))
+        let late = try #require(planned(now: TestClock.date("2026-10-01 20:00"), count: 1).first)
+        #expect(late.fireDate == TestClock.date("2026-10-02 19:00"))
+        #expect(planned(now: TestClock.now, count: 0).isEmpty, "nothing owed, nothing said")
+        #expect(planned(now: TestClock.now, count: 2, on: false).isEmpty, "switched off in the settings")
+    }
+
+    @Test("Prefs saved before the records switch existed keep her choices and turn it on")
+    func oldPrefsDecode() throws {
+        let json = """
+        {"newBookings":false,"cancellations":true,"clientCheckIns":true,"followUpsDue":true,"birthdays":false,
+         "dailySummary":true,"clientRemindersEnabled":true,"reminderTimeMinutes":1080}
+        """
+        let prefs = try JSONDecoder().decode(NotificationPrefs.self, from: Data(json.utf8))
+        #expect(!prefs.newBookings && !prefs.birthdays && prefs.dailySummary)
+        #expect(prefs.recordsToWrite)
+    }
+
     // MARK: - Privacy
 
     @Test("No title or body carries a client's name or a service name, in any localization",
@@ -225,7 +259,7 @@ struct NotificationPlannerTests {
         let planned = NotificationPlanner.plan(
             NotificationPlanner.Input(
                 now: TestClock.now, calendar: calendar, appointments: visits, clients: [camila, julia],
-                prefs: prefs(birthdays: true, dailySummary: true, reminders: true)
+                prefs: prefs(birthdays: true, dailySummary: true, reminders: true), recordsToWrite: 2
             ),
             texts: NotificationTexts.localized(in: localization.locale)
         )
@@ -241,9 +275,11 @@ struct NotificationPlannerTests {
             }
         }
     }
+}
 
-    // MARK: - Quiet hours and urgent exceptions
+// MARK: - Quiet hours and urgent exceptions
 
+extension NotificationPlannerTests {
     @Test("Urgent events ignore quiet hours; the others wait for the window to end",
           arguments: [(AlertKind.clientRunningLate, true), (.cancellation, true), (.newBooking, false),
                       (.formReceived, false), (.birthday, false), (.remindersReady, false)])

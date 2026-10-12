@@ -17,13 +17,19 @@ enum RecordEditRules {
 
     /// What the record says in `field` now: the latest correction of that field, else the original.
     static func currentValue(
-        of field: RecordCorrectableField, in record: TreatmentRecord, corrections: [RecordCorrection]
+        of field: RecordEditableField, in record: TreatmentRecord, corrections: [RecordCorrection]
     ) -> String? {
         let latest = corrections
-            .filter { $0.recordID == record.id && $0.fieldKey == field.rawValue }
+            .filter { $0.recordID == record.id && $0.fieldKey == field.fieldKey }
             .max { $0.createdAt < $1.createdAt }
         guard let latest else { return field.originalValue(in: record) }
         return latest.newValue
+    }
+
+    static func currentValue(
+        of field: RecordCorrectableField, in record: TreatmentRecord, corrections: [RecordCorrection]
+    ) -> String? {
+        currentValue(of: .standard(field), in: record, corrections: corrections)
     }
 
     static func path(for record: TreatmentRecord, now: Date) -> RecordLockPolicy.EditPath {
@@ -45,7 +51,7 @@ enum RecordEditRules {
         id: UUID, draft: RecordCorrectionDraft, record: TreatmentRecord, corrections: [RecordCorrection], now: Date
     ) -> RecordCorrection {
         RecordCorrection(
-            id: id, recordID: record.id, createdAt: now, fieldKey: draft.field.rawValue,
+            id: id, recordID: record.id, createdAt: now, fieldKey: draft.field.fieldKey,
             oldValue: currentValue(of: draft.field, in: record, corrections: corrections),
             newValue: normalized(draft.newValue), reason: normalized(draft.reason)
         )

@@ -5,30 +5,38 @@
 
 import SwiftUI
 
-/// 4.1 ClientProfile. Her name and what the vault says about her at a glance: the important note, her session plan,
-/// the last and next visit, what she remembers about her, the health and consent line and her habits. Record history,
-/// photos, products, no-show history, export and incidents join it with their own stages.
+/// 4.1 Client record: the center of following a client. Her name, contact and three small actions on top; allergies,
+/// sensitivities and the important note when there are any; "Register visit" as the one primary action; then History
+/// (open by default), Photos, Information and Documents. Export, incidents and editing sit in the actions menu.
 struct ClientProfileView: View {
     let onOpen: (ClientsRoute) -> Void
-    /// Opens a record screen (4.7) on the tab's stack, or a record sheet (4.9, 4.10). Both default to nothing so a
-    /// preview needs neither.
+    /// Pushes a record screen (the visit details) on the tab's stack. Defaults to nothing so a preview needs none.
     let onRecord: (RecordRoute) -> Void
+    /// Presents a record sheet (incident, export, organizing photos).
     let onRecordSheet: (RecordSheet) -> Void
+    /// Opens the visit flow full screen.
+    let onVisitFlow: (TreatmentFlowRequest) -> Void
+    /// Presents an agenda sheet (a message, a new booking).
+    let onAgendaSheet: (AgendaSheet) -> Void
 
     @State private var viewModel: ClientProfileViewModel
+    @State private var comparing: ComparedPhotos?
     @Environment(ProfileService.self) private var profile
     @Environment(\.locale) private var locale
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     init(
         clientID: UUID, vault: VaultService, profile: ProfileService, onOpen: @escaping (ClientsRoute) -> Void,
         onRecord: @escaping (RecordRoute) -> Void = { _ in },
-        onRecordSheet: @escaping (RecordSheet) -> Void = { _ in }
+        onRecordSheet: @escaping (RecordSheet) -> Void = { _ in },
+        onVisitFlow: @escaping (TreatmentFlowRequest) -> Void = { _ in },
+        onAgendaSheet: @escaping (AgendaSheet) -> Void = { _ in }
     ) {
         _viewModel = State(initialValue: ClientProfileViewModel(clientID: clientID, vault: vault, profile: profile))
         self.onOpen = onOpen
         self.onRecord = onRecord
         self.onRecordSheet = onRecordSheet
+        self.onVisitFlow = onVisitFlow
+        self.onAgendaSheet = onAgendaSheet
     }
 
     var body: some View {
@@ -37,13 +45,14 @@ struct ClientProfileView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if viewModel.snapshot != nil {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button { onOpen(.edit(clientID: viewModel.clientID)) } label: { Text("clientProfile.edit") }
-                            .accessibilityIdentifier("clientProfile.editButton")
-                    }
+                    ToolbarItem(placement: .topBarTrailing) { actionsMenu }
                 }
             }
             .task { viewModel.startListening() }
+            .sheet(item: $comparing) { pair in
+                PhotoCompareSheet(first: pair.first, second: pair.second, formatters: formatters,
+                                  load: viewModel.fullPhoto(for:))
+            }
             .alert(Text("clientProfile.call.failedTitle"), isPresented: callFailed) {
                 Button(role: .cancel) {} label: { Text("common.close") }
             } message: {
@@ -72,9 +81,9 @@ struct ClientProfileView: View {
             .frame(maxHeight: .infinity)
         } else {
             VStack(spacing: Spacing.md) {
-                Skeleton(height: 220, cornerRadius: Radius.hero)
-                Skeleton(height: 90, cornerRadius: Radius.card)
-                Skeleton(height: 90, cornerRadius: Radius.card)
+                Skeleton(height: 180, cornerRadius: Radius.hero)
+                Skeleton(height: 56, cornerRadius: Radius.button)
+                Skeleton(height: 140, cornerRadius: Radius.card)
                 Spacer(minLength: 0)
             }
             .padding(Spacing.gutter)
@@ -90,30 +99,28 @@ struct ClientProfileView: View {
         let now = Date()
         let client = snapshot.client
         return ScrollView {
-            StaggeredStack(spacing: Spacing.lg) {
+            VStack(alignment: .leading, spacing: Spacing.lg) {
                 ClientProfileHero(
-                    client: client, chips: viewModel.chips, canCall: viewModel.canCall, onCall: viewModel.call
+                    client: client, chips: viewModel.chips, canCall: viewModel.canCall,
+                    canMessage: viewModel.canMessage, onCall: viewModel.call,
+                    onMessage: { onAgendaSheet(.clientMessage(.init(clientID: client.id, kind: .general))) },
+                    onEdit: { onOpen(.edit(clientID: client.id)) }
                 )
                 if hasImportantNote(client) {
-                    ImportantNoteCard(note: client.importantNote, allergies: client.allergies)
+                    ImportantNoteCard(note: client.importantNote, allergies: client.allergies,
+                                      sensitivities: client.sensitivities)
                 }
+                Button { onVisitFlow(viewModel.newVisitRequest) } label: {
+                    Label { Text("clientRecord.register") } icon: { Image(icon: .compose) }
+                }
+                .buttonStyle(.belloPrimary)
+                .accessibilityIdentifier("clientRecord.registerButton")
                 if let plan = snapshot.plan {
                     SessionPlanCard(plan: plan, formatters: formatters)
                 }
-                visitTiles(snapshot, now: now)
-                VStack(alignment: .leading, spacing: 0) {
-                    knowledgeHeader(for: client)
-                    KnowledgeSummaryCard(client: client)
-                }
-                HealthConsentRow(
-                    summary: snapshot.health, formatters: formatters, now: now,
-                    action: { onOpen(.health(clientID: client.id)) }
-                )
-                recordSection(client)
-                VStack(alignment: .leading, spacing: 0) {
-                    habitsHeader
-                    HabitsCard(habits: snapshot.habits, source: client.source)
-                }
+                ClientRecordSectionPicker(selection: $viewModel.section)
+                    .padding(.top, Spacing.sm)
+                section(snapshot, now: now)
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.top, Spacing.sm)
@@ -123,106 +130,75 @@ struct ClientProfileView: View {
         .accessibilityIdentifier("clientProfile.overview")
     }
 
-    /// The doors to the client's record: its history (with photos and corrections), a reaction note and the PDF export.
-    private func recordSection(_ client: Client) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.row) {
-            Text("clientProfile.record.title").font(Typography.section).foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-            ActionRow(
-                icon: .document, title: "clientProfile.record.history",
-                subtitle: Text("clientProfile.record.history.detail"), tone: .rose,
-                identifier: "clientProfile.recordsRow", action: { onRecord(.history(clientID: client.id)) }
+    @ViewBuilder
+    private func section(_ snapshot: ClientProfileSnapshot, now: Date) -> some View {
+        let clientID = snapshot.client.id
+        switch viewModel.section {
+        case .history:
+            ClientHistorySection(
+                timeline: viewModel.timeline, formatters: formatters, now: now,
+                loadThumbnail: viewModel.thumbnail(for:), onOpenVisit: openVisit,
+                onFillPending: { onVisitFlow(viewModel.pendingRecordRequest(for: $0)) },
+                onOrganizePhotos: { onRecordSheet(.organizePhotos(clientID: clientID)) }
             )
-            ActionRow(
-                icon: .alert, title: "clientProfile.record.incident",
-                subtitle: Text("clientProfile.record.incident.detail"), tone: .coral,
-                identifier: "clientProfile.incidentRow",
-                action: { onRecordSheet(.incident(clientID: client.id, appointmentID: nil)) }
+        case .photos:
+            ClientPhotosSection(
+                timeline: viewModel.timeline, formatters: formatters, now: now,
+                loadThumbnail: viewModel.thumbnail(for:), onOpenVisit: openVisit,
+                onCompare: { comparing = ComparedPhotos(first: $0, second: $1) }
             )
-            ActionRow(
-                icon: .share, title: "clientProfile.record.export",
-                subtitle: Text("clientProfile.record.export.detail"), tone: .peach,
-                identifier: "clientProfile.exportRow", action: { onRecordSheet(.exportRecord(clientID: client.id)) }
+        case .info:
+            ClientInfoSection(
+                snapshot: snapshot, formatters: formatters, now: now,
+                onEditKnowledge: { onOpen(.knowledge(clientID: clientID)) },
+                onEditDetails: { onOpen(.edit(clientID: clientID)) },
+                onBook: { onAgendaSheet(.newAppointment(clientID: clientID, startsAt: nil)) }
             )
-        }
-    }
-
-    private func hasImportantNote(_ client: Client) -> Bool {
-        client.importantNote != nil || !client.allergies.isEmpty
-    }
-
-    private func visitTiles(_ snapshot: ClientProfileSnapshot, now: Date) -> some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.md))
-            : AnyLayout(HStackLayout(spacing: Spacing.md))
-        let next = snapshot.nextAppointment
-        return layout {
-            VisitTile(
-                title: "clientProfile.lastVisit",
-                service: snapshot.lastVisit?.serviceName,
-                detail: snapshot.lastVisit.map { formatters.recentDate($0.startsAt, now: now) },
-                emptyText: "clientProfile.lastVisit.empty", identifier: "clientProfile.lastVisit"
-            )
-            VisitTile(
-                title: "clientProfile.next",
-                service: next?.serviceName,
-                detail: next.map {
-                    formatters.dayAndTime(
-                        $0.startsAt, now: now, today: LocalizedStringResource(
-                            "clientProfile.today"
-                        ).resolved(in: locale),
-                        tomorrow: LocalizedStringResource("clientProfile.tomorrow").resolved(in: locale)
-                    )
-                },
-                emptyText: "clientProfile.next.empty",
-                status: next.map { appointment in
-                    appointment.status == .confirmed
-                        ? .init(label: "clientProfile.next.confirmed", style: StatusPalette.confirmed)
-                        : .init(label: "clientProfile.next.booked", style: StatusPalette.pending)
-                },
-                identifier: "clientProfile.next"
+        case .documents:
+            ClientDocumentsSection(
+                snapshot: snapshot, timeline: viewModel.timeline, formatters: formatters,
+                onOpenHealth: { onOpen(.health(clientID: clientID)) }
             )
         }
-        .fixedSize(horizontal: false, vertical: true)
     }
 
-    /// The knowledge section's title with its Edit action. It is not a `SectionHeader` because that one carries no
-    /// accessibility identifier on its action.
-    private func knowledgeHeader(for client: Client) -> some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text("clientProfile.knowledge.title")
-                .font(Typography.section)
-                .foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-            Spacer(minLength: Spacing.row)
-            Button { onOpen(.knowledge(clientID: client.id)) } label: {
-                Text("clientProfile.knowledge.edit")
-                    .font(Typography.metaStrong)
-                    .foregroundStyle(Palette.roseText)
-                    .frame(minHeight: Spacing.touchTarget)
+    /// Edit, an incident without a visit, export: what she does to the record as a whole, out of the way.
+    private var actionsMenu: some View {
+        let clientID = viewModel.clientID
+        return Menu {
+            Button { onOpen(.edit(clientID: clientID)) } label: {
+                Label { Text("clientRecord.menu.edit") } icon: { Image(icon: .pencil) }
             }
-            .accessibilityIdentifier("clientProfile.knowledgeEditButton")
+            .accessibilityIdentifier("clientRecord.menu.edit")
+            Button { onAgendaSheet(.newAppointment(clientID: clientID, startsAt: nil)) } label: {
+                Label { Text("clientRecord.menu.book") } icon: { Image(icon: .calendar) }
+            }
+            .accessibilityIdentifier("clientRecord.menu.book")
+            Button { onRecordSheet(.incident(clientID: clientID, appointmentID: nil)) } label: {
+                Label { Text("clientProfile.record.incident") } icon: { Image(icon: .alert) }
+            }
+            .accessibilityIdentifier("clientRecord.menu.incident")
+            Button { onRecordSheet(.exportRecord(clientID: clientID)) } label: {
+                Label { Text("clientProfile.record.export") } icon: { Image(icon: .share) }
+            }
+            .accessibilityIdentifier("clientRecord.menu.export")
+        } label: {
+            Image(icon: .ellipsis)
+                .frame(width: Spacing.touchTarget, height: Spacing.touchTarget)
         }
-        .padding(.top, Spacing.section)
-        .padding(.bottom, Spacing.row)
-    }
-
-    private var habitsHeader: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text("clientProfile.habits.title")
-                .font(Typography.section)
-                .foregroundStyle(Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-            Spacer(minLength: Spacing.row)
-            Label { Text("clientProfile.habits.private") } icon: { Image(icon: .lock) }
-                .font(Typography.footnote)
-                .foregroundStyle(Palette.ink2)
-        }
-        .padding(.top, Spacing.section)
-        .padding(.bottom, Spacing.row)
+        .accessibilityLabel(Text("clientRecord.menu.label"))
+        .accessibilityIdentifier("clientRecord.menu")
     }
 
     // MARK: - Helpers
+
+    private func openVisit(_ visit: VisitSummary) {
+        onRecord(.visit(recordID: visit.id))
+    }
+
+    private func hasImportantNote(_ client: Client) -> Bool {
+        client.importantNote != nil || !client.allergies.isEmpty || !client.sensitivities.isEmpty
+    }
 
     private var callFailed: Binding<Bool> {
         Binding(get: { viewModel.callFailed }, set: { if !$0 { viewModel.dismissCallFailure() } })

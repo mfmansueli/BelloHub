@@ -14,6 +14,7 @@ extension InMemoryClientRecordRepository {
         servicesByID = [:]
         addOnsByID = [:]
         productsByID = [:]
+        optionsByID = [:]
         credentialsByID = [:]
         recordsByID = [:]
         correctionsByID = [:]

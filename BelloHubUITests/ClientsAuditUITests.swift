@@ -83,11 +83,20 @@ final class ClientsAuditUITests: XCTestCase {
         app.swipeUp()
         try audit(app, "\(tag) profile, lower half")
         app.swipeUp()
-        try audit(app, "\(tag) profile, habits")
+        try audit(app, "\(tag) profile, timeline")
+        for (offset, name) in ["photos", "information", "documents"].enumerated() {
+            app.swipeDown()
+            app.swipeDown()
+            app.showRecordSection(offset + 1)
+            try audit(app, "\(tag) record \(name)")
+            app.swipeUp()
+            try audit(app, "\(tag) record \(name), lower half")
+        }
+        app.swipeDown()
+        app.swipeDown()
+        app.showRecordSection(0)
 
-        app.swipeDown()
-        app.swipeDown()
-        app.tapButton("clientProfile.editButton")
+        app.tapButton("clientProfile.editAction")
         XCTAssertTrue(app.textFields["clientEdit.nameField"].waitForExistence(timeout: 5), "\(tag) edit")
         try audit(app, "\(tag) edit")
         app.swipeUp()
@@ -99,9 +108,8 @@ final class ClientsAuditUITests: XCTestCase {
         app.tapButton("clientEdit.cancelButton")
 
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5))
-        app.swipeUp()
-        app.tapButton("clientProfile.knowledgeEditButton")
-        XCTAssertTrue(app.element("clientKnowledge.lists").waitForExistence(timeout: 5), "\(tag) knowledge")
+        app.showRecordSection(2)
+        app.tapRow("clientProfile.knowledgeEditButton", expecting: "clientKnowledge.lists")
         try audit(app, "\(tag) knowledge")
     }
 

@@ -22,12 +22,15 @@ final class ClientHealthViewModel {
     private(set) var patchTests: [PatchTest] = []
     private(set) var templates: [HealthFormTemplate] = []
     private(set) var catalog: HealthFormCatalog?
+    /// Her visits, newest first, so a document can say which visit it belongs to (optional).
+    private(set) var visits: [TreatmentRecord] = []
     /// The sheets. Setting one to nil closes it; the view reloads when a sheet goes away.
     var fillSheet: HealthFormViewModel?
     var patchSheet: PatchTestViewModel?
     var consentSheet: ConsentRecordViewModel?
 
     private let repository: (any HealthRepository)?
+    private let records: (any TreatmentRepository)?
     private let profile: ProfileService
     private let catalogProvider: any HealthFormCatalogProviding
     private let photos: any PhotoProcessing
@@ -41,6 +44,7 @@ final class ClientHealthViewModel {
     init(
         clientID: UUID,
         repository: (any HealthRepository)?,
+        records: (any TreatmentRepository)? = nil,
         profile: ProfileService,
         catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
         photos: any PhotoProcessing = ImageIOPhotoProcessing(),
@@ -51,6 +55,7 @@ final class ClientHealthViewModel {
     ) {
         self.clientID = clientID
         self.repository = repository
+        self.records = records
         self.profile = profile
         self.catalogProvider = catalogProvider
         self.photos = photos
@@ -89,6 +94,11 @@ final class ClientHealthViewModel {
             consents = try await repository.consents(for: clientID)
             patchTests = try await repository.patchTests(for: clientID)
             templates = try await repository.healthFormTemplates()
+            // A visit list that cannot be read only costs the optional link, never the screen.
+            // Finalized visits only: a draft may still be discarded, which would leave the document pointing nowhere.
+            visits = ((try? await records?.records(for: clientID)) ?? [])
+                .filter { !$0.isDraft }
+                .sorted { ($0.performedAt ?? $0.createdAt) > ($1.performedAt ?? $1.createdAt) }
             client = loadedClient
             catalog = loadedCatalog
             hasLoaded = true
@@ -175,7 +185,8 @@ final class ClientHealthViewModel {
     func startConsent() {
         guard let repository, consentSheet == nil else { return }
         consentSheet = ConsentRecordViewModel(
-            clientID: clientID, repository: repository, photos: photos, files: files, now: now, makeID: makeID
+            clientID: clientID, repository: repository, visits: visits, photos: photos, files: files, now: now,
+            makeID: makeID
         )
     }
 
@@ -183,8 +194,8 @@ final class ClientHealthViewModel {
     func open(_ consent: ConsentRecord) {
         guard let repository, consentSheet == nil else { return }
         consentSheet = ConsentRecordViewModel(
-            clientID: clientID, existing: consent, repository: repository, photos: photos, files: files, now: now,
-            makeID: makeID
+            clientID: clientID, existing: consent, repository: repository, visits: visits, photos: photos,
+            files: files, now: now, makeID: makeID
         )
     }
 }
