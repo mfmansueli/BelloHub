@@ -32,14 +32,15 @@ struct ChoiceCard: View {
                     }
                 }
                 Spacer(minLength: Spacing.sm)
-                if isSelected {
-                    Image(icon: .check)
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Palette.onAction)
-                        .frame(width: 28, height: 28)
-                        .background(Palette.action, in: Circle())
-                        .accessibilityHidden(true)
-                }
+                // The check's place is kept when it is off, so selecting a card never changes its width (a
+                // `FittingGrid` would otherwise switch columns under her finger).
+                Image(icon: .check)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(Palette.onAction)
+                    .frame(width: 28, height: 28)
+                    .background(Palette.action, in: Circle())
+                    .opacity(isSelected ? 1 : 0)
+                    .accessibilityHidden(true)
             }
             .padding(.horizontal, Spacing.md)
             .padding(.vertical, Spacing.row)

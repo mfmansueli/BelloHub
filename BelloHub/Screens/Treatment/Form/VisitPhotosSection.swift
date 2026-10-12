@@ -32,7 +32,7 @@ struct VisitPhotosSection: View {
                 }
                 .accessibilityElement(children: .combine)
             }
-            HStack(spacing: Spacing.sm) {
+            FittingRow {
                 // One tap to the camera: the kind follows the visit (before, then after, then progress) and is
                 // changed on the photo's tile, so taking a picture never starts with a choice.
                 Button { viewModel.path.append(.camera(viewModel.nextPhotoKind)) } label: {

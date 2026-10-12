@@ -31,7 +31,7 @@ struct VisitPhotosCard: View {
                     ForEach(photos) { photo in tile(photo) }
                 }
             }
-            HStack(spacing: Spacing.sm) {
+            FittingRow {
                 Button(action: onAdd) {
                     Label { Text("visitDetail.photos.add") } icon: { Image(icon: .camera) }
                 }

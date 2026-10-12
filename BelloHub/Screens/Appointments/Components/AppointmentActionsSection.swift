@@ -11,7 +11,6 @@ struct AppointmentActionsSection: View {
     let layout: AppointmentActionLayout
     let isWorking: Bool
     let onAction: (AppointmentAction) -> Void
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(spacing: Spacing.md) {
@@ -29,10 +28,7 @@ struct AppointmentActionsSection: View {
     }
 
     private var quickTiles: some View {
-        let stack = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return stack {
+        FittingRow(fillsWidth: true) {
             ForEach(layout.quick, id: \.self) { action in
                 Button { onAction(action) } label: {
                     VStack(spacing: Spacing.xs) {

@@ -203,6 +203,8 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
 | `BrandMark`, `BrandLockup` | The app icon itself, stacked from its own two layers (`BrandMarkRelief` and `BrandMarkFront` in the asset catalog, copies of `BelloHub.icon/Assets/Relief.png` and `Front.png`) over the icon's background (`BrandPalette`: orange `#E84A10`, near-black `#181717` in dark; ivory "b" `#FAF5EB`) in the rounded square of the icon mask. The 2026-10-11 icon (orange background, ivory "b" with a sage relief) replaced the earlier sage tile. Used on Locked (64 pt), the privacy cover (72 pt) and the lockup. The layers come from raster cut-outs of the approved reference, not vector files. The wordmark is the brand name, never localized, and always left-to-right |
 | `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `selectionInk` outline and an `action` check disc, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
+| `FittingRow` | Buttons side by side only while every label fits on one line, stacked otherwise; `fillsWidth` gives equal halves side by side and full width stacked. Decides by the labels, not the text size, so a word never breaks in the middle ("appointme / nt" on an iPhone 15 Pro at a large size). Follows the reading direction |
+| `FittingGrid` | Cards in equal columns while every label fits its column on one line, one per row otherwise (profession cards, tag colors) |
 | `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
 | `StepProgressBar` | One 4 pt segment per step, filled in `action` up to the current one (`hairline` after it); spoken as "Step n of m" |
 | `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
@@ -268,7 +270,7 @@ Home's two starts, "New booking" and "Register visit", sit side by side under th
 | 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
 | 4.3 ClientEdit (+ merge sheet) | `Clients/Form/ClientEditView`, `ClientMergeSheet` | `ClientFormViewModel`, `ClientMergeViewModel` | `clientEdit.*`, `clientMerge.*` |
 | 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
-| 4.5 ClientHealth "Health and consents" (+ health form, patch test, consent record sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `healthForm.*`, `patch.*`, `consent.*` (D55) |
+| 4.5 ClientHealth "Health and consents", a folder (+ patch test and record sheets; the record sheet keeps health forms and consents) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `patch.*`, `consent.*` (D55, D60) |
 | 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
 | 6.1 Services (+ 6.2 ServiceEdit sheet, 6.3 AddOns pushed) | `Screens/Services/ServicesView` -> `ServicesContentView`, `AddOns/` | `ServicesViewModel`, `AddOnsViewModel` | `services.*`, `serviceEditor.*`, `addOns.*` |
 | 6.4 Products | `Screens/Products/ProductsView` | `ProductsViewModel` | `products.*` |
@@ -421,6 +423,26 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **7.10 Help**: six questions as rows, "Write to support" and "Send feedback" as `mailto:` links; no chat.
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
+
+### Quick access (Home avatar)
+
+- Her avatar on Home is a button (44 pt at accessibility sizes, never hidden) that opens the **Quick access** sheet:
+  her profile card (avatar, name, profession · region, "Open account"), the booking link card shared with the booking
+  page settings (`BookingLinkCard`: link, status, Copy and Share, or "Choose your address"), "Business" (booking page,
+  services, availability, products, record fields), "Preferences" (plan, notifications, language and region), then
+  Lock now and All settings. A row closes the sheet and opens the same screen on the More tab (`QuickAccessItem.path`),
+  so each setting has one screen. The row subtitles come from `SettingsSubtitles`, shared with More.
+
+### Changes from D60 (health forms are her own papers too)
+
+- **4.5** is a folder. First section "Health forms": the same list card as the consents (label or "Health form",
+  Signed / Not signed chip, date, "Photo kept"), an "Add health form" row, a footnote that the app asks no health
+  question and nothing leaves the iPhone, and under it "Review every 12 months" with the review chip, counted from the
+  last signed health form. The empty folder says to use her own form, sign it with the client and keep a photo or file.
+  The in-app questionnaire and its "Fill in the form" button are gone. Answers recorded in the app before D60, or sent
+  from the booking page, show read-only under "Answers recorded in the app". Then "Consents" (every kind but health
+  form) and the patch test log. The record sheet adds the "Health form" kind first and reads "New health form" /
+  "Health form" for it.
 
 ### Changes from D55 (consents are the professional's own business)
 
@@ -618,6 +640,9 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - **Counts** read "Not back in 2+ months: 3 clients", "Ready for a follow-up: 2 clients": the counted noun follows the
   language's plural rules (`ClientTerm.countText`, Arabic six forms, German "Personen"), so the sentence needs no
   agreement.
+- **No word breaks in the middle**, in any language or text size: pairs of buttons use `FittingRow` and card grids
+  `FittingGrid`, which stack when a label does not fit whole; wrapping between words is fine. The old rule (stack
+  only at accessibility sizes) cut "New appointment" on Home at a large size.
 - **Chips** keep a one-line label on one line (`FlowLayout` places them at their natural size; "12 hr" wrapped before).
 - **5.8 Camera**: the preview and the "only saved in Bello" note scroll above the pinned bottom bar, and the bar
   (`FlowBottomBar`) always keeps the height its buttons need; at AX5 in German the 3:4 preview squeezed the capture

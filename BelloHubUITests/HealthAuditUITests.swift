@@ -5,8 +5,8 @@
 
 import XCTest
 
-/// Accessibility audit of the health screen (4.5 and its three sheets: the form, the consent record and the
-/// patch test) and the form settings (6.14), in several localizations, at the default size and at AX5. Slow, so it
+/// Accessibility audit of the health screen (4.5 and its sheets: a health form or consent record, and the patch
+/// test) and the form settings (6.14), in several localizations, at the default size and at AX5. Slow, so it
 /// runs in the Full plan and
 /// is skipped by UISmoke. It reports clipped text and missing descriptions; contrast is measured by unit tests
 /// (CLAUDE.md section 5), as in `OnboardingAuditUITests`.
@@ -44,21 +44,15 @@ final class HealthAuditUITests: XCTestCase {
         for locale in Self.locales {
             let app = XCUIApplication.launchedOnHealth(locale: locale, largestText: largestText)
             let tag = "\(locale)\(largestText ? " AX5" : "")"
-            XCTAssertTrue(app.buttons["health.fillButton"].waitForExistence(timeout: 20), "\(tag) empty")
+            XCTAssertTrue(app.buttons["health.addFormButton"].waitForExistence(timeout: 20), "\(tag) empty")
             try audit(app, "\(tag) empty")
 
-            app.tapButton("health.fillButton")
-            XCTAssertTrue(app.buttons["healthForm.saveButton"].waitForExistence(timeout: 15), "\(tag) sheet")
-            try audit(app, "\(tag) health form")
-            app.selectChip("healthForm.minor.yes")
-            XCTAssertTrue(app.textFields["healthForm.minorNameField"].waitForExistence(timeout: 15))
-            try audit(app, "\(tag) health form, minor")
-            app.selectChip("healthForm.minor.no")
-            app.answerHealthForm()
-            app.tapButton("healthForm.saveButton")
-
-            XCTAssertTrue(app.element("health.answer.allergies").waitForExistence(timeout: 20), "\(tag) answers")
-            try audit(app, "\(tag) answers")
+            app.tapButton("health.addFormButton")
+            XCTAssertTrue(app.buttons["consent.saveButton"].waitForExistence(timeout: 15), "\(tag) form sheet")
+            try audit(app, "\(tag) health form sheet")
+            app.tapButton("consent.saveButton")
+            XCTAssertTrue(app.button(withPrefix: "health.forms.").waitForExistence(timeout: 20), "\(tag) form row")
+            try audit(app, "\(tag) health forms")
 
             app.tapButton("health.addConsentButton")
             XCTAssertTrue(app.buttons["consent.saveButton"].waitForExistence(timeout: 15), "\(tag) consent sheet")

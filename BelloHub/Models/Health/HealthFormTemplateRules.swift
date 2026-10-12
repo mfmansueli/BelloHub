@@ -120,6 +120,14 @@ enum HealthFormTemplateRules {
         return now >= dueAt ? .due(dueAt: dueAt) : .current(dueAt: dueAt)
     }
 
+    /// When the client last gave her health history: the latest signed health-form record (her paper, D60) or the
+    /// latest form answered in the app before D60, whichever is later. Nil when there is neither, or none is dated.
+    static func lastHealthFormDate(forms: [HealthForm], records: [ConsentRecord]) -> Date? {
+        let paper = records.filter { $0.kind == .healthForm && $0.isSigned }.map(\.effectiveDate).max()
+        let answered = latestForm(in: forms)?.signedAt
+        return [paper, answered].compactMap(\.self).max()
+    }
+
     /// The form the professional reads first: the one signed last. A form without a date comes after every dated one.
     static func latestForm(in forms: [HealthForm]) -> HealthForm? {
         forms.max { left, right in

@@ -5,47 +5,45 @@
 
 import XCTest
 
-/// The health flow of one client (screen 4.5): the professional fills the health form with her, the answers appear,
-/// a consent is noted as a status record (D55: a label, signed or not, the date; no text and no signature), the
-/// record reopens for editing and can be marked not signed, and a patch test is recorded. The Clients tab that pushes
-/// this screen belongs to another stage, so the test opens it directly (`-uiRoute health`) for the seeded client.
+/// The health folder of one client (screen 4.5, D60): her own health form, signed with the client in person, is kept
+/// as a record (a label, signed or not, the date; the app asks no health question), a consent is noted the same way
+/// (D55), the record reopens for editing and can be marked not signed, and a patch test is recorded. The Clients tab
+/// that pushes this screen belongs to another stage, so the test opens it directly (`-uiRoute health`) for the seeded
+/// client.
 @MainActor
 final class HealthUITests: XCTestCase {
     override func setUp() async throws {
         continueAfterFailure = false
     }
 
-    func testFillTheHealthFormAndRecordAPatchTest() {
+    func testKeepAHealthFormAndRecordAPatchTest() {
         let app = XCUIApplication.launchedOnHealth()
 
-        // No form yet: the screen explains and offers the professional-filled path.
-        XCTAssertTrue(app.buttons["health.fillButton"].waitForExistence(timeout: 20))
+        // An empty folder, and no questionnaire to fill in the app (D60).
+        XCTAssertTrue(app.buttons["health.addFormButton"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.staticTexts["health.forms.empty"].exists)
+        XCTAssertFalse(app.buttons["health.fillButton"].exists, "the app asks no health question (D60)")
         XCTAssertFalse(app.element(withPrefix: "health.answer.").exists)
-        app.tapButton("health.fillButton")
+        app.tapButton("health.addFormButton")
 
-        // The sheet opens with the questions only, and Save stays off until everything is answered.
-        XCTAssertTrue(app.buttons["healthForm.saveButton"].waitForExistence(timeout: 15))
-        XCTAssertFalse(app.buttons["healthForm.saveButton"].isEnabled)
-        XCTAssertEqual(app.switches.matching(identifier: "healthForm.agreeToggle").count, 0, "no agreement (D55)")
-        XCTAssertEqual(app.textFields.matching(identifier: "healthForm.signatureField").count, 0, "no signature")
-        app.answerHealthForm()
-        XCTAssertTrue(
-            app.buttons["healthForm.saveButton"].isEnabled,
-            "\(app.healthFormState()) \(app.saveScreenshot(named: "health-form"))"
-        )
-        app.tapButton("healthForm.saveButton")
+        // The record sheet opens on the health-form kind, signed today.
+        XCTAssertTrue(app.buttons["consent.saveButton"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["consent.kind.healthForm"].isSelected, app.saveScreenshot(named: "health-form"))
+        XCTAssertEqual(app.switches["consent.signedToggle"].value as? String, "1", "starts signed")
+        app.typeIntoField("Anamnesis, paper form", identifier: "consent.labelField")
+        app.dismissKeyboard()
+        app.tapButton("consent.saveButton")
 
-        // The sheet closes and the answers show on the screen, with the review; no consent was made.
-        let allergies = app.element("health.answer.allergies")
-        XCTAssertTrue(allergies.waitForExistence(timeout: 20))
-        XCTAssertTrue(allergies.label.contains("Fragrance"), allergies.label)
-        XCTAssertTrue(allergies.label.contains("Retinol"), allergies.label)
-        XCTAssertTrue(app.element("health.answer.medication").label.contains("No"))
+        // The paper is in the folder, the review counts from it, and no consent was made.
+        let form = app.button(withPrefix: "health.forms.")
+        XCTAssertTrue(form.waitForExistence(timeout: 20))
+        XCTAssertTrue(form.label.contains("Anamnesis, paper form"), form.label)
+        XCTAssertTrue(form.label.contains("Signed"), form.label)
         XCTAssertTrue(app.element("health.review").label.contains("12"), "the default review period is 12 months")
-        XCTAssertTrue(app.staticTexts["health.consent.empty"].exists, "filling the form notes no consent (D55)")
+        XCTAssertTrue(app.staticTexts["health.consent.empty"].exists, "a health form is not a consent")
 
         // A patch test goes into the log.
-        XCTAssertTrue(app.buttons["health.recordPatchTestButton"].waitForExistence(timeout: 15))
+        app.scrollUntilHittable(app.buttons["health.recordPatchTestButton"])
         app.tapButton("health.recordPatchTestButton")
         XCTAssertTrue(app.buttons["patch.saveButton"].waitForExistence(timeout: 15))
         XCTAssertFalse(app.buttons["patch.saveButton"].isEnabled, "a patch test needs a product")

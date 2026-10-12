@@ -17,7 +17,6 @@ struct TagEditorSheet: View {
     @State private var isSaving = false
     @State private var pendingDeletion: Tag?
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.dynamicTypeSize) private var typeSize
     @Environment(\.locale) private var locale
     @FocusState private var isFocused: Bool
 
@@ -76,17 +75,12 @@ struct TagEditorSheet: View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             Text("tags.editor.color").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
                 .accessibilityAddTraits(.isHeader)
-            LazyVGrid(columns: columns, spacing: Spacing.sm) {
+            FittingGrid {
                 ForEach(TagColor.allCases) { option in
                     colorButton(option)
                 }
             }
         }
-    }
-
-    private var columns: [GridItem] {
-        let count = typeSize.isAccessibilitySize ? 1 : 2
-        return Array(repeating: GridItem(.flexible(), spacing: Spacing.sm), count: count)
     }
 
     private func colorButton(_ option: TagColor) -> some View {
@@ -97,14 +91,14 @@ struct TagEditorSheet: View {
                 TagDot(color: option, size: 24)
                 Text(option.name.localized(in: locale)).font(Typography.bodyStrong).foregroundStyle(Palette.ink)
                 Spacer(minLength: 0)
-                if isSelected {
-                    Image(icon: .check)
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Palette.onAction)
-                        .frame(width: 28, height: 28)
-                        .background(Palette.action, in: Circle())
-                        .accessibilityHidden(true)
-                }
+                // Kept in place when off: a choice never changes the button's width, so the grid stays put.
+                Image(icon: .check)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(Palette.onAction)
+                    .frame(width: 28, height: 28)
+                    .background(Palette.action, in: Circle())
+                    .opacity(isSelected ? 1 : 0)
+                    .accessibilityHidden(true)
             }
             .padding(.horizontal, Spacing.md)
             .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
