@@ -76,9 +76,13 @@ struct BeforeYouStartLastVisit: View {
         }
         add(.technique, record.technique)
         add(.productsUsed, record.productsUsed.isEmpty ? nil : formatters.list(record.productsUsed))
-        let result = record.result.title.resolved(in: locale)
-        let resultText = [result, record.resultDetail].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · ")
-        rows.append((LocalizedStringResource("beforeYouStart.result").resolved(in: locale), resultText))
+        // "Neutral" is also what a record holds when she chose no result, so it shows only next to her own words.
+        let detail = record.resultDetail?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let chosen = record.result == .neutral ? nil : record.result.title.resolved(in: locale)
+        let resultText = [chosen, detail.isEmpty ? nil : detail].compactMap { $0 }.joined(separator: " · ")
+        if !resultText.isEmpty {
+            rows.append((LocalizedStringResource("beforeYouStart.result").resolved(in: locale), resultText))
+        }
         add(.reaction, record.reaction)
         return rows
     }

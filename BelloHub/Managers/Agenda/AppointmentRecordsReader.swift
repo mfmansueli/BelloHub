@@ -22,7 +22,8 @@ struct AppointmentRecordsReader {
             corrections += try await repository.corrections(for: record.id)
         }
         return AppointmentRecords.make(
-            appointmentID: visit.appointment.id, records: records, corrections: corrections,
+            appointmentID: visit.appointment.id, startsAt: visit.appointment.startsAt, records: records,
+            corrections: corrections,
             appointments: appointments, photos: try await repository.photos(for: clientID), now: now, list: list
         )
     }

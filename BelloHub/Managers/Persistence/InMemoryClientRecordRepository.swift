@@ -260,9 +260,11 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
         photoDataByID[id] = nil
         changes.notify()
     }
+}
 
-    // MARK: - BusinessRepository
+// MARK: - BusinessRepository
 
+extension InMemoryClientRecordRepository {
     func profile() -> ProfessionalProfile? {
         storedProfile
     }

@@ -245,9 +245,11 @@ struct VaultEncryptionTests {
 
         #expect(try await restored.client(id: client.id)?.importantNote == "Sentinel-RESTORE")
     }
+}
 
-    // MARK: - Tampering and binding
+// MARK: - Tampering and binding
 
+extension VaultEncryptionTests {
     private func flipAByte(in container: ModelContainer, kind: VaultKind, named name: String) throws {
         let context = ModelContext(container)
         let raw = kind.rawValue

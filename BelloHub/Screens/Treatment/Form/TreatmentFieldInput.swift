@@ -20,6 +20,8 @@ struct TreatmentFieldInput: View {
     var textSuggestions: [String] = []
     /// "+ Add": the name and whether to save it for reuse. Nil hides the chip (the review cards).
     var onAddOption: ((String, Bool) -> Void)?
+    /// A saved word tapped again on a text field: takes its line out.
+    var onRemoveOption: ((String) -> Void)?
 
     @Environment(\.locale) private var locale
     @State private var isAdding = false
@@ -68,8 +70,11 @@ struct TreatmentFieldInput: View {
         if onAddOption != nil {
             FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm, wrapsLongChildren: true) {
                 ForEach(textSuggestions, id: \.self) { word in
-                    Button { onAddOption?(word, false) } label: { Text(verbatim: word) }
-                        .buttonStyle(.belloChip(selected: TreatmentAnswerFormat.items(value).contains(word)))
+                    // One technique per line: a chip is on when its line is in the field.
+                    let isOn = OptionNameRules.match(word, in: TreatmentAnswerFormat.textLines(value)) != nil
+                    Button { isOn ? onRemoveOption?(word) : onAddOption?(word, false) } label: { Text(verbatim: word) }
+                        .buttonStyle(.belloChip(selected: isOn))
+                        .accessibilityAddTraits(isOn ? .isSelected : [])
                         .accessibilityIdentifier("\(identifier).option.\(word)")
                 }
                 AddOptionChip(identifier: "\(identifier).addOption") { isAdding = true }

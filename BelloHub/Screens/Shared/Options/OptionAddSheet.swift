@@ -28,6 +28,12 @@ struct OptionAddSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.md) {
+                    // The field's name can be long in any language: it wraps here instead of being cut in the bar.
+                    title
+                        .font(Typography.section)
+                        .foregroundStyle(Palette.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityAddTraits(.isHeader)
                     field
                     suggestions
                     if let created = newName { createRow(created) }
@@ -37,7 +43,7 @@ struct OptionAddSheet: View {
                 .padding(.vertical, Spacing.md)
             }
             .background(Palette.bg)
-            .navigationTitle(title)
+            .navigationTitle(Text("optionAdd.chip"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

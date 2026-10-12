@@ -39,6 +39,9 @@ struct RecordTemplateRequiredTests {
         #expect(field?.applies(toService: UUID()) == false)
         #expect(field?.applies(toService: nil) == true, "no service known yet: every field is asked")
         #expect(RecordFieldSetting(profession: .esthetician, key: "x", isOn: true).applies(toService: brow))
+        // Her only chosen services were switched off or deleted: the field is asked everywhere again.
+        #expect(field?.applies(toService: UUID(), existing: [UUID()]) == true)
+        #expect(field?.applies(toService: UUID(), existing: [brow]) == false)
     }
 
     @Test("A field saved before these settings existed reads as optional and asked for every service")
@@ -59,7 +62,10 @@ struct RecordTemplateRequiredTests {
                 RecordFieldSetting(profession: .esthetician, key: "custom-b", customName: "Pressure", isOn: true,
                                    isRequired: true),
                 RecordFieldSetting(profession: .esthetician, key: "custom-c", customName: "Mood", isOn: true),
-                RecordFieldSetting(profession: .esthetician, key: "custom-d", customName: "Music", isOn: true)
+                RecordFieldSetting(profession: .esthetician, key: "custom-d", customName: "Music", isOn: true),
+                RecordFieldSetting(profession: .esthetician, key: "custom-e", customName: "Room", isOn: true),
+                RecordFieldSetting(profession: .esthetician, key: "custom-f", customName: "Pillow", isOn: true,
+                                   isRequired: true)
             ],
             intake: [], updatedAt: TestClock.now
         )
@@ -68,15 +74,17 @@ struct RecordTemplateRequiredTests {
             TreatmentFormFields.resolve(template: template, professions: [.esthetician], catalog: catalog,
                                         notesName: "Notes", serviceID: service).map(\.key)
         }
-        #expect(keys(brow) == ["notes", "custom-a", "custom-b", "custom-c", "custom-d"])
-        #expect(keys(UUID()) == ["notes", "custom-b", "custom-c", "custom-d"])
+        #expect(keys(brow) == ["notes", "custom-a", "custom-b", "custom-c", "custom-d", "custom-e", "custom-f"])
+        #expect(keys(UUID()) == ["notes", "custom-b", "custom-c", "custom-d", "custom-e", "custom-f"])
 
         let fields = TreatmentFormFields.resolve(template: template, professions: [.esthetician], catalog: catalog,
                                                  notesName: "Notes", serviceID: UUID())
         #expect(fields.first { $0.key == "custom-b" }?.isRequired == true)
-        // Mood and Music lead; Pressure is needed, so it never waits under "More fields".
+        // Pressure is needed and shows first; Mood and Music lead the rest; Room folds; Pillow is needed, so it never
+        // waits under "More fields".
         let layout = TreatmentFormLayout.split(fields, draft: TreatmentDraft())
-        #expect(layout.more.isEmpty || !layout.more.contains { $0.key == "custom-b" })
+        #expect(layout.more.map(\.key) == ["custom-e"])
+        #expect(layout.main.contains { $0.key == "custom-f" })
     }
 
     @Test("A needed field stops finalizing only; it is reported once and clears when answered")

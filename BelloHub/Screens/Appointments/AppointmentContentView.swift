@@ -223,9 +223,11 @@ struct AppointmentContentView: View {
             .accessibilityIdentifier("appointment.reminderWaiting")
         }
     }
+}
 
-    // MARK: - Links
+// MARK: - Links
 
+extension AppointmentContentView {
     @ViewBuilder
     private func links(_ checklist: PreVisitChecklist, visit: VisitContext) -> some View {
         if let plan = checklist.plan {

@@ -107,6 +107,13 @@ extension TreatmentFlowViewModel {
             if case .saving = autosave { autosave = .idle }
             return
         }
+        // A finalized record still open keeps its rules: a needed field cleared or a number that is not one waits on
+        // screen (marked) instead of being saved. A draft saves whatever it holds.
+        if isFinalized, !issues.isEmpty {
+            showsValidation = true
+            autosave = .failed
+            return
+        }
         let status: RecordStatus = isFinalized ? .finalized : .draft
         autosave = await persist(status: status) ? .saved(now()) : .failed
     }

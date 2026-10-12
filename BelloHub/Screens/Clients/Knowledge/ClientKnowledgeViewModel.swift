@@ -95,6 +95,13 @@ final class ClientKnowledgeViewModel {
     }
 
     /// Adds a saved option (or one she just created) to `section`; the same words already there are not repeated.
+    /// A saved word is offered only while the list does not already say it, by the list's own rule (case and accents
+    /// ignored), so a chip never shows for something a tap would refuse.
+    func offers(_ name: String, in section: KnowledgeSection) -> Bool {
+        if case .added = KnowledgeListRules.adding(name, to: entries(in: section)) { return true }
+        return false
+    }
+
     func add(_ entry: String, to section: KnowledgeSection) {
         if case .added(let updated) = KnowledgeListRules.adding(entry, to: entries(in: section)) {
             lists[section] = updated

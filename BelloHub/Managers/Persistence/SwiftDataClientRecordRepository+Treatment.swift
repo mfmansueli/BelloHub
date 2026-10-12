@@ -6,8 +6,10 @@
 import Foundation
 
 extension SwiftDataClientRecordRepository {
+    /// Reads the clear part only: Home, Alerts and the notifications ask on every change, and none of them needs (or
+    /// may hold) the clinical text. An item whose clear part cannot be read is left out.
     func recordMarks() throws -> [RecordMark] {
-        try values(TreatmentRecord.self, from: items(kind: .treatmentRecord)).map(RecordMark.init)
+        try items(kind: .treatmentRecord).compactMap { try? VaultCoding.plainPart(RecordMark.self, from: $0.plain) }
     }
 
     func records(for clientID: UUID) throws -> [TreatmentRecord] {

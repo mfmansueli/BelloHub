@@ -146,6 +146,10 @@ struct ConsentRecordSheet: View {
                 ForEach(viewModel.visits) { record in
                     Text(verbatim: visitTitle(record)).tag(UUID?.some(record.id))
                 }
+                // A link saved earlier to a visit that is no longer listed stays as it is, and says so.
+                if let linked = viewModel.draft.recordID, !viewModel.visits.contains(where: { $0.id == linked }) {
+                    Text("consent.visit.unavailable").tag(UUID?.some(linked))
+                }
             } label: {
                 Text("consent.visit")
             }

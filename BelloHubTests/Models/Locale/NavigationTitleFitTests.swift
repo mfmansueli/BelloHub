@@ -46,7 +46,8 @@ struct NavigationTitleFitTests {
         "services.editor.addTitle", "services.editor.editTitle", "sessionPlan.title", "tags.editor.addTitle",
         "tags.editor.editTitle", "treatmentFlow.form.title", "treatmentFlow.register.title",
         "visitDetail.title", "reuseVisit.title", "visitDay.title", "organizePhotos.title", "photoCompare.title",
-        "personalization.title", "clientPicker.title", "recordTemplate.services.title"
+        "personalization.title", "clientPicker.title", "recordTemplate.services.title",
+        "optionAdd.chip"
     ]
 
     @Test("Large titles fit at 34 pt in every localization", arguments: AppLocalization.allCases)

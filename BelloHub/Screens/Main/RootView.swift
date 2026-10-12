@@ -206,9 +206,11 @@ struct RootView: View {
             if wasLocked && !isLocked { Task { await model.didUnlock() } }
         }
     }
+}
 
-    // MARK: - Stages
+// MARK: - Stages
 
+extension RootView {
     @ViewBuilder
     private var content: some View {
         #if DEBUG

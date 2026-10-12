@@ -39,10 +39,13 @@ struct RecordFieldSetting: Identifiable, Hashable, Codable, Sendable {
     var isCustom: Bool { customName != nil }
 
     /// Whether the visit form asks this field for a visit of `serviceID`. A visit with no service known yet asks
-    /// every field, so nothing is hidden before she says what was done.
-    func applies(toService serviceID: UUID?) -> Bool {
-        guard let serviceID, !serviceIDs.isEmpty else { return true }
-        return serviceIDs.contains(serviceID)
+    /// every field, so nothing is hidden before she says what was done. With `existing` (her active services), a
+    /// service that was switched off or deleted no longer narrows the field: when none of its services exists, it is
+    /// asked at every service again, as the template screen then shows it.
+    func applies(toService serviceID: UUID?, existing: Set<UUID>? = nil) -> Bool {
+        let narrowed = existing.map { known in serviceIDs.filter(known.contains) } ?? serviceIDs
+        guard let serviceID, !narrowed.isEmpty else { return true }
+        return narrowed.contains(serviceID)
     }
 
     init(

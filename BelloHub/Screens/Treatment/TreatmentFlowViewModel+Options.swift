@@ -18,12 +18,18 @@ extension TreatmentFlowViewModel {
     /// Adds a technique to the technique field (on a new line when there is text already).
     func addTechnique(_ name: String, save: Bool, fieldKey: String) {
         let current = draft.value(for: fieldKey)
-        let lines = current.split(whereSeparator: \.isNewline).map(String.init)
-        if OptionNameRules.match(name, in: lines) == nil {
+        if OptionNameRules.match(name, in: TreatmentAnswerFormat.textLines(current)) == nil {
             set(current.isEmpty ? name : current + "\n" + name, for: fieldKey)
         }
         guard save, let options else { return }
         Task { _ = try? await options.add(name, to: .technique) }
+    }
+
+    /// A saved technique chip tapped again: its line leaves the field; what she typed around it stays.
+    func removeTechnique(_ name: String, fieldKey: String) {
+        let kept = draft.value(for: fieldKey).components(separatedBy: .newlines)
+            .filter { OptionNameRules.match(name, in: [$0]) == nil }
+        set(kept.joined(separator: "\n"), for: fieldKey)
     }
 
     /// Adds a product to the products field, and to her product list when she saves it.

@@ -61,6 +61,14 @@ struct ClientListBuilderTests {
         ).entries[0].summary
 
         #expect(summary == .lastVisit(service: "Brow lamination", date: TestClock.days(-5)))
+
+        let walkInOnly = makeListedClient(name: "Walk-in")
+        let record = TreatmentRecord(clientID: walkInOnly.id, serviceName: "Peel", createdAt: TestClock.days(-2))
+        let entry = ClientListBuilder.build(
+            clients: [walkInOnly], appointments: [], services: [glow], walkIns: [RecordMark(record)],
+            now: TestClock.now, calendar: calendar
+        ).entries[0]
+        #expect(!entry.isNew, "seen as a walk-in: not new")
     }
 
     // MARK: - Win back (FollowUpPlanner's rule)

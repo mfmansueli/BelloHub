@@ -228,4 +228,16 @@ struct TreatmentFlowViewModelTests {
         let stored = try await world.repository.records(for: world.client.id).first
         #expect(stored?.nextSessionSuggestion == world.model.formatters.weeks(6))
     }
+
+    @Test("A saved technique chip adds its line once and a second tap takes only that line out")
+    func techniqueChips() async throws {
+        let world = try await TreatmentFlowWorld.make()
+        let key = "technique"
+        world.model.set("Soft pressure", for: key)
+        world.model.addTechnique("Classic lift", save: false, fieldKey: key)
+        world.model.addTechnique("classic LIFT", save: false, fieldKey: key)
+        #expect(world.model.draft.value(for: key) == "Soft pressure\nClassic lift")
+        world.model.removeTechnique("Classic lift", fieldKey: key)
+        #expect(world.model.draft.value(for: key) == "Soft pressure")
+    }
 }

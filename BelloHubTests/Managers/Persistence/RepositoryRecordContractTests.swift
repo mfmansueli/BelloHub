@@ -116,6 +116,24 @@ struct RepositoryRecordContractTests {
         #expect(try await repository.record(id: finalized.id) != nil)
     }
 
+    @Test("Record marks carry links and state only, for every record and both repositories",
+          arguments: RepositoryFlavor.allCases)
+    func recordMarks(flavor: RepositoryFlavor) async throws {
+        let (repository, client) = try seeded(flavor)
+        let appointmentID = UUID()
+        let draft = TreatmentRecord(clientID: client.id, appointmentID: appointmentID, serviceName: "Glow",
+                                    createdAt: clock.now, performedAt: clock.now, status: .draft,
+                                    notes: "Sentinel-DRAFT")
+        let finalized = record(client)
+        try await repository.save(draft)
+        try await repository.save(finalized)
+
+        let marks = try await repository.recordMarks().sorted { $0.isDraft && !$1.isDraft }
+        #expect(marks.map(\.id) == [draft.id, finalized.id])
+        #expect(marks[0].appointmentID == appointmentID && marks[0].performedAt == clock.now)
+        #expect(marks[1].status == .finalized && marks[1].serviceName == "Glow")
+    }
+
     @Test("Corrections need a locked record, are ordered, and the same one twice is a no-op",
           arguments: RepositoryFlavor.allCases)
     func corrections(flavor: RepositoryFlavor) async throws {

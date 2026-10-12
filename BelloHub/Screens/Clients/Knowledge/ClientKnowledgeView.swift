@@ -188,9 +188,7 @@ struct ClientKnowledgeView: View {
 
     /// Her saved words for this list that the client does not have yet, one tap away, and "+ Add".
     private func savedOptions(for section: KnowledgeSection) -> some View {
-        let saved = (options?.names(in: section.optionContext) ?? []).filter { name in
-            OptionNameRules.match(name, in: viewModel.entries(in: section)) == nil
-        }
+        let saved = (options?.names(in: section.optionContext) ?? []).filter { viewModel.offers($0, in: section) }
         return FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm, wrapsLongChildren: true) {
             ForEach(saved, id: \.self) { name in
                 Button { viewModel.add(name, to: section) } label: { Text(verbatim: name) }

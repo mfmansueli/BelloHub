@@ -234,9 +234,11 @@ struct RecordTemplateView: View {
             .accessibilityIdentifier("recordTemplate.services.action.\(field.key)")
         }
     }
+}
 
-    // MARK: - Needed to finalize
+// MARK: - Needed to finalize
 
+extension RecordTemplateView {
     /// Which fields a record needs before it can be finalized. Drafts never need them, so a busy day is never blocked:
     /// she writes what she can and finalizes when the rest is there.
     private func requiredSection(for profession: ProfessionID) -> some View {

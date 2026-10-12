@@ -275,9 +275,11 @@ struct NotificationPlannerTests {
             }
         }
     }
+}
 
-    // MARK: - Quiet hours and urgent exceptions
+// MARK: - Quiet hours and urgent exceptions
 
+extension NotificationPlannerTests {
     @Test("Urgent events ignore quiet hours; the others wait for the window to end",
           arguments: [(AlertKind.clientRunningLate, true), (.cancellation, true), (.newBooking, false),
                       (.formReceived, false), (.birthday, false), (.remindersReady, false)])

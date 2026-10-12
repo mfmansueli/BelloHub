@@ -62,11 +62,26 @@ PhotoFraming, Motion, Home) and `scripts/check-warnings.sh`.
 - **Not compiled, not run.** Expect a few compile fixes on the first Mac build; UI tests in particular need a run.
 - "Due to return", habits and win-back still read bookings only; a walk-in record updates the client row's last
   visit but not those rules.
-- `RecordMark` (Home, Alerts, notifications, client list) ignores corrections to the visit day; the record screens
-  apply them.
+- `RecordMark` (Home, Alerts, notifications, client list) reads the clear part only, so it ignores corrections to the
+  visit day; the record screens apply them.
 - Translations are machine-written (`needs_review`, D41). Old keys no longer used (`treatmentFlow.save`,
   `treatmentFlow.lock.*`, `clientRecord.documents.sharing.counts`) are left in the catalog; prune with
   `merge-strings.py --prune` when convenient.
 - Light/dark, Dynamic Type to AX5, VoiceOver and contrast of the new cards use existing tokens and patterns but were
   not measured on a device or simulator; no new color pairs were introduced.
 - Older "Finish later" closings (routine-a) still appear in the follow-up queue until resumed; new visits use drafts.
+- An open finalized record edited so that it breaks its rules (a needed field cleared, a bad number) is not
+  autosaved; leaving the form then keeps the stored version, without asking.
+- `Managers/Agenda/AppointmentRecordsReader` uses Screens support types (`AppointmentRecords`,
+  `ClientTimelineBuilder`), like the existing `PreVisitReader`: an upward dependency to clean up together.
+- A field narrowed to services that are all switched off or deleted is asked at every service again (and the
+  template shows it that way); saving its services sheet then drops the missing ids.
+
+## Second review (stages 4–5) applied
+Lint: trailing newlines, a 6-parameter function, six type bodies over 250 lines (members moved to same-file
+extensions), a committed `__pycache__` (now ignored). Logic: open finalized records keep their rules on autosave,
+fields of switched-off services, the previous visit is the last one *before* the appointment, technique chips
+select and unselect, "Before you start" shows a result only when one was written, `recordMarks()` reads only the
+clear part (no decryption on every change), walk-in clients are not "New", saved-option chips use the list's own
+duplicate rule, the consent visit picker lists finalized visits only and keeps an old link visible, the add-option
+title wraps instead of being cut in the navigation bar.

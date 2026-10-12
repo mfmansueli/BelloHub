@@ -198,7 +198,9 @@ struct VisitFormStepView: View {
                 hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key),
                 choices: viewModel.choices(for: field),
                 textSuggestions: field.role == .technique ? viewModel.techniqueSuggestions : [],
-                onAddOption: addOption(for: field)
+                onAddOption: addOption(for: field),
+                onRemoveOption: field.role == .technique
+                    ? { viewModel.removeTechnique($0, fieldKey: field.key) } : nil
             )
             if field.isRequired, !viewModel.isFinalized { requiredNote(field) }
         }

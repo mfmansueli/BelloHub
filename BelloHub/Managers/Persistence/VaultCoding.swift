@@ -43,6 +43,12 @@ enum VaultCoding {
         return (plain, sensitive)
     }
 
+    /// Reads a part of a stored value from its clear JSON only, without opening the sealed part (lists that need
+    /// links and states, never clinical text). `Part` must decode only keys that are not sensitive.
+    static func plainPart<Part: Decodable>(_ type: Part.Type, from plain: Data) throws -> Part {
+        try makeDecoder().decode(type, from: plain)
+    }
+
     /// The inverse of `split`.
     static func merge<Value: VaultStorable>(_ type: Value.Type, plain: Data, sensitive: Data?) throws -> Value {
         guard let sensitive else { return try makeDecoder().decode(type, from: plain) }

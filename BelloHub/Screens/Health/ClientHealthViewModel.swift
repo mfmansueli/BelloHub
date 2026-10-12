@@ -95,7 +95,9 @@ final class ClientHealthViewModel {
             patchTests = try await repository.patchTests(for: clientID)
             templates = try await repository.healthFormTemplates()
             // A visit list that cannot be read only costs the optional link, never the screen.
+            // Finalized visits only: a draft may still be discarded, which would leave the document pointing nowhere.
             visits = ((try? await records?.records(for: clientID)) ?? [])
+                .filter { !$0.isDraft }
                 .sorted { ($0.performedAt ?? $0.createdAt) > ($1.performedAt ?? $1.createdAt) }
             client = loadedClient
             catalog = loadedCatalog

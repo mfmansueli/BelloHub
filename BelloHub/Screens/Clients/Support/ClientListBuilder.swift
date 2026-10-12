@@ -28,10 +28,11 @@ enum ClientListBuilder {
                 clients: [client], appointments: own, services: services, now: now, calendar: calendar
             ).isEmpty
             winBack += FollowUpPlanner.winBack(clients: [client], appointments: own, now: now, calendar: calendar)
+            let walkIns = walkInsByClient[client.id] ?? []
+            // A client seen only as a walk-in has been seen: she is not "New".
             entries.append(ClientListEntry(
-                client: client, habits: habits,
-                summary: .make(appointments: own, walkIns: walkInsByClient[client.id] ?? [], now: now),
-                isDueToReturn: isDue, isNew: habits.visits == 0
+                client: client, habits: habits, summary: .make(appointments: own, walkIns: walkIns, now: now),
+                isDueToReturn: isDue, isNew: habits.visits == 0 && walkIns.isEmpty
             ))
         }
         return ClientList(

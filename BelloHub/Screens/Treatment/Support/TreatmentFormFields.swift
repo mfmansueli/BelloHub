@@ -28,14 +28,14 @@ enum TreatmentFormFields {
     /// is nothing to call it); a field she added always has her own name.
     static func resolve(
         template: RecordTemplate?, professions: [ProfessionID], catalog: ProfessionCatalog, notesName: String,
-        serviceID: UUID? = nil
+        serviceID: UUID? = nil, existingServiceIDs: Set<UUID>? = nil
     ) -> [TreatmentFormField] {
         var fields = [TreatmentFormField(key: TreatmentFormField.notesKey, name: notesName, input: .text, role: .notes)]
         var seenKeys: Set<String> = [TreatmentFormField.notesKey]
         var claimedRoles: Set<String> = []
         for profession in professions {
             for setting in template?.fields(for: profession) ?? []
-            where setting.isOn && setting.applies(toService: serviceID) {
+            where setting.isOn && setting.applies(toService: serviceID, existing: existingServiceIDs) {
                 guard seenKeys.insert(setting.key).inserted,
                       let name = name(of: setting, in: catalog) else { continue }
                 var role = role(forKey: setting.key)
