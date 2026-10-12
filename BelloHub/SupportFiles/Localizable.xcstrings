@@ -72709,6 +72709,96 @@
         }
       }
     },
+    "consent.title.editForm" : {
+      "comment" : "Title of the record sheet when it edits a health form record (D60)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استمارة صحية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gesundheitsfragebogen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health form"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Health form"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fiche santé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "स्वास्थ्य फ़ॉर्म"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Formulir kesehatan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scheda sanitaria"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de saúde"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de saúde"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sağlık formu"
+          }
+        }
+      }
+    },
     "consent.title.new" : {
       "comment" : "Title of the consent sheet for a new record.",
       "extractionState" : "manual",
@@ -72795,6 +72885,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Yeni onay"
+          }
+        }
+      }
+    },
+    "consent.title.newForm" : {
+      "comment" : "Title of the record sheet when it records a new health form (D60)",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استمارة صحية جديدة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Neuer Gesundheitsfragebogen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New health form"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "New health form"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nueva ficha de salud"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nueva ficha de salud"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nueva ficha de salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nouvelle fiche santé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नया स्वास्थ्य फ़ॉर्म"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Formulir kesehatan baru"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nuova scheda sanitaria"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nova ficha de saúde"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nova ficha de saúde"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Yeni sağlık formu"
           }
         }
       }
@@ -94501,6 +94681,96 @@
         }
       }
     },
+    "health.consent.healthForm" : {
+      "comment" : "Kind of a record of a paper signed in person: her own health questionnaire (D60). Chip and row title",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استمارة صحية"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gesundheitsfragebogen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health form"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Health form"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de salud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fiche santé"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "स्वास्थ्य फ़ॉर्म"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Formulir kesehatan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scheda sanitaria"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de saúde"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ficha de saúde"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sağlık formu"
+          }
+        }
+      }
+    },
     "health.consent.notedOn" : {
       "comment" : "Line under an unsigned consent record. %@ is the day the note was made.",
       "extractionState" : "manual",
@@ -95221,186 +95491,6 @@
         }
       }
     },
-    "health.empty.message" : {
-      "comment" : "Empty state of 4.5: explains the professional-filled path",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "تُملأ الاستمارة معًا أثناء الزيارة. تُختم الإجابات وتبقى على جهاز iPhone الخاص بك."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Füllt ihn beim Termin gemeinsam aus. Die Antworten werden versiegelt und bleiben auf deinem iPhone."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fill it in together at the visit. The answers are sealed and stay on your iPhone."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fill it in together at the visit. The answers are sealed and stay on your iPhone."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se rellena en conjunto durante la visita. Las respuestas quedan selladas en tu iPhone."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se llena en conjunto durante la visita. Las respuestas quedan selladas en tu iPhone."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Se llena en conjunto durante la visita. Las respuestas quedan selladas en tu iPhone."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Elle se remplit ensemble pendant la visite. Les réponses sont scellées et restent sur votre iPhone."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "विज़िट के दौरान साथ मिलकर भरें। जवाब सील होकर आपके iPhone पर ही रहते हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Isi bersama saat kunjungan. Jawaban disegel dan tetap berada di iPhone kamu."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Si compila insieme durante la visita. Le risposte vengono sigillate e restano sul tuo iPhone."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A ficha é preenchida junto durante a visita. As respostas ficam seladas no seu iPhone."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "A ficha é preenchida em conjunto durante a visita. As respostas ficam seladas no seu iPhone."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ziyaret sırasında birlikte doldurulur. Yanıtlar mühürlenir ve iPhone'unuzda kalır."
-          }
-        }
-      }
-    },
-    "health.empty.title" : {
-      "comment" : "Empty state of 4.5: no health form for this person yet",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لا توجد استمارة صحية بعد"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Noch kein Gesundheitsfragebogen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No health form yet"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "No health form yet"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Todavía no hay ficha de salud"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aún no hay ficha de salud"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aún no hay ficha de salud"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pas encore de fiche santé"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "अभी कोई स्वास्थ्य फ़ॉर्म नहीं"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Belum ada formulir kesehatan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nessuna scheda sanitaria"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nenhuma ficha de saúde ainda"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ainda sem ficha de saúde"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Henüz sağlık formu yok"
-          }
-        }
-      }
-    },
     "health.error.load" : {
       "comment" : "Error state of 4.5",
       "extractionState" : "manual",
@@ -95581,182 +95671,272 @@
         }
       }
     },
-    "health.fill.again" : {
-      "comment" : "Button: fill the health form again (a form already exists)",
+    "health.forms.add" : {
+      "comment" : "Row button of the health forms folder: adds a record of a health form signed in person",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ملء الاستمارة مرة أخرى"
+            "value" : "إضافة استمارة صحية"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fragebogen erneut ausfüllen"
+            "value" : "Gesundheitsfragebogen hinzufügen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill in the form again"
+            "value" : "Add health form"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fill in the form again"
+            "value" : "Add health form"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rellenar la ficha de nuevo"
+            "value" : "Añadir ficha de salud"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llenar la ficha de nuevo"
+            "value" : "Añadir ficha de salud"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llenar la ficha de nuevo"
+            "value" : "Añadir ficha de salud"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Remplir à nouveau la fiche"
+            "value" : "Ajouter une fiche santé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "फ़ॉर्म दोबारा भरें"
+            "value" : "स्वास्थ्य फ़ॉर्म जोड़ें"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isi formulir lagi"
+            "value" : "Tambah formulir kesehatan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compila di nuovo la scheda"
+            "value" : "Aggiungi scheda sanitaria"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencher a ficha de novo"
+            "value" : "Adicionar ficha de saúde"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencher a ficha novamente"
+            "value" : "Adicionar ficha de saúde"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formu yeniden doldur"
+            "value" : "Sağlık formu ekle"
           }
         }
       }
     },
-    "health.fill.first" : {
-      "comment" : "Button: the professional fills the health form (no form yet)",
+    "health.forms.empty" : {
+      "comment" : "Empty health forms folder of 4.5 (D60): the app asks no health question; she keeps her own signed form",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "ملء الاستمارة"
+            "value" : "لا توجد استمارات صحية محفوظة بعد. استخدمي استمارتك الخاصة أثناء الموعد، ووقّعيها معها، واحفظي هنا صورة أو ملفًا منها."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fragebogen ausfüllen"
+            "value" : "Noch kein Gesundheitsfragebogen abgelegt. Nutze beim Termin deinen eigenen Fragebogen, lass ihn unterschreiben und lege hier ein Foto oder eine Datei davon ab."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fill in the form"
+            "value" : "No health form kept yet. Use your own form at the visit, sign it with her and keep a photo or file of it here."
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Fill in the form"
+            "value" : "No health form kept yet. Use your own form at the visit, sign it with her and keep a photo or file of it here."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Rellenar la ficha"
+            "value" : "Aún no hay fichas de salud guardadas. Usa tu propia ficha en la cita, fírmala con ella y guarda aquí una foto o un archivo."
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llenar la ficha"
+            "value" : "Aún no hay fichas de salud guardadas. Usa tu propia ficha en la cita, fírmala con ella y guarda aquí una foto o un archivo."
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Llenar la ficha"
+            "value" : "Aún no hay fichas de salud guardadas. Usa tu propia ficha en la cita, fírmala con ella y guarda aquí una foto o un archivo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Remplir la fiche"
+            "value" : "Aucune fiche santé conservée. Utilisez votre propre fiche pendant le rendez-vous, signez-la avec elle et gardez-en ici une photo ou un fichier."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "फ़ॉर्म भरें"
+            "value" : "अभी कोई स्वास्थ्य फ़ॉर्म सहेजा नहीं गया। विज़िट पर अपना फ़ॉर्म इस्तेमाल करें, उनके साथ हस्ताक्षर करें और उसकी फ़ोटो या फ़ाइल यहाँ रखें।"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Isi formulir"
+            "value" : "Belum ada formulir kesehatan yang disimpan. Gunakan formulir milikmu saat kunjungan, tanda tangani bersamanya, lalu simpan foto atau filenya di sini."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Compila la scheda"
+            "value" : "Nessuna scheda sanitaria conservata. Usa la tua scheda all’appuntamento, firmatela insieme e conserva qui una foto o un file."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencher a ficha"
+            "value" : "Nenhuma ficha de saúde guardada ainda. Use a sua própria ficha no atendimento, assine com ela e guarde aqui uma foto ou arquivo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Preencher a ficha"
+            "value" : "Ainda sem fichas de saúde guardadas. Use a sua própria ficha no atendimento, assine com ela e guarde aqui uma foto ou ficheiro."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Formu doldur"
+            "value" : "Henüz saklanan sağlık formu yok. Randevuda kendi formunuzu kullanın, birlikte imzalayın ve fotoğrafını ya da dosyasını burada saklayın."
+          }
+        }
+      }
+    },
+    "health.forms.footnote" : {
+      "comment" : "Footnote under the health forms folder (D60): her own forms, no health question in the app, sealed on the iPhone",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "استماراتك الخاصة، تُملأ وتُوقَّع معها شخصيًا. لا يطرح التطبيق أي أسئلة صحية، وما تحفظينه هنا لا يغادر هذا الـ iPhone أبدًا."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Deine eigenen Fragebögen, beim Termin persönlich ausgefüllt und unterschrieben. Die App stellt keine Gesundheitsfragen; was du hier ablegst, verlässt dieses iPhone nie."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your own forms, filled in and signed with her in person. The app asks no health questions; what you keep here never leaves this iPhone."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your own forms, filled in and signed with her in person. The app asks no health questions; what you keep here never leaves this iPhone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus propias fichas, rellenadas y firmadas con ella en persona. La app no hace preguntas de salud; lo que guardas aquí nunca sale de este iPhone."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus propias fichas, llenadas y firmadas con ella en persona. La app no hace preguntas de salud; lo que guardas aquí nunca sale de este iPhone."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tus propias fichas, llenadas y firmadas con ella en persona. La app no hace preguntas de salud; lo que guardas aquí nunca sale de este iPhone."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Vos propres fiches, remplies et signées avec elle en personne. L’app ne pose aucune question de santé ; ce que vous gardez ici ne quitte jamais cet iPhone."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपके अपने फ़ॉर्म, उनके साथ आमने-सामने भरे और साइन किए गए। ऐप स्वास्थ्य से जुड़े सवाल नहीं पूछता; जो आप यहाँ रखते हैं, वह इस iPhone से बाहर नहीं जाता।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Formulir milikmu sendiri, diisi dan ditandatangani bersamanya secara langsung. Aplikasi tidak menanyakan soal kesehatan; yang kamu simpan di sini tidak pernah keluar dari iPhone ini."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le tue schede, compilate e firmate di persona all’appuntamento. L’app non fa domande sulla salute; ciò che conservi qui non lascia mai questo iPhone."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suas próprias fichas, preenchidas e assinadas com ela pessoalmente. O app não faz perguntas de saúde; o que você guarda aqui nunca sai deste iPhone."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "As suas próprias fichas, preenchidas e assinadas com ela presencialmente. A app não faz perguntas de saúde; o que guarda aqui nunca sai deste iPhone."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Kendi formlarınız, randevuda yüz yüze doldurulup imzalanır. Uygulama sağlık sorusu sormaz; burada sakladıklarınız bu iPhone’dan hiç çıkmaz."
           }
         }
       }
@@ -98203,6 +98383,96 @@
         }
       }
     },
+    "health.section.answers" : {
+      "comment" : "Section header of 4.5: answers of a health form recorded in the app before D60 or sent from the booking page, read-only",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إجابات مسجّلة في التطبيق"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "In der App erfasste Antworten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers recorded in the app"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Answers recorded in the app"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Respuestas registradas en la app"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Respuestas registradas en la app"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Respuestas registradas en la app"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Réponses enregistrées dans l’app"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऐप में दर्ज जवाब"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jawaban yang dicatat di aplikasi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Risposte registrate nell’app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Respostas registradas no app"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Respostas registadas na app"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Uygulamada kaydedilen yanıtlar"
+          }
+        }
+      }
+    },
     "health.section.consent" : {
       "comment" : "Section title: the consent records the professional keeps (D55).",
       "extractionState" : "manual",
@@ -98293,92 +98563,92 @@
         }
       }
     },
-    "health.section.history" : {
-      "comment" : "Section title: the answers of the health form",
+    "health.section.forms" : {
+      "comment" : "Section header of 4.5: the folder of the health forms she keeps (D60)",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "التاريخ الصحي"
+            "value" : "الاستمارات الصحية"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Gesundheitsanamnese"
+            "value" : "Gesundheitsfragebögen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Health history"
+            "value" : "Health forms"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Health history"
+            "value" : "Health forms"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Historial de salud"
+            "value" : "Fichas de salud"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Historial de salud"
+            "value" : "Fichas de salud"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Historial de salud"
+            "value" : "Fichas de salud"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Antécédents de santé"
+            "value" : "Fiches santé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "स्वास्थ्य इतिहास"
+            "value" : "स्वास्थ्य फ़ॉर्म"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Riwayat kesehatan"
+            "value" : "Formulir kesehatan"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Anamnesi"
+            "value" : "Schede sanitarie"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Histórico de saúde"
+            "value" : "Fichas de saúde"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Historial de saúde"
+            "value" : "Fichas de saúde"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Sağlık geçmişi"
+            "value" : "Sağlık formları"
           }
         }
       }
@@ -98563,366 +98833,6 @@
         }
       }
     },
-    "healthForm.fullName.prompt" : {
-      "comment" : "Placeholder of a full-name field",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "الاسم الكامل"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vollständiger Name"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Full name"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Full name"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre completo"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre completo"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nombre completo"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nom complet"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "पूरा नाम"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nama lengkap"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome e cognome"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome completo"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nome completo"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ad soyad"
-          }
-        }
-      }
-    },
-    "healthForm.incomplete" : {
-      "comment" : "Hint while Save is off.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "أجيبي عن كل الأسئلة للحفظ. الملاحظة اختيارية."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Beantworte alle Fragen, um zu speichern. Die Notiz ist optional."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Answer every question to save. A note is optional."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Answer every question to save. A note is optional."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responde todas las preguntas para guardar. La nota es opcional."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Répondez à toutes les questions pour enregistrer. La note est facultative."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "सहेजने के लिए सभी प्रश्नों के उत्तर दें। नोट वैकल्पिक है।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Jawab semua pertanyaan untuk menyimpan. Catatan bersifat opsional."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Rispondi a tutte le domande per salvare. La nota è facoltativa."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responda todas as perguntas para salvar. A observação é opcional."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Responda a todas as perguntas para guardar. A nota é opcional."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kaydetmek için tüm soruları yanıtlayın. Not isteğe bağlıdır."
-          }
-        }
-      }
-    },
-    "healthForm.minor.hint" : {
-      "comment" : "Hint under the minor switch (D17, D55).",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اكتبي اسم القاصر. يجيب أحد الوالدين أو ولي الأمر نيابةً عنه؛ وتجمعين الموافقة شخصيًا."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Trag den Namen der minderjährigen Person ein. Ein Elternteil oder eine erziehungsberechtigte Person antwortet für sie; die Einwilligung holst du persönlich ein."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Write the young person’s name. A parent or guardian answers for them; their consent is yours to collect in person."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Write the young person’s name. A parent or guardian answers for them; their consent is yours to collect in person."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escribe el nombre del menor. Un tutor responde por él; el consentimiento lo recoges en persona."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Indiquez le nom du mineur. Un parent ou tuteur répond pour lui ; vous recueillez le consentement en personne."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "नाबालिग का नाम लिखें। माता-पिता या अभिभावक उसके लिए उत्तर देते हैं; सहमति आप व्यक्तिगत रूप से लेती हैं।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tulis nama anak tersebut. Orang tua atau wali menjawab untuknya; persetujuannya kamu kumpulkan secara langsung."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scrivi il nome del minore. Un genitore o tutore risponde per lui; il consenso lo raccogli di persona."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escreva o nome do menor. Um responsável responde por ele; o consentimento você recolhe pessoalmente."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Escreva o nome do menor. Um encarregado responde por ele; o consentimento recolhe-o pessoalmente."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Reşit olmayan kişinin adını yazın. Bir ebeveyn veya veli onun adına yanıtlar; onayı siz bizzat alırsınız."
-          }
-        }
-      }
-    },
-    "healthForm.minor.question" : {
-      "comment" : "Question: is this visit for someone under 18 (D17)",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "هل هذه الزيارة لشخص دون 18 عامًا؟"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gilt dieser Termin für eine Person unter 18?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Is this visit for someone under 18?"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Is this visit for someone under 18?"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Esta visita es para una persona menor de 18 años?"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Esta visita es para una persona menor de 18 años?"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "¿Esta visita es para una persona menor de 18 años?"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cette visite concerne-t-elle une personne de moins de 18 ans ?"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "क्या यह विज़िट 18 वर्ष से कम उम्र के व्यक्ति के लिए है?"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Apakah kunjungan ini untuk orang di bawah 18 tahun?"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Questa visita è per una persona minorenne?"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Esta visita é para menor de 18 anos?"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Esta visita é para alguém com menos de 18 anos?"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu ziyaret 18 yaşından küçük biri için mi?"
-          }
-        }
-      }
-    },
     "healthForm.optional" : {
       "comment" : "Placeholder of an optional free-text answer",
       "extractionState" : "manual",
@@ -99009,276 +98919,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "İsteğe bağlı"
-          }
-        }
-      }
-    },
-    "healthForm.save" : {
-      "comment" : "Primary button of the health form sheet.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "حفظ الإجابات"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Antworten speichern"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Save answers"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Save answers"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar respuestas"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar respuestas"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar respuestas"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Enregistrer les réponses"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "उत्तर सहेजें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Simpan jawaban"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Salva risposte"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Salvar respostas"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Guardar respostas"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Yanıtları kaydet"
-          }
-        }
-      }
-    },
-    "healthForm.subtitle" : {
-      "comment" : "Subtitle of the health form sheet.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اطرحي الأسئلة واحفظي الإجابات. تُوقَّع أي موافقة معك خارج التطبيق."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Stell die Fragen und speichere die Antworten. Einwilligungen werden bei dir unterschrieben, außerhalb der App."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ask the questions and save the answers. Any consent is signed with you, outside the app."
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ask the questions and save the answers. Any consent is signed with you, outside the app."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Haz las preguntas y guarda las respuestas. Cualquier consentimiento se firma contigo, fuera de la app."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Posez les questions et enregistrez les réponses. Tout consentement se signe avec vous, hors de l’app."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "प्रश्न पूछें और उत्तर सहेजें। कोई भी सहमति आपके साथ, ऐप के बाहर हस्ताक्षरित होती है।"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ajukan pertanyaan dan simpan jawabannya. Persetujuan apa pun ditandatangani bersama kamu, di luar aplikasi."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fai le domande e salva le risposte. Ogni consenso si firma con te, fuori dall’app."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Faça as perguntas e salve as respostas. Qualquer consentimento é assinado com você, fora do app."
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Faça as perguntas e guarde as respostas. Qualquer consentimento é assinado consigo, fora da app."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Soruları sorun ve yanıtları kaydedin. Onaylar sizinle, uygulama dışında imzalanır."
-          }
-        }
-      }
-    },
-    "healthForm.title" : {
-      "comment" : "Sheet title: the professional fills the health form with the client",
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "استمارة صحية"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gesundheitsfragebogen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Health form"
-          }
-        },
-        "en-GB" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Health form"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ficha de salud"
-          }
-        },
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ficha de salud"
-          }
-        },
-        "es-MX" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ficha de salud"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fiche santé"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "स्वास्थ्य फ़ॉर्म"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Formulir kesehatan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Scheda sanitaria"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ficha de saúde"
-          }
-        },
-        "pt-PT" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ficha de saúde"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sağlık formu"
           }
         }
       }

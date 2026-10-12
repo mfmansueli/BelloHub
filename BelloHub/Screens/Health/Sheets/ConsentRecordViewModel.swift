@@ -39,6 +39,7 @@ final class ConsentRecordViewModel: Identifiable {
     init(
         clientID: UUID,
         existing: ConsentRecord? = nil,
+        kind: ConsentKind = .treatment,
         repository: any HealthRepository,
         visits: [TreatmentRecord] = [],
         photos: any PhotoProcessing = ImageIOPhotoProcessing(),
@@ -55,7 +56,7 @@ final class ConsentRecordViewModel: Identifiable {
         self.now = now
         self.recordID = existing?.id ?? makeID()
         self.draft = existing.map { ConsentRecordRules.draft(from: $0, now: now()) }
-            ?? ConsentRecordDraft(signedAt: now())
+            ?? ConsentRecordDraft(kind: kind, signedAt: now())
     }
 
     // MARK: - What the sheet shows

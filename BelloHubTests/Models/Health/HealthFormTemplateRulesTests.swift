@@ -233,4 +233,17 @@ struct HealthFormTemplateRulesTests {
         #expect(HealthFormTemplateRules.latestForm(in: [undated, older])?.id == older.id)
         #expect(HealthFormTemplateRules.latestForm(in: []) == nil)
     }
+
+    @Test("Her health history dates from the latest signed paper form or answered form, whichever is later (D60)")
+    func lastHealthFormDate() {
+        let answered = makeHealthForm(signedAt: TestClock.days(-400))
+        let paper = makeConsentRecord(kind: .healthForm, daysAgo: 20)
+        let unsignedPaper = makeConsentRecord(kind: .healthForm, isSigned: false, daysAgo: 2)
+        let consent = makeConsentRecord(kind: .treatment, daysAgo: 1)
+
+        #expect(HealthFormTemplateRules.lastHealthFormDate(forms: [answered], records: [paper]) == TestClock.days(-20))
+        #expect(HealthFormTemplateRules.lastHealthFormDate(forms: [answered], records: [unsignedPaper, consent])
+            == TestClock.days(-400))
+        #expect(HealthFormTemplateRules.lastHealthFormDate(forms: [], records: [consent]) == nil)
+    }
 }

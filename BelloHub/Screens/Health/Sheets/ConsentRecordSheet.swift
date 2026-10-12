@@ -6,8 +6,8 @@
 import PhotosUI
 import SwiftUI
 
-/// The sheet that records a consent (D55): what it is about, her own label, signed or not and when, a note, and an
-/// optional photo or file of the real signed paper. Editing an existing record also offers to delete it. Sealed in
+/// The sheet that records a paper signed in person, a consent (D55) or her own health form (D60): what it is about,
+/// her own label, signed or not and when, a note, and an optional photo or file of the real signed paper. Editing an existing record also offers to delete it. Sealed in
 /// the vault when she saves; the paper itself stays with her.
 struct ConsentRecordSheet: View {
     @Bindable var viewModel: ConsentRecordViewModel
@@ -20,7 +20,7 @@ struct ConsentRecordSheet: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 SheetHeader(
-                    title: viewModel.isEditing ? "consent.title.edit" : "consent.title.new",
+                    title: title,
                     subtitle: "consent.subtitle", closeLabel: "common.close",
                     closeIdentifier: "consent.closeButton", onClose: { dismiss() }
                 )
@@ -69,6 +69,16 @@ struct ConsentRecordSheet: View {
     }
 
     // MARK: - Parts
+
+    /// Follows the kind she has chosen, so a health form never reads "New consent".
+    private var title: LocalizedStringKey {
+        switch (viewModel.draft.kind == .healthForm, viewModel.isEditing) {
+        case (true, false): "consent.title.newForm"
+        case (true, true): "consent.title.editForm"
+        case (false, false): "consent.title.new"
+        case (false, true): "consent.title.edit"
+        }
+    }
 
     private var kindChips: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {

@@ -5,8 +5,9 @@
 
 import SwiftUI
 
-/// The body of 4.5: the answers of the latest health form, the consent records and the patch test log, with the
-/// loading, empty and error states, and the three sheets. Everything on it is private to the professional.
+/// The body of 4.5, a folder (D60): the health forms and the consents she filled in and signed with the client in
+/// person, the answers recorded in the app before D60 (read-only, only when there are some) and the patch test log,
+/// with the loading and error states and the two sheets. Everything on it is private to the professional.
 struct ClientHealthContentView: View {
     @State private var viewModel: ClientHealthViewModel
 
@@ -37,9 +38,6 @@ struct ClientHealthContentView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.load() }
         .refreshable { await viewModel.load() }
-        .sheet(item: $model.fillSheet, onDismiss: viewModel.reload) { sheet in
-            HealthFormSheet(viewModel: sheet)
-        }
         .sheet(item: $model.patchSheet, onDismiss: viewModel.reload) { sheet in
             PatchTestSheet(viewModel: sheet)
         }
@@ -56,12 +54,12 @@ struct ClientHealthContentView: View {
             if viewModel.errorMessage != nil { errorState } else { loadingState }
         } else {
             if viewModel.errorMessage != nil { errorNotice }
-            historySection
+            formsSection
+            if let form = viewModel.latestForm { answersSection(form) }
             consentSection
             PatchTestCard(
                 patchTests: viewModel.patchTests, formatters: viewModel.formatters, onRecord: viewModel.startPatchTest
             )
-            if viewModel.latestForm != nil { fillAgainButton }
         }
     }
 
@@ -102,39 +100,34 @@ struct ClientHealthContentView: View {
 
     // MARK: - Sections
 
-    private var historySection: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            SectionHeader(title: "health.section.history")
-            if let form = viewModel.latestForm {
-                HealthHistoryCard(viewModel: viewModel, form: form)
-            } else {
-                emptyHistory
+    /// Her own health questionnaires, signed with the client in person: a photo or file of each, the date, and when
+    /// to ask again. The app asks no health question itself (D60).
+    private var formsSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            ConsentsCard(
+                folder: .healthForms, consents: viewModel.healthForms, formatters: viewModel.formatters,
+                onOpen: viewModel.open, onAdd: viewModel.startHealthForm
+            )
+            if viewModel.reviewStatus != nil {
+                HealthReviewLine(
+                    months: viewModel.reviewMonths, status: viewModel.reviewStatus, formatters: viewModel.formatters
+                )
             }
         }
     }
 
-    /// No form yet: explains why and offers the professional-filled path (the client's own form needs the booking
-    /// link, which arrives with the server).
-    private var emptyHistory: some View {
-        VStack(spacing: Spacing.sm) {
-            EmptyState(icon: .document, title: "health.empty.title", message: "health.empty.message")
-            Button { viewModel.startFilling() } label: { Text("health.fill.first") }
-                .buttonStyle(.belloPrimary)
-                .accessibilityIdentifier("health.fillButton")
+    /// Answers recorded in the app before D60, or sent from the booking page: kept and readable, never asked again.
+    private func answersSection(_ form: HealthForm) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            SectionHeader(title: "health.section.answers")
+            HealthHistoryCard(viewModel: viewModel, form: form)
         }
     }
 
     private var consentSection: some View {
         ConsentsCard(
-            consents: viewModel.consents, formatters: viewModel.formatters, onOpen: viewModel.open,
-            onAdd: viewModel.startConsent
+            consents: viewModel.otherConsents, formatters: viewModel.formatters, onOpen: viewModel.open,
+            onAdd: { viewModel.startConsent() }
         )
-    }
-
-    private var fillAgainButton: some View {
-        Button { viewModel.startFilling() } label: { Text("health.fill.again") }
-            .buttonStyle(.belloSecondary)
-            .padding(.top, Spacing.sm)
-            .accessibilityIdentifier("health.fillButton")
     }
 }

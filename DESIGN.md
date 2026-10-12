@@ -254,7 +254,7 @@ Home's two starts, "New booking" and "Register visit", sit side by side under th
 | 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
 | 4.3 ClientEdit (+ merge sheet) | `Clients/Form/ClientEditView`, `ClientMergeSheet` | `ClientFormViewModel`, `ClientMergeViewModel` | `clientEdit.*`, `clientMerge.*` |
 | 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
-| 4.5 ClientHealth "Health and consents" (+ health form, patch test, consent record sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `healthForm.*`, `patch.*`, `consent.*` (D55) |
+| 4.5 ClientHealth "Health and consents", a folder (+ patch test and record sheets; the record sheet keeps health forms and consents) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `patch.*`, `consent.*` (D55, D60) |
 | 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
 | 6.1 Services (+ 6.2 ServiceEdit sheet, 6.3 AddOns pushed) | `Screens/Services/ServicesView` -> `ServicesContentView`, `AddOns/` | `ServicesViewModel`, `AddOnsViewModel` | `services.*`, `serviceEditor.*`, `addOns.*` |
 | 6.4 Products | `Screens/Products/ProductsView` | `ProductsViewModel` | `products.*` |
@@ -404,6 +404,17 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **7.10 Help**: six questions as rows, "Write to support" and "Send feedback" as `mailto:` links; no chat.
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
+
+### Changes from D60 (health forms are her own papers too)
+
+- **4.5** is a folder. First section "Health forms": the same list card as the consents (label or "Health form",
+  Signed / Not signed chip, date, "Photo kept"), an "Add health form" row, a footnote that the app asks no health
+  question and nothing leaves the iPhone, and under it "Review every 12 months" with the review chip, counted from the
+  last signed health form. The empty folder says to use her own form, sign it with the client and keep a photo or file.
+  The in-app questionnaire and its "Fill in the form" button are gone. Answers recorded in the app before D60, or sent
+  from the booking page, show read-only under "Answers recorded in the app". Then "Consents" (every kind but health
+  form) and the patch test log. The record sheet adds the "Health form" kind first and reads "New health form" /
+  "Health form" for it.
 
 ### Changes from D55 (consents are the professional's own business)
 

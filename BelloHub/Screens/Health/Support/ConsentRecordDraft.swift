@@ -18,7 +18,8 @@ struct ConsentRecordDraft: Equatable, Sendable {
     /// The visit the document belongs to, if she tied it to one.
     var recordID: UUID?
 
-    init(signedAt: Date) {
+    init(kind: ConsentKind = .treatment, signedAt: Date) {
+        self.kind = kind
         self.signedAt = signedAt
     }
 }

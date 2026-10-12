@@ -5,8 +5,9 @@
 
 import SwiftUI
 
-/// The answers of the latest health form, who gave them and when, and where the review stands. For a form filled in
-/// for someone under 18 it says so, with the young person's name (D17).
+/// The answers of the latest health form answered in the app before D60, or sent from the booking page, and who gave
+/// them and when. Read-only: new health forms are her own papers, kept in the folder above. For a form filled in for
+/// someone under 18 it says so, with the young person's name (D17).
 struct HealthHistoryCard: View {
     let viewModel: ClientHealthViewModel
     let form: HealthForm
@@ -38,53 +39,12 @@ struct HealthHistoryCard: View {
     // MARK: - Footer
 
     private var footer: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text(verbatim: reportedByLine).font(Typography.footnote).foregroundStyle(Palette.ink2)
-            Text(reviewEveryResource.localized(in: locale)).font(Typography.footnote).foregroundStyle(Palette.ink2)
-            reviewStatusLine
-        }
-        .padding(Spacing.md)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .accessibilityElement(children: .combine)
-        .accessibilityIdentifier("health.review")
-    }
-
-    private var reviewEveryResource: LocalizedStringResource {
-        let months = viewModel.reviewMonths
-        return LocalizedStringResource("health.review.every", defaultValue: "Review every \(months) months")
-    }
-
-    @ViewBuilder
-    private var reviewStatusLine: some View {
-        let formatters = viewModel.formatters
-        switch viewModel.reviewStatus {
-        case .current(let dueAt)?:
-            statusRow(
-                chip: StatusChip(label: "health.review.upToDate", style: StatusPalette.confirmed),
-                note: LocalizedStringResource(
-                    "health.review.nextOn", defaultValue: "Next review on \(formatters.shortDate(dueAt))"
-                )
-            )
-        case .due(let dueAt)?:
-            statusRow(
-                chip: StatusChip(label: "health.review.due", style: StatusPalette.attention),
-                note: LocalizedStringResource(
-                    "health.review.wasDueOn", defaultValue: "Was due on \(formatters.shortDate(dueAt))"
-                )
-            )
-        case .undated?:
-            Text("health.review.undated").font(Typography.footnote).foregroundStyle(Palette.ink2)
-        case nil:
-            EmptyView()
-        }
-    }
-
-    /// The chip and the date beside it; at accessibility sizes they stack.
-    private func statusRow(chip: StatusChip, note: LocalizedStringResource) -> some View {
-        FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.xs) {
-            chip
-            Text(note.localized(in: locale)).font(Typography.footnote).foregroundStyle(Palette.ink2)
-        }
+        Text(verbatim: reportedByLine)
+            .font(Typography.footnote)
+            .foregroundStyle(Palette.ink2)
+            .padding(Spacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityIdentifier("health.reportedBy")
     }
 
     /// "Reported by Ana · Sep 12", or "Filled in by you · Sep 12" when the professional filled it in herself.
