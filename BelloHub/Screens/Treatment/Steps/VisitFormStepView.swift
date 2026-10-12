@@ -48,26 +48,7 @@ struct VisitFormStepView: View {
         return ScrollView {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 VisitDetailsCard(viewModel: viewModel)
-                VisitAutosaveStatus(state: viewModel.autosave, isFinalized: viewModel.isFinalized,
-                                    formatters: viewModel.formatters, onRetry: viewModel.retryAutosave)
-                if viewModel.isLocked {
-                    InlineNotice(style: .info, title: "visitForm.locked.title", message: "visitForm.locked.message")
-                        .accessibilityIdentifier("visitForm.lockedNotice")
-                }
-                if let failure = viewModel.failure {
-                    // Only a failed save is retried; the autosave line retries it too.
-                    TreatmentFailureNotice(
-                        failure: failure, onRetry: failure == .save ? viewModel.retryAutosave : nil,
-                        onDismiss: { viewModel.failure = nil }
-                    )
-                }
-                if viewModel.heardNothing {
-                    InlineNotice(
-                        style: .info, title: "treatmentFlow.register.heardNothing.title",
-                        message: "treatmentFlow.register.heardNothing.message"
-                    )
-                    .accessibilityIdentifier("treatmentFlow.register.heardNothing")
-                }
+                notices
                 VisitPhotosSection(viewModel: viewModel)
                 if viewModel.registerOffer == .voiceAndManual, !viewModel.isLocked { dictate }
                 if let note = sections.quickNote { quickNote(note) }
@@ -85,6 +66,36 @@ struct VisitFormStepView: View {
         .scrollDismissesKeyboard(.interactively)
         .accessibilityIdentifier("treatmentFlow.form")
         .safeAreaInset(edge: .bottom) { bottomBar }
+    }
+
+    /// The status line and the notices above the fields. Kept out of `form` so the type checker resolves each
+    /// call on its own: the long builder with a method reference in a ternary was "ambiguous use of init".
+    @ViewBuilder
+    private var notices: some View {
+        VisitAutosaveStatus(
+            state: viewModel.autosave, isFinalized: viewModel.isFinalized,
+            formatters: viewModel.formatters, onRetry: { viewModel.retryAutosave() }
+        )
+        if viewModel.isLocked {
+            InlineNotice(style: .info, title: "visitForm.locked.title", message: "visitForm.locked.message")
+                .accessibilityIdentifier("visitForm.lockedNotice")
+        }
+        if let failure = viewModel.failure {
+            failureNotice(failure)
+        }
+        if viewModel.heardNothing {
+            InlineNotice(
+                style: .info, title: "treatmentFlow.register.heardNothing.title",
+                message: "treatmentFlow.register.heardNothing.message"
+            )
+            .accessibilityIdentifier("treatmentFlow.register.heardNothing")
+        }
+    }
+
+    /// Only a failed save is retried; the autosave line retries it too.
+    private func failureNotice(_ failure: TreatmentFlowViewModel.Failure) -> some View {
+        let retry: (() -> Void)? = failure == .save ? { viewModel.retryAutosave() } : nil
+        return TreatmentFailureNotice(failure: failure, onRetry: retry, onDismiss: { viewModel.failure = nil })
     }
 
     private var dictate: some View {
