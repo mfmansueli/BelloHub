@@ -6,8 +6,10 @@
 import SwiftUI
 
 /// The one plan (D33): a hero with her status, the monthly and yearly choice (the yearly highlighted with its
-/// saving), what is included, the purchase button, restore and manage. Prices are the store's `displayPrice`, never
-/// typed here. In paywall form the headline explains the limit and reminds her that nothing is lost.
+/// saving), what is included, the purchase button, restore and manage, then what App Review 3.1.2 asks next to a
+/// subscription: that it renews automatically until cancelled, and the Terms and the Privacy Policy. Prices are the
+/// store's `displayPrice`, never typed here. In paywall form the headline explains the limit and reminds her that
+/// nothing is lost.
 struct PlanContentView: View {
     @State private var viewModel: PlanViewModel
 
@@ -29,6 +31,9 @@ struct PlanContentView: View {
                 features
                 actions
                 FooterNote(text: "plan.footer", icon: .info)
+                PlanLegalSection(
+                    errorMessage: viewModel.legalErrorMessage, onOpen: viewModel.open
+                )
             }
             .padding(.horizontal, Spacing.gutter)
             .padding(.top, Spacing.md)
@@ -39,6 +44,11 @@ struct PlanContentView: View {
         // The paywall is a sheet: an inline bar, and the headline that explains the limit sits in the content.
         .navigationBarTitleDisplayMode(viewModel.mode == .paywall ? .inline : .large)
         .task { await viewModel.load() }
+        .sheet(isPresented: Binding(
+            get: { viewModel.openedNotice != nil }, set: { if !$0 { viewModel.closeLegalNotice() } }
+        )) {
+            if let notice = viewModel.openedNotice { LegalNoticeSheet(text: notice) }
+        }
     }
 
     // MARK: - Sections
@@ -75,7 +85,7 @@ struct PlanContentView: View {
             VStack(alignment: .leading, spacing: Spacing.sm) {
                 HStack(spacing: Spacing.xs) {
                     Image(icon: .star).accessibilityHidden(true)
-                    Text(verbatim: PlanProduct.groupName).font(Typography.metaStrong)
+                    Text(verbatim: PlanProducts.groupName).font(Typography.metaStrong)
                 }
                 .foregroundStyle(HeroPalette.ink2)
                 Text(heroTitle).font(Typography.title).foregroundStyle(HeroPalette.ink)

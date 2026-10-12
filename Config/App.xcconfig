@@ -28,6 +28,10 @@ BELLO_FUNCTIONS_BASE_URL = https:/$()/europe-west1-bello-hub.cloudfunctions.net
 BELLO_WEB_BASE_URL = https:/$()/bellohub.app
 // The Firestore project the inbox reads from (bookings, requests, waitlist, sealed items), with the same rules.
 BELLO_FIREBASE_PROJECT_ID = bello-hub
+// The two products of the one plan (D33, D59): the app reads them through the Info.plist (`PlanProducts`), never from a
+// Swift literal. They must match App Store Connect and Config/BelloHub.storekit.
+BELLO_PLAN_MONTHLY_PRODUCT_ID = com.bellohub.pro.monthly
+BELLO_PLAN_YEARLY_PRODUCT_ID = com.bellohub.pro.yearly
 
 // MARK: - Generated Info.plist
 

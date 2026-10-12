@@ -154,16 +154,6 @@ struct RemoteInboxRepository: InboxRepository {
         let _: DeletedAnswer = try await perform("deleteClientServerData", request)
     }
 
-    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation {
-        let request = ReserveRequest(clients: claims.map {
-            ReserveClaim(clientId: $0.clientID.uuidString.lowercased(), phone: $0.phone)
-        })
-        let answer: ReserveAnswer = try await perform("reserveRegistrations", request)
-        let allowed = answer.results.filter { $0.decision == "allowed" }.map(\.clientId)
-        let refused = answer.results.filter { $0.decision != "allowed" }.map(\.clientId)
-        return RegistrationReservation(allowed: Set(allowed), refused: Set(refused), count: answer.count)
-    }
-
     func registerDevice(fcmToken: String, locale: String?) async throws {
         let _: Acknowledged = try await perform(
             "registerDevice", RegisterDeviceRequest(fcmToken: fcmToken, platform: "ios", locale: locale)
@@ -294,23 +284,6 @@ struct RemoteInboxRepository: InboxRepository {
     private struct DeleteClientRequest: Encodable {
         let phone: String?
         let bookingIds: [String]?
-    }
-
-    private struct ReserveClaim: Encodable {
-        let clientId: String
-        let phone: String?
-    }
-
-    private struct ReserveRequest: Encodable { let clients: [ReserveClaim] }
-
-    private struct ReserveResult: Decodable {
-        let clientId: UUID
-        let decision: String
-    }
-
-    private struct ReserveAnswer: Decodable {
-        let results: [ReserveResult]
-        let count: Int
     }
 
     /// The counts per collection; the app only needs to know the call went through.

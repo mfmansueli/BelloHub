@@ -7,7 +7,8 @@ import Foundation
 import Observation
 
 /// State and actions of Plan (7.3) and of the paywall (the same screen opened as a sheet, ASSUMPTION-20): the
-/// period she picked, purchase, restore and manage, with the store's answers turned into a notice.
+/// period she picked, purchase, restore and manage, with the store's answers turned into a notice, and the Terms and the
+/// Privacy Policy to read before buying (App Review 3.1.2).
 @MainActor
 @Observable
 final class PlanViewModel {
@@ -32,12 +33,21 @@ final class PlanViewModel {
     private var hasChosen = false
     private(set) var isBusy = false
     private(set) var notice: Notice?
+    private(set) var openedNotice: LegalNoticeText?
+    private(set) var legalErrorMessage: String?
 
     private let subscription: SubscriptionService
+    private let legal: any LegalNoticeLibrary
+    private let localization: AppLocalization
 
-    init(subscription: SubscriptionService, mode: Mode) {
+    init(
+        subscription: SubscriptionService, mode: Mode, legal: any LegalNoticeLibrary = BundleLegalNoticeLibrary(),
+        localization: AppLocalization = InterfaceLocale.localization
+    ) {
         self.subscription = subscription
         self.mode = mode
+        self.legal = legal
+        self.localization = localization
         choice = PlanPresentation(offers: subscription.offers, state: subscription.state).defaultChoice
     }
 
@@ -111,6 +121,24 @@ final class PlanViewModel {
 
     func dismissNotice() {
         notice = nil
+    }
+
+    // MARK: - Legal
+
+    /// The bundled Terms or Privacy Policy in her language, in a sheet.
+    func open(_ legalNotice: LegalNotice) {
+        do {
+            openedNotice = try legal.latest(legalNotice, localization: localization)
+            legalErrorMessage = nil
+        } catch {
+            legalErrorMessage = String(interface: LocalizedStringResource(
+                "privacy.legal.error", defaultValue: "This text could not be opened right now."
+            ))
+        }
+    }
+
+    func closeLegalNotice() {
+        openedNotice = nil
     }
 
     // MARK: - Private

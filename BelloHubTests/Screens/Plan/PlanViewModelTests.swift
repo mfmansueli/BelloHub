@@ -13,7 +13,7 @@ struct PlanViewModelTests {
     private func makeViewModel(
         provider: FakeSubscriptionProvider = FakeSubscriptionProvider(), mode: PlanViewModel.Mode = .plan
     ) async -> (PlanViewModel, SubscriptionService) {
-        let service = SubscriptionService(provider: provider, verifier: FakeSubscriptionVerifier())
+        let service = makeSubscriptionService(provider: provider)
         await service.refreshState()
         let viewModel = PlanViewModel(subscription: service, mode: mode)
         await viewModel.load()

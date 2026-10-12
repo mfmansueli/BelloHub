@@ -156,8 +156,9 @@ final class OutboundQueue {
             return .bookingRequest(try await repository.respondBookingRequest(id: bookingId, approve: approve))
         case .respondRescheduleRequest(let requestId, let accept):
             return .reschedule(try await repository.respondRescheduleRequest(id: requestId, accept: accept))
-        case .reserveRegistrations(let claims):
-            return .registrations(try await repository.reserveRegistrations(claims))
+        case .reserveRegistrations:
+            // D59: the free registrations are counted on the iPhone; an old entry is dropped without calling the server.
+            return .done
         case .cancelBookingByOwner, .moveBookingByOwner, .markNoShow, .forgiveNoShow:
             try await performLinkChange(action.kind)
         default:

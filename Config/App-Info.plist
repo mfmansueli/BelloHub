@@ -28,6 +28,11 @@
 	<string>$(BELLO_WEB_BASE_URL)</string>
 	<key>BelloFirebaseProjectID</key>
 	<string>$(BELLO_FIREBASE_PROJECT_ID)</string>
+	<!-- The plan's two App Store products (D33, D59), read by PlanProducts. -->
+	<key>BelloPlanMonthlyProductID</key>
+	<string>$(BELLO_PLAN_MONTHLY_PRODUCT_ID)</string>
+	<key>BelloPlanYearlyProductID</key>
+	<string>$(BELLO_PLAN_YEARLY_PRODUCT_ID)</string>
 	<!-- No method swizzling: AppDelegate hands the APNs token and the pushes to FCM itself. -->
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>

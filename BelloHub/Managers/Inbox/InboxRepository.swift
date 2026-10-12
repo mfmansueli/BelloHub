@@ -54,10 +54,6 @@ protocol InboxRepository: Sendable {
     /// items, requests, waitlist rows, portal and contact row. At most 200 booking ids per call; idempotent.
     func deleteClientServerData(phone: String?, bookingIds: [String]) async throws
 
-    /// `reserveRegistrations` (D42): the server counts new clients, at most 200 per call, in order; idempotent per
-    /// client id and phone. The server is the authority for the count and the plan.
-    func reserveRegistrations(_ claims: [RegistrationClaim]) async throws -> RegistrationReservation
-
     func registerDevice(fcmToken: String, locale: String?) async throws
     func unregisterDevice(fcmToken: String) async throws
 }

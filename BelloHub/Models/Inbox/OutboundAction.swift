@@ -20,7 +20,8 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         case unregisterDevice(fcmToken: String)
         /// She deleted a client on the phone: the server forgets her too (D30). At most 200 booking ids per action.
         case deleteClientServerData(phone: String?, bookingIds: [String])
-        /// Clients registered while the server was away: the server counts them when it answers (D42).
+        /// Clients registered while the server was away (D42). Since D59 nothing enqueues it and the server no longer
+        /// counts for the app; it stays only so a queue saved by an older version still reads, and is dropped unsent.
         case reserveRegistrations(claims: [RegistrationClaim])
         /// She cancelled a link visit in the app (`cancelBookingByOwner`).
         case cancelBookingByOwner(bookingId: String)

@@ -7,7 +7,7 @@
 import Foundation
 import Testing
 
-@Suite("PlanSavings and PlanProduct")
+@Suite("PlanSavings and PlanProducts")
 struct PlanSavingsTests {
     @Test("Europe and the United States save about 17 percent: 149.99 against 12 x 14.99",
           arguments: [(Decimal(string: "14.99") ?? 0, Decimal(string: "149.99") ?? 0)])
@@ -39,11 +39,19 @@ struct PlanSavingsTests {
         #expect(saving == nil)
     }
 
-    @Test("The two product ids and the group are the ones of D33")
+    @Test("The product ids come from the Info.plist, fall back to D33's one by one, and map back to their period")
     func productIdentifiers() {
-        #expect(PlanProduct.monthly.rawValue == "com.bellohub.pro.monthly")
-        #expect(PlanProduct.yearly.rawValue == "com.bellohub.pro.yearly")
-        #expect(PlanProduct.groupName == "Bello Hub Pro")
-        #expect(PlanProduct.allCases.count == 2)
+        #expect(PlanProducts.fallback.monthly == "com.bellohub.pro.monthly")
+        #expect(PlanProducts.fallback.yearly == "com.bellohub.pro.yearly")
+        #expect(PlanProducts.groupName == "Bello Hub Pro")
+
+        let configured = PlanProducts(info: [PlanProducts.monthlyKey: "x.monthly", PlanProducts.yearlyKey: " "])
+        #expect(configured.monthly == "x.monthly")
+        #expect(configured.yearly == PlanProducts.fallback.yearly, "a blank value falls back")
+        #expect(PlanProducts(info: [PlanProducts.monthlyKey: "$(BELLO_PLAN_MONTHLY_PRODUCT_ID)"]).monthly
+            == PlanProducts.fallback.monthly, "an unexpanded build setting falls back")
+        #expect(configured.period(forProductID: "x.monthly") == .monthly)
+        #expect(configured.period(forProductID: "other") == nil)
+        #expect(configured.productID(for: .yearly) == PlanProducts.fallback.yearly)
     }
 }
