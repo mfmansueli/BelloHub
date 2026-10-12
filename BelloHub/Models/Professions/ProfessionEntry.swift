@@ -15,4 +15,9 @@ struct ProfessionEntry: Identifiable, Hashable, Codable, Sendable {
     let fields: [SuggestedField]
     /// Intake items that start switched on for this profession.
     let intake: [IntakeItem]
+    /// Quick answers for how the client reacted, the ones this profession sees ("Watery eyes" for lashes, "Razor
+    /// bumps" for barbers).
+    var reactionTags: [String] = []
+    /// Quick answers for the aftercare she gives, in this profession's words.
+    var aftercareTags: [String] = []
 }

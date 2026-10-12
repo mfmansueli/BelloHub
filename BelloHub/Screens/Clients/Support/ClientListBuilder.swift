@@ -13,9 +13,11 @@ import Foundation
 /// the number of appointments, not with clients times appointments (2,000 clients stay fast).
 enum ClientListBuilder {
     static func build(
-        clients: [Client], appointments: [Appointment], services: [Service], now: Date, calendar: Calendar
+        clients: [Client], appointments: [Appointment], services: [Service], walkIns: [RecordMark] = [], now: Date,
+        calendar: Calendar
     ) -> ClientList {
         let appointmentsByClient = Dictionary(grouping: appointments, by: \.clientID)
+        let walkInsByClient = Dictionary(grouping: walkIns.filter(\.isWalkInVisit), by: \.clientID)
         var entries: [ClientListEntry] = []
         entries.reserveCapacity(clients.count)
         var winBack: [WinBackCandidate] = []
@@ -26,9 +28,11 @@ enum ClientListBuilder {
                 clients: [client], appointments: own, services: services, now: now, calendar: calendar
             ).isEmpty
             winBack += FollowUpPlanner.winBack(clients: [client], appointments: own, now: now, calendar: calendar)
+            let walkIns = walkInsByClient[client.id] ?? []
+            // A client seen only as a walk-in has been seen: she is not "New".
             entries.append(ClientListEntry(
-                client: client, habits: habits, summary: .make(appointments: own, now: now),
-                isDueToReturn: isDue, isNew: habits.visits == 0
+                client: client, habits: habits, summary: .make(appointments: own, walkIns: walkIns, now: now),
+                isDueToReturn: isDue, isNew: habits.visits == 0 && walkIns.isEmpty
             ))
         }
         return ClientList(

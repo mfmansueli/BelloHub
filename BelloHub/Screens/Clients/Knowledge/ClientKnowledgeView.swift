@@ -16,6 +16,9 @@ struct ClientKnowledgeView: View {
 
     @State private var viewModel: ClientKnowledgeViewModel
     @State private var confirmsDiscard = false
+    /// The list whose "+ Add" sheet is open.
+    @State private var addingTo: KnowledgeSection?
+    @Environment(OptionCatalogService.self) private var options: OptionCatalogService?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
 
@@ -46,6 +49,14 @@ struct ClientKnowledgeView: View {
                 }
             }
             .task { await viewModel.load() }
+            .task { await options?.loadIfNeeded() }
+            .sheet(item: $addingTo) { section in
+                OptionAddSheet(title: Text(section.title), existing: options?.names(in: section.optionContext) ?? [],
+                               canSave: options != nil) { name, save in
+                    viewModel.add(name, to: section)
+                    if save { Task { _ = try? await options?.add(name, to: section.optionContext) } }
+                }
+            }
             .confirmationDialog(
                 Text("clientForm.discard.title"), isPresented: $confirmsDiscard, titleVisibility: .visible
             ) {
@@ -164,6 +175,7 @@ struct ClientKnowledgeView: View {
                     .buttonStyle(.belloChip(selected: true))
                     .accessibilityIdentifier("clientKnowledge.addButton.\(section.rawValue)")
             }
+            savedOptions(for: section)
             if viewModel.duplicateIn == section {
                 Text("clientKnowledge.duplicate").font(Typography.footnote).foregroundStyle(Palette.coralText)
             }
@@ -172,6 +184,20 @@ struct ClientKnowledgeView: View {
         .listRowBackground(Palette.surface)
         .deleteDisabled(true)
         .moveDisabled(true)
+    }
+
+    /// Her saved words for this list that the client does not have yet, one tap away, and "+ Add".
+    private func savedOptions(for section: KnowledgeSection) -> some View {
+        let saved = (options?.names(in: section.optionContext) ?? []).filter { viewModel.offers($0, in: section) }
+        return FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm, wrapsLongChildren: true) {
+            ForEach(saved, id: \.self) { name in
+                Button { viewModel.add(name, to: section) } label: { Text(verbatim: name) }
+                    .buttonStyle(.belloChip(selected: false))
+                    .accessibilityIdentifier("clientKnowledge.option.\(section.rawValue).\(name)")
+            }
+            AddOptionChip(identifier: "clientKnowledge.addOption.\(section.rawValue)") { addingTo = section }
+        }
+        .padding(.vertical, Spacing.xs)
     }
 
     private func header(_ key: LocalizedStringKey) -> some View {

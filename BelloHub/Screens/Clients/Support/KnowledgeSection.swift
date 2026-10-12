@@ -14,6 +14,15 @@ enum KnowledgeSection: String, CaseIterable, Identifiable, Sendable {
 
     var id: String { rawValue }
 
+    /// The list of saved options this section offers.
+    var optionContext: OptionContext {
+        switch self {
+        case .sensitivities: .sensitivity
+        case .preferences: .preference
+        case .recurringRequests: .recurringRequest
+        }
+    }
+
     func entries(of client: Client) -> [String] {
         switch self {
         case .sensitivities: client.sensitivities

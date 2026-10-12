@@ -39,21 +39,6 @@ extension XCUIApplication {
         descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH %@", prefix)).firstMatch
     }
 
-    /// Answers every question of an esthetician's health form (the seeded profession): a real answer where it is
-    /// interesting (allergies, a skin condition) and "no" or "none" elsewhere. Stops ready to tap Save: no agreement
-    /// and no signature are asked (D55).
-    @MainActor
-    func answerHealthForm() {
-        selectChip("healthForm.question.allergies.option.fragrance")
-        selectChip("healthForm.question.allergies.option.retinol")
-        selectChip("healthForm.question.medication.no")
-        selectChip("healthForm.question.pregnancy.no")
-        selectChip("healthForm.question.skinConditions.option.sensitive")
-        selectChip("healthForm.question.healthConditions.option.none")
-        selectChip("healthForm.question.recentProcedures.option.none")
-        selectChip("healthForm.minor.no")
-    }
-
     /// Taps a chip until it is selected. XCUITest scrolls a chip into view before it taps it, and a tap that lands
     /// while the scroll is still decelerating only stops the scroll, so the first tap can be lost.
     @MainActor
@@ -162,17 +147,6 @@ extension XCUIApplication {
             let end = coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.55 - fraction))
             start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.4)
         }
-    }
-
-    /// What the health form sheet looks like right now, for a failure message: the chips that are selected and
-    /// whether the "answer everything" hint shows. Costs nothing when the test passes.
-    @MainActor
-    func healthFormState() -> String {
-        let chips = buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'healthForm.question'"))
-            .allElementsBoundByIndex
-        let selected = chips.filter(\.isSelected).map(\.identifier)
-        let hint = staticTexts["healthForm.incomplete"].exists
-        return "selected: \(selected); incompleteHint: \(hint)"
     }
 
     /// Saves a screenshot to the test runner's temporary folder and returns where, for a failure message.

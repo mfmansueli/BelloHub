@@ -5,11 +5,12 @@
 
 import SwiftUI
 
-/// The flow's navigation stack. It owns the ViewModel (`@State`), puts it in the environment of the steps, maps every
-/// `TreatmentFlowStep` to its screen, and closes the flow: asking first when she would lose what she typed.
+/// The flow's navigation stack. It owns the ViewModel (`@State`), maps every `TreatmentFlowStep` to its screen, and
+/// closes the flow. The visit form is the root. Closing never loses anything: the draft is saved first, and she can
+/// keep it for later or delete it.
 struct TreatmentFlowHost: View {
     @State private var viewModel: TreatmentFlowViewModel
-    @State private var confirmsDiscard = false
+    @State private var asksAboutDraft = false
     @State private var agendaSheet: AgendaSheet?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
@@ -20,7 +21,7 @@ struct TreatmentFlowHost: View {
 
     var body: some View {
         NavigationStack(path: $viewModel.path) {
-            RegisterStepView(viewModel: viewModel, onCancel: cancel)
+            VisitFormStepView(viewModel: viewModel, onCancel: cancel)
                 .navigationDestination(for: TreatmentFlowStep.self) { step in
                     destination(for: step)
                 }
@@ -32,21 +33,19 @@ struct TreatmentFlowHost: View {
             await viewModel.load()
         }
         .onChange(of: locale) { _, new in viewModel.useLocale(new) }
-        // The last step of the closing is settled: the visit is done. A haptic only, because the flow closes at once.
-        .sensoryFeedback(.success, trigger: viewModel.closing?.isComplete ?? false) { old, new in
-            ConfirmationCue.fires(flagFrom: old, to: new)
-        }
         .onDisappear { viewModel.tearDown() }
         .agendaSheet(item: $agendaSheet)
         .confirmationDialog(
-            Text("treatmentFlow.discard.title"), isPresented: $confirmsDiscard, titleVisibility: .visible
+            Text("visitForm.leave.title"), isPresented: $asksAboutDraft, titleVisibility: .visible
         ) {
-            Button(role: .destructive) { close() } label: { Text("treatmentFlow.discard.confirm") }
-                .accessibilityIdentifier("treatmentFlow.discardButton")
-            Button(role: .cancel) {} label: { Text("treatmentFlow.discard.keep") }
+            Button { close() } label: { Text("visitForm.leave.keep") }
                 .accessibilityIdentifier("treatmentFlow.keepButton")
+            Button(role: .destructive) { discard() } label: { Text("visitForm.leave.delete") }
+                .accessibilityIdentifier("treatmentFlow.discardButton")
+            Button(role: .cancel) {} label: { Text("visitForm.leave.stay") }
+                .accessibilityIdentifier("treatmentFlow.stayButton")
         } message: {
-            Text("treatmentFlow.discard.message")
+            Text("visitForm.leave.message")
         }
     }
 
@@ -57,33 +56,41 @@ struct TreatmentFlowHost: View {
         switch step {
         case .listening: ListeningStepView(viewModel: viewModel)
         case .organizing: OrganizingStepView(viewModel: viewModel)
-        case .review: ReviewStepView(viewModel: viewModel, onCancel: cancel)
-        case .form: FormStepView(viewModel: viewModel)
-        case .saved: SavedStepView(viewModel: viewModel, onDone: close)
-        case .photos: PhotosStepView(viewModel: viewModel, onClose: close)
-        case .aftercare:
-            AftercareStepView(viewModel: viewModel, onMessage: { agendaSheet = $0 }, onFinishLater: finishLater)
+        case .review:
+            // Her words are kept as notes before leaving, so cancelling the review never loses the dictation.
+            ReviewStepView(viewModel: viewModel, onCancel: {
+                viewModel.applyTranscriptAsNotes()
+                cancel()
+            })
+        case .saved: SavedStepView(viewModel: viewModel, onBook: { agendaSheet = $0 }, onDone: close)
         case .camera(let kind): CameraStepView(viewModel: viewModel, kind: kind)
-        case .nextSession:
-            NextSessionStepView(viewModel: viewModel, onBook: { agendaSheet = $0 }, onClose: close)
-        case .history: RecordHistoryView(clientID: viewModel.clientID)
+        case .record: VisitDetailView(recordID: viewModel.recordID)
         }
     }
 
     // MARK: - Closing
 
-    /// Asks before throwing away what she typed or said; closes at once when there is nothing to lose.
+    /// A draft with something in it is saved, then she chooses to keep it for later or delete it; an empty form or a
+    /// finalized record closes at once.
     private func cancel() {
-        if viewModel.hasUnsavedWork { confirmsDiscard = true } else { close() }
+        Task {
+            await viewModel.autosaveNow()
+            if viewModel.savedRecord?.isDraft == true {
+                asksAboutDraft = true
+            } else {
+                close()
+            }
+        }
     }
 
-    /// "Finish later": what is still open waits in the follow-up queue.
-    private func finishLater() {
-        viewModel.finishLater()
-        close()
+    private func discard() {
+        Task {
+            if await viewModel.discardDraft() { close() }
+        }
     }
 
     private func close() {
+        viewModel.markClosingDone()
         viewModel.tearDown()
         dismiss()
     }

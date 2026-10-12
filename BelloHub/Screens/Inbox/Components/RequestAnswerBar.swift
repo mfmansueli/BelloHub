@@ -14,12 +14,8 @@ struct RequestAnswerBar: View {
     let onDecline: () -> Void
     let onAccept: () -> Void
 
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     var body: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm)) : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        layout {
+        FittingRow(fillsWidth: true) {
             Button(action: onDecline) { Text("inbox.decline") }
                 .buttonStyle(.belloSecondary)
                 .accessibilityIdentifier("\(identifierPrefix).declineButton")

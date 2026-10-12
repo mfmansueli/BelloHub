@@ -27,6 +27,8 @@ final class ClientsViewModel {
     private var clients: [Client] = []
     private var appointments: [Appointment] = []
     private var services: [Service] = []
+    /// Visits recorded with no booking, so a walk-in shows as the client's last visit.
+    private var walkIns: [RecordMark] = []
     private var hasClients = false
     private var hasAppointments = false
     private let listeners = TaskBag()
@@ -119,6 +121,7 @@ final class ClientsViewModel {
         clients = []
         appointments = []
         services = []
+        walkIns = []
         hasClients = false
         hasAppointments = false
         buildGeneration += 1
@@ -145,6 +148,7 @@ final class ClientsViewModel {
             clients = try await repository.allClients()
             appointments = try await repository.loadAppointments(in: Self.everything)
             services = try await repository.services()
+            walkIns = try await repository.recordMarks().filter(\.isWalkInVisit)
             hasClients = true
             hasAppointments = true
             await rebuild(reloadingServices: false)
@@ -163,19 +167,22 @@ final class ClientsViewModel {
     }
 
     private func rebuild(reloadingServices: Bool) async {
-        if reloadingServices, let repository = vault.repository, let loaded = try? await repository.services() {
-            services = loaded
+        if reloadingServices, let repository = vault.repository {
+            if let loaded = try? await repository.services() { services = loaded }
+            // The clients stream fires on every vault change: a record just written is read here.
+            if let marks = try? await repository.recordMarks() { walkIns = marks.filter(\.isWalkInVisit) }
         }
         // Wait for both first answers: a list built from clients alone would flash "New" on every client.
         guard hasClients, hasAppointments else { return }
         buildGeneration += 1
         let generation = buildGeneration
-        let (currentClients, currentAppointments, currentServices) = (clients, appointments, services)
+        let (currentClients, currentAppointments, currentServices, currentWalkIns) =
+            (clients, appointments, services, walkIns)
         let (moment, businessCalendar) = (now(), calendar)
         let built = await Task.detached(priority: .userInitiated) {
             ClientListBuilder.build(
                 clients: currentClients, appointments: currentAppointments, services: currentServices,
-                now: moment, calendar: businessCalendar
+                walkIns: currentWalkIns, now: moment, calendar: businessCalendar
             )
         }.value
         guard generation == buildGeneration else { return }

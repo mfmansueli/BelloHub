@@ -77,6 +77,47 @@ struct ClientProfileViewModelTests {
         #expect(await Wait.untilMain { model.snapshot?.nextAppointment != nil })
     }
 
+    // MARK: - Timeline
+
+    @Test("A walk-in visit recorded with no appointment and no portal shows on the timeline with its photos")
+    func walkInVisit() async throws {
+        let world = try await ClientsWorld.make()
+        let ana = makeListedClient(name: "Ana")
+        try await world.repository.save(ana)
+        let record = TreatmentRecord(clientID: ana.id, serviceName: "Brows", createdAt: TestClock.now,
+                                     performedAt: TestClock.days(-1), technique: "Henna")
+        try await world.repository.save(record)
+        let photo = Photo(id: UUID(), clientID: ana.id, recordID: record.id, takenAt: TestClock.now, kind: .after,
+                          visibility: .professionalOnly)
+        try await world.repository.save(photo, data: PhotoData(image: Data([1]), thumbnail: Data([2])))
+        let model = makeModel(world, client: ana)
+        model.startListening()
+        defer { model.stopListening() }
+
+        #expect(await Wait.untilMain { model.timeline.lastVisit?.id == record.id })
+        #expect(model.timeline.lastVisit?.photos.map(\.id) == [photo.id])
+        #expect(model.timeline.lastVisit?.visitDate.source == .recorded)
+        #expect(model.section == .history, "History opens first")
+        #expect(await model.thumbnail(for: photo) == Data([2]))
+    }
+
+    @Test("Registering from the record starts a visit with no appointment; a pending booking starts its own")
+    func requests() async throws {
+        let world = try await ClientsWorld.make()
+        let ana = makeListedClient(name: "Ana")
+        try await world.repository.save(ana)
+        let done = makeAppointment(clientID: ana.id, daysFromNow: -1)
+        try await world.repository.save(done)
+        let model = makeModel(world, client: ana)
+        model.startListening()
+        defer { model.stopListening() }
+
+        #expect(await Wait.untilMain { model.timeline.pendingRecords.map(\.id) == [done.id] })
+        #expect(model.newVisitRequest.appointmentID == nil)
+        #expect(model.newVisitRequest.clientID == ana.id)
+        #expect(model.pendingRecordRequest(for: done).appointmentID == done.id)
+    }
+
     @Test("A client who is gone (merged or deleted) is said to be gone, not shown empty")
     func missingClient() async throws {
         let world = try await ClientsWorld.make()

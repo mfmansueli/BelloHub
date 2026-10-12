@@ -78,7 +78,7 @@ struct ConsentRecordTests {
 
     @Test("Every kind has a title, and the raw values that are stored never change")
     func kinds() {
-        #expect(ConsentKind.allCases.map(\.rawValue) == ["treatment", "photos", "guardian", "other"])
+        #expect(ConsentKind.allCases.map(\.rawValue) == ["healthForm", "treatment", "photos", "guardian", "other"])
         #expect(ConsentKind.fallback == .treatment)
         for kind in ConsentKind.allCases {
             #expect(!String(localized: kind.title).isEmpty)

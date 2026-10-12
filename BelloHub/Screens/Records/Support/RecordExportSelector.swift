@@ -6,7 +6,8 @@
 import Foundation
 
 /// Chooses what an export contains from what the vault holds. The privacy rules live here and nowhere else:
-/// - the client's copy never includes internal notes, nor corrections of them;
+/// - the client's copy never includes internal notes or what to remember next time, nor corrections of them;
+/// - drafts are in no copy: they are not a record until she finalizes them;
 /// - the client's copy includes only photos that are shared with the client or in the portfolio;
 /// - the client's copy never includes her important note;
 /// - the photo or file of a signed paper is never included, only the label, the status and the date of each consent
@@ -52,6 +53,11 @@ enum RecordExportSelector {
         start.map { date >= $0 } ?? true
     }
 
+    /// Her own working notes, never in the client's copy: internal notes and what to remember next time.
+    private static let privateFieldKeys: Set<String> = [
+        RecordCorrectableField.notes.rawValue, RecordCorrectableField.nextVisitReminder.rawValue
+    ]
+
     private static func withoutDocument(_ consent: ConsentRecord) -> ConsentRecord {
         var plain = consent
         plain.document = nil
@@ -61,15 +67,19 @@ enum RecordExportSelector {
     private static func treatments(
         _ records: [TreatmentRecord], corrections: [RecordCorrection], since start: Date?, keepsNotes: Bool
     ) -> [RecordExportContent.Treatment] {
+        // A draft is not a record yet: it stays out of every copy until she finalizes it.
         records
-            .filter { within($0.createdAt, since: start) }
-            .sorted { $0.createdAt > $1.createdAt }
+            .filter { !$0.isDraft && within($0.performedAt ?? $0.createdAt, since: start) }
+            .sorted { ($0.performedAt ?? $0.createdAt) > ($1.performedAt ?? $1.createdAt) }
             .map { record in
                 var shown = record
-                if !keepsNotes { shown.notes = nil }
+                if !keepsNotes {
+                    shown.notes = nil
+                    shown.nextVisitReminder = nil
+                }
                 let own = corrections
                     .filter { $0.recordID == record.id }
-                    .filter { keepsNotes || $0.fieldKey != RecordCorrectableField.notes.rawValue }
+                    .filter { keepsNotes || !privateFieldKeys.contains($0.fieldKey) }
                     .sorted { $0.createdAt > $1.createdAt }
                 return RecordExportContent.Treatment(record: shown, corrections: own)
             }

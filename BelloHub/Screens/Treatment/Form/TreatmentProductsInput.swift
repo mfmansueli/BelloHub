@@ -13,6 +13,8 @@ struct TreatmentProductsInput: View {
     /// The names in her product list, offered as one-tap suggestions.
     let suggestions: [String]
     let idPrefix: String
+    /// "+ Add" (with the choice to save the product to her list); nil keeps only the inline field.
+    var onAdd: (() -> Void)?
 
     @Environment(\.locale) private var locale
     @State private var typed = ""
@@ -30,7 +32,7 @@ struct TreatmentProductsInput: View {
                 .accessibilityAddTraits(.isHeader)
             if !items.isEmpty { chosen }
             addRow
-            if !remainingSuggestions.isEmpty { suggestionRow }
+            if !remainingSuggestions.isEmpty || onAdd != nil { suggestionRow }
         }
     }
 
@@ -95,6 +97,7 @@ struct TreatmentProductsInput: View {
                 .buttonStyle(.belloChip(selected: false))
                 .accessibilityIdentifier("\(idPrefix).suggestion.\(name)")
             }
+            if let onAdd { AddOptionChip(identifier: "\(idPrefix).addOption", action: onAdd) }
         }
     }
 

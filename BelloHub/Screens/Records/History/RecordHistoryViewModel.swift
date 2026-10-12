@@ -10,7 +10,7 @@ import Observation
 /// corrections that change a locked record (the only way to change it, D9), her incidents and her photos.
 @MainActor
 @Observable
-final class RecordHistoryViewModel {
+final class RecordHistoryViewModel: RecordCorrecting {
     let clientID: UUID
     private(set) var client: Client?
     private(set) var items: [RecordHistoryItem] = []
@@ -66,6 +66,11 @@ final class RecordHistoryViewModel {
         draftItem.map { RecordEditRules.path(for: $0.record, now: now()) } ?? .addCorrection
     }
 
+    /// Every field of the open draft's record she can change, including her template's own fields.
+    var editableFields: [RecordEditableField] {
+        draftItem.map { RecordEditableField.all(for: $0.record) } ?? []
+    }
+
     /// What the field says now, shown above the box she types in.
     var draftCurrentValue: String? {
         guard let draft, let item = draftItem else { return nil }
@@ -117,7 +122,7 @@ final class RecordHistoryViewModel {
     }
 
     /// Picking another field starts from what that field says now.
-    func selectField(_ field: RecordCorrectableField) {
+    func selectField(_ field: RecordEditableField) {
         draft?.field = field
         draftProblem = nil
         syncDraftText()

@@ -27,8 +27,7 @@ extension XCUIApplication {
         )
     }
 
-    /// Launches on the app with Ana Costa's records seeded and opens her profile from the Clients tab, where the
-    /// record rows (history, incident, export) live.
+    /// Launches on the app with Ana Costa's records seeded and opens her client record from the Clients tab.
     @MainActor
     static func launchedOnSeededProfile(locale: String? = nil, largestText: Bool = false) -> XCUIApplication {
         let app = launchedForUITests(
@@ -51,5 +50,32 @@ extension XCUIApplication {
         field.tap()
         field.typeText(text)
         dismissKeyboard()
+    }
+
+    /// Opens the client record's actions menu and picks one item, then waits for the screen it opens.
+    @MainActor
+    func chooseRecordMenuItem(
+        _ identifier: String, expecting expected: String, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        tapButton("clientRecord.menu", file: file, line: line)
+        tapButton(identifier, file: file, line: line)
+        XCTAssertTrue(element(expected).waitForExistence(timeout: 10), "\(identifier) did not show \(expected)",
+                      file: file, line: line)
+    }
+
+    /// Switches the client record to one of its sections (0 History, 1 Photos, 2 Information, 3 Documents). At the
+    /// accessibility sizes the switch is a menu, so the section is picked by its position in the menu.
+    @MainActor
+    func showRecordSection(_ index: Int, file: StaticString = #filePath, line: UInt = #line) {
+        let segmented = segmentedControls["clientRecord.sections"]
+        if segmented.waitForExistence(timeout: 5) {
+            segmented.buttons.element(boundBy: index).tap()
+            return
+        }
+        let menu = buttons["clientRecord.sections"].firstMatch
+        XCTAssertTrue(menu.waitForExistence(timeout: 5), "no section switch", file: file, line: line)
+        menu.tap()
+        // The menu lists the sections in order, as buttons of the popover's collection view.
+        collectionViews.buttons.element(boundBy: index).tap()
     }
 }

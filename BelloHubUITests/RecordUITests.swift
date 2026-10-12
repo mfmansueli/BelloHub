@@ -42,7 +42,7 @@ final class RecordUITests: XCTestCase {
     func testIncidentFromTheProfileIsSaved() {
         let app = XCUIApplication.launchedOnSeededProfile()
 
-        app.tapRow("clientProfile.incidentRow", expecting: "incident.form")
+        app.chooseRecordMenuItem("clientRecord.menu.incident", expecting: "incident.form")
         XCTAssertTrue(app.element("incident.clientName").label.contains("Ana"))
         app.selectChip("incident.symptom.swelling")
         app.selectChip("incident.severity.moderate")
@@ -56,7 +56,7 @@ final class RecordUITests: XCTestCase {
     func testExportBuildsAClientCopyWithoutPrivateNotes() {
         let app = XCUIApplication.launchedOnSeededProfile()
 
-        app.tapRow("clientProfile.exportRow", expecting: "exportRecord.form")
+        app.chooseRecordMenuItem("clientRecord.menu.export", expecting: "exportRecord.form")
         // The client's copy is the default: the private-notes switch is off and disabled. The copy for a health
         // professional frees it; back on the client's copy it goes off again.
         let notes = app.switches["exportRecord.notesToggle"]

@@ -30,14 +30,9 @@ final class PhotoFramingUITests: XCTestCase {
     // MARK: - Helpers
 
     private func walkFramingReference(_ app: XCUIApplication) {
-        XCTAssertTrue(app.buttons["treatmentFlow.register.manualButton"].waitForExistence(timeout: 30))
-        app.tapButton("treatmentFlow.register.manualButton")
-        app.typeNotes("Skin a little sensitive around the cheeks.")
-        app.tapButton("treatmentFlow.form.saveButton")
-        XCTAssertTrue(app.element("treatmentFlow.saved").waitForExistence(timeout: 15))
-        app.tapButton("treatmentFlow.saved.continueButton")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 30))
 
-        // First photo: nothing to line up with yet.
+        // First photo, before anything is written: nothing to line up with yet.
         app.tapButton("treatmentFlow.photos.takeButton")
         XCTAssertTrue(app.buttons["treatmentFlow.camera.captureButton"].waitForExistence(timeout: 15))
         XCTAssertFalse(app.switches["treatmentFlow.camera.referenceToggle"].exists, "no earlier photo, no reference")

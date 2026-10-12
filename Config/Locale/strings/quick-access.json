@@ -1,0 +1,66 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "quickAccess.title",
+   "Title of the sheet that opens from her avatar on Home; also the avatar button's accessibility label",
+   "Quick access",
+   "Acesso rápido",
+   "Acesso rápido",
+   "Acceso rápido",
+   "Acceso rápido",
+   "Accesso rapido",
+   "Accès rapide",
+   "Schnellzugriff",
+   "Hızlı erişim",
+   "Akses cepat",
+   "त्वरित पहुँच",
+   "وصول سريع"
+  ],
+  [
+   "quickAccess.hint",
+   "Accessibility hint of the avatar on Home: what the quick access sheet holds",
+   "Your profile, your booking link and the settings you use most.",
+   "Seu perfil, seu link de agendamento e os ajustes que você mais usa.",
+   "O seu perfil, a sua ligação de marcações e as definições que mais usa.",
+   "Tu perfil, tu enlace de reservas y los ajustes que más usas.",
+   "Tu perfil, tu enlace de reservas y los ajustes que más usas.",
+   "Il tuo profilo, il tuo link di prenotazione e le impostazioni che usi di più.",
+   "Votre profil, votre lien de réservation et les réglages que vous utilisez le plus.",
+   "Dein Profil, dein Buchungslink und die Einstellungen, die du am meisten nutzt.",
+   "Profiliniz, randevu bağlantınız ve en çok kullandığınız ayarlar.",
+   "Profilmu, tautan pemesananmu, dan pengaturan yang paling sering kamu pakai.",
+   "आपकी प्रोफ़ाइल, आपका बुकिंग लिंक और वे सेटिंग्स जो आप सबसे ज़्यादा इस्तेमाल करते हैं।",
+   "ملفك الشخصي ورابط الحجز الخاص بك والإعدادات التي تستخدمينها أكثر."
+  ],
+  [
+   "quickAccess.allSettings",
+   "Last row of the quick access sheet: opens the More tab with every setting",
+   "All settings",
+   "Todos os ajustes",
+   "Todas as definições",
+   "Todos los ajustes",
+   "Todos los ajustes",
+   "Tutte le impostazioni",
+   "Tous les réglages",
+   "Alle Einstellungen",
+   "Tüm ayarlar",
+   "Semua pengaturan",
+   "सभी सेटिंग्स",
+   "كل الإعدادات"
+  ]
+ ]
+}

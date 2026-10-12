@@ -38,7 +38,7 @@ final class HomeUITests: XCTestCase {
         XCTAssertTrue(app.element("followUps.subtitle").waitForExistence(timeout: 5))
     }
 
-    func testNewAppointmentIsInTheNavigationBarAndTheQueueGroupsAClient() {
+    func testNewAppointmentIsOneTapAwayAndTheQueueGroupsAClient() {
         let app = XCUIApplication.launchedOnHome()
         XCTAssertTrue(app.buttons["home.quick.newAppointment"].isHittable, "New appointment is not one tap away")
         app.scrollToAndTap(prefix: "home.reachOut.open")
@@ -50,5 +50,43 @@ final class HomeUITests: XCTestCase {
         app.goBack()
         app.tapButton("home.quick.newAppointment")
         XCTAssertTrue(app.buttons["newAppointment.cancelButton"].waitForExistence(timeout: 5))
+    }
+
+    func testRecordsToFollowUpAndRegisterVisitOpenTheVisitForm() {
+        let app = XCUIApplication.launchedOnHome()
+        // Julia's visit earlier today is completed with nothing written: it waits under "To follow up".
+        app.scrollToAndTap(prefix: "home.records.unwritten:")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 10), "the visit form did not open")
+        // Nothing written: the form closes at once and leaves no draft.
+        app.tapButton("treatmentFlow.register.cancelButton")
+
+        app.scrollToTop()
+        app.tapButton("home.quick.registerVisit")
+        XCTAssertTrue(app.element("clientPicker.list").waitForExistence(timeout: 5), "no client picker")
+        app.tapButton("clientPicker.client.\(Self.julia)")
+        XCTAssertTrue(app.element("treatmentFlow.form").waitForExistence(timeout: 10), "no visit form for Julia")
+    }
+
+    // MARK: - Helpers
+
+    /// Julia Mendes in `HomeUITestSeeding`.
+    private static let julia = "A9902200-0000-4000-8000-000000000001"
+
+    func testTheAvatarOpensQuickAccessAndARowOpensItsScreenInMore() {
+        let app = XCUIApplication.launchedOnHome()
+        XCTAssertTrue(app.buttons["home.avatarButton"].waitForExistence(timeout: 10), "the avatar is not a button")
+        app.tapButton("home.avatarButton")
+
+        // The sheet holds her profile, her link and the settings she uses most.
+        let services = app.buttons["home.quickAccess.services"]
+        XCTAssertTrue(services.waitForExistence(timeout: 5), "quick access did not open")
+        XCTAssertTrue(app.buttons["home.quickAccess.profile"].exists)
+        XCTAssertTrue(app.element("bookingSettings.linkText").exists, "the booking link card is missing")
+        XCTAssertTrue(app.buttons["home.quickAccess.allSettings"].exists, "All settings is missing")
+
+        // A row closes the sheet and opens the same screen as in More.
+        app.tapButton("home.quickAccess.services")
+        XCTAssertTrue(app.buttons["services.addButton"].waitForExistence(timeout: 5), "Services did not open in More")
+        XCTAssertFalse(app.buttons["home.quickAccess.services"].exists, "the sheet stayed open")
     }
 }

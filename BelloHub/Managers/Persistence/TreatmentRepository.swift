@@ -9,9 +9,15 @@ import Foundation
 protocol TreatmentRepository: Sendable {
     func records(for clientID: UUID) async throws -> [TreatmentRecord]
     func record(id: UUID) async throws -> TreatmentRecord?
+    /// Every record of every client, reduced to what lists of pending work need (`RecordMark`): no notes, no
+    /// technique, no products leave the repository through this.
+    func recordMarks() async throws -> [RecordMark]
     /// Inserts a record, or edits an existing one **while it is not locked**. A locked record throws
     /// `VaultRepositoryError.recordLocked`: use `addCorrection` (D9, `RecordLockPolicy`).
     func save(_ record: TreatmentRecord) async throws
+    /// Deletes a draft she does not want, with the photos tied to it. A finalized record is never deleted this way
+    /// (`recordLocked`): it changes only by corrections, and goes only with the client's data.
+    func deleteDraft(id: UUID) async throws
     /// Adds a logged correction to a locked record. Corrections are never edited or deleted. Adding the same
     /// correction id twice is a no-op.
     func addCorrection(_ correction: RecordCorrection) async throws
@@ -25,5 +31,13 @@ protocol TreatmentRepository: Sendable {
     /// The photo's bytes are encrypted before they reach the store.
     func save(_ photo: Photo, data: PhotoData) async throws
     func photoData(id: UUID) async throws -> PhotoData
+    /// Only the thumbnail, decrypted on its own, for strips and timelines that never need the full image.
+    func photoThumbnail(id: UUID) async throws -> Data
     func deletePhoto(id: UUID) async throws
+}
+
+extension TreatmentRepository {
+    func photoThumbnail(id: UUID) async throws -> Data {
+        try await photoData(id: id).thumbnail
+    }
 }

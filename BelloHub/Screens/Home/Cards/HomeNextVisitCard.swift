@@ -96,10 +96,7 @@ struct HomeNextVisitCard: View {
     }
 
     private var actions: some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return layout {
+        FittingRow(fillsWidth: true) {
             Button(action: onBeforeYouStart) { Text("beforeYouStart.title") }
                 .buttonStyle(.belloOnHero)
                 .accessibilityIdentifier("home.next.beforeYouStart")

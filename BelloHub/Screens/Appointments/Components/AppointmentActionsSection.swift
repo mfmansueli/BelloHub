@@ -11,7 +11,6 @@ struct AppointmentActionsSection: View {
     let layout: AppointmentActionLayout
     let isWorking: Bool
     let onAction: (AppointmentAction) -> Void
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(spacing: Spacing.md) {
@@ -29,10 +28,7 @@ struct AppointmentActionsSection: View {
     }
 
     private var quickTiles: some View {
-        let stack = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return stack {
+        FittingRow(fillsWidth: true) {
             ForEach(layout.quick, id: \.self) { action in
                 Button { onAction(action) } label: {
                     VStack(spacing: Spacing.xs) {
@@ -56,7 +52,7 @@ struct AppointmentActionsSection: View {
                 Button { onAction(action) } label: {
                     Text(title(of: action))
                         .font(Typography.calloutStrong)
-                        .foregroundStyle(action == .reschedule ? Palette.ink : Palette.coralText)
+                        .foregroundStyle([.noShow, .cancel].contains(action) ? Palette.coralText : Palette.ink)
                         .frame(minHeight: Spacing.touchTarget)
                 }
                 .accessibilityIdentifier("appointment.\(action.rawValue)Button")
@@ -74,6 +70,9 @@ struct AppointmentActionsSection: View {
         case .reschedule: "appointment.action.reschedule"
         case .noShow: "appointment.action.noShow"
         case .cancel: "appointment.action.cancel"
+        case .registerVisit: "clientRecord.register"
+        case .continueRecord: "visitDetail.draft.continue"
+        case .openRecord: "visitForm.saved.open"
         }
     }
 
@@ -86,6 +85,8 @@ struct AppointmentActionsSection: View {
         case .reschedule: .calendar
         case .noShow: .alert
         case .cancel: .close
+        case .registerVisit, .continueRecord: .compose
+        case .openRecord: .document
         }
     }
 }

@@ -8,8 +8,8 @@ import SwiftUI
 /// "Add correction" (and, while a record is still open, "Edit"). Once a record is locked the original never
 /// changes: the new text is saved as a correction with the reason, logged with date and time.
 /// While it is open the text is replaced.
-struct RecordCorrectionSheet: View {
-    let viewModel: RecordHistoryViewModel
+struct RecordCorrectionSheet<Model: RecordCorrecting>: View {
+    let viewModel: Model
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
 
@@ -76,8 +76,8 @@ struct RecordCorrectionSheet: View {
 
     private func fieldPicker(_ draft: RecordCorrectionDraft) -> some View {
         Picker(selection: Binding(get: { draft.field }, set: { viewModel.selectField($0) })) {
-            ForEach(RecordCorrectableField.allCases) { field in
-                Text(field.title.localized(in: locale)).tag(field)
+            ForEach(viewModel.editableFields) { field in
+                Text(verbatim: field.title(in: locale)).tag(field)
             }
         } label: {
             Text("recordHistory.correction.field")

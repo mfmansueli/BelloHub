@@ -19,7 +19,7 @@ enum RecordHistoryBuilder {
                     trail: RecordTrailBuilder.entries(for: record, corrections: own, now: now),
                     corrections: own,
                     isLocked: RecordLockPolicy.isLocked(lockedAt: record.lockedAt, now: now),
-                    remaining: RecordLockPolicy.remaining(lockedAt: record.lockedAt, now: now)
+                    remaining: RecordLockPolicy.remaining(of: record, now: now)
                 )
             }
     }

@@ -1,0 +1,50 @@
+{
+ "languages": [
+  "en",
+  "pt-BR",
+  "pt-PT",
+  "es-MX",
+  "es",
+  "it",
+  "fr",
+  "de",
+  "tr",
+  "id",
+  "hi",
+  "ar"
+ ],
+ "strings": [
+  [
+   "options.context.reaction",
+   "Personalization list (and saved options) of the reactions she noted on visits, beside her profession's quick answers",
+   "Reactions",
+   "Reações",
+   "Reações",
+   "Reacciones",
+   "Reacciones",
+   "Reazioni",
+   "Réactions",
+   "Reaktionen",
+   "Reaksiyonlar",
+   "Reaksi",
+   "प्रतिक्रियाएँ",
+   "التفاعلات"
+  ],
+  [
+   "options.context.aftercare",
+   "Personalization list (and saved options) of the aftercare lines she gives, beside her profession's quick answers",
+   "Aftercare",
+   "Cuidados pós-atendimento",
+   "Cuidados pós-tratamento",
+   "Cuidados posteriores",
+   "Cuidados posteriores",
+   "Consigli post-trattamento",
+   "Soins après la séance",
+   "Nachsorge",
+   "Bakım önerileri",
+   "Perawatan setelahnya",
+   "बाद की देखभाल",
+   "العناية اللاحقة"
+  ]
+ ]
+}

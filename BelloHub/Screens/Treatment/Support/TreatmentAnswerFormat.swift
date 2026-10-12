@@ -50,4 +50,10 @@ enum TreatmentAnswerFormat {
             return value
         }
     }
+
+    /// A free-text field that holds one saved word per line (the technique, written by "+ Add"), trimmed and without
+    /// empty lines.
+    static func textLines(_ value: String) -> [String] {
+        value.split(whereSeparator: \.isNewline).map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+    }
 }

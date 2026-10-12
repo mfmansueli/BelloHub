@@ -203,6 +203,8 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
 | `BrandMark`, `BrandLockup` | The app icon itself, stacked from its own two layers (`BrandMarkRelief` and `BrandMarkFront` in the asset catalog, copies of `BelloHub.icon/Assets/Relief.png` and `Front.png`) over the icon's background (`BrandPalette`: orange `#E84A10`, near-black `#181717` in dark; ivory "b" `#FAF5EB`) in the rounded square of the icon mask. The 2026-10-11 icon (orange background, ivory "b" with a sage relief) replaced the earlier sage tile. Used on Locked (64 pt), the privacy cover (72 pt) and the lockup. The layers come from raster cut-outs of the approved reference, not vector files. The wordmark is the brand name, never localized, and always left-to-right |
 | `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `selectionInk` outline and an `action` check disc, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
+| `FittingRow` | Buttons side by side only while every label fits on one line, stacked otherwise; `fillsWidth` gives equal halves side by side and full width stacked. Decides by the labels, not the text size, so a word never breaks in the middle ("appointme / nt" on an iPhone 15 Pro at a large size). Follows the reading direction |
+| `FittingGrid` | Cards in equal columns while every label fits its column on one line, one per row otherwise (profession cards, tag colors) |
 | `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
 | `StepProgressBar` | One 4 pt segment per step, filled in `action` up to the current one (`hairline` after it); spoken as "Step n of m" |
 | `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
@@ -230,8 +232,8 @@ the catalog): `TEST_RUNNER_SCREENSHOT_DIR=$PWD/build/screenshots ONLY_TESTING=Be
 scripts/test.sh full` (skipped in every plan otherwise). `-uiDark` runs the whole app in dark, because the iOS 27
 simulator's appearance switch does not reach apps.
 
-Home's "New appointment" quick action is the screen's primary (`action`) while the day has visits; on a clear day the
-empty state's own "New appointment" is the primary and the quick action is secondary.
+Home's two starts, "New booking" and "Register visit", sit side by side under the greeting as `belloSecondary` buttons
+(stacked at the accessibility sizes); the next visit card keeps the screen's one primary action.
 
 ## Screen inventory
 
@@ -252,17 +254,23 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 1.9 Permissions | removed (routine-a): each permission is asked when its feature is used; notifications from Home once a visit is coming | | `home.today.notificationsButton` |
 | 1.10 Ready | `Steps/ReadyStepView` | shared | `onboarding.ready.title`, `onboarding.ready.continueButton`, `onboarding.ready.error` |
 | 1.11 Locked | `Screens/Locked/LockedView` | none (reads `AppLockService`) | `locked.title`, `locked.unlockButton`, `locked.passcodeButton`, `locked.error` |
-| 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeTodayCard`, `HomeVisitRow`, `HomeReachOutCard`, `HomeCountRow`) | `HomeViewModel` (reads `AgendaDigestService`, `FollowUpQueueService`; `HomePending`, `HomeReachOut`) | `home.*`, `home.quick.newAppointment` (toolbar) |
+| 2.1 Home | `Screens/Home/HomeView` -> `HomeContentView` (`HomeNextVisitCard`, `HomeTodayCard`, `HomeRecordsCard`, `HomeVisitRow`, `HomeReachOutCard`, `HomeCountRow`) | `HomeViewModel` (reads `AgendaDigestService`, `FollowUpQueueService`; `HomePending`, `RecordPending`, `HomeReachOut`) | `home.*`, `home.quick.newAppointment`, `home.quick.registerVisit`, `home.records[.<kind>:<id>, .seeAll]` |
+| Choose client (sheet, from "Register visit") | `Screens/Shared/ClientRecord/ClientPickerSheet` | none (filters `AgendaDigestService.clients` with `ClientSearch`) | `clientPicker.list`, `clientPicker.client.<uuid>`, `clientPicker.empty`, `clientPicker.cancelButton` |
 | Time-zone notice (Home card, Calendar row) | `Screens/Shared/TimeZoneNotice/` (`TimeZoneNoticeView` -> `TimeZoneNoticeContent`, `TimeZoneNoticeCard`, `TimeZoneNoticeRow`, `Support/TimeZoneNoticeText`) | `TimeZoneNoticeViewModel` (reads `TimeZoneNoticeService`, `ProfileService`, `BookingSetupService`; rule `Models/Business/TimeZoneMismatch`) | `home.timeZoneNotice[.message, .regionNote, .usePhone, .keep, .languageRegion, .error]`, `calendar.timeZoneNotice[.usePhone, .keep, .languageRegion, .error]` |
 | 2.7 To reach out (2.8 Win back is its "Not back" filter) | `Screens/FollowUps/` (`FollowUpRowCard`) | `FollowUpsViewModel` (`FollowUpQueue`, `FollowUpAction`) | `followUps.*` (`followUps.filter.<filter>`, `followUps.row.<client>`, `followUps.reason.<occurrence>`, `followUps.action.<occurrence>`) |
 | Client message (sheet, `AgendaSheet.clientMessage`) | `Screens/Shared/ClientMessage/` | `ClientMessageViewModel` (`ClientMessageComposer` is pure; nothing is sent by the app, D14) | `clientMessage.*` |
 | 7.11 Shared states | `Screens/Shared/States/` (`ScreenPhase`, `ScreenStateView`, `ListLoadingView`) | none | caller-defined |
 | 2.2 Clients | `Screens/Clients/ClientsTabView` (stack, `ClientsRoute`) + `ClientsView` | `ClientsViewModel` | `clients.empty`, `clients.row.<uuid>`, `clients.filter.<chip>`, `clients.newButton`, `clients.importButton` |
-| 4.1 ClientProfile | `Clients/Profile/ClientProfileView` | `ClientProfileViewModel` | `clientProfile.*` |
+| 4.1 Client record (the center of a client) | `Clients/Profile/ClientProfileView` (`ClientProfileHero`, `ImportantNoteCard`, `SessionPlanCard`, `ClientRecordSectionPicker`; sections `History/`, `Photos/`, `Info/`, `Documents/`); pushed from the agenda as `Screens/Shared/ClientRecord/ClientRecordScreen` | `ClientProfileViewModel` (`ClientTimelineBuilder`, `ClientTimeline`, `VisitSummary`, `PhotoGroup` are pure) | `clientProfile.*`, `clientRecord.registerButton`, `clientRecord.sections`, `clientRecord.menu[.edit, .book, .incident, .export]`, `clientRecord.history`, `clientRecord.visit.<id>`, `clientRecord.booking.<id>`, `clientRecord.pending.fill.<id>`, `clientRecord.unlinked[.organize]`, `clientRecord.photos[.filter.<id>, .compare, .photo.<id>]`, `clientRecord.info`, `clientRecord.documents[.sharingCard, .portfolioCard, .manage]` |
+| Visit details (pushed, `RecordRoute.visit`; sheets: Use as base, Visit day) | `Screens/Records/Visit/` (`VisitDetailHeader`, `VisitPhotosCard`, `VisitFieldsCard`, `VisitLinksCard`, `ReuseVisitSheet`, `VisitDaySheet`) | `VisitDetailViewModel` (+ corrections, visit day; `RecordCurrentValues`, `VisitReuse`, `RecordTrailBuilder` pure) | `visitDetail.*`, `reuseVisit.*`, `visitDay.*` |
+| Organize photos (sheet, `RecordSheet.organizePhotos`) | `Screens/Records/Organize/` | `OrganizePhotosViewModel` | `organizePhotos.*` |
+| Compare photos (sheet) | `Screens/Records/Components/PhotoCompareSheet` | none | `photoCompare.*` |
+| Personalization (More, Clients) | `Screens/Personalization/PersonalizationView` | none (reads `OptionCatalogService`) | `personalization.*` |
+| Add option (sheet from "+ Add") | `Screens/Shared/Options/OptionAddSheet`, `AddOptionChip` | none (`OptionNameRules` pure) | `optionAdd.*` |
 | 4.2 NewClient (sheet) | `Clients/Form/NewClientView` | `ClientFormViewModel` | `clientForm.*` (inline "already saved" notice, D42 counter) |
 | 4.3 ClientEdit (+ merge sheet) | `Clients/Form/ClientEditView`, `ClientMergeSheet` | `ClientFormViewModel`, `ClientMergeViewModel` | `clientEdit.*`, `clientMerge.*` |
 | 4.4 ClientKnowledge | `Clients/Knowledge/ClientKnowledgeView` | `ClientKnowledgeViewModel` | `clientKnowledge.*` |
-| 4.5 ClientHealth "Health and consents" (+ health form, patch test, consent record sheets) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `HealthFormViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `healthForm.*`, `patch.*`, `consent.*` (D55) |
+| 4.5 ClientHealth "Health and consents", a folder (+ patch test and record sheets; the record sheet keeps health forms and consents) | `Screens/Health/ClientHealthView`, `Health/Sheets/` | `ClientHealthViewModel`, `PatchTestViewModel`, `ConsentRecordViewModel` | `health.*`, `patch.*`, `consent.*` (D55, D60) |
 | 4.6 ImportClients (sheet: sources, contacts, column mapping, result) | `Clients/Import/ImportClientsView` | `ImportClientsViewModel` | `importClients.*`, `onboarding.ready.importButton` |
 | 6.1 Services (+ 6.2 ServiceEdit sheet, 6.3 AddOns pushed) | `Screens/Services/ServicesView` -> `ServicesContentView`, `AddOns/` | `ServicesViewModel`, `AddOnsViewModel` | `services.*`, `serviceEditor.*`, `addOns.*` |
 | 6.4 Products | `Screens/Products/ProductsView` | `ProductsViewModel` | `products.*` |
@@ -272,13 +280,13 @@ empty state's own "New appointment" is the primary and the quick action is secon
 | 6.7 BookingSettings (+ pause sheet) with 6.8 ShareLink, 6.16 CancelPolicy, 6.15 NoShowPolicy, Where you work (design addition, 2026-10-11) | `Screens/BookingSettings/` (`Workplace/`) | `BookingSettingsViewModel`, policy and share view models, `WorkplaceViewModel` (`BusinessLocationFormat`, `WorkplaceCountries` pure) | `bookingSettings.*` (`.workplaceRow`), `shareLink.*`, `cancelPolicy.*`, `noShowPolicy.*`, `workplace.*` (`.streetField`, `.postalCodeField`, `.cityField`, `.countryPicker`, `.directionsField`, `.tooLong`, `.visibility.<confirmedClients|bookingPage>`, `.preview.address`, `.preview.empty`, `.map.apple`, `.map.google`, `.saveButton`, `.removeButton`, `.removeConfirmButton`, `.saveError`) |
 | 6.9 QuickReplies (+ editor sheet) | `Screens/QuickReplies/QuickRepliesView` | `QuickRepliesViewModel` | `quickReplies.*` |
 | 6.12 Tags (+ tag sheet) | `Screens/Tags/TagsView` | `TagsViewModel` | `tags.*`, `tagEditor.*` |
-| 6.13 RecordTemplate (+ field sheet) | `Screens/RecordTemplate/RecordTemplateView` | `RecordTemplateViewModel` | `recordTemplate.*`, `fieldEditor.*` |
+| 6.13 RecordTemplate (+ field sheet, services sheet) | `Screens/RecordTemplate/RecordTemplateView` (`FieldServicesSheet`) | `RecordTemplateViewModel` | `recordTemplate.*` (`.required.<key>`, `.services.action.<key>`, `.services.<id>`, `.services.all`), `fieldEditor.*` |
 | 6.14 FormTemplates | `Screens/Health/FormTemplates/FormTemplatesView` | `FormTemplatesViewModel` | `formTemplates.*` |
 | 2.3 Calendar (day timeline + list, week grid + agenda), 2.6 WeekGlance, 3.1 NewAppointment, 3.4 Reschedule, 6.6 BlockTime | `Screens/Calendar/` (rules in `Calendar/Support/`) | one view model per screen; `TimeBlockService` | `calendar.*`, `newAppointment.*`, `reschedule.*`, `blockTime.*` |
-| 3.2 Appointment (pushed, `AgendaRoute.appointment`), 3.3 BeforeYouStart, 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
-| 2.4 Alerts | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList` and `InboxAlerts` are pure) | `alerts.*`, `alerts.request.<bookingId>[.action]`, `alerts.reschedule.<requestId>[.action]`, `alerts.waitlist[.action]` |
-| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.unverified`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.planOnDevice`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
-| 5.1 to 5.9 Treatment flow (`fullScreenCover`, own stack: Register, Listening, Organizing, Review or Form, Saved, Photos, Camera, NextSession) | `Screens/Treatment/` | flow and step view models; voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatment.*` |
+| 3.2 Appointment (pushed, `AgendaRoute.appointment`; the client's name opens her record, `AgendaRoute.clientRecord`; previous visit card; Register visit / Continue record / Open record), 3.3 BeforeYouStart (last visit with photos, "Remember today", what was written; complete then "Register now" or "Later"), 3.5 Cancel, 3.6 MessageClient, 3.7 NoShowMark, 2.12 RunningLate (sheets), 4.8 SessionPlan, 4.11 NoShowHistory (pushed) | `Screens/Appointments/` | one view model per screen; `MessageService` behind `MessageSending` | `appointment.*` and one prefix per sheet |
+| 2.4 Alerts | `Screens/Alerts/` (`AlertsContentView`, `AlertCard`, `RecordPendingAlertCards`, `NotificationPermissionNotice`) | `AlertsViewModel` (`AlertsList`, `InboxAlerts` and `RecordPending` are pure) | `alerts.*`, `alerts.request.<bookingId>[.action]`, `alerts.reschedule.<requestId>[.action]`, `alerts.waitlist[.action]`, `alerts.records.<kind>:<id>[.action]` |
+| 2.10 BookingRequest, 2.11 RescheduleRequest, 2.9 Waitlist (pushed, `AgendaRoute.bookingRequest` / `.rescheduleRequest` / `.waitlist`) | `Screens/Inbox/` (`RequestSummaryCard`, `RequestAnswerBar`, `RequestOutcomeNotice`, `WaitlistPersonRow`) | one per screen over `BookingSyncService` (`InboxRequestPhase`, `RescheduleTiming` pure; `WaitlistBoard` in `Models/Inbox`) | `bookingRequest.*`, `rescheduleRequest.*` (`.client`, `.note`, `.time` / `.current` / `.requested`, `.reason`, `.unverified`, `.resetCountToggle`, `.acceptButton`, `.declineButton`, `.outcome`, `.needsPlan`, `.seePlansButton`, `.historyButton`, `.timing`, `.slotTaken`, `.missing`), `waitlist.*` (`.openTime`, `.person.<id>`, `.offer.<id>`, `.offerAllButton`, `.slotTaken`, `.empty`, `.error`) |
+| 5.1 to 5.9 Visit form (`fullScreenCover`, own stack: the one-screen form with drafts at the root; Listening, Organizing, Review, Camera, Saved and the record pushed on it) | `Screens/Treatment/` (`Steps/VisitFormStepView`, `Form/VisitDetailsCard`, `Form/VisitPhotosSection`, `Form/VisitAutosaveStatus`, `Form/VisitNextSessionPicker`, `Steps/SavedStepView`) | `TreatmentFlowViewModel` (+ draft, photos, options, review, voice; `TreatmentRecordBuilder`, `TreatmentDraftLoader`, `VisitFormSections` pure); voice and AI behind `VoiceCapturing` / `RecordStructuring` (unavailable stubs in v1, D53) | `treatmentFlow.*`, `visitForm.*` |
 | 4.7 RecordHistory (pushed, `RecordRoute.history`), 4.9 Incident and 4.10 ExportRecord (sheets, `RecordSheet`) | `Screens/Records/` | history, incident and export view models | `recordHistory.*`, `incident.*`, `exportRecord.*` |
 | 7.5 AISettings | `Screens/AISettings/` | one screen | `aiSettings.*` (More → Preferences) |
 | 7.1 Account (+ Delete account sheet) | `Screens/Account/` | `AccountViewModel` (the sheet runs on it; `AccountDeletionFlow`, `AccountRules` pure) | `account.*` (`account.signOutButton`, `account.languageRegionRow`, `account.nameField`) |
@@ -307,17 +315,23 @@ RootView (state gate, `RootGate`: welcome → sign-in → setup → locked → a
 ├── LockedView (sheet: Restore key, when this phone has no key)
 └── MainView (TabView, five tabs, each with its own NavigationStack)
     ├── Home      → HomeView → Appointment · FollowUps · WinBack · WeekGlance (same `AgendaRoute` / `AgendaSheet`)
+    │                Register visit → Choose client (sheet) → visit form (fullScreenCover)
+    │                To follow up → visit form of a draft or of a completed booking with nothing written
     ├── Clients   → ClientsTabView → ClientsView (title = the term she chose; sheets: NewClient, ImportClients)
-    │                → ClientProfile → ClientEdit (sheet: merge) · ClientKnowledge · ClientHealth (sheets: health form,
-    │                  patch test, consent record) · RecordHistory (sheets: Incident, ExportRecord)
+    │                → Client record (History · Photos · Information · Documents) → Visit details (sheets: Use as
+    │                  base, Visit day, Incident; → the visit form to complete it) · ClientEdit (sheet: merge) ·
+    │                  ClientKnowledge (sheet: Add option) · ClientHealth (sheets: health form, patch test, consent
+    │                  record with its visit) · RecordHistory (sheets: Incident, ExportRecord, Organize photos)
     │                NewClient / Import at the 11th registration → Paywall sheet (the Plan screen, D42)
     │                Start (appointment or profile) → TreatmentFlow (fullScreenCover)
-    ├── Calendar  → CalendarView (day | week) → Appointment → SessionPlan · NoShowHistory; WeekGlance
+    ├── Calendar  → CalendarView (day | week) → Appointment → Client record · Visit details · SessionPlan ·
+    │                NoShowHistory; WeekGlance; visit form (fullScreenCover)
     │                (sheets through `AgendaSheet`: NewAppointment, Reschedule, BlockTime, BeforeYouStart, Cancel,
     │                MessageClient, NoShowMark, RunningLate, ClientMessage)
-    ├── Alerts    → AlertsView → BookingRequest (sheet: Paywall; → NoShowHistory) · RescheduleRequest · Waitlist
+    ├── Alerts    → AlertsView → BookingRequest (sheet: Paywall; → NoShowHistory) · RescheduleRequest · Waitlist;
+    │                Records to complete → visit form (fullScreenCover)
     └── More      → MoreTab → MoreView: Business (Services → Add-ons, Products, Booking page → Share link · Where you work · Cancel policy · No-show policy, Availability, Credentials, Team; S5),
-                     Clients (Record fields, Forms, Tags), Messages (Quick replies; S5),
+                     Clients (Record fields → Services sheet, Forms, Tags, Personalization), Messages (Quick replies; S5),
                      Preferences (Plan, Notifications, Integrations, Privacy → Recovery key · Export all · Legal notice,
                      AI assistant, Help; S10), Account (profile card or row → Account → Language and region,
                      Delete account sheet → Export all; Sign out; S10), Lock now
@@ -409,6 +423,35 @@ Secondary flows are sheets. Celebrations and media viewers are `fullScreenCover`
 - **7.10 Help**: six questions as rows, "Write to support" and "Send feedback" as `mailto:` links; no chat.
 - Feature-local components (not Design System): `RegionPresetRow`, `WeekClockCard`, the 12-word grid, the preview
   bubbles. No new tokens, colors or fonts.
+
+### Visit form: specialized by niche, with quick answers
+
+- Each profession's fields come with its own quick answers (the profession catalog's `tags`): chips under a note field,
+  one tap writes the answer on its own line, a second tap takes it out, and she can still type anything. "+ Add" sits
+  at the end of the chips; "Save to reuse" keeps her answer for next time. Reaction and aftercare show her professions'
+  answers ("Watery eyes" for lashes, "Razor bumps" for barbers). Products and actives offer her product list and then
+  the profession's names. Fields with quick answers never fold under "More fields". A field she made with no answers
+  stays one line. Research and sources: `docs/agent-notes/record-fields-by-niche.md`.
+
+### Quick access (Home avatar)
+
+- Her avatar on Home is a button (44 pt at accessibility sizes, never hidden) that opens the **Quick access** sheet:
+  her profile card (avatar, name, profession · region, "Open account"), the booking link card shared with the booking
+  page settings (`BookingLinkCard`: link, status, Copy and Share, or "Choose your address"), "Business" (booking page,
+  services, availability, products, record fields), "Preferences" (plan, notifications, language and region), then
+  Lock now and All settings. A row closes the sheet and opens the same screen on the More tab (`QuickAccessItem.path`),
+  so each setting has one screen. The row subtitles come from `SettingsSubtitles`, shared with More.
+
+### Changes from D60 (health forms are her own papers too)
+
+- **4.5** is a folder. First section "Health forms": the same list card as the consents (label or "Health form",
+  Signed / Not signed chip, date, "Photo kept"), an "Add health form" row, a footnote that the app asks no health
+  question and nothing leaves the iPhone, and under it "Review every 12 months" with the review chip, counted from the
+  last signed health form. The empty folder says to use her own form, sign it with the client and keep a photo or file.
+  The in-app questionnaire and its "Fill in the form" button are gone. Answers recorded in the app before D60, or sent
+  from the booking page, show read-only under "Answers recorded in the app". Then "Consents" (every kind but health
+  form) and the patch test log. The record sheet adds the "Health form" kind first and reads "New health form" /
+  "Health form" for it.
 
 ### Changes from D55 (consents are the professional's own business)
 
@@ -606,6 +649,9 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - **Counts** read "Not back in 2+ months: 3 clients", "Ready for a follow-up: 2 clients": the counted noun follows the
   language's plural rules (`ClientTerm.countText`, Arabic six forms, German "Personen"), so the sentence needs no
   agreement.
+- **No word breaks in the middle**, in any language or text size: pairs of buttons use `FittingRow` and card grids
+  `FittingGrid`, which stack when a label does not fit whole; wrapping between words is fine. The old rule (stack
+  only at accessibility sizes) cut "New appointment" on Home at a large size.
 - **Chips** keep a one-line label on one line (`FlowLayout` places them at their natural size; "12 hr" wrapped before).
 - **5.8 Camera**: the preview and the "only saved in Bello" note scroll above the pinned bottom bar, and the bar
   (`FlowBottomBar`) always keeps the height its buttons need; at AX5 in German the 3:4 preview squeezed the capture
@@ -729,6 +775,46 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   an `action` button with `on-action` text, all at least 4.5:1, measured in `messaging.test.ts`) and `dir="rtl"` in
   Arabic.
 
+### Client record and agenda (2026-10-12, `docs/agent-notes/client-records.md`)
+
+The two pillars, agenda and Client Records, now meet on every screen where a visit is touched.
+
+- **Client record** (4.1) is the center of a client: a hero with name, contact and compact message, call and edit
+  actions; allergies, sensitivities and her important note in one highlighted card; the screen's one primary action,
+  "Register visit"; a compact session-plan card; then four sections in a segmented control (a menu at the
+  accessibility sizes): History (default), Photos, Information, Documents. Export, booking, incident and edit live in
+  the actions menu.
+- **History** is a timeline of `VisitTimelineCard`s: the real visit day (`RecordVisitDate`: the visit day she noted,
+  else the linked booking's start, else "written on"), service, a short summary, photo thumbnails and the state chip
+  (Draft only; Finalized and Locked appear in the details). The newest visit is highlighted. Bookings that did not
+  happen (cancelled, no-show) are thin rows, never treatment cards; a completed booking with nothing written is
+  "Record pending" with a Fill action. Everything is grouped by stored links, never by date; photos with no visit
+  wait in an "Organize" card.
+- **Visit details** show everything the record holds with corrections applied, the photos, incidents and linked
+  documents, and the change history collapsed at the end. Actions: Add photo, Complete (the visit form), Use as the
+  base of a new visit (choose parts; never photos, result, reaction, day or signed documents).
+- **Visit form**: one screen, any order. Photos first or last (one "Take photo" button: before, then after, then
+  progress; kind and visibility change on the tile), client, service and the real visit day, a quick note, the
+  profession's fields (needed fields never fold), result and reaction, aftercare and "Remember next time". It saves a
+  draft by itself (`VisitAutosaveStatus` says saving, saved at, or not saved with a retry). "Finalize record" is the
+  one primary action; the confirmation is compact (open the record, book the return, done). Closing with a draft asks
+  keep or delete.
+- **Appointment and Before you start**: the client's name opens her record; the previous visit shows with photos;
+  the actions follow the record's state (Register visit, Continue record, Open record). "Mark completed" never
+  finalizes a record; with nothing written it asks "Register now" or "Later". Before you start shows only what was
+  written: "Remember today" (rose wash), the last visit card and technique, products, result and reaction.
+- **Home and Alerts**: "To follow up" (Home, three rows, then "See all in Alerts") and "Records to complete" (Alerts,
+  every one) list completed bookings of the last 14 days with nothing written and drafts, one line per visit. An
+  optional evening notification says only a count.
+- **Options**: "+ Add" chips on techniques, products, her fields' choices and the client's preferences, sensitivities
+  and recurring requests open `OptionAddSheet` (suggestions while typing, create and select, "Only this time" or "Save
+  to reuse"). More → Personalization renames, reorders, archives and restores; written records keep their words.
+- **Documents**: four parts, private documentation, sent by the client, sharing with the client and portfolio use; a
+  consent can name the visit it belongs to.
+- **Record fields**: "Needed to finalize" (never blocks a draft) and "Only for…" services per field.
+- **Welcome**: "Organize your agenda. Follow every client." with a sample record card; voice and the assistant are
+  shown as optional, never as active.
+
 ## Empty, loading and error states
 
 Home, Calendar and Alerts use the shared `ScreenPhase` / `ScreenStateView` (loading skeleton, caller-defined empty
@@ -743,7 +829,10 @@ grace; offers skeleton; store error with retry; purchased, restored, nothing to 
 Export (idle, preparing, ready, error), Recovery key (masked, revealed, not recognized, no key, done), Delete account
 (offer, confirm, deleting, done per outcome, error), Notifications (ask, denied, granted), Integrations (available,
 connected, denied in Settings, coming soon). D55: the consent list has an empty text inside its card; a document
-that cannot be read or is above 10 MB shows an error in the sheet.
+that cannot be read or is above 10 MB shows an error in the sheet. Client records (2026-10-12): the record has empty
+lines per section (no visits, no photos, no documents), Visit details have loading, missing and error states, the
+visit form says when a draft is not saved and offers a retry, Organize photos and the client picker have empty
+states, Personalization has an empty line per list and an error alert for a duplicate or a failed save.
 
 ## Accessibility
 

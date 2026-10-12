@@ -6,8 +6,8 @@
 import PhotosUI
 import SwiftUI
 
-/// The sheet that records a consent (D55): what it is about, her own label, signed or not and when, a note, and an
-/// optional photo or file of the real signed paper. Editing an existing record also offers to delete it. Sealed in
+/// The sheet that records a paper signed in person, a consent (D55) or her own health form (D60): what it is about,
+/// her own label, signed or not and when, a note, and an optional photo or file of the real signed paper. Editing an existing record also offers to delete it. Sealed in
 /// the vault when she saves; the paper itself stays with her.
 struct ConsentRecordSheet: View {
     @Bindable var viewModel: ConsentRecordViewModel
@@ -20,7 +20,7 @@ struct ConsentRecordSheet: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 SheetHeader(
-                    title: viewModel.isEditing ? "consent.title.edit" : "consent.title.new",
+                    title: title,
                     subtitle: "consent.subtitle", closeLabel: "common.close",
                     closeIdentifier: "consent.closeButton", onClose: { dismiss() }
                 )
@@ -36,6 +36,7 @@ struct ConsentRecordSheet: View {
                         isSensitive: true, identifier: "consent.noteField"
                     )
                     documentSection
+                    if !viewModel.visits.isEmpty { visitPicker }
                     if viewModel.isEditing { deleteButton }
                 }
                 .padding(.horizontal, Spacing.gutter)
@@ -68,6 +69,16 @@ struct ConsentRecordSheet: View {
     }
 
     // MARK: - Parts
+
+    /// Follows the kind she has chosen, so a health form never reads "New consent".
+    private var title: LocalizedStringKey {
+        switch (viewModel.draft.kind == .healthForm, viewModel.isEditing) {
+        case (true, false): "consent.title.newForm"
+        case (true, true): "consent.title.editForm"
+        case (false, false): "consent.title.new"
+        case (false, true): "consent.title.edit"
+        }
+    }
 
     private var kindChips: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
@@ -135,6 +146,35 @@ struct ConsentRecordSheet: View {
                 }
             }
         }
+    }
+
+    /// The visit this document belongs to, if any. "No visit" is a real answer: a general consent is not tied to one.
+    private var visitPicker: some View {
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Picker(selection: $viewModel.draft.recordID) {
+                Text("consent.visit.none").tag(UUID?.none)
+                ForEach(viewModel.visits) { record in
+                    Text(verbatim: visitTitle(record)).tag(UUID?.some(record.id))
+                }
+                // A link saved earlier to a visit that is no longer listed stays as it is, and says so.
+                if let linked = viewModel.draft.recordID, !viewModel.visits.contains(where: { $0.id == linked }) {
+                    Text("consent.visit.unavailable").tag(UUID?.some(linked))
+                }
+            } label: {
+                Text("consent.visit")
+            }
+            .pickerStyle(.menu)
+            .tint(Palette.roseText)
+            .frame(minHeight: Spacing.touchTarget)
+            .accessibilityIdentifier("consent.visitPicker")
+            Text("consent.visit.note").font(Typography.footnote).foregroundStyle(Palette.ink2)
+        }
+    }
+
+    private func visitTitle(_ record: TreatmentRecord) -> String {
+        let day = (record.performedAt ?? record.createdAt)
+            .formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(locale))
+        return "\(record.serviceName) · \(day)"
     }
 
     private var deleteButton: some View {

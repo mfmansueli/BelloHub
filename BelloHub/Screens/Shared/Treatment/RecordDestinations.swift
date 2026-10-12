@@ -11,6 +11,18 @@ extension View {
         navigationDestination(for: RecordRoute.self) { route in
             switch route {
             case .history(let clientID): RecordHistoryView(clientID: clientID)
+            case .visit(let recordID): VisitDetailView(recordID: recordID)
+            }
+        }
+    }
+
+    /// Pushes the record screen `item` names, for a screen that is itself pushed on a stack without
+    /// `.recordDestinations()` (an appointment, a client record opened from another tab).
+    func recordDestination(item: Binding<RecordRoute?>) -> some View {
+        navigationDestination(item: item) { route in
+            switch route {
+            case .history(let clientID): RecordHistoryView(clientID: clientID)
+            case .visit(let recordID): VisitDetailView(recordID: recordID)
             }
         }
     }
@@ -19,9 +31,10 @@ extension View {
     func recordSheet(item: Binding<RecordSheet?>) -> some View {
         sheet(item: item) { sheet in
             switch sheet {
-            case .incident(let clientID, let appointmentID):
-                IncidentView(clientID: clientID, appointmentID: appointmentID)
+            case .incident(let clientID, let appointmentID, let recordID):
+                IncidentView(clientID: clientID, appointmentID: appointmentID, recordID: recordID)
             case .exportRecord(let clientID): ExportRecordView(clientID: clientID)
+            case .organizePhotos(let clientID): OrganizePhotosView(clientID: clientID)
             }
         }
     }

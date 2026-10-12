@@ -4,6 +4,8 @@
 Checks the profession catalogs in BelloHub/Resources/Professions (docs/07-LOCALIZATION.md section 5): all fourteen
 localizations exist, every profession is present in the same order, every localization has the same keys, every name
 is filled, keys are unique within each kind (services, tags, fields), and every profession preselects at least one service and one record field.
+Quick answers (a field's `tags`, a profession's `reactionTags` and `aftercareTags`) come in the same number as in English,
+each filled, at most 32 characters and once per list (spaces and letter case aside).
 Structure (minutes, follow-up weeks, defaults, colors) must match the English file so a translation cannot change
 behavior. When a language genuinely needs different services (henna brows in `hi`, threading), relax the key check
 for that language here and say why in the commit.
@@ -35,8 +37,10 @@ def shape(data):
             p["id"],
             [(s["key"], s["minutes"], s["followUpWeeks"], s["selected"], s["photos"]) for s in p["services"]],
             [(t["key"], t["color"], t["selected"]) for t in p["tags"]],
-            [(f["key"], f["on"]) for f in p["fields"]],
+            [(f["key"], f["on"], len(f.get("tags", []))) for f in p["fields"]],
             p["intake"],
+            len(p.get("reactionTags", [])),
+            len(p.get("aftercareTags", [])),
         )
         for p in data["professions"]
     ]
@@ -60,7 +64,7 @@ def main():
             errors.append(f"{code}: professions are not {PROFESSIONS}")
             continue
         if shape(data) != expected:
-            errors.append(f"{code}: structure (keys, minutes, weeks, defaults, colors) differs from en")
+            errors.append(f"{code}: structure (keys, minutes, weeks, defaults, colors, answer counts) differs from en")
         # Keys are unique within a kind (a service and a tag may both be `makeup.bridal`): selections are kept per kind.
         seen = {"services": set(), "tags": set(), "fields": set()}
         for p in data["professions"]:
@@ -82,6 +86,15 @@ def main():
                 errors.append(f"{code}/{p['id']}: no record field on")
             if any(t["color"] not in COLORS for t in p["tags"]):
                 errors.append(f"{code}/{p['id']}: unknown tag color")
+            lists = [(f["key"], f.get("tags", [])) for f in p["fields"]]
+            lists += [(f"{p['id']}.reactionTags", p.get("reactionTags", [])),
+                      (f"{p['id']}.aftercareTags", p.get("aftercareTags", []))]
+            for name, answers in lists:
+                folded = [" ".join(a.split()).lower() for a in answers]
+                if any(not a.strip() or len(a) > 32 for a in answers):
+                    errors.append(f"{code}/{name}: a quick answer is empty or longer than 32 characters")
+                if len(set(folded)) != len(folded):
+                    errors.append(f"{code}/{name}: a quick answer repeats")
             if not set(p["intake"]) <= INTAKE:
                 errors.append(f"{code}/{p['id']}: unknown intake item")
             if any(s["category"].strip() == "" for s in p["services"]):

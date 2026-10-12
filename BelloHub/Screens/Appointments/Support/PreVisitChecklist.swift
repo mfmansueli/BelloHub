@@ -35,11 +35,12 @@ struct PreVisitChecklist: Equatable, Sendable {
     let preferences: [String]
     let contraindications: ContraindicationStatus
     let patchTest: PatchTestStatus
-    /// When the latest health form was signed; nil when there is none.
+    /// When the client last gave her health history (a signed paper form or an older answered one); nil when never.
     let healthFormSignedAt: Date?
     /// The form is older than "ask again every N months".
     let healthFormReviewDue: Bool
-    /// When the latest consent record she marked signed is dated; nil when none is signed (D55).
+    /// When the latest consent record she marked signed is dated; nil when none is signed (D55). Health forms count
+    /// under `healthFormSignedAt`, not here.
     let consentSignedAt: Date?
     /// The plan this visit belongs to, or the client's plan in progress.
     let plan: Plan?
@@ -53,7 +54,7 @@ struct PreVisitChecklist: Equatable, Sendable {
 
     static func make(_ input: Input, now: Date, calendar: Calendar) -> PreVisitChecklist {
         let form = HealthFormTemplateRules.latestForm(in: input.forms)
-        let signed = form?.signedAt
+        let signed = HealthFormTemplateRules.lastHealthFormDate(forms: input.forms, records: input.consents)
         let review = signed.map {
             HealthFormTemplateRules.reviewStatus(signedAt: $0, months: input.reviewMonths, now: now, calendar: calendar)
         }
@@ -67,7 +68,7 @@ struct PreVisitChecklist: Equatable, Sendable {
             patchTest: PatchTestStatus.make(service: input.service, patchTests: input.patchTests, now: now),
             healthFormSignedAt: signed,
             healthFormReviewDue: review?.isDue ?? false,
-            consentSignedAt: input.consents.filter(\.isSigned).map(\.effectiveDate).max(),
+            consentSignedAt: input.consents.filter { $0.isSigned && $0.kind != .healthForm }.map(\.effectiveDate).max(),
             plan: plan(for: input.appointment, plans: input.plans, appointments: own, calendar: calendar),
             lastVisit: own.filter { $0.status == .completed && $0.startsAt < input.appointment.startsAt }
                 .max { $0.startsAt < $1.startsAt }

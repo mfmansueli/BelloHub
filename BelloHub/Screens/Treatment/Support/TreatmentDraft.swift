@@ -37,4 +37,10 @@ struct TreatmentDraft: Equatable, Sendable {
 
     /// Nothing worth saving: no result and every answer blank.
     var isEmpty: Bool { result == nil && values.isEmpty }
+
+    /// Something she wrote herself: a result, or an answer that differs from what the flow put there on its own
+    /// (`starting`: the service's aftercare text, the parts of a past visit used as the base).
+    func hasAnswers(besides starting: [String: String]) -> Bool {
+        result != nil || values.contains { key, value in starting[key] != value }
+    }
 }

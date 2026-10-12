@@ -6,8 +6,9 @@
 import Foundation
 
 /// Which questions of the manual form show at once and which wait under "More fields" (routine-a item 8): the
-/// observations, the fields with a place in the record (products, technique, result, aftercare) and the first few of
-/// her own; a field that already has an answer always shows. Nothing is required but one answer. Pure.
+/// observations, the fields with a place in the record (products, technique, result, aftercare), every field with
+/// quick answers (her profession's prepared questions: one tap each, so they never hide) and the first few of her
+/// own; a field that already has an answer, or that her template needs to finalize, always shows. Pure.
 enum TreatmentFormLayout {
     /// How many of her template's own fields show before "More fields".
     static let leadingGenericCount = 2
@@ -20,7 +21,7 @@ enum TreatmentFormLayout {
         var generic = 0
         for field in fields {
             let answered = !draft.value(for: field.key).isEmpty
-            if field.role != .generic || answered {
+            if field.role != .generic || answered || field.isRequired || !field.tags.isEmpty {
                 main.append(field)
             } else if generic < leadingGenericCount {
                 generic += 1
