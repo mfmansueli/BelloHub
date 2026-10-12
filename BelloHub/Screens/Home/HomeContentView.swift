@@ -63,11 +63,9 @@ struct HomeContentView: View {
     // MARK: - Shortcuts
 
     /// The two ways a day starts: booking someone, or writing down a visit that just happened (a walk-in, a visit
-    /// with no booking). Side by side; stacked at the largest text sizes so neither label is cut.
+    /// with no booking). Side by side while both labels fit whole; stacked otherwise, so no word is ever cut.
     private var shortcuts: some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(spacing: Spacing.sm)) : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return layout {
+        FittingRow(fillsWidth: true) {
             Button { agendaSheet = .newAppointment(clientID: nil, startsAt: nil) } label: {
                 Label { Text("home.quick.newAppointment") } icon: { Image(icon: .plus) }
                     .frame(maxWidth: .infinity)

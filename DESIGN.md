@@ -187,6 +187,8 @@ Generic, no business rules, in `DesignSystem/Components/` (and `Styles/`, `Backg
 | `Skeleton`, `OfflineBanner`, `FooterNote`, `SuccessSeal` | See Motion for the seal |
 | `BrandMark`, `BrandLockup` | The app icon itself, stacked from its own two layers (`BrandMarkRelief` and `BrandMarkFront` in the asset catalog, copies of `BelloHub.icon/Assets/Relief.png` and `Front.png`) over the icon's background (`BrandPalette`: orange `#E84A10`, near-black `#181717` in dark; ivory "b" `#FAF5EB`) in the rounded square of the icon mask. The 2026-10-11 icon (orange background, ivory "b" with a sage relief) replaced the earlier sage tile. Used on Locked (64 pt), the privacy cover (72 pt) and the lockup. The layers come from raster cut-outs of the approved reference, not vector files. The wordmark is the brand name, never localized, and always left-to-right |
 | `ChoiceCard` | A tappable card for a profession or suggested service: selected is `surface` with a 1.5 pt `selectionInk` outline and an `action` check disc, unselected is flat `sunken`. One element for VoiceOver with the selected trait |
+| `FittingRow` | Buttons side by side only while every label fits on one line, stacked otherwise; `fillsWidth` gives equal halves side by side and full width stacked. Decides by the labels, not the text size, so a word never breaks in the middle ("appointme / nt" on an iPhone 15 Pro at a large size). Follows the reading direction |
+| `FittingGrid` | Cards in equal columns while every label fits its column on one line, one per row otherwise (profession cards, tag colors) |
 | `FlowLayout` | Wraps chips into rows and follows the reading direction (rows start on the right in Arabic); `wrapsLongChildren` lets a chip with a long label wrap instead of overflowing |
 | `StepProgressBar` | One 4 pt segment per step, filled in `action` up to the current one (`hairline` after it); spoken as "Step n of m" |
 | `ToggleRow` | Title, optional line, the native `Toggle` tinted `sage` |
@@ -597,6 +599,9 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
 - **Counts** read "Not back in 2+ months: 3 clients", "Ready for a follow-up: 2 clients": the counted noun follows the
   language's plural rules (`ClientTerm.countText`, Arabic six forms, German "Personen"), so the sentence needs no
   agreement.
+- **No word breaks in the middle**, in any language or text size: pairs of buttons use `FittingRow` and card grids
+  `FittingGrid`, which stack when a label does not fit whole; wrapping between words is fine. The old rule (stack
+  only at accessibility sizes) cut "New appointment" on Home at a large size.
 - **Chips** keep a one-line label on one line (`FlowLayout` places them at their natural size; "12 hr" wrapped before).
 - **5.8 Camera**: the preview and the "only saved in Bello" note scroll above the pinned bottom bar, and the bar
   (`FlowBottomBar`) always keeps the height its buttons need; at AX5 in German the 3:4 preview squeezed the capture

@@ -21,8 +21,6 @@ struct FollowUpRowCard: View {
     let onRestore: (FollowUpItem) -> Void
     let onFinishClosing: (FollowUpItem) -> Void
 
-    @Environment(\.dynamicTypeSize) private var typeSize
-
     private var text: FollowUpReasonText { FollowUpReasonText(formatters: formatters) }
 
     var body: some View {
@@ -70,10 +68,7 @@ struct FollowUpRowCard: View {
     }
 
     private func actions(_ item: FollowUpItem, isMain: Bool) -> some View {
-        let layout = typeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.sm))
-            : AnyLayout(HStackLayout(spacing: Spacing.sm))
-        return layout {
+        FittingRow {
             if let action = FollowUpAction.primary(for: item) {
                 Button { onAction(action) } label: { Text(FollowUpAction.title(for: item.kind)) }
                     .buttonStyle(isMain ? .belloSecondary : .belloChip(selected: false))

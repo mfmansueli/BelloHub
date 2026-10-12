@@ -57,7 +57,7 @@ struct BookingLinkCard<Destination: View>: View {
     private var buttons: some View {
         if let link {
             if !state.isLive { goOnlineButton }
-            HStack(spacing: Spacing.row) {
+            FittingRow(spacing: Spacing.row, fillsWidth: true) {
                 Button(action: onCopy) {
                     Text(isCopied ? "bookingSettings.link.copied" : "bookingSettings.link.copy")
                 }
