@@ -11,6 +11,8 @@ import SwiftUI
 struct AppointmentContentView: View {
     @State private var viewModel: AppointmentViewModel
     @State private var sheet: AgendaSheet?
+    @State private var visitFlow: TreatmentFlowRequest?
+    @State private var recordRoute: RecordRoute?
     @Environment(\.locale) private var locale
 
     init(
@@ -29,6 +31,20 @@ struct AppointmentContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task { viewModel.startListening() }
             .agendaSheet(item: $sheet)
+            .treatmentFlow(item: $visitFlow)
+            // Back from the visit form: the record state (draft, finalized) changed.
+            .onChange(of: visitFlow) { _, new in if new == nil { viewModel.refresh() } }
+            .recordDestination(item: $recordRoute)
+            .confirmationDialog(
+                Text("appointment.register.title"), isPresented: $viewModel.offersToRegister, titleVisibility: .visible
+            ) {
+                Button { visitFlow = viewModel.visitFlowRequest } label: { Text("appointment.register.now") }
+                    .accessibilityIdentifier("appointment.registerNowButton")
+                Button(role: .cancel) {} label: { Text("appointment.register.later") }
+                    .accessibilityIdentifier("appointment.registerLaterButton")
+            } message: {
+                Text("appointment.register.message")
+            }
             .alert(Text("appointment.error.actionTitle"), isPresented: actionFailed) {
                 Button(role: .cancel) {} label: { Text("common.close") }
             } message: {
@@ -66,6 +82,13 @@ struct AppointmentContentView: View {
                         now: now
                     )
                     reminderRow(visit, formatters: formatters, now: now)
+                    if let previous = viewModel.previousVisit {
+                        AppointmentPreviousVisitCard(
+                            visit: previous, formatters: formatters, now: now,
+                            loadThumbnail: viewModel.thumbnail(for:),
+                            onOpen: { recordRoute = .visit(recordID: previous.id) }
+                        )
+                    }
                     links(checklist, visit: visit)
                 } else {
                     reminderRow(visit, formatters: formatters, now: now)
@@ -85,7 +108,17 @@ struct AppointmentContentView: View {
         .accessibilityIdentifier("appointment.detail")
     }
 
+    /// Her name opens her record: the history, photos and everything she knows about the client.
     private func header(_ visit: VisitContext, formatters: Formatters, now: Date) -> some View {
+        NavigationLink(value: AgendaRoute.clientRecord(clientID: visit.client.id)) {
+            headerContent(visit, formatters: formatters)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint(Text("appointment.clientRecord.hint"))
+        .accessibilityIdentifier("appointment.clientRecordLink")
+    }
+
+    private func headerContent(_ visit: VisitContext, formatters: Formatters) -> some View {
         HStack(spacing: Spacing.md) {
             Avatar(name: visit.client.name, id: visit.client.id.uuidString, size: 64)
             VStack(alignment: .leading, spacing: Spacing.xxs) {
@@ -100,7 +133,13 @@ struct AppointmentContentView: View {
                     .accessibilityIdentifier("appointment.service")
             }
             Spacer(minLength: 0)
+            Image(icon: .forward)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(Palette.ink2)
+                .flipsForRightToLeftLayoutDirection(true)
+                .accessibilityHidden(true)
         }
+        .contentShape(Rectangle())
     }
 
     private func statusRow(_ visit: VisitContext, formatters: Formatters, now: Date) -> some View {
@@ -252,6 +291,9 @@ struct AppointmentContentView: View {
         case .reschedule: sheet = .reschedule(appointmentID: id)
         case .noShow: sheet = .noShowMark(appointmentID: id)
         case .cancel: sheet = .cancel(appointmentID: id)
+        case .registerVisit, .continueRecord: visitFlow = viewModel.visitFlowRequest
+        case .openRecord:
+            if let record = viewModel.record { recordRoute = .visit(recordID: record.id) }
         }
     }
 

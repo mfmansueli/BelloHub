@@ -19,6 +19,7 @@ extension View {
             case .bookingRequest(let id): BookingRequestView(bookingID: id)
             case .rescheduleRequest(let id): RescheduleRequestView(requestID: id)
             case .waitlist: WaitlistView()
+            case .clientRecord(let clientID): ClientRecordScreen(clientID: clientID)
             }
         }
     }

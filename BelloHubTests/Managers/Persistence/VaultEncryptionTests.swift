@@ -97,6 +97,7 @@ struct VaultEncryptionTests {
                 data: Data("SENTINEL-CONSENTIMG".utf8), thumbnail: Data("SENTINEL-CONSENTTHUMB".utf8)
             )
         ))
+        try await repository.save(SavedOption(context: .sensitivity, name: "SENTINEL-OPTION", createdAt: start))
         let photoBytes = Data("SENTINEL-PHOTO-BYTES-".utf8) + Data(repeating: 0xAB, count: 4_000)
         try await repository.save(Photo(id: UUID(), clientID: client.id, recordID: record.id, takenAt: start,
                                         kind: .before, visibility: .professionalOnly),
@@ -118,7 +119,8 @@ struct VaultEncryptionTests {
             "SENTINEL-OLD", "SENTINEL-NEW",
             "SENTINEL-WHY", "SENTINEL-SYMPTOMS", "SENTINEL-AREA", "SENTINEL-ACTION", "SENTINEL-FOLLOW",
             "SENTINEL-ANSWER", "SENTINEL-MINOR", "SENTINEL-LABEL", "SENTINEL-CONSENTNOTE", "SENTINEL-FILENAME",
-            "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB"
+            "SENTINEL-CONSENTIMG", "SENTINEL-CONSENTTHUMB", "SENTINEL-PHOTO-BYTES-", "SENTINEL-THUMB",
+            "SENTINEL-OPTION"
         ]
 
         #expect(!files.isEmpty)
@@ -165,6 +167,7 @@ struct VaultEncryptionTests {
         #expect(HealthForm.sensitiveKeys == ["answers", "minorName"])
         #expect(ConsentRecord.sensitiveKeys == ["label", "note", "document"])
         #expect(Photo.sensitiveKeys.isEmpty, "photo bytes are sealed separately, not as JSON keys")
+        #expect(SavedOption.sensitiveKeys == ["name"])
     }
 
     // MARK: - Keys

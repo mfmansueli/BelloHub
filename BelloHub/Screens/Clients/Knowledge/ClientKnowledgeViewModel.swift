@@ -94,6 +94,14 @@ final class ClientKnowledgeViewModel {
         }
     }
 
+    /// Adds a saved option (or one she just created) to `section`; the same words already there are not repeated.
+    func add(_ entry: String, to section: KnowledgeSection) {
+        if case .added(let updated) = KnowledgeListRules.adding(entry, to: entries(in: section)) {
+            lists[section] = updated
+            duplicateIn = nil
+        }
+    }
+
     func remove(at offsets: IndexSet, from section: KnowledgeSection) {
         lists[section] = KnowledgeListRules.removing(offsets, from: entries(in: section))
     }

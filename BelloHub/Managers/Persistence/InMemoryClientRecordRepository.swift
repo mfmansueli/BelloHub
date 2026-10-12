@@ -17,6 +17,7 @@ actor InMemoryClientRecordRepository: ClientRecordRepository {
     var servicesByID: [UUID: Service] = [:]
     var addOnsByID: [UUID: AddOn] = [:]
     var productsByID: [UUID: Product] = [:]
+    var optionsByID: [UUID: SavedOption] = [:]
     var credentialsByID: [UUID: Credential] = [:]
     var recordsByID: [UUID: TreatmentRecord] = [:]
     var correctionsByID: [UUID: RecordCorrection] = [:]

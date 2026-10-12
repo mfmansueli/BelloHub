@@ -135,3 +135,12 @@ extension RecordTemplate: VaultStorable {
         VaultIndex(dateA: updatedAt)
     }
 }
+
+extension SavedOption: VaultStorable {
+    static var kind: VaultKind { .savedOption }
+    static var sensitiveKeys: Set<String> { ["name"] }
+
+    var index: VaultIndex {
+        VaultIndex(dateA: createdAt, statusRaw: context.rawValue)
+    }
+}

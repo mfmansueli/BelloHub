@@ -183,9 +183,24 @@ struct VisitFormStepView: View {
     private func input(_ field: TreatmentFormField) -> some View {
         TreatmentFieldInput(
             field: field, value: binding(for: field.key), suggestions: viewModel.productNames,
-            hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key)
+            hasError: viewModel.showsValidation && viewModel.issue(forNumberField: field.key),
+            choices: viewModel.choices(for: field),
+            textSuggestions: field.role == .technique ? viewModel.techniqueSuggestions : [],
+            onAddOption: addOption(for: field)
         )
         .disabled(viewModel.isLocked)
+    }
+
+    /// "+ Add" for the lists that take new options: techniques, products and her fields' choices. Fixed answers
+    /// (yes or no, the result) and free notes get none.
+    private func addOption(for field: TreatmentFormField) -> ((String, Bool) -> Void)? {
+        guard !viewModel.isLocked else { return nil }
+        switch (field.role, field.input) {
+        case (.technique, _): return { viewModel.addTechnique($0, save: $1, fieldKey: field.key) }
+        case (_, .products): return { viewModel.addProduct($0, save: $1, fieldKey: field.key) }
+        case (_, .choice), (_, .multiChoice): return { viewModel.addChoice($0, save: $1, field: field) }
+        default: return nil
+        }
     }
 
     @ViewBuilder

@@ -164,6 +164,12 @@ struct MoreView: View {
                         subtitle: Text("more.row.forms.subtitle"), showsChevron: true
                     )
                 }
+                link(.personalization, identifier: "more.personalizationRow") {
+                    MoreRow(
+                        icon: .sliders, tint: .peach, title: Text("more.row.personalization"),
+                        subtitle: Text("more.row.personalization.subtitle"), showsChevron: true
+                    )
+                }
                 link(.tags, identifier: "more.tagsRow") {
                     MoreRow(
                         icon: .tag, tint: .rose, title: Text("more.row.tags"), subtitle: tagsSubtitle,

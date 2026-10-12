@@ -34,6 +34,7 @@ Layer A is reached **only** through `ClientRecordRepository`; layer B **only** t
 | `Photo` | `image`, `thumbnail` (encrypted file bytes in `externalStorage`) |
 | `Appointment` | `privateNote` (if present) |
 | `TimeBlock` | `reason` |
+| `SavedOption` | `name` (a saved sensitivity can be health information) |
 
 **Not encrypted** (needed for sorting, queries, notifications, search): names, phone numbers, dates, service names, statuses, tags, counts. Free-text clinical search works by decrypting in memory over the working set (fine to a few thousand records) and is limited to what the professional has loaded; document the limit.
 

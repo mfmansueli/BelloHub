@@ -16,6 +16,17 @@ extension View {
         }
     }
 
+    /// Pushes the record screen `item` names, for a screen that is itself pushed on a stack without
+    /// `.recordDestinations()` (an appointment, a client record opened from another tab).
+    func recordDestination(item: Binding<RecordRoute?>) -> some View {
+        navigationDestination(item: item) { route in
+            switch route {
+            case .history(let clientID): RecordHistoryView(clientID: clientID)
+            case .visit(let recordID): VisitDetailView(recordID: recordID)
+            }
+        }
+    }
+
     /// Presents the sheet a `RecordSheet` names.
     func recordSheet(item: Binding<RecordSheet?>) -> some View {
         sheet(item: item) { sheet in

@@ -43,4 +43,6 @@ enum VaultKind: String, CaseIterable, Sendable {
     case timeBlock
     /// Records that a chat was opened with a message ready (S6). Owned by the client; holds no text.
     case messageLog
+    /// A word she saved to reuse in one list (a technique, a preference). The name is sealed.
+    case savedOption
 }

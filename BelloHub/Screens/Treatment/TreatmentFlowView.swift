@@ -19,12 +19,13 @@ struct TreatmentFlowView: View {
     @Environment(\.photoProcessing) private var photoProcessing
     @Environment(\.locale) private var locale
     @Environment(FollowUpQueueService.self) private var closings: FollowUpQueueService?
+    @Environment(OptionCatalogService.self) private var options: OptionCatalogService?
 
     var body: some View {
         TreatmentFlowHost(
             viewModel: TreatmentFlowViewModel(
                 request: request, repository: vault.repository, profile: profile, voice: voice,
-                structuring: structuring, photoProcessing: photoProcessing, closings: closings,
+                structuring: structuring, photoProcessing: photoProcessing, closings: closings, options: options,
                 names: TreatmentFlowViewModel.FieldNames(
                     serviceFallback: text("treatmentFlow.serviceFallback", "Treatment"),
                     notes: text("treatmentFlow.field.notes", "Observations"),

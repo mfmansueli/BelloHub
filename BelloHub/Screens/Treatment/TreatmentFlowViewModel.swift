@@ -92,6 +92,8 @@ final class TreatmentFlowViewModel {
     let photoProcessing: any PhotoProcessing
     /// Where the closing progress of older visits is kept (per user, on this iPhone); nil in tests that do not look.
     let closings: FollowUpQueueService?
+    /// Her saved options (techniques), for "+ Add"; nil in tests that do not look.
+    let options: OptionCatalogService?
     let now: @Sendable () -> Date
     let makeID: @Sendable () -> UUID
     let names: FieldNames
@@ -123,6 +125,7 @@ final class TreatmentFlowViewModel {
         structuring: any RecordStructuring = UnavailableRecordStructuring(),
         photoProcessing: any PhotoProcessing = ImageIOPhotoProcessing(),
         closings: FollowUpQueueService? = nil,
+        options: OptionCatalogService? = nil,
         names: FieldNames,
         autosaveDelay: Duration = .milliseconds(800),
         now: @escaping @Sendable () -> Date = { Date() },
@@ -135,6 +138,7 @@ final class TreatmentFlowViewModel {
         self.structuring = structuring
         self.photoProcessing = photoProcessing
         self.closings = closings
+        self.options = options
         self.names = names
         self.autosaveDelay = autosaveDelay
         self.now = now
@@ -234,6 +238,7 @@ final class TreatmentFlowViewModel {
                 excluding: recordID
             )
             if profile.template == nil { await profile.load() }
+            await options?.loadIfNeeded()
             buildFields()
             performedAt = appointment?.startsAt ?? now()
             nextWeeks = NextSessionRules.suggestedWeeks(serviceFollowUpWeeks: service?.followUpWeeks)
@@ -272,6 +277,13 @@ final class TreatmentFlowViewModel {
         }
         recordID = found.id
         return found
+    }
+
+    /// Rebuilds the fields after her template changed (a choice saved from the form); what she wrote stays.
+    func buildFieldsKeepingAnswers() {
+        let answers = draft
+        buildFields()
+        draft = answers
     }
 
     private func buildFields() {
