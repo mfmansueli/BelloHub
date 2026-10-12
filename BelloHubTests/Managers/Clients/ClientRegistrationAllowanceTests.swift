@@ -125,4 +125,18 @@ struct ClientRegistrationAllowanceTests {
         for index in 2...10 { _ = try await rig.service.register(person(index)) }
         #expect(try await rig.service.register(person(11)) == .needsSubscription)
     }
+
+    @Test("A registration claim queued by an older version is dropped without calling the server")
+    func oldQueuedClaimDropped() async {
+        let rig = InboxRig(repository: FakeInboxRepository())
+        defer { rig.cleanUp() }
+        await rig.start()
+        let before = await rig.repository.writes.count
+
+        _ = rig.queue.enqueue(.reserveRegistrations(claims: [RegistrationClaim(person(1))]))
+        await rig.queue.flushAsync()
+
+        #expect(rig.queue.pending.isEmpty)
+        #expect(await rig.repository.writes.count == before)
+    }
 }

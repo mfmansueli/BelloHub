@@ -69,6 +69,24 @@ struct BookingRequestViewModelTests {
         #expect(await Wait.untilMain { model.phase == .accepted })
     }
 
+    @Test("With the plan active on this iPhone, a server that still says 'needs a plan' is explained, not sold again")
+    func serverMissesPlan() async {
+        let booking = makeIncomingBooking(reason: .freeRegistrationsUsed)
+        let rig = InboxRig(repository: FakeInboxRepository(bookings: [booking]))
+        defer { rig.cleanUp() }
+        await rig.start()
+        let plan = FakeSubscriptionStatus(hasActivePlan: true)
+        let model = BookingRequestViewModel(bookingID: booking.id, sync: rig.sync, vault: rig.vault, subscription: plan)
+        await rig.repository.setApprovalOutcome(.needsSubscription)
+
+        model.approve()
+
+        #expect(await Wait.untilMain { model.phase == .needsPlan })
+        #expect(model.serverMissesPlan)
+        plan.hasActivePlan = false
+        #expect(!model.serverMissesPlan, "without a plan the paywall is the right answer")
+    }
+
     @Test("Offline, the answer waits in the queue and reaches the server when the network is back")
     func offlineReplay() async {
         let (model, rig) = await makeModel()

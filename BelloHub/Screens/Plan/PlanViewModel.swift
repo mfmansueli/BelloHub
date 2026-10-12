@@ -6,8 +6,8 @@
 import Foundation
 import Observation
 
-/// State and actions of Plan (7.3) and of the paywall (the same screen opened as a sheet, ASSUMPTION-20): the
-/// period she picked, purchase, restore and manage, with the store's answers turned into a notice, and the Terms and the
+/// State and actions of Plan (7.3) and of the paywall (the same screen opened as a sheet, ASSUMPTION-20): the period
+/// she picked, purchase, restore and manage, with the store's answers turned into a notice, and the Terms and the
 /// Privacy Policy to read before buying (App Review 3.1.2).
 @MainActor
 @Observable

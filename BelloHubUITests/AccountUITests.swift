@@ -126,6 +126,16 @@ final class AccountUITests: XCTestCase {
         XCTAssertTrue(app.buttons["plan.choice.yearly"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["plan.choice.monthly"].exists)
         XCTAssertTrue(app.buttons["plan.choice.yearly"].label.contains("17"), "the yearly saving is shown")
+        // App Review 3.1.2: restore, the renewal sentence and the two legal texts are on the paywall itself.
+        let terms = app.buttons["plan.legal.termsButton"]
+        app.bringIntoView(terms)
+        XCTAssertTrue(app.buttons["plan.restoreButton"].exists)
+        XCTAssertTrue(app.element("plan.legal.renewal").exists)
+        XCTAssertTrue(app.buttons["plan.legal.privacyButton"].exists)
+        terms.tap()
+        XCTAssertTrue(app.element("legalNotice.body").waitForExistence(timeout: 5), "the Terms open")
+        app.tapButton("legalNotice.closeButton")
+        XCTAssertTrue(waitUntil { !app.element("legalNotice.body").exists })
         app.tapButton("paywall.closeButton")
         XCTAssertTrue(waitUntil { !app.staticTexts["paywall.title"].exists })
         app.tapButton("newClient.cancelButton")

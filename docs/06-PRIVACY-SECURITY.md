@@ -24,6 +24,7 @@ If you are unsure which class a field is, treat it as S.
 | Client's health form (while in transit) | after import | ✔ (her own input) | opaque envelope, size and timing | ✘ | ✘ |
 | Booking facts (name, phone, time, service) | ✔ | ✔ own | ✔ (operational need) | ✘ | email/SMS provider sees the code/message content they deliver (no clinical content) |
 | Voice and transcript | ✔ | ✘ | ✘ | ✘ (audio discarded) | ✘ (on-device AI) |
+| Her Bello Hub Pro purchase (D59) | ✔ | ✘ | ✘ (verified on the iPhone; no transaction, receipt or plan state is sent) | Apple handles the purchase | ✘ |
 
 ## 3. The sealed mailbox (client → professional)
 
@@ -101,6 +102,9 @@ entropy E (128 bits, SecRandomCopyBytes)  ──▶  12-word BIP-39 phrase (Engl
 
 ### 4.2 Storage on the iPhone
 
+- The free-registration count (D59) is a separate Keychain item: service `app.bellohub.registrations`, account
+  `count.v1`, `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly`, **not** synchronizable; it holds a number only and
+  survives deleting the app on that iPhone. It is not part of the vault and is not cleared by deleting the account.
 - On first launch (before the first sensitive write) generate `E` and store it in the **iCloud Keychain**: `kSecClassGenericPassword`, service `app.bellohub.keys`, account `seed.v1`, `kSecAttrSynchronizable = true`, `kSecAttrAccessible = kSecAttrAccessibleAfterFirstUnlock`. Cache derived keys in memory only; clear them when the app locks.
 - Showing the recovery phrase requires **Face ID or the device passcode** (`LAPolicy.deviceOwnerAuthentication`) every time. The words are rendered masked until she taps "Show with Face ID" (prototype `7.9`), excluded from screenshots/screen recording where the system allows (`UIScreen.isCaptured` hides them), and never placed on the pasteboard.
 - "Save to Files" exports a small text file; "Print" uses `UIPrintInteractionController`. Both are her choice; warn that anyone with the words can read her records.
@@ -183,6 +187,7 @@ Cross-cutting engineering requirements that follow:
 | Stolen iPhone | Data protection + Face ID/passcode lock + app lock + blur; Find My; vault keys cleared on lock. |
 | iCloud account takeover | Records are encrypted with a vault key that is not in CloudKit; Keychain access also needs the attacker to compromise iCloud Keychain. Recommend ADP. |
 | Lost phone with no recovery key | Unrecoverable by design; warn clearly. |
+| Modified app bypasses the free limit or the plan (D59) | Accepted by the owner: the plan and the free allowance are decided on the iPhone (StoreKit 2 verified transactions; a Keychain count on this device only plus the iCloud vault ledger). Only revenue is at stake; no data of anyone else is exposed. |
 | Malicious browser extension or compromised client device | Out of scope; limit exposure (answers only in memory). |
 | Spam bookings | App Check, verification code, rate limits, approval mode, no-show protection. |
 | Insider misuse of logs | No PII in logs. |

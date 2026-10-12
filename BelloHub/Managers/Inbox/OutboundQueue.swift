@@ -157,7 +157,7 @@ final class OutboundQueue {
         case .respondRescheduleRequest(let requestId, let accept):
             return .reschedule(try await repository.respondRescheduleRequest(id: requestId, accept: accept))
         case .reserveRegistrations:
-            // D59: the free registrations are counted on the iPhone; an old entry is dropped without calling the server.
+            // D59: the free registrations are counted on the iPhone; an old entry is dropped, the server not called.
             return .done
         case .cancelBookingByOwner, .moveBookingByOwner, .markNoShow, .forgiveNoShow:
             try await performLinkChange(action.kind)

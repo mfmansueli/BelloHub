@@ -43,14 +43,14 @@ All writes by Functions with the Admin SDK except where "owner" is stated. Docum
 `getBooking`, `confirmPresence`, `reportLate`, `rescheduleBooking`, `requestReschedule`, `cancelBooking`, `rebook`.
 
 **Owner (Auth + App Check)**
-`reserveRegistration(clientId)` (D42: idempotent by client id; counts the first time, returns `allowed` or `needsSubscription` from the count and the mirrored plan; the server is the source of truth and the client only reads it), `isSlugAvailable`, `claimSlug`, `publishProfile`, `publishAvailability`, `publishPortal`, `updateInboxKey`, `respondBookingRequest`, `respondRescheduleRequest`, `offerWaitlistSlot`, `markNoShow`, `acknowledgeMailboxItem`, `registerDevice`, `deleteClientServerData(phoneHash | bookingIds)`, `deleteAccount`.
+`reserveRegistration(clientId)` (D42: idempotent by client id; counts the first time, returns `allowed` or `needsSubscription` from the count and the mirrored plan; **unused since D59, can be removed after v1**: the app counts on the iPhone), `isSlugAvailable`, `claimSlug`, `publishProfile`, `publishAvailability`, `publishPortal`, `updateInboxKey`, `respondBookingRequest`, `respondRescheduleRequest`, `offerWaitlistSlot`, `markNoShow`, `acknowledgeMailboxItem`, `registerDevice`, `deleteClientServerData(phoneHash | bookingIds)`, `deleteAccount`.
 
 **Triggers and jobs**
 - `onBookingWritten`: pushes (generic) to the owner's devices; enqueues the confirmation email when an email exists; updates `contacts`.
 - `onInboxItemCreated`: silent push `content-available` to the owner's devices.
 - `cleanupJob` (every 10 min): expired holds; confirms Firestore TTL deleted inbox items, deletes the corresponding Storage objects; purges `bookings` past `purgeAt`; revokes expired portal tokens.
 - `sendReminders` (every 5 min; **only when `whatsAppAutomation` is on**): due reminders through `ClientMessenger`.
-- `appStoreNotifications` (HTTPS): App Store Server Notifications V2: verify the signed payload (JWS chain) and update `accounts.plan`.
+- `appStoreNotifications` (HTTPS): App Store Server Notifications V2: verify the signed payload (JWS chain) and update `accounts.plan`. **Unused since D59 (the plan is verified on the iPhone); can be removed after v1.**
 
 **`ClientMessenger`** (interface in `functions/src/messaging/`): `sendEmail(template, to, locale, vars)`, `sendWhatsApp(template, to, locale, vars)`. Providers: `EmailProvider` (transactional email through an HTTP API; provider chosen by Mateus, H7; the code depends only on the interface and a `FakeEmailProvider` for tests), `WhatsAppCloudProvider` (Meta Cloud API; implemented and tested against a mock; **disabled** unless the flag and credentials exist; message templates must be pre-approved by Meta, see H13). Template content: booking facts only. Per-locale text from `functions/src/messaging/templates/<locale>.json` generated from `docs/strings/message-templates.json`.
 

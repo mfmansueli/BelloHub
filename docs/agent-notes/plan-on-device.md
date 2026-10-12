@@ -76,3 +76,77 @@ approving them answers `needsSubscription` even for a paying professional. This 
 - the functions stay untouched; the server follow-up is written below and in the final report;
 - the app stops sending a paying professional to the paywall when the server answers `needsSubscription` to an
   approval: it says the request could not be approved online instead.
+
+## What changed (D59)
+
+### App
+- `Managers/Subscription/`:
+  - `StoreKitSubscriptionProvider` hands on only verified facts as `StoreEntitlement` (no StoreKit type outside it):
+    `Product.SubscriptionInfo.status` per subscription (subscribed, expired, billing retry, grace period, revoked)
+    with the signed renewal info (`willAutoRenew`, `gracePeriodExpirationDate`). Offline it falls back to the locally
+    signed `Transaction.currentEntitlements`. Unverified results are ignored and logged by product id. `updates()`
+    finishes verified transactions and fires on every change.
+  - `DeviceSubscriptionVerifier` replaces `RemoteSubscriptionVerifier` and `OfflineSubscriptionVerifier` (deleted). It
+    decides with `EntitlementRules` and keeps a `SubscriptionSnapshot` through `DefaultsSubscriptionSnapshotStore`
+    (`DefaultsKey.subscriptionSnapshot`), and `EphemeralSubscriptionSnapshotStore` in DEBUG launches.
+  - `SubscriptionService` shows the cached plan at launch, then reads the store; it listens to `updates()` for the
+    session (`start()` / `stop()`); when the store cannot be read, the cached state stands (until its signed end).
+    Purchase has no account token; Restore calls `AppStore.sync()` and reads the entitlements again.
+- `Models/Plan/`: `PlanProducts` (ids from `Config/App.xcconfig` → `Config/App-Info.plist`, replaces `PlanProduct`),
+  `StoreEntitlement`, `EntitlementRules`, `SubscriptionSnapshot`. `RegistrationReservation` deleted.
+- `Managers/Clients/`: `RegistrationAllowanceStoring`, `KeychainRegistrationAllowanceStore` (app),
+  `InMemoryRegistrationAllowanceStore` (UI tests, previews, default). `ClientRegistrationService` no longer takes a
+  server or a queue.
+- Inbox: `reserveRegistrations` removed from `InboxRepository` and its implementations. The `OutboundAction` case
+  stays so an older saved queue still decodes; replaying it is a no-op.
+- Plan screen and paywall: `PlanLegalSection` (auto-renewal sentence, Terms of Use, Privacy Policy) and the Legal
+  notice sheet moved to `Screens/Shared/Legal/`. BookingRequest: `serverMissesPlan` notice.
+
+### Migration and old data
+- First read after the update: Keychain count = max(Keychain, vault ledger). The vault ledger is untouched and still
+  counts, so the count can never go down. The same rule runs on every read, so clients that arrive through the
+  booking page (saved by the sync, counted by the ledger) also raise the Keychain.
+- A client id the ledger already holds (a deleted client coming back with the same id) is not counted twice.
+- Purchases made before: StoreKit already holds them; the first read after the update proves them on the iPhone. No
+  server state is read or migrated.
+- `accounts/{uid}` on the server keeps its count and plan as they were; nothing writes the plan any more.
+
+### Documentation and human tasks
+- D59 in `docs/02-DECISIONS.md` (D33 and D42 item 5 marked as superseded).
+- `docs/14-HUMAN-TASKS.md`: H14 rewritten (no Apple root certificates, no notifications URL, no `APPLE_APP_ID` /
+  `APPLE_ENVIRONMENT`; Billing Grace Period on; Terms and Privacy links; App Review notes).
+- `docs/store/app-privacy.md` and `PrivacyInfo.xcprivacy`: Purchase History no longer collected; the account token is
+  no longer listed. The Keychain is not a required-reason API (`scripts/check-privacy.sh` passes).
+- `docs/06-PRIVACY-SECURITY.md`: who sees the purchase, the allowance Keychain item, the modified-app threat.
+- `firebase/functions/API.md`, `docs/11-BACKEND-FIREBASE.md`: `reserveRegistration(s)`, `syncPlan`,
+  `appStoreNotifications` marked "unused since D59, can be removed after v1". The functions are untouched.
+- `DESIGN.md`: Plan legal section, BookingRequest notice.
+
+## How to test
+
+- **Simulator with `Config/BelloHub.storekit`** (already set in the scheme): buy monthly or yearly, then in Xcode →
+  Debug → StoreKit → Manage Transactions: refund (the plan leaves through `Transaction.updates`), expire, or turn on
+  billing retry and grace period for the subscription; "Restore purchases" calls `AppStore.sync()`.
+- **UI tests**: `-uiPlan none|active` and `-uiRegisteredClients N` as before (scripted store, in-memory snapshot and
+  allowance). `AccountUITests.testPlanScreenAndPaywall` now also opens the Terms from the paywall.
+- **Sandbox on a real iPhone** (a sandbox Apple ID in Settings → App Store → Sandbox Account), with the products
+  created in App Store Connect (H14).
+
+## Needs a real iPhone
+- A sandbox purchase, and Restore purchases on a second iPhone with the same Apple ID.
+- A refund (sandbox: Settings → App Store → Sandbox Account → Manage) reaching the app while it runs.
+- Deleting and reinstalling the app keeps the free count (Keychain this-device-only survives the app's deletion).
+- Offline use with a plan (flight mode), and the clock moved back and forward in Settings.
+- A new iPhone restored from a backup starts with the vault ledger's count (the Keychain item does not move).
+
+## Not run here (no Swift toolchain)
+`scripts/build.sh`, `scripts/test.sh fast|smoke`, `scripts/check-warnings.sh`, the UI tests and the device runs. Ran:
+`scripts/check-privacy.sh`, `scripts/check-strings.sh --final`, `scripts/check-localization-sources.sh`,
+`scripts/check-project-settings.sh` (its first two checks pass; the `plutil` step cannot run on Linux).
+
+## Server follow-up (not done: forbidden by this task)
+To stop the online-booking path from asking a paying professional for a plan, the server must stop applying D42 with
+a plan it cannot know: for example, `approvalReason` without the `freeRegistrationsUsed` branch and
+`respondBookingRequest` without the `needsSubscription` branch, leaving the decision to the app when she approves (the
+app's gate already registers the client through `ClientRegistering`). That is a function change plus a deploy, and the
+shared rules fixture (`firebase/scripts/rules-fixtures`) would change with it.
