@@ -20,6 +20,10 @@ final class ClientDataDeletionUITests: XCTestCase {
         app.openClientsTab()
         app.tapButton("clients.addButton")
         app.type("Ana Costa", intoField: "newClient.nameField")
+        app.type("11981234410", intoField: "newClient.phoneField")
+        app.type("11981234410", intoField: "newClient.confirmPhoneField")
+        app.type("ana@example.com", intoField: "newClient.emailField")
+        app.type("ana@example.com", intoField: "newClient.confirmEmailField")
         app.tapButton("newClient.saveButton")
         XCTAssertTrue(app.staticTexts["clientProfile.name"].waitForExistence(timeout: 5))
 

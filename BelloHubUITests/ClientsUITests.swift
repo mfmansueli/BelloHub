@@ -20,10 +20,13 @@ final class ClientsUITests: XCTestCase {
         app.openClientsTab()
         XCTAssertTrue(app.element("clients.empty").waitForExistence(timeout: 5))
 
-        // Add a client: only a name is required.
+        // New clients require contact details with double-entry confirmation.
         app.tapButton("clients.addButton")
         app.type("Ana Costa", intoField: "newClient.nameField")
         app.type("11981234410", intoField: "newClient.phoneField")
+        app.type("11981234410", intoField: "newClient.confirmPhoneField")
+        app.type("ana@example.com", intoField: "newClient.emailField")
+        app.type("ana@example.com", intoField: "newClient.confirmEmailField")
         app.tapButton("newClient.saveButton")
 
         // Saving opens her profile.
