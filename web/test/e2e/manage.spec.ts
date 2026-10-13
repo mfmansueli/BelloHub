@@ -25,6 +25,36 @@ test.describe('managing a booking from its link (Bk-9)', () => {
     await expect.poll(async () => (await mock.bookings(slug))[0]?.clientConfirmedAt).not.toBeNull();
   });
 
+  test('confirms presence with double-entry email and phone verification', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria');
+    const { token } = await mock.seed({ slug, startsInMinutes: 20 * HOUR });
+    await open(page, `/m/${token}`);
+
+    // Fill mismatched emails
+    await page.getByTestId('attend-email').fill('client@example.com');
+    await page.getByTestId('attend-confirm-email').fill('other@example.com');
+    await page.getByTestId('attend-yes').click();
+    await expect(page.getByTestId('attend-thanks')).toHaveCount(0);
+
+    // Fix email to match
+    await page.getByTestId('attend-confirm-email').fill('client@example.com');
+
+    // Fill mismatched phones
+    await page.getByTestId('attend-phone').fill('11987654321');
+    await page.getByTestId('attend-confirm-phone').fill('11911112222');
+    await page.getByTestId('attend-yes').click();
+    await expect(page.getByTestId('attend-thanks')).toHaveCount(0);
+
+    // Fix phone to match
+    await page.getByTestId('attend-confirm-phone').fill('11987654321');
+    await page.getByTestId('attend-yes').click();
+
+    await expect(page.getByTestId('attend-thanks')).toBeVisible();
+    await expect.poll(async () => (await mock.bookings(slug))[0]?.clientConfirmedAt).not.toBeNull();
+    const updated = (await mock.bookings(slug))[0];
+    expect(updated?.client.email).toBe('client@example.com');
+  });
+
   test('says "I cannot come" and points to reschedule or cancel', async ({ page, mock, slugFor }) => {
     const { token } = await mock.seed({ slug: slugFor('maria'), startsInMinutes: 20 * HOUR });
     await open(page, `/m/${token}`);
@@ -129,6 +159,7 @@ test.describe('cancelling (Cl-6)', () => {
     const { token } = await mock.seed({ slug, startsInMinutes: 50 * HOUR });
     await open(page, `/m/${token}`);
     await page.getByTestId('cancel').click();
+    await expect(page.getByTestId('confirm-cancel')).toBeVisible();
     await expect(page.getByTestId('counts-warning')).toHaveCount(0);
     await page.getByTestId('reason-conflict').click({ force: true });
     await page.getByTestId('confirm-cancel').click();

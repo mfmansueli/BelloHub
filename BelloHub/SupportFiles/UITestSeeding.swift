@@ -49,6 +49,14 @@ enum UITestSeeding {
         let result = OnboardingBuilder.build(draft: draft, catalog: catalog, now: Date())
         try? dependencies.keyManager.prepare(createIfMissing: true)
         try? await dependencies.vault.repository?.saveOnboarding(result)
+        var setup = dependencies.bookingSetup.setup
+        setup.location = BusinessLocation(
+            street: "Rua Augusta 1200",
+            postalCode: "01304-001",
+            city: "São Paulo",
+            countryCode: "BR"
+        )
+        try? await dependencies.bookingSetup.saveSetup(setup)
         if seed == "clientWithHealth" {
             let client = Client(id: healthClientID, name: "Ana Costa", createdAt: Date())
             _ = try? await dependencies.vault.repository?.save(client)

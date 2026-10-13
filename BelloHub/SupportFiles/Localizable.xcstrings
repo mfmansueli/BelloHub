@@ -33955,6 +33955,1086 @@
         }
       }
     },
+    "bookingSettings.requirements.link" : {
+      "comment" : "Label for the booking link address requirement.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "عنوان الرابط"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Linkadresse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Booking link address"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Booking link address"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del enlace"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del enlace"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del enlace"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adresse du lien"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "बुकिंग लिंक का पता"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alamat tautan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Indirizzo del link"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Endereço do link"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Endereço do link"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantı adresi"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.linkMissing" : {
+      "comment" : "Subtitle when booking link has not been claimed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اختر عنوان حجزك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wähle deine Linkadresse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your booking address"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choose your booking address"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elige la dirección de tu enlace"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elige la dirección de tu enlace"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Elige la dirección de tu enlace"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Choisissez l'adresse du lien"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अपना बुकिंग पता चुनें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tentukan alamat tautanmu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Scegli l'indirizzo del link"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Defina o endereço do seu link"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Defina o endereço do seu link"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bağlantı adresinizi belirleyin"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.pendingMessage" : {
+      "comment" : "Notice message explaining that requirements must be met before publishing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يجب إكمال جميع المتطلبات أعلاه قبل تفعيل حجز متجرك عبر الإنترنت."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle oben genannten Voraussetzungen müssen erfüllt sein, um online zu gehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All requirements above must be completed before putting your store online."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "All requirements above must be completed before putting your store online."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los requisitos anteriores son obligatorios para publicar tu tienda online."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los requisitos anteriores son obligatorios para publicar tu tienda online."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos los requisitos anteriores son obligatorios para publicar tu tienda online."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tous les éléments ci-dessus sont requis pour mettre votre salon en ligne."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "दुकान को ऑनलाइन करने के लिए उपरोक्त सभी आवश्यकताएं पूरी होनी चाहिए।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Semua syarat di atas harus dilengkapi sebelum tokomu online."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutti i requisiti sopra devono essere completati prima di pubblicare il tuo negozio."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os itens acima são obrigatórios para que a loja possa ir online e receber clientes."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Todos os itens acima são obrigatórios para que a loja possa ir online e receber clientes."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mağazanızı çevrimiçi yapmak için yukarıdaki tüm gereksinimler tamamlanmalıdır."
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.pendingTitle" : {
+      "comment" : "Notice title when requirements are incomplete.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أكمل العناصر المعلقة قبل النشر"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Schließe die ausstehenden Punkte ab"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete items before going online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complete items before going online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa los datos pendientes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa los datos pendientes"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa los datos pendientes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Complétez les éléments manquants"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन होने से पहले जानकारी पूरी करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lengkapi informasi yang belum diisi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Completa gli elementi mancanti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preencha os itens pendentes"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Preencha os itens pendentes"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Eksik bilgileri tamamlayın"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.readyMessage" : {
+      "comment" : "Notice message when all requirements are met.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتوي متجرك على جميع المعلومات المطلوبة للنشر متى أردت."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dein Geschäft verfügt über alle erforderlichen Angaben und kann online gehen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your store has all required information. You can go online whenever you are ready."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your store has all required information. You can go online whenever you are ready."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu tienda tiene toda la información necesaria para publicarse en cualquier momento."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu tienda tiene toda la información necesaria para publicarse en cualquier momento."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu tienda tiene toda la información necesaria para publicarse en cualquier momento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Votre salon dispose de toutes les informations nécessaires pour être mis en ligne."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "आपकी दुकान की सभी आवश्यक जानकारी पूरी है। आप कभी भी ऑनलाइन जा सकते हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tokomu sudah memiliki semua informasi yang diperlukan untuk online."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il tuo negozio ha tutte le informazioni necessarie per andare online."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sua loja tem todas as informações necessárias para entrar no ar a qualquer momento."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "A sua loja tem todas as informações necessárias para entrar no ar a qualquer momento."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mağazanız gerekli tüm bilgilere sahip. İstediğiniz zaman çevrimiçi olabilirsiniz."
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.readyTitle" : {
+      "comment" : "Notice title when all requirements are met.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "جاهز للنشر على الإنترنت"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bereit für den Onlinemodus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to go online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ready to go online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Listo para publicar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Listo para publicar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Listo para publicar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prêt pour la mise en ligne"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन जाने के लिए तैयार"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Siap untuk online"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutto pronto per andare online"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tudo pronto para ir online"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tudo pronto para ir online"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi olmaya hazır"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.services" : {
+      "comment" : "Label for active offered services requirement.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخدمات المقدمة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Angebotene Leistungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offered services"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Offered services"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios disponibles"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios disponibles"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios disponibles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prestations proposées"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "उपलब्ध सेवाएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Layanan yang ditawarkan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servizi offerti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços disponíveis"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços disponíveis"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sunulan hizmetler"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.servicesActive" : {
+      "comment" : "Subtitle when active services are ready.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الخدمات النشطة جاهزة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aktive Leistungen bereit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active services ready"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Active services ready"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios activos listos"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios activos listos"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servicios activos listos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Prestations actives prêtes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सक्रिय सेवाएं तैयार हैं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Layanan aktif siap"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Servizi attivi pronti"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços ativos cadastrados"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Serviços ativos registados"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aktif hizmetler hazır"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.servicesMissing" : {
+      "comment" : "Subtitle when no active services exist.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أضف خدمة نشطة واحدة على الأقل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füge mindestens eine aktive Leistung hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add at least one active service"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add at least one active service"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añade al menos un servicio activo"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega al menos un servicio activo"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega al menos un servicio activo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutez au moins une prestation active"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कम से कम एक सक्रिय सेवा जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambahkan minimal satu layanan aktif"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi almeno un servizio attivo"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cadastre pelo menos 1 serviço ativo"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Registe pelo menos 1 serviço ativo"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "En az bir aktif hizmet ekleyin"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.title" : {
+      "comment" : "Section title: requirements needed before putting booking page online.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "متطلبات النشر على الإنترنت"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Voraussetzungen für den Onlinemodus"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requirements to go online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requirements to go online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisitos para publicar"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisitos para publicar"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisitos para publicar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conditions requises pour publier"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन होने के लिए आवश्यकताएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Syarat untuk online"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisiti per andare online"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisitos para colocar online"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Requisitos para colocar online"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Çevrimiçi olma gereksinimleri"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.workplace" : {
+      "comment" : "Label for the store/workplace location address requirement.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "موقع المتجر"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Standortadresse"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Store location"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Store location"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del centro"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del negocio"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dirección del negocio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adresse du salon"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "दुकान का स्थान"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Lokasi toko"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Indirizzo del locale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Endereço da loja"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Morada da loja"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İşletme adresi"
+          }
+        }
+      }
+    },
+    "bookingSettings.requirements.workplaceMissing" : {
+      "comment" : "Subtitle when store location has not been configured.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أضف عنوان متجرك"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füge deine Geschäftsadresse hinzu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your store location address"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add your store location address"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añade la dirección de tu centro"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega la dirección de tu negocio"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega la dirección de tu negocio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutez l'adresse de votre salon"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "दुकान का पता जोड़ें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambahkan alamat tokomu"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi l'indirizzo del tuo locale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione o endereço da sua loja"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione a morada da sua loja"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "İşletme adresinizi ekleyin"
+          }
+        }
+      }
+    },
     "bookingSettings.resume" : {
       "comment" : "Button that ends a pause and opens bookings again.",
       "extractionState" : "manual",
@@ -51799,6 +52879,366 @@
         }
       }
     },
+    "clientForm.confirmEmail" : {
+      "comment" : "Form field label: confirm email.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تأكيد البريد الإلكتروني"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail bestätigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm email"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirm email"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar correo electrónico"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar correo electrónico"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar correo electrónico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmer l'e-mail"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ईमेल की पुष्टि करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Konfirmasi email"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conferma email"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar e-mail"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar e-mail"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-postayı onayla"
+          }
+        }
+      }
+    },
+    "clientForm.confirmEmail.prompt" : {
+      "comment" : "Form field placeholder: repeat email.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كرر البريد الإلكتروني"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail wiederholen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat email"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repeat email"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el correo electrónico"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el correo electrónico"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el correo electrónico"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Répétez l'e-mail"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ईमेल दोहराएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ulangi email"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ripeti l'email"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repita o e-mail"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repita o e-mail"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-postayı tekrarla"
+          }
+        }
+      }
+    },
+    "clientForm.confirmPhone" : {
+      "comment" : "Form field label: confirm WhatsApp number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تأكيد واتساب"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp bestätigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm WhatsApp"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirm WhatsApp"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar WhatsApp"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar WhatsApp"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar WhatsApp"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmer WhatsApp"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp की पुष्टि करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Konfirmasi WhatsApp"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Conferma WhatsApp"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar WhatsApp"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Confirmar WhatsApp"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp'ı onayla"
+          }
+        }
+      }
+    },
+    "clientForm.confirmPhone.prompt" : {
+      "comment" : "Form field placeholder: repeat the WhatsApp number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "كرر رقم الجوال"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wiederhole die Handynummer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Repeat mobile number"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repeat mobile number"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el número de móvil"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el número de celular"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repite el número de celular"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Répétez le numéro de portable"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "मोबाइल नंबर दोहराएं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ulangi nomor ponsel"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ripeti il numero di cellulare"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repita o número do celular"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Repita o número de telemóvel"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cep telefonu numarasını tekrarla"
+          }
+        }
+      }
+    },
     "clientForm.discard.confirm" : {
       "comment" : "Same dialog: throw the changes away.",
       "extractionState" : "manual",
@@ -52515,6 +53955,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "E-posta adresini kontrol edin."
+          }
+        }
+      }
+    },
+    "clientForm.email.mismatch" : {
+      "comment" : "Form: email addresses do not match.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "عناوين البريد الإلكتروني غير متطابقة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail-Adressen stimmen nicht überein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email addresses do not match."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Email addresses do not match."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los correos electrónicos no coinciden."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los correos electrónicos no coinciden."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los correos electrónicos no coinciden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les adresses e-mail ne correspondent pas."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ईमेल पते मेल नहीं खाते।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alamat email tidak cocok."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Gli indirizzi email non corrispondono."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os e-mails não conferem."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os e-mails não coincidem."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-posta adresleri eşleşmiyor."
+          }
+        }
+      }
+    },
+    "clientForm.email.missing" : {
+      "comment" : "Form: email is required.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "البريد الإلكتروني مطلوب."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-Mail-Adresse ist erforderlich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email is required."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Email is required."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El correo electrónico es obligatorio."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El correo electrónico es obligatorio."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El correo electrónico es obligatorio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'e-mail est requis."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ईमेल आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Email wajib diisi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'email è obbligatoria."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-mail é obrigatório."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-mail é obrigatório."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "E-posta gereklidir."
           }
         }
       }
@@ -53775,6 +55395,186 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "WhatsApp"
+          }
+        }
+      }
+    },
+    "clientForm.phone.mismatch" : {
+      "comment" : "Form: phone numbers do not match.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أرقام واتساب غير متطابقة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Handynummern stimmen nicht überein."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp numbers do not match."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp numbers do not match."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los números de WhatsApp no coinciden."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los números de WhatsApp no coinciden."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Los números de WhatsApp no coinciden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Les numéros WhatsApp ne correspondent pas."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp नंबर मेल नहीं खाते।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nomor WhatsApp tidak cocok."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "I numeri WhatsApp non corrispondono."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os números de WhatsApp não conferem."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Os números de WhatsApp não coincidem."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp numaraları eşleşmiyor."
+          }
+        }
+      }
+    },
+    "clientForm.phone.missing" : {
+      "comment" : "Form: phone number is required.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "رقم واتساب مطلوب."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Handynummer ist erforderlich."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp number is required."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp number is required."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El número de WhatsApp es obligatorio."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El número de WhatsApp es obligatorio."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "El número de WhatsApp es obligatorio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Le numéro WhatsApp est requis."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp नंबर आवश्यक है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nomor WhatsApp wajib diisi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Il numero WhatsApp è obbligatorio."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Número de WhatsApp é obrigatório."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Número de WhatsApp é obrigatório."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp numarası gereklidir."
           }
         }
       }
@@ -128839,6 +130639,276 @@
         }
       }
     },
+    "newAppointment.booked.sms" : {
+      "comment" : "Button: open Messages app with the confirmation message.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الرسائل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nachrichten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iMessage / SMS"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "iMessage / SMS"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensajes"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensajes"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensajes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Messages"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "संदेश"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pesan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Messaggi"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensagens"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mensagens"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mesajlar"
+          }
+        }
+      }
+    },
+    "newAppointment.booked.title" : {
+      "comment" : "New appointment: confirmation title after booking.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "تم حجز الموعد."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Termin gebucht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appointment booked."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Appointment booked."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cita reservada."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cita agendada."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cita agendada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rendez-vous confirmé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अपॉइंटमेंट तय हो गया।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janji temu dijadwalkan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Appuntamento confermato."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agendamento confirmado."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Marcação confirmada."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Randevu oluşturuldu."
+          }
+        }
+      }
+    },
+    "newAppointment.booked.whatsApp" : {
+      "comment" : "Button: open WhatsApp chat with the confirmation message.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "واتساب"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WhatsApp"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "WhatsApp"
+          }
+        }
+      }
+    },
     "newAppointment.chooseAnother" : {
       "comment" : "New appointment: button that scrolls to the time choice.",
       "extractionState" : "manual",
@@ -172369,6 +174439,96 @@
         }
       }
     },
+    "publish.error.needsWorkplace" : {
+      "comment" : "Publishing error: professional must configure her store/workplace location address before publishing.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "أضف عنوان متجرك لنشر صفحتك على الإنترنت."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Füge die Adresse deines Geschäfts hinzu, um deine Seite online zu stellen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your store location address to put your page online."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Add your store location address to put your page online."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Añade la dirección de tu centro para publicar tu página."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega la dirección de tu negocio para publicar tu página."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Agrega la dirección de tu negocio para publicar tu página."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ajoutez l'adresse de votre salon pour mettre votre page en ligne."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "अपना पेज ऑनलाइन करने के लिए अपनी दुकान का पता जोड़ें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tambahkan alamat tokomu untuk mempublikasikan halaman."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aggiungi l'indirizzo del tuo locale per pubblicare la tua pagina online."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione o endereço da sua loja para colocar sua página online."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Adicione a morada do seu espaço para colocar a sua página online."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sayfanızı çevrimiçi yapmak için işletme adresinizi ekleyin."
+          }
+        }
+      }
+    },
     "publish.error.offline" : {
       "comment" : "Error: no connection while her page is not online yet.",
       "extractionState" : "manual",
@@ -175250,91 +177410,91 @@
       }
     },
     "quickReplies.default.confirm.text" : {
-      "comment" : "Built-in reply: confirms an appointment. Keep {name} {service} {date} {time} {address} {link} exactly as written, {address} and {link} each on a line of their own (the app fills the address lines and the full link); YES is what the client types back, so use the natural word for yes in the language.",
+      "comment" : "Built-in reply: confirms an appointment. Keep {name} {service} {date} {time} {address} {link} {business} exactly as written, {address} and {link} each on a line of their own.",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "مرحبًا {name}! أؤكد لك موعد {service} في {date} الساعة {time}.\n{address}\nيُرجى الرد بكلمة «نعم» للتأكيد. لتغيير الموعد أو إلغائه:\n{link}"
+            "value" : "مرحبًا {name}! تم حجز موعد {service} الخاص بك في {date} الساعة {time}.\n\n{address}\n\nإذا كنت بحاجة إلى تعديل الموعد، أو إلغائه (وفقًا لسياستنا)، أو معرفة الاتجاهات عبر Google Maps وApple Maps، فيمكنك استخدام الرابط المخصص لك:\n{link}\n\nنتطلع إلى رؤيتك!\n{business}"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hallo {name}! Ich bestätige Ihren Termin für {service} am {date} um {time} Uhr.\n{address}\nAntworten Sie mit JA, um zu bestätigen. Zum Verschieben oder Absagen:\n{link}"
+            "value" : "Hallo {name}! Ihr Termin für {service} ist für den {date} um {time} Uhr gebucht.\n\n{address}\n\nWenn Sie etwas anpassen, absagen (gemäß unseren Richtlinien) oder die Route auf Google Maps und Apple Maps ansehen möchten, nutzen Sie Ihren exklusiven Link:\n{link}\n\nWir freuen uns auf Ihren Besuch!\n{business}"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\nReply YES to confirm. To change or cancel:\n{link}"
+            "value" : "Hi {name}! Your {service} is booked for {date} at {time}.\n\n{address}\n\nIf you need to make any changes, cancel (according to our policy), or get directions on Google Maps or Apple Maps, please use your exclusive link:\n{link}\n\nWe look forward to seeing you!\n{business}"
           }
         },
         "en-GB" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\nReply YES to confirm. To change or cancel:\n{link}"
+            "value" : "Hi {name}! Your {service} is booked for {date} at {time}.\n\n{address}\n\nIf you need to make any changes, cancel (according to our policy), or get directions on Google Maps or Apple Maps, please use your exclusive link:\n{link}\n\nWe look forward to seeing you!\n{business}"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+            "value" : "¡Hola, {name}! Tu cita de {service} está reservada para el {date} a las {time}.\n\n{address}\n\nSi necesitas hacer algún cambio, cancelar (según nuestra política) o consultar cómo llegar en Google Maps y Apple Maps, solo tienes que acceder a tu enlace exclusivo:\n{link}\n\n¡Te esperamos!\n{business}"
           }
         },
         "es-419" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+            "value" : "¡Hola, {name}! Tu cita de {service} está agendada para el {date} a las {time}.\n\n{address}\n\nSi necesitas hacer algún cambio, cancelar (conforme a nuestra política) o consultar la ruta en Google Maps y Apple Maps, solo entra a tu enlace exclusivo:\n{link}\n\n¡Te esperamos!\n{business}"
           }
         },
         "es-MX" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+            "value" : "¡Hola, {name}! Tu cita de {service} está agendada para el {date} a las {time}.\n\n{address}\n\nSi necesitas hacer algún cambio, cancelar (conforme a nuestra política) o consultar la ruta en Google Maps y Apple Maps, solo entra a tu enlace exclusivo:\n{link}\n\n¡Te esperamos!\n{business}"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bonjour {name} ! Je vous confirme votre rendez-vous pour {service} : {date} à {time}.\n{address}\nRépondez OUI pour confirmer. Pour le déplacer ou l'annuler :\n{link}"
+            "value" : "Bonjour {name} ! Votre rendez-vous pour {service} est réservé pour le {date} à {time}.\n\n{address}\n\nSi vous devez modifier un détail, annuler (selon notre politique) ou obtenir l'itinéraire sur Google Maps et Apple Maps, utilisez votre lien exclusif :\n{link}\n\nAu plaisir de vous accueillir !\n{business}"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "नमस्ते {name}! आपके {service} अपॉइंटमेंट की पुष्टि: {date}, {time} पर।\n{address}\nपुष्टि के लिए हाँ लिखकर जवाब दें। बदलने या रद्द करने के लिए:\n{link}"
+            "value" : "नमस्ते {name}! आपका {service} अपॉइंटमेंट {date} को {time} पर तय हो गया है।\n\n{address}\n\nयदि आपको कोई बदलाव करना है, रद्द करना है (हमारी नीति के अनुसार), या Google Maps और Apple Maps पर रास्ता देखना है, तो अपने विशेष लिंक का उपयोग करें:\n{link}\n\nहम आपके स्वागत के लिए उत्सुक हैं!\n{business}"
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Halo {name}! Konfirmasi janji temu {service} Anda pada {date} pukul {time}.\n{address}\nBalas YA untuk mengonfirmasi. Untuk menjadwalkan ulang atau membatalkan:\n{link}"
+            "value" : "Halo {name}! Janji temu {service} Anda sudah dijadwalkan untuk {date} pukul {time}.\n\n{address}\n\nJika Anda perlu mengubah jadwal, membatalkan (sesuai kebijakan kami), atau melihat petunjuk arah di Google Maps dan Apple Maps, silakan gunakan tautan eksklusif Anda:\n{link}\n\nKami menantikan kedatangan Anda!\n{business}"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ciao {name}! Ti confermo l'appuntamento per {service}: {date} alle {time}.\n{address}\nRispondi SÌ per confermare. Per spostarlo o annullarlo:\n{link}"
+            "value" : "Ciao {name}! Il tuo appuntamento per {service} è confermato per il {date} alle {time}.\n\n{address}\n\nSe hai bisogno di modificare qualcosa, annullare (secondo le nostre regole) o trovare le indicazioni su Google Maps e Apple Maps, accedi al tuo link esclusivo:\n{link}\n\nTi aspettiamo!\n{business}"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Oi, {name}! Passando para confirmar seu horário de {service} para {date}, às {time}.\n{address}\nResponda SIM para confirmar. Para remarcar ou cancelar:\n{link}"
+            "value" : "Oi, {name}! Seu horário de {service} está agendado para {date}, às {time}.\n\n{address}\n\nSe precisar ajustar algo, cancelar (conforme nossa política de agendamento) ou traçar a rota no Google Maps e Apple Maps, é só acessar seu link exclusivo:\n{link}\n\nEstamos ansiosos para te receber!\n{business}"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Olá, {name}! Estou a confirmar a sua marcação de {service} para {date}, às {time}.\n{address}\nResponda SIM para confirmar. Para alterar ou desmarcar:\n{link}"
+            "value" : "Olá, {name}! A sua marcação de {service} está confirmada para {date}, às {time}.\n\n{address}\n\nSe precisar de alterar algo, cancelar (conforme a nossa política de marcação) ou ver o trajeto no Google Maps e Apple Maps, basta aceder ao seu link exclusivo:\n{link}\n\nEsperamos por si!\n{business}"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Merhaba {name}! {service} randevunuzu {date}, saat {time} için onaylıyorum.\n{address}\nOnaylamak için EVET yazarak yanıtlayın. Ertelemek veya iptal etmek için:\n{link}"
+            "value" : "Merhaba {name}! {service} randevunuz {date}, saat {time} için oluşturuldu.\n\n{address}\n\nHerhangi bir değişiklik yapmak, randevuyu kurallarımıza uygun olarak iptal etmek veya Google Maps ile Apple Maps üzerinden yol tarifi almak için özel bağlantınızı kullanabilirsiniz:\n{link}\n\nSizi görmek için sabırsızlanıyoruz!\n{business}"
           }
         }
       }
@@ -175425,6 +177585,96 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Merhaba {name}! {service} randevunuzu {date}, saat {time} için onaylıyorum. Onaylamak için EVET yazarak yanıtlayın ya da değiştirmek için {link} bağlantısını kullanın."
+          }
+        }
+      }
+    },
+    "quickReplies.default.confirm.text.v2" : {
+      "comment" : "Previous wording of a built-in reply (before 2026-10-13). Never shown: a stored reply still equal to it is upgraded to the new wording. Keep exactly as it was.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مرحبًا {name}! أؤكد لك موعد {service} في {date} الساعة {time}.\n{address}\nيُرجى الرد بكلمة «نعم» للتأكيد. لتغيير الموعد أو إلغائه:\n{link}"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hallo {name}! Ich bestätige Ihren Termin für {service} am {date} um {time} Uhr.\n{address}\nAntworten Sie mit JA, um zu bestätigen. Zum Verschieben oder Absagen:\n{link}"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\nReply YES to confirm. To change or cancel:\n{link}"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\nReply YES to confirm. To change or cancel:\n{link}"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "¡Hola, {name}! Te confirmo tu cita de {service} para el {date} a las {time}.\n{address}\nResponde SÍ para confirmarla. Para cambiarla o cancelarla:\n{link}"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bonjour {name} ! Je vous confirme votre rendez-vous pour {service} : {date} à {time}.\n{address}\nRépondez OUI pour confirmer. Pour le déplacer ou l'annuler :\n{link}"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "नमस्ते {name}! आपके {service} अपॉइंटमेंट की पुष्टि: {date}, {time} पर।\n{address}\nपुष्टि के लिए हाँ लिखकर जवाब दें। बदलने या रद्द करने के लिए:\n{link}"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Halo {name}! Konfirmasi janji temu {service} Anda pada {date} pukul {time}.\n{address}\nBalas YA untuk mengonfirmasi. Untuk menjadwalkan ulang atau membatalkan:\n{link}"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ciao {name}! Ti confermo l'appuntamento per {service}: {date} alle {time}.\n{address}\nRispondi SÌ per confermare. Per spostarlo o annullarlo:\n{link}"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Oi, {name}! Passando para confirmar seu horário de {service} para {date}, às {time}.\n{address}\nResponda SIM para confirmar. Para remarcar ou cancelar:\n{link}"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Olá, {name}! Estou a confirmar a sua marcação de {service} para {date}, às {time}.\n{address}\nResponda SIM para confirmar. Para alterar ou desmarcar:\n{link}"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Merhaba {name}! {service} randevunuzu {date}, saat {time} için onaylıyorum.\n{address}\nOnaylamak için EVET yazarak yanıtlayın. Ertelemek veya iptal etmek için:\n{link}"
           }
         }
       }

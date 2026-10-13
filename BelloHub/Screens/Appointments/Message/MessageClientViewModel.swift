@@ -80,10 +80,19 @@ final class MessageClientViewModel {
         return AppointmentMessageComposer.text(
             for: .quickReply(reply),
             values: AppointmentMessageComposer.values(
-                client: visit.client, appointment: visit.appointment, link: link, location: setup.setup.location
+                client: visit.client, appointment: visit.appointment, link: link, location: setup.setup.location,
+                businessName: effectiveBusinessName
             ),
             localization: business.localization, formatters: business.messageFormatters
         )
+    }
+
+    private var effectiveBusinessName: String? {
+        guard let currentProfile = profile.profile else { return nil }
+        let name = currentProfile.businessName.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !name.isEmpty { return name }
+        let display = currentProfile.displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return display.isEmpty ? nil : display
     }
 
     private var bookingPage: BookingLink? {

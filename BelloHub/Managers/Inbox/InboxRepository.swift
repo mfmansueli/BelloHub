@@ -39,6 +39,9 @@ protocol InboxRepository: Sendable {
     /// The client's own link to change or cancel one booking (`mintManageLink`), for a message she sends herself. The
     /// server returns the same link for 30 minutes and refuses a booking that no longer holds time.
     func mintManageLink(bookingId: String) async throws -> ClientManageLink
+    /// Registers an appointment created by hand in the app, creating or updating an active `BookingDoc` on the server
+    /// and returning the client's exclusive manage link (`/m/<token>`).
+    func registerManualBooking(_ registration: ManualBookingRegistration) async throws -> ClientManageLink
     func removeWaitlistEntry(id: String) async throws
     /// `markNoShow` with `reset`: her count starts from zero and online booking opens again for her (2.10).
     func resetNoShowCount(phone: String) async throws

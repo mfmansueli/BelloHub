@@ -111,6 +111,25 @@ final class BookingSettingsViewModel {
         setup.slug.map { BookingLink(slug: $0, baseURL: baseURL) }
     }
 
+    // MARK: - Publishing Readiness
+
+    var hasConfiguredLink: Bool {
+        setup.slug != nil && !setup.slug!.isEmpty
+    }
+
+    var hasCompleteWorkplace: Bool {
+        guard let location = setup.location else { return false }
+        return BusinessLocationFormat.isComplete(location)
+    }
+
+    var hasActiveServices: Bool {
+        services.contains(where: \.isActive)
+    }
+
+    var isReadyToGoOnline: Bool {
+        hasConfiguredLink && hasCompleteWorkplace && hasActiveServices
+    }
+
     var showsSkeleton: Bool { isLoading && !hasLoaded }
 
     var saveErrorMessage: String? { editor.saveErrorMessage ?? availabilityErrorMessage }
@@ -187,6 +206,9 @@ final class BookingSettingsViewModel {
     func appear() {
         editor.adoptStored()
         availability = service.availability
+        Task {
+            if let servicesSource { services = (try? await servicesSource.services()) ?? services }
+        }
     }
 
     // MARK: - The page

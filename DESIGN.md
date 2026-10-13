@@ -588,6 +588,11 @@ prototype that are not owner decisions (D45 to D52, D55 are listed there):
   the extra and processing time of each visit, the compact day); a "Show all times" text button
   (`<prefix>.showAllTimesButton`, rose text, 44 pt tall, VoiceOver hint) reveals the other free times in place and
   closes again on another day. "Another time" (any minute, with warnings) is unchanged.
+- **New appointment confirmation** (`BookingConfirmationView`): upon saving an appointment booked by the professional,
+  the sheet transitions to a confirmation screen showing `SuccessSeal`, full appointment details (client name, service,
+  date, start/end time, duration, add-ons, guests, workplace address), a preview of the ready-to-send confirmation
+  message, and quick-action buttons to open the message directly in WhatsApp or Messages (iMessage / SMS), plus a
+  system share sheet option.
 - **Web Bk-4, Cl-3 rebook and Cl-9 reschedule** (`SlotChoices`): the same "Show all times" link
   (`data-testid="show-all-times"`, `link-button` style, 44 px tall) under the time list; a time already picked from
   the hidden ones keeps the list open.

@@ -20,18 +20,33 @@ struct ClientFormRulesTests {
 
     // MARK: - Validation
 
-    @Test("Only a name is required: a draft with a name and nothing else is valid")
-    func nameOnly() {
-        #expect(issues(ClientFormDraft(name: "Ana Costa")).isEmpty)
-        #expect(issues(ClientFormDraft(name: "   ")) == [.nameMissing])
-        #expect(issues(ClientFormDraft()) == [.nameMissing])
+    @Test("Name, phone and email are required for a new client, with double-entry confirmation")
+    func namePhoneAndEmailRequired() {
+        let valid = ClientFormDraft(
+            name: "Ana Costa", phone: "11 98123-4410", confirmPhone: "11 98123-4410",
+            email: "ana@example.com", confirmEmail: "ana@example.com"
+        )
+        #expect(issues(valid).isEmpty)
+
+        #expect(issues(ClientFormDraft(name: "Ana Costa")) == [.phoneMissing, .emailMissing])
+        #expect(issues(ClientFormDraft(name: "   ")) == [.nameMissing, .phoneMissing, .emailMissing])
+        #expect(issues(ClientFormDraft()) == [.nameMissing, .phoneMissing, .emailMissing])
+
+        let mismatch = ClientFormDraft(
+            name: "Ana", phone: "11 98123-4410", confirmPhone: "11 98123-9999",
+            email: "ana@example.com", confirmEmail: "other@example.com"
+        )
+        #expect(issues(mismatch) == [.phoneMismatch, .emailMismatch])
     }
 
     @Test("A national number is read in the business region and saved in international form")
     func phoneIsNormalizedWithTheBusinessRegion() throws {
         let client = try #require(brazil.newClient(
-            from: ClientFormDraft(name: "Ana", phone: "(11) 98123-4410"), id: UUID(), now: TestClock.now,
-            calendar: calendar
+            from: ClientFormDraft(
+                name: "Ana", phone: "(11) 98123-4410", confirmPhone: "(11) 98123-4410",
+                email: "ana@example.com", confirmEmail: "ana@example.com"
+            ),
+            id: UUID(), now: TestClock.now, calendar: calendar
         ))
 
         #expect(client.phoneE164 == "+5511981234410")
@@ -40,8 +55,11 @@ struct ClientFormRulesTests {
     @Test("A number with its own country code keeps it, whatever the business region")
     func internationalNumberKeepsItsCountry() throws {
         let client = try #require(brazil.newClient(
-            from: ClientFormDraft(name: "Zoe", phone: "+1 415 555 2671"), id: UUID(), now: TestClock.now,
-            calendar: calendar
+            from: ClientFormDraft(
+                name: "Zoe", phone: "+1 415 555 2671", confirmPhone: "+1 415 555 2671",
+                email: "zoe@example.com", confirmEmail: "zoe@example.com"
+            ),
+            id: UUID(), now: TestClock.now, calendar: calendar
         ))
 
         #expect(client.phoneE164 == "+14155552671")
@@ -49,7 +67,10 @@ struct ClientFormRulesTests {
 
     @Test("A number that cannot be right is a problem next to the field, and nothing is built")
     func badPhone() {
-        let draft = ClientFormDraft(name: "Ana", phone: "123")
+        let draft = ClientFormDraft(
+            name: "Ana", phone: "123", confirmPhone: "123",
+            email: "ana@example.com", confirmEmail: "ana@example.com"
+        )
 
         #expect(issues(draft) == [.phone(.tooShort)])
         #expect(brazil.phoneIssue(in: draft) == .tooShort)
@@ -65,24 +86,32 @@ struct ClientFormRulesTests {
         #expect(rules.phoneIssue(in: ClientFormDraft(name: "A", phone: "+55 11 98123-4410")) == nil)
     }
 
-    @Test("An email is optional and only checked lightly", arguments: [
+    @Test("An email is checked lightly", arguments: [
         ("ana@example.com", true), ("a.b+c@sub.example.org", true), ("ana@example", false), ("ana@", false),
         ("@example.com", false), ("ana example@x.com", false), ("ana@@example.com", false), ("ana@.com", false),
         ("ana@example.", false)
     ])
     func emailCheck(email: String, plausible: Bool) {
         #expect(ClientFormRules.isPlausibleEmail(email) == plausible)
-        let found = issues(ClientFormDraft(name: "Ana", email: email))
+        let found = issues(ClientFormDraft(
+            name: "Ana", phone: "11 98123-4410", confirmPhone: "11 98123-4410",
+            email: email, confirmEmail: email
+        ))
         #expect(found.contains(.emailInvalid) == !plausible)
     }
 
-    @Test("A blank email is not a problem and is saved as nothing")
+    @Test("A blank email is refused for new client, but an edit without email preserves nil")
     func blankEmail() throws {
-        let client = try #require(brazil.newClient(
-            from: ClientFormDraft(name: "Ana", email: "  "), id: UUID(), now: TestClock.now, calendar: calendar
-        ))
+        let newDraft = ClientFormDraft(
+            name: "Ana", phone: "11 98123-4410", confirmPhone: "11 98123-4410", email: "  "
+        )
+        #expect(issues(newDraft).contains(.emailMissing))
 
-        #expect(client.email == nil)
+        let client = makeListedClient(name: "Ana", phone: "+5511981234410")
+        var editDraft = brazil.draft(for: client)
+        editDraft.name = "Ana Costa"
+        let updated = try #require(brazil.updated(client, from: editDraft, now: TestClock.now, calendar: calendar))
+        #expect(updated.email == nil)
     }
 
     @Test("A new client is manual, counts as created now, and keeps her tags and her private note")
@@ -90,7 +119,11 @@ struct ClientFormRulesTests {
         let tag = UUID()
         let id = UUID()
         let client = try #require(brazil.newClient(
-            from: ClientFormDraft(name: "  Ana Costa ", tagIDs: [tag], importantNote: " Allergic to fragrance "),
+            from: ClientFormDraft(
+                name: "  Ana Costa ", phone: "11 98123-4410", confirmPhone: "11 98123-4410",
+                email: "ana@example.com", confirmEmail: "ana@example.com",
+                tagIDs: [tag], importantNote: " Allergic to fragrance "
+            ),
             id: id, now: TestClock.now, calendar: calendar
         ))
 
@@ -145,10 +178,12 @@ struct ClientFormRulesTests {
         var draft = brazil.draft(for: client)
 
         draft.phone = "12"
+        draft.confirmPhone = "12"
         #expect(brazil.updated(client, from: draft, now: TestClock.now, calendar: calendar) == nil)
         #expect(issues(draft, original: client) == [.phone(.tooShort)])
 
         draft.phone = ""
+        draft.confirmPhone = ""
         let cleared = try #require(brazil.updated(client, from: draft, now: TestClock.now, calendar: calendar))
         #expect(cleared.phoneE164 == nil)
     }
@@ -196,7 +231,7 @@ struct ClientFormRulesTests {
         var draft = brazil.draft(for: client)
 
         draft.birthday = BirthdayInput(day: 14, month: nil, year: nil)
-        #expect(issues(draft) == [.birthday(.incomplete)])
+        #expect(issues(draft, original: client) == [.birthday(.incomplete)])
 
         draft.birthday = BirthdayInput(day: 14, month: 3, year: nil)
         let saved = try #require(brazil.updated(client, from: draft, now: TestClock.now, calendar: calendar))

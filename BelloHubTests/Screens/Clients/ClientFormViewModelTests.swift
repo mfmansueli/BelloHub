@@ -43,14 +43,24 @@ struct ClientFormViewModelTests {
         )
     }
 
+    private func fillValidContact(
+        _ model: ClientFormViewModel, phone: String = "11 98123-4410", email: String = "ana@example.com"
+    ) {
+        model.draft.phone = phone
+        model.draft.confirmPhone = phone
+        model.draft.email = email
+        model.draft.confirmEmail = email
+    }
+
     // MARK: - New client
 
-    @Test("A name is enough: the client is built and sent through the registration gate, then her profile opens")
+    @Test("Valid name, phone and email are sent through the registration gate, then her profile opens")
     func savesANewClient() async throws {
         let world = try await ClientsWorld.make()
         let registrar = FakeClientRegistrar()
         let model = newModel(world, registrar: registrar)
         model.draft.name = "Ana Costa"
+        fillValidContact(model)
 
         await model.saveAsync()
 
@@ -71,6 +81,7 @@ struct ClientFormViewModelTests {
 
         #expect(registrar.registered.isEmpty && model.finish == nil)
         #expect(model.nameIssue == .nameMissing)
+        #expect(model.phoneMissing && model.emailMissing)
     }
 
     @Test("A bad number is said next to the field, and fixing it lets the save through")
@@ -79,12 +90,13 @@ struct ClientFormViewModelTests {
         let registrar = FakeClientRegistrar()
         let model = newModel(world, registrar: registrar)
         model.draft.name = "Ana"
-        model.draft.phone = "123"
+        fillValidContact(model, phone: "123")
 
         await model.saveAsync()
         #expect(model.phoneFailure == .tooShort && registrar.registered.isEmpty)
 
         model.draft.phone = "(11) 98123-4410"
+        model.draft.confirmPhone = "(11) 98123-4410"
         #expect(model.phoneFailure == nil)
         await model.saveAsync()
         #expect(registrar.registered.first?.phoneE164 == "+5511981234410")
@@ -96,7 +108,7 @@ struct ClientFormViewModelTests {
         let registrar = FakeClientRegistrar()
         let model = newModel(world, registrar: registrar)
         model.draft.name = "Ana"
-        model.draft.phone = "912 345 678"
+        fillValidContact(model, phone: "912 345 678")
 
         await model.saveAsync()
 
@@ -110,6 +122,7 @@ struct ClientFormViewModelTests {
         registrar.outcome = .needsSubscription
         let model = newModel(world, registrar: registrar)
         model.draft.name = "Ana"
+        fillValidContact(model)
 
         await model.saveAsync()
 
@@ -124,15 +137,17 @@ struct ClientFormViewModelTests {
         registrar.outcome = .duplicate(existingID: existing)
         let model = newModel(world, registrar: registrar)
         model.draft.name = "Ana"
-        model.draft.phone = "+5511981234410"
+        fillValidContact(model, phone: "+5511981234410")
 
         await model.saveAsync()
         #expect(model.duplicateNotice == existing && model.finish == nil)
 
         model.draft.phone = "+5511981234411"
+        model.draft.confirmPhone = "+5511981234411"
         #expect(model.duplicateNotice == nil)
 
         model.draft.phone = "+5511981234410"
+        model.draft.confirmPhone = "+5511981234410"
         #expect(model.duplicateNotice == existing, "the same number brings the notice back")
     }
 
@@ -141,6 +156,7 @@ struct ClientFormViewModelTests {
         let world = try await ClientsWorld.make()
         let model = newModel(world, registrar: FailingRegistrar())
         model.draft.name = "Ana"
+        fillValidContact(model)
 
         await model.saveAsync()
 
@@ -223,7 +239,7 @@ struct ClientFormViewModelTests {
         let gate = ClientRegistrationService(vault: world.vault)
         let model = newModel(world, registrar: gate)
         model.draft.name = "Ana Costa"
-        model.draft.phone = "11 98123-4410"
+        fillValidContact(model)
 
         await model.saveAsync()
         await model.refreshUsage()
@@ -241,6 +257,7 @@ struct ClientFormViewModelTests {
         }
         let model = newModel(world, registrar: ClientRegistrationService(vault: world.vault))
         model.draft.name = "One too many"
+        fillValidContact(model)
 
         await model.saveAsync()
 
@@ -255,7 +272,7 @@ struct ClientFormViewModelTests {
         try await world.repository.save(existing)
         let model = newModel(world, registrar: ClientRegistrationService(vault: world.vault))
         model.draft.name = "Another Ana"
-        model.draft.phone = "11 98123-4410"
+        fillValidContact(model)
 
         await model.saveAsync()
 

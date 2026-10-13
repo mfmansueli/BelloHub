@@ -50,8 +50,16 @@ export async function chooseSlot(page: Page, slotIndex = 0): Promise<string> {
 export async function fillYou(page: Page, input: BookingInput = {}): Promise<void> {
   await expect(page.getByTestId('name')).toBeVisible();
   await page.getByTestId('name').fill(input.name ?? DEFAULTS.name);
-  await page.getByTestId('phone').fill(input.phone ?? DEFAULTS.phone);
-  await page.getByTestId('email').fill(input.email ?? DEFAULTS.email);
+  const phone = input.phone ?? DEFAULTS.phone;
+  await page.getByTestId('phone').fill(phone);
+  if (await page.getByTestId('confirm-phone').isVisible()) {
+    await page.getByTestId('confirm-phone').fill(phone);
+  }
+  const email = input.email ?? DEFAULTS.email;
+  await page.getByTestId('email').fill(email);
+  if (await page.getByTestId('confirm-email').isVisible()) {
+    await page.getByTestId('confirm-email').fill(email);
+  }
   await page.getByTestId('send-code').click();
 }
 

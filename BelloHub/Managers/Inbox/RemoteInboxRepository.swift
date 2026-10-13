@@ -317,4 +317,10 @@ extension RemoteInboxRepository {
         let request = NoShowRequest(phone: phone, action: "forgive", markId: markId.uuidString.lowercased())
         let _: CountAnswer = try await perform("markNoShow", request)
     }
+
+    func registerManualBooking(_ registration: ManualBookingRegistration) async throws -> ClientManageLink {
+        let answer: ManageLinkAnswer = try await perform("registerManualBooking", registration)
+        guard let url = URL(string: answer.url), url.scheme == "https" else { throw BookingRepositoryError.rejected }
+        return ClientManageLink(url: url, expiresAt: answer.expiresAt)
+    }
 }

@@ -179,7 +179,11 @@ test.describe('keyboard', () => {
     await page.keyboard.type('Helena Duarte');
     await page.getByTestId('phone').focus();
     await page.keyboard.type('11 98765 4321');
+    await page.getByTestId('confirm-phone').focus();
+    await page.keyboard.type('11 98765 4321');
     await page.getByTestId('email').focus();
+    await page.keyboard.type('helena@example.com');
+    await page.getByTestId('confirm-email').focus();
     await page.keyboard.type('helena@example.com');
     await page.getByTestId('send-code').focus();
     await page.keyboard.press('Enter');

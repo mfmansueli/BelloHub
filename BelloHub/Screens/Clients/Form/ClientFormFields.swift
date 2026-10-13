@@ -25,7 +25,14 @@ struct ClientFormFields: View {
             .textInputAutocapitalization(.words)
             BelloTextField(
                 title: "clientForm.phone", text: $viewModel.draft.phone, prompt: "clientForm.phone.prompt",
-                errorMessage: viewModel.phoneFailure.map(Self.message(for:)), identifier: "\(idPrefix).phoneField"
+                errorMessage: phoneErrorMessage, identifier: "\(idPrefix).phoneField"
+            )
+            .keyboardType(.phonePad)
+            .textContentType(.telephoneNumber)
+            BelloTextField(
+                title: "clientForm.confirmPhone", text: $viewModel.draft.confirmPhone,
+                prompt: "clientForm.confirmPhone.prompt",
+                errorMessage: confirmPhoneErrorMessage, identifier: "\(idPrefix).confirmPhoneField"
             )
             .keyboardType(.phonePad)
             .textContentType(.telephoneNumber)
@@ -34,14 +41,46 @@ struct ClientFormFields: View {
             }
             BelloTextField(
                 title: "clientForm.email", text: $viewModel.draft.email, prompt: "clientForm.email.prompt",
-                errorMessage: viewModel.emailIssue == nil ? nil : "clientForm.email.invalid",
+                errorMessage: emailErrorMessage,
                 identifier: "\(idPrefix).emailField"
             )
             .keyboardType(.emailAddress)
             .textContentType(.emailAddress)
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
+            BelloTextField(
+                title: "clientForm.confirmEmail", text: $viewModel.draft.confirmEmail,
+                prompt: "clientForm.confirmEmail.prompt",
+                errorMessage: confirmEmailErrorMessage,
+                identifier: "\(idPrefix).confirmEmailField"
+            )
+            .keyboardType(.emailAddress)
+            .textContentType(.emailAddress)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
         }
+    }
+
+    private var phoneErrorMessage: LocalizedStringKey? {
+        if viewModel.phoneMissing { return "clientForm.phone.missing" }
+        if let failure = viewModel.phoneFailure { return Self.message(for: failure) }
+        return nil
+    }
+
+    private var confirmPhoneErrorMessage: LocalizedStringKey? {
+        if viewModel.phoneMismatch { return "clientForm.phone.mismatch" }
+        return nil
+    }
+
+    private var emailErrorMessage: LocalizedStringKey? {
+        if viewModel.emailMissing { return "clientForm.email.missing" }
+        if viewModel.emailIssue != nil { return "clientForm.email.invalid" }
+        return nil
+    }
+
+    private var confirmEmailErrorMessage: LocalizedStringKey? {
+        if viewModel.emailMismatch { return "clientForm.email.mismatch" }
+        return nil
     }
 
     private func duplicateNotice(_ existingID: UUID) -> some View {

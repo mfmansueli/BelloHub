@@ -703,7 +703,14 @@ export class MockApi {
     this.maybeFail('confirmPresence');
     const booking = this.active(this.bookingByToken(input['token'], now), now);
     booking.clientConfirmedAt = iso(now);
-    return { clientConfirmedAt: booking.clientConfirmedAt };
+    const client = input['client'] as { email?: string; phone?: string } | undefined;
+    if (client?.email) booking.client.email = client.email;
+    if (client?.phone) booking.client.phone = client.phone;
+    return {
+      clientConfirmedAt: booking.clientConfirmedAt,
+      ...(booking.client.email ? { email: booking.client.email } : {}),
+      ...(booking.client.phone ? { phone: booking.client.phone } : {})
+    };
   }
 
   reportLate(input: Json, now = Date.now()): Json {

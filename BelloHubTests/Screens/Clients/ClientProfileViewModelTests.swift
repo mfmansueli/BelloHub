@@ -18,7 +18,7 @@ struct ClientProfileViewModelTests {
     }
 
     private func loaded(_ model: ClientProfileViewModel) async -> Bool {
-        await Wait.untilMain { model.snapshot != nil }
+        await Wait.untilMain { model.snapshot != nil && !model.isLoading }
     }
 
     @Test("The profile loads the client, her habits and her last and next visit")

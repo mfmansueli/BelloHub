@@ -67,6 +67,7 @@ struct ClientEditViewModelTests {
         try await world.repository.save(bia)
         let model = await editModel(world, bia, registrar: ClientRegistrationService(vault: world.vault))
         model.draft.phone = "+55 11 98123-4410"
+        model.draft.confirmPhone = "+55 11 98123-4410"
 
         await model.saveAsync()
 
@@ -97,6 +98,7 @@ struct ClientEditViewModelTests {
         let registrar = FakeClientRegistrar()
         let model = await editModel(world, ana, registrar: registrar)
         model.draft.email = "ana@"
+        model.draft.confirmEmail = "ana@"
 
         await model.saveAsync()
 
@@ -112,6 +114,7 @@ struct ClientEditViewModelTests {
         try await world.repository.save(ana)
         let model = await editModel(world, ana, registrar: ClientRegistrationService(vault: world.vault))
         model.draft.email = "ana@example.com"
+        model.draft.confirmEmail = "ana@example.com"
 
         model.setArchived(true)
         #expect(await Wait.untilMain { model.finish != nil })

@@ -12,6 +12,8 @@ struct BookingSettingsContentView: View {
     @State private var viewModel: BookingSettingsViewModel
     @State private var showsPauseSheet = false
     @State private var confirmsStop = false
+    @State private var showsShareLink = false
+    @State private var showsWorkplace = false
     let publishing: PublishingService
 
     @Environment(\.locale) private var locale
@@ -39,6 +41,7 @@ struct BookingSettingsContentView: View {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 notices
                 linkSection
+                readinessSection
                 takingBookings
                 workplaceSection
                 BookingRulesSection(viewModel: viewModel)
@@ -122,6 +125,21 @@ struct BookingSettingsContentView: View {
             editor: viewModel.editor, publishing: publishing, displayName: viewModel.displayName,
             businessName: viewModel.businessName, localization: viewModel.localization
         )
+    }
+
+    private var readinessSection: some View {
+        BookingReadinessSection(
+            viewModel: viewModel,
+            publishing: publishing,
+            onOpenShareLink: { showsShareLink = true },
+            onOpenWorkplace: { showsWorkplace = true }
+        )
+        .navigationDestination(isPresented: $showsShareLink) {
+            shareLinkScreen
+        }
+        .navigationDestination(isPresented: $showsWorkplace) {
+            WorkplaceView(editor: viewModel.editor, businessRegion: viewModel.regionCode)
+        }
     }
 
     private var takingBookings: some View {

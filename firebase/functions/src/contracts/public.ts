@@ -240,8 +240,18 @@ export const getBooking = {
 };
 
 export const confirmPresence = {
-  input: z.strictObject({ token: Token }),
-  output: z.strictObject({ clientConfirmedAt: Instant })
+  input: z.strictObject({
+    token: Token,
+    client: z.strictObject({
+      email: Email.optional(),
+      phone: E164.optional()
+    }).optional()
+  }),
+  output: z.strictObject({
+    clientConfirmedAt: Instant,
+    email: Email.optional(),
+    phone: E164.optional()
+  })
 };
 
 export const reportLate = {

@@ -66,7 +66,13 @@ test.describe('a client and the real functions', () => {
     await expect(page.getByTestId('name')).toBeVisible();
     await page.getByTestId('name').fill(CLIENT.name);
     await page.getByTestId('phone').fill(CLIENT.phone);
+    if (await page.getByTestId('confirm-phone').isVisible()) {
+      await page.getByTestId('confirm-phone').fill(CLIENT.phone);
+    }
     await page.getByTestId('email').fill(CLIENT.email);
+    if (await page.getByTestId('confirm-email').isVisible()) {
+      await page.getByTestId('confirm-email').fill(CLIENT.email);
+    }
     await page.getByTestId('send-code').click();
 
     // D46: the e-mail code is the only verification; the emulator fixes it.

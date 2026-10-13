@@ -248,3 +248,12 @@ actor FakeInboxRepository: InboxRepository {
         writes.append(call)
     }
 }
+
+extension FakeInboxRepository {
+    func registerManualBooking(_ registration: ManualBookingRegistration) async throws -> ClientManageLink {
+        try write("registerManualBooking:\(registration.appointmentId)")
+        let token = String(("Link" + registration.appointmentId + String(repeating: "0", count: 22)).prefix(22))
+        let url = URL(string: "https://bellohub.app/m/\(token)") ?? URL(filePath: "/")
+        return ClientManageLink(url: url, expiresAt: registration.endsAt.addingTimeInterval(7 * 86_400))
+    }
+}

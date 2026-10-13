@@ -28,7 +28,9 @@ import { useRules } from '../../components/RuleList';
 interface Errors {
   name?: string;
   phone?: string;
+  confirmPhone?: string;
   email?: string;
+  confirmEmail?: string;
 }
 
 export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | null {
@@ -47,7 +49,9 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
   const [name, setName] = useState(draft.name);
   const [country, setCountry] = useState(draft.phoneCountry);
   const [phone, setPhone] = useState(draft.phoneInput);
+  const [confirmPhone, setConfirmPhone] = useState(draft.phoneInput);
   const [email, setEmail] = useState(draft.email);
+  const [confirmEmail, setConfirmEmail] = useState(draft.email);
   const [errors, setErrors] = useState<Errors>({});
   const [noticeOpen, setNoticeOpen] = useState(false);
 
@@ -60,7 +64,15 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
     const next: Errors = {};
     if (name.trim().length < 2) next.name = t('bk5.err.name');
     if (!normalizePhone(phone, phoneRegion(country)).ok) next.phone = t('bk5.err.phone');
+    const phoneDigits = phone.replace(/\D/g, '');
+    const confirmDigits = confirmPhone.replace(/\D/g, '');
+    if (!confirmDigits || phoneDigits !== confirmDigits) {
+      next.confirmPhone = t('bk5.err.phoneMismatch');
+    }
     if (!isEmail(email)) next.email = t('bk5.err.email');
+    if (!confirmEmail.trim() || email.trim().toLowerCase() !== confirmEmail.trim().toLowerCase()) {
+      next.confirmEmail = t('bk5.err.emailMismatch');
+    }
     setErrors(next);
     if (Object.keys(next).length > 0) {
       // Focus the first field with a problem so the keyboard and a screen reader land on it.
@@ -106,7 +118,29 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
       >
         <TextField label={t('bk5.name')} value={name} onInput={setName} autoComplete="name" error={errors.name} testId="name" />
         <PhoneField label={t('bk5.phone')} countryLabel={t('bk5.phoneCountry')} country={country} input={phone} defaultCountry={profile.regionCode} error={errors.phone} onChange={(c, p) => { setCountry(c); setPhone(p); }} />
+        <TextField
+          label={t('bk5.confirmPhone')}
+          type="tel"
+          inputMode="tel"
+          value={confirmPhone}
+          error={errors.confirmPhone}
+          testId="confirm-phone"
+          dir="ltr"
+          onInput={setConfirmPhone}
+        />
         <TextField label={t('bk5.email')} value={email} onInput={setEmail} type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" error={errors.email} testId="email" dir="ltr" />
+        <TextField
+          label={t('bk5.confirmEmail')}
+          value={confirmEmail}
+          onInput={setConfirmEmail}
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          error={errors.confirmEmail}
+          testId="confirm-email"
+          dir="ltr"
+        />
       </form>
 
       <p class="well well-icon">

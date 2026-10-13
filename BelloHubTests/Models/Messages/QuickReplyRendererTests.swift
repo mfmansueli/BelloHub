@@ -109,10 +109,10 @@ struct QuickReplyRendererTests {
         #expect(QuickReplyRenderer.unknownWords(in: "Hi {name} {service} {date} {time} {link}").isEmpty)
     }
 
-    @Test("The five variables are the ones the prototype lists, written in braces")
+    @Test("The variables are the ones the prototype lists, written in braces")
     func variables() {
         #expect(QuickReplyVariable.allCases.map(\.token)
-            == ["{name}", "{service}", "{date}", "{time}", "{link}", "{address}"])
+            == ["{name}", "{service}", "{date}", "{time}", "{link}", "{address}", "{business}"])
     }
 
     // MARK: - {address}

@@ -217,7 +217,7 @@ export interface BookingDoc extends TimingFields {
   note?: string;
   /** SHA-256 of each valid manage token (the token itself is never stored). At most five. */
   manageTokenHashes: string[];
-  origin: 'bookingLink' | 'rebook' | 'waitlist';
+  origin: 'bookingLink' | 'rebook' | 'waitlist' | 'manual';
   /** D47: the rules in force when the booking was made. Later edits by the professional never change them. */
   policy: CancellationPolicy;
   /** D47: the rule texts (per booking language) published at booking time. Absent on bookings made before the snapshot. */

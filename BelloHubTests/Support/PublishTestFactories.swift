@@ -40,6 +40,9 @@ func makePublishInputs(
     var setup = BookingSetup.starter(now: TestClock.now)
     setup.slug = slug
     setup.page = page
+    setup.location = BusinessLocation(
+        street: "Rua Augusta 1200", postalCode: "01304-001", city: "São Paulo", countryCode: "BR"
+    )
     let offered = services ?? [
         Service(
             id: UUID(uuidString: "11111111-1111-4111-8111-111111111111") ?? UUID(), name: "Glow Facial",

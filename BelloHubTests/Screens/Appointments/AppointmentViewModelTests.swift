@@ -47,7 +47,7 @@ struct AppointmentViewModelTests {
         #expect(model.actionErrorMessage == nil)
         #expect(model.visit?.appointment.status == .completed)
         #expect(try await store.visit(visit.id)?.status == .completed)
-        #expect(model.layout?.primary == nil)
+        #expect(model.layout?.primary == .registerVisit)
     }
 
     @Test("An upcoming visit cannot be completed early")

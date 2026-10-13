@@ -17,13 +17,21 @@ struct PublishPayloadsTests {
 
     // MARK: - Readiness
 
-    @Test("A page needs an address and at least one active service")
+    @Test("A page needs an address, a workplace location and at least one active service")
     func blockers() {
         #expect(PublishPayloads.blocker(makePublishInputs()) == nil)
         #expect(PublishPayloads.blocker(makePublishInputs(slug: nil)) == .needsAddress)
         let inactive = [Service(name: "Old", durationMinutes: 30, isActive: false)]
         #expect(PublishPayloads.blocker(makePublishInputs(services: inactive)) == .needsService)
         #expect(PublishPayloads.blocker(makePublishInputs(slug: nil, services: [])) == .needsAddress)
+
+        var noLocation = makePublishInputs()
+        noLocation.setup.location = nil
+        #expect(PublishPayloads.blocker(noLocation) == .needsWorkplace)
+
+        var incompleteLocation = makePublishInputs()
+        incompleteLocation.setup.location = BusinessLocation(street: "", city: "", countryCode: "BR")
+        #expect(PublishPayloads.blocker(incompleteLocation) == .needsWorkplace)
     }
 
     // MARK: - Profile

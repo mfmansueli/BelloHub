@@ -57,12 +57,13 @@ enum AppointmentMessageComposer {
     /// the link (her client's own or her booking page) and where she works. Nothing else, so no message can carry
     /// clinical data.
     static func values(
-        client: Client, appointment: Appointment, link: String?, location: BusinessLocation? = nil
+        client: Client, appointment: Appointment, link: String?, location: BusinessLocation? = nil,
+        businessName: String? = nil
     ) -> QuickReplyValues {
         let first = client.name.split(separator: " ").first.map(String.init) ?? client.name
         return QuickReplyValues(
             name: first, service: appointment.serviceName, startsAt: appointment.startsAt, link: link,
-            address: BusinessLocationFormat.messageBlock(location)
+            address: BusinessLocationFormat.messageBlock(location), business: businessName
         )
     }
 

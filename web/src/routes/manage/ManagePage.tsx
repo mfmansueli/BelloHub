@@ -21,8 +21,11 @@ import { Icon } from '../../components/Icon';
 import { Footer, Screen, Title, TopBar, Avatar, useDocumentTitle } from '../../components/Layout';
 import { PlaceCard } from '../../components/PlaceCard';
 import { BookingRules } from '../../components/BookingRules';
+import { PhoneField, TextField } from '../../components/Field';
 import { useI18n } from '../../i18n';
 import { pageUrl } from '../../lib/config';
+import { isEmail } from '../../lib/email';
+import { normalizePhone, phoneRegion } from '../../lib/phone';
 import { freeUntil, reschedulesLeft } from '../../lib/policy';
 import { forgetDeviceLocally, storedDeviceToken } from '../../lib/trustedDevice';
 import { whatsAppUrl } from '../../lib/whatsapp';
@@ -76,6 +79,17 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   const startsAt = Date.parse(booking.startsAt);
   const endsAt = Date.parse(booking.endsAt);
   const policy = booking.policy;
+  const [email, setEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
+  const [phoneCountry, setPhoneCountry] = useState(pro.regionCode);
+  const [phone, setPhone] = useState('');
+  const [confirmPhone, setConfirmPhone] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{
+    email?: string;
+    confirmEmail?: string;
+    phone?: string;
+    confirmPhone?: string;
+  }>({});
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [attend, setAttend] = useState<'yes' | 'no' | null>(null);
   const [late, setLate] = useState<number | null>(booking.lateByMinutes ?? null);
@@ -100,10 +114,55 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
   const showLate = actions.canReportLate && now <= endsAt;
 
   const confirmPresence = async (): Promise<void> => {
+    const errors: {
+      email?: string;
+      confirmEmail?: string;
+      phone?: string;
+      confirmPhone?: string;
+    } = {};
+
+    const trimmedEmail = email.trim().toLowerCase();
+    const trimmedConfirmEmail = confirmEmail.trim().toLowerCase();
+    const hasEmail = trimmedEmail.length > 0 || trimmedConfirmEmail.length > 0;
+
+    if (hasEmail) {
+      if (!trimmedEmail || !isEmail(trimmedEmail)) {
+        errors.email = t('bk5.err.email');
+      }
+      if (!trimmedConfirmEmail || trimmedEmail !== trimmedConfirmEmail) {
+        errors.confirmEmail = t('bk9.attend.err.emailMismatch');
+      }
+    }
+
+    const trimmedPhone = phone.trim();
+    const trimmedConfirmPhone = confirmPhone.trim();
+    const hasPhone = trimmedPhone.length > 0 || trimmedConfirmPhone.length > 0;
+    let normalizedPhoneE164: string | undefined;
+
+    if (hasPhone) {
+      const norm = normalizePhone(trimmedPhone, phoneRegion(phoneCountry));
+      if (!norm.ok) {
+        errors.phone = t('bk5.err.phone');
+      } else {
+        normalizedPhoneE164 = norm.e164;
+      }
+      const phoneDigits = trimmedPhone.replace(/\D/g, '');
+      const confirmDigits = trimmedConfirmPhone.replace(/\D/g, '');
+      if (!confirmDigits || phoneDigits !== confirmDigits) {
+        errors.confirmPhone = t('bk9.attend.err.phoneMismatch');
+      }
+    }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
     setBusy(true);
     setFailure(null);
     try {
-      await api.confirmPresence(token);
+      const clientPayload: { email?: string; phone?: string } = {};
+      if (trimmedEmail) clientPayload.email = trimmedEmail;
+      if (normalizedPhoneE164) clientPayload.phone = normalizedPhoneE164;
+      await api.confirmPresence(token, Object.keys(clientPayload).length > 0 ? clientPayload : undefined);
       setAttend('yes');
     } catch (error) {
       setFailure(error);
@@ -232,6 +291,63 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
         <section class="card stack-sm" aria-labelledby="attend-title" data-testid="attend">
           <h2 id="attend-title" class="strong">{t('bk9.attend.title')}</h2>
           <p class="meta">{t('bk9.attend.text', { name: pro.firstName })}</p>
+          <div class="stack-sm">
+            <TextField
+              label={t('bk5.email')}
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              value={email}
+              optional
+              error={fieldErrors.email}
+              testId="attend-email"
+              onInput={(v) => {
+                setEmail(v);
+                setFieldErrors((prev) => ({ ...prev, email: undefined }));
+              }}
+            />
+            <TextField
+              label={t('bk9.attend.confirmEmail')}
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              value={confirmEmail}
+              optional
+              error={fieldErrors.confirmEmail}
+              testId="attend-confirm-email"
+              onInput={(v) => {
+                setConfirmEmail(v);
+                setFieldErrors((prev) => ({ ...prev, confirmEmail: undefined }));
+              }}
+            />
+            <PhoneField
+              label={t('bk5.phone')}
+              countryLabel={t('bk5.phoneCountry')}
+              country={phoneCountry}
+              input={phone}
+              defaultCountry={pro.regionCode}
+              error={fieldErrors.phone}
+              testId="attend-phone"
+              onChange={(c, p) => {
+                setPhoneCountry(c);
+                setPhone(p);
+                setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+              }}
+            />
+            <TextField
+              label={t('bk9.attend.confirmPhone')}
+              type="tel"
+              inputMode="tel"
+              value={confirmPhone}
+              optional
+              error={fieldErrors.confirmPhone}
+              testId="attend-confirm-phone"
+              onInput={(v) => {
+                setConfirmPhone(v);
+                setFieldErrors((prev) => ({ ...prev, confirmPhone: undefined }));
+              }}
+            />
+          </div>
           <div class="row-flex">
             <Button inline busy={busy} onClick={() => { void confirmPresence(); }} testId="attend-yes">{t('bk9.attend.yes')}</Button>
             <Button inline variant="secondary" onClick={() => { setAttend('no'); }} testId="attend-no">{t('bk9.attend.no')}</Button>

@@ -54,7 +54,13 @@ test('a 75-minute service is offered right after a 30-minute visit, at the ancho
   await expect(page.getByTestId('name')).toBeVisible();
   await page.getByTestId('name').fill(CLIENT.name);
   await page.getByTestId('phone').fill(CLIENT.phone);
+  if (await page.getByTestId('confirm-phone').isVisible()) {
+    await page.getByTestId('confirm-phone').fill(CLIENT.phone);
+  }
   await page.getByTestId('email').fill(CLIENT.email);
+  if (await page.getByTestId('confirm-email').isVisible()) {
+    await page.getByTestId('confirm-email').fill(CLIENT.email);
+  }
   await page.getByTestId('send-code').click();
   await expect(page.getByTestId('code')).toBeVisible();
   // The countdown starts when the server answered: only then does the code exist.

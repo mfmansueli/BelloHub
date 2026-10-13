@@ -139,6 +139,28 @@ export const mintManageLink = {
   output: z.strictObject({ url: z.url().max(300), expiresAt: Instant })
 };
 
+/** Registers an appointment added by hand, creates a booking doc with phone/email hashes and mints a manage link. */
+export const registerManualBooking = {
+  input: z.strictObject({
+    appointmentId: Uuid,
+    serviceName: text(80),
+    startsAt: Instant,
+    endsAt: Instant,
+    timeZoneID: TimeZoneId,
+    client: z.strictObject({
+      name: text(80),
+      phone: E164,
+      email: Email.optional(),
+      locale: LocaleSchema.optional()
+    })
+  }),
+  output: z.strictObject({
+    bookingId: DocId,
+    url: z.url().max(300),
+    expiresAt: Instant
+  })
+};
+
 export const suggestBookingTime = {
   input: z.strictObject({
     bookingId: DocId,

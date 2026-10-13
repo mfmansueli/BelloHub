@@ -93,10 +93,14 @@ final class ClientFormViewModel {
 
     /// What to say next to each field. Empty until she first tries to save.
     var nameIssue: ClientFormRules.Issue? { shown.first { $0 == .nameMissing } }
-    var emailIssue: ClientFormRules.Issue? { shown.first { $0 == .emailInvalid } }
+    var phoneMissing: Bool { shown.contains(.phoneMissing) }
     var phoneFailure: PhoneNormalizer.Failure? {
         shown.lazy.compactMap { if case .phone(let failure) = $0 { failure } else { nil } }.first
     }
+    var phoneMismatch: Bool { shown.contains(.phoneMismatch) }
+    var emailMissing: Bool { shown.contains(.emailMissing) }
+    var emailIssue: ClientFormRules.Issue? { shown.first { $0 == .emailInvalid } }
+    var emailMismatch: Bool { shown.contains(.emailMismatch) }
     var birthdayProblem: BirthdayInput.Problem? {
         shown.lazy.compactMap { if case .birthday(let problem) = $0 { problem } else { nil } }.first
     }

@@ -14,6 +14,8 @@ enum QuickReplyVariable: String, CaseIterable, Identifiable, Sendable {
     /// Where she works ("Where you work"): the address lines, the "how to find us" note and a map link, on lines of
     /// their own. Gone, with its line, when she has no address.
     case address
+    /// The professional's business name, or display name if no business name is set.
+    case business
 
     var id: String { rawValue }
 

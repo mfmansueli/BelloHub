@@ -682,6 +682,14 @@ out). Limit: 60/hour per professional. Logs the uid, the booking id and whether 
 the URL; no audit document.
 
 ```ts
+registerManualBooking: req { appointmentId: DocId; serviceName: string; startsAt: Instant; endsAt: Instant; timeZoneID: TimeZoneId; client: { name: string; phone: string; email?: Email; locale?: LocaleId } }
+                       res { bookingId: string; url: string; expiresAt: Instant }
+```
+Registers an appointment created by the professional in the iPhone app, creating or updating an active `BookingDoc`
+with origin `manual`, contact hashes and a client manage token. Returns the client's exclusive manage link (`/m/<token>`).
+
+
+```ts
 markNoShow: req { phone: E164; action: "mark" | "forgive" | "reset"; markId?: Uuid; markedAt?: Instant; bookingId?: string }
             res { counted: number }
 setOnlineBookingStopped: req { phone: E164; stopped: boolean }   res { ok: true }
@@ -828,7 +836,7 @@ Public / token: `getPublicPage` `getSlots` `holdSlot` `getHold` `sendEmailCode` 
 Owner: `ensureAccount` `reserveRegistration` `reserveRegistrations` `syncPlan` `isSlugAvailable` `claimSlug`
 `publishProfile` `publishAvailability` `updateInboxKey` `respondBookingRequest` `respondRescheduleRequest`
 `cancelBookingByOwner` `moveBookingByOwner` `suggestBookingTime` `mintManageLink` `offerWaitlistSlot` `removeWaitlistEntry` `markNoShow`
-`setOnlineBookingStopped` `publishPortal` `getMailboxItem` `acknowledgeMailboxItem` `registerDevice` `unregisterDevice`
+`registerManualBooking` `setOnlineBookingStopped` `publishPortal` `getMailboxItem` `acknowledgeMailboxItem` `registerDevice` `unregisterDevice`
 `deleteClientServerData` `deleteAccount`
 
 Triggers, jobs, webhooks: `onBookingWritten` `onInboxItemCreated` `cleanupJob` `sendReminders` `appStoreNotifications`

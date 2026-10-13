@@ -31,29 +31,37 @@ struct NewAppointmentContent: View {
 
     var body: some View {
         NavigationStack {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 0) {
-                        if let message = viewModel.errorMessage {
-                            ErrorNotice(message: message, actionTitle: "scheduling.tryAgain") { viewModel.load() }
-                                .padding(.top, Spacing.md)
-                                .accessibilityIdentifier("newAppointment.error")
-                        }
-                        clientSection
-                        visitTypeSection
-                        serviceSection
-                        durationRow
-                        addOnsSection
-                        guestsSection
-                        timeSection.id(Self.timeSectionID)
-                        warningsSection
-                    }
-                    .padding(.horizontal, Spacing.gutter)
-                    .padding(.bottom, Spacing.lg)
-                }
-                .scrollDismissesKeyboard(.interactively)
-                .safeAreaInset(edge: .bottom) {
-                    actionBar(scrollTo: { withAnimation { proxy.scrollTo(Self.timeSectionID) } })
+            Group {
+                if viewModel.didBook,
+                   let client = viewModel.selectedClient,
+                   let service = viewModel.selectedService,
+                   let start = viewModel.start,
+                   let endsAt = viewModel.endsAt {
+                    BookingConfirmationView(
+                        client: client,
+                        service: service,
+                        visitType: viewModel.visitType,
+                        addOns: viewModel.chosenAddOns,
+                        guestNames: viewModel.guestNames,
+                        startsAt: start,
+                        endsAt: endsAt,
+                        totalMinutes: viewModel.totalMinutes,
+                        location: viewModel.bookingSetup.setup.location,
+                        messageText: viewModel.confirmationMessageText(formatters: formatters),
+                        formatters: formatters,
+                        onSendWhatsApp: {
+                            let text = viewModel.confirmationMessageText(formatters: formatters)
+                            Task { await viewModel.sendConfirmationWhatsApp(messageText: text) }
+                        },
+                        onSendSMS: {
+                            let text = viewModel.confirmationMessageText(formatters: formatters)
+                            Task { await viewModel.sendConfirmationSMS(messageText: text) }
+                        },
+                        onDone: { dismiss() },
+                        outcome: viewModel.confirmationOutcome
+                    )
+                } else {
+                    formContent
                 }
             }
             .background(Palette.bg)
@@ -61,8 +69,10 @@ struct NewAppointmentContent: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: { Text("common.cancel") }
-                        .accessibilityIdentifier("newAppointment.cancelButton")
+                    let cancelTitle = viewModel.didBook ? "common.close" : "common.cancel"
+                    let cancelID = viewModel.didBook ? "newAppointment.closeButton" : "newAppointment.cancelButton"
+                    Button { dismiss() } label: { Text(cancelTitle) }
+                        .accessibilityIdentifier(cancelID)
                 }
             }
             .task { await viewModel.loadAsync() }
@@ -73,7 +83,38 @@ struct NewAppointmentContent: View {
         .presentationBackground(Palette.bg)
     }
 
-    // MARK: - Sections
+    private var formContent: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 0) {
+                    if let message = viewModel.errorMessage {
+                        ErrorNotice(message: message, actionTitle: "scheduling.tryAgain") { viewModel.load() }
+                            .padding(.top, Spacing.md)
+                            .accessibilityIdentifier("newAppointment.error")
+                    }
+                    clientSection
+                    visitTypeSection
+                    serviceSection
+                    durationRow
+                    addOnsSection
+                    guestsSection
+                    timeSection.id(Self.timeSectionID)
+                    warningsSection
+                }
+                .padding(.horizontal, Spacing.gutter)
+                .padding(.bottom, Spacing.lg)
+            }
+            .scrollDismissesKeyboard(.interactively)
+            .safeAreaInset(edge: .bottom) {
+                actionBar(scrollTo: { withAnimation { proxy.scrollTo(Self.timeSectionID) } })
+            }
+        }
+    }
+}
+
+// MARK: - Sections
+
+extension NewAppointmentContent {
 
     private var clientSection: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -236,7 +277,7 @@ struct NewAppointmentContent: View {
 
     private func book() {
         Task {
-            if await viewModel.bookAsync() { dismiss() }
+            _ = await viewModel.bookAsync()
         }
     }
 

@@ -52,6 +52,11 @@ enum PublishStatusText {
             LocalizedStringResource(
                 "publish.error.needsService", defaultValue: "Add at least one active service to put your page online."
             )
+        case .needsWorkplace:
+            LocalizedStringResource(
+                "publish.error.needsWorkplace",
+                defaultValue: "Add your store location address to put your page online."
+            )
         case .addressTaken:
             LocalizedStringResource(
                 "publish.error.addressTaken", defaultValue: "That address is taken. Choose another one."
@@ -102,7 +107,7 @@ enum PublishStatusText {
     /// service) or sign in again.
     static func offersRetry(_ failure: PublishFailure) -> Bool {
         switch failure {
-        case .needsAddress, .needsService, .addressTaken, .signedOut: false
+        case .needsAddress, .needsWorkplace, .needsService, .addressTaken, .signedOut: false
         case .offline, .busy, .locked, .rejected, .keyMismatch: true
         }
     }

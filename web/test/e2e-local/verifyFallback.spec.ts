@@ -22,7 +22,13 @@ async function toDetails(page: Page, client: { name: string; phone: string; emai
   await expect(page.getByTestId('name')).toBeVisible();
   await page.getByTestId('name').fill(client.name);
   await page.getByTestId('phone').fill(client.phone);
+  if (await page.getByTestId('confirm-phone').isVisible()) {
+    await page.getByTestId('confirm-phone').fill(client.phone);
+  }
   await page.getByTestId('email').fill(client.email);
+  if (await page.getByTestId('confirm-email').isVisible()) {
+    await page.getByTestId('confirm-email').fill(client.email);
+  }
   await page.getByTestId('send-code').click();
 }
 

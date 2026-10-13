@@ -95,6 +95,8 @@ enum QuickReplyRenderer {
             return values.link
         case .address:
             return values.address.flatMap { $0.isEmpty ? nil : $0 }
+        case .business:
+            return values.business.map { isolates ? BidiIsolate.wrap($0) : $0 }
         }
     }
 }

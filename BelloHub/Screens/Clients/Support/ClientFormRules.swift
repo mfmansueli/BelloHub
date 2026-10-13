@@ -15,8 +15,12 @@ import Foundation
 struct ClientFormRules: Sendable {
     enum Issue: Hashable, Sendable {
         case nameMissing
+        case phoneMissing
         case phone(PhoneNormalizer.Failure)
+        case phoneMismatch
+        case emailMissing
         case emailInvalid
+        case emailMismatch
         case birthday(BirthdayInput.Problem)
     }
 
@@ -48,8 +52,31 @@ struct ClientFormRules: Sendable {
         let draft = draft.trimmed
         var found: [Issue] = []
         if draft.name.isEmpty { found.append(.nameMissing) }
-        if let failure = phoneFailure(draft.phone, original: original) { found.append(.phone(failure)) }
-        if !draft.email.isEmpty, !Self.isPlausibleEmail(draft.email) { found.append(.emailInvalid) }
+
+        if draft.phone.isEmpty {
+            if original == nil {
+                found.append(.phoneMissing)
+            }
+        } else {
+            if let failure = phoneFailure(draft.phone, original: original) { found.append(.phone(failure)) }
+            let phoneDigits = draft.phone.filter(\.isNumber)
+            let confirmDigits = draft.confirmPhone.filter(\.isNumber)
+            if draft.confirmPhone.isEmpty || phoneDigits != confirmDigits {
+                found.append(.phoneMismatch)
+            }
+        }
+
+        if draft.email.isEmpty {
+            if original == nil {
+                found.append(.emailMissing)
+            }
+        } else {
+            if !Self.isPlausibleEmail(draft.email) { found.append(.emailInvalid) }
+            if draft.confirmEmail.isEmpty || draft.email.lowercased() != draft.confirmEmail.lowercased() {
+                found.append(.emailMismatch)
+            }
+        }
+
         if case .failure(let problem) = draft.birthday.resolve(currentYear: calendar.component(.year, from: now)) {
             found.append(.birthday(problem))
         }
@@ -111,8 +138,10 @@ struct ClientFormRules: Sendable {
 
     /// The draft the edit form starts from.
     func draft(for client: Client) -> ClientFormDraft {
-        ClientFormDraft(
-            name: client.name, phone: client.phoneE164.map(displayPhone) ?? "", email: client.email ?? "",
+        let phone = client.phoneE164.map(displayPhone) ?? ""
+        let email = client.email ?? ""
+        return ClientFormDraft(
+            name: client.name, phone: phone, confirmPhone: phone, email: email, confirmEmail: email,
             tagIDs: client.tagIDs, importantNote: client.importantNote ?? "", birthday: BirthdayInput(client.birthday),
             onlineBookingStopped: client.onlineBookingStopped, stopReason: client.stopReason ?? "",
             remindersEnabled: client.remindersEnabled

@@ -16,14 +16,15 @@ struct QuickReplyUpgradeTests {
         )
     }
 
-    @Test("A built-in still worded as the previous default gets the new one, in the business language")
+    @Test("A built-in still worded as any previous default (v1 or v2) gets the new one, in the business language")
     func upgradesUntouched() throws {
-        let old = try #require(BuiltInQuickReply.confirm.previousText(in: .ptBR))
-        let replies = [stored(.confirm, text: old)]
-        let upgraded = QuickReplyUpgrade.upgraded(replies, localization: .ptBR, now: TestClock.now)
-        #expect(upgraded.count == 1)
-        #expect(upgraded.first?.text == BuiltInQuickReply.confirm.text(in: .ptBR))
-        #expect(upgraded.first?.updatedAt == TestClock.now)
+        for old in BuiltInQuickReply.confirm.previousTexts(in: .ptBR) {
+            let replies = [stored(.confirm, text: old)]
+            let upgraded = QuickReplyUpgrade.upgraded(replies, localization: .ptBR, now: TestClock.now)
+            #expect(upgraded.count == 1)
+            #expect(upgraded.first?.text == BuiltInQuickReply.confirm.text(in: .ptBR))
+            #expect(upgraded.first?.updatedAt == TestClock.now)
+        }
     }
 
     @Test("Her business language changed since: the old wording in any language is still recognized")

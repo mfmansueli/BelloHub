@@ -35,6 +35,8 @@ struct BeforeYouStartViewModelTests {
 
         await model.completeAsync()
 
+        #expect(model.offersToRegister)
+        model.finishAfterCompleting()
         #expect(model.didComplete)
         #expect(model.actionErrorMessage == nil)
         #expect(try await store.visit(visit.id)?.status == .completed)

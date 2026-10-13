@@ -72,6 +72,30 @@ test.describe('booking (Bk-1 to Bk-8)', () => {
     await expect(page.getByTestId('health-form')).toHaveCount(0);
   });
 
+  test('double entry of email and phone rejects mismatches and accepts matching entries', async ({ page, slugFor }) => {
+    const slug = slugFor('maria');
+    await chooseService(page, slug);
+    await chooseSlot(page);
+    await expect(page.getByTestId('name')).toBeVisible();
+    await page.getByTestId('name').fill('Helena Duarte');
+    await page.getByTestId('phone').fill('11 98765 4321');
+    await page.getByTestId('confirm-phone').fill('11 99999 9999');
+    await page.getByTestId('email').fill('helena@example.com');
+    await page.getByTestId('confirm-email').fill('wrong@example.com');
+    await page.getByTestId('send-code').click();
+
+    const alerts = page.getByRole('alert');
+    await expect(alerts.first()).toBeVisible();
+    expect(await alerts.count()).toBeGreaterThanOrEqual(2);
+
+    // Fix mismatches
+    await page.getByTestId('confirm-phone').fill('11 98765 4321');
+    await page.getByTestId('confirm-email').fill('helena@example.com');
+    await page.getByTestId('send-code').click();
+
+    await expect(page.getByTestId('code')).toBeVisible();
+  });
+
   test('verifies by e-mail code only and sends no phone verification (D46)', async ({ page, mock, slugFor, guard }) => {
     const slug = slugFor('maria');
     await chooseService(page, slug);

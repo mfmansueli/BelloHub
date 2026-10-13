@@ -24,6 +24,9 @@ enum PublishPayloads {
     static func blocker(_ inputs: PublishInputs) -> PublishFailure? {
         if inputs.setup.slug == nil { return .needsAddress }
         if offeredServices(inputs.services).isEmpty { return .needsService }
+        guard let location = inputs.setup.location, BusinessLocationFormat.isComplete(location) else {
+            return .needsWorkplace
+        }
         return nil
     }
 

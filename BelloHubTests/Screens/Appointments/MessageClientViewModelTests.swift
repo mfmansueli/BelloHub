@@ -179,7 +179,7 @@ struct MessageClientViewModelTests {
         #expect(model.linkChoice == ClientLinkChoice(source: .bookingPage(.failed), link: "https://bellohub.app/maria"))
     }
 
-    @Test("The confirmation carries her saved address on its own lines, with the map link")
+    @Test("The confirmation carries her saved address on its own lines, without the raw map link")
     func confirmationCarriesAddress() async throws {
         let store = await AppointmentTestStore()
         var setup = store.setup.setup
@@ -194,7 +194,8 @@ struct MessageClientViewModelTests {
         await model.loadAsync()
 
         let text = try #require(model.text)
-        #expect(text.contains("\nRua Augusta 1200\nSão Paulo 01304-001\nhttps://www.google.com/maps/search/"))
+        #expect(text.contains("\nRua Augusta 1200\nSão Paulo 01304-001\n"))
+        #expect(!text.contains("https://www.google.com/maps/search/"))
         #expect(!text.contains("{address}"))
     }
 }

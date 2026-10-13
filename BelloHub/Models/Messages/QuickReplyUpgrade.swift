@@ -14,7 +14,7 @@ enum QuickReplyUpgrade {
     static func upgraded(_ stored: [QuickReply], localization: AppLocalization, now: Date) -> [QuickReply] {
         stored.compactMap { reply in
             guard let builtIn = reply.builtIn else { return nil }
-            let previous = AppLocalization.allCases.compactMap { builtIn.previousText(in: $0) }
+            let previous = AppLocalization.allCases.flatMap { builtIn.previousTexts(in: $0) }
             guard previous.contains(reply.text) else { return nil }
             var upgraded = reply
             upgraded.text = builtIn.text(in: localization)

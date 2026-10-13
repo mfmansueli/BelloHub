@@ -73,7 +73,7 @@ export interface Api {
   joinWaitlist(request: WaitlistRequest): Promise<void>;
   findBookings(request: FindBookingsRequest): Promise<FoundBooking[]>;
   getBooking(token: string): Promise<BookingView>;
-  confirmPresence(token: string): Promise<string>;
+  confirmPresence(token: string, client?: { email?: string; phone?: string }): Promise<string>;
   reportLate(token: string, minutes: number): Promise<LateResponse>;
   /** Direct mode only; throws `slotTaken` when the time went meanwhile. */
   rescheduleBooking(request: RescheduleDirect): Promise<MovedResponse>;
@@ -129,7 +129,7 @@ export function createApi(transport: Transport): Api {
 
     findBookings: async (request) => parseFound(await transport.call('findBookings', request)),
     getBooking,
-    confirmPresence: async (token) => parseConfirmed(await transport.call('confirmPresence', { token })),
+    confirmPresence: async (token, client) => parseConfirmed(await transport.call('confirmPresence', { token, ...(client ? { client } : {}) })),
     reportLate: async (token, minutes) => parseLate(await transport.call('reportLate', { token, minutes })),
     rescheduleBooking: async (request) => parseMoved(await transport.call('rescheduleBooking', request)),
     requestReschedule: async (request) => {

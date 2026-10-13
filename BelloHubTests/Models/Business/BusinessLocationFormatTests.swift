@@ -57,11 +57,10 @@ struct BusinessLocationFormatTests {
         #expect(!tricky.absoluteString.contains("&B") && tricky.query?.contains("x=y") == false)
     }
 
-    @Test("{address} carries the lines, the note and the Google Maps link, each on its own line")
-    func messageBlock() throws {
+    @Test("{address} carries the lines and the note, without the raw map URL")
+    func messageBlock() {
         let block = BusinessLocationFormat.messageBlock(location(directions: "2º andar, interfone 4"))
-        let google = try #require(BusinessLocationFormat.googleMapsURL(location())).absoluteString
-        #expect(block == "Rua Augusta 1200, sala 4\nSão Paulo 01304-001\n2º andar, interfone 4\n\(google)")
+        #expect(block == "Rua Augusta 1200, sala 4\nSão Paulo 01304-001\n2º andar, interfone 4")
         #expect(BusinessLocationFormat.messageBlock(nil).isEmpty)
         #expect(BusinessLocationFormat.messageBlock(location(city: "")).isEmpty)
     }

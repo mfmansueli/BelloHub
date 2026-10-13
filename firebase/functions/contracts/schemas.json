@@ -147,6 +147,22 @@
         "token": {
           "type": "string",
           "pattern": "^[A-Za-z0-9_-]{22}$"
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "maxLength": 254,
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
@@ -161,6 +177,11 @@
         "clientConfirmedAt": {
           "type": "string",
           "format": "date-time"
+        },
+        "email": {},
+        "phone": {
+          "type": "string",
+          "pattern": "^\\+[1-9]\\d{7,14}$"
         }
       },
       "required": [
@@ -3963,6 +3984,112 @@
       },
       "required": [
         "ok"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "registerManualBooking": {
+    "access": "owner",
+    "input": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "appointmentId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "serviceName": {
+          "type": "string",
+          "maxLength": 320
+        },
+        "startsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endsAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeZoneID": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "maxLength": 320
+            },
+            "phone": {
+              "type": "string",
+              "pattern": "^\\+[1-9]\\d{7,14}$"
+            },
+            "email": {
+              "type": "string",
+              "maxLength": 254,
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "locale": {
+              "type": "string",
+              "enum": [
+                "pt-BR",
+                "pt-PT",
+                "es-MX",
+                "es-419",
+                "es",
+                "en",
+                "en-GB",
+                "it",
+                "fr",
+                "de",
+                "tr",
+                "id",
+                "hi",
+                "ar"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "phone"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "appointmentId",
+        "serviceName",
+        "startsAt",
+        "endsAt",
+        "timeZoneID",
+        "client"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "bookingId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 300,
+          "format": "uri"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "bookingId",
+        "url",
+        "expiresAt"
       ],
       "additionalProperties": false
     }

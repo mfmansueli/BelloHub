@@ -18,14 +18,18 @@ struct QuickReplyValues: Equatable, Sendable {
     /// `BusinessLocationFormat.messageBlock`: a few lines ending with a map link; nil or empty when she has no address,
     /// and then `{address}` disappears instead of staying as written.
     var address: String?
+    /// The business name (or professional display name) for the farewell sign-off.
+    var business: String?
 
     init(
-        name: String? = nil, service: String? = nil, startsAt: Date? = nil, link: String? = nil, address: String? = nil
+        name: String? = nil, service: String? = nil, startsAt: Date? = nil, link: String? = nil,
+        address: String? = nil, business: String? = nil
     ) {
         self.name = name
         self.service = service
         self.startsAt = startsAt
         self.link = link
         self.address = address
+        self.business = business
     }
 }

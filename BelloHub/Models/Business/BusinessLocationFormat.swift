@@ -61,20 +61,19 @@ enum BusinessLocationFormat {
         URL(string: "https://maps.apple.com/?address=\(MessageLinks.encoded(query(location)))")
     }
 
-    /// `https://www.google.com/maps/search/?api=1&query=…` (Google's documented Maps URL): the Google Maps app or page
-    /// on any phone.
+    /// `https://www.google.com/maps/search/?api=1&query=…`: opens Google Maps (the app on Android or iOS if installed,
+    /// the website elsewhere).
     static func googleMapsURL(_ location: BusinessLocation) -> URL? {
         URL(string: "https://www.google.com/maps/search/?api=1&query=\(MessageLinks.encoded(query(location)))")
     }
 
-    /// What `{address}` puts in a message: the lines, the "how to find us" note and the Google Maps link (it opens on
-    /// any phone), each on its own line; the link follows `ClientLinkText`. Empty without a complete address.
+    /// What `{address}` puts in a message: the lines and the "how to find us" note, each on its own line;
+    /// map directions are opened directly from the client's booking manage link. Empty without a complete address.
     static func messageBlock(_ location: BusinessLocation?) -> String {
         guard let location, isComplete(location) else { return "" }
         var parts = lines(location)
         let directions = clean(location.directions)
         if !directions.isEmpty { parts.append(directions) }
-        if let map = googleMapsURL(location) { parts.append(ClientLinkText.text(map)) }
         return parts.joined(separator: "\n")
     }
 

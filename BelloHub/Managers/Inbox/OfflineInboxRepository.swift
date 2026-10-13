@@ -33,6 +33,9 @@ struct OfflineInboxRepository: InboxRepository {
     func mintManageLink(bookingId: String) async throws -> ClientManageLink {
         throw BookingRepositoryError.notPublishedYet
     }
+    func registerManualBooking(_ registration: ManualBookingRegistration) async throws -> ClientManageLink {
+        throw BookingRepositoryError.notPublishedYet
+    }
     func removeWaitlistEntry(id: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func resetNoShowCount(phone: String) async throws { throw BookingRepositoryError.notPublishedYet }
     func mailboxItems(uid: String) async throws -> [MailboxItem] { [] }

@@ -68,7 +68,13 @@ await page.getByTestId('continue').click();
 await page.waitForSelector('[data-testid="name"]');
 await page.getByTestId('name').fill('Helena Duarte');
 await page.getByTestId('phone').fill('11 98765 4321');
+if (await page.getByTestId('confirm-phone').isVisible()) {
+  await page.getByTestId('confirm-phone').fill('11 98765 4321');
+}
 await page.getByTestId('email').fill('helena@example.com');
+if (await page.getByTestId('confirm-email').isVisible()) {
+  await page.getByTestId('confirm-email').fill('helena@example.com');
+}
 await page.getByTestId('guest-name-0').fill('Ana');
 await shot('bk5-you');
 await page.getByTestId('send-code').click();

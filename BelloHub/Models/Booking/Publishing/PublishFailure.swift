@@ -10,6 +10,8 @@ enum PublishFailure: Equatable, Sendable {
     case needsAddress
     /// A page needs at least one service clients can book.
     case needsService
+    /// She has not added her store/workplace location yet.
+    case needsWorkplace
     /// Somebody else owns the address she chose.
     case addressTaken
     /// The phone cannot reach the server now; the page is as it was and the change goes out when it can.
@@ -29,7 +31,8 @@ enum PublishFailure: Equatable, Sendable {
     var isRetryable: Bool {
         switch self {
         case .offline, .busy, .locked: true
-        case .needsAddress, .needsService, .addressTaken, .signedOut, .rejected, .keyMismatch: false
+        case .needsAddress, .needsService, .needsWorkplace, .addressTaken,
+             .signedOut, .rejected, .keyMismatch: false
         }
     }
 }

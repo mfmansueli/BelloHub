@@ -92,15 +92,16 @@ struct QuickAccessSheet: View {
     private var linkCard: some View {
         BookingLinkCard(
             link: link, shareMessage: shareMessage, isCopied: viewModel.copiedLink, state: publishing.state,
-            onCopy: { if let link { viewModel.copy(link) } }, onGoOnline: publishing.goOnline
-        ) {
-            Button { open(QuickAccessItem.bookingPage.path) } label: { Text("bookingSettings.link.noAddress") }
-        }
+            onCopy: { if let link { viewModel.copy(link) } }, onGoOnline: publishing.goOnline,
+            chooseAddress: {
+                Button { open(QuickAccessItem.bookingPage.path) } label: { Text("bookingSettings.link.noAddress") }
+            }
+        )
     }
 
-    private func section(_ title: LocalizedStringKey, items: [QuickAccessItem]) -> some View {
+    private func section(_ sectionTitle: LocalizedStringKey, items: [QuickAccessItem]) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            SectionHeader(title: title)
+            SectionHeader(title: sectionTitle)
             ListCard(dividerInset: 72) {
                 ForEach(items) { item in
                     Button { open(item.path) } label: {

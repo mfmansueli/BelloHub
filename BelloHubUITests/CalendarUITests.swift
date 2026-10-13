@@ -15,7 +15,9 @@ final class CalendarUITests: XCTestCase {
     }
 
     func testBookFromAFreeHourThenRescheduleIt() {
-        let app = XCUIApplication.launchedForUITests(arguments: ["-uiSeed", "clients", "-uiCalendar"])
+        let app = XCUIApplication.launchedForUITests(
+            arguments: ["-uiSeed", "clients", "-uiCalendar", "-uiInbox", "fixtures"]
+        )
         XCTAssertTrue(app.staticTexts["home.greeting"].waitForExistence(timeout: 10))
         app.openCalendarTab()
         XCTAssertFalse(app.calendarVisits.firstMatch.exists, "the calendar should start empty")
@@ -30,8 +32,18 @@ final class CalendarUITests: XCTestCase {
         app.tapButton("newAppointment.client.0")
         app.tapButton("newAppointment.service.0")
         let confirm = app.buttons["newAppointment.confirmButton"]
-        XCTAssertTrue(confirm.isEnabled, "the appointment cannot be booked")
         confirm.tap()
+
+        // She sees the booking confirmation view with details and action buttons, then taps Done:
+        XCTAssertTrue(app.element("newAppointment.booked.title").waitForExistence(timeout: 5))
+        app.swipeUp()
+        let confirmationScreenshot = app.screenshot()
+        let artifactDir = "/Users/iagoxavierdelima/.gemini/antigravity-cli/brain/4e7df6b6-10ad-47cd-bed1-92ccb7f1c743"
+        let screenshotURL = URL(fileURLWithPath: artifactDir).appendingPathComponent("ios_booking_confirmation.png")
+        try? confirmationScreenshot.pngRepresentation.write(to: screenshotURL)
+        XCTAssertTrue(app.buttons["newAppointment.booked.whatsAppButton"].exists)
+        XCTAssertTrue(app.buttons["newAppointment.booked.smsButton"].exists)
+        app.tapButton("newAppointment.booked.doneButton")
 
         // She is back on the calendar and the appointment is there.
         XCTAssertTrue(app.element("calendar.modePicker").waitForExistence(timeout: 5))

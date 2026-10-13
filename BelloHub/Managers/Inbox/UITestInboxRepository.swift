@@ -163,6 +163,13 @@ actor UITestInboxRepository: InboxRepository {
         return ClientManageLink(url: url, expiresAt: booking.endsAt.addingTimeInterval(7 * 86_400))
     }
 
+    func registerManualBooking(_ registration: ManualBookingRegistration) async throws -> ClientManageLink {
+        let letters = registration.appointmentId.filter { $0.isLetter || $0.isNumber }
+        let token = String(("UITest" + letters + String(repeating: "x", count: 22)).prefix(22))
+        let url = BookingLink.defaultBaseURL.appending(path: "m").appending(path: token)
+        return ClientManageLink(url: url, expiresAt: registration.endsAt.addingTimeInterval(7 * 86_400))
+    }
+
     func removeWaitlistEntry(id: String) async throws {
         waitlist.removeAll { $0.id == id }
     }

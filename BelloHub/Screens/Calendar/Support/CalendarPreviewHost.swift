@@ -57,6 +57,7 @@ struct CalendarPreviewHost<Content: View>: View {
                     .environment(world.appointments)
                     .environment(world.timeBlocks)
                     .environment(world.bookingSetup)
+                    .environment(MessageService(vault: world.vault))
             } else {
                 ProgressView()
             }

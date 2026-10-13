@@ -24,25 +24,40 @@ struct BuiltInQuickReplyTests {
     @Test("The English defaults are the prototype's")
     func english() {
         #expect(BuiltInQuickReply.confirm.title(in: .en) == "Confirm appointment")
-        // 2026-10-11: the address on its own line, the link last and alone (ClientLinkText).
         #expect(BuiltInQuickReply.confirm.text(in: .en)
-            == "Hi {name}! Confirming your {service} on {date} at {time}.\n{address}\n"
-            + "Reply YES to confirm. To change or cancel:\n{link}")
+            == """
+            Hi {name}! Your {service} is booked for {date} at {time}.
+
+            {address}
+
+            If you need to make any changes, cancel (according to our policy), or get directions on \
+            Google Maps or Apple Maps, please use your exclusive link:
+            {link}
+
+            We look forward to seeing you!
+            {business}
+            """)
         #expect(BuiltInQuickReply.late.text(in: .en)
             == "Hi {name}, I am running about 10 minutes behind. Thank you for your patience!")
         #expect(BuiltInQuickReply.reschedule.text(in: .en)
             == "Hi {name}, I need to move your {service}.\n{address}\nPlease choose a new time here:\n{link}")
     }
 
-    @Test("Confirm and Reschedule end with the link alone on its line and carry the address, in every localization",
+    @Test("Confirm and Reschedule carry the address and the link on its own line, in every localization",
           arguments: AppLocalization.allCases)
     func linkLastAndAddress(localization: AppLocalization) {
+        let confirmText = BuiltInQuickReply.confirm.text(in: localization)
+        #expect(confirmText.contains("\n{address}\n"), "\(localization.rawValue) confirm")
+        #expect(confirmText.contains("\n{link}\n"), "\(localization.rawValue) confirm")
+        #expect(confirmText.hasSuffix("\n{business}"), "\(localization.rawValue) confirm")
+
+        let rescheduleText = BuiltInQuickReply.reschedule.text(in: localization)
+        #expect(rescheduleText.contains("\n{address}\n"), "\(localization.rawValue) reschedule")
+        #expect(rescheduleText.hasSuffix("\n{link}"), "\(localization.rawValue) reschedule")
+
         for builtIn in [BuiltInQuickReply.confirm, .reschedule] {
-            let text = builtIn.text(in: localization)
-            #expect(text.hasSuffix("\n{link}"), "\(localization.rawValue) \(builtIn)")
-            #expect(text.contains("\n{address}\n"), "\(localization.rawValue) \(builtIn)")
             let previous = builtIn.previousText(in: localization)
-            #expect(previous?.isEmpty == false && previous != text && previous?.contains("{address}") == false)
+            #expect(previous?.isEmpty == false && previous != builtIn.text(in: localization))
         }
         #expect(BuiltInQuickReply.late.previousText(in: localization) == nil)
     }

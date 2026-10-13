@@ -39,12 +39,19 @@ final class NewAppointmentViewModel {
     private(set) var saveErrorMessage: String?
     private(set) var isSaving = false
     private(set) var didBook = false
+    /// The client's exclusive manage link minted when booking if online booking is configured.
+    private(set) var exclusiveManageLink: String?
+    /// How the last "Send" on the confirmation screen ended; nil before she taps.
+    private(set) var confirmationOutcome: MessageService.Outcome?
 
     let days: CalendarDays
     let timeZoneID: String
     private let appointmentService: AppointmentService
-    private let bookingSetup: BookingSetupService
+    let bookingSetup: BookingSetupService
     private let vault: VaultService
+    private let profileService: ProfileService
+    private let messages: MessageService
+    private let clientLinks: ClientLinkService?
     private let loader: SchedulingContextLoader
     private let now: @Sendable () -> Date
     private var contextGeneration = 0
@@ -52,7 +59,9 @@ final class NewAppointmentViewModel {
     init(
         clientID: UUID?, startsAt: Date?, timeZoneID: String, firstWeekday: Int = 2,
         appointments: AppointmentService, timeBlocks: TimeBlockService, bookingSetup: BookingSetupService,
-        vault: VaultService, catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
+        vault: VaultService, profileService: ProfileService? = nil, messages: MessageService? = nil,
+        clientLinks: ClientLinkService? = nil,
+        catalogProvider: any HealthFormCatalogProviding = BundleHealthFormCatalogProvider(),
         localization: AppLocalization = .en, now: @escaping @Sendable () -> Date = { Date() }
     ) {
         let days = CalendarDays(timeZone: TimeZone(identifier: timeZoneID) ?? .current, firstWeekday: firstWeekday)
@@ -61,6 +70,9 @@ final class NewAppointmentViewModel {
         appointmentService = appointments
         self.bookingSetup = bookingSetup
         self.vault = vault
+        self.profileService = profileService ?? ProfileService(vault: vault)
+        self.messages = messages ?? MessageService(vault: vault)
+        self.clientLinks = clientLinks
         loader = SchedulingContextLoader(
             appointments: appointments, timeBlocks: timeBlocks, vault: vault, catalogProvider: catalogProvider,
             localization: localization
@@ -173,6 +185,9 @@ final class NewAppointmentViewModel {
             services = try await repository.services().filter(\.isActive)
             addOns = try await repository.addOns().filter(\.isOffered)
             try await bookingSetup.load(timeZoneID: timeZoneID)
+            if profileService.profile == nil { await profileService.load() }
+            let appLocale = profileService.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
+            try? await bookingSetup.loadQuickReplies(localization: appLocale)
         } catch {
             errorMessage = Self.unavailableMessage
             return
@@ -186,55 +201,6 @@ final class NewAppointmentViewModel {
             "newAppointment.error.load",
             defaultValue: "We could not read your clients and services. Check that your iPhone is unlocked."
         ))
-    }
-
-    // MARK: - Choosing
-
-    func selectClient(_ id: UUID) {
-        guard id != clientID else { return }
-        clientID = id
-        Task { await refreshContext() }
-    }
-
-    func selectService(_ id: UUID) {
-        serviceID = id
-    }
-
-    func toggleAddOn(_ id: UUID) {
-        if addOnIDs.contains(id) { addOnIDs.remove(id) } else { addOnIDs.insert(id) }
-    }
-
-    func addGuest() {
-        guard canAddGuest else { return }
-        guestNames.append("")
-    }
-
-    func setGuestName(_ name: String, at index: Int) {
-        guard guestNames.indices.contains(index) else { return }
-        guestNames[index] = name
-    }
-
-    func removeGuest(at index: Int) {
-        guard guestNames.indices.contains(index) else { return }
-        guestNames.remove(at: index)
-    }
-
-    /// Moves to another day and forgets the chosen time (a time of one day means little on another).
-    func selectDay(_ date: Date) {
-        let newDay = days.start(of: date)
-        guard newDay != day else { return }
-        day = newDay
-        start = nil
-        Task { await refreshContext() }
-    }
-
-    func selectStart(_ date: Date) {
-        start = date
-    }
-
-    /// A time typed with the picker: `minutes` after midnight on the chosen day.
-    func selectTime(minutes: Int) {
-        start = days.date(on: day, minutes: minutes)
     }
 
     // MARK: - Booking
@@ -256,6 +222,19 @@ final class NewAppointmentViewModel {
         )
         do {
             try await appointmentService.book(appointment)
+            if let client = selectedClient {
+                let localeID = profileService.profile?.appLocaleID
+                let appLocale = localeID.flatMap { AppLocalization(rawValue: $0) } ?? .en
+                if let link = await clientLinks?.registerManualBooking(
+                    appointment: appointment,
+                    client: client,
+                    serviceName: service.name,
+                    timeZoneID: timeZoneID,
+                    locale: appLocale.rawValue
+                ) {
+                    exclusiveManageLink = link.url.absoluteString
+                }
+            }
             didBook = true
             return true
         } catch {
@@ -314,5 +293,97 @@ final class NewAppointmentViewModel {
             context = partial
             contextIsIncomplete = clientID != nil
         }
+    }
+}
+
+// MARK: - Choosing
+
+extension NewAppointmentViewModel {
+    func selectClient(_ id: UUID) {
+        guard id != clientID else { return }
+        clientID = id
+        Task { await refreshContext() }
+    }
+
+    func selectService(_ id: UUID) {
+        serviceID = id
+    }
+
+    func toggleAddOn(_ id: UUID) {
+        if addOnIDs.contains(id) { addOnIDs.remove(id) } else { addOnIDs.insert(id) }
+    }
+
+    func addGuest() {
+        guard canAddGuest else { return }
+        guestNames.append("")
+    }
+
+    func setGuestName(_ name: String, at index: Int) {
+        guard guestNames.indices.contains(index) else { return }
+        guestNames[index] = name
+    }
+
+    func removeGuest(at index: Int) {
+        guard guestNames.indices.contains(index) else { return }
+        guestNames.remove(at: index)
+    }
+
+    /// Moves to another day and forgets the chosen time (a time of one day means little on another).
+    func selectDay(_ date: Date) {
+        let newDay = days.start(of: date)
+        guard newDay != day else { return }
+        day = newDay
+        start = nil
+        Task { await refreshContext() }
+    }
+
+    func selectStart(_ date: Date) {
+        start = date
+    }
+
+    /// A time typed with the picker: `minutes` after midnight on the chosen day.
+    func selectTime(minutes: Int) {
+        start = days.date(on: day, minutes: minutes)
+    }
+}
+
+// MARK: - Confirmation Message
+
+extension NewAppointmentViewModel {
+    /// Builds the confirmation message for the booked appointment, including client name, service, date, time,
+    /// full address and booking link.
+    func confirmationMessageText(formatters: Formatters) -> String {
+        guard let client = selectedClient, let service = selectedService, let start else { return "" }
+        let localization = profileService.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
+        let confirmReply = bookingSetup.quickReplies.first { $0.builtInKey == BuiltInQuickReply.confirm.rawValue }
+        let link = exclusiveManageLink ?? bookingSetup.setup.slug.map { BookingLink(slug: $0).messageText }
+        let location = bookingSetup.setup.location
+        let profile = profileService.profile
+        let businessName = profile?.businessName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let businessDisplay = (businessName?.isEmpty == false ? businessName : profile?.displayName) ?? ""
+        let input = BookingConfirmationText.Input(
+            client: client, serviceName: service.name, startsAt: start, link: link,
+            location: location, businessName: businessDisplay, confirmReply: confirmReply,
+            localization: localization, formatters: formatters
+        )
+        return BookingConfirmationText.text(for: input)
+    }
+
+    /// Opens WhatsApp with the confirmation message ready to send to the client.
+    func sendConfirmationWhatsApp(messageText: String) async {
+        guard let client = selectedClient else { return }
+        confirmationOutcome = await messages.send(
+            text: messageText, to: client.id, phoneE164: client.phoneE164,
+            template: BuiltInQuickReply.confirm.rawValue, preferred: .whatsapp, now: now()
+        )
+    }
+
+    /// Opens Messages (SMS / iMessage) with the confirmation message ready to send to the client.
+    func sendConfirmationSMS(messageText: String) async {
+        guard let client = selectedClient else { return }
+        confirmationOutcome = await messages.send(
+            text: messageText, to: client.id, phoneE164: client.phoneE164,
+            template: BuiltInQuickReply.confirm.rawValue, preferred: .messages, now: now()
+        )
     }
 }

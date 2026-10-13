@@ -273,6 +273,30 @@ struct NewAppointmentViewModelTests {
     }
 }
 
+// MARK: - Booking Confirmation
+
+extension NewAppointmentViewModelTests {
+    @Test("Booking sets didBook and produces the confirmation message for the client")
+    func bookingConfirmation() async throws {
+        let world = try await CalendarWorld.make()
+        let model = await loaded(world, clientID: world.ana.id, startsAt: friday("10:00"))
+
+        let booked = await model.bookAsync()
+        #expect(booked)
+        #expect(model.didBook)
+
+        let formatters = Formatters(
+            locale: Locale(identifier: "pt_BR"), timeZone: TestClock.saoPaulo, currencyCode: "BRL"
+        )
+        let message = model.confirmationMessageText(formatters: formatters)
+        #expect(message.contains("Ana"))
+        #expect(message.contains("Glow Facial"))
+
+        await model.sendConfirmationWhatsApp(messageText: message)
+        #expect(model.confirmationOutcome != nil)
+    }
+}
+
 // MARK: - Business time zone (fix-reschedule-day)
 
 extension NewAppointmentViewModelTests {

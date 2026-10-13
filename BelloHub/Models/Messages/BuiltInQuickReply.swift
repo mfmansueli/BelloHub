@@ -61,10 +61,16 @@ enum BuiltInQuickReply: String, CaseIterable, Sendable {
         switch self {
         case .confirm:
             LocalizedStringResource("quickReplies.default.confirm.text", defaultValue: """
-                Hi {name}! Confirming your {service} on {date} at {time}.
+                Hi {name}! Your {service} is booked for {date} at {time}.
+
                 {address}
-                Reply YES to confirm. To change or cancel:
+
+                If you need to make any changes, cancel (according to our policy), or get directions on \
+                Google Maps or Apple Maps, please use your exclusive link:
                 {link}
+
+                We look forward to seeing you!
+                {business}
                 """)
         case .late:
             LocalizedStringResource("quickReplies.default.late.text", defaultValue: """
@@ -94,23 +100,34 @@ enum BuiltInQuickReply: String, CaseIterable, Sendable {
         }
     }
 
-    /// The wording this message had before the 2026-10-11 rewrite (the link glued inside a sentence, no `{address}`),
-    /// or nil for a message that did not change. Used only to upgrade a reply she never edited
-    /// (`QuickReplyUpgrade`).
-    func previousText(in localization: AppLocalization) -> String? {
+    /// The wording this message had before recent rewrites, or empty for a message that did not change.
+    /// Used to upgrade a reply she never edited (`QuickReplyUpgrade`).
+    func previousTexts(in localization: AppLocalization) -> [String] {
         switch self {
         case .confirm:
-            resolve(LocalizedStringResource("quickReplies.default.confirm.text.v1", defaultValue: """
-                Hi {name}! Confirming your {service} on {date} at {time}. \
-                Reply YES to confirm or use {link} to change it.
-                """), in: localization)
+            [
+                resolve(LocalizedStringResource("quickReplies.default.confirm.text.v1", defaultValue: """
+                    Hi {name}! Confirming your {service} on {date} at {time}. \
+                    Reply YES to confirm or use {link} to change it.
+                    """), in: localization),
+                resolve(LocalizedStringResource("quickReplies.default.confirm.text.v2", defaultValue: """
+                    Hi {name}! Confirming your {service} on {date} at {time}.
+                    {address}
+                    Reply YES to confirm. To change or cancel:
+                    {link}
+                    """), in: localization)
+            ]
         case .reschedule:
-            resolve(LocalizedStringResource("quickReplies.default.reschedule.text.v1", defaultValue: """
+            [resolve(LocalizedStringResource("quickReplies.default.reschedule.text.v1", defaultValue: """
                 Hi {name}, I need to move your {service}. Here are new times: {link}
-                """), in: localization)
+                """), in: localization)]
         case .late, .aftercare, .checkIn, .comeBack:
-            nil
+            []
         }
+    }
+
+    func previousText(in localization: AppLocalization) -> String? {
+        previousTexts(in: localization).first
     }
 
     private func resolve(_ resource: LocalizedStringResource, in localization: AppLocalization) -> String {

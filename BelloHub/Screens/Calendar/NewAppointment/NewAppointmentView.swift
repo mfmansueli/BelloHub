@@ -17,6 +17,8 @@ struct NewAppointmentView: View {
     @Environment(BookingSetupService.self) private var bookingSetup
     @Environment(VaultService.self) private var vault
     @Environment(ProfileService.self) private var profile
+    @Environment(MessageService.self) private var messages
+    @Environment(ClientLinkService.self) private var clientLinks
     @Environment(\.locale) private var locale
 
     var body: some View {
@@ -25,7 +27,9 @@ struct NewAppointmentView: View {
             viewModel: NewAppointmentViewModel(
                 clientID: clientID, startsAt: startsAt, timeZoneID: settings.timeZoneID,
                 firstWeekday: settings.firstWeekday, appointments: appointments, timeBlocks: timeBlocks,
-                bookingSetup: bookingSetup, vault: vault, localization: AppLocalization(locale: locale)
+                bookingSetup: bookingSetup, vault: vault, profileService: profile, messages: messages,
+                clientLinks: clientLinks,
+                localization: AppLocalization(locale: locale)
             ),
             settings: settings
         )
