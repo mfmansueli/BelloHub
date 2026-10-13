@@ -25,6 +25,7 @@ import { PhoneField, TextField } from '../../components/Field';
 import { useI18n } from '../../i18n';
 import { pageUrl } from '../../lib/config';
 import { isEmail } from '../../lib/email';
+import { digitsOnly } from '../../lib/digits';
 import { normalizePhone, phoneRegion } from '../../lib/phone';
 import { freeUntil, reschedulesLeft } from '../../lib/policy';
 import { forgetDeviceLocally, storedDeviceToken } from '../../lib/trustedDevice';
@@ -146,8 +147,8 @@ export function ManagePage({ token, booking }: Props): JSX.Element {
       } else {
         normalizedPhoneE164 = norm.e164;
       }
-      const phoneDigits = trimmedPhone.replace(/\D/g, '');
-      const confirmDigits = trimmedConfirmPhone.replace(/\D/g, '');
+      const phoneDigits = digitsOnly(trimmedPhone);
+      const confirmDigits = digitsOnly(trimmedConfirmPhone);
       if (!confirmDigits || phoneDigits !== confirmDigits) {
         errors.confirmPhone = t('bk9.attend.err.phoneMismatch');
       }

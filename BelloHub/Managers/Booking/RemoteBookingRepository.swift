@@ -85,7 +85,8 @@ struct RemoteBookingRepository: BookingRepository {
         case .unauthenticated, .forbidden: .unauthenticated
         case .slugTaken: .slugTaken
         case .invalidArgument: invalidIsSlug ? .slugInvalid : .rejected
-        case .notFound, .notConfigured, .conflict, .payloadTooLarge, .unexpected: .rejected
+        case .conflict: .conflict
+        case .notFound, .notConfigured, .payloadTooLarge, .unexpected: .rejected
         }
     }
 

@@ -116,7 +116,7 @@ struct RemoteBookingRepositoryTests {
         (.invalidArgument(fields: ["x"]), .rejected),
         (.notFound, .rejected),
         (.notConfigured, .rejected),
-        (.conflict, .rejected),
+        (.conflict, .conflict),
         (.payloadTooLarge, .rejected),
         (.unexpected(code: "DECODE"), .rejected)
     ])

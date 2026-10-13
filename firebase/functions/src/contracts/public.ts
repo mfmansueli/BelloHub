@@ -45,7 +45,8 @@ export const getPublicPage = {
 export const getSlots = {
   input: z.strictObject({
     slug: SlugSchema,
-    serviceId: Uuid,
+    // A manual booking uses this sentinel on its manage page; with rescheduleToken the stored offer is authoritative.
+    serviceId: z.union([Uuid, z.literal('manual')]),
     addOnIds: z.array(Uuid).max(10).optional(),
     guests: GuestsSchema.optional(),
     from: LocalDateSchema,

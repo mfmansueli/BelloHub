@@ -2214,8 +2214,16 @@
           "pattern": "^[a-z0-9][a-z0-9-]{1,28}[a-z0-9]$"
         },
         "serviceId": {
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+            },
+            {
+              "type": "string",
+              "const": "manual"
+            }
+          ]
         },
         "addOnIds": {
           "maxItems": 10,

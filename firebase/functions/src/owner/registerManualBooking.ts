@@ -104,6 +104,12 @@ export const registerManualBooking = defineUseCase({
           manageTokenHashes: [hashedToken],
           origin: 'manual',
           policy: profileDoc.policy,
+          rulesText: profileDoc.rulesText,
+          noShowPolicy: {
+            isOn: calendar.availability?.noShow.isOn ?? false,
+            limit: calendar.availability?.noShow.limit ?? 3,
+            lateCancelCounts: calendar.availability?.noShow.lateCancelCounts ?? false
+          },
           rescheduleCount: 0,
           ownerLinkMintedAt: ts(now),
           createdAt: ts(now),

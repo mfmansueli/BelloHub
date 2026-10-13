@@ -26,7 +26,7 @@ extension PublishingService {
         case .busy: .busy
         case .unauthenticated: .signedOut
         case .slugTaken: .addressTaken
-        case .slugInvalid, .rejected: .rejected
+        case .slugInvalid, .conflict, .rejected: .rejected
         }
     }
 

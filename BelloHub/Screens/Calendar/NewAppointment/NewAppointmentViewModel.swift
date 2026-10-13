@@ -10,7 +10,6 @@ import Observation
 @Observable
 final class NewAppointmentViewModel {
     // MARK: - What she chose
-
     private(set) var clientID: UUID?
     var searchText = ""
     var visitType = VisitType.treatment
@@ -22,7 +21,6 @@ final class NewAppointmentViewModel {
     private(set) var start: Date?
 
     // MARK: - What the screen shows
-
     private(set) var clients: [Client] = []
     private(set) var services: [Service] = []
     private(set) var addOns: [AddOn] = []
@@ -81,7 +79,6 @@ final class NewAppointmentViewModel {
     }
 
     // MARK: - Reading
-
     /// Her hours, read in the zone this screen cuts its days in: a day chosen here gets that day's hours even when
     /// they were saved in another zone (`AvailabilitySettings.inTimeZone`).
     var availability: AvailabilitySettings { bookingSetup.availability.inTimeZone(days.calendar.timeZone) }
@@ -161,7 +158,6 @@ final class NewAppointmentViewModel {
     }
 
     // MARK: - Loading
-
     /// Entry point for appearing and retrying; `loadAsync()` is what tests await.
     func load() {
         Task { await loadAsync() }
@@ -204,7 +200,6 @@ final class NewAppointmentViewModel {
     }
 
     // MARK: - Booking
-
     /// Books the visit. Returns true when it is stored.
     @discardableResult
     func bookAsync() async -> Bool {
@@ -214,9 +209,7 @@ final class NewAppointmentViewModel {
         defer { isSaving = false }
         await refreshContext()
         guard !hasOccupiedTime else {
-            saveErrorMessage = String(interface: LocalizedStringResource(
-                "newAppointment.chooseAnother", defaultValue: "Choose another time"
-            ))
+            saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.chooseAnother"))
             return false
         }
         let linked = AppointmentBuilder.visitToCheck(among: context.clientAppointments, before: start)
@@ -232,18 +225,22 @@ final class NewAppointmentViewModel {
             if let client = selectedClient {
                 let localeID = profileService.profile?.appLocaleID
                 let appLocale = localeID.flatMap { AppLocalization(rawValue: $0) } ?? .en
-                if let link = await clientLinks?.registerManualBooking(
-                    appointment: appointment,
-                    client: client,
-                    serviceName: service.name,
-                    timeZoneID: timeZoneID,
-                    locale: appLocale.rawValue
-                ) {
-                    exclusiveManageLink = link.url.absoluteString
-                    // If this write fails, the importer can still reconnect by the appointment UUID.
-                    try? await appointmentService.linkManualBooking(
-                        id: appointment.id, bookingID: appointment.id.uuidString.lowercased()
-                    )
+                if let clientLinks {
+                    do {
+                        let link = try await clientLinks.registerManualBooking(
+                            appointment: appointment, client: client, serviceName: service.name,
+                            timeZoneID: timeZoneID, locale: appLocale.rawValue
+                        )
+                        exclusiveManageLink = link.url.absoluteString
+                        // The importer can reconnect by UUID if this local write fails.
+                        try? await appointmentService.linkManualBooking(
+                            id: appointment.id, bookingID: appointment.id.uuidString.lowercased()
+                        )
+                    } catch BookingRepositoryError.conflict {
+                        try await appointmentService.discardUnlinkedManualBooking(id: appointment.id)
+                        saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.chooseAnother"))
+                        return false
+                    } catch { /* A transient or unknown server failure does not erase a saved local visit. */ }
                 }
             }
             didBook = true
@@ -271,7 +268,6 @@ final class NewAppointmentViewModel {
     }
 
     // MARK: - Private
-
     private func request(duration: Int) -> OpenTimes.Request {
         OpenTimes.Request(
             durationMinutes: duration, settings: availability, appointments: context.appointments,

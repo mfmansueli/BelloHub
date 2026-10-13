@@ -59,28 +59,24 @@ final class ClientLinkService {
         serviceName: String,
         timeZoneID: String,
         locale: String?
-    ) async -> ClientManageLink? {
-        do {
-            let bookingID = appointment.id.uuidString.lowercased()
-            let registration = ManualBookingRegistration(
-                appointmentId: bookingID,
-                serviceName: serviceName,
-                startsAt: appointment.startsAt,
-                endsAt: appointment.endsAt,
-                timeZoneID: timeZoneID,
-                client: .init(
-                    name: client.name,
-                    phone: client.phoneE164 ?? "",
-                    email: client.email,
-                    locale: locale
-                )
+    ) async throws -> ClientManageLink {
+        let bookingID = appointment.id.uuidString.lowercased()
+        let registration = ManualBookingRegistration(
+            appointmentId: bookingID,
+            serviceName: serviceName,
+            startsAt: appointment.startsAt,
+            endsAt: appointment.endsAt,
+            timeZoneID: timeZoneID,
+            client: .init(
+                name: client.name,
+                phone: client.phoneE164 ?? "",
+                email: client.email,
+                locale: locale
             )
-            let link = try await repository.registerManualBooking(registration)
-            minted[bookingID] = (link, now())
-            return link
-        } catch {
-            return nil
-        }
+        )
+        let link = try await repository.registerManualBooking(registration)
+        minted[bookingID] = (link, now())
+        return link
     }
 
     // MARK: - Private

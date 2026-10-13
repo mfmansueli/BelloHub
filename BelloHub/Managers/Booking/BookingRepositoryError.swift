@@ -19,6 +19,8 @@ enum BookingRepositoryError: Error, Equatable, Sendable {
     case slugTaken
     /// The server does not accept the address (it breaks a rule the app should have caught).
     case slugInvalid
+    /// Another visit or block already occupies this time.
+    case conflict
     /// The server refused the content, or answered something the app cannot read. Retrying does not help.
     case rejected
 }

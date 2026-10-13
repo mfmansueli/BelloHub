@@ -11,6 +11,23 @@ import Testing
 @Suite("Manual booking audit")
 @MainActor
 struct ManualBookingAuditTests {
+    @Test("F01: a server conflict removes the provisional local visit and does not show success")
+    func serverConflictRollsBackLocalVisit() async throws {
+        let world = try await CalendarWorld.make()
+        let inbox = FakeInboxRepository()
+        await inbox.setWriteFailure(.conflict)
+        let model = NewAppointmentViewModel(
+            clientID: world.ana.id, startsAt: friday("10:00"), timeZoneID: "America/Sao_Paulo",
+            appointments: world.appointments, timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup,
+            vault: world.vault, profileService: world.profile,
+            clientLinks: ClientLinkService(repository: inbox), now: { TestClock.now }
+        )
+        await model.loadAsync()
+        #expect(await model.bookAsync() == false)
+        #expect(!model.didBook && model.saveErrorMessage != nil)
+        #expect(try await world.appointments.appointments(for: world.ana.id).isEmpty)
+    }
+
     @Test("F02: successful registration links the original visit and import updates it in place")
     func registeredManualVisitRemainsOneVisitOnImport() async throws {
         let world = try await CalendarWorld.make()

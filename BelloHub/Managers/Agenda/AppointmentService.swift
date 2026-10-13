@@ -65,6 +65,14 @@ final class AppointmentService {
         try await repository.save(visit)
     }
 
+    /// Remove only the unlinked manual visit just created when the server definitively rejects its time.
+    func discardUnlinkedManualBooking(id: UUID) async throws {
+        let repository = try requireRepository()
+        guard let visit = try await repository.appointment(id: id), visit.origin == .manual,
+              visit.bookingID == nil else { return }
+        try await repository.deleteAppointment(id: id)
+    }
+
     @discardableResult
     func reschedule(id: UUID, to start: Date, now: Date = Date()) async throws -> Appointment {
         try await change(id) { AppointmentTransitions.rescheduled($0, to: start, now: now) }

@@ -20,6 +20,7 @@ import { LegalDocumentView } from '../../components/Legal';
 import { Sheet } from '../../components/Sheet';
 import { useI18n } from '../../i18n';
 import { isEmail } from '../../lib/email';
+import { digitsOnly } from '../../lib/digits';
 import { ltr } from '../../lib/bidi';
 import { normalizePhone, phoneRegion } from '../../lib/phone';
 import { trustedDeviceFor } from '../../lib/trustedDevice';
@@ -64,8 +65,8 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
     const next: Errors = {};
     if (name.trim().length < 2) next.name = t('bk5.err.name');
     if (!normalizePhone(phone, phoneRegion(country)).ok) next.phone = t('bk5.err.phone');
-    const phoneDigits = phone.replace(/\D/g, '');
-    const confirmDigits = confirmPhone.replace(/\D/g, '');
+    const phoneDigits = digitsOnly(phone);
+    const confirmDigits = digitsOnly(confirmPhone);
     if (!confirmDigits || phoneDigits !== confirmDigits) {
       next.confirmPhone = t('bk5.err.phoneMismatch');
     }

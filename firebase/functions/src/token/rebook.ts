@@ -37,12 +37,15 @@ export const rebook = defineUseCase({
     ]);
     const now = deps.now();
     const identity = await identify(deps, input.token, now);
+    const sameService = input.serviceId === undefined || input.serviceId === identity.serviceId;
+    const sameAddOns = input.addOnIds === undefined ||
+      (input.addOnIds.length === identity.addOnIds.length && input.addOnIds.every((id) => identity.addOnIds.includes(id)));
     return createBookingCore(deps, {
       slug: identity.slug,
       offer: {
         serviceId: input.serviceId ?? identity.serviceId,
         addOnIds: input.addOnIds ?? identity.addOnIds,
-        guests: input.serviceId || input.addOnIds ? 0 : identity.guests
+        guests: sameService && sameAddOns ? identity.guests : 0
       },
       startsAt: instantMs(input.startsAt),
       client: identity.client,

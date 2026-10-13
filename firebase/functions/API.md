@@ -241,7 +241,7 @@ Errors: `NOT_FOUND`. Limits: 120/min per IP. Paused pages are returned normally 
 ### 5.2 `getSlots`  (public)
 ```ts
 req: {
-  slug: Slug; serviceId: Uuid; addOnIds?: Uuid[]; guests?: 0 | 1 | 2;
+  slug: Slug; serviceId: Uuid | 'manual'; addOnIds?: Uuid[]; guests?: 0 | 1 | 2;
   from: LocalDate; to: LocalDate;     // inclusive, at most 42 days
   holdKey?: string;                   // your own hold does not block you
   rescheduleToken?: Token;            // moving an existing booking: its own time does not block it, and its service/add-ons/guests are used
@@ -257,6 +257,8 @@ res: {
   }[];                                // one entry per day of the range, `slots: []` when none
 }
 ```
+`serviceId: 'manual'` is accepted only for a manual booking's reschedule-token flow; without that token there is no
+published offer by that id.
 Semantics mirror the iOS `FreeSlotsCalculator`: weekly hours, breaks, days off, buffer (around bookings and holds,
 none around blocks), minimum notice, booking window, business time zone, daylight saving (a time that does not
 exist moves to the first valid time, a time that happens twice means its first occurrence), and D56: anchored starts,
@@ -457,7 +459,8 @@ req: { token: Token; serviceId?: Uuid; addOnIds?: Uuid[]; startsAt: Instant; ide
 res: same as createBooking
 ```
 The client is a known one (the token proves it): no new verification, no "new client" approval. A pause, the no-show
-action and a stopped client still apply.
+action and a stopped client still apply. If the request repeats the original service and add-ons, its guest count is
+preserved; changing the offer resets guests to zero.
 
 ### 5.14 `getFormContext`  (token)  -> Cl-4, Cl-5, Cl-7
 ```ts
