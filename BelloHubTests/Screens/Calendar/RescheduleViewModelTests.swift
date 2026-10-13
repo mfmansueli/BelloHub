@@ -115,7 +115,7 @@ struct RescheduleViewModelTests {
         #expect(!model.changesTime && model.warnings.isEmpty)
         model.selectStart(friday("10:30"))
         #expect(model.warnings.contains(.overlap(with: other.id)) && model.hasScheduleConflict)
-        #expect(model.changesTime && model.canConfirm)
+        #expect(model.changesTime && !model.canConfirm)
         model.selectStart(friday("12:15"))
         #expect(model.warnings.contains(.insideBreak(label: "Lunch")))
     }

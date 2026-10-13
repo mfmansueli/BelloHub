@@ -4,6 +4,7 @@ import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
 import { ownerLinkToken, tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { emailHashOf, phoneHashOf } from '../lib/emailProof.js';
+import { bumpCalendarLock, isOccupied, loadCalendar, loadOccupied, readCalendarLock } from '../lib/calendar.js';
 import { AppError } from '../lib/errors.js';
 import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, refs, ts, txReader } from '../lib/store.js';
@@ -44,15 +45,23 @@ export const registerManualBooking = defineUseCase({
       const reader = txReader(tx);
       const bookingRef = r.booking(bookingId);
       const existing = dataOf<BookingDoc>(await reader.doc(bookingRef));
+      if (existing && existing.ownerUid !== uid) throw new AppError('FORBIDDEN');
+      const calendar = await loadCalendar(reader, deps.db, slugName);
+      if (calendar?.ownerUid !== uid) throw new AppError('NOT_FOUND');
+      await readCalendarLock(tx, deps.db, uid);
+      const occupied = await loadOccupied(reader, deps.db, calendar,
+        { start: startsAtMs - 86_400_000, end: endsAtMs + 86_400_000 }, now,
+        { excludeBookingId: bookingId });
+      if (isOccupied(occupied, startsAtMs, endsAtMs,
+        { durationMinutes: Math.round((endsAtMs - startsAtMs) / 60_000),
+          timing: { prepMinutes: 0, cleanupMinutes: 0, processingStartMinutes: 0, processingMinutes: 0 } },
+        calendar.availability?.bufferMinutes ?? 0)) throw new AppError('CONFLICT');
       const durationMinutes = Math.max(1, Math.round((endsAtMs - startsAtMs) / 60_000));
       const phoneHash = phoneHashOf(deps.pepper, input.client.phone);
       const emailHash = input.client.email ? emailHashOf(deps.pepper, input.client.email) : undefined;
       const hashedToken = tokenHash(token);
 
       if (existing) {
-        if (existing.ownerUid !== uid) {
-          throw new AppError('FORBIDDEN');
-        }
         tx.update(bookingRef, {
           serviceName: input.serviceName,
           startsAt: ts(startsAtMs),
@@ -103,6 +112,7 @@ export const registerManualBooking = defineUseCase({
         };
         tx.set(bookingRef, doc);
       }
+      bumpCalendarLock(tx, deps.db, uid);
     });
 
     deps.log.info('manualBooking.registered', { uid, bookingId });

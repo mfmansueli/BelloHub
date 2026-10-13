@@ -80,7 +80,9 @@ enum BookingImporter {
         var byBooking: [String: [Appointment]] = [:]
         var seen: Set<UUID> = []
         for visit in existing where seen.insert(visit.id).inserted {
-            if let bookingID = visit.bookingID { byBooking[bookingID, default: []].append(visit) }
+            // Earlier builds left manual visits unlinked; their server booking id is the visit UUID.
+            let bookingID = visit.bookingID ?? (visit.origin == .manual ? visit.id.uuidString.lowercased() : nil)
+            if let bookingID { byBooking[bookingID, default: []].append(visit) }
         }
         return byBooking.mapValues { copies in
             copies.sorted { lhs, rhs in
@@ -141,6 +143,9 @@ enum BookingImporter {
     /// The server's view of the visit, over what the phone has.
     static func apply(_ booking: IncomingBooking, to appointment: Appointment, now: Date) -> Appointment {
         var visit = appointment
+        if visit.bookingID == nil && visit.id.uuidString.lowercased() == booking.id {
+            visit.bookingID = booking.id
+        }
         visit.startsAt = booking.startsAt
         visit.endsAt = booking.endsAt
         visit.totalMinutes = booking.totalMinutes

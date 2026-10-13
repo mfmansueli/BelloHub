@@ -275,6 +275,19 @@ function conflicts(first: Segment, second: Segment, buffer: number): boolean {
   return first.start < second.end + afterSecond && second.start < first.end + afterFirst;
 }
 
+/** Same occupancy calculation as public slots, without checking published working hours or the slot grid. */
+export function hasOccupiedConflict(
+  visit: TimedInterval, appointments: TimedInterval[], blocks: Interval[], bufferMinutes: number
+): boolean {
+  const own = segmentsOf(visit.start, visit.end, visit.timing ?? NO_EXTRA_TIME);
+  const buffer = bufferMinutes * MINUTE_MS;
+  return own.some((mine) => appointments.some((other) =>
+    segmentsOf(other.start, other.end, other.timing ?? NO_EXTRA_TIME).some((segment) => conflicts(mine, segment, buffer))
+  ) || blocks.some((block) => conflicts(mine, {
+    ...block, bufferedStart: false, bufferedEnd: false
+  }, 0)));
+}
+
 /** Two stretches overlap if the gap between them is smaller than `margin`. */
 export function overlaps(first: Interval, second: Interval, margin: number): boolean {
   return first.start < second.end + margin && first.end + margin > second.start;

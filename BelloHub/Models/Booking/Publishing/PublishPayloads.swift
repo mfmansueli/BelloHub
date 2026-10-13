@@ -134,7 +134,8 @@ enum PublishPayloads {
             .filter { $0.origin == .manual && $0.bookingID == nil && $0.status.holdsTime && $0.endsAt > now }
             .map {
                 PublishAvailabilityRequest.Busy(kind: "appointment", startsAt: $0.startsAt, endsAt: $0.endsAt,
-                                                timing: $0.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
+                                                timing: $0.serviceID.flatMap { timings[$0] } ?? .noExtraTime,
+                                                appointmentId: $0.id.uuidString.lowercased())
             }
         let blocks = inputs.blocks
             .filter { $0.endsAt > now && $0.endsAt > $0.startsAt }

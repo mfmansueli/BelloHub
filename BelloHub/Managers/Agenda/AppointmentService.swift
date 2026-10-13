@@ -53,6 +53,18 @@ final class AppointmentService {
         try await requireRepository().save(appointment)
     }
 
+    /// Associates a manual visit with its server booking after registration succeeds. Keep the original visit id,
+    /// so a later inbox sync updates this visit rather than creating a second calendar entry.
+    func linkManualBooking(id: UUID, bookingID: String) async throws {
+        let repository = try requireRepository()
+        guard var visit = try await repository.appointment(id: id), visit.origin == .manual else {
+            throw VaultRepositoryError.notFound
+        }
+        guard visit.bookingID == nil || visit.bookingID == bookingID else { return }
+        visit.bookingID = bookingID
+        try await repository.save(visit)
+    }
+
     @discardableResult
     func reschedule(id: UUID, to start: Date, now: Date = Date()) async throws -> Appointment {
         try await change(id) { AppointmentTransitions.rescheduled($0, to: start, now: now) }

@@ -146,7 +146,7 @@ struct NewAppointmentViewModelTests {
 
     // MARK: - Warnings
 
-    @Test("An overlap warns, the button says it is the time that is the matter, and booking still works")
+    @Test("An occupied time warns and cannot be booked")
     func overlapIsHerDecision() async throws {
         let world = try await CalendarWorld.make()
         let existing = makeVisit(clientID: world.beatriz.id, start: friday("10:00"))
@@ -154,10 +154,14 @@ struct NewAppointmentViewModelTests {
         let model = makeModel(world, clientID: world.ana.id, startsAt: friday("10:30"))
         await model.loadAsync()
         #expect(model.warnings.contains(.overlap(with: existing.id)))
-        #expect(model.hasScheduleConflict && model.canBook)
+        #expect(model.hasScheduleConflict && !model.canBook)
         #expect(model.clientName(for: existing.id) == "Beatriz Lima")
-        #expect(await model.bookAsync())
-        #expect(try await world.appointments.appointments(for: world.ana.id).count == 1)
+        #expect(await model.bookAsync() == false)
+        #expect(try await world.appointments.appointments(for: world.ana.id).isEmpty)
+        let sameClient = makeModel(world, clientID: world.beatriz.id, startsAt: friday("10:30"))
+        await sameClient.loadAsync()
+        #expect(!sameClient.canBook)
+        #expect(await sameClient.bookAsync() == false)
     }
 
     @Test("A contraindication that matches the client's health form warns; the form of another client does not")

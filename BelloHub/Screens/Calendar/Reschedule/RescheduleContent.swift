@@ -187,6 +187,8 @@ struct RescheduleContent: View {
             Button { Task { await viewModel.confirmAsync() } } label: {
                 if viewModel.isSaving {
                     ProgressView()
+                } else if viewModel.hasOccupiedTime {
+                    Text("newAppointment.chooseAnother")
                 } else {
                     Text(viewModel.hasScheduleConflict ? "reschedule.confirmAnyway" : "reschedule.confirm")
                 }

@@ -36,12 +36,14 @@ export const publishAvailability = defineUseCase({
     // The past cannot block anything, so it is dropped to keep the document small.
     // An appointment keeps its extra and processing time (D56); a block is only closed time.
     const busy = input.busy
-      .map((entry) => ({ start: instantMs(entry.startsAt), end: instantMs(entry.endsAt), kind: entry.kind, timing: timingOf(entry) }))
+      .map((entry) => ({ start: instantMs(entry.startsAt), end: instantMs(entry.endsAt), kind: entry.kind,
+        appointmentId: entry.appointmentId, timing: timingOf(entry) }))
       .filter((entry) => entry.end > entry.start && entry.end > now - DAY_MS)
       .map((entry) => ({
         start: ts(entry.start),
         end: ts(entry.end),
         kind: entry.kind,
+        ...(entry.kind === 'appointment' && entry.appointmentId ? { appointmentId: entry.appointmentId } : {}),
         ...(entry.kind === 'appointment' ? timingFields(entry.timing) : {})
       }));
 

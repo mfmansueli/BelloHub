@@ -170,6 +170,7 @@ export interface BusyEntry extends TimingFields {
   start: Timestamp;
   end: Timestamp;
   kind: 'appointment' | 'block';
+  appointmentId?: string;
 }
 
 /** Function-only: the scheduling rules and the no-show policy. */

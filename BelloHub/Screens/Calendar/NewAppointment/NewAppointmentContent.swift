@@ -6,8 +6,7 @@
 import SwiftUI
 
 /// The body of the New appointment sheet. Sections in the order she decides: who, what kind of visit, which service,
-/// add-ons and guests, when. Warnings appear under the time and the primary button says "Book anyway" while one is
-/// about the time; none of them blocks.
+/// add-ons and guests, when. Warnings appear under the time; an occupied time asks her to choose another.
 struct NewAppointmentContent: View {
     @State private var viewModel: NewAppointmentViewModel
     private let settings: CalendarSettings
@@ -247,17 +246,19 @@ extension NewAppointmentContent {
             if let message = viewModel.saveErrorMessage {
                 ErrorNotice(message: message).accessibilityIdentifier("newAppointment.saveError")
             }
-            Button(action: book) {
+            Button(action: viewModel.hasOccupiedTime ? scrollTo : book) {
                 if viewModel.isSaving {
                     ProgressView()
+                } else if viewModel.hasOccupiedTime {
+                    Text("newAppointment.chooseAnother")
                 } else {
                     Text(viewModel.hasScheduleConflict ? "newAppointment.bookAnyway" : "newAppointment.confirm")
                 }
             }
             .buttonStyle(.belloPrimary)
-            .disabled(!viewModel.canBook)
+            .disabled(viewModel.isSaving || (!viewModel.canBook && !viewModel.hasOccupiedTime))
             .accessibilityIdentifier("newAppointment.confirmButton")
-            if viewModel.hasScheduleConflict {
+            if viewModel.hasScheduleConflict && !viewModel.hasOccupiedTime {
                 FittingRow {
                     Button(action: scrollTo) { Text("newAppointment.chooseAnother") }
                         .buttonStyle(.belloTertiary)

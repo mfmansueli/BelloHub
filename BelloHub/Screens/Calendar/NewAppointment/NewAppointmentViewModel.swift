@@ -1,14 +1,11 @@
-//
 //  NewAppointmentViewModel.swift
 //  BelloHub
-//
 
 import Foundation
 import Observation
 
-/// State and actions of the New appointment sheet (3.1): who, what kind of visit, which service, add-ons and guests,
-/// and when. It watches the warnings as she chooses (`SchedulingWarningEngine`) and books through
-/// `AppointmentService`. **Warnings inform; the booking stays her decision.**
+/// New appointment state: choices, schedule warnings and booking through `AppointmentService`.
+/// Occupied times cannot be booked; other warnings remain her decision.
 @MainActor
 @Observable
 final class NewAppointmentViewModel {
@@ -147,11 +144,14 @@ final class NewAppointmentViewModel {
         ))
     }
 
-    /// A warning about the time itself: the primary button then says "Book anyway".
+    /// A warning about the time itself: the primary action changes to "Book anyway" or "Choose another time".
     var hasScheduleConflict: Bool { warnings.contains { $0.isScheduleConflict } }
 
+    var hasOccupiedTime: Bool { warnings.contains { $0.preventsBooking } }
+
     var canBook: Bool {
-        clientID != nil && selectedService != nil && start != nil && !exceedsMaximumDuration && !isSaving
+        clientID != nil && selectedService != nil && start != nil && !exceedsMaximumDuration
+            && !hasOccupiedTime && !isSaving
     }
 
     /// The name of a client by id, for a warning that names the visit it clashes with.
@@ -212,6 +212,13 @@ final class NewAppointmentViewModel {
         isSaving = true
         saveErrorMessage = nil
         defer { isSaving = false }
+        await refreshContext()
+        guard !hasOccupiedTime else {
+            saveErrorMessage = String(interface: LocalizedStringResource(
+                "newAppointment.chooseAnother", defaultValue: "Choose another time"
+            ))
+            return false
+        }
         let linked = AppointmentBuilder.visitToCheck(among: context.clientAppointments, before: start)
         let appointment = AppointmentBuilder.appointment(
             from: AppointmentBuilder.Choice(
@@ -233,6 +240,10 @@ final class NewAppointmentViewModel {
                     locale: appLocale.rawValue
                 ) {
                     exclusiveManageLink = link.url.absoluteString
+                    // If this write fails, the importer can still reconnect by the appointment UUID.
+                    try? await appointmentService.linkManualBooking(
+                        id: appointment.id, bookingID: appointment.id.uuidString.lowercased()
+                    )
                 }
             }
             didBook = true

@@ -5,8 +5,8 @@
 
 import Foundation
 
-/// One thing she may want to know before she books (or moves) a visit. **A warning informs and never blocks**: booking
-/// stays her decision (D16, docs/screens 3.1 "Book anyway").
+/// One thing she may want to know before she books (or moves) a visit. Working outside published hours remains her
+/// decision; an occupied visit or time block cannot be overridden.
 enum SchedulingWarning: Hashable, Sendable {
     /// Where the "way out" is the time: moving the visit or closing the time would fix it.
     case inThePast
@@ -38,6 +38,13 @@ enum SchedulingWarning: Hashable, Sendable {
         switch self {
         case .inThePast, .overlap, .blocked, .dayOff, .closedDay, .outsideHours, .insideBreak, .buffer: true
         case .missingPatchTest, .patchTestReaction, .contraindicated, .noHealthForm, .cancelsOften: false
+        }
+    }
+
+    var preventsBooking: Bool {
+        switch self {
+        case .overlap, .blocked: true
+        default: false
         }
     }
 

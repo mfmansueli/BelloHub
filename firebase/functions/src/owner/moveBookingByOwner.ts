@@ -4,7 +4,7 @@ import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
 import { tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { sendBookingEmail } from '../lib/bookingEmails.js';
-import { bumpCalendarLock, readCalendarLock } from '../lib/calendar.js';
+import { bookingOffer, bumpCalendarLock, isOccupied, loadCalendar, loadOccupied, readCalendarLock } from '../lib/calendar.js';
 import type { PublicProfileDoc } from '../lib/docs.js';
 import { ACTIVE_BOOKING_STATUSES } from '../lib/docs.js';
 import { AppError } from '../lib/errors.js';
@@ -41,6 +41,13 @@ export const moveBookingByOwner = defineUseCase({
       await readCalendarLock(tx, deps.db, uid);
 
       const endsAt = startsAt + booking.data.durationMinutes * 60_000;
+      const calendar = await loadCalendar(reader, deps.db, booking.data.slug);
+      if (calendar?.ownerUid !== uid) throw new AppError('NOT_FOUND');
+      const occupied = await loadOccupied(reader, deps.db, calendar,
+        { start: startsAt - 86_400_000, end: endsAt + 86_400_000 }, now,
+        { excludeBookingId: input.bookingId });
+      if (isOccupied(occupied, startsAt, endsAt, bookingOffer(booking.data),
+        calendar.availability?.bufferMinutes ?? 0)) throw new AppError('CONFLICT');
       const mints = booking.data.client.email !== undefined;
       tx.update(booking.ref, {
         ...(mints ? { manageTokenHashes: withNewTokenHash(booking.data.manageTokenHashes, tokenHash(manageToken)) } : {}),

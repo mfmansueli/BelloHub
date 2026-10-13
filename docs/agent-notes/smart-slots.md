@@ -36,8 +36,9 @@ Where it is used: `getSlots` (`slots` = recommended, `more` = the rest, absent w
 accept any start of `all`; alternatives after `slotTaken` come from `recommended`), the waitlist match after a
 cancellation (a service matches only when it now has a free start whose blocked stretch overlaps the freed one), and
 the app's `OpenTimes` (New appointment and Reschedule suggestions; "Show all times" there too). The
-`SchedulingWarningEngine` still only warns: overlap and buffer warnings now use the segments, so a visit inside a
-processing stretch is not an overlap and prep or clean-up can bring a neighbour inside the buffer.
+`SchedulingWarningEngine` uses the segments for overlap and buffer warnings. Overlap and closed-block warnings
+prevent manual booking or moving a visit; a buffer or an out-of-hours warning remains the professional's choice.
+A visit inside a processing stretch is not an overlap, while prep or clean-up can create one.
 
 ## Data (all optional, additive)
 

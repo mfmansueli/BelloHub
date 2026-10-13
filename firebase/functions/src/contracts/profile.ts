@@ -176,6 +176,7 @@ export const AvailabilityInputSchema = z.strictObject({
         startsAt: Instant,
         endsAt: Instant,
         kind: z.enum(['appointment', 'block']),
+        appointmentId: Uuid.optional(),
         prepMinutes: ExtraMinutes.optional(),
         cleanupMinutes: ExtraMinutes.optional(),
         processingStartMinutes: z.number().int().min(0).max(24 * 60).optional(),

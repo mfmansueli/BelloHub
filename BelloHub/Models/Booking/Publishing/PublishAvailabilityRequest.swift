@@ -45,6 +45,8 @@ struct PublishAvailabilityRequest: Encodable, Equatable, Sendable {
     struct Busy: Encodable, Equatable, Sendable {
         /// `appointment` gets the buffer around it, `block` does not.
         var kind: String
+        /// Opaque visit identifier, used only to avoid counting a registered manual booking twice.
+        var appointmentId: String?
         var startsAt: Date
         var endsAt: Date
         /// D56, appointments only: the visit's extra and processing time, sent only when not 0.
@@ -53,8 +55,10 @@ struct PublishAvailabilityRequest: Encodable, Equatable, Sendable {
         var processingStartMinutes: Int?
         var processingMinutes: Int?
 
-        init(kind: String, startsAt: Date, endsAt: Date, timing: VisitTiming = .noExtraTime) {
+        init(kind: String, startsAt: Date, endsAt: Date, timing: VisitTiming = .noExtraTime,
+             appointmentId: String? = nil) {
             self.kind = kind
+            self.appointmentId = appointmentId
             self.startsAt = startsAt
             self.endsAt = endsAt
             let fields = PublishTimingFields(timing, visibleMinutes: Int(endsAt.timeIntervalSince(startsAt) / 60))

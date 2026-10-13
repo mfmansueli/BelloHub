@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { refs } from '../../src/lib/store.js';
+import { refs, ts } from '../../src/lib/store.js';
 import { registerManualBooking } from '../../src/owner/registerManualBooking.js';
 import { moveBookingByOwner } from '../../src/owner/moveBookingByOwner.js';
 import { getSlots } from '../../src/public/getSlots.js';
@@ -53,6 +53,19 @@ async function slots(token?: string): Promise<string[]> {
 }
 
 describe('functional audit: manual/web scheduling parity', () => {
+  it('F01: a published manual visit can register itself, but another visit cannot take its time', async () => {
+    const appointmentId = randomUUID();
+    await refs(env.deps.db).availability(pro.uid).update({
+      busy: [{ start: ts(Date.parse(START)), end: ts(Date.parse(END)), kind: 'appointment', appointmentId }]
+    });
+    await env.call(registerManualBooking, {
+      appointmentId, serviceName: 'Glow Facial', startsAt: START, endsAt: END,
+      timeZoneID: 'America/Sao_Paulo', client: { ...ANA, email: 'ana@example.com', locale: 'pt-BR' }
+    }, ownerContext(pro.uid));
+    expect((await bookingDoc(env, appointmentId)).status).toBe('confirmed');
+    await expect(manual()).rejects.toMatchObject({ code: 'CONFLICT' });
+  });
+
   it('CONTROL: two public clients cannot book overlapping visits', async () => {
     const outcomes = await Promise.all([
       book(env, pro, { startsAt: START, client: ANA, ip: '203.0.113.1' }),
@@ -83,7 +96,7 @@ describe('functional audit: manual/web scheduling parity', () => {
     const booked = await manual();
     await refs(env.deps.db).availability(pro.uid).update({
       busy: [{ start: (await bookingDoc(env, booked.bookingId)).startsAt,
-        end: (await bookingDoc(env, booked.bookingId)).endsAt, kind: 'appointment' }]
+        end: (await bookingDoc(env, booked.bookingId)).endsAt, kind: 'appointment', appointmentId: booked.bookingId }]
     });
     expect(await slots(booked.token)).toContain(START);
   });
@@ -92,7 +105,7 @@ describe('functional audit: manual/web scheduling parity', () => {
     const booked = await manual();
     const stored = await bookingDoc(env, booked.bookingId);
     await refs(env.deps.db).availability(pro.uid).update({
-      busy: [{ start: stored.startsAt, end: stored.endsAt, kind: 'appointment' }]
+      busy: [{ start: stored.startsAt, end: stored.endsAt, kind: 'appointment', appointmentId: booked.bookingId }]
     });
     await env.call(cancelBooking, { token: booked.token });
     expect(await slots()).toContain(START);

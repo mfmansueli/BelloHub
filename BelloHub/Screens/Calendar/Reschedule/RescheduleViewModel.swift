@@ -97,7 +97,11 @@ final class RescheduleViewModel {
 
     var hasScheduleConflict: Bool { warnings.contains { $0.isScheduleConflict } }
 
-    var canConfirm: Bool { start != nil && appointment != nil && !isSaving }
+    var hasOccupiedTime: Bool { warnings.contains { $0.preventsBooking } }
+
+    var canConfirm: Bool {
+        start != nil && appointment != nil && !hasOccupiedTime && !isSaving
+    }
 
     /// True when the chosen time is not the visit's current one.
     var changesTime: Bool { start != nil && start != appointment?.startsAt }

@@ -16,7 +16,7 @@ import { AppError } from './errors.js';
 import type { AccountDoc, AvailabilityDoc, BookingDoc, HoldDoc, PublicProfileDoc, SlugDoc, TimingFields } from './docs.js';
 import { ACTIVE_BOOKING_STATUSES } from './docs.js';
 import type { AvailabilitySettings, Interval, SlotPlan, TimedInterval, VisitTiming } from './freeSlots.js';
-import { SLOT_STEP_MINUTES, planSlots } from './freeSlots.js';
+import { SLOT_STEP_MINUTES, hasOccupiedConflict, planSlots } from './freeSlots.js';
 import { MAX_TOTAL_MINUTES, totalMinutes } from './rules.js';
 import { addDays, localDateOf } from './time.js';
 
@@ -196,6 +196,7 @@ export async function loadOccupied(
 
   const appointments: TimedInterval[] = [];
   const blocks: Interval[] = [];
+  const registeredIds = new Set(bookingSnaps.docs.map((snap) => snap.id));
   for (const snap of bookingSnaps.docs) {
     const booking = snap.data() as BookingDoc;
     if (snap.id === options.excludeBookingId || !ACTIVE_BOOKING_STATUSES.includes(booking.status)) continue;
@@ -207,11 +208,21 @@ export async function loadOccupied(
     appointments.push({ start: ms(hold.startsAt), end: ms(hold.endsAt), timing: timingOf(hold) });
   }
   for (const entry of calendar.availability?.busy ?? []) {
+    // The BookingDoc is authoritative once registered, even if a publish from an older phone still lists this visit.
+    if (entry.kind === 'appointment' && entry.appointmentId &&
+      (entry.appointmentId === options.excludeBookingId || registeredIds.has(entry.appointmentId))) continue;
     const interval = { start: ms(entry.start), end: ms(entry.end) };
     if (entry.kind === 'appointment') appointments.push({ ...interval, timing: timingOf(entry) });
     else blocks.push(interval);
   }
   return { appointments, blocks };
+}
+
+/** Owner-chosen times may be outside published hours, but must not overlap another occupied time. */
+export function isOccupied(occupied: Occupied, start: number, end: number, offer: SlotOffer, bufferMinutes: number): boolean {
+  return hasOccupiedConflict(
+    { start, end, timing: offer.timing }, occupied.appointments, occupied.blocks, bufferMinutes
+  );
 }
 
 // MARK: - Free starts
