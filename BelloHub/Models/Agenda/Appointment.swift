@@ -5,6 +5,12 @@
 
 import Foundation
 
+/// Why a manual visit saved on the phone still needs attention before it appears on the booking site.
+enum ManualBookingSyncIssue: String, Codable, Hashable, Sendable {
+    case conflict
+    case failed
+}
+
 /// A visit in the calendar. The time, status and names are in the clear (lists, notifications and conflict
 /// detection need them); `privateNote` is encrypted at rest.
 struct Appointment: Identifiable, Hashable, Codable, Sendable {
@@ -25,6 +31,8 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
     var origin: AppointmentOrigin
     /// The server's id for a visit booked through the link.
     var bookingID: String?
+    /// Set only after the server definitively refused a manual booking. Nil in older stored visits.
+    var manualBookingSyncIssue: ManualBookingSyncIssue?
     var visitType: VisitType
     /// The visit this one checks after a reaction.
     var linkedAppointmentID: UUID?
@@ -62,6 +70,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         isLateCancellation: Bool = false,
         origin: AppointmentOrigin = .manual,
         bookingID: String? = nil,
+        manualBookingSyncIssue: ManualBookingSyncIssue? = nil,
         visitType: VisitType = .treatment,
         linkedAppointmentID: UUID? = nil,
         addOns: [AppointmentAddOn] = [],
@@ -90,6 +99,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         self.isLateCancellation = isLateCancellation
         self.origin = origin
         self.bookingID = bookingID
+        self.manualBookingSyncIssue = manualBookingSyncIssue
         self.visitType = visitType
         self.linkedAppointmentID = linkedAppointmentID
         self.addOns = addOns

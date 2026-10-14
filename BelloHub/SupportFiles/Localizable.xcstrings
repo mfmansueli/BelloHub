@@ -15481,6 +15481,366 @@
         }
       }
     },
+    "appointment.manualSync.conflict.message" : {
+      "comment" : "The visit remains on the phone; explain the conflict and direct the professional to reschedule, then confirm with the client.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "هذا الموعد محفوظ على iPhone، لكن موقع الحجز رفض هذا الوقت. استخدم إعادة الجدولة أدناه ثم أكّد الوقت الجديد مع العميل."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Termin ist auf deinem iPhone gespeichert, aber die Buchungsseite hat diese Zeit abgelehnt. Wähle unten Verschieben und bestätige die neue Zeit mit der Kundschaft."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This visit is saved on your iPhone, but the booking site rejected this time. Use Reschedule below and confirm the new time with the client."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This visit is saved on your iPhone, but the booking site rejected this time. Use Reschedule below and confirm the new time with the client."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero la web de reservas rechazó esta hora. Usa Cambiar fecha abajo y confirma la nueva hora con el cliente."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero el sitio de reservas rechazó este horario. Usa Reprogramar abajo y confirma la nueva hora con el cliente."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero el sitio de reservas rechazó este horario. Usa Reprogramar abajo y confirma la nueva hora con el cliente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce rendez-vous est enregistré sur l'iPhone, mais le site de réservation a refusé ce créneau. Utilisez Reporter ci-dessous, puis confirmez le nouvel horaire avec le client."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह अपॉइंटमेंट iPhone पर सेव है, लेकिन बुकिंग साइट ने यह समय स्वीकार नहीं किया। नीचे पुनर्निर्धारित करें चुनें और ग्राहक से नया समय पक्का करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janji temu ini tersimpan di iPhone, tetapi situs pemesanan menolak waktunya. Gunakan Jadwalkan ulang di bawah, lalu konfirmasi waktu baru dengan pelanggan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'appuntamento è salvato sull'iPhone, ma il sito di prenotazione ha rifiutato questo orario. Usa Riprogramma qui sotto e conferma il nuovo orario con il cliente."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este atendimento está salvo no iPhone, mas o site de reservas recusou esse horário. Use Reagendar abaixo e confirme o novo horário com o cliente."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta marcação está guardada no iPhone, mas o site de reservas recusou este horário. Use Reagendar abaixo e confirme a nova hora com o cliente."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu randevu iPhone'unuzda kayıtlı, ancak rezervasyon sitesi bu saati reddetti. Aşağıdan Yeniden planla'yı kullanın ve yeni saati müşteriyle doğrulayın."
+          }
+        }
+      }
+    },
+    "appointment.manualSync.conflict.title" : {
+      "comment" : "A manual visit saved offline could not be registered because its time is occupied on the booking site.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "الوقت محجوز على الموقع"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Online-Termin belegt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time taken online"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Time taken online"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Horario ocupado en la web"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Horario ocupado en el sitio"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Horario ocupado en el sitio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Créneau pris sur le site"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "ऑनलाइन समय उपलब्ध नहीं है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Jadwal sudah terisi di situs"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Orario occupato sul sito"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Horário ocupado no site"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Horário ocupado no site"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saat çevrimiçi olarak dolu"
+          }
+        }
+      }
+    },
+    "appointment.manualSync.failed.message" : {
+      "comment" : "The visit is locally saved but the site did not accept it; the retry button submits it again.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "هذا الموعد محفوظ على iPhone، لكنه لم يُضف إلى موقع الحجز. تحقّق من حسابك ثم حاول مرة أخرى قبل أن تعد العميل برابط."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Der Termin ist auf deinem iPhone gespeichert, aber nicht auf der Buchungsseite. Prüfe dein Konto und versuche es erneut, bevor du der Kundschaft einen Link zusagst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This visit is saved on your iPhone, but was not added to the booking site. Check your account, then try again before promising an online link to the client."
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "This visit is saved on your iPhone, but was not added to the booking site. Check your account, then try again before promising an online link to the client."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero no se añadió a la web de reservas. Revisa tu cuenta y vuelve a intentarlo antes de prometer un enlace al cliente."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero no se añadió al sitio de reservas. Revisa tu cuenta y vuelve a intentarlo antes de prometer un enlace al cliente."
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta cita está guardada en el iPhone, pero no se añadió al sitio de reservas. Revisa tu cuenta y vuelve a intentarlo antes de prometer un enlace al cliente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ce rendez-vous est enregistré sur l'iPhone, mais pas sur le site de réservation. Vérifiez votre compte, puis réessayez avant de promettre un lien au client."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "यह अपॉइंटमेंट iPhone पर सेव है, लेकिन बुकिंग साइट पर नहीं जोड़ा गया। ग्राहक को ऑनलाइन लिंक देने से पहले अपना खाता जाँचें और फिर कोशिश करें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Janji temu ini tersimpan di iPhone, tetapi belum ditambahkan ke situs pemesanan. Periksa akunmu lalu coba lagi sebelum menjanjikan tautan kepada pelanggan."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "L'appuntamento è salvato sull'iPhone, ma non è stato aggiunto al sito di prenotazione. Controlla il tuo account e riprova prima di promettere un link al cliente."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Este atendimento está salvo no iPhone, mas não foi adicionado ao site de reservas. Verifique sua conta e tente de novo antes de prometer um link ao cliente."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Esta marcação está guardada no iPhone, mas não foi adicionada ao site de reservas. Verifique a sua conta e tente novamente antes de prometer um link ao cliente."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bu randevu iPhone'unuzda kayıtlı, ancak rezervasyon sitesine eklenmedi. Müşteriye bağlantı sözü vermeden önce hesabınızı kontrol edip tekrar deneyin."
+          }
+        }
+      }
+    },
+    "appointment.manualSync.failed.title" : {
+      "comment" : "A manual visit remains only on the phone after another definitive server failure.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "غير موجود على موقع الحجز"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nicht auf der Buchungsseite"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not on the booking site"
+          }
+        },
+        "en-GB" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Not on the booking site"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No está en la web de reservas"
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No está en el sitio de reservas"
+          }
+        },
+        "es-MX" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "No está en el sitio de reservas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Absent du site de réservation"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "बुकिंग साइट पर नहीं है"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Belum ada di situs pemesanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Non è sul sito di prenotazione"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não está no site de reservas"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Não está no site de reservas"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Rezervasyon sitesinde yok"
+          }
+        }
+      }
+    },
     "appointment.message.cancelled" : {
       "comment" : "Message to a client when the professional cancels. Keep {name}, {service}, {date} and {time}. Never any clinical data.",
       "extractionState" : "manual",

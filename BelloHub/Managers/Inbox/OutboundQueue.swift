@@ -99,6 +99,11 @@ final class OutboundQueue {
     /// Adds the action and sends it as soon as the server answers. Returns it so the caller can match its outcome.
     @discardableResult
     func enqueue(_ kind: OutboundAction.Kind) -> OutboundAction {
+        if case .registerManualBooking(let id, _, _) = kind,
+           let existing = pending.first(where: {
+               if case .registerManualBooking(let queuedID, _, _) = $0.kind { return queuedID == id }
+               return false
+           }) { return existing }
         let action = OutboundAction(kind: kind, createdAt: now())
         pending.append(action)
         persist()

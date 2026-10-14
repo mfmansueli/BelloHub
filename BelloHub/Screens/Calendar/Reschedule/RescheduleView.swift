@@ -15,13 +15,15 @@ struct RescheduleView: View {
     @Environment(BookingSetupService.self) private var bookingSetup
     @Environment(VaultService.self) private var vault
     @Environment(ProfileService.self) private var profile
+    @Environment(ClientLinkService.self) private var clientLinks
 
     var body: some View {
         let settings = CalendarSettings(profile: profile.profile)
         RescheduleContent(
             viewModel: RescheduleViewModel(
                 appointmentID: appointmentID, timeZoneID: settings.timeZoneID, firstWeekday: settings.firstWeekday,
-                appointments: appointments, timeBlocks: timeBlocks, bookingSetup: bookingSetup, vault: vault
+                appointments: appointments, timeBlocks: timeBlocks, bookingSetup: bookingSetup, vault: vault,
+                clientLinks: clientLinks, locale: profile.profile?.appLocaleID
             ),
             settings: settings
         )

@@ -253,7 +253,7 @@ final class NewAppointmentViewModel {
             return false
         } catch BookingRepositoryError.unreachable, BookingRepositoryError.busy {
             clientLinks.retryManualBooking(id: appointment.id, timeZoneID: timeZoneID, locale: appLocale.rawValue)
-        } catch { /* A permanent server failure does not erase a saved local visit. */ }
+        } catch { try? await appointmentService.markManualBookingIssue(id: appointment.id, issue: .failed) }
         return true
     }
 

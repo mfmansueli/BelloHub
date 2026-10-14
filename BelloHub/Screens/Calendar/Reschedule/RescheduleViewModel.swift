@@ -39,6 +39,8 @@ final class RescheduleViewModel {
     private let appointments: AppointmentService
     private let bookingSetup: BookingSetupService
     private let vault: VaultService
+    private let clientLinks: ClientLinkService?
+    private let locale: String?
     private let loader: SchedulingContextLoader
     private let timeZoneID: String
     private let now: @Sendable () -> Date
@@ -50,7 +52,8 @@ final class RescheduleViewModel {
     init(
         appointmentID: UUID, timeZoneID: String, firstWeekday: Int = 2,
         appointments: AppointmentService, timeBlocks: TimeBlockService, bookingSetup: BookingSetupService,
-        vault: VaultService, now: @escaping @Sendable () -> Date = { Date() }
+        vault: VaultService, clientLinks: ClientLinkService? = nil, locale: String? = nil,
+        now: @escaping @Sendable () -> Date = { Date() }
     ) {
         let days = CalendarDays(timeZone: TimeZone(identifier: timeZoneID) ?? .current, firstWeekday: firstWeekday)
         self.days = days
@@ -59,6 +62,8 @@ final class RescheduleViewModel {
         self.appointments = appointments
         self.bookingSetup = bookingSetup
         self.vault = vault
+        self.clientLinks = clientLinks
+        self.locale = locale
         loader = SchedulingContextLoader(
             appointments: appointments, timeBlocks: timeBlocks, vault: vault,
             catalogProvider: BundleHealthFormCatalogProvider(), localization: .en
@@ -172,6 +177,9 @@ final class RescheduleViewModel {
         defer { isSaving = false }
         do {
             let moved = try await appointments.reschedule(id: appointmentID, to: start, now: now())
+            if moved.manualBookingSyncIssue != nil {
+                clientLinks?.retryManualBooking(id: appointmentID, timeZoneID: timeZoneID, locale: locale)
+            }
             appointment = moved
             phase = .moved(moved)
             return true

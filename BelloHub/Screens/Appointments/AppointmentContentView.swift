@@ -14,6 +14,8 @@ struct AppointmentContentView: View {
     @State private var visitFlow: TreatmentFlowRequest?
     @State private var recordRoute: RecordRoute?
     @Environment(\.locale) private var locale
+    @Environment(ProfileService.self) private var profile
+    @Environment(ClientLinkService.self) private var clientLinks
 
     init(
         appointmentID: UUID, appointments: AppointmentService, vault: VaultService, profile: ProfileService,
@@ -75,6 +77,9 @@ struct AppointmentContentView: View {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 header(visit, formatters: formatters, now: now)
                 statusRow(visit, formatters: formatters, now: now)
+                if let issue = visit.appointment.manualBookingSyncIssue, visit.appointment.status.holdsTime {
+                    manualBookingNotice(issue, appointmentID: visit.appointment.id)
+                }
                 if let checklist = viewModel.checklist {
                     if !checklist.allergies.isEmpty { allergyNotice(checklist) }
                     PreVisitChecksCard(
@@ -160,6 +165,32 @@ struct AppointmentContentView: View {
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("appointment.lateChip")
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func manualBookingNotice(_ issue: ManualBookingSyncIssue, appointmentID: UUID) -> some View {
+        switch issue {
+        case .conflict:
+            InlineNotice(
+                style: .warning, title: "appointment.manualSync.conflict.title",
+                message: "appointment.manualSync.conflict.message"
+            )
+        case .failed:
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                InlineNotice(
+                    style: .warning, title: "appointment.manualSync.failed.title",
+                    message: "appointment.manualSync.failed.message"
+                )
+                Button("appointment.error.retry") {
+                    clientLinks.retryManualBooking(
+                        id: appointmentID, timeZoneID: CalendarSettings(profile: profile.profile).timeZoneID,
+                        locale: profile.profile?.appLocaleID
+                    )
+                }
+                .buttonStyle(.belloSecondary)
+                .accessibilityIdentifier("appointment.retryManualBookingButton")
             }
         }
     }

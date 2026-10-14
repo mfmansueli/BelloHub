@@ -145,6 +145,7 @@ enum BookingImporter {
         var visit = appointment
         if visit.bookingID == nil && visit.id.uuidString.lowercased() == booking.id {
             visit.bookingID = booking.id
+            visit.manualBookingSyncIssue = nil
         }
         visit.startsAt = booking.startsAt
         visit.endsAt = booking.endsAt

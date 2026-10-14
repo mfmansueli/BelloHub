@@ -62,6 +62,16 @@ final class AppointmentService {
         }
         guard visit.bookingID == nil || visit.bookingID == bookingID else { return }
         visit.bookingID = bookingID
+        visit.manualBookingSyncIssue = nil
+        try await repository.save(visit)
+    }
+
+    /// Keep a server refusal on the visit itself, so the warning survives relaunch and a queue entry can be dropped.
+    func markManualBookingIssue(id: UUID, issue: ManualBookingSyncIssue) async throws {
+        let repository = try requireRepository()
+        guard var visit = try await repository.appointment(id: id), visit.origin == .manual,
+              visit.bookingID == nil, visit.status.holdsTime else { return }
+        visit.manualBookingSyncIssue = issue
         try await repository.save(visit)
     }
 
