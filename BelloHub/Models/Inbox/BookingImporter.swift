@@ -136,6 +136,9 @@ enum BookingImporter {
                     AppointmentAddOn(addOnID: $0, name: addOn.name, minutes: addOn.minutes)
                 }
             },
+            guestCount: booking.guestCount,
+            serviceTiming: booking.visitTiming ?? .noExtraTime,
+            serviceMinutes: booking.baseServiceMinutes,
             createdAt: booking.createdAt
         )
     }
@@ -151,6 +154,21 @@ enum BookingImporter {
         visit.endsAt = booking.endsAt
         visit.totalMinutes = booking.totalMinutes
         visit.serviceName = booking.serviceName
+        // Older manual registrations only sent the total interval. Do not erase the richer local appointment with
+        // the server's old empty offer while reconnecting it by UUID.
+        let legacyManualOffer = visit.origin == .manual && booking.serviceId == "manual"
+            && booking.addOns.isEmpty && booking.guestCount == 0 && booking.visitTiming == nil
+        if !legacyManualOffer {
+            visit.addOns = booking.addOns.compactMap { addOn in
+                UUID(uuidString: addOn.id).map {
+                    AppointmentAddOn(addOnID: $0, name: addOn.name, minutes: addOn.minutes)
+                }
+            }
+            visit.guestCount = booking.guestCount
+            visit.serviceTiming = booking.visitTiming
+                ?? (visit.origin == .manual ? visit.serviceTiming : .noExtraTime)
+            visit.serviceMinutes = booking.baseServiceMinutes ?? visit.serviceMinutes
+        }
         visit.clientConfirmedAt = booking.clientConfirmedAt
         visit.lateByMinutes = booking.lateByMinutes
         visit.rescheduleCount = booking.rescheduleCount

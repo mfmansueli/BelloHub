@@ -36,6 +36,10 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
     var durationMinutes: Int
     var addOns: [AddOn]
     var guestCount: Int
+    var prepMinutes: Int?
+    var cleanupMinutes: Int?
+    var processingStartMinutes: Int?
+    var processingMinutes: Int?
     var startsAt: Date
     var endsAt: Date
     var timeZoneID: String
@@ -72,6 +76,10 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         durationMinutes: Int,
         addOns: [AddOn] = [],
         guestCount: Int = 0,
+        prepMinutes: Int? = nil,
+        cleanupMinutes: Int? = nil,
+        processingStartMinutes: Int? = nil,
+        processingMinutes: Int? = nil,
         startsAt: Date,
         endsAt: Date,
         timeZoneID: String,
@@ -102,6 +110,10 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         self.durationMinutes = durationMinutes
         self.addOns = addOns
         self.guestCount = guestCount
+        self.prepMinutes = prepMinutes
+        self.cleanupMinutes = cleanupMinutes
+        self.processingStartMinutes = processingStartMinutes
+        self.processingMinutes = processingMinutes
         self.startsAt = startsAt
         self.endsAt = endsAt
         self.timeZoneID = timeZoneID
@@ -128,6 +140,21 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
     /// Service plus add-ons plus guests, as the server computed it.
     var totalMinutes: Int { max(Int(endsAt.timeIntervalSince(startsAt) / 60), 0) }
 
+    var visitTiming: VisitTiming? {
+        guard prepMinutes != nil || cleanupMinutes != nil || processingStartMinutes != nil || processingMinutes != nil
+        else { return nil }
+        return VisitTiming(
+            prepMinutes: prepMinutes ?? 0, cleanupMinutes: cleanupMinutes ?? 0,
+            processingStartMinutes: processingStartMinutes ?? 0, processingMinutes: processingMinutes ?? 0
+        )
+    }
+
+    var baseServiceMinutes: Int? {
+        let remaining = totalMinutes - addOns.reduce(0) { $0 + $1.minutes }
+        guard guestCount >= 0, remaining > 0, remaining % (guestCount + 1) == 0 else { return nil }
+        return remaining / (guestCount + 1)
+    }
+
     /// A request (2.10) that still waits for her answer.
     var isPendingRequest: Bool { status.isRequest }
 
@@ -146,6 +173,10 @@ struct IncomingBooking: Identifiable, Hashable, Codable, Sendable {
         durationMinutes = try container.decodeIfPresent(Int.self, forKey: .durationMinutes) ?? 0
         addOns = try container.decodeIfPresent([AddOn].self, forKey: .addOns) ?? []
         guestCount = try container.decodeIfPresent(Int.self, forKey: .guestCount) ?? 0
+        prepMinutes = try container.decodeIfPresent(Int.self, forKey: .prepMinutes)
+        cleanupMinutes = try container.decodeIfPresent(Int.self, forKey: .cleanupMinutes)
+        processingStartMinutes = try container.decodeIfPresent(Int.self, forKey: .processingStartMinutes)
+        processingMinutes = try container.decodeIfPresent(Int.self, forKey: .processingMinutes)
         startsAt = try container.decode(Date.self, forKey: .startsAt)
         endsAt = try container.decode(Date.self, forKey: .endsAt)
         timeZoneID = try container.decodeIfPresent(String.self, forKey: .timeZoneID) ?? "UTC"

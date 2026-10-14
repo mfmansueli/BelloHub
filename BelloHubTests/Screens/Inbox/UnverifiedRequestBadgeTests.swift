@@ -78,5 +78,15 @@ struct UnverifiedRequestBadgeTests {
          "client":{"name":"Ana","phone":"+5511981234410"}}
         """.utf8))
         #expect(plain.verification == nil && plain.reference == nil && plain.pendingExpiresAt == nil)
+        #expect(plain.visitTiming == nil)
+
+        let timed = try decoder.decode(IncomingBooking.self, from: Data("""
+        {"id":"bk-10","status":"confirmed","serviceId":"svc","serviceName":"Glow",
+         "startsAt":0,"endsAt":3600,"prepMinutes":10,"cleanupMinutes":5,
+         "processingStartMinutes":20,"processingMinutes":15,
+         "guestCount":1,"client":{"name":"Ana","phone":"+5511981234410"}}
+        """.utf8))
+        #expect(timed.visitTiming == VisitTiming(prepMinutes: 10, cleanupMinutes: 5,
+                                                 processingStartMinutes: 20, processingMinutes: 15))
     }
 }

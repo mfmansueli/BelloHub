@@ -46,6 +46,19 @@ struct OpenTimesTests {
         #expect(moving.contains(TestClock.date("2026-10-02 10:00")))
     }
 
+    @Test("A booked visit with no prep stays plain when the service later gains prep")
+    func bookedTimingIsSnapshot() {
+        let serviceID = UUID()
+        var visit = makeVisit(start: TestClock.date("2026-10-02 10:00"))
+        visit.serviceID = serviceID
+        visit.serviceTiming = .noExtraTime
+        var editedService = makeService(id: serviceID)
+        editedService.timing = VisitTiming(prepMinutes: 15)
+        var query = request(settings: makeAvailability(bufferMinutes: 0), appointments: [visit])
+        query.services = [editedService]
+        #expect(OpenTimes.slots(on: friday, query).contains(TestClock.date("2026-10-02 09:00")))
+    }
+
     @Test("A cancelled visit and a no-show leave the time free")
     func freed() {
         let cancelled = makeVisit(start: TestClock.date("2026-10-02 10:00"), status: .cancelled)

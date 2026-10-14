@@ -12,7 +12,7 @@ struct AppointmentExtrasCard: View {
     let formatters: Formatters
 
     private var hasContent: Bool {
-        !appointment.addOns.isEmpty || !appointment.guests.isEmpty || !(appointment.privateNote ?? "").isEmpty
+        !appointment.addOns.isEmpty || appointment.numberOfGuests > 0 || !(appointment.privateNote ?? "").isEmpty
     }
 
     var body: some View {
@@ -21,8 +21,8 @@ struct AppointmentExtrasCard: View {
                 if !appointment.addOns.isEmpty {
                     infoLine("appointment.addOns", value: appointment.addOns.map(\.name), identifier: "addOns")
                 }
-                if !appointment.guests.isEmpty {
-                    infoLine("appointment.guests", value: appointment.guests, identifier: "guests")
+                if appointment.numberOfGuests > 0 {
+                    guestLine
                 }
                 if let note = appointment.privateNote, !note.isEmpty {
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -41,6 +41,21 @@ struct AppointmentExtrasCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .belloCard(cornerRadius: Radius.tile)
         }
+    }
+
+    private var guestLine: some View {
+        VStack(alignment: .leading, spacing: Spacing.xxs) {
+            Text("appointment.guests").font(Typography.metaStrong).foregroundStyle(Palette.ink2)
+            if appointment.guests.isEmpty || appointment.numberOfGuests != appointment.guests.count {
+                Text(verbatim: formatters.number(appointment.numberOfGuests))
+                    .font(Typography.body).foregroundStyle(Palette.ink)
+            } else {
+                Text(verbatim: formatters.list(appointment.guests))
+                    .font(Typography.body).foregroundStyle(Palette.ink)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("appointment.guests")
     }
 
     private func infoLine(_ title: LocalizedStringKey, value: [String], identifier: String) -> some View {

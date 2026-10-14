@@ -39,6 +39,9 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
     var addOns: [AppointmentAddOn]
     /// Names of guests, booked back to back with the same service.
     var guests: [String]
+    /// Web bookings know the number of guests but not their names; nil for older local visits.
+    var guestCount: Int?
+    var numberOfGuests: Int { max(guestCount ?? guests.count, guests.count) }
     /// The service's timing when this visit was created; later catalog edits must not reshape it on retry.
     var serviceTiming: VisitTiming?
     /// The service duration when this visit was created, needed to preserve the web booking's offer.
@@ -79,6 +82,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         linkedAppointmentID: UUID? = nil,
         addOns: [AppointmentAddOn] = [],
         guests: [String] = [],
+        guestCount: Int? = nil,
         serviceTiming: VisitTiming? = nil,
         serviceMinutes: Int? = nil,
         sessionPlanID: UUID? = nil,
@@ -110,6 +114,7 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         self.linkedAppointmentID = linkedAppointmentID
         self.addOns = addOns
         self.guests = guests
+        self.guestCount = guestCount
         self.serviceTiming = serviceTiming
         self.serviceMinutes = serviceMinutes
         self.sessionPlanID = sessionPlanID

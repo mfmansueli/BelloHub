@@ -11,6 +11,73 @@ import Testing
 /// through it). Conflict detection is one of the v1 acceptance items (docs/13 section 8).
 @Suite("BookingImporter")
 struct BookingImporterTests {
+    @Test("A web booking brings its guests, extras and timing into the iPhone agenda")
+    func importsCompleteOffer() throws {
+        var booking = makeIncomingBooking(status: .confirmed, minutes: 130)
+        let serviceID = UUID()
+        let addOnID = UUID()
+        booking.serviceId = serviceID.uuidString.lowercased()
+        booking.addOns = [.init(id: addOnID.uuidString.lowercased(), name: "Mask", minutes: 10)]
+        booking.guestCount = 1
+        booking.prepMinutes = 10
+        booking.cleanupMinutes = 5
+        booking.processingStartMinutes = 20
+        booking.processingMinutes = 15
+        let currentCatalog = makeService(id: serviceID, minutes: 90)
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [], clients: [], services: [currentCatalog], now: TestClock.now
+        )
+        let visit = try #require(plan.appointments.first)
+        #expect(visit.numberOfGuests == 1 && visit.guests.isEmpty)
+        #expect(visit.addOns == [AppointmentAddOn(addOnID: addOnID, name: "Mask", minutes: 10)])
+        #expect(visit.serviceMinutes == 60)
+        #expect(visit.serviceTiming == VisitTiming(prepMinutes: 10, cleanupMinutes: 5,
+                                                   processingStartMinutes: 20, processingMinutes: 15))
+    }
+
+    @Test("A plain web booking remains plain after a catalog timing change")
+    func plainBookingKeepsNoExtraTime() throws {
+        let booking = makeIncomingBooking(status: .confirmed, minutes: 60)
+        let visit = try mirror(booking)
+        #expect(visit.serviceTiming == .noExtraTime)
+        #expect(BookingImporter.apply(booking, to: visit, now: TestClock.now).serviceTiming == .noExtraTime)
+    }
+
+    @Test("A changed web offer updates one visit without erasing the professional's note")
+    func updatesOfferInPlace() throws {
+        var booking = makeIncomingBooking(status: .confirmed, minutes: 60)
+        let original = try mirror(booking)
+        var noted = original
+        noted.privateNote = "Allergy discussed"
+        booking.endsAt = booking.startsAt.addingTimeInterval(120 * 60)
+        booking.durationMinutes = 120
+        booking.guestCount = 1
+        booking.prepMinutes = 10
+        let plan = BookingImporter.plan(
+            bookings: [booking], appointments: [noted], clients: [], services: [], now: TestClock.now
+        )
+        let updated = try #require(plan.appointments.first)
+        #expect(updated.id == original.id && updated.privateNote == "Allergy discussed")
+        #expect(updated.numberOfGuests == 1 && updated.serviceMinutes == 60)
+        #expect(updated.serviceTiming?.prepMinutes == 10)
+    }
+
+    @Test("An old manual server document cannot erase locally recorded extras and guest names")
+    func legacyManualOfferKeepsLocalDetails() {
+        var booking = makeIncomingBooking(status: .confirmed, minutes: 130)
+        booking.serviceId = "manual"
+        let extra = AppointmentAddOn(addOnID: UUID(), name: "Mask", minutes: 10)
+        let visit = Appointment(
+            clientID: UUID(), serviceName: booking.serviceName, startsAt: booking.startsAt,
+            endsAt: booking.endsAt, origin: .manual, bookingID: booking.id, addOns: [extra], guests: ["Bia"],
+            serviceTiming: VisitTiming(prepMinutes: 10), serviceMinutes: 60, createdAt: booking.createdAt
+        )
+        let imported = BookingImporter.apply(booking, to: visit, now: TestClock.now)
+        #expect(imported.addOns == [extra])
+        #expect(imported.guests == ["Bia"] && imported.numberOfGuests == 1)
+        #expect(imported.serviceMinutes == 60 && imported.serviceTiming?.prepMinutes == 10)
+    }
+
     private func makeManualVisit(over booking: IncomingBooking, clientID: UUID = UUID()) -> Appointment {
         Appointment(
             clientID: clientID, serviceName: "Brow lamination", startsAt: booking.startsAt.addingTimeInterval(1_800),

@@ -35,7 +35,7 @@ struct ManualBookingRegistration: Equatable, Sendable, Encodable {
     init(appointment: Appointment, timeZoneID: String, client: ClientPayload) {
         appointmentId = appointment.id.uuidString.lowercased()
         serviceName = appointment.serviceName
-        let guestTotal = appointment.guests.count
+        let guestTotal = appointment.numberOfGuests
         let remaining = appointment.totalMinutes - appointment.addOns.reduce(0) { $0 + $1.minutes }
         let inferredMinutes = remaining % (guestTotal + 1) == 0 ? remaining / (guestTotal + 1) : 0
         let minutes = appointment.serviceMinutes ?? inferredMinutes
