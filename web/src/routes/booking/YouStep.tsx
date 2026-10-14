@@ -151,7 +151,7 @@ export function YouStep({ profile }: { profile: PublicProfile }): JSX.Element | 
 
       {draft.guests > 0 && summary !== null ? (
         <Notice kind="info" icon="clock" testId="guest-total">
-          {t('bk5.guestTotal', { total: format.minutes(summary.totalMinutes), each: format.minutes(summary.perPersonMinutes), name: profile.firstName })}
+          {t('bk5.guestTotal', { total: format.minutes(summary.totalMinutes), name: profile.firstName })}
         </Notice>
       ) : null}
 

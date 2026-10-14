@@ -10,7 +10,7 @@ export type PriceSummary =
   | { readonly kind: 'onRequest' };
 
 export interface Totals {
-  /** Minutes for one person: the service plus her add-ons. */
+  /** Minutes for the first person: the service plus the selected add-ons. */
   readonly perPersonMinutes: number;
   /** Minutes the visit occupies: one person after another. */
   readonly totalMinutes: number;
@@ -37,7 +37,8 @@ export function totals(service: PublicService, addOns: readonly PublicAddOn[], g
   const base = servicePrice(service);
   let price: PriceSummary | null = base;
   if (base !== null && base.kind !== 'onRequest') price = { kind: base.kind, amount: base.amount * people };
-  return { perPersonMinutes, totalMinutes: perPersonMinutes * people, people, price };
+  return { perPersonMinutes, totalMinutes: service.durationMinutes * people +
+    addOns.reduce((sum, addOn) => sum + addOn.minutes, 0), people, price };
 }
 
 /** The selected add-ons of a draft, in the order the professional offers them, ignoring ids that no longer exist. */

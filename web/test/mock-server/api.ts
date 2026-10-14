@@ -817,6 +817,7 @@ export class MockApi {
     let client: StoredBooking['client'];
     let serviceId: string;
     let addOnIds: string[];
+    let guests = 0;
     let mode: Portal['mode'];
     if (portal !== undefined) {
       slug = portal.slug;
@@ -830,6 +831,9 @@ export class MockApi {
       client = base.client;
       serviceId = typeof input['serviceId'] === 'string' ? input['serviceId'] : base.serviceId;
       addOnIds = input['addOnIds'] === undefined ? base.addOnIds : idsOf(input['addOnIds'], 'addOnIds');
+      const sameAddOns = addOnIds.length === base.addOnIds.length &&
+        addOnIds.every((id) => base.addOnIds.includes(id));
+      guests = serviceId === base.serviceId && sameAddOns ? base.guests : 0;
       mode = this.scenario(slug).noShow[client.phone] === 'pauseOnline' ? 'paused' : this.scenario(slug).noShow[client.phone] === 'approveNewBookings' ? 'approval' : 'direct';
     }
     const profile = this.profile(slug);
@@ -837,7 +841,8 @@ export class MockApi {
     if (mode === 'paused' || this.isPaused(profile, now)) {
       result = { status: 'paused', ...(profile.booking.pausedUntil === undefined ? {} : { pausedUntil: profile.booking.pausedUntil }) };
     } else {
-      const minutes = this.duration(profile, serviceId, addOnIds, 0);
+      if (guests > profile.booking.maxGuests) throw new MockError('INVALID_ARGUMENT', { fields: ['guests'] });
+      const minutes = this.duration(profile, serviceId, addOnIds, guests);
       const start = instant(input['startsAt'], 'startsAt');
       if (!isFree(start, minutes, this.rules(profile), this.busy(slug, now), now)) {
         result = { status: 'slotTaken', alternatives: this.alternatives(slug, start, minutes, now) };
@@ -848,7 +853,7 @@ export class MockApi {
           status: mode === 'approval' ? 'pendingApproval' : 'confirmed',
           serviceId,
           addOnIds,
-          guests: 0,
+          guests,
           startsAt: start,
           endsAt: start + minutes * MINUTE,
           durationMinutes: minutes,

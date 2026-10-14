@@ -56,6 +56,31 @@ test.describe('the client portal (Cl-2) and rebooking (Cl-3)', () => {
     await expect(page.getByTestId('actions')).toBeVisible();
   });
 
+  test('a returning guest stays on the new booking with the offered duration', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria');
+    const { token } = await mock.seed({ slug, startsInMinutes: -24 * HOUR, status: 'completed', guests: 1 });
+    await open(page, `/m/${token}/rebook`);
+    const slots = page.locator('[data-testid^="slot-"]');
+    await expect(slots.first()).toBeVisible();
+    await slots.first().click();
+    await page.getByTestId('rebook').click();
+    await expect(page.getByTestId('done-card')).toBeVisible();
+    const bookings = await mock.bookings(slug);
+    const next = bookings.find((booking) => Date.parse(booking.startsAt) > Date.now());
+    expect(next?.guests).toBe(1);
+    expect(next?.durationMinutes).toBe(180);
+  });
+
+  test('a manual visit with too many guests offers an honest alternative, not a broken time picker', async ({ page, mock, slugFor }) => {
+    const slug = slugFor('maria');
+    const { token } = await mock.seed({ slug, startsInMinutes: -24 * HOUR, status: 'completed', guests: 3 });
+    await open(page, `/m/${token}/rebook`);
+    await expect(page.getByTestId('offer-unavailable')).toBeVisible();
+    await expect(page.getByTestId('offer-unavailable')).toContainText(/guests/i);
+    await expect(page.getByTestId('choose-current-service')).toHaveAttribute('href', `/${slug}`);
+    await expect(page.getByTestId('rebook')).toHaveCount(0);
+  });
+
   // API.md 5.13: the portal does not say beforehand whether a pause or an approval applies; the server's answer does.
   test('when the professional confirms new bookings, the answer is a request and the page says so kindly', async ({ page, mock, slugFor }) => {
     const slug = slugFor('maria');
