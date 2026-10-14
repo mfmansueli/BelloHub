@@ -27,7 +27,33 @@ struct InboxServices {
         retryDelays: [Duration] = [.seconds(15), .seconds(60), .seconds(300)], pollInterval: Duration? = .seconds(90),
         notifier: any ImmediateNotifying = UserNotificationPoster()
     ) -> InboxServices {
-        let queue = OutboundQueue(repository: repository, defaults: defaults, retryDelays: retryDelays)
+        let queue = OutboundQueue(
+            repository: repository,
+            registerManualBooking: { id, timeZoneID, locale in
+                guard let store = vault.repository else { throw BookingRepositoryError.unreachable }
+                guard let visit = try await store.appointment(id: id), visit.origin == .manual else { return }
+                guard visit.bookingID == nil else { return }
+                guard visit.status.holdsTime else {
+                    // If the first server response was lost, the booking might already exist there.
+                    try? await repository.cancelBookingByOwner(id: id.uuidString.lowercased())
+                    return
+                }
+                guard let client = try await store.client(id: visit.clientID) else {
+                    throw BookingRepositoryError.rejected
+                }
+                let registration = ManualBookingRegistration(
+                    appointmentId: id.uuidString.lowercased(), serviceName: visit.serviceName,
+                    startsAt: visit.startsAt, endsAt: visit.endsAt, timeZoneID: timeZoneID,
+                    client: .init(name: client.name, phone: client.phoneE164 ?? "", email: client.email, locale: locale)
+                )
+                _ = try await repository.registerManualBooking(registration)
+                // A failed local write is reconciled by the importer using the same deterministic booking id.
+                try? await appointments.linkManualBooking(id: id, bookingID: registration.appointmentId)
+            },
+            defaults: defaults, retryDelays: retryDelays
+        )
+        let clientLinks = ClientLinkService(repository: repository)
+        clientLinks.outboundQueue = queue
         let bookings = BookingSyncService(
             repository: repository, queue: queue, appointments: appointments, vault: vault, defaults: defaults,
             pollInterval: pollInterval
@@ -42,7 +68,7 @@ struct InboxServices {
         return InboxServices(
             queue: queue, bookings: bookings, mailbox: mailbox, push: push,
             clientDeletion: ClientDataDeletionService(vault: vault, queue: queue),
-            clientLinks: ClientLinkService(repository: repository)
+            clientLinks: clientLinks
         )
     }
 }

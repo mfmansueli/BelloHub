@@ -7,7 +7,7 @@
 import Foundation
 import Testing
 
-/// Regression probes for manual booking sync and the remaining offline-registration gap.
+/// Regression probes for manual booking sync, including retry after a relaunch.
 @Suite("Manual booking audit")
 @MainActor
 struct ManualBookingAuditTests {
@@ -83,21 +83,50 @@ struct ManualBookingAuditTests {
         #expect(plan.conflicts.isEmpty)
     }
 
-    @Test("F04: an offline registration still reports booking success and leaves no linked booking")
-    func offlineRegistrationIsNotRetriedByBooking() async throws {
+    @Test("F04: an offline registration survives relaunch and links the original visit once online")
+    func offlineRegistrationIsRetriedAfterRelaunch() async throws {
         let world = try await CalendarWorld.make()
         let inbox = FakeInboxRepository()
         await inbox.setWriteFailure(.unreachable)
-        let links = ClientLinkService(repository: inbox, now: { TestClock.now })
+        let suite = "test.manual.retry.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let keys = KeyManager(store: InMemoryKeyStore(seed: VaultVectors.entropy))
+        func services() -> InboxServices {
+            InboxServices.make(
+                repository: inbox, keys: keys, vault: world.vault, appointments: world.appointments,
+                pushProvider: FakePushTokenProvider(), defaults: defaults,
+                retryDelays: [.seconds(600)], pollInterval: nil
+            )
+        }
+        let first = services()
+        first.bookings.startListening(userId: "manual-test")
         let model = NewAppointmentViewModel(
             clientID: world.ana.id, startsAt: friday("10:00"), timeZoneID: "America/Sao_Paulo",
             appointments: world.appointments, timeBlocks: world.timeBlocks, bookingSetup: world.bookingSetup,
-            vault: world.vault, profileService: world.profile, clientLinks: links, now: { TestClock.now }
+            vault: world.vault, profileService: world.profile, clientLinks: first.clientLinks,
+            now: { TestClock.now }
         )
         await model.loadAsync()
         #expect(await model.bookAsync())
         #expect(model.didBook && model.saveErrorMessage == nil && model.exclusiveManageLink == nil)
         let visits = try await world.appointments.appointments(for: world.ana.id)
         #expect(visits.count == 1 && visits.first?.bookingID == nil)
+        let visit = try #require(visits.first)
+        await Wait.untilMain { first.queue.pending.count == 1 && !first.queue.isFlushing }
+        let queued = try #require(String(data: JSONEncoder().encode(first.queue.pending), encoding: .utf8))
+        #expect(!queued.contains(world.ana.name))
+        if let phone = world.ana.phoneE164 { #expect(!queued.contains(phone)) }
+        first.bookings.stopListening()
+
+        await inbox.setWriteFailure(nil)
+        let relaunched = services()
+        relaunched.bookings.startListening(userId: "manual-test")
+        await Wait.untilMain { relaunched.queue.pending.isEmpty }
+        #expect(relaunched.queue.pending.isEmpty)
+        #expect(try await world.appointments.appointment(id: visit.id)?.bookingID == visit.id.uuidString.lowercased())
+        let registrationCall = "registerManualBooking:\(visit.id.uuidString.lowercased())"
+        #expect(await inbox.writes.filter { $0 == registrationCall }.count == 1)
+        relaunched.bookings.stopListening()
     }
 }

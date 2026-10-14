@@ -23,6 +23,8 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         /// Clients registered while the server was away (D42). Since D59 nothing enqueues it and the server no longer
         /// counts for the app; it stays only so a queue saved by an older version still reads, and is dropped unsent.
         case reserveRegistrations(claims: [RegistrationClaim])
+        /// Only an opaque local id is persisted; contact details are read from the vault when retried.
+        case registerManualBooking(appointmentID: UUID, timeZoneID: String, locale: String?)
         /// She cancelled a link visit in the app (`cancelBookingByOwner`).
         case cancelBookingByOwner(bookingId: String)
         /// She moved a link visit in the app (`moveBookingByOwner`).
@@ -71,6 +73,7 @@ struct OutboundAction: Identifiable, Hashable, Codable, Sendable {
         case .registerDevice, .unregisterDevice: "device"
         case .deleteClientServerData(let phone, let bookingIds): "contact:\(phone ?? bookingIds.first ?? "")"
         case .reserveRegistrations: "registrations"
+        case .registerManualBooking(let id, _, _): "booking:\(id.uuidString.lowercased())"
         }
     }
 }

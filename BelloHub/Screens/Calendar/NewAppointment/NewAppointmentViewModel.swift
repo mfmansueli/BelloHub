@@ -222,36 +222,39 @@ final class NewAppointmentViewModel {
         )
         do {
             try await appointmentService.book(appointment)
-            if let client = selectedClient {
-                let localeID = profileService.profile?.appLocaleID
-                let appLocale = localeID.flatMap { AppLocalization(rawValue: $0) } ?? .en
-                if let clientLinks {
-                    do {
-                        let link = try await clientLinks.registerManualBooking(
-                            appointment: appointment, client: client, serviceName: service.name,
-                            timeZoneID: timeZoneID, locale: appLocale.rawValue
-                        )
-                        exclusiveManageLink = link.url.absoluteString
-                        // The importer can reconnect by UUID if this local write fails.
-                        try? await appointmentService.linkManualBooking(
-                            id: appointment.id, bookingID: appointment.id.uuidString.lowercased()
-                        )
-                    } catch BookingRepositoryError.conflict {
-                        try await appointmentService.discardUnlinkedManualBooking(id: appointment.id)
-                        saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.chooseAnother"))
-                        return false
-                    } catch { /* A transient or unknown server failure does not erase a saved local visit. */ }
-                }
-            }
+            guard await registerManualVisit(appointment, service: service) else { return false }
             didBook = true
             return true
         } catch {
-            saveErrorMessage = String(interface: LocalizedStringResource(
-                "newAppointment.error.save",
-                defaultValue: "We could not save this appointment. Nothing was changed. Try again."
-            ))
+            saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.error.save"))
             return false
         }
+    }
+
+    private func registerManualVisit(_ appointment: Appointment, service: Service) async -> Bool {
+        guard let client = selectedClient, let clientLinks else { return true }
+        let appLocale = profileService.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
+        do {
+            let link = try await clientLinks.registerManualBooking(
+                appointment: appointment, client: client, serviceName: service.name,
+                timeZoneID: timeZoneID, locale: appLocale.rawValue
+            )
+            exclusiveManageLink = link.url.absoluteString
+            let bookingID = appointment.id.uuidString.lowercased()
+            try? await appointmentService.linkManualBooking(id: appointment.id, bookingID: bookingID)
+        } catch BookingRepositoryError.conflict {
+            do {
+                try await appointmentService.discardUnlinkedManualBooking(id: appointment.id)
+            } catch {
+                saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.error.save"))
+                return false
+            }
+            saveErrorMessage = String(interface: LocalizedStringResource("newAppointment.chooseAnother"))
+            return false
+        } catch BookingRepositoryError.unreachable, BookingRepositoryError.busy {
+            clientLinks.retryManualBooking(id: appointment.id, timeZoneID: timeZoneID, locale: appLocale.rawValue)
+        } catch { /* A permanent server failure does not erase a saved local visit. */ }
+        return true
     }
 
     func dismissSaveError() {
@@ -363,7 +366,8 @@ extension NewAppointmentViewModel {
         guard let client = selectedClient, let service = selectedService, let start else { return "" }
         let localization = profileService.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
         let confirmReply = bookingSetup.quickReplies.first { $0.builtInKey == BuiltInQuickReply.confirm.rawValue }
-        let link = exclusiveManageLink ?? bookingSetup.setup.slug.map { BookingLink(slug: $0).messageText }
+        // The public booking page would invite this client to book a second visit while registration is pending.
+        let link = exclusiveManageLink
         let location = bookingSetup.setup.location
         let profile = profileService.profile
         let businessName = profile?.businessName.trimmingCharacters(in: .whitespacesAndNewlines)

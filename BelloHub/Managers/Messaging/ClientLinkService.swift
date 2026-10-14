@@ -16,6 +16,7 @@ import Observation
 @Observable
 final class ClientLinkService {
     @ObservationIgnored private let repository: any InboxRepository
+    @ObservationIgnored weak var outboundQueue: OutboundQueue?
     @ObservationIgnored private let now: @Sendable () -> Date
     @ObservationIgnored private var minted: [String: (link: ClientManageLink, fetchedAt: Date)] = [:]
 
@@ -50,6 +51,11 @@ final class ClientLinkService {
     /// Forgets every minted link (lock, sign-out).
     func clear() {
         minted = [:]
+    }
+
+    /// A failed network attempt must survive app relaunch without persisting the client's contact details in defaults.
+    func retryManualBooking(id: UUID, timeZoneID: String, locale: String?) {
+        outboundQueue?.enqueue(.registerManualBooking(appointmentID: id, timeZoneID: timeZoneID, locale: locale))
     }
 
     /// Registers an appointment scheduled by hand, obtaining the client's exclusive manage link (/m/<token>).

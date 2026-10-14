@@ -23,6 +23,7 @@ final class OutboundQueue {
     @ObservationIgnored private var observers: [UUID: @MainActor (OutboundAction, OutboundOutcome) -> Void] = [:]
 
     @ObservationIgnored private let repository: any InboxRepository
+    @ObservationIgnored private let registerManualBooking: (@MainActor (UUID, String, String?) async throws -> Void)?
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let now: @Sendable () -> Date
     @ObservationIgnored private let retryDelays: [Duration]
@@ -34,12 +35,14 @@ final class OutboundQueue {
 
     init(
         repository: any InboxRepository,
+        registerManualBooking: (@MainActor (UUID, String, String?) async throws -> Void)? = nil,
         defaults: UserDefaults = .standard,
         now: @escaping @Sendable () -> Date = { Date() },
         retryDelays: [Duration] = [.seconds(15), .seconds(60), .seconds(300)],
         sleeper: @escaping @Sendable (Duration) async throws -> Void = { try await Task.sleep(for: $0) }
     ) {
         self.repository = repository
+        self.registerManualBooking = registerManualBooking
         self.defaults = defaults
         self.now = now
         self.retryDelays = retryDelays.isEmpty ? [.seconds(60)] : retryDelays
@@ -159,6 +162,9 @@ final class OutboundQueue {
         case .reserveRegistrations:
             // D59: the free registrations are counted on the iPhone; an old entry is dropped, the server not called.
             return .done
+        case .registerManualBooking(let id, let timeZoneID, let locale):
+            guard let registerManualBooking else { throw BookingRepositoryError.notPublishedYet }
+            try await registerManualBooking(id, timeZoneID, locale)
         case .cancelBookingByOwner, .moveBookingByOwner, .markNoShow, .forgiveNoShow:
             try await performLinkChange(action.kind)
         default:
