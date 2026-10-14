@@ -4014,6 +4014,80 @@
           "type": "string",
           "maxLength": 320
         },
+        "serviceId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+        },
+        "serviceMinutes": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 720
+        },
+        "addOns": {
+          "maxItems": 20,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              },
+              "name": {
+                "type": "string",
+                "maxLength": 320
+              },
+              "minutes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 240
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "minutes"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "guestCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "timing": {
+          "type": "object",
+          "properties": {
+            "prepMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 60
+            },
+            "cleanupMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 60
+            },
+            "processingStartMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 720
+            },
+            "processingMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 720
+            }
+          },
+          "required": [
+            "prepMinutes",
+            "cleanupMinutes",
+            "processingStartMinutes",
+            "processingMinutes"
+          ],
+          "additionalProperties": false
+        },
         "startsAt": {
           "type": "string",
           "format": "date-time"

@@ -110,7 +110,8 @@ enum SchedulingWarningEngine {
     private static func segments(
         of appointment: Appointment, timings: [UUID: VisitTiming]
     ) -> [FreeSlotsCalculator.Segment] {
-        segments(of: appointment.interval, timing: appointment.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
+        segments(of: appointment.interval, timing: appointment.serviceTiming
+            ?? appointment.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
     }
 
     private static func clash(

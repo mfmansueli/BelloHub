@@ -144,6 +144,18 @@ export const registerManualBooking = {
   input: z.strictObject({
     appointmentId: Uuid,
     serviceName: text(80),
+    serviceId: Uuid.optional(),
+    serviceMinutes: z.number().int().min(5).max(720).optional(),
+    addOns: z.array(z.strictObject({
+      id: Uuid, name: text(80), minutes: z.number().int().min(1).max(240)
+    })).max(20).optional(),
+    guestCount: z.number().int().min(0).max(4).optional(),
+    timing: z.strictObject({
+      prepMinutes: z.number().int().min(0).max(60),
+      cleanupMinutes: z.number().int().min(0).max(60),
+      processingStartMinutes: z.number().int().min(0).max(720),
+      processingMinutes: z.number().int().min(0).max(720)
+    }).optional(),
     startsAt: Instant,
     endsAt: Instant,
     timeZoneID: TimeZoneId,

@@ -104,6 +104,18 @@ struct PublishAvailabilityPayloadTests {
         ])
     }
 
+    @Test("A manual visit keeps its original timing after the service catalog changes")
+    func busyUsesVisitSnapshot() {
+        var visit = makeVisit(hours: 1)
+        visit.serviceTiming = VisitTiming(prepMinutes: 10, cleanupMinutes: 5,
+                                          processingStartMinutes: 20, processingMinutes: 15)
+        let sent = availability(makePublishInputs(appointments: [visit])).busy
+        #expect(sent.first?.prepMinutes == 10)
+        #expect(sent.first?.cleanupMinutes == 5)
+        #expect(sent.first?.processingStartMinutes == 20)
+        #expect(sent.first?.processingMinutes == 15)
+    }
+
     @Test("A visit still running counts, one that ended does not")
     func busyBoundaries() {
         let running = makeVisit(hours: -0.5)

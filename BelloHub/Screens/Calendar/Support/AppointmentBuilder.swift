@@ -36,6 +36,7 @@ enum AppointmentBuilder {
             linkedAppointmentID: choice.visitType == .reactionCheck ? choice.linkedAppointmentID : nil,
             addOns: choice.addOns.map { AppointmentAddOn(addOnID: $0.id, name: $0.name, minutes: $0.minutes) },
             guests: choice.guestNames.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) },
+            serviceTiming: choice.service.visitTiming, serviceMinutes: choice.service.durationMinutes,
             createdAt: now
         )
     }

@@ -11,6 +11,42 @@ import Testing
 @Suite("Manual booking audit")
 @MainActor
 struct ManualBookingAuditTests {
+    @Test("F05: registration preserves the original service offer and processing timing")
+    func manualRegistrationPreservesOffer() {
+        let serviceID = UUID()
+        let addOnID = UUID()
+        let visit = Appointment(
+            clientID: UUID(), serviceID: serviceID, serviceName: "Facial", startsAt: friday("10:00"),
+            endsAt: friday("12:10"), addOns: [AppointmentAddOn(addOnID: addOnID, name: "Mask", minutes: 10)],
+            guests: ["Guest"], serviceTiming: VisitTiming(prepMinutes: 10, cleanupMinutes: 5,
+                processingStartMinutes: 20, processingMinutes: 15), serviceMinutes: 60, createdAt: TestClock.now
+        )
+        let payload = ManualBookingRegistration(
+            appointment: visit, timeZoneID: "America/Sao_Paulo",
+            client: .init(name: "Ana", phone: "+5511999999999")
+        )
+        #expect(payload.serviceId == serviceID.uuidString.lowercased())
+        #expect(payload.serviceMinutes == 60)
+        #expect(payload.addOns?.first?.id == addOnID.uuidString.lowercased())
+        #expect(payload.guestCount == 1)
+        #expect(payload.timing?.processingMinutes == 15)
+    }
+
+    @Test("F05: an older saved visit recovers its service duration when retried")
+    func oldManualVisitRecoversDuration() {
+        let visit = Appointment(
+            clientID: UUID(), serviceID: UUID(), serviceName: "Facial", startsAt: friday("10:00"),
+            endsAt: friday("12:10"), addOns: [AppointmentAddOn(addOnID: UUID(), name: "Mask", minutes: 10)],
+            guests: ["Guest"], createdAt: TestClock.now
+        )
+        let payload = ManualBookingRegistration(
+            appointment: visit, timeZoneID: "America/Sao_Paulo",
+            client: .init(name: "Ana", phone: "+5511999999999")
+        )
+        #expect(payload.serviceMinutes == 60)
+        #expect(payload.guestCount == 1)
+    }
+
     @Test("F01: a server conflict removes the provisional local visit and does not show success")
     func serverConflictRollsBackLocalVisit() async throws {
         let world = try await CalendarWorld.make()

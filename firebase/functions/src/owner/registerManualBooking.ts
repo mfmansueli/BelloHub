@@ -4,7 +4,7 @@ import { instantMs, iso } from '../contracts/common.js';
 import * as contract from '../contracts/owner.js';
 import { ownerLinkToken, tokenHash, withNewTokenHash } from '../lib/bookingAccess.js';
 import { emailHashOf, phoneHashOf } from '../lib/emailProof.js';
-import { bumpCalendarLock, isOccupied, loadCalendar, loadOccupied, readCalendarLock } from '../lib/calendar.js';
+import { bumpCalendarLock, isOccupied, loadCalendar, loadOccupied, readCalendarLock, timingFields } from '../lib/calendar.js';
 import { AppError } from '../lib/errors.js';
 import { consumeRate } from '../lib/rateLimit.js';
 import { dataOf, refs, ts, txReader } from '../lib/store.js';
@@ -28,6 +28,22 @@ export const registerManualBooking = defineUseCase({
     const endsAtMs = instantMs(input.endsAt);
     if (endsAtMs <= startsAtMs) {
       throw new AppError('INVALID_ARGUMENT', { fields: ['endsAt'] });
+    }
+    const durationMinutes = Math.round((endsAtMs - startsAtMs) / 60_000);
+    const timing = input.timing ?? { prepMinutes: 0, cleanupMinutes: 0, processingStartMinutes: 0, processingMinutes: 0 };
+    if (input.serviceMinutes === undefined &&
+      (input.serviceId !== undefined || input.addOns !== undefined || input.guestCount !== undefined || input.timing !== undefined)) {
+      throw new AppError('INVALID_ARGUMENT', { fields: ['serviceMinutes'] });
+    }
+    if (input.serviceMinutes !== undefined &&
+      input.serviceMinutes * (1 + (input.guestCount ?? 0)) +
+      (input.addOns ?? []).reduce((total, addOn) => total + addOn.minutes, 0) !== durationMinutes) {
+      throw new AppError('INVALID_ARGUMENT', { fields: ['endsAt'] });
+    }
+    if (timing.processingStartMinutes + timing.processingMinutes > durationMinutes ||
+      (timing.processingMinutes === 0 && timing.processingStartMinutes !== 0) ||
+      new Set((input.addOns ?? []).map((addOn) => addOn.id)).size !== (input.addOns ?? []).length) {
+      throw new AppError('INVALID_ARGUMENT', { fields: ['timing', 'addOns'] });
     }
 
     const r = refs(deps.db);
@@ -53,10 +69,8 @@ export const registerManualBooking = defineUseCase({
         { start: startsAtMs - 86_400_000, end: endsAtMs + 86_400_000 }, now,
         { excludeBookingId: bookingId });
       if (isOccupied(occupied, startsAtMs, endsAtMs,
-        { durationMinutes: Math.round((endsAtMs - startsAtMs) / 60_000),
-          timing: { prepMinutes: 0, cleanupMinutes: 0, processingStartMinutes: 0, processingMinutes: 0 } },
+        { durationMinutes, timing },
         calendar.availability?.bufferMinutes ?? 0)) throw new AppError('CONFLICT');
-      const durationMinutes = Math.max(1, Math.round((endsAtMs - startsAtMs) / 60_000));
       const phoneHash = phoneHashOf(deps.pepper, input.client.phone);
       const emailHash = input.client.email ? emailHashOf(deps.pepper, input.client.email) : undefined;
       const hashedToken = tokenHash(token);
@@ -67,6 +81,10 @@ export const registerManualBooking = defineUseCase({
           startsAt: ts(startsAtMs),
           endsAt: ts(endsAtMs),
           durationMinutes,
+          serviceId: input.serviceId ?? existing.serviceId,
+          addOns: input.addOns ?? existing.addOns,
+          guestCount: input.guestCount ?? existing.guestCount,
+          ...(input.timing ?? {}),
           timeZoneID: input.timeZoneID,
           'client.name': input.client.name,
           'client.phone': input.client.phone,
@@ -85,11 +103,12 @@ export const registerManualBooking = defineUseCase({
           ownerUid: uid,
           slug: slugName,
           status: 'confirmed',
-          serviceId: 'manual',
+          serviceId: input.serviceId ?? 'manual',
           serviceName: input.serviceName,
           durationMinutes,
-          addOns: [],
-          guestCount: 0,
+          addOns: input.addOns ?? [],
+          guestCount: input.guestCount ?? 0,
+          ...timingFields(timing),
           startsAt: ts(startsAtMs),
           endsAt: ts(endsAtMs),
           timeZoneID: input.timeZoneID,

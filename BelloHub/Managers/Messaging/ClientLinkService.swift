@@ -62,16 +62,11 @@ final class ClientLinkService {
     func registerManualBooking(
         appointment: Appointment,
         client: Client,
-        serviceName: String,
         timeZoneID: String,
         locale: String?
     ) async throws -> ClientManageLink {
-        let bookingID = appointment.id.uuidString.lowercased()
         let registration = ManualBookingRegistration(
-            appointmentId: bookingID,
-            serviceName: serviceName,
-            startsAt: appointment.startsAt,
-            endsAt: appointment.endsAt,
+            appointment: appointment,
             timeZoneID: timeZoneID,
             client: .init(
                 name: client.name,
@@ -81,7 +76,7 @@ final class ClientLinkService {
             )
         )
         let link = try await repository.registerManualBooking(registration)
-        minted[bookingID] = (link, now())
+        minted[registration.appointmentId] = (link, now())
         return link
     }
 

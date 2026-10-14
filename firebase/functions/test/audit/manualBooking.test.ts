@@ -53,6 +53,32 @@ async function slots(token?: string): Promise<string[]> {
 }
 
 describe('functional audit: manual/web scheduling parity', () => {
+  it('F05: the manual booking keeps its service, extras, guests and processing snapshot', async () => {
+    const appointmentId = randomUUID();
+    const addOnId = randomUUID();
+    await env.call(registerManualBooking, {
+      appointmentId, serviceId: SERVICE.glowFacial, serviceName: 'Glow Facial', serviceMinutes: 60,
+      addOns: [{ id: addOnId, name: 'Mask', minutes: 10 }], guestCount: 1,
+      timing: { prepMinutes: 10, cleanupMinutes: 5, processingStartMinutes: 20, processingMinutes: 15 },
+      startsAt: START, endsAt: '2026-10-03T15:10:00.000Z', timeZoneID: 'America/Sao_Paulo',
+      client: { ...ANA, email: 'ana@example.com', locale: 'pt-BR' }
+    }, ownerContext(pro.uid));
+    const stored = await bookingDoc(env, appointmentId);
+    expect(stored.serviceId).toBe(SERVICE.glowFacial);
+    expect(stored.addOns).toEqual([{ id: addOnId, name: 'Mask', minutes: 10 }]);
+    expect(stored.guestCount).toBe(1);
+    expect(stored).toMatchObject({ prepMinutes: 10, cleanupMinutes: 5,
+      processingStartMinutes: 20, processingMinutes: 15 });
+  });
+
+  it('F05: inconsistent manual booking details cannot claim a shorter time', async () => {
+    await expect(env.call(registerManualBooking, {
+      appointmentId: randomUUID(), serviceId: SERVICE.glowFacial, serviceName: 'Glow Facial', serviceMinutes: 60,
+      addOns: [], guestCount: 1, startsAt: START, endsAt: END, timeZoneID: 'America/Sao_Paulo',
+      client: { ...ANA, locale: 'pt-BR' }
+    }, ownerContext(pro.uid))).rejects.toMatchObject({ code: 'INVALID_ARGUMENT' });
+  });
+
   it('F01: a published manual visit can register itself, but another visit cannot take its time', async () => {
     const appointmentId = randomUUID();
     await refs(env.deps.db).availability(pro.uid).update({

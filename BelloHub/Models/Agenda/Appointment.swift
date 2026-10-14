@@ -39,6 +39,10 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
     var addOns: [AppointmentAddOn]
     /// Names of guests, booked back to back with the same service.
     var guests: [String]
+    /// The service's timing when this visit was created; later catalog edits must not reshape it on retry.
+    var serviceTiming: VisitTiming?
+    /// The service duration when this visit was created, needed to preserve the web booking's offer.
+    var serviceMinutes: Int?
     var sessionPlanID: UUID?
     var rescheduleCount: Int
     /// When she opened the reminder chat with the text ready (D31). It proves neither sending nor delivery.
@@ -75,6 +79,8 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         linkedAppointmentID: UUID? = nil,
         addOns: [AppointmentAddOn] = [],
         guests: [String] = [],
+        serviceTiming: VisitTiming? = nil,
+        serviceMinutes: Int? = nil,
         sessionPlanID: UUID? = nil,
         rescheduleCount: Int = 0,
         reminderSentAt: Date? = nil,
@@ -104,6 +110,8 @@ struct Appointment: Identifiable, Hashable, Codable, Sendable {
         self.linkedAppointmentID = linkedAppointmentID
         self.addOns = addOns
         self.guests = guests
+        self.serviceTiming = serviceTiming
+        self.serviceMinutes = serviceMinutes
         self.sessionPlanID = sessionPlanID
         self.rescheduleCount = rescheduleCount
         self.reminderSentAt = reminderSentAt

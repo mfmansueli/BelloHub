@@ -42,7 +42,8 @@ enum OpenTimes {
             $0.id != request.ignoring && $0.status != .cancelled && $0.status != .noShow
         }
         let visits = held.map {
-            TimedInterval($0.interval, timing: $0.serviceID.flatMap { timings[$0] } ?? .noExtraTime)
+            TimedInterval($0.interval, timing: $0.serviceTiming ?? $0.serviceID.flatMap { timings[$0] }
+                ?? .noExtraTime)
         }
         return FreeSlotsCalculator.plan(for: FreeSlotsRequest(
             day: day, durationMinutes: max(request.durationMinutes, 1), now: request.now, settings: settings,

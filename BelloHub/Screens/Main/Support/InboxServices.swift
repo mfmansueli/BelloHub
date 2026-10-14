@@ -79,8 +79,7 @@ struct InboxServices {
         }
         guard let client = try await store.client(id: visit.clientID) else { throw BookingRepositoryError.rejected }
         let registration = ManualBookingRegistration(
-            appointmentId: id.uuidString.lowercased(), serviceName: visit.serviceName,
-            startsAt: visit.startsAt, endsAt: visit.endsAt, timeZoneID: timeZoneID,
+            appointment: visit, timeZoneID: timeZoneID,
             client: .init(name: client.name, phone: client.phoneE164 ?? "", email: client.email, locale: locale)
         )
         do {

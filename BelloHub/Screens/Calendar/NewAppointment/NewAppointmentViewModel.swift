@@ -222,7 +222,7 @@ final class NewAppointmentViewModel {
         )
         do {
             try await appointmentService.book(appointment)
-            guard await registerManualVisit(appointment, service: service) else { return false }
+            guard await registerManualVisit(appointment) else { return false }
             didBook = true
             return true
         } catch {
@@ -231,12 +231,12 @@ final class NewAppointmentViewModel {
         }
     }
 
-    private func registerManualVisit(_ appointment: Appointment, service: Service) async -> Bool {
+    private func registerManualVisit(_ appointment: Appointment) async -> Bool {
         guard let client = selectedClient, let clientLinks else { return true }
         let appLocale = profileService.profile.flatMap { AppLocalization(rawValue: $0.appLocaleID) } ?? .en
         do {
             let link = try await clientLinks.registerManualBooking(
-                appointment: appointment, client: client, serviceName: service.name,
+                appointment: appointment, client: client,
                 timeZoneID: timeZoneID, locale: appLocale.rawValue
             )
             exclusiveManageLink = link.url.absoluteString

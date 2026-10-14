@@ -685,11 +685,18 @@ out). Limit: 60/hour per professional. Logs the uid, the booking id and whether 
 the URL; no audit document.
 
 ```ts
-registerManualBooking: req { appointmentId: DocId; serviceName: string; startsAt: Instant; endsAt: Instant; timeZoneID: TimeZoneId; client: { name: string; phone: string; email?: Email; locale?: LocaleId } }
+registerManualBooking: req { appointmentId: UUID; serviceName: string; serviceId?: UUID; serviceMinutes?: number;
+                             addOns?: { id: UUID; name: string; minutes: number }[]; guestCount?: number;
+                             timing?: { prepMinutes: number; cleanupMinutes: number; processingStartMinutes: number; processingMinutes: number };
+                             startsAt: Instant; endsAt: Instant; timeZoneID: TimeZoneId;
+                             client: { name: string; phone: string; email?: Email; locale?: LocaleId } }
                        res { bookingId: string; url: string; expiresAt: Instant }
 ```
 Registers an appointment created by the professional in the iPhone app, creating or updating an active `BookingDoc`
 with origin `manual`, contact hashes and a client manage token. Returns the client's exclusive manage link (`/m/<token>`).
+The optional offer fields support older app versions. When present, `serviceMinutes × (1 + guestCount) + add-on minutes`
+must equal the booked interval; the service, add-ons, guests and timing are snapshotted, so later catalog edits do not
+change this visit's occupancy.
 
 
 ```ts
