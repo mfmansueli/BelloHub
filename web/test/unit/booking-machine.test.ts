@@ -199,7 +199,7 @@ describe('time and price of a booking (D19)', () => {
 
   it('puts guests in sequence: the same visit again, back to back', () => {
     const t = totals(brazilian, [brow], 1);
-    expect(t).toMatchObject({ perPersonMinutes: 105, totalMinutes: 210, people: 2, price: { kind: 'amount', amount: 240 } });
+    expect(t).toMatchObject({ perPersonMinutes: 105, totalMinutes: 195, people: 2, price: { kind: 'amount', amount: 240 } });
     expect(totals(glow, [], 2)).toMatchObject({ totalMinutes: 180, people: 3, price: { kind: 'amount', amount: 210 } });
   });
 

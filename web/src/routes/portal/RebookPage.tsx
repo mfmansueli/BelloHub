@@ -12,13 +12,14 @@ import type { BookingOutcome, ProfessionalLite } from '../../api/types';
 import { TokenLayout } from '../../app/TokenLayout';
 import { useFormatter } from '../../app/context';
 import { newIdempotencyKey } from '../../app/booking/machine';
+import { currentRebookMinutes, rebookOfferState, type RebookOfferState } from '../../app/booking/rebookOffer';
 import { loadPublicPage } from '../../app/pageData';
 import { manageRoute, routePath, type Route } from '../../app/router';
 import { groupByDay } from '../../app/booking/slotDays';
 import { Button, ExternalLink, LinkButton } from '../../components/Button';
 import { DayStrip } from '../../components/Calendar';
 import { SlotChoices } from '../../components/SlotChoices';
-import { ErrorNotice, Seal } from '../../components/Feedback';
+import { ErrorNotice, Notice, Seal } from '../../components/Feedback';
 import { Avatar, Footer, Screen, Title, TopBar, useDocumentTitle } from '../../components/Layout';
 import { useI18n } from '../../i18n';
 import { addDays, zonedDateKey, type DateKey } from '../../lib/datetime';
@@ -30,6 +31,7 @@ interface RebookInfo {
   readonly service: { readonly id: string; readonly name: string; readonly durationMinutes: number };
   readonly addOnIds: readonly string[];
   readonly guests: number;
+  readonly offerState: RebookOfferState;
   readonly recommendedDate: string | undefined;
   readonly back: Route | string;
 }
@@ -46,24 +48,32 @@ export function RebookPage({ token, kind }: { token: string; kind: 'manage' | 'p
           if (portal.rebook === undefined) throw new ApiError('notFound');
           const profile = await loadPublicPage(portal.slug);
           const service = profile.services.find((candidate) => candidate.id === portal.rebook?.serviceId);
-          if (service === undefined) throw new ApiError('notFound');
           return {
             professional: portal.professional,
             firstName: portal.clientFirstName,
-            service: { id: service.id, name: service.name, durationMinutes: service.durationMinutes },
+            service: service === undefined
+              ? { id: portal.rebook.serviceId, name: '', durationMinutes: 0 }
+              : { id: service.id, name: service.name,
+                durationMinutes: currentRebookMinutes(profile, service.id, portal.rebook.addOnIds, 0) ?? 0 },
             addOnIds: portal.rebook.addOnIds,
             guests: 0,
+            offerState: rebookOfferState(profile, portal.rebook.serviceId, portal.rebook.addOnIds, 0),
             recommendedDate: portal.next?.recommendedDate,
             back: `/p/${token}`,
           };
         }
         const booking = await api.getBooking(token);
+        const profile = await loadPublicPage(booking.professional.slug);
+        const addOnIds = booking.addOns.map((addOn) => addOn.id);
         return {
           professional: booking.professional,
           firstName: booking.client.firstName,
-          service: { id: booking.service.id, name: booking.service.name, durationMinutes: booking.durationMinutes },
-          addOnIds: booking.addOns.map((addOn) => addOn.id),
+          service: { id: booking.service.id, name: booking.service.name,
+            durationMinutes: currentRebookMinutes(profile, booking.service.id, addOnIds, booking.guestCount)
+              ?? booking.durationMinutes },
+          addOnIds,
           guests: booking.guestCount,
+          offerState: rebookOfferState(profile, booking.service.id, addOnIds, booking.guestCount),
           recommendedDate: undefined,
           back: manageRoute(token),
         };
@@ -96,6 +106,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   const idempotencyKey = useMemo(() => newIdempotencyKey(), [pick]);
 
   useEffect(() => {
+    if (info.offerState !== 'ready') return;
     let current = true;
     setLoad({ status: 'loading' });
     const from = zonedDateKey(Date.now(), pro.timeZoneID);
@@ -117,7 +128,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
     return () => {
       current = false;
     };
-  }, [token, attempt]);
+  }, [token, attempt, info.offerState]);
 
   const byDay = load.status === 'ready' ? load.byDay : new Map<DateKey, readonly string[]>();
   const best = info.recommendedDate === undefined ? undefined : zonedDateKey(Date.parse(info.recommendedDate), pro.timeZoneID);
@@ -125,6 +136,28 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
   const slots = day === null ? [] : (byDay.get(day) ?? []);
   const moreSlots = day === null || load.status !== 'ready' ? [] : (load.moreByDay.get(day) ?? []);
   const message = whatsAppUrl(pro.whatsappE164, t('wa.book', { name: pro.firstName }));
+
+  if (info.offerState !== 'ready') {
+    return (
+      <Screen top={<TopBar back={info.back} backLabel={t('cl3.back')} />}>
+        <div class="stack">
+          <Title>{info.firstName === undefined ? t('cl3.titleAnon') : t('cl3.title', { name: info.firstName })}</Title>
+          <Notice kind="warning" testId="offer-unavailable">
+            {t(info.offerState === 'guests' ? 'cl3.guestsUnavailable' : 'cl3.offerUnavailable', { name: pro.firstName })}
+          </Notice>
+        </div>
+        <LinkButton to={{ kind: 'slug', slug: pro.slug, step: 'home' }} testId="choose-current-service">
+          {t('bk1.book')}
+        </LinkButton>
+        {message === null ? null : (
+          <ExternalLink href={message} variant="secondary" testId="message-pro">
+            {t('bk1.messageWa', { name: pro.firstName })}
+          </ExternalLink>
+        )}
+        <Footer />
+      </Screen>
+    );
+  }
 
   const submit = async (): Promise<void> => {
     if (pick === null) return;
@@ -210,6 +243,7 @@ function Rebook({ token, info }: { token: string; info: RebookInfo }): JSX.Eleme
           <b class="strong"><bdi>{info.service.name}</bdi></b>
           <br />
           <span class="meta">{t('bk9.with', { name: pro.displayName, meta: format.minutes(info.service.durationMinutes) })}</span>
+          {info.guests > 0 ? <p class="meta">{t('bk8.guest.unnamed', { count: info.guests })}</p> : null}
         </div>
       </section>
 
